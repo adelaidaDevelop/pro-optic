@@ -14,7 +14,12 @@ class CreateProductosTable extends Migration
     public function up()
     {
         Schema::create('productos', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_producto');
+            $table->foreign('departamento')->references('id_departamento')->on('departamento');
+            $table->string('nombre')->unique();
+            $table->string('descripcion');
+            $table->integer('minimo_stock');
+            $table->unsignedInteger('existencia');
             $table->timestamps();
         });
     }

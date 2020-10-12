@@ -35,7 +35,11 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$datosProducto = request()->all();
+        $datosProducto = request()->except('_token');
+        Producto::insert($datosProducto);
+        
+        return response()->json($datosProducto);
     }
 
     /**
