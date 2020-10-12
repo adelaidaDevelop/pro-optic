@@ -20,8 +20,6 @@ class CreacionProducto extends Migration
             $table->string('descripcion');
             $table->integer('minimo_stock');
             $table->unsignedInteger('existencia');
-            $table->timestamps();
-            
         });
     }
 
