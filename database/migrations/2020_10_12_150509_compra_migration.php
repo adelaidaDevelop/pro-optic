@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreacionDepartamento extends Migration
+class CompraMigration extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreacionDepartamento extends Migration
      */
     public function up()
     {
-        Schema::create('departamento', function (Blueprint $table) {
-            $table->id('id_departamento');
-            $table->string('nombre')->unique();
+        Schema::create('compra', function (Blueprint $table) {
+            $table->id('id');
+            $table->string('proveedor');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +27,6 @@ class CreacionDepartamento extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departamento');
+        Schema::dropIfExists('compra');
     }
 }
