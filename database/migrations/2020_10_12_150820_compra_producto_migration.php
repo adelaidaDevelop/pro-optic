@@ -15,7 +15,7 @@ class CompraProductoMigration extends Migration
     {
         Schema::create('compra_producto', function (Blueprint $table) {
             $table->foreign('id')->references('id')->on('compra');
-            $table->foreign('id_producto')->references('id_producto')->on('producto');
+            $table->foreign('id_producto')->references('id_producto')->on('productos');
             $table->integer('cantidad');
             $table->integer('porcentaje_ganancia');
             $table->timestamps('fecha_caducidad');
