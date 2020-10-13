@@ -15,7 +15,7 @@ class CreateProductosTable extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id('id_producto');
-            $table->foreign('departamento')->references('id_departamento')->on('departamento');
+            $table->foreign('departamento')->references('id_departamento')->on('departamentos');
             $table->string('nombre')->unique();
             $table->string('descripcion');
             $table->integer('minimo_stock');
