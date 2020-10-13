@@ -14,7 +14,13 @@ class CreateSubproductosTable extends Migration
     public function up()
     {
         Schema::create('subproductos', function (Blueprint $table) {
-            $table->id();
+            $table->foreign('id_producto')->references('id_producto')->on('producto');
+            $table->integer('piezas');
+            $table->double('precio_ind');
+            $table->string('descripcion');
+            $table->string('medida');
+            $table->integer('existencia');
+            $table->double('ganancia');
             $table->timestamps();
         });
     }

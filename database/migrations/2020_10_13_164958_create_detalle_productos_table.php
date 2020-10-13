@@ -14,7 +14,10 @@ class CreateDetalleProductosTable extends Migration
     public function up()
     {
         Schema::create('detalle_productos', function (Blueprint $table) {
-            $table->id();
+            $table->foreign('id_producto')->references('id_producto')->on('producto');
+            $table->string('codigo_barras')->unique();
+            $table->integer('existencia');
+            $table->string('imagen');
             $table->timestamps();
         });
     }
