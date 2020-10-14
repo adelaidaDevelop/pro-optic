@@ -14,7 +14,7 @@ class CreateSubproductosTable extends Migration
     public function up()
     {
         Schema::create('subproductos', function (Blueprint $table) {
-            $table->foreign('id_producto')->references('id_producto')->on('productos');
+            $table->engine = 'InnoDB';
             $table->integer('piezas');
             $table->double('precio_ind');
             $table->string('descripcion');
@@ -22,7 +22,16 @@ class CreateSubproductosTable extends Migration
             $table->integer('existencia');
             $table->double('ganancia');
             $table->timestamps();
+            if (Schema::hasTable('productos')) {
+                $table->foreignId('productos_id')->nullable()->constrained('productos');
+            }
+                            
+
+            
+
         });
+        
+        
     }
 
     /**
@@ -33,5 +42,7 @@ class CreateSubproductosTable extends Migration
     public function down()
     {
         Schema::dropIfExists('subproductos');
+
     }
+    
 }

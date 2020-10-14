@@ -14,9 +14,15 @@ class CreateComprasTable extends Migration
     public function up()
     {
         Schema::create('compras', function (Blueprint $table) {
-            $table->id('id_compra');
+            $table->engine = 'InnoDB';
+            $table->id();
             $table->string('proveedor');
             $table->timestamps();
+            if (Schema::hasTable('compra_porductos')) {
+                if (!Schema::hasColumn('compra_productos', 'compras_id')) {
+                    $table->foreignId('compras_id')->nullable()->constrained('compras');
+                }
+            }
         });
     }
 
