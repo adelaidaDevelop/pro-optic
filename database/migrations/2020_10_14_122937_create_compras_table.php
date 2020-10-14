@@ -14,15 +14,10 @@ class CreateComprasTable extends Migration
     public function up()
     {
         Schema::create('compras', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
             $table->id();
+           // $table->id('id_compra');
             $table->string('proveedor');
             $table->timestamps();
-            if (Schema::hasTable('compra_porductos')) {
-                if (!Schema::hasColumn('compra_productos', 'compras_id')) {
-                    $table->foreignId('compras_id')->nullable()->constrained('compras');
-                }
-            }
         });
     }
 
@@ -33,6 +28,6 @@ class CreateComprasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('compras');
+        Schema::dropIfExists('compraas');
     }
 }

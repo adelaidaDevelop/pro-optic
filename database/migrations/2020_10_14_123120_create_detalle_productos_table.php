@@ -14,19 +14,13 @@ class CreateDetalleProductosTable extends Migration
     public function up()
     {
         Schema::create('detalle_productos', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
+           // $table->foreign('id')->references('id')->on('productoos');
+           $table->foreignId('idProductos')->constrained('productos');
             $table->string('codigo_barras')->unique();
             $table->integer('existencia');
             $table->string('imagen');
             $table->timestamps();
-            if (Schema::hasTable('productos')) {
-                $table->foreignId('productos_id')->nullable()->constrained('productos');
-            }
-            
-
         });
-
-
     }
 
     /**
@@ -36,7 +30,6 @@ class CreateDetalleProductosTable extends Migration
      */
     public function down()
     {
-        
-        Schema::dropIfExists('detalle_productos');
+        Schema::dropIfExists('detalle_productoos');
     }
 }

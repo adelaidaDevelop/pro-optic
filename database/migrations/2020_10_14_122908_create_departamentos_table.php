@@ -14,15 +14,10 @@ class CreateDepartamentosTable extends Migration
     public function up()
     {
         Schema::create('departamentos', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
             $table->id();
+           // $table->id('id_departamento');
             $table->string('nombre')->unique();
             $table->timestamps();
-            if (Schema::hasTable('productos')) {
-                if (!Schema::hasColumn('productos', 'departamentos_id')) {
-                    $table->foreignId('departamentos_id')->nullable()->constrained('departamentos');
-                }
-            }
         });
     }
 
@@ -33,6 +28,6 @@ class CreateDepartamentosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departamentos');
+        Schema::dropIfExists('departamentoos');
     }
 }
