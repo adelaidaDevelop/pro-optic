@@ -15,7 +15,6 @@ class CreateProductosTable extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-
             $table->id();
             $table->string('nombre')->unique();
             $table->string('descripcion');
@@ -40,7 +39,6 @@ class CreateProductosTable extends Migration
                     $table->foreignId('productos_id')->nullable()->constrained('productos');
                 }
             }
-            
         });
 
         

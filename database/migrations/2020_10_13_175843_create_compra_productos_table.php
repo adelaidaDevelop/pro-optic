@@ -27,8 +27,7 @@ class CreateCompraProductosTable extends Migration
             if (Schema::hasTable('productos')) {
                 $table->foreignId('productos_id')->nullable()->constrained('productos');
             }
-            
-       
+        }
         });
         
     }
