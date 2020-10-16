@@ -23,19 +23,7 @@ class CreateCompraProductosTable extends Migration
             $table->timestamp('fecha_caducidad');
             $table->double('costo_unitario');
             $table->string('iva');
-<<<<<<< HEAD:database/migrations/2020_10_13_175843_create_compra_productos_table.php
-            $table->timestamp('fecha_registro');
-            if (Schema::hasTable('compras')) {
-                $table->foreignId('compras_id')->nullable()->constrained('compras');
-            }
-            if (Schema::hasTable('productos')) {
-                $table->foreignId('productos_id')->nullable()->constrained('productos');
-            }
-        }
-=======
-            //$table->timestamp('fecha_registro');
->>>>>>> 76dad42f1cca359af34bd91adf4b93f7ad7c45eb:database/migrations/2020_10_14_123148_create_compra_productos_table.php
-        });
+      });
     }
 
     /**
