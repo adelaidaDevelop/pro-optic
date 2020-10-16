@@ -14,7 +14,8 @@ class DepartamentoController extends Controller
      */
     public function index()
     {
-        //
+        return view('Departamento.index');
+
     }
 
     /**
@@ -24,7 +25,8 @@ class DepartamentoController extends Controller
      */
     public function create()
     {
-        //
+        return view('Departamento.create');
+
     }
 
     /**
@@ -35,7 +37,10 @@ class DepartamentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datosDepartamento = request()->except('_token');
+        Departamento::insert($datosDepartamento);
+        
+        return response()->json($datosDepartamento);
     }
 
     /**
