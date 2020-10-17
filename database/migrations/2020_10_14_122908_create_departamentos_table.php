@@ -17,7 +17,7 @@ class CreateDepartamentosTable extends Migration
             $table->id();
            // $table->id('id_departamento');
             $table->string('nombre')->unique();
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 
