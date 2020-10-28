@@ -14,7 +14,8 @@ class DepartamentoController extends Controller
      */
     public function index()
     {
-        return view('Departamento.index');
+        $datos['departamentos'] = Departamento::paginate();
+        return view('Departamento.index',$datos);
 
     }
 
@@ -40,7 +41,7 @@ class DepartamentoController extends Controller
         $datosDepartamento = request()->except('_token');
         Departamento::insert($datosDepartamento);
         
-        return response()->json($datosDepartamento);
+        return redirect('departamento');
     }
 
     /**
@@ -83,8 +84,9 @@ class DepartamentoController extends Controller
      * @param  \App\Models\Departamento  $departamento
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Departamento $departamento)
+    public function destroy($id)//Departamento $departamento)
     {
-        //
+        Departamento::destroy($id);
+        return redirect('departamento');
     }
 }
