@@ -38,8 +38,13 @@ class ProductoController extends Controller
         //$datosProducto = request()->all();
         $datosProducto = request()->except('_token');
         Producto::insert($datosProducto);
-        
-        return response()->json($datosProducto);
+        //return response()->json($datosProducto);
+        return redirect('producto');
+
+        //DEPARTAMENTO
+      //  $datosDepartamento = request()->except('_token');
+       // Departamento::insert($datosDepartamento);
+       // return redirect('departamento');
     }
 
     /**
