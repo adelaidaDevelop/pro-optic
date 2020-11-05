@@ -6,7 +6,7 @@
     <input type="text" name="descripcion" id="descripcion" value="">
     <label for="MinimoStock">{{'Minimo Stock'}}</label>
     <input type="text" name="minimo_stock" id="minimo_stock" value="">
+    <label for="Existencia">{{'Existencia'}}</label>
     <input type="number" name="existencia" id="existencia" value="0" style="display:none">
-    
     <input type="submit" value="Agregar">
 </form>
