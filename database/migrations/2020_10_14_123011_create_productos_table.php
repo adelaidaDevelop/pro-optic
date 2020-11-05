@@ -19,8 +19,10 @@ class CreateProductosTable extends Migration
             //$table->foreign('id_departamento')->references('id_departamento')->on('departamentoos');
             $table->foreignId('idDepartamento')->constrained('departamentos');
            // $table->foreign('id')->references('id')->on('departamentoos');
+            $table->string('codigoBarras')->unique();
             $table->string('nombre')->unique();
             $table->string('descripcion');
+            $table->string('imagen');
             $table->integer('minimo_stock');
             $table->unsignedInteger('existencia');
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Models\Departamento;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -24,7 +25,9 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('Producto.create');
+        $departamento= Departamento::all();
+        return view('Producto.create', compact('departamento'));
+        //return view('Producto.create', $departamento);
     }
 
     /**
@@ -37,14 +40,15 @@ class ProductoController extends Controller
     {
         //$datosProducto = request()->all();
         $datosProducto = request()->except('_token');
+        if($request->hasFile('Imagen')){
+            $datosProducto['Imagen']=$request->file('Imagen')->store('uploads','public');
+        }
         Producto::insert($datosProducto);
-        //return response()->json($datosProducto);
-        return redirect('producto');
 
-        //DEPARTAMENTO
-      //  $datosDepartamento = request()->except('_token');
-       // Departamento::insert($datosDepartamento);
-       // return redirect('departamento');
+        return response()->json($datosProducto);
+
+      //  return redirect('producto');
+
     }
 
     /**
@@ -87,8 +91,11 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    //public function destroy(Producto $producto)
+    public function destroy($id)
     {
         //
+        Departamento::destroy($id);
+        return redirect('departamento');
     }
 }
