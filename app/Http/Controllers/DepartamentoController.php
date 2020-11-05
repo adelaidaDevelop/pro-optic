@@ -12,6 +12,8 @@ class DepartamentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    
     public function index()
     {
         $datos['departamentos'] = Departamento::paginate();
@@ -61,9 +63,12 @@ class DepartamentoController extends Controller
      * @param  \App\Models\Departamento  $departamento
      * @return \Illuminate\Http\Response
      */
-    public function edit(Departamento $departamento)
+    public function edit($id)//Departamento $departamento)
     {
-        //
+        $datos['departamentos'] = Departamento::paginate();
+        $datosD['d'] = Departamento::findOrFail($id);
+        
+        return view('Departamento.index',$datos,$datosD);
     }
 
     /**
@@ -73,9 +78,11 @@ class DepartamentoController extends Controller
      * @param  \App\Models\Departamento  $departamento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Departamento $departamento)
+    public function update(Request $request, $id)
     {
-        //
+        $datosDepartamento = request()->except(['_token','_method']);
+        Departamento::where('id','=',$id)->update($datosDepartamento);
+        return redirect('departamento');
     }
 
     /**
