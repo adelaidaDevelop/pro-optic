@@ -25,7 +25,17 @@ Consultar Producto
 <td> {{$producto->idDepartamento}}</td>
 <td> {{$producto->minimo_stock}} </td>
 <td> {{$producto->existencia}} </td>
-<td> Editar | Borrar </td>
+<td> 
+<a href="{{ url('/producto/'.$producto->id.'/edit')}}"> Editar </a>
+ | 
+<form method="post" action="{{ url('/producto/'.$producto->id)}}">
+{{csrf_field()}}
+{{method_field('DELETE')}}
+<button type="submit" onclick= "return confirm('¿Borrar?');"> Borrar</button>
+
+</form>
+
+ </td>
 </tr>
 @endforeach
 

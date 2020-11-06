@@ -71,9 +71,12 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function edit(Producto $producto)
+    public function edit($id)
     {
         //
+        $departamento= Departamento::all();
+        $producto= Producto::findOrFail($id);
+        return view('Producto.edit', compact('producto', 'departamento'));
     }
 
     /**
@@ -98,7 +101,8 @@ class ProductoController extends Controller
     public function destroy($id)
     {
         //
-        Departamento::destroy($id);
-        return redirect('departamento');
+        Producto::destroy($id);
+
+        return redirect('producto');
     }
 }
