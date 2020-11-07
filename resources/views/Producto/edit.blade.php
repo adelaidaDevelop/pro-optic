@@ -27,7 +27,8 @@
     <br/>
 
     <label for="Imagen">{{'Imagen'}}</label>
-    {{ $producto->imagen}}
+   <!-- {{ $producto->imagen}}-->
+    <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200">
     <input type="file" name="Imagen" id="Imagen" value="{{ $producto->imagen}}">
     <br/>
 
