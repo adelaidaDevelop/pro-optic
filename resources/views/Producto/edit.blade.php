@@ -42,5 +42,5 @@
 
     <input type="submit" value="Editar producto">
     
-    
+    <a href="{{url('producto')}}"> Regresar</a>
 </form>

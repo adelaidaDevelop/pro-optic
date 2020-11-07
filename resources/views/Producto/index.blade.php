@@ -41,3 +41,5 @@ Consultar Producto
 
 </tbody>
 </table>
+
+<a href="{{url('producto/create')}}"> Nuevo producto</a>

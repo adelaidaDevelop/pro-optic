@@ -51,9 +51,8 @@ class ProductoController extends Controller
         }
         Producto::insert($datosProducto);
 
-        return response()->json($datosProducto);
-
-      //  return redirect('producto');
+       // return response()->json($datosProducto);
+        return redirect('producto');
 
     }
 
@@ -99,7 +98,7 @@ class ProductoController extends Controller
         if($request->hasFile('Imagen')){
             $producto=Producto::findOrFail($id);
             //borrar fotografia antigua
-            Storage::delete('public/'.$producto->Imagen);
+            Storage::delete('public/'.$producto->imagen);
             $datosProducto['Imagen']=$request->file('Imagen')->store('uploads','public');
         }
 
@@ -119,9 +118,12 @@ class ProductoController extends Controller
     //public function destroy(Producto $producto)
     public function destroy($id)
     {
-        //
-        Producto::destroy($id);
+        //buscaar todos los datos que corresponden a este id
+        $producto= Producto::findOrFail($id);
 
+        if( Storage::delete('public/'.$producto->imagen)){
+            Producto::destroy($id);
+        }
         return redirect('producto');
     }
 }

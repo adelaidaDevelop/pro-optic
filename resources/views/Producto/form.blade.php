@@ -35,3 +35,5 @@
   <br/>
 
     <input type="submit" value="Agregar producto">
+    <br/>
+    <a href="{{url('producto')}}"> Regresar</a>
