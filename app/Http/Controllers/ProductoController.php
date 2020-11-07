@@ -43,6 +43,7 @@ class ProductoController extends Controller
     {
         //$datosProducto = request()->all();
         $datosProducto = request()->except('_token');
+        $datosProducto['existencia']=0;
         if($request->hasFile('Imagen')){
             $datosProducto['Imagen']=$request->file('Imagen')->store('uploads','public');
         }
@@ -86,9 +87,17 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, $id)
     {
         //
+        
+        $departamento= Departamento::all();
+        $datosProducto=request()->except(['_token', '_method']);
+        Producto::where('id', '=',$id)->update($datosProducto);
+
+        $producto=Producto::findOrFail($id);
+        return view('producto.edit', compact('producto', 'departamento'));
+        
     }
 
     /**

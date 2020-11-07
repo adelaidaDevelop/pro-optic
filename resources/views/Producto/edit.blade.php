@@ -1,7 +1,7 @@
 
-<form method="post" action="{{url('producto')}}" enctype="multipart/form-data">
+<form method="post" action="{{url('/producto/'.$producto->id)}}" enctype="multipart/form-data">
     {{ csrf_field() }}
-
+    {{method_field('PATCH')}}
    
     <label for="idDepartamento">{{'Departamento'}}</label>  
     <select name="idDepartamento" id="idDepartamento">
@@ -27,6 +27,7 @@
     <br/>
 
     <label for="Imagen">{{'Imagen'}}</label>
+    {{ $producto->imagen}}
     <input type="file" name="Imagen" id="Imagen" value="{{ $producto->imagen}}">
     <br/>
 
@@ -35,10 +36,10 @@
     <br/>
 
     <label for="existencia">{{'Existencia'}}</label>
-    <input type="number" name="existencia" id="existencia" value="{{ $producto->existencia}}" disabled>
+    <input type="number" name="existencia" id="existencia" value="{{ $producto->existencia}}" disabled >
   <br/>
 
-    <input type="submit" value="Agregar producto">
+    <input type="submit" value="Editar producto">
     
     
 </form>
