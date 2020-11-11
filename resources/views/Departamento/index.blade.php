@@ -127,9 +127,16 @@
     const boton = document.querySelector('#boton');
 
     const filtrar = ()=>{
-        console.log($departamentos);
-        //const texto = buscador.value.toLowerCase();
-        //for(let producto of departamentos)
+        //console.log($departamentos);
+        const texto = buscador.value.toLowerCase();
+        for(let producto of departamentos)
+        {
+            let nombre = departamentos.nombre.toLowerCase();
+            if(nombre.indexOf(texto) !== -1)
+            {
+
+            }
+        }
     }
 
     boton.addEventListener('click',filtrar);
