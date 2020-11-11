@@ -35,7 +35,7 @@
 
     <label for="MinimoStock">{{'Minimo Stock'}}</label>
     <input type="number" name="minimo_stock" id="minimo_stock" 
-    value=" isset($producto->minimo_stock)?$producto->minimo_stock:''">
+    value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}">
     <br/>
   <br/>
     <input type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
