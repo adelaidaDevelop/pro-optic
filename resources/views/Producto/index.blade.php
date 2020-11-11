@@ -14,7 +14,6 @@ Consultar Producto
 <th>Acciones</th>
 </tr>
 </thead>
-
 <tbody>
 @foreach($productos as $producto)
 <tr>
@@ -32,14 +31,10 @@ Consultar Producto
 {{csrf_field()}}
 {{method_field('DELETE')}}
 <button type="submit" onclick= "return confirm('¿Borrar?');"> Borrar</button>
-
 </form>
-
  </td>
 </tr>
 @endforeach
-
 </tbody>
 </table>
-
 <a href="{{url('producto/create')}}"> Nuevo producto</a>
