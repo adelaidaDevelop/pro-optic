@@ -96,4 +96,11 @@ class DepartamentoController extends Controller
         Departamento::destroy($id);
         return redirect('departamento');
     }
+
+    public function buscador(Request $request)
+    {
+        $datosConsulta['departamentosB'] = Departamento::where("nombre",'like',$request->texto."%")->get();
+        return view('Departamento.form',$datosConsulta);
+        //return redirect('departamento');
+    }
 }

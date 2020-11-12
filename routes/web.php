@@ -13,13 +13,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Auth::routes();
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
 
 Route::resource('producto', ProductoController::class);
 
 Route::resource('departamento', DepartamentoController::class);
+// RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO
+
+//
 
