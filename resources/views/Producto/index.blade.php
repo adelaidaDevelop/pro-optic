@@ -1,4 +1,3 @@
-Consultar Producto
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,10 +13,39 @@ Consultar Producto
     <script href="{{ asset('js\bootstrap.min.js') }}"></script>
 </head>
 <body>
-<br/>
-<br/> </br>
-<table >
-<thead>
+<br/><br/> 
+
+<div class= "row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+    <h3 class="p-3 mb-6  text-white" style="background:#ED4D46" >PRODUCTO</h3>
+    </div>
+    <div class="col-md-1"> </div>
+    </div>
+
+    <div class= "row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" style="background:#D5DBDB">
+    <h5 class="blockquote text-center"> <strong>Consultar Producto</strong></h5>
+    </div>
+    
+    <div class="col-md-2"> </div>
+    </div>
+    <br/>
+
+    
+
+    <div class= "row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10" style="background:#0CC6CC">
+<table class="table"  >
+<!--"table table-hover"
+"table table-bordered table-dark"
+
+"table-active"
+-->
+
+<thead class="thead-dark" >
 <tr>
 <th>Numero</th>
 <th>Codigo barras</th>
@@ -52,7 +80,15 @@ Consultar Producto
 @endforeach
 </tbody>
 </table>
+
+
 <a href="{{url('producto/create')}}"> Nuevo producto</a>
+
+</div>
+    <div class="col-md-1"> </div>
+    </div>
+
+
 </body>
 </html>
 
