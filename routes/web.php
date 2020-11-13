@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\DepartamentoController;
+use App\Http\Controllers\CompraController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,9 @@ Route::get('/departamento/buscador', [DepartamentoController::class,'buscador'])
 Route::resource('producto', ProductoController::class);
 
 Route::resource('departamento', DepartamentoController::class);
+
+Route::resource('compra', CompraController::class);
+
 // RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO
 
 //

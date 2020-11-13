@@ -16,7 +16,7 @@
 
 <div class="container-fluid">
     <div class="row" style="background:#ED4D46">
-        <h1>DEPARTAMENTOS</h1>
+        <h1 style="color:#FFFFFF">DEPARTAMENTOS</h1>
     </div>
     <div class="row">
         <div class="col-4" style="background:#0CC6CC">
