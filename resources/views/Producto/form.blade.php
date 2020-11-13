@@ -14,46 +14,84 @@
 <body>
   
 <br/>
+<div class= "row">
+<div class="col-md-1"></div>
+<div class="col-md-2">
+<label for="codigoBarras"><h5> <strong>{{'CodigoBarras'}}</strong></h5></label>  
+<br/>
+<br/>
+<label for="Nombre"><h5> <strong>{{'Nombre'}}</strong></h5></label>  
+<br/>
+<br/>
+<label for="Descripcion"> <h5><strong> {{'Descripcion'}} </strong> </h5></label>
+<br/>
+<br/>
+<label for="MinimoStock"><h5> <strong> {{'Minimo Stock'}}</strong></h5></label>
+</div>
+<br/>
+<div class="col-md-2">
+<!--El name debe ser igual al de la base de datos-->      
+<input type="text" name="codigoBarras" id="codigoBarras" 
+value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}">
+<br/><br/>
+      
+<input type="text" name="nombre" id="nombre" 
+value=" {{ isset($producto->nombre)?$producto->nombre:''}} ">
+<br/><br/>
+<input type="text" name="descripcion" id="descripcion" 
+value=" {{ isset($producto->descripcion)?$producto->descripcion:''}}">
+<br/><br/>
+<input type="number" name="minimo_stock" id="minimo_stock" 
+value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}">
+<br/><br/>
+</div>
+    <div class="col-md-2"> 
+<label for="idDepartamento"><h5> <strong>{{'Departamento'}}</strong></h5></label> 
+<br/><br/>
+<label for="Imagen"><h5> <strong>{{'Imagen'}}</strong></h5></label>
+<br/><br/>
+<a href="{{url('producto')}}"> Inicio</a>
+<br/>
+</div>
 
-<label for="idDepartamento">{{'Departamento'}}</label>  
+<div class="col-md-3">
 <select name="idDepartamento" id="idDepartamento">
 @foreach($departamento as $departamento)
 <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
 @endforeach
 </select>
+<br/><br/>
 
-<label for="codigoBarras">{{'CodigoBarras'}}</label>  
-<!--El name debe ser igual al de la base de datos-->      
-<input type="text" name="codigoBarras" id="codigoBarras" 
-value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}">
-<br/>
-
-<label for="Nombre">{{'Nombre'}}</label>        |
-<input type="text" name="nombre" id="nombre" 
-value=" {{ isset($producto->nombre)?$producto->nombre:''}} ">
-<br/>
-
-<label for="Descripcion">{{'Descripcion'}}</label>
-<input type="text" name="descripcion" id="descripcion" 
-value=" {{ isset($producto->descripcion)?$producto->descripcion:''}}">
-<br/>
-
-<label for="Imagen">{{'Imagen'}}</label>
 @if(isset($producto->imagen))
 <br/>
 <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200">
-<br/>
+<br/><br/>
 @endif
 <input type="file" name="Imagen" id="Imagen" value="">
 <br/>
+<br/>
 
-<label for="MinimoStock">{{'Minimo Stock'}}</label>
-<input type="number" name="minimo_stock" id="minimo_stock" 
-value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}">
-<br/>
-<br/>
 <input type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
 <br/>
+
 <a href="{{url('producto')}}"> Regresar</a>
+</div>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<div class="col-md-1"></div>
+</div>
+
 </body>
 </html>
