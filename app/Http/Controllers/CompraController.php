@@ -14,7 +14,7 @@ class CompraController extends Controller
      */
     public function index()
     {
-        //
+        return view('Compra.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class CompraController extends Controller
      */
     public function create()
     {
-        //
+        return view('Compra.create');
     }
 
     /**
