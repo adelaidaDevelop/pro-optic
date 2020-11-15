@@ -25,7 +25,6 @@ class CreateProductosTable extends Migration
             $table->string('imagen');
             $table->integer('minimo_stock');
             $table->unsignedInteger('existencia');
-            $table->timestamps();
         });
     }
 
