@@ -50,7 +50,9 @@ value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}">
 <br/><br/>
 <label for="Imagen"><h5> <strong>{{'Imagen'}}</strong></h5></label>
 <br/><br/>
-<a href="{{url('producto')}}"> Inicio</a>
+
+<a title="Inicio" href="{{url('producto')}}" class="text-danger">
+    <img src="{{ asset('img\inicio.png') }}" class="img-thumbnail" alt="Inicio"width="50px" height="50px" />Inicio</a>
 <br/>
 </div>
 
@@ -71,10 +73,19 @@ value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}">
 <br/>
 <br/>
 
-<input type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
-<br/>
+<input type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}" >
 
-<a href="{{url('producto')}}"> Regresar</a>
+<button class="btn btn-outline-secondary" type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
+ <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+ </button>
+
+
+<br/>
+<a title="Regreesar" href="{{url('producto')}}" class="text-dark">
+    <img src="{{ asset('img\editar.png') }}" class="img-thumbnail" alt="Regreesar"width="50px" height="50px" />Regresar</a>
+   
+
+<br/><br/>
 </div>
 
 <br/>
