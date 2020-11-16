@@ -25,7 +25,7 @@
 <br/>
 <label for="Descripcion"> <h5><strong> {{'Descripcion'}} </strong> </h5></label>
 <br/>
-<br/>
+<br/><br/>
 <label for="MinimoStock"><h5> <strong> {{'Minimo Stock'}}</strong></h5></label>
 </div>
 <br/>
@@ -38,8 +38,10 @@ value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}">
 <input type="text" name="nombre" id="nombre" 
 value=" {{ isset($producto->nombre)?$producto->nombre:''}} ">
 <br/><br/>
-<input type="text" name="descripcion" id="descripcion" 
-value=" {{ isset($producto->descripcion)?$producto->descripcion:''}}">
+<textarea name="descripcion" id="descripcion" rows="3" cols="23">
+{{ isset($producto->descripcion)?$producto->descripcion:'Ingresa la descripcion del producto'}}</textarea>
+
+
 <br/><br/>
 <input type="number" name="minimo_stock" id="minimo_stock" 
 value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}">
@@ -51,9 +53,7 @@ value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}">
 <label for="Imagen"><h5> <strong>{{'Imagen'}}</strong></h5></label>
 <br/><br/>
 
-<a title="Inicio" href="{{url('producto')}}" class="text-danger">
-    <img src="{{ asset('img\inicio.png') }}" class="img-thumbnail" alt="Inicio"width="50px" height="50px" />Inicio</a>
-<br/>
+
 </div>
 
 <div class="col-md-3">
@@ -69,21 +69,31 @@ value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}">
 <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200">
 <br/><br/>
 @endif
+
 <input type="file" name="Imagen" id="Imagen" value="">
 <br/>
-<br/>
+<br/><br/><br/><br/>
 
-<input type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}" >
-
-<button class="btn btn-outline-secondary" type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
- <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+<!--<input type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}" >-->
+<!--Fila para botones-->
+<div class= "row">
+    
+    <div class="col-md-4">
+    <button class="btn btn-outline-secondary" type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
+ <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">{{ $Modo== 'crear' ?'Agregar' : 'Editar' }}
  </button>
+    </div>
+    <div class="col-md-4">
+    <a title="Inicio" href="{{url('producto')}}" class="text-danger">
+    <img src="{{ asset('img\inicio.png') }}" class="img-thumbnail" alt="Inicio"width="50px" height="50px" />Inicio</a>
+</div>
+    <div class="col-md-4"> 
+<a title="Regresar" href="{{url('producto')}}" class="text-dark">
+<img src="{{ asset('img\regresar2.png') }}" class="img-thumbnail" alt="Regresar"width="50px" height="50px" />Regresar</a>
+    </div>
+    </div>
 
 
-<br/>
-<a title="Regreesar" href="{{url('producto')}}" class="text-dark">
-    <img src="{{ asset('img\editar.png') }}" class="img-thumbnail" alt="Regreesar"width="50px" height="50px" />Regresar</a>
-   
 
 <br/><br/>
 </div>

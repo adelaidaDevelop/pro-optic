@@ -115,9 +115,9 @@ Borrar</button>
     <button> Editar</button>
     <button> Agregar</button>
     <button> Salir</button>-->
-    <a title="Editar" href="{{url('producto/editar')}}" class="text-dark">
+   <!-- <a title="Editar" href="{{url('producto/editar')}}" class="text-dark">
     <img src="{{ asset('img\editar.png') }}" class="img-thumbnail" alt="Editar"width="50px" height="50px" />Editar</a>
-
+-->
     <a title="Agregar" href="{{url('producto/create')}}" class="text-dark">
     <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Agregar"width="50px" height="50px" />Agregar</a>
 
