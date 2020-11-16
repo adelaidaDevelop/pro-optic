@@ -21,6 +21,13 @@ class DepartamentoController extends Controller
 
     }
 
+    public function index2()
+    {
+        $datos['departamentos'] = Departamento::paginate();
+        return view('Departamento.index2',$datos);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -101,6 +108,13 @@ class DepartamentoController extends Controller
     {
         $datosConsulta['departamentosB'] = Departamento::where("nombre",'like',$request->texto."%")->get();
         return view('Departamento.form',$datosConsulta);
-        //return redirect('departamento');
+        //return $datosConsulta;
+    }
+
+    public function buscador2(Request $request)
+    {
+        $datosConsulta['departamentosB'] = Departamento::where("nombre",'like',$request->texto."%")->get();
+        return view('Departamento.form2',$datosConsulta);
+        //return $datosConsulta;
     }
 }

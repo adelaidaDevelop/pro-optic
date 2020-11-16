@@ -20,6 +20,10 @@ Route::get('/', function () {
 });
 Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
 
+Route::get('/departamento/buscador2', [DepartamentoController::class,'buscador2']);
+
+Route::get('/departamento2', [DepartamentoController::class,'index2']);
+
 Route::resource('producto', ProductoController::class);
 
 Route::resource('departamento', DepartamentoController::class);
