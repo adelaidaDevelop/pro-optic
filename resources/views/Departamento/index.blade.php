@@ -32,8 +32,10 @@
             </div>
 
             </div>
-            <div id="resultados" class="btn-group-vertical btn-block">
-            
+            <div class="row" style="height:200px;overflow-y:auto;">
+                <div id="resultados" 
+                class="col btn-block h-100">
+            </div>
             </div>
         </div>
         <div class="col" style="background:#edeadb"><!--#FFFBF2"-->
@@ -41,14 +43,20 @@
         <div class="row mx-1">
             <div class="col-4">
                 <form method="get" action="{{url('/departamento')}}">
-                    <button class="btn btn-outline-secondary my-3 ml-0" type="submit">Nuevo Departamento</button>
+                    <button class="btn btn-outline-secondary my-3 ml-0" type="submit">
+                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                    Nuevo Departamento
+                    </button>
                 </form>
             </div>
             <div class="col-4">
                 <form method="post" action="{{url('/departamento/'.$d->id)}}">
                     {{csrf_field()}}
                     {{ method_field('DELETE')}}
-                    <button class="btn btn-outline-secondary my-3" type="submit">Eliminar Departamento</button>
+                    <button class="btn btn-outline-secondary my-3" type="submit">
+                         <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                        Eliminar Departamento
+                    </button>
                 </form>
             </div>
         </div>
@@ -82,8 +90,8 @@
                 <br/>
                 <!--input type="submit" value="Guardar Departamento"-->
                 <button class="btn btn-outline-secondary" type="submit">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-                    Agregar Departamento
+                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                    Guardar Departamento
                 </button>
             </div>
             </form>
