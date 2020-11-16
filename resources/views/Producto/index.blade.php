@@ -85,6 +85,7 @@
 <td>{{$producto->codigoBarras}}</td>
 <td>{{$producto->nombre}}</td>
 <td> {{$producto->descripcion}}</td>
+
 <td> {{$producto->idDepartamento}}</td>
 <td> {{$producto->minimo_stock}} </td>
 <td> {{$producto->existencia}} </td>
@@ -115,10 +116,11 @@ Borrar</button>
     <!--
     <button> Editar</button>
     <button> Agregar</button>
-    <button> Salir</button>-->
+    <button> Salir</button>
+
    <a title="Salir" href="{{url('producto')}}" class="text-dark">
     <img src="{{ asset('img\eliminar_usuariio.png') }}" class="img-thumbnail" alt="Salir"width="50px" height="50px" />Salir</a>
-
+-->
     <a title="Agregar" href="{{url('producto/create')}}" class="text-dark">
     <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Agregar"width="50px" height="50px" />Agregar</a>
 

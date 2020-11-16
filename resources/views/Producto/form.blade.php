@@ -31,19 +31,18 @@
 <br/>
 <div class="col-md-2">
 <!--El name debe ser igual al de la base de datos-->      
-<input type="text" name="codigoBarras" id="codigoBarras" 
+<input type="text" name="codigoBarras" id="codigoBarras" placeholder="Ingresar codigo de barras"
 value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}" required>
 <br/><br/>
-      
-<input type="text" name="nombre" id="nombre" 
-value=" {{ isset($producto->nombre)?$producto->nombre:''}} " required>
-<br/><br/>
-<textarea name="descripcion" id="descripcion" rows="3" cols="23">
-{{ isset($producto->descripcion)?$producto->descripcion:'Ingresa la descripcion del producto'}}</textarea>
-
+<input type="text" name="nombre" id="nombre" placeholder="Nombre productos"
+value="{{ isset($producto->nombre)?$producto->nombre:''}}" required>
 
 <br/><br/>
-<input type="number" name="minimo_stock" id="minimo_stock" 
+<textarea name="descripcion" id="descripcion" placeholder="Descripcion del producto" rows="3" cols="23">
+{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
+
+<br/><br/>
+<input type="number" name="minimo_stock" id="minimo_stock" placeholder="Ingrese el minimo de productos permitidos"
 value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required>
 <br/><br/>
 </div>
@@ -57,12 +56,18 @@ value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required>
 </div>
 
 <div class="col-md-3">
-<select name="idDepartamento" id="idDepartamento">
+<select name="idDepartamento" id="idDepartamento" required>
+<option value="">Seleccione departamento</option>
 @foreach($departamento as $departamento)
+@if( isset($producto->idDepartamento))
+<option value="{{ $departamento['id']}}" selected> {{$departamento['nombre']}}</option>
+@else
 <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
+@endif
 @endforeach
 </select>
 <br/><br/>
+
 
 @if(isset($producto->imagen))
 <br/>
