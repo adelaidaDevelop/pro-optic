@@ -21,19 +21,11 @@
     <div class="row">
         <div class="col-4" style="background:#0CC6CC">
             <div class="row">
-            <!--input type="text" id="buscador" class="form-control my-2">
-            <button class="btn btn-info mb-2" id="boton">Buscar</button-->
-
-            <div class="input-group">
-                <input type="text" class="form-control mx-2 my-3" placeholder="Buscar departamento" id="texto">
-                <!--div class="input-group-append">
-                    <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
-                </div-->
+                <div class="input-group">
+                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar departamento" id="texto">
+                </div>
             </div>
-
-            </div>
-            <div id="resultados" class="row">
-            
+            <div id="resultados" class="btn-group-vertical btn-block">
             </div>
         </div>
         <div class="col" style="background:#FFFBF2">
@@ -43,7 +35,7 @@
             <div class="form-group">
                 {{ csrf_field() }}
                 {{ method_field('PATCH')}}
-                <label for="Nombre"><h2>Editard Departamento</h2></label>
+                <label for="Nombre"><h2>Editar Departamento</h2></label>
                 <br/>
                 <label for="Nombre"><h3>{{$d->nombre}}</h3></label>
                 <input type="text" class="form-control" name="nombre" id="nombre" value="{{$d->nombre}}">
@@ -80,12 +72,21 @@
     function filtrar()
     {
         document.getElementById("resultados").innerHTML = "";
-        fetch(`/departamento/buscador?texto=${texto.value}`,{ method:'get' })
+        fetch(`/departamento/buscador2?texto=${texto.value}`,{ method:'get' })
                 .then(response  =>  response.text() )
                 .then(html      =>  {   document.getElementById("resultados").innerHTML = html  })   
     }
     texto.addEventListener('keyup',filtrar);
     filtrar();
+
+    function verInfoDepartamento()
+    {
+        document.getElementById("impresion").innerHTML = "";
+        //alert("a");
+    }
+    verInfoDepartamento();
 </script>
+
+
 </body>
 </html>
