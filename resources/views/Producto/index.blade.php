@@ -11,6 +11,7 @@
     <script href="{{ asset('js\jquery-3.5.1.min.js') }}"></script>
     <script href="{{ asset('js\popper.min.js') }}"></script>
     <script href="{{ asset('js\bootstrap.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 <br/><br/> 
@@ -53,7 +54,8 @@
     <div class= "row">
     <div class="col-md-1"></div>
     <div class="col-md-10" style="background:#0CC6CC">
-<table class="table table-sm table-bordered" >
+    <div class="scrollable">
+<table class=" table-bordered table-hover" >
 <!--"table table-hover"
 "table table-bordered table-dark"
 
@@ -78,7 +80,7 @@
 <tr>
 <td>{{$loop->iteration}}</td>
 <td>
-<img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="100">
+<img src="{{ asset('storage').'/'.$producto->imagen}}" class="img-thumbnail img-fluid" alt="" width="100">
 </td>
 <td>{{$producto->codigoBarras}}</td>
 <td>{{$producto->nombre}}</td>
@@ -87,12 +89,11 @@
 <td> {{$producto->minimo_stock}} </td>
 <td> {{$producto->existencia}} </td>
 <td> 
-<a href="{{ url('/producto/'.$producto->id.'/edit')}}"> Editar </a>| 
-<form method="post" action="{{ url('/producto/'.$producto->id)}}">
+<a class="btn btn-primary" href="{{ url('/producto/'.$producto->id.'/edit')}}"> Editar </a>
+<form method="post" action="{{ url('/producto/'.$producto->id)}}" style="display:inline">
 {{csrf_field()}}
 {{method_field('DELETE')}}
-<button type="submit" onclick= "return confirm('¿Borrar?');">
-
+<button class="btn btn-danger" type="submit" onclick= "return confirm('¿Borrar?');">
 Borrar</button>
 </form>
  </td>
@@ -100,11 +101,11 @@ Borrar</button>
 @endforeach
 </tbody>
 </table>
-<a href="{{url('producto/create')}}" > Nuevo producto</a>
+</div>
+<br/>
 </div>
     <div class="col-md-1"> </div>
     </div>
-
     <div class= "row">
     <div class="col-md-1"></div>
     <div class="col-md-10" style="background:#0CC6CC">
@@ -115,9 +116,9 @@ Borrar</button>
     <button> Editar</button>
     <button> Agregar</button>
     <button> Salir</button>-->
-   <!-- <a title="Editar" href="{{url('producto/editar')}}" class="text-dark">
-    <img src="{{ asset('img\editar.png') }}" class="img-thumbnail" alt="Editar"width="50px" height="50px" />Editar</a>
--->
+   <a title="Salir" href="{{url('producto')}}" class="text-dark">
+    <img src="{{ asset('img\eliminar_usuariio.png') }}" class="img-thumbnail" alt="Salir"width="50px" height="50px" />Salir</a>
+
     <a title="Agregar" href="{{url('producto/create')}}" class="text-dark">
     <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Agregar"width="50px" height="50px" />Agregar</a>
 

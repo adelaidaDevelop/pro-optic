@@ -32,11 +32,11 @@
 <div class="col-md-2">
 <!--El name debe ser igual al de la base de datos-->      
 <input type="text" name="codigoBarras" id="codigoBarras" 
-value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}">
+value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}" required>
 <br/><br/>
       
 <input type="text" name="nombre" id="nombre" 
-value=" {{ isset($producto->nombre)?$producto->nombre:''}} ">
+value=" {{ isset($producto->nombre)?$producto->nombre:''}} " required>
 <br/><br/>
 <textarea name="descripcion" id="descripcion" rows="3" cols="23">
 {{ isset($producto->descripcion)?$producto->descripcion:'Ingresa la descripcion del producto'}}</textarea>
@@ -44,13 +44,13 @@ value=" {{ isset($producto->nombre)?$producto->nombre:''}} ">
 
 <br/><br/>
 <input type="number" name="minimo_stock" id="minimo_stock" 
-value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}">
+value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required>
 <br/><br/>
 </div>
     <div class="col-md-2"> 
 <label for="idDepartamento"><h5> <strong>{{'Departamento'}}</strong></h5></label> 
 <br/><br/>
-<label for="Imagen"><h5> <strong>{{'Imagen'}}</strong></h5></label>
+<label for="Imagen"><h5> <strong>{{'Imagen'}}</strong></h5></label required>
 <br/><br/>
 
 
@@ -66,7 +66,7 @@ value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}">
 
 @if(isset($producto->imagen))
 <br/>
-<img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200">
+<img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200" >
 <br/><br/>
 @endif
 
