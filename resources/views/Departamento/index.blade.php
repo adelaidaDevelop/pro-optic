@@ -32,8 +32,10 @@
             </div>
 
             </div>
-            <div id="resultados" class="btn-group-vertical btn-block">
-            
+            <div class="row" style="height:200px;overflow-y:auto;">
+                <div id="resultados" 
+                class="col btn-block h-100">
+            </div>
             </div>
         </div>
         <div class="col" style="background:#edeadb"><!--#FFFBF2"-->
