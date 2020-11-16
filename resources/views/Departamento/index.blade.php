@@ -153,15 +153,7 @@
 
     boton.addEventListener('click',filtrar);
 
-    //keyup
-    /*window.addEventListener("load",function()
-    {
-        document.getElementById("texto").addEventListener("keyup",function()
-        {
-            if((document.getElementById("buscarD").value.length)>=1)
-                fetch(`/departamento/buscador?texto=${document.getElementById("texto").value}`,{ method:'get' })
-        })
-    })*/
+    
     window.addEventListener('load',function(){
         document.getElementById("texto").addEventListener("keyup",function()
             {
