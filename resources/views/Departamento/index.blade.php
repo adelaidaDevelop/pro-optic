@@ -15,11 +15,11 @@
 <body>
 
 <div class="container-fluid">
-    <div class="row" style="background:#ED4D46">
-        <h1 style="color:#FFFFFF">DEPARTAMENTOS</h1>
+    <div class="row mb-2" style="background:#ED4D46">
+        <h1 class="font-weight-bold m-4" style="color:#FFFFFF">DEPARTAMENTOS</h1>
     </div>
     <div class="row">
-        <div class="col-4" style="background:#0CC6CC">
+        <div class="col-4 mr-2" style="background:#0CC6CC">
             <div class="row">
             <!--input type="text" id="buscador" class="form-control my-2">
             <button class="btn btn-info mb-2" id="boton">Buscar</button-->
@@ -32,27 +32,44 @@
             </div>
 
             </div>
-            <div id="resultados" class="row">
+            <div id="resultados" class="btn-group-vertical btn-block">
             
             </div>
         </div>
-        <div class="col" style="background:#FFFBF2">
+        <div class="col" style="background:#edeadb"><!--#FFFBF2"-->
         @if(isset($d))
-            
+        <div class="row mx-1">
+            <div class="col-4">
+                <form method="get" action="{{url('/departamento')}}">
+                    <button class="btn btn-outline-secondary my-3 ml-0" type="submit">Nuevo Departamento</button>
+                </form>
+            </div>
+            <div class="col-4">
+                <form method="post" action="{{url('/departamento/'.$d->id)}}">
+                    {{csrf_field()}}
+                    {{ method_field('DELETE')}}
+                    <button class="btn btn-outline-secondary my-3" type="submit">Eliminar Departamento</button>
+                </form>
+            </div>
+        </div>
+        <div class="row mx-3">
             <form method="post" action="{{url('/departamento/'.$d->id)}}" enctype="multipart/form-data">
             <div class="form-group">
                 {{ csrf_field() }}
                 {{ method_field('PATCH')}}
-                <label for="Nombre"><h2>Editard Departamento</h2></label>
+                <label for="Nombre"><h2>Editar Departamento</h2></label>
                 <br/>
                 <label for="Nombre"><h3>{{$d->nombre}}</h3></label>
+                <br>
                 <input type="text" class="form-control" name="nombre" id="nombre" value="{{$d->nombre}}">
+                <br/>
                 <button class="btn btn-outline-secondary" type="submit">
                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                     Guardar Departamento
                 </button>
             </div>
             </form>
+            </div>
             @else
             <form method="post" action="{{url('departamento')}}" enctype="multipart/form-data">
             <div class="form-group">
@@ -87,5 +104,7 @@
     texto.addEventListener('keyup',filtrar);
     filtrar();
 </script>
+
+
 </body>
 </html>
