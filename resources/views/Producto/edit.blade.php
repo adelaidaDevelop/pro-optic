@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,40 +10,35 @@
     <script href="{{ asset('js\popper.min.js') }}"></script>
     <script href="{{ asset('js\bootstrap.min.js') }}"></script>
 </head>
+
 <body>
-<form method="post" action="{{url('/producto/'.$producto->id)}}" enctype="multipart/form-data">
-    {{ csrf_field() }}
-    {{method_field('PATCH')}}
-    
-    <br/>
-    <br/>
-
-    <div class= "row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-    <h3 class="p-3 mb-6  text-white" style="background:#ED4D46" >PRODUCTO</h3>
-    </div>
-    <div class="col-md-1"> </div>
-    </div>
-
-    <div class= "row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8" style="background:#D5DBDB">
-    <h5 class="blockquote text-center"> <strong>Editar Producto</strong></h5>
-    </div>
-    
-    <div class="col-md-2"> </div>
-    </div>
-    <br/>
-    
-    <div class= "row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10" style="background:#0CC6CC">
-    @include('Producto.form', ['Modo' => 'editar'])
-    </div>
-    <div class="col-md-1"> </div>
-    </div>
-
-</form>
+    <form method="post" action="{{url('/producto/'.$producto->id)}}" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        {{method_field('PATCH')}}
+        <br/> <br/>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h3 class="p-3 mb-6  text-white" style="background:#ED4D46">PRODUCTO</h3>
+            </div>
+            <div class="col-md-1"> </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" style="background:#D5DBDB">
+                <h5 class="blockquote text-center"> <strong>Editar Producto</strong></h5>
+            </div>
+            <div class="col-md-2"> </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10" style="background:#0CC6CC">
+                @include('Producto.form', ['Modo' => 'editar'])
+            </div>
+            <div class="col-md-1"> </div>
+        </div>
+    </form>
 </body>
+
 </html>

@@ -29,6 +29,7 @@ Route::resource('producto', ProductoController::class);
 Route::resource('departamento', DepartamentoController::class);
 
 Route::resource('compra', CompraController::class);
+//Route::resource('subproducto', SubproductoController::class);
 
 // RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO
 
