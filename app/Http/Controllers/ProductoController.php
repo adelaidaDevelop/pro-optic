@@ -17,10 +17,15 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $datosProd['productos'] = Producto::paginate();
-        return view('Producto.index',$datosProd);
-
+      //  $departamento= Departamento::all();
+        $datosProd['producto'] = Producto::paginate();
+        $departamentos['d']= Departamento::paginate();
+        $departamento= Departamento::all();
+       // $producto= Producto::all();
+        //return view('Producto.edit', compact('producto', 'departamento'));
       
+       // return view('Producto.index',$departamentos, compact('producto','departamento'));
+        return view('Producto.index',$datosProd,$departamentos, compact('departamento'));
     }
 
     /**
@@ -30,8 +35,12 @@ class ProductoController extends Controller
      */
     public function create()
     {
+       // $departamentos['d']= Departamento::paginate();
+        $producto['producto']= Producto::paginate();
+       // $producto=Producto::all();
         $departamento= Departamento::all();
         return view('Producto.create', compact('departamento'));
+        
         //return view('Producto.create', $departamento);
     }
 

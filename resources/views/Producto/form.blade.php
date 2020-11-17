@@ -38,7 +38,7 @@ value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}" required>
 value="{{ isset($producto->nombre)?$producto->nombre:''}}" required>
 
 <br/><br/>
-<textarea name="descripcion" id="descripcion" placeholder="Descripcion del producto" rows="3" cols="23">
+<textarea name="descripcion" id="descripcion" placeholder="Descripcion del producto" rows="3" cols="23" required>
 {{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
 
 <br/><br/>
@@ -59,23 +59,29 @@ value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required>
 <select name="idDepartamento" id="idDepartamento" required>
 <option value="">Seleccione departamento</option>
 @foreach($departamento as $departamento)
-@if( isset($producto->idDepartamento))
+@if(isset($producto))
+@if( $producto->idDepartamento == $departamento->id)
 <option value="{{ $departamento['id']}}" selected> {{$departamento['nombre']}}</option>
 @else
 <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
 @endif
+@else 
+<option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
+@endif
 @endforeach
+
 </select>
 <br/><br/>
-
 
 @if(isset($producto->imagen))
 <br/>
 <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200" >
 <br/><br/>
 @endif
-
+@if(isset($producto->imagen))
 <input type="file" name="Imagen" id="Imagen" value="">
+@else <input type="file" name="Imagen" id="Imagen" value="" required>
+@endif
 <br/>
 <br/><br/><br/><br/>
 
@@ -84,9 +90,10 @@ value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required>
 <div class= "row">
     
     <div class="col-md-4">
-    <button class="btn btn-outline-secondary" type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
+    <button  class="btn btn-outline-secondary" type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
  <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">{{ $Modo== 'crear' ?'Agregar' : 'Editar' }}
  </button>
+
     </div>
     <div class="col-md-4">
     <a title="Inicio" href="{{url('producto')}}" class="text-danger">

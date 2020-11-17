@@ -69,14 +69,15 @@
 <th>Codigo barras</th>
 <th>Nombre</th>
 <th>Descripcion</th>
-<th>Departamento</th>
+
 <th>Minimo stock</th>
 <th>Existencia</th>
+<th>Departamento</th>
 <th>Acciones</th>
 </tr>
 </thead>
 <tbody>
-@foreach($productos as $producto)
+@foreach($producto as $producto)
 <tr>
 <td>{{$loop->iteration}}</td>
 <td>
@@ -85,10 +86,19 @@
 <td>{{$producto->codigoBarras}}</td>
 <td>{{$producto->nombre}}</td>
 <td> {{$producto->descripcion}}</td>
-
-<td> {{$producto->idDepartamento}}</td>
 <td> {{$producto->minimo_stock}} </td>
 <td> {{$producto->existencia}} </td>
+
+<td>
+@foreach($d as $departament)
+@if( $producto->idDepartamento == $departament->id)
+{{$departament->nombre}} <br/>
+@endif
+@endforeach
+</td>
+
+
+
 <td> 
 <a class="btn btn-primary" href="{{ url('/producto/'.$producto->id.'/edit')}}"> Editar </a>
 <form method="post" action="{{ url('/producto/'.$producto->id)}}" style="display:inline">
@@ -99,6 +109,7 @@ Borrar</button>
 </form>
  </td>
 </tr>
+
 @endforeach
 </tbody>
 </table>
@@ -135,6 +146,7 @@ Borrar</button>
     <div class="col-md-1"> </div>
     </div>
 
+    
 
 </body>
 </html>
