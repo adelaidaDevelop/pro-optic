@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +10,18 @@
     <script href="{{ asset('js\popper.min.js') }}"></script>
     <script href="{{ asset('js\bootstrap.min.js') }}"></script>
 </head>
-<body>
-@if (count($departamentosB))
-@foreach($departamentosB as $departamento)
-<a href="{{url('/departamento/'.$departamento->id.'/edit/')}}" class="btn btn-light btn-block my-2 mx-1">{{$departamento->nombre}}</a-->
 
-@endforeach
-@else
-<div class="row">
-    <h5>Departamento no encontrado</h5>
-</div>           
-@endif
+<body>
+    @if (count($departamentosB))
+    @foreach($departamentosB as $departamento)
+    <a href="{{url('/departamento/'.$departamento->id.'/edit/')}}" class="btn btn-light btn-block my-2 mx-1">{{$departamento->nombre}}</a-->
+
+        @endforeach
+        @else
+        <div class="row">
+            <h5>Departamento no encontrado</h5>
+        </div>
+        @endif
 </body>
+
 </html>
