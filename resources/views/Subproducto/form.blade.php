@@ -40,10 +40,10 @@
             <input type="text" name="codigoBarras" id="codigoBarras" placeholder="Ingresar codigo de barras" value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}" required>
             <br /><br />
             <input type="text" name="idProductos" id="idProductos" placeholder="Nombre productos" value="{{ isset($producto->nombre)?$producto->nombre:''}}" required>
-            <br /><br />
+            <br /><br /><br/>
             <input type="number" name="piezas" id="piezas" placeholder="Total de piezas contenido" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required>
-            <br /><br />
-            <input type="number" name="precio_ind" id="precio_ind" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required>
+            <br /><br /><br/>
+            <input type="number" name="precio_ind" id="precio_ind" placeholder="Ingrese el precio individual del producto" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required>
             <br /><br />
 
         </div>
@@ -51,11 +51,11 @@
             <label for="descripcion">
                 <h5> <strong>{{'Descripcion'}}</strong></h5>
             </label>
-            <br /><br />
+            <br /><br/><br/><br/>
             <label for="medida">
                 <h5> <strong>{{'Medida'}}</strong></h5>
             </label required>
-            <br /><br />
+            <br /><br/>
             <label for="ganancia">
                 <h5> <strong>{{'Ganancia'}}</strong></h5>
             </label>
@@ -65,8 +65,8 @@
             {{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
             <br /><br />
             <input type="text" name="medida" id="medida" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required>
-            <br /><br />
-            <input type="number" name="ganancia" id="ganancia" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required>
+            <br /><br /><br/>
+            <input type="number" name="ganancia" id="ganancia" placeholder="Ganancia" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required disabled>
             <br /><br />
             <br /> <br /><br /><br /><br />
             <!--<input type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}" >-->
@@ -78,11 +78,11 @@
                     </button>
                 </div>
                 <div class="col-md-4">
-                    <a title="Inicio" href="{{url('producto')}}" class="text-danger">
+                    <a title="Inicio" href="{{url('subproducto')}}" class="text-danger">
                         <img src="{{ asset('img\inicio.png') }}" class="img-thumbnail" alt="Inicio" width="50px" height="50px" />Inicio</a>
                 </div>
                 <div class="col-md-4">
-                    <a title="Regresar" href="{{url('producto')}}" class="text-dark">
+                    <a title="Regresar" href="{{url('subproducto')}}" class="text-dark">
                         <img src="{{ asset('img\regresar2.png') }}" class="img-thumbnail" alt="Regresar" width="50px" height="50px" />Regresar</a>
                 </div>
             </div>

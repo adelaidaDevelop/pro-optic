@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subproducto;
+use App\Models\Producto;
+use App\Models\Departamento;
 use Illuminate\Http\Request;
 
 class SubproductoController extends Controller
@@ -14,7 +16,8 @@ class SubproductoController extends Controller
      */
     public function index()
     {
-        //
+        $subproducto['s']= Subproducto::paginate();
+          return view('Subproducto.index',$subproducto);
     }
 
     /**
@@ -25,6 +28,10 @@ class SubproductoController extends Controller
     public function create()
     {
         //
+        $producto['producto']= Producto::paginate();
+         $producto=Producto::all();
+        // $departamento= Departamento::all();
+         return view('Subproducto.agregar', compact('producto'));
     }
 
     /**

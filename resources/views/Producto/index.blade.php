@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4" style="background:#0CC6CC">
-                    <input type="text" size="50" name="buscar" id="buscar" value="Buscar producto">
+                    <input type="text" size="50" name="buscar" id="buscar" value="" placeholder="Buscar producto">
                     <!--placeholder="Texto por defecto"-->
                 </div>
                 <div class="col-md-4"></div>
