@@ -51,9 +51,50 @@
 
 <div class="row">
     <div class="col-md-1"></div>
-    <div class="col-md-10" style="background:#0CC6CC">
+    <div class="col-md-2"style="background:#0CC6CC"></div>
+    <div class="col-md-8" style="background:#0CC6CC">
         <div class="scrollable">
-            
+        <table class=" table-bordered table-hover">
+                    <!--"table table-hover" "table table-bordered table-dark" "table-active" -->
+                    <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Producto</th>
+                            <th>Total piezas</th>
+                            <th>Precio individual</th>
+                            <th>Existencia</th>
+                            <th>Descripcion</th>
+                            <th>Medida</th>
+                            <th>Ganancia</th>
+                           <!-- <th>Acciones</th>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($subproducto as $subproducto)
+                        <tr>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{$subproducto->idProductos}}</td>
+                          
+                            <td>{{$subproducto->piezas}}</td>
+                            <td>{{$subproducto->precio_ind}} </td>
+                            <td>{{$subproducto->descripcion}} </td>
+                            <td>{{$subproducto->medida}} </td>
+                            <td>{{$subproducto->existencia}} </td>
+                            <td>{{$subproducto->ganancia}} </td>
+                          <!--  <td>
+                                <a class="btn btn-primary" href="{{ url('/subproducto/'.$subproducto->idProductos.'/edit')}}"> Editar </a>
+                                <form method="post" action="{{ url('/subproducto/'.$subproducto->idProductos)}}" style="display:inline">
+                                    {{csrf_field()}}
+
+                                    {{method_field('DELETE')}}
+                                    <button class="btn btn-danger" type="submit" onclick="return confirm('¿Borrar?');">
+                                        Borrar</button>
+                                </form>
+                            </td>-->
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
         </div>
         <br />
     </div>

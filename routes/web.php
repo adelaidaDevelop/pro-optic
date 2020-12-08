@@ -33,6 +33,8 @@ Route::resource('compra', CompraController::class);
 
 Route::resource('subproducto', SubproductoController::class);
 
+Route::resource('empleado', EmpleadoController::class);
+
 // RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO
 
 //

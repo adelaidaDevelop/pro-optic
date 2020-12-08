@@ -10,7 +10,7 @@
     <script href="{{ asset('js\bootstrap.min.js') }}"></script>
 </head>
 <body>
-<form method="post" action="{{url('/producto/'.$producto->id)}}" enctype="multipart/form-data">
+<form method="post" action="{{url('/subproducto/'.$subproducto->idProductos)}}" enctype="multipart/form-data">
         {{ csrf_field() }}
         {{method_field('PATCH')}}
         <br/> <br/>
