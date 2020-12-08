@@ -10,7 +10,7 @@
     <script href="{{ asset('js\bootstrap.min.js') }}"></script>
 </head>
 <body>
-<form method="post" action="{{url('producto')}}" enctype="multipart/form-data">
+<form method="post" action="{{url('subproducto')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <br/> <br/>
         <div class="row">

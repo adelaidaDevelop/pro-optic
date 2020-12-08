@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subproducto;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class SubproductoController extends Controller
@@ -14,7 +15,17 @@ class SubproductoController extends Controller
      */
     public function index()
     {
-        //
+        $datosProd['prod'] = Producto::paginate();
+        $subproducto2['subproducto']= Subproducto::paginate();
+      //  $productos['prod']= Producto::paginate();
+          return view('Subproducto.index',$subproducto2);
+
+/*
+          $datosProd['producto'] = Producto::paginate();
+          $departamentos['d']= Departamento::paginate();
+          $departamento= Departamento::all();
+              return view('Producto.index',$datosProd,$departamentos, compact('departamento'));
+   */
     }
 
     /**
@@ -25,6 +36,10 @@ class SubproductoController extends Controller
     public function create()
     {
         //
+       // $datosProd['producto'] = Producto::paginate(); necesito este: producto
+        $subproducto2['subproducto']= SubProducto::paginate();
+         $producto=Producto::all();
+         return view('Subproducto.agregar', compact('producto'));
     }
 
     /**
@@ -36,6 +51,14 @@ class SubproductoController extends Controller
     public function store(Request $request)
     {
         //
+        $datosSubproducto = request()->except('_token');
+        $datosSubproducto['existencia']=0;
+        $datosSubproducto['ganancia']=0; //calcular
+        
+        Subproducto::insert($datosSubproducto);
+
+       // return response()->json($datosSubproducto);
+        return redirect('subproducto');
     }
 
     /**

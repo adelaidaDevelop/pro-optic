@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4" style="background:#0CC6CC">
-                    <input type="text" size="50" name="buscar" id="buscar" value="Buscar producto">
+                    <input type="text" size="50" name="buscar" id="buscar" value="" placeholder="Buscar producto">
                     <!--placeholder="Texto por defecto"-->
                 </div>
                 <div class="col-md-4"></div>
@@ -52,7 +52,7 @@
         <div class="col-md-1"> </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="tablas">
         <div class="col-md-1"></div>
         <div class="col-md-10" style="background:#0CC6CC">
             <div class="scrollable">
@@ -101,7 +101,6 @@
                                 </form>
                             </td>
                         </tr>
-
                         @endforeach
                     </tbody>
                 </table>
@@ -133,5 +132,17 @@
         </div>
         <div class="col-md-1"> </div>
     </div>
+    <script>
+        const texto = document.querySelector('#texto');
+        function filtrar()
+        {
+            document.getElementById("resultados").innerHTML = "";
+            fetch(`/departamento/buscadorProducto?texto=${texto.value}`,{ method:'get' })
+                    .then(response  =>  response.text() )
+                    .then(html      =>  {   document.getElementById("resultados").innerHTML = html  })   
+        }
+        texto.addEventListener('keyup',filtrar);
+        filtrar();
+    </script>
 </body>
 </html>
