@@ -19,6 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
+Route::get('/departamento/buscadorProducto', [CompraController::class,'buscadorProducto']);
 
 Route::get('/departamento/buscador2', [DepartamentoController::class,'buscador2']);
 

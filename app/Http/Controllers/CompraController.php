@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compra;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class CompraController extends Controller
@@ -15,6 +16,7 @@ class CompraController extends Controller
     public function index()
     {
         return view('Compra.index');
+        
     }
 
     /**
@@ -24,7 +26,8 @@ class CompraController extends Controller
      */
     public function create()
     {
-        return view('Compra.create');
+        $productos = Producto::all();
+        return view('Compra.create');//, compact('productos'));
     }
 
     /**
@@ -82,4 +85,13 @@ class CompraController extends Controller
     {
         //
     }
+
+    public function buscadorProducto(Request $request)
+    {
+        //$datosConsulta['departamentosB'] = Departamento::where("nombre",'like',$request->texto."%")->get();
+        $productos = Producto::where("nombre",'like',$request->texto."%")->get();
+        return view('Compra.form',compact('productos'));
+        //return compact('productos');
+    }
 }
+?>
