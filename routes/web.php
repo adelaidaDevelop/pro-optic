@@ -2,6 +2,7 @@
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\SubproductoController;
 use Illuminate\Support\Facades\Route;
 
