@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empleado;
+use App\Models\Departamento;
 use Illuminate\Http\Request;
 
 class EmpleadoController extends Controller
@@ -14,7 +15,8 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        return view('Empleado.index');
+        $datos['departamentos'] = Departamento::paginate();
+        return view('Empleado.index',$datos);
     }
 
     /**

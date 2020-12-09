@@ -14,6 +14,9 @@
 </head>
 <body>
 <div class="container-fluid">
+    <div class="row" style="background:#4388CC">
+        @include('header')
+    </div>
     <div class="row mb-2" style="background:#ED4D46">
         <h1 class="font-weight-bold m-4" style="color:#FFFFFF">DEPARTAMENTOS</h1>
     </div>
