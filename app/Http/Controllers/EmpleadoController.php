@@ -84,4 +84,11 @@ class EmpleadoController extends Controller
     {
         //
     }
+
+    public function buscadorEmpleado(Request $request)
+    {
+        $datosConsulta['empleados'] = Empleado::where("nombre",'like',$request->texto."%")->get();
+        return view('Empleado.empleados',$datosConsulta);
+        //return $datosConsulta;
+    }
 }

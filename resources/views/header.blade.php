@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container-fluid">
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#4388CC;">
+<nav class="navbar navbar-expand-lg navbar-light w-100" style="background-color:#3366FF;">
   <a class="navbar-brand" href="#">
     <img src="{{ asset('img\farmaciagilogo.png') }}" alt="Editar"  height="50px">         
   </a>
