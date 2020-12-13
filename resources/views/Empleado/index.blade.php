@@ -171,7 +171,7 @@
                                     <button class="btn btn-outline-secondary d-flex" type="submit">
                                         <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
                                         width="25px" height="25px">
-                                        Guardar Departamento
+                                        GUARDAR EMPLEADO
                                     </button>
                                 </div>
                             </div>
