@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/empleado/buscadorEmpleado', [EmpleadoController::class,'buscadorEmpleado']);
+
 Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
 Route::get('/departamento/buscadorProducto', [CompraController::class,'buscadorProducto']);
 
