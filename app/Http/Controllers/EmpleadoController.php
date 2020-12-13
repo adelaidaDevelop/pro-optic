@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empleado;
+use App\Models\Departamento;
 use Illuminate\Http\Request;
 
 class EmpleadoController extends Controller
@@ -14,8 +15,13 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         //return view('Empleado.index');
         return view('Empleado.sesion1');
+=======
+        $datos['departamentos'] = Departamento::paginate();
+        return view('Empleado.index',$datos);
+>>>>>>> 2559fa78896225ab6bed508be652261654cb5149
     }
 
     /**
@@ -82,5 +88,12 @@ class EmpleadoController extends Controller
     public function destroy(Empleado $empleado)
     {
         //
+    }
+
+    public function buscadorEmpleado(Request $request)
+    {
+        $datosConsulta['empleados'] = Empleado::where("nombre",'like',$request->texto."%")->get();
+        return view('Empleado.empleados',$datosConsulta);
+        //return $datosConsulta;
     }
 }
