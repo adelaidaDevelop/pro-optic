@@ -15,13 +15,10 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
         //return view('Empleado.index');
-        return view('Empleado.sesion1');
-=======
-        $datos['departamentos'] = Departamento::paginate();
-        return view('Empleado.index',$datos);
->>>>>>> 2559fa78896225ab6bed508be652261654cb5149
+        //return view('Empleado.sesion1');
+        //$datos['departamentos'] = Departamento::paginate();
+        return view('Empleado.index');//,$datos);
     }
 
     /**
@@ -42,7 +39,10 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datosEmpleado = request()->except('_token','contra2');//,'apellidos','contra2','correo');
+        Empleado::insert($datosEmpleado);
+        //return $datosEmpleado;
+        return redirect('empleado');
     }
 
     /**
@@ -62,9 +62,13 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function edit(Empleado $empleado)
+    public function edit($id)//Empleado $empleado)
     {
-        //
+        //$datos['empleados'] = Departamento::paginate();
+        $datosEmpleado = Empleado::findOrFail($id);
+        
+        return view('Empleado.index',compact('datosEmpleado'));
+        //return compact('datosEmpleado');
     }
 
     /**

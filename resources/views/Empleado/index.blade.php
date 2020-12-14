@@ -20,7 +20,19 @@
             @include('header')
         </div>
         <div class="row" style="background:#ED4D46">
+            
             <h3 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">EMPLEADOS</h3>
+            @if(isset($datosEmpleado))
+            <div class="col my-2 ml-5 px-1">
+                <form method="get" action="{{url('/empleado')}}">
+                    <button class="btn btn-secondary" type="submit">
+                        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                            height="25px">
+                        AGREGAR EMPLEADO
+                    </button>
+                </form>
+            </div>
+            @endif
         </div>
         <div class="row p-1 ">
             <div class="row border border-dark m-2 w-100">
@@ -46,58 +58,122 @@
                 </div>
                 <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">
                     <!--#FFFBF2"-->
-                    @if(isset($d))
-                    <div class="row mx-1">
-                        <div class="col-4">
-                            <form method="get" action="{{url('/departamento')}}">
-                                <button class="btn btn-outline-secondary my-3 ml-0" type="submit">
-                                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar"
+                    @if(isset($datosEmpleado))
+                    <div class="row px-3 py-3 m-0">
+                        <form class="w-100" method="post" action="{{url('/empleado/'.$datosEmpleado->id)}}"
+                            enctype="multipart/form-data">
+                            <div class="form-group">
+                                {{ csrf_field() }}
+                                {{ method_field('PATCH')}}
+                                <label for="nempleado">
+                                    <h4 style="color:#4388CC">EMPLEADO</h4>
+                                </label>
+                                <br />
+                                <label for="Nombre">
+                                    <h5>{{$datosEmpleado->nombre}}</h5>
+                                </label>
+                                <div class="form-row w-100">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="nombre">
+                                                NOMBRE
+                                            </label>
+                                            <input type="text" class="form-control" name="nombre" id="nombre"
+                                                value="{{$datosEmpleado->nombre}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nombre">
+                                                APELLIDOS
+                                            </label>
+                                            <input type="text" class="form-control" name="apellidos" id="apellidos"
+                                                value="{{$datosEmpleado->apellidos}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nombre">
+                                                DOMICILIO
+                                            </label>
+                                            <input type="text" class="form-control" name="domicilio" id="domicilio"
+                                                value="{{$datosEmpleado->domicilio}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nombre">
+                                                CURP
+                                            </label>
+                                            <input type="text" class="form-control" name="curp" id="curp"
+                                                value="{{$datosEmpleado->curp}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nombre">
+                                                CORREO
+                                            </label>
+                                            <input type="text" class="form-control" name="correo" id="correo"
+                                                value="{{$datosEmpleado->correo}}">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="nombre">
+                                                TELEFONO
+                                            </label>
+                                            <input type="text" class="form-control" name="telefono" id="telefono"
+                                                value="{{$datosEmpleado->telefono}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nombre">
+                                                CARGO
+                                            </label>
+                                            <input type="text" class="form-control" name="cargo" id="cargo"
+                                                value="{{$datosEmpleado->cargo}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nombre">
+                                                CLAVE
+                                            </label>
+                                            <input type="text" class="form-control" name="claveE" id="claveE"
+                                                value="{{$datosEmpleado->claveE}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nombre">
+                                                USUARIO
+                                            </label>
+                                            <input type="text" class="form-control" name="usuario" id="usuario"
+                                                value="{{$datosEmpleado->usuario}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nombre">
+                                                CONTRASEÑA
+                                            </label>
+                                            <input type="password" class="form-control" name="contra" id="contra"
+                                                value="{{$datosEmpleado->contra}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
                                         width="25px" height="25px">
-                                    Nuevo Departamento
+                                    GUARDAR CAMBIOS
                                 </button>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row mx-1">
+
                         <div class="col-4">
-                            <form method="post" action="{{url('/departamento/'.$d->id)}}">
+                            <form method="post" action="{{url('/departamento/'.$datosEmpleado->id)}}">
                                 {{csrf_field()}}
                                 {{ method_field('DELETE')}}
                                 <button class="btn btn-outline-secondary my-3" type="submit">
                                     <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                         width="25px" height="25px">
-                                    Eliminar Departamento
+                                    DAR DE BAJA
                                 </button>
                             </form>
                         </div>
                     </div>
-                    <div class="row">
-
-                        <form method="post" action="{{url('/departamento/'.$d->id)}}" enctype="multipart/form-data">
-                            <div class="form-group">
-                                {{ csrf_field() }}
-                                {{ method_field('PATCH')}}
-                                <label for="Nombre">
-                                    <h2>Editar Departamento</h2>
-                                </label>
-                                <br />
-                                <label for="Nombre">
-                                    <h3>{{$d->nombre}}</h3>
-                                </label>
-                                <br>
-                                <input type="text" class="form-control" name="nombre" id="nombre"
-                                    value="{{$d->nombre}}">
-                                <br />
-                                <button class="btn btn-outline-secondary" type="submit">
-                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                        width="25px" height="25px">
-                                    Guardar Departamento
-                                </button>
-                            </div>
-                        </form>
-                    </div>
                     @else
                     <div class="row px-3 py-3 m-0">
-                        <form class="w-100" method="post" action="{{url('departamento')}}"
-                            enctype="multipart/form-data">
+                        <form class="w-100" method="post" action="{{url('empleado')}}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <label for="nempleado">
                                 <h4 style="color:#4388CC">CREAR EMPLEADO</h4>
@@ -112,37 +188,49 @@
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="nombre" id="nombre">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             APELLIDOS
                                         </label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="apellidos" id="apellidos">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             DOMICILIO
                                         </label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="domicilio" id="domicilio">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             CURP
                                         </label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="curp" id="curp">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             CORREO
                                         </label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="correo" id="correo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nombre">
+                                            TELEFONO
+                                        </label>
+                                        <input type="text" class="form-control" name="telefono" id="telefono">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nombre">
+                                            CARGO
+                                        </label>
+                                        <input type="text" class="form-control" name="cargo" id="cargo">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             CLAVE
                                         </label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="claveE" id="claveE">
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -150,19 +238,19 @@
                                         <label for="nombre">
                                             USUARIO
                                         </label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="usuario" id="usuario">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             CONTRASEÑA
                                         </label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" name="contra" id="contra">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             CONFIRMAR CONTRASEÑA
                                         </label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" name="contra2" id="contra2">
                                     </div>
                                 </div>
                             </div>
@@ -170,7 +258,7 @@
                                 <div class="form-group">
                                     <button class="btn btn-outline-secondary d-flex" type="submit">
                                         <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                        width="25px" height="25px">
+                                            width="25px" height="25px">
                                         GUARDAR EMPLEADO
                                     </button>
                                 </div>

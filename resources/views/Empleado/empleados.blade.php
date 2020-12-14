@@ -15,7 +15,7 @@
     @if (count($empleados))
     @foreach($empleados as $empleado)
     
-        <a href="{{url('/departamento/'.$empleado->id.'/edit/')}}" class="btn btn-light btn-block my-2 border border-dark" style="color:#3366FF">{{$empleado->nombre}}</a>
+        <a href="{{url('/empleado/'.$empleado->id.'/edit/')}}" class="btn btn-light btn-block my-2 border border-dark" style="color:#3366FF">{{$empleado->nombre}}</a>
     
     @endforeach
     @else
