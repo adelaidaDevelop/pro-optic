@@ -39,7 +39,13 @@ Route::resource('subproducto', SubproductoController::class);
 
 Route::resource('empleado', EmpleadoController::class);
 
+Route::get('emple', [EmpleadoController::class,'index2']);
+
 // RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO
 
 //
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
