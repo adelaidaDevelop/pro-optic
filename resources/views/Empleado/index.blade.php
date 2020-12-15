@@ -1,26 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!--link rel="stylesheet" href="https://unpkg.com/@popperjs/core@2" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"-->
-    <!--link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"-->
-    <link rel="stylesheet" href="{{ asset('css\bootstrap.min.css') }}">
-    <script src="{{ asset('js\jquery-3.5.1.min.js') }}"></script>
-    <script src="{{ asset('js\popper.min.js') }}"></script>
-    <script src="{{ asset('js\bootstrap.min.js') }}"></script>
-
-</head>
-
-<body>
+@section('content')
     <div class="container-fluid">
         <div class="row" style="background:#3366FF">
-            @include('header')
+           @include('header')
         </div>
         <div class="row" style="background:#ED4D46">
-            
             <h3 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">EMPLEADOS</h3>
             @if(isset($datosEmpleado))
             <div class="col my-2 ml-5 px-1">
@@ -272,7 +256,6 @@
     </div>
     <script>
     const texto = document.querySelector('#texto');
-
     function filtrar() {
         document.getElementById("resultados").innerHTML = "";
         fetch(`/empleado/buscadorEmpleado?texto=${texto.value}`, {
@@ -286,8 +269,5 @@
     texto.addEventListener('keyup', filtrar);
     filtrar();
     </script>
+    
 
-
-</body>
-
-</html>

@@ -18,9 +18,15 @@ class EmpleadoController extends Controller
         //return view('Empleado.index');
         //return view('Empleado.sesion1');
         //$datos['departamentos'] = Departamento::paginate();
-        return view('Empleado.index');//,$datos);
+      // return view('header2');//,$datos);
+        return view('Empleado.index2');//,$datos);
+       // return view('Empleado.index');//,$datos);
     }
-
+    public function index2()
+    {
+        
+        return view('Empleado.sesion1');//,$datos);
+    }
     /**
      * Show the form for creating a new resource.
      *
