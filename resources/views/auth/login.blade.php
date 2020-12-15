@@ -1,4 +1,5 @@
 
+
 @extends('layouts.app')
 @section('content')
 <div class="container">
@@ -33,9 +34,8 @@
                                 <div class="col-3" style="background:#A9CCE3"></div>
                                 <div class="col-6 text-center" style="background:#A9CCE3">
                                     <br />
-
                                     <div>
-                                        <h3>LOGIN </h3>
+                                        <h4> INICIO DE SESION </h4>
                                     </div>
                                     <div class="input-group mb-3 align-self-center text-center">
                                         <div class="input-group-prepend text-right">
@@ -94,3 +94,4 @@
 
 </div>
 @endsection
+
