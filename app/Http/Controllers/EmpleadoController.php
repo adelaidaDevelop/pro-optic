@@ -6,6 +6,8 @@ use App\Models\Empleado;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Arr;
+
 class EmpleadoController extends Controller
 {
     /**
@@ -46,9 +48,12 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         $datosEmpleado = request()->except('_token','contra2');//,'apellidos','contra2','correo');
-        Empleado::insert($datosEmpleado);
-        //return $datosEmpleado;
-        return redirect('empleado');
+        $dato = ['status','alta'];
+        $datosEmpleado = Arr::add($datosEmpleado,'status','alta');
+        //$datosEmpleado = Arr::add($datosEmpleado, 'price', 100);
+        //Empleado::insert($datosEmpleado);
+        return $datosEmpleado;
+        //return redirect('empleado');
     }
 
     /**
@@ -84,9 +89,11 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empleado $empleado)
+    public function update(Request $request, $id)
     {
-        //
+        $datosEmpleado = request()->except(['_token','_method']);
+        Empleado::where('id','=',$id)->update($datosEmpleado);
+        return redirect('empleado');
     }
 
     /**
@@ -95,9 +102,12 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Empleado $empleado)
+    public function destroy($id)
     {
-        //
+        //Empleado::destroy($id);
+        $dato = $request->validate(['status'=>'baja']);
+        Empleado::where('id','=',$id)->update($dato);
+        return redirect('empleado');
     }
 
     public function buscadorEmpleado(Request $request)

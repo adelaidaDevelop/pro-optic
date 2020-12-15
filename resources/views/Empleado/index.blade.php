@@ -144,12 +144,12 @@
                     <div class="row mx-1">
 
                         <div class="col-4">
-                            <form method="post" action="{{url('/departamento/'.$datosEmpleado->id)}}">
+                            <form method="post" action="{{url('/empleado/'.$datosEmpleado->id)}}">
                                 {{csrf_field()}}
                                 {{ method_field('DELETE')}}
-                                <button class="btn btn-outline-secondary my-3" type="submit">
+                                <button class="btn btn-outline-secondary my-3" type="submit" onclick="return confirm('¿Desea dar de baja a este empleado'+'?');"> 
                                     <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
-                                        width="25px" height="25px">
+                                        width="25px" height="25px" >
                                     DAR DE BAJA
                                 </button>
                             </form>
