@@ -73,52 +73,6 @@
             </div>
         </nav>
     </div>
-    <!--div class="row" style="background:#4388CC">
-        <div class="row m-4">
-            <div class="col-3">
-                <img src="{{ asset('img\farmaciagilogo.png') }}" alt="Editar"  height="50px">
-            </div>
-            <div class="col mx-auto my-2">
-                <button class="btn btn-light">
-                VENTA
-                </button>
-            </div>
-            <div class="col mx-auto my-2">
-                <button class="btn btn-light">
-                COMPRA
-                </button>
-            </div>
-            <div class="col mx-auto my-2">
-                <button class="btn btn-light">
-                PRODUCTOS
-                </button>
-            </div>
-            <div class="col mx-auto my-2">
-                <button class="btn btn-light">
-                INVENTARIO
-                </button>
-            </div>
-            <div class="col mx-auto my-2">
-                <button class="btn btn-light">
-                EMPLEADOS
-                </button>
-            </div>
-            <div class="col mx-auto my-2">
-                <button class="btn btn-light">
-                CLIENTES
-                </button>
-            </div>
-            <div class="col-1 mx-auto my-2">
-                <button class="btn btn-light">
-                CORTE
-                </button>
-            </div>
-            <div class="col-1 mx-auto my-2">
-                <button class="btn btn-secondary">
-                Salir
-                </button>
-            </div>
-        </div>                
-    </div-->
+
 </div>
 @endsection

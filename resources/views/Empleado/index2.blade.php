@@ -1,4 +1,3 @@
-
 @extends('header2')
 @section('contenido')
 <div class="container-fluid">
@@ -6,7 +5,7 @@
 
         @section('subtitulo')
         EMPLEADOS
-        
+
         @endsection
 
         @if(isset($datosEmpleado))
