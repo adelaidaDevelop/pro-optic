@@ -51,9 +51,9 @@ class EmpleadoController extends Controller
         $dato = ['status','alta'];
         $datosEmpleado = Arr::add($datosEmpleado,'status','alta');
         //$datosEmpleado = Arr::add($datosEmpleado, 'price', 100);
-        //Empleado::insert($datosEmpleado);
-        return $datosEmpleado;
-        //return redirect('empleado');
+        Empleado::insert($datosEmpleado);
+        //return $datosEmpleado;
+        return redirect('empleado');
     }
 
     /**
@@ -105,14 +105,15 @@ class EmpleadoController extends Controller
     public function destroy($id)
     {
         //Empleado::destroy($id);
-        $dato = $request->validate(['status'=>'baja']);
+        $dato = (['status'=>'baja']);;
         Empleado::where('id','=',$id)->update($dato);
         return redirect('empleado');
     }
 
     public function buscadorEmpleado(Request $request)
     {
-        $datosConsulta['empleados'] = Empleado::where("nombre",'like',$request->texto."%")->get();
+        $datosConsulta['empleados'] = Empleado::where("nombre",'like',$request->texto."%")->
+        where("status",'=','alta')->get();
         return view('Empleado.empleados',$datosConsulta);
         //return $datosConsulta;
     }
