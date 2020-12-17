@@ -63,6 +63,7 @@
                                             NOMBRE
                                         </label>
                                         <input type="text" class="form-control" name="nombre" id="nombre" value="{{$datosEmpleado->nombre}}">
+                                        
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
@@ -160,7 +161,12 @@
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre">
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre">
+                                    @error('nombre')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre">

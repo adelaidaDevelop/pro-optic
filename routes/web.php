@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::get('/empleado/buscadorEmpleado', [EmpleadoController::class,'buscadorEmpleado']);
 
 Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
+
 Route::get('/departamento/buscadorProducto', [CompraController::class,'buscadorProducto']);
 
 Route::get('/departamento/buscador2', [DepartamentoController::class,'buscador2']);
