@@ -20,15 +20,9 @@ class EmpleadoController extends Controller
         //return view('Empleado.index');
         //return view('Empleado.sesion1');
         //$datos['departamentos'] = Departamento::paginate();
-<<<<<<< HEAD
         //return view('header2');//,$datos);
         // return view('Empleado.index2');//,$datos);
         return view('Empleado.index');//,$datos);
-=======
-     //  return view('header2');//,$datos);
-     return view('Empleado.index2');
-       // return view('Empleado.index');//,$datos);
->>>>>>> 3f824a7c47a5d1152fe94cd89b449fa05f5145d4
     }
     /*
     public function index2()
@@ -42,6 +36,15 @@ class EmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'nombre' => ['required', 'string', 'max:2'],
+            //'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            //'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
     public function create()
     {
         //
