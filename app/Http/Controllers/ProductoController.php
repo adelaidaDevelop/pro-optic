@@ -25,7 +25,8 @@ class ProductoController extends Controller
         //return view('Producto.edit', compact('producto', 'departamento'));
       
        // return view('Producto.index',$departamentos, compact('producto','departamento'));
-        return view('Producto.index',$datosProd,$departamentos, compact('departamento'));
+       // return view('Producto.index',$datosProd,$departamentos, compact('departamento'));
+        return view('Producto.form2');
     }
 
     /**
