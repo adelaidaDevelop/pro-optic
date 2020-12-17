@@ -37,7 +37,7 @@ Route::resource('compra', CompraController::class);
 
 Route::resource('subproducto', SubproductoController::class);
 
-Route::resource('empleado', EmpleadoController::class);
+Route::resource('empleado', EmpleadoController::class)->middleware('auth');
 
 Route::get('emple', [EmpleadoController::class,'index2']);
 
