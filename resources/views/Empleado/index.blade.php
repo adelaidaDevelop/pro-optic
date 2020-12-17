@@ -4,7 +4,7 @@
          @include('header')
         </div>
         <div class="row" style="background:#ED4D46">
-            <h3 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">EMPLEADOS</h3>
+            <h3 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">EMPLEADOS?</h3>
             @if(isset($datosEmpleado))
             <div class="col my-2 ml-5 px-1">
                 <form method="get" action="{{url('/empleado')}}">
@@ -16,6 +16,15 @@
                 </form>
             </div>
             @endif
+            <div class="col my-2 ml-5 px-1">
+                <form method="get" action="{{url('/empleado')}}">
+                    <button class="btn btn-secondary" type="submit">
+                        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                            height="25px">
+                        EMPLEADOS DADOS DE BAJA
+                    </button>
+                </form>
+            </div>
         </div>
         <div class="row p-1 ">
             <div class="row border border-dark m-2 w-100">
