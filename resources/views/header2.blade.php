@@ -82,8 +82,8 @@
                 <div class="row" style="background:#ED4D46">
                     <h3 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">
                         @yield('subtitulo')
-
                     </h3>
+                    @yield('opciones')
                 </div>
                 <!--BODY-->
                 @yield('contenido')
