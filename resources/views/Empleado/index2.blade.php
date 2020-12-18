@@ -5,22 +5,14 @@
         @section('subtitulo')
         EMPLEADOS
         @endsection
-<<<<<<< HEAD
-=======
         @section('opciones')
->>>>>>> ea7751dee0e0e75cd90aa66ba6dfe1ca9dd2d313
         @if(isset($datosEmpleado))
         <div class="col my-2 ml-5 px-1">
             <form method="get" action="{{url('/empleado')}}">
                 <button class="btn btn-secondary" type="submit">
-<<<<<<< HEAD
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-                    AGREGAR EMPLEADOS
-=======
                     <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                         height="25px">
                     AGREGAR EMPLEADO
->>>>>>> ea7751dee0e0e75cd90aa66ba6dfe1ca9dd2d313
                 </button>
             </form>
         </div>
