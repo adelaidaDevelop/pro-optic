@@ -7,17 +7,28 @@
         EMPLEADOS
 
         @endsection
-
+        @section('opciones')
         @if(isset($datosEmpleado))
         <div class="col my-2 ml-5 px-1">
             <form method="get" action="{{url('/empleado')}}">
                 <button class="btn btn-secondary" type="submit">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                        height="25px">
                     AGREGAR EMPLEADO
                 </button>
             </form>
         </div>
         @endif
+        <div class="col my-2 ml-5 px-1">
+            <form method="get" action="{{url('/empleado')}}">
+                <button class="btn btn-secondary" type="submit">
+                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                        height="25px">
+                    EMPLEADOS DADOS DE BAJA
+                </button>
+            </form>
+        </div>
+        @endsection
     </div>
     <div class="row p-1 ">
         <div class="row border border-dark m-2 w-100">
@@ -45,7 +56,8 @@
                 <!--#FFFBF2"-->
                 @if(isset($datosEmpleado))
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/empleado/'.$datosEmpleado->id)}}" enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{url('/empleado/'.$datosEmpleado->id)}}"
+                        enctype="multipart/form-data">
                         <div class="form-group">
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
@@ -62,32 +74,37 @@
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="form-control" name="nombre" id="nombre" value="{{$datosEmpleado->nombre}}">
-                                        
+                                        <input type="text" class="form-control" name="nombre" id="nombre"
+                                            value="{{$datosEmpleado->nombre}}">
+
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             APELLIDOS
                                         </label>
-                                        <input type="text" class="form-control" name="apellidos" id="apellidos" value="{{$datosEmpleado->apellidos}}">
+                                        <input type="text" class="form-control" name="apellidos" id="apellidos"
+                                            value="{{$datosEmpleado->apellidos}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             DOMICILIO
                                         </label>
-                                        <input type="text" class="form-control" name="domicilio" id="domicilio" value="{{$datosEmpleado->domicilio}}">
+                                        <input type="text" class="form-control" name="domicilio" id="domicilio"
+                                            value="{{$datosEmpleado->domicilio}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             CURP
                                         </label>
-                                        <input type="text" class="form-control" name="curp" id="curp" value="{{$datosEmpleado->curp}}">
+                                        <input type="text" class="form-control" name="curp" id="curp"
+                                            value="{{$datosEmpleado->curp}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             CORREO
                                         </label>
-                                        <input type="text" class="form-control" name="correo" id="correo" value="{{$datosEmpleado->correo}}">
+                                        <input type="text" class="form-control" name="correo" id="correo"
+                                            value="{{$datosEmpleado->correo}}">
                                     </div>
 
                                 </div>
@@ -96,36 +113,42 @@
                                         <label for="nombre">
                                             TELEFONO
                                         </label>
-                                        <input type="text" class="form-control" name="telefono" id="telefono" value="{{$datosEmpleado->telefono}}">
+                                        <input type="text" class="form-control" name="telefono" id="telefono"
+                                            value="{{$datosEmpleado->telefono}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             CARGO
                                         </label>
-                                        <input type="text" class="form-control" name="cargo" id="cargo" value="{{$datosEmpleado->cargo}}">
+                                        <input type="text" class="form-control" name="cargo" id="cargo"
+                                            value="{{$datosEmpleado->cargo}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             CLAVE
                                         </label>
-                                        <input type="text" class="form-control" name="claveE" id="claveE" value="{{$datosEmpleado->claveE}}">
+                                        <input type="text" class="form-control" name="claveE" id="claveE"
+                                            value="{{$datosEmpleado->claveE}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             USUARIO
                                         </label>
-                                        <input type="text" class="form-control" name="usuario" id="usuario" value="{{$datosEmpleado->usuario}}">
+                                        <input type="text" class="form-control" name="usuario" id="usuario"
+                                            value="{{$datosEmpleado->usuario}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="nombre">
                                             CONTRASEÑA
                                         </label>
-                                        <input type="password" class="form-control" name="contra" id="contra" value="{{$datosEmpleado->contra}}">
+                                        <input type="password" class="form-control" name="contra" id="contra"
+                                            value="{{$datosEmpleado->contra}}">
                                     </div>
                                 </div>
                             </div>
                             <button class="btn btn-outline-secondary" type="submit">
-                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
+                                    width="25px" height="25px">
                                 GUARDAR CAMBIOS
                             </button>
                         </div>
@@ -138,7 +161,8 @@
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
                             <button class="btn btn-outline-secondary my-3" type="submit">
-                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
+                                    width="25px" height="25px">
                                 DAR DE BAJA
                             </button>
                         </form>
@@ -161,11 +185,12 @@
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre">
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror"
+                                        name="nombre" id="nombre">
                                     @error('nombre')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -235,7 +260,8 @@
                         <div class="form-row w-100 d-flex flex-row-reverse">
                             <div class="form-group">
                                 <button class="btn btn-outline-secondary d-flex" type="submit">
-                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
+                                        width="25px" height="25px">
                                     GUARDAR EMPLEADO
                                 </button>
                             </div>
@@ -248,20 +274,20 @@
     </div>
 </div>
 <script>
-    const texto = document.querySelector('#texto');
+const texto = document.querySelector('#texto');
 
-    function filtrar() {
-        document.getElementById("resultados").innerHTML = "";
-        fetch(`/empleado/buscadorEmpleado?texto=${texto.value}`, {
-                method: 'get'
-            })
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById("resultados").innerHTML = html
-            })
-    }
-    texto.addEventListener('keyup', filtrar);
-    filtrar();
+function filtrar() {
+    document.getElementById("resultados").innerHTML = "";
+    fetch(`/empleado/buscadorEmpleado?texto=${texto.value}`, {
+            method: 'get'
+        })
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("resultados").innerHTML = html
+        })
+}
+texto.addEventListener('keyup', filtrar);
+filtrar();
 </script>
 
 @endsection

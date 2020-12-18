@@ -17,7 +17,7 @@ class DepartamentoController extends Controller
     public function index()
     {
         $datos['departamentos'] = Departamento::paginate();
-        return view('Departamento.index',$datos);
+        return view('Departamento.index3',$datos);
 
     }
 
@@ -76,7 +76,9 @@ class DepartamentoController extends Controller
         $datos['departamentos'] = Departamento::paginate();
         $datosD['d'] = Departamento::findOrFail($id);
         
-        return view('Departamento.index',$datos,$datosD);
+        return view('Departamento.index3',$datos,$datosD);
+        //return redirect('departamento')->with('datosD',$datosD);
+        //return redirect()->route('departamento', $datosD);
     }
 
     /**
