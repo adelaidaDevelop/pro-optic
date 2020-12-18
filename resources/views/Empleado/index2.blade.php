@@ -2,18 +2,15 @@
 @section('contenido')
 <div class="container-fluid">
     <div class="row" style="background:#ED4D46">
-
         @section('subtitulo')
         EMPLEADOS
-
         @endsection
-
         @if(isset($datosEmpleado))
         <div class="col my-2 ml-5 px-1">
             <form method="get" action="{{url('/empleado')}}">
                 <button class="btn btn-secondary" type="submit">
                     <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-                    AGREGAR EMPLEADO
+                    AGREGAR EMPLEADOS
                 </button>
             </form>
         </div>

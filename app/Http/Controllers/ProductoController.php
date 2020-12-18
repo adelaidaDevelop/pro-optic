@@ -23,7 +23,7 @@ class ProductoController extends Controller
         $departamento= Departamento::all();
        // $producto= Producto::all();
         //return view('Producto.edit', compact('producto', 'departamento'));
-      
+
        // return view('Producto.index',$departamentos, compact('producto','departamento'));
        // return view('Producto.index',$datosProd,$departamentos, compact('departamento'));
         return view('Producto.form2');
@@ -63,7 +63,6 @@ class ProductoController extends Controller
 
        // return response()->json($datosProducto);
         return redirect('producto');
-
     }
 
     /**
