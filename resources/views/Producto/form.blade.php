@@ -1,12 +1,9 @@
 @extends('header2')
 @section('contenido')
 <div class="row p-1 ">
-    <!--CONSULTAR PRODUCTO -->
-
     <div class="row border border-dark m-2 w-100">
 
         <div class="row">
-
             <div class="col-md-1"></div>
             <div class="col-md-3">
                 <br />
@@ -25,7 +22,7 @@
                 <label for="MinimoStock">
                     <h5> <strong> {{'MINIMO STOCK'}}</strong></h5>
                 </label>
-                <br/><br/>
+                <br /><br />
                 <label for="Receta">
                     <h5><strong> {{'RECETA MEDICA'}} </strong> </h5>
                 </label>
@@ -48,14 +45,14 @@
                 {{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
                 <br /><br />
                 <input type="number" name="minimo_stock" id="minimo_stock" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" required>
-                <br /><br /><br/>   
+                <br /><br /><br />
 
                 <select name="Receta" id="Receta" required>
                     <option value="">Elija una opcion</option>
                     <option value="si" selected>si</option>
                     <option value="no" selected>no</option>
                 </select>
-                <br /><br /><br/>
+                <br /><br /><br />
                 <select name="idDepartamento" id="idDepartamento" required>
                     <option value="">Seleccione departamento</option>
                     @foreach($departamento as $departamento)
@@ -73,7 +70,7 @@
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-3">
-                <br/><br/><br/>
+                <br /><br /><br />
                 <label for="Imagen">
                     <h5> <strong>{{'FOTO'}}</strong></h5>
                 </label required>
@@ -107,4 +104,5 @@
             <img src="{{ asset('img\regresar2.png') }}" class="img-thumbnail" alt="Regresar" width="50px" height="50px" />CANCELAR</a>
     </div>
 </div>
+
 @endsection

@@ -16,14 +16,8 @@
 <body>
     <form method="post" action="{{url('producto')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <br/> <br/>
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10" ++>
                 @include('Producto.form', ['Modo' => 'crear'])
-            </div>
-            <div class="col-md-1"> </div>
-        </div>
+          
     </form>
 </body>
 </html>
