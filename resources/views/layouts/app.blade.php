@@ -28,7 +28,7 @@
 <body>
 
     <div id="app">
-            <nav class="navbar  navbar-expand-md  shadow-sm" style="background-color: #3366FF;">
+    <nav class="navbar  navbar-expand-md  shadow-sm  " style="height: 30px;background-color: #3366FF;">
           <!--  <div class="container">  --> 
             <!--
                 <a class="navbar-brand" href="{{ url('/') }}">

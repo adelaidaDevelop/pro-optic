@@ -19,23 +19,7 @@
         <br/> <br/>
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <h3 class="p-3 mb-6  text-white" style="background:#ED4D46">PRODUCTO</h3>
-            </div>
-            <div class="col-md-1"> </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8" style="background:#D5DBDB">
-                <h5 class="blockquote text-center"> <strong>Nuevo Producto</strong></h5>
-            </div>
-            <div class="col-md-2"> </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10" style="background:#0CC6CC">
+            <div class="col-md-10" ++>
                 @include('Producto.form', ['Modo' => 'crear'])
             </div>
             <div class="col-md-1"> </div>

@@ -1,148 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('header2')
+@section('contenido')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!--link rel="stylesheet" href="https://unpkg.com/@popperjs/core@2" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"-->
-    <!--link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"-->
-    <link rel="stylesheet" href="{{ asset('css\bootstrap.min.css') }}">
-    <script src="{{ asset('js\jquery-3.5.1.min.js') }}"></script>
-    <script src="{{ asset('js\popper.min.js') }}"></script>
-    <script src="{{ asset('js\bootstrap.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-</head>
-
-<body>
-    <br/><br />
-
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <h3 class="p-3 mb-6  text-white" style="background:#ED4D46">PRODUCTO</h3>
-        </div>
-        <div class="col-md-1"> </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8" style="background:#D5DBDB">
-            <h5 class="blockquote text-center"> <strong>Consultar Producto</strong></h5>
-        </div>
-        <div class="col-md-2"> </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-1"></div>
-        <br />
-        <br />
-        <div class="col-md-10" style="background:#0CC6CC">
+<div class="row p-1 ">
+    <!--CONSULTAR PRODUCTO -->
+    <div class="row border border-dark m-2 w-100">
+        <div class="col-2 border border-dark mt-4 mb-4 ml-4 mr-2">
             <br />
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4" style="background:#0CC6CC">
-                    <input type="text" size="50" name="buscar" id="buscar" value="" placeholder="Buscar producto">
-                    <!--placeholder="Texto por defecto"-->
-                </div>
-                <div class="col-md-4"></div>
+            <select name="idDepartamento" id="idDepartamento" required>
+                <option value="">Seleccione departamento</option>
+            </select>
+            <br /> <br />
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label text-primary" for="flexCheckChecked">
+                    PROXIMOS A CADUCAR
+                </label>
+                <br />
+            </div>
+            <!--
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    BAJOS DE EXISTENCIA
+                </label>
+            </div>
+            -->
+
+        </div>
+        <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
+        <div class="col-9 border border-dark mt-4 mb-4 ml-4 mr-2">
+
+            <div class="input-group">
+                <input type="text" class="form-control my-1" size="15" placeholder="BUSCAR EMPLEADO" id="texto">
+                <!--div class="input-group-append">
+                        <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
+                        </div-->
+            </div>
+            <label for="">
+                <h5> BUSCAR POR:</h5>
+            </label>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    CODIGO
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                    NOMBRE
+                </label>
             </div>
             <br />
-        </div>
-        <div class="col-md-1"> </div>
-    </div>
+            <!-- TABLA -->
+            <table class=" table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Codigo barras</th>
+                        <th>Nombre</th>
+                        <th>Existencia</th>
+                        <th>Departamento</th>
+                        <th>Costo</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($producto as $producto)
+                    <tr>
+                        <td>{{$loop->iteration}}</td>
 
-    <div class="row" id="tablas">
-        <div class="col-md-1"></div>
-        <div class="col-md-10" style="background:#0CC6CC">
-            <div class="scrollable">
-                <table class=" table-bordered table-hover">
-                    <!--"table table-hover" "table table-bordered table-dark" "table-active" -->
-                    <thead>
-                        <tr>
-                            <th>Numero</th>
-                            <th>Imagen</th>
-                            <th>Codigo barras</th>
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Minimo stock</th>
-                            <th>Existencia</th>
-                            <th>Departamento</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($producto as $producto)
-                        <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td>
-                                <img src="{{ asset('storage').'/'.$producto->imagen}}" class="img-thumbnail img-fluid" alt="" width="100">
-                            </td>
-                            <td>{{$producto->codigoBarras}}</td>
-                            <td>{{$producto->nombre}}</td>
-                            <td> {{$producto->descripcion}}</td>
-                            <td> {{$producto->minimo_stock}} </td>
-                            <td> {{$producto->existencia}} </td>
-
-                            <td>
-                                @foreach($d as $departament)
-                                @if( $producto->idDepartamento == $departament->id)
-                                {{$departament->nombre}} <br />
-                                @endif
-                                @endforeach
-                            </td>
-                            <td>
-                                <a class="btn btn-primary" href="{{ url('/producto/'.$producto->id.'/edit')}}"> Editar </a>
-                                <form method="post" action="{{ url('/producto/'.$producto->id)}}" style="display:inline">
-                                    {{csrf_field()}}
-                                    {{method_field('DELETE')}}
-                                    <button class="btn btn-danger" type="submit" onclick="return confirm('¿Borrar?');">
-                                        Borrar</button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                        <td>{{$producto->codigoBarras}}</td>
+                        <td>{{$producto->nombre}}</td>
+                        <td> {{$producto->existencia}} </td>
+                        <td>
+                            @foreach($d as $departament)
+                            @if( $producto->idDepartamento == $departament->id)
+                            {{$departament->nombre}} <br />
+                            @endif
+                            @endforeach
+                        </td>
+                        <td> {{$producto->existencia}} </td>
+                        <td> {{$producto->existencia}} </td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ url('/producto/'.$producto->id.'/edit')}}"> Editar </a>
+                            <form method="post" action="{{ url('/producto/'.$producto->id)}}" style="display:inline">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                                <button class="btn btn-danger" type="submit" onclick="return confirm('¿Borrar?');">
+                                    Borrar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
             <br />
         </div>
-        <div class="col-md-1"> </div>
     </div>
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10" style="background:#0CC6CC">
-            <div class="row">
-                <div class="col-md-7"></div>
-                <div class="col-md-4" style="background:#0CC6CC">
-                    <!--
-    <button> Editar</button>
-    <button> Agregar</button>
-    <button> Salir</button>
-   <a title="Salir" href="{{url('producto')}}" class="text-dark">
-    <img src="{{ asset('img\eliminar_usuariio.png') }}" class="img-thumbnail" alt="Salir"width="50px" height="50px" />Salir</a>-->
-                    <a title="Agregar" href="{{url('producto/create')}}" class="text-dark">
-                        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Agregar" width="50px" height="50px" />Agregar</a>
+</div>
 
-                    <a title="Inicio" href="{{url('producto')}}" class="text-dark">
-                        <img src="{{ asset('img\inicio.png') }}" class="img-thumbnail" alt="Regreesar" width="50px" height="50px" />Inicio</a>
-                </div>
-                <div class="col-md-1"></div>
-            </div>
-        </div>
-        <div class="col-md-1"> </div>
-    </div>
-    <script>
-        const texto = document.querySelector('#texto');
-        function filtrar()
-        {
-            document.getElementById("resultados").innerHTML = "";
-            fetch(`/departamento/buscadorProducto?texto=${texto.value}`,{ method:'get' })
-                    .then(response  =>  response.text() )
-                    .then(html      =>  {   document.getElementById("resultados").innerHTML = html  })   
-        }
-        texto.addEventListener('keyup',filtrar);
-        filtrar();
-    </script>
-</body>
-</html>
+@endsection
