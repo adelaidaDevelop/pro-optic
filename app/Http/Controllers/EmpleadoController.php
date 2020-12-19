@@ -46,9 +46,21 @@ class EmpleadoController extends Controller
             //'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
-    public function create()
+    public function create(array $data)
     {
-        //
+        Empleado::create([
+            'nombre' => 'Adelaida',
+            'apellidos' => 'Molina Reyes',
+            'claveE' => '123457',
+            'telefono' => '9512274920',
+            'cargo' => 'administrador',
+            'curp' => 'DDFSD6SDF5DF4D',
+            'domicilio' => 'Libertad 12',
+            'usuario' => $data['name'],
+            'contra' => $data['password'],
+            'correo' => $data['email'],
+            'status' =>'alta',
+        ]);
     }
 
     /**
