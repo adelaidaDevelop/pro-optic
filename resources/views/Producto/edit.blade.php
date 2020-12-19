@@ -15,15 +15,7 @@
     <form method="post" action="{{url('/producto/'.$producto->id)}}" enctype="multipart/form-data">
         {{ csrf_field() }}
         {{method_field('PATCH')}}
-        <br /> <br />
-        <br />
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
                 @include('Producto.form', ['Modo' => 'editar'])
-            </div>
-            <div class="col-md-1"> </div>
-        </div>
     </form>
 </body>
 
