@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empleado;
+use App\Models\User;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 
 class EmpleadoController extends Controller
@@ -38,14 +41,6 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'nombre' => ['required', 'string', 'max:2'],
-            //'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            //'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
     public function create(array $data)
     {
         Empleado::create([
@@ -71,13 +66,44 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $datosEmpleado = request()->except('_token','contra2');//,'apellidos','contra2','correo');
+        $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
         $dato = ['status','alta'];
         $datosEmpleado = Arr::add($datosEmpleado,'status','alta');
         //$datosEmpleado = Arr::add($datosEmpleado, 'price', 100);
-        Empleado::insert($datosEmpleado);
+        
+        $this->validator($request->all())->validate();
+
+        
         //return $datosEmpleado;
+
+        User::create([
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+
+        $user = User::latest('id')->first();
+        $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$user->id);
+        Empleado::insert($datosEmpleado);
         return redirect('empleado');
+        //return $user->id;
+        
+    }
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'nombre' => ['required', 'string', 'max:30'],
+            'apellidos' => ['required', 'string', 'max:30'],
+            'domicilio' => ['required', 'string', 'max:50'],
+            'curp' => ['required', 'string', 'max:18','unique:empleados'],
+            'telefono' => ['required', 'string', 'max:10'],
+            'cargo' => ['required', 'string', 'max:30'],
+            'claveE' => ['required', 'string', 'max:5','unique:empleados'],
+            'username' => ['required', 'string', 'max:255','unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
     }
 
     /**
@@ -141,4 +167,6 @@ class EmpleadoController extends Controller
         return view('Empleado.empleados',$datosConsulta);
         //return $datosConsulta;
     }
+
+    
 }
