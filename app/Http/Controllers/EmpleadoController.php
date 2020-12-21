@@ -66,7 +66,7 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $datosEmpleado = request()->except('_token','contra2','contra','correo');//,'apellidos','contra2','correo');
+        $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
         $dato = ['status','alta'];
         $datosEmpleado = Arr::add($datosEmpleado,'status','alta');
         //$datosEmpleado = Arr::add($datosEmpleado, 'price', 100);
@@ -77,23 +77,30 @@ class EmpleadoController extends Controller
         //return $datosEmpleado;
 
         User::create([
-            'username' => $request['usuario'],
-            'email' => $request['correo'],
-            'password' => Hash::make($request['contra']),
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
         ]);
 
-        $user = Users::latest('id')->first();
-        $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$user);
+        $user = User::latest('id')->first();
+        $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$user->id);
         Empleado::insert($datosEmpleado);
         return redirect('empleado');
+        //return $user->id;
         
     }
 
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'nombre' => ['required', 'string', 'max:5'],
-            'username' => ['required', 'string', 'max:255'],
+            'nombre' => ['required', 'string', 'max:30'],
+            'apellidos' => ['required', 'string', 'max:30'],
+            'domicilio' => ['required', 'string', 'max:50'],
+            'curp' => ['required', 'string', 'max:18','unique:empleados'],
+            'telefono' => ['required', 'string', 'max:10'],
+            'cargo' => ['required', 'string', 'max:30'],
+            'claveE' => ['required', 'string', 'max:5','unique:empleados'],
+            'username' => ['required', 'string', 'max:255','unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);

@@ -183,8 +183,10 @@
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" id="nombre" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="nombre" id="nombre" value="{{ old('nombre') }}" required autocomplete="nombre" autofocus>
+                                    <input type="text" id="nombre"
+                                        class="form-control @error('nombre') is-invalid @enderror" name="nombre"
+                                        id="nombre" value="{{ old('nombre') }}" required autocomplete="nombre"
+                                        autofocus>
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -195,43 +197,92 @@
                                     <label for="nombre">
                                         APELLIDOS
                                     </label>
-                                    <input type="text" class="form-control" name="apellidos" id="apellidos">
+                                    <input type="text" class="form-control @error('apellidos') is-invalid @enderror"
+                                        name="apellidos" id="apellidos" value="{{ old('apellidos') }}" required
+                                        autocomplete="apellidos" autofocus>
+                                    @error('apellidos')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre">
                                         DOMICILIO
                                     </label>
-                                    <input type="text" class="form-control" name="domicilio" id="domicilio">
+                                    <input type="text" class="form-control @error('domicilio') is-invalid @enderror"
+                                        name="domicilio" id="domicilio" value="{{ old('domicilio') }}" required
+                                        autocomplete="domicilio" autofocus>
+                                    @error('domicilio')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre">
                                         CURP
                                     </label>
-                                    <input type="text" class="form-control" name="curp" id="curp">
+                                    <input type="text" class="form-control @error('curp') is-invalid @enderror"
+                                        name="curp" id="curp" value="{{ old('curp') }}" required autocomplete="curp"
+                                        autofocus>
+                                    @error('curp')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre">
-                                        CORREO
+                                        EMAIL
                                     </label>
-                                    <input type="text" class="form-control" name="correo" id="correo">
+                                    <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                        name="email" id="email" value="{{ old('email') }}" required autocomplete="email"
+                                        autofocus>
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre">
                                         TELEFONO
                                     </label>
-                                    <input type="text" class="form-control" name="telefono" id="telefono">
+                                    <input type="text" class="form-control @error('telefono') is-invalid @enderror"
+                                        name="telefono" id="telefono" value="{{ old('telefono') }}" required
+                                        autocomplete="telefono" autofocus>
+                                    @error('telefono')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre">
                                         CARGO
                                     </label>
-                                    <input type="text" class="form-control" name="cargo" id="cargo">
+                                    <input type="text" class="form-control @error('cargo') is-invalid @enderror"
+                                        name="cargo" id="cargo" value="{{ old('cargo') }}" required autocomplete="cargo"
+                                        autofocus>
+                                    @error('cargo')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre">
                                         CLAVE
                                     </label>
-                                    <input type="text" class="form-control" name="claveE" id="claveE">
+                                    <input type="text" class="form-control @error('claveE') is-invalid @enderror"
+                                        name="claveE" id="claveE" value="{{ old('claveE') }}" required
+                                        autocomplete="claveE" autofocus>
+                                    @error('claveE')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-6">
@@ -239,19 +290,33 @@
                                     <label for="nombre">
                                         USUARIO
                                     </label>
-                                    <input type="text" class="form-control" name="usuario" id="usuario">
+                                    <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                        name="username" id="username" value="{{ old('username') }}" required
+                                        autocomplete="username" autofocus>
+                                    @error('username')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre">
                                         CONTRASEÑA
                                     </label>
-                                    <input type="password" class="form-control" name="contra" id="contra">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                        name="password" id="password" required autocomplete="new-password" autofocus>
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre">
                                         CONFIRMAR CONTRASEÑA
                                     </label>
-                                    <input type="password" class="form-control" name="contra2" id="contra2">
+                                    <input type="password" class="form-control" name="password_confirmation"
+                                        id="password-confirm" required autocomplete="new-password">
                                 </div>
                             </div>
                         </div>

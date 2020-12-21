@@ -17,9 +17,7 @@ class Empleado extends Model
         'cargo',
         'curp',
         'domicilio',
-        'usuario',
-        'contra',
-        'correo',
+        'idUsuario',
         'status',
     ];
 }
