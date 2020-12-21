@@ -1,23 +1,43 @@
 @extends('header2')
 @section('contenido')
+@section('subtitulo')
+PRODUCTOS
+@endsection
+
+@section('opciones')
+@endsection
 
 <div class="row p-1 ">
     <!--CONSULTAR PRODUCTO -->
     <div class="row border border-dark m-2 w-100">
-        <div class="col-2 border border-dark mt-4 mb-4 ml-4 mr-2">
-            <br />
-            <select name="idDepartamento" id="idDepartamento" required>
-                <option value="">Seleccione departamento</option>
-            </select>
-            <br /> <br />
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                <label class="form-check-label text-primary" for="flexCheckChecked">
-                    PROXIMOS A CADUCAR
-                </label>
+        <div class="row col-12 mx-2 mt-4">
+            <label for="">
+                <h5 class="text-primary">
+                    <strong>
+                        CONSULTAR PRODUCTO
+                    </strong>
+                </h5>
+            </label>
+        </div>
+        <div class="row col-12">
+            <div class="col-2 border border-primary mt-2 mb-4 ml-4 mr-2">
+
                 <br />
-            </div>
-            <!--
+                <select name="idDepartamento" id="idDepartamento" required>
+                    <option value="">DEPARTAMENTO</option>
+                    @foreach($d as $departamento)
+                    <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
+                    @endforeach
+                </select>
+                <br /> <br />
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label text-primary" for="flexCheckChecked">
+                        PROXIMOS A CADUCAR
+                    </label>
+                    <br />
+                </div>
+                <!--
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
                 <label class="form-check-label" for="flexCheckChecked">
@@ -26,78 +46,94 @@
             </div>
             -->
 
-        </div>
-        <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-        <div class="col-9 border border-dark mt-4 mb-4 ml-4 mr-2">
+            </div>
 
-            <div class="input-group">
-                <input type="text" class="form-control my-1" size="15" placeholder="BUSCAR EMPLEADO" id="texto">
-                <!--div class="input-group-append">
+            <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
+            <div class="col-9  mt-1 mb-4 ml-4 mr-2">
+                <div class="form-group w-100">
+                    <div class="row my-2">
+                        <div class="col-6 input-group">
+                            <input type="text" class="form-control border-primary " size="15" placeholder="BUSCAR PRODUCTO" id="texto">
+                            <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
-            </div>
-            <label for="">
-                <h5> BUSCAR POR:</h5>
-            </label>
+                        </div>
+                        <a title="buscar" href="" class="text-dark ">
+                            <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
+                        <div class="mt-2 mx-2">
 
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                <label class="form-check-label" for="flexRadioDefault1">
-                    CODIGO
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                <label class="form-check-label" for="flexRadioDefault2">
-                    NOMBRE
-                </label>
-            </div>
-            <br />
-            <!-- TABLA -->
-            <table class=" table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Codigo barras</th>
-                        <th>Nombre</th>
-                        <th>Existencia</th>
-                        <th>Departamento</th>
-                        <th>Costo</th>
-                        <th>Precio</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($producto as $producto)
-                    <tr>
-                        <td>{{$loop->iteration}}</td>
+                        </div>
 
-                        <td>{{$producto->codigoBarras}}</td>
-                        <td>{{$producto->nombre}}</td>
-                        <td> {{$producto->existencia}} </td>
-                        <td>
-                            @foreach($d as $departament)
-                            @if( $producto->idDepartamento == $departament->id)
-                            {{$departament->nombre}} <br />
-                            @endif
+                        <label for="" class="mx-3 mt-2">
+                            <h6> BUSCAR POR:</h6>
+                        </label>
+
+
+                        <div class=" form-check mt-2">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                CODIGO
+                            </label>
+                        </div>
+                        <div class="mx-4 form-check mt-2">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                NOMBRE
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- TABLA -->
+                <div class="row" style="height:350px;overflow-y:auto;">
+                    <table class="table table-bordered border-primary col-12 ">
+                        <thead class="table-secondary text-primary">
+
+                            <tr>
+                                <th>#</th>
+                                <th>CODIGO BARRAS</th>
+                                <th>NOMBRE</th>
+                                <th>EXISTENCIA</th>
+                                <th>DEPARTAMENTO</th>
+                                <th>COSTO</th>
+                                <th>PRECIO</th>
+                                <th>ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($producto as $producto)
+                            <tr>
+                                <td>{{$loop->iteration}}</td>
+
+                                <td>{{$producto->codigoBarras}}</td>
+                                <td>{{$producto->nombre}}</td>
+                                <td> {{$producto->existencia}} </td>
+                                <td>
+                                    @foreach($d as $departament)
+                                    @if( $producto->idDepartamento == $departament->id)
+                                    {{$departament->nombre}} <br />
+                                    @endif
+                                    @endforeach
+                                </td>
+                                <td> {{$producto->existencia}} </td>
+                                <td> {{$producto->existencia}} </td>
+                                <td>
+                                    <a class="btn btn-outline-info" href="{{ url('/producto/'.$producto->id.'/edit')}}"> Editar </a>
+                                    <form method="post" action="{{ url('/producto/'.$producto->id)}}" style="display:inline">
+                                        {{csrf_field()}}
+                                        {{method_field('DELETE')}}
+                                        <button class="btn btn-outline-info" type="submit" onclick="return confirm('¿Borrar?');">
+                                            Borrar</button>
+                                    </form>
+                                </td>
+                            </tr>
                             @endforeach
-                        </td>
-                        <td> {{$producto->existencia}} </td>
-                        <td> {{$producto->existencia}} </td>
-                        <td>
-                            <a class="btn btn-primary" href="{{ url('/producto/'.$producto->id.'/edit')}}"> Editar </a>
-                            <form method="post" action="{{ url('/producto/'.$producto->id)}}" style="display:inline">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                                <button class="btn btn-danger" type="submit" onclick="return confirm('¿Borrar?');">
-                                    Borrar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <br />
+                        </tbody>
+                    </table>
+                </div>
+               
+            </div>
         </div>
     </div>
 </div>
