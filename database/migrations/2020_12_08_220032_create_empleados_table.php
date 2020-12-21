@@ -22,9 +22,10 @@ class CreateEmpleadosTable extends Migration
             $table->string('cargo');
             $table->string('curp');
             $table->string('domicilio');
-            $table->string('usuario');
-            $table->string('contra');
-            $table->string('correo');
+            $table->foreignId('idUsuario')->constrained('users');
+           // $table->string('usuario');
+           // $table->string('contra');
+            //$table->string('correo');
             $table->string('status');
             $table->timestamps();
         });

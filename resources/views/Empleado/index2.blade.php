@@ -183,8 +183,8 @@
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="nombre" id="nombre">
+                                    <input type="text" id="nombre" class="form-control @error('nombre') is-invalid @enderror"
+                                        name="nombre" id="nombre" value="{{ old('nombre') }}" required autocomplete="nombre" autofocus>
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

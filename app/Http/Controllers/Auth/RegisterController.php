@@ -65,7 +65,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        Empleado::create([
+        /*Empleado::create([
             'nombre' => 'Adelaida',
             'apellidos' => 'Molina Reyes',
             'claveE' => '123457',
@@ -77,7 +77,7 @@ class RegisterController extends Controller
             'contra' => $data['password'],
             'correo' => $data['email'],
             'status' =>'alta',
-        ]);
+        ]);*/
 
         return User::create([
             'name' => $data['name'],
