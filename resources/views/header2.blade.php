@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row" style="background:#3366FF">
         <div class="container-fluid align-self-center">
-            <nav class="navbar navbar-expand-lg navbar-light w-100 " style="height: 50px;background-color:#3366FF;">
+            <nav class="navbar navbar-expand-lg navbar-light w-100 " style="height: 20px;background-color:#3366FF;">
 
 
                 <a class="navbar-brand" href="#">
