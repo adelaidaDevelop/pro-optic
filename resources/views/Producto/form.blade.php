@@ -36,7 +36,7 @@
                         <label for="Receta">
                             <h6> {{'RECETA MEDICA'}} </h6>
                         </label>
-                        <br />
+                        <br/><br/>
                         <label for="idDepartamento">
                             <h6> {{'DEPARTAMENTO'}}</h6>
                         </label>
@@ -62,7 +62,7 @@
                             <option value="si" selected>si</option>
                             <option value="no" selected>no</option>
                         </select>
-                        <br /><br />
+                        <br />
                         <select class="form-control" name="idDepartamento" id="idDepartamento" required>
                             <option value="">Seleccione departamento</option>
                             @foreach($departamento as $departamento)
