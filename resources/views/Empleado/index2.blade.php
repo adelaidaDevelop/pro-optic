@@ -9,7 +9,7 @@
         @if(isset($datosEmpleado))
         <div class="col my-2 ml-5 px-1">
             <form method="get" action="{{url('/empleado')}}">
-                <button class="btn btn-secondary" type="submit">
+                <button class="btn btn-primary" type="submit"  style="background-color:#3366FF">
                     <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                         height="25px">
                     AGREGAR EMPLEADO
@@ -19,7 +19,7 @@
         @endif
         <div class="col my-2 ml-5 px-1">
             <form method="get" action="{{url('/empleado')}}">
-                <button class="btn btn-secondary" type="submit">
+                <button class="btn btn-primary" type="submit"  style="background-color:#3366FF">
                     <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                         height="25px">
                     EMPLEADOS DADOS DE BAJA
@@ -177,67 +177,74 @@
                         <label for="Nombre">
                             <h5>NUEVO EMPLEADO</h5>
                         </label>
-                        <div class="form-row w-100">
-                            <div class="col-6">
-                                <div class="form-group">
+                        <div class="form-col w-100">
+                            <div class="form-row">
+                                <div class="form-group col-6">
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
                                     <input type="text" id="nombre"
                                         class="form-control @error('nombre') is-invalid @enderror" name="nombre"
-                                        id="nombre" value="{{ old('nombre') }}" required autocomplete="nombre"
-                                        autofocus>
+                                        id="nombre" value="{{ old('nombre') }}" placeholder="Ingresar nombre(s)"
+                                        required autocomplete="nombre" autofocus>
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-6">
                                     <label for="nombre">
                                         APELLIDOS
                                     </label>
                                     <input type="text" class="form-control @error('apellidos') is-invalid @enderror"
-                                        name="apellidos" id="apellidos" value="{{ old('apellidos') }}" required
-                                        autocomplete="apellidos" autofocus>
+                                        name="apellidos" id="apellidos" value="{{ old('apellidos') }}"
+                                        placeholder="Ingresar apellidos" required autocomplete="apellidos" autofocus>
                                     @error('apellidos')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="nombre">
-                                        DOMICILIO
-                                    </label>
-                                    <input type="text" class="form-control @error('domicilio') is-invalid @enderror"
-                                        name="domicilio" id="domicilio" value="{{ old('domicilio') }}" required
-                                        autocomplete="domicilio" autofocus>
-                                    @error('domicilio')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre">
+                                    DOMICILIO
+                                </label>
+                                <!--input type="text" class="form-control @error('domicilio') is-invalid @enderror"
+                                    name="domicilio" id="domicilio" value="{{ old('domicilio') }}" required
+                                    autocomplete="domicilio" autofocus-->
+                                <textarea name="domicilio" id="domicilio"
+                                    class="form-control @error('domicilio') is-invalid @enderror"
+                                    placeholder="Ingresar domicilio completo" value="{{ old('domicilio') }}"
+                                    required autocomplete="domicilio" autofocus></textarea>
+                                @error('domicilio')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-6">
                                     <label for="nombre">
                                         CURP
                                     </label>
                                     <input type="text" class="form-control @error('curp') is-invalid @enderror"
-                                        name="curp" id="curp" value="{{ old('curp') }}" required autocomplete="curp"
-                                        autofocus>
+                                        name="curp" id="curp" value="{{ old('curp') }}" placeholder="Ingresar curp"
+                                        required autocomplete="curp" autofocus>
                                     @error('curp')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-6">
                                     <label for="nombre">
                                         EMAIL
                                     </label>
                                     <input type="text" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" id="email" value="{{ old('email') }}" required autocomplete="email"
+                                        name="email" id="email" value="{{ old('email') }}"
+                                        placeholder="Ingresar correo electronico" required autocomplete="email"
                                         autofocus>
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -245,39 +252,42 @@
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="nombre">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-6">
+                                    <label for="telefono">
                                         TELEFONO
                                     </label>
                                     <input type="text" class="form-control @error('telefono') is-invalid @enderror"
-                                        name="telefono" id="telefono" value="{{ old('telefono') }}" required
-                                        autocomplete="telefono" autofocus>
+                                        name="telefono" id="telefono" value="{{ old('telefono') }}"
+                                        placeholder="Ingresar telefono" required autocomplete="telefono" autofocus>
                                     @error('telefono')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="nombre">
-                                        CARGO
-                                    </label>
-                                    <input type="text" class="form-control @error('cargo') is-invalid @enderror"
-                                        name="cargo" id="cargo" value="{{ old('cargo') }}" required autocomplete="cargo"
-                                        autofocus>
-                                    @error('cargo')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
+                                <!--div class="form-group">
+                                <label for="nombre">
+                                    CARGO
+                                </label>
+                                <input type="text" class="form-control @error('cargo') is-invalid @enderror"
+                                    name="cargo" id="cargo" value="{{ old('cargo') }}" required autocomplete="cargo"
+                                    autofocus>
+                                @error('cargo')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div-->
+                                <div class="form-group col-6">
                                     <label for="nombre">
                                         CLAVE
                                     </label>
                                     <input type="text" class="form-control @error('claveE') is-invalid @enderror"
-                                        name="claveE" id="claveE" value="{{ old('claveE') }}" required
-                                        autocomplete="claveE" autofocus>
+                                        name="claveE" id="claveE" value="{{ old('claveE') }}"
+                                        placeholder="Ingresar clave para operaciones" required autocomplete="claveE"
+                                        autofocus>
                                     @error('claveE')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -285,13 +295,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
+                            <div class="form-row">
+                                <div class="form-group col-4">
                                     <label for="nombre">
                                         USUARIO
                                     </label>
                                     <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                        name="username" id="username" value="{{ old('username') }}" required
+                                        name="username" id="username" value="{{ old('username') }}" placeholder="Ingresar usuario" required
                                         autocomplete="username" autofocus>
                                     @error('username')
                                     <span class="invalid-feedback" role="alert">
@@ -299,30 +309,31 @@
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-4">
                                     <label for="nombre">
                                         CONTRASEÑA
                                     </label>
                                     <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                        name="password" id="password" required autocomplete="new-password" autofocus>
+                                        name="password" id="password" placeholder="Ingresar contraseña" required autocomplete="new-password" autofocus>
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-4">
                                     <label for="nombre">
-                                        CONFIRMAR CONTRASEÑA
+                                        {{ __('CONFIRMAR CONTRASEÑA') }}
+
                                     </label>
                                     <input type="password" class="form-control" name="password_confirmation"
-                                        id="password-confirm" required autocomplete="new-password">
+                                        id="password-confirm" placeholder="Ingresar de nuevo contraseña" required autocomplete="new-password">
                                 </div>
                             </div>
                         </div>
                         <div class="form-row w-100 d-flex flex-row-reverse">
                             <div class="form-group">
-                                <button class="btn btn-outline-secondary d-flex" type="submit">
+                                <button class="btn btn-outline-dark d-flex" type="submit">
                                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
                                         width="25px" height="25px">
                                     GUARDAR EMPLEADO
