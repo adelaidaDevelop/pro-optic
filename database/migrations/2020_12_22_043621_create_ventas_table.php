@@ -16,7 +16,7 @@ class CreateVentasTable extends Migration
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
             $table->string('estado');
-            $table->dateTime('created_at', $precision = 0);
+            //$table->dateTime('created_at', $precision = 0);
             $table->timestamps();
         });
     }

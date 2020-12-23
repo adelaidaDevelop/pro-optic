@@ -1,3 +1,4 @@
+
 @extends('header2')
 
 @section('contenido')
@@ -120,8 +121,9 @@ PRODUCTOS
                                 <td> {{$producto->existencia}} </td>
                                 <td> {{$producto->existencia}} </td>
                                 <td>
-
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" href="bd-example-modal-lg?x=$producto->id;">
+                                
+                                    <?php $producto_info = $producto?>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick="return info('{{$producto->id}}')" value="{{$producto->id}}">
                                         VER MAS
                                     </button>
                                     <a class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> VER MAS3 </a>
@@ -190,10 +192,10 @@ PRODUCTOS
                 </label>
                 <div class="col-6 input-group">
                     <!--BUSCADOR-->
-                    <input type="text" class="form-control border-primary " size="15" placeholder="BUSCAR PRODUCTO" id="texto">
+                    <input type="text" class="form-control border-primary" size="15" placeholder="BUSCAR PRODUCTO" id="texto">
                 </div>
                 <!--INFORMACION PRODUCTOS-->
-                <div class="row">
+                <div class="row" id="resultados">
                     <div class="col-md-4">
                         <br />
                         <br />
@@ -223,18 +225,18 @@ PRODUCTOS
                         <br />
                     </div>
                     <br />
+                    
                     <div class="col-md-6">
-                        {{$x=$_GET['x']}}
                         <br />
                         <!--El name debe ser igual al de la base de datos-->
-                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="{{$producto[x]->codigoBarras}}" required autocomplete="codigoBarras" autofocus>
+                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="{{$producto->codigoBarras}}" required autocomplete="codigoBarras" autofocus>
                         <br />
-                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="{{ $producto[x]->nombre}}" autofocus required>
+                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="{{ $producto_info}}" autofocus required>
                         <br />
                         <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required>
-                        {{ $producto[x]->descripcion}}</textarea>
+                        {{ $producto->descripcion}}</textarea>
                         <br />
-                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="{{$producto[x]->minimo_stock}}" autofocus required>
+                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="{{$producto->minimo_stock}}" autofocus required>
                         <br />
 
                         <select class="form-control" name="Receta" id="Receta" required>
@@ -250,7 +252,7 @@ PRODUCTOS
                         <label for="Imagen">
                             <h5> <strong>{{'FOTO'}}</strong></h5>
                         </label required>
-                        @if(isset($producto[x]->imagen))
+                        @if(isset($producto->imagen))
                         <br />
                         <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200">
                         <br /><br />
@@ -274,4 +276,19 @@ PRODUCTOS
 </div>
 
 <!--POP UP-->
+<script>
+const texto = document.querySelector('#ver');
+function info($id) {
+    document.getElementById("resultados").innerHTML = "";
+    fetch(`/producto/buscarProducto?texto=${$id}`, {
+            method: 'get'
+        })
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("resultados").innerHTML = html
+        })
+}
+//texto.addEventListener('onclick', info);
+</script>
+
 @endsection

@@ -133,4 +133,11 @@ class ProductoController extends Controller
         }
         return redirect('producto');
     }
+
+    public function buscarProducto(Request $request)
+    {
+        $productosB['productos'] = Producto::where("id",'=',$request->texto)->get();
+        return view('Producto.producto',$productosB);//compact('productoB'));
+        //return compact('productoB');
+    }
 }
