@@ -26,6 +26,7 @@ class CreateEmpleadosTable extends Migration
            // $table->string('usuario');
            // $table->string('contra');
             //$table->string('correo');
+            
             $table->string('status');
             $table->timestamps();
         });
