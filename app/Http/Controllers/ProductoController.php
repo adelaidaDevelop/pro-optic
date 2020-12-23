@@ -20,8 +20,8 @@ class ProductoController extends Controller
         $datosProd['producto'] = Producto::paginate();
         $depas['d']= Departamento::paginate();
         $departamento= Departamento::all();
+      //  $producto= Producto::findOrFail($id);
           return view('Producto.index',$datosProd,$depas, compact('departamento'));
-      
       
        
     }
@@ -36,7 +36,6 @@ class ProductoController extends Controller
         $producto['producto']= Producto::paginate();
         $departamento= Departamento::all();
         return view('Producto.create', compact('departamento'));
-
     }
 
     /**
@@ -69,6 +68,12 @@ class ProductoController extends Controller
     {
         //
     }
+    public function show2($id)
+    {
+        //
+        $producto= Producto::findOrFail($id);
+        return view('Producto.edit', compact('producto'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -94,7 +99,6 @@ class ProductoController extends Controller
     public function update(Request $request, $id)
     {
         //
-        
         $departamento= Departamento::all();
         $datosProducto=request()->except(['_token', '_method']);
 

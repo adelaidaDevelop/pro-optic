@@ -21,6 +21,7 @@ class CreateProductosTable extends Migration
            // $table->foreign('id')->references('id')->on('departamentoos');
             $table->string('codigoBarras')->unique();
             $table->string('nombre')->unique();
+            $table->string('receta');
             $table->string('descripcion');
             $table->string('imagen');
             $table->integer('minimo_stock');
