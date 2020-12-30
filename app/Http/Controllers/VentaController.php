@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Venta;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class VentaController extends Controller
@@ -14,7 +15,10 @@ class VentaController extends Controller
      */
     public function index()
     {
-        return view('Venta.index');
+        $datosP= Producto::all();
+        $datos['departamentos'] = Producto::paginate();
+        return view('Venta.index',compact('datosP'));
+        //return compact('datosP');
     }
 
     /**

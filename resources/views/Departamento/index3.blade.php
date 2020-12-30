@@ -92,7 +92,7 @@
                 </div>
                 <div class="row mx-1 my-1 ">
 
-                    
+
                 </div>
                 @else
                 <div class="row px-3 py-3 m-0">
