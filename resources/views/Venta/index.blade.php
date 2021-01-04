@@ -158,7 +158,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="producto">
+                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;" id="resultados">
                    <div class="col" id="busqueda">
@@ -246,7 +246,7 @@ function agregarPorCodigo() {
         //alert(productos[count].nombre);
     }
 
-    alert(productosVenta);
+    //alert(productosVenta);
     venta();
 
     /*fetch(`/venta/productos?`, {
@@ -308,6 +308,56 @@ function agregarProducto(id)
         //alert(productos[count].nombre);
     }
     venta();
+};
+
+const busqueda = document.querySelector('#busquedaProducto');
+function busquedaProducto() 
+{
+    let productosInfo = "";
+    var contador = 1;
+    //alert(productos[0].nombre);
+    for(count in productos)
+    {
+
+        if(productos[count].nombre.toUpperCase().includes(busqueda.value.toUpperCase()))
+        {
+            productosInfo = productosInfo +
+        `
+        <div class="row">
+        <a class="nav-link btn-outline-secondary text-dark border border-dark my-1 col-12 " 
+        data-dismiss="modal" onclick="agregarProducto(`+productos[count].id+`)">
+            <div class="row">
+                <div class="col-1">`+(contador++)+`</div>
+                <div class="col-3">`+productos[count].codigoBarras+`</div>
+                <div class="col-4">`+productos[count].nombre+`</div>
+                <div class="col-1">`+productos[count].existencia+`</div>
+                <div class="col-3">`+productos[count].idDepartamento+`</div>
+            </div>
+        </a>
+        </div>
+        `;
+        }
+        /*productosInfo = productosInfo +
+        `
+        <div class="row">
+        <a class="nav-link btn-outline-secondary text-dark border border-dark my-1 col-12 " 
+        data-dismiss="modal" onclick="agregarProducto(`+productos[count].id+`)">
+            <div class="row">
+                <div class="col-1">`+(contador++)+`</div>
+                <div class="col-3">`+productos[count].codigoBarras+`</div>
+                <div class="col-4">`+productos[count].nombre+`</div>
+                <div class="col-1">`+productos[count].existencia+`</div>
+                <div class="col-3">`+productos[count].idDepartamento+`</div>
+            </div>
+        </a>
+        </div>
+        `;*/
+    }
+    document.getElementById("busqueda").innerHTML= productosInfo;
+    
 }
+
+busqueda.addEventListener('keyup', busquedaProducto);
+
 </script>
 @endsection
