@@ -43,13 +43,10 @@ COMPRAS
                         </select>
                     </div>
 
-
-
                     <!-- TABLA -->
                     <div class="row" style="height:300px;overflow-y:auto;">
-                        <table class="table table-bordered border-primary col-12 ">
+                        <table class=" table table-bordered border-primary col-12 ">
                             <thead class="table-secondary text-primary">
-
                                 <tr>
                                     <th>#</th>
                                     <th>CODIGO BARRAS</th>
@@ -62,6 +59,17 @@ COMPRAS
                                 </tr>
                             </thead>
                             <tbody>
+                            <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            </tr>
+
 
                             </tbody>
                         </table>

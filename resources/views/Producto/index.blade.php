@@ -123,10 +123,10 @@ PRODUCTOS
                                 <td>
                                 
                                     <?php $producto_info = $producto?>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick="return info('{{$producto->id}}')" value="{{$producto->id}}">
+                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick="return info('{{$producto->id}}')" value="{{$producto->id}}">
                                         VER MAS
                                     </button>
-                                    <a class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> VER MAS3 </a>
+                                    
 
                                     <a class="btn btn-outline-info" href="{{ url('/producto/'.$producto->id.'/edit')}}"> Editar </a>
                                     <form method="post" action="{{ url('/producto/'.$producto->id)}}" style="display:inline">

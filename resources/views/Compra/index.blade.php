@@ -113,15 +113,14 @@ COMPRAS
                 <div class="row" style="height:350px;overflow-y:auto;">
                     <table class="table table-bordered border-primary col-12 ">
                         <thead class="table-secondary text-primary">
-
                             <tr>
                                 <th>#</th>
-                                <th>CODIGO BARRAS</th>
-                                <th>NOMBRE</th>
-                                <th>EXISTENCIA</th>
-                                <th>DEPARTAMENTO</th>
-                                <th>COSTO</th>
-                                <th>PRECIO</th>
+                                <th>FOLIO</th>
+                                <th>PROVEEDOR</th>
+                                <th>FECHA COMPRA</th>
+                                <th>FECHA REGISTRO</th>
+                                <th>ESTADO</th>
+                                <th>COSTO TOTAL</th>
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
@@ -129,7 +128,6 @@ COMPRAS
                             @foreach($producto as $producto)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-
                                 <td>{{$producto->codigoBarras}}</td>
                                 <td>{{$producto->nombre}}</td>
                                 <td> {{$producto->existencia}} </td>
@@ -144,13 +142,10 @@ COMPRAS
                                 <td> {{$producto->existencia}} </td>
                                 <td>
                                 
-                                    <?php $producto_info = $producto?>
+                                    <?php $producto_info = $producto?> 
                                     <button type="button" class="btn btn-primary" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick="return info('{{$producto->id}}')" value="{{$producto->id}}">
                                         VER MAS
                                     </button>
-                                    <a class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> VER MAS3 </a>
-
-                                    <a class="btn btn-outline-info" href="{{ url('/producto/'.$producto->id.'/edit')}}"> Editar </a>
                                     <form method="post" action="{{ url('/producto/'.$producto->id)}}" style="display:inline">
                                         {{csrf_field()}}
                                         {{method_field('DELETE')}}
