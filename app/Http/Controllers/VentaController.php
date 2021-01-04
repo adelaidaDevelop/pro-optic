@@ -39,7 +39,9 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datosP= Producto::all();
+        $datos['departamentos'] = Producto::paginate();
+        return view('Venta.index',compact('datosP'));
     }
 
     /**
@@ -85,5 +87,10 @@ class VentaController extends Controller
     public function destroy(Venta $venta)
     {
         //
+    }
+
+    public function productos()
+    {
+        return view('Venta.formulario');
     }
 }
