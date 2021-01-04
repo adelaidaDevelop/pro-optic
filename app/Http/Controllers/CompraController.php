@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Compra;
 use App\Models\Producto;
+use App\Models\Departamento;
 use Illuminate\Http\Request;
 
 class CompraController extends Controller
@@ -15,8 +16,12 @@ class CompraController extends Controller
      */
     public function index()
     {
-        return view('Compra.index');
-        
+        $datosProd['producto'] = Producto::paginate();
+        $depas['d']= Departamento::paginate();
+        $departamento= Departamento::all();
+        return view('Compra.index',$datosProd,$depas, compact('departamento'));
+        //return view('Compra.index');
+
     }
 
     /**
