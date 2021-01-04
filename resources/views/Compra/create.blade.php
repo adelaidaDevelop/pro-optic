@@ -1,138 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('header2')
+@section('contenido')
+@section('subtitulo')
+COMPRAS
+@endsection
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{ asset('css\bootstrap.min.css') }}">
-    <script src="{{ asset('js\jquery-3.5.1.min.js') }}"></script>
-    <script src="{{ asset('js\popper.min.js') }}"></script>
-    <script src="{{ asset('js\bootstrap.min.js') }}"></script>
-</head>
+@section('opciones')
+@endsection
 
-<body>
-<?php
-                                // comprobar si tenemos los parametros w1 y w2 en la URL
-                                if (isset($_GET["productos"])) {
-                                // asignar w1 y w2 a dos variables
-                                $productosCompra = $_GET["productos"];
-                                // mostrar $phpVar1 y $phpVar2
-                                echo "<p>Parameters: " . $productosCompra . "</p>";
-                                } else {
-                                echo "<p>No parameters</p>";
-                                }
-                                ?>
-    <div class="container-fluid">
-        <div class="row mb-2" style="background:#ED4D46">
-            <h1 class="font-weight-bold m-4" style="color:#FFFFFF">COMPRAS</h1>
+<div class="row p-1 ">
+    <!--CONSULTAR PRODUCTO -->
+    <div class="row border border-dark m-2 w-100">
+        <div class="row col-12 mx-2 mt-4">
+            <label for="">
+                <h5 class="text-primary">
+                    <strong>
+                        INGRESAR PRODUCTO
+                    </strong>
+                </h5>
+            </label>
         </div>
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8" style="background:#D5DBDB">
-                <h5 class="blockquote text-center"> <strong>Consultar Producto</strong></h5>
-            </div>
-            <div class="col-md-2"> </div>
-        </div>
-        <div class="row">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Codigo de Barras</th>
-                        <th scope="col">Producto</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">Costo</th>
-                        <th scope="col">% Porcentaje Ganancia</th>
-                        <th scope="col">IVA</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Caducidad</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <main class="container">
-            <!-- Button trigger modal -->
-            <button id="bm" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Ingresar producto
-            </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
+        <div class="row col-12">
 
-                            <h5 class="modal-title" id="exampleModalLabel">Ingresar Producto</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto"
-                                    id="producto">
-                            </div>
-                            <div class="row" style="height:200px;overflow:auto;" id="resultados">
-                                
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Agregar Producto</button>
-                            </div>
-                        </div>
+            <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
+            <div class="col-9  mt-1 mb-4 ml-4 mr-2">
+                <div class="form-group w-100">
+
+                    <div class="form-group w-100">
+                    <label class="form-check-label  mx-2" for="flexCheckChecked">
+                                PROVEEDOR
+                            </label>
+                        <select class="mr-3" name="idDepartamento" id="idDepartamento" required>
+                            <option value="">PROVEEDOR</option>
+                        </select>
+                     
+                            <label class="form-check-label  mx-2" for="flexCheckChecked">
+                                FECHA
+                            </label>
+               
+                        <select class="" name="idDepartamento" id="idDepartamento" required>
+                            <option value="">10/12/2020</option>
+                        </select>
                     </div>
+
+
+
+                    <!-- TABLA -->
+                    <div class="row" style="height:300px;overflow-y:auto;">
+                        <table class="table table-bordered border-primary col-12 ">
+                            <thead class="table-secondary text-primary">
+
+                                <tr>
+                                    <th>#</th>
+                                    <th>CODIGO BARRAS</th>
+                                    <th>NOMBRE</th>
+                                    <th>EXISTENCIA</th>
+                                    <th>DEPARTAMENTO</th>
+                                    <th>COSTO</th>
+                                    <th>PRECIO</th>
+                                    <th>ACCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button> GUARDAR COMPRA</button>
+
                 </div>
-        </main>
+
+
+
+            </div>
+        </div>
     </div>
-    
-    <script>
-    const texto = document.querySelector('#producto');
+</div>
 
-    function filtrar() {
-        //document.getElementById("resultados").innerHTML = "";
-        fetch(`/compra/create?texto=${texto.value}`, {
-                method: 'get'
-            })
-            .then(response => response.text())
-            .then(html => {
-                document.all.innerHTML = html
-            })
-        //var arrayJS = ?php echo json_encode($productos);?>;
-        const valor = fetch(`/departamento/buscadorProducto?texto=${texto.value}`, {
-            method: 'get'
-        });
-        const valor1 = fetch(`/departamento/buscadorProducto?texto=${texto.value}`, {
-            method: 'get'
-        });
-        //window.location.href = window.location.href + "?p=" + valor;
 
-    }
-    texto.addEventListener('keyup', filtrar);
-    //filtrar();
-    function f() {
-        document.getElementById("resultados").innerHTML = "";
-        fetch(`/departamento/buscadorProducto?texto=${texto.value}`, {
-                method: 'get'
-            })
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById("resultados").innerHTML = html
-            })
-        }
-        f();
-    </script>
-    
-</body>
 
-</html>
+@endsection
