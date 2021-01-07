@@ -225,8 +225,8 @@ function venta()
             <td>` + productosVenta[count].codigoBarras + `</td>
             <td>` + productosVenta[count].nombre + `</td>
             <td>5</td>
-            <td>36</td>
-            <td>10</td>
+            <td>` + productosVenta[count].nombre + `</td>
+            <td><input type="number"/></td>
             <td>55</td>
         </tr>
         `;
