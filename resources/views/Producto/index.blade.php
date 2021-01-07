@@ -123,18 +123,25 @@ PRODUCTOS
                                 <td>
                                 
                                     <?php $producto_info = $producto?>
+                                    <!--
                                     <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick="return info('{{$producto->id}}')" value="{{$producto->id}}">
                                         VER MAS
                                     </button>
+                                    -->
+
+                                    <a class="" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick="return info('{{$producto->id}}')" value="{{$producto->id}}" role="button">VER MAS2</a>
+
                                     
 
-                                    <a class="btn btn-outline-info" href="{{ url('/producto/'.$producto->id.'/edit')}}"> Editar </a>
+                                    
+                                    <!--
                                     <form method="post" action="{{ url('/producto/'.$producto->id)}}" style="display:inline">
                                         {{csrf_field()}}
                                         {{method_field('DELETE')}}
                                         <button class="btn btn-outline-info" type="submit" onclick="return confirm('¿Borrar?');">
                                             Borrar</button>
                                     </form>
+                                    -->
                                 </td>
                             </tr>
                             @endforeach
@@ -253,7 +260,7 @@ PRODUCTOS
                             <h5> <strong>{{'FOTO'}}</strong></h5>
                         </label required>
                         @if(isset($producto->imagen))
-                        <br />
+                        <br/>
                         <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200">
                         <br /><br />
                         @endif
@@ -263,8 +270,9 @@ PRODUCTOS
                         @else <input class="form-control" type="file" name="Imagen" id="Imagen" value="" autofocus required>
                         @endif
                     </div>
-
                 </div>
+               AQUI
+                <a class="" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick="return editar('{{$producto->id}}')" value="{{$producto->id}}" role="button">VER MAS</a>
 
             </div>
             <div class="modal-footer">
@@ -279,7 +287,7 @@ PRODUCTOS
 <script>
 const texto = document.querySelector('#ver');
 function info($id) {
-    document.getElementById("resultados").innerHTML = "";
+    document.getElementById("resultados").innerHTML = "Aqui se esta modificando";
     fetch(`/producto/buscarProducto?texto=${$id}`, {
             method: 'get'
         })
@@ -288,6 +296,11 @@ function info($id) {
             document.getElementById("resultados").innerHTML = html
         })
 }
+
+function editar($id){
+    return redirect('"/producto/".$id."/edit"');
+}
+
 //texto.addEventListener('onclick', info);
 </script>
 

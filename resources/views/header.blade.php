@@ -14,9 +14,10 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="#">
-                            <button class="btn btn-light">
+                          <!--  <button class="btn btn-light" >
                                 VENTAS
-                            </button>
+                            </button>-->
+                            <a class="btn btn-light" href="{{ url('/venta')}}"> VENTAS </a>
                             <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">

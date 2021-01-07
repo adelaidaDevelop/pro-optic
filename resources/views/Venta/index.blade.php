@@ -319,6 +319,7 @@ function agregarProducto(id) {
 
 function buscarProducto() {
     
+<<<<<<< HEAD
     const palabraBusqueda = document.querySelector('#busquedaProducto');
     let cuerpo = "";
     let contador = 1;
@@ -334,6 +335,26 @@ function buscarProducto() {
             <td>` + productos[count5].existencia +`</td>
             <td>` + productos[count5].idDepartamento + `</td>
         </tr>
+=======
+    let productosInfo = ""; 
+    var contador = 1;
+    for(count in productos)
+    {
+        productosInfo = productosInfo +
+        `
+        <div class="row">
+        <a class="nav-link btn-outline-secondary text-dark border border-dark my-1 col-12 " 
+        data-dismiss="modal" onclick="agregarProducto(`+productos[count].id+`)">
+            <div class="row">
+                <div class="col-1">`+(contador++)+`</div>
+                <div class="col-3">`+productos[count].codigoBarras+`</div>
+                <div class="col-4">`+productos[count].nombre+`</div>
+                <div class="col-1">`+productos[count].existencia+`</div>
+                <div class="col-3">`+productos[count].idDepartamento+`</div>
+            </div>
+        </a>
+        </div>
+>>>>>>> 61f24fb0c045879e2548f644b14d6bad7b627e4a
         `;
         }
     }

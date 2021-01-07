@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Subproducto;
 use App\Models\Producto;
+use App\Models\Departamento;
 use Illuminate\Http\Request;
 
 class SubproductoController extends Controller
@@ -17,8 +18,9 @@ class SubproductoController extends Controller
     {
         $datosProd['prod'] = Producto::paginate();
         $subproducto2['subproducto']= Subproducto::paginate();
+        $depas['d']= Departamento::paginate();
       //  $productos['prod']= Producto::paginate();
-          return view('Subproducto.index',$subproducto2);
+          return view('Subproducto.index',$subproducto2,$depas);
 
 /*
           $datosProd['producto'] = Producto::paginate();

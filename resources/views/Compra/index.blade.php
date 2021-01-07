@@ -122,7 +122,7 @@ COMPRAS
                                 <th>ESTADO</th>
                                 <th>COSTO TOTAL</th>
                                 <th>ACCIONES</th>
-                            </tr>
+                            </tr>33
                         </thead>
                         <tbody>
                             @foreach($producto as $producto)
