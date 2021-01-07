@@ -275,11 +275,10 @@ function agregarPorCodigo() {
 
 function codigo() {
     
-    let productosInfo = "";
+    let productosInfo = ""; 
     var contador = 1;
     for(count in productos)
     {
-
         productosInfo = productosInfo +
         `
         <div class="row">

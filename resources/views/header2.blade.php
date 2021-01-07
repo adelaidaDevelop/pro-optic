@@ -5,8 +5,6 @@
     <div class="row" style="background:#3366FF">
         <div class="container-fluid align-self-center">
             <nav class="navbar navbar-expand-lg navbar-light w-100 " style="height: 20px;background-color:#3366FF;">
-
-
                 <a class="navbar-brand" href="#">
                     <img src="{{ asset('img\farmaciagilogo.png') }}" alt="Editar" height="50px">
                 </a>
@@ -18,9 +16,12 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="#">
-                                <button class="btn btn-light">
-                                    VENTAS
+                            
+                                <button class="btn btn-light" type="submit"  href="{{ url('/venta')}}" >VENTAS
+                                    
                                 </button>
+                                
+                                
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
@@ -79,8 +80,6 @@
             </nav>
             <br/>
         </div>
-    
-
     </div>
     <div class="row" style="background:#ED4D46">
         <h3 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">
@@ -91,6 +90,4 @@
     <!--BODY-->
     @yield('contenido')
 </div>
-
-
 @endsection
