@@ -19,9 +19,9 @@ class ProductoController extends Controller
     {
         $datosProd['producto'] = Producto::paginate();
         $depas['d']= Departamento::paginate();
-        $departamento= Departamento::all();
-      //  $producto= Producto::findOrFail($id);
-          return view('Producto.index',$datosProd,$depas, compact('departamento'));
+        $datosP= Producto::all();
+        $depa= Departamento::all();
+          return view('Producto.index',$depas, compact('depa', 'datosP'));
       
        
     }
@@ -139,5 +139,12 @@ class ProductoController extends Controller
         $productosB['productos'] = Producto::where("id",'=',$request->texto)->get();
         return view('Producto.producto',$productosB);//compact('productoB'));
         //return compact('productoB');
+
+    }
+    public function buscador(Request $request)
+    {
+        $datosConsulta['departamentosB'] = Producto::where("nombre",'like',$request->texto."%")->get();
+        return view('Departamento.form',$datosConsulta);
+        //return $datosConsulta;
     }
 }

@@ -113,11 +113,12 @@ class DepartamentoController extends Controller
         return view('Departamento.form',$datosConsulta);
         //return $datosConsulta;
     }
-
+/*
     public function buscador2(Request $request)
     {
         $datosConsulta['departamentosB'] = Departamento::where("nombre",'like',$request->texto."%")->get();
         return view('Departamento.form2',$datosConsulta);
         //return $datosConsulta;
     }
+    */
 }
