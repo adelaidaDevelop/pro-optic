@@ -1,4 +1,3 @@
-
 @extends('header2')
 
 @section('contenido')
@@ -55,11 +54,14 @@ PRODUCTOS
                 <div class="form-group w-100">
                     <div class="row my-2">
                         <div class="col-6 input-group">
-                            <input type="text" class="form-control border-primary " size="15" placeholder="BUSCAR PRODUCTO" id="texto">
+                            <!-- <input type="text" class="form-control border-primary " size="15" placeholder="BUSCAR PRODUCTO" id="texto">-->
+                            <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarProducto()">
+
                             <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
                         </div>
+
                         <a title="buscar" href="" class="text-dark ">
                             <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
                         <div class="mt-2 mx-2">
@@ -89,7 +91,7 @@ PRODUCTOS
 
                 <!-- TABLA -->
                 <div class="row" style="height:350px;overflow-y:auto;">
-                    <table class="table table-bordered border-primary col-12 ">
+                    <table class="table table-bordered border-primary col-12 " id="productos">
                         <thead class="table-secondary text-primary">
 
                             <tr>
@@ -103,48 +105,8 @@ PRODUCTOS
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach($producto as $producto)
-                            <tr>
-                                <td>{{$loop->iteration}}</td>
+                        <tbody id="consultaBusqueda">
 
-                                <td>{{$producto->codigoBarras}}</td>
-                                <td>{{$producto->nombre}}</td>
-                                <td> {{$producto->existencia}} </td>
-                                <td>
-                                    @foreach($d as $departament)
-                                    @if( $producto->idDepartamento == $departament->id)
-                                    {{$departament->nombre}} <br />
-                                    @endif
-                                    @endforeach
-                                </td>
-                                <td> {{$producto->existencia}} </td>
-                                <td> {{$producto->existencia}} </td>
-                                <td>
-                                
-                                    <?php $producto_info = $producto?>
-                                    <!--
-                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick="return info('{{$producto->id}}')" value="{{$producto->id}}">
-                                        VER MAS
-                                    </button>
-                                    -->
-
-                                    <a class="" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick="return info('{{$producto->id}}')" value="{{$producto->id}}" role="button">VER MAS2</a>
-
-                                    
-
-                                    
-                                    <!--
-                                    <form method="post" action="{{ url('/producto/'.$producto->id)}}" style="display:inline">
-                                        {{csrf_field()}}
-                                        {{method_field('DELETE')}}
-                                        <button class="btn btn-outline-info" type="submit" onclick="return confirm('¿Borrar?');">
-                                            Borrar</button>
-                                    </form>
-                                    -->
-                                </td>
-                            </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -153,6 +115,9 @@ PRODUCTOS
         </div>
     </div>
 </div>
+
+
+<!-- MODAL-->
 
 <!-- MODAL-->
 
@@ -187,7 +152,7 @@ PRODUCTOS
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="width:500px;">
+            <div class="modal-body" style="width:500px;"  id="">
                 <!--BODY MODAL-->
                 <h6> BUSCAR PRODUCTO POR CODIGO O NOMBRE</h6>
                 <label for="codigoBarras">
@@ -199,11 +164,136 @@ PRODUCTOS
                 </label>
                 <div class="col-6 input-group">
                     <!--BUSCADOR-->
+                    <!--
                     <input type="text" class="form-control border-primary" size="15" placeholder="BUSCAR PRODUCTO" id="texto">
+                       
+                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="buscador" onkeyup="buscarProducto()">
+ -->
                 </div>
                 <!--INFORMACION PRODUCTOS-->
-                <div class="row" id="resultados">
-                    <div class="col-md-4">
+                <div class="row" id="resultados" >
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END MODAL-->
+
+<!--POP UP-->
+<script>
+    const texto = document.querySelector('#verMas');
+    const buscar = document.querySelector('#texto');
+
+    function info($id) {
+        document.getElementById("resultados").innerHTML = "Aqui se esta modificando";
+        fetch(`/producto/buscarProducto?texto=${$id}`, {
+                method: 'get'
+            })
+            .then(response => response.text())
+            .then(html => {
+                 document.getElementById("resultados").innerHTML = html
+            })
+    }
+
+
+    function filtrar() {
+        document.getElementById("resultBusq").innerHTML = "";
+        fetch(`/producto/buscador?texto=${texto.value}`, {
+                method: 'get'
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("resultBusq").innerHTML = html
+            })
+    }
+
+    buscar.addEventListener('keyup', filtrar);
+    filtrar();
+</script>
+
+<!-- SCRIPT-->
+
+<script>
+    let productosVenta = [];
+    const productos = @json($datosP);
+    const d = @json($depa);
+
+    function agregarPorCodigo() {
+        const codigo = document.querySelector('#codigoBarras');
+        //location.href= location.href+'?codigo='+codigo.value;
+
+        for (count3 in productos) {
+            if (productos[count3].codigoBarras === codigo.value) {
+
+                //agregarProductoAVenta(id,codigoBarras,nombre,existencia,precio,cantidad,subtotal)
+                /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
+                productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
+                if (!buscarProductoEnVenta(productos[count3].id))
+                    agregarProductoAVenta(productos[count3].id, productos[count3].codigoBarras, productos[count3].nombre,
+                        6, 22, 1, 22);
+                mostrarProductos();
+            }
+        }
+        codigo.value = "";
+    };
+
+
+    function buscarProducto() {
+
+        const palabraBusqueda = document.querySelector('#busquedaProducto');
+        let cuerpo = "";
+        let contador = 1;
+        for (count5 in productos) {
+            if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                let departamento = "";
+                for (count8 in d) {
+                    if (productos[count5].idDepartamento === d[count8].id) {
+                        departamento = d[count8].nombre;
+                    }
+                }
+                let id = productos[count5].id;
+                cuerpo = cuerpo + `
+        <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">
+            <th scope="row">` + productos[count5].id + `</th>
+            <td>` + productos[count5].codigoBarras + `</td>
+            <td>` + productos[count5].nombre + `</td>
+            <td>` + productos[count5].existencia + `</td>
+           <td>` + departamento + `</td>
+
+           <td>` + `0` + `</td>
+            <td>` + `0` + `</td>
+            <td>` +
+                    ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
+               VER MAS
+              </button>
+            </td>            
+        </tr>
+        `;
+            }
+        }
+        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+
+    };
+
+
+
+    function info4(id) {
+
+        //Modal
+        let datosProduct = "";
+        let imagen= "";
+        for (count10 in productos) {
+            if (productos[count10].id === id) {
+                x=productos[count10].id;
+                datosProduct = 
+                `
+                <div class="col-md-4">
                         <br />
                         <br />
                         <label for="codigoBarras">
@@ -232,18 +322,19 @@ PRODUCTOS
                         <br />
                     </div>
                     <br />
-                    
+
                     <div class="col-md-6">
+                    
                         <br />
                         <!--El name debe ser igual al de la base de datos-->
-                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="{{$producto->codigoBarras}}" required autocomplete="codigoBarras" autofocus>
+                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="` +productos[count10].codigoBarras+ `" required autocomplete="codigoBarras" autofocus>
                         <br />
-                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="{{ $producto_info}}" autofocus required>
+                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required>
                         <br />
                         <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required>
-                        {{ $producto->descripcion}}</textarea>
+                        ` + productos[count10].descripcion + `</textarea>
                         <br />
-                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="{{$producto->minimo_stock}}" autofocus required>
+                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="`+ productos[count10].minimo_stock + `" autofocus required>
                         <br />
 
                         <select class="form-control" name="Receta" id="Receta" required>
@@ -252,6 +343,7 @@ PRODUCTOS
                             <option value="no" selected>no</option>
                         </select>
                         <br />
+                        
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-1 text-center">
@@ -259,49 +351,49 @@ PRODUCTOS
                         <label for="Imagen">
                             <h5> <strong>{{'FOTO'}}</strong></h5>
                         </label required>
-                        @if(isset($producto->imagen))
-                        <br/>
-                        <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200">
+                        <br />
+                        <img src="{{ asset('storage')}}/`+productos[count10].imagen+ ` " alt="" width="200">
                         <br /><br />
-                        @endif
 
                         @if(isset($producto->imagen))
                         <input type="file" name="Imagen" id="Imagen" class="form-control" value="">
                         @else <input class="form-control" type="file" name="Imagen" id="Imagen" value="" autofocus required>
                         @endif
                     </div>
-                </div>
-               AQUI
-                <a class="" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick="return editar('{{$producto->id}}')" value="{{$producto->id}}" role="button">VER MAS</a>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+                    <br/>
+                    
+                    <a class="btn btn-primary" href="{{ url('/producto/` +x+`/edit')}}"> Editar </a>
+                `
 
-<!--POP UP-->
-<script>
-const texto = document.querySelector('#ver');
-function info($id) {
-    document.getElementById("resultados").innerHTML = "Aqui se esta modificando";
-    fetch(`/producto/buscarProducto?texto=${$id}`, {
-            method: 'get'
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById("resultados").innerHTML = html
-        })
-}
+                }
+        }
+        document.getElementById("resultados").innerHTML = datosProduct;
+    };
 
-function editar($id){
-    return redirect('"/producto/".$id."/edit"');
-}
+    function agregarProducto(id) {
+        for (count4 in productos) {
+            if (productos[count4].id === id) {
+                /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
+                    productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
+                console.log(id);
+                console.log(productos[count4].id);
+                if (!buscarProductoEnVenta(id)) {
+                    console.log(productos[count4].id);
+                    agregarProductoAVenta(productos[count4].id, productos[count4].codigoBarras, productos[count4].nombre,
+                        6, 22, 1, 22);
+                }
+                console.log(productos[count4].id);
+                mostrarProductos();
+                //productosVenta.push(productos[count]);
+            }
+        }
+        const palabraBusqueda = document.querySelector('#busquedaProducto');
+        palabraBusqueda.value = "";
+        //venta();
+    };
 
-//texto.addEventListener('onclick', info);
+    buscarProducto()
 </script>
 
 @endsection

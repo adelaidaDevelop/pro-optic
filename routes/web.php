@@ -25,11 +25,14 @@ Route::get('/empleado/buscadorEmpleado', [EmpleadoController::class,'buscadorEmp
 
 Route::get('/producto/buscarProducto', [ProductoController::class,'buscarProducto']);
 
+Route::get('/producto/buscador', [ProductoController::class,'buscador']);
+
+
 Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
 
-Route::get('/departamento/buscadorProducto', [CompraController::class,'buscadorProducto']);
+//Route::get('/departamento/buscadorProducto', [CompraController::class,'buscadorProducto']);
 
-Route::get('/departamento/buscador2', [DepartamentoController::class,'buscador2']);
+//Route::get('/departamento/buscador2', [DepartamentoController::class,'buscador2']);
 
 Route::get('/departamento2', [DepartamentoController::class,'index2']);
 

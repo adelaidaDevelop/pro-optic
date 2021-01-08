@@ -19,7 +19,8 @@ class CompraController extends Controller
         $datosProd['producto'] = Producto::paginate();
         $depas['d']= Departamento::paginate();
         $departamento= Departamento::all();
-        return view('Compra.index',$datosProd,$depas, compact('departamento'));
+        $datosP= Producto::all();
+        return view('Compra.index',$depas, compact('departamento','datosP'));
         //return view('Compra.index');
 
     }

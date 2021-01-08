@@ -140,7 +140,7 @@
 </div>
 </div>
 <script>
-const texto = document.querySelector('#texto');
+const texto = document.querySelector('#texto'); 
 
 function filtrar() {
     document.getElementById("resultados").innerHTML = "";
