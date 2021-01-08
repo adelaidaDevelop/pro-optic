@@ -327,17 +327,17 @@ PRODUCTOS
                     
                         <br />
                         <!--El name debe ser igual al de la base de datos-->
-                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="` +productos[count10].codigoBarras+ `" required autocomplete="codigoBarras" autofocus>
+                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="` +productos[count10].codigoBarras+ `" required autocomplete="codigoBarras" autofocus disabled>
                         <br />
-                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required>
+                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required disabled>
                         <br />
-                        <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required>
+                        <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required disabled>
                         ` + productos[count10].descripcion + `</textarea>
                         <br />
-                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="`+ productos[count10].minimo_stock + `" autofocus required>
+                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="`+ productos[count10].minimo_stock + `" autofocus required disabled>
                         <br />
 
-                        <select class="form-control" name="Receta" id="Receta" required>
+                        <select class="form-control" name="Receta" id="Receta" required disabled>
                             <option value="">Elija una opcion</option>
                             <option value="si" selected>si</option>
                             <option value="no" selected>no</option>
@@ -354,16 +354,14 @@ PRODUCTOS
                         <br />
                         <img src="{{ asset('storage')}}/`+productos[count10].imagen+ ` " alt="" width="200">
                         <br /><br />
+                        
+                        <a class="btn btn-primary" href="{{ url('/producto/` +x+`/edit')}}"> Editar </a>
 
-                        @if(isset($producto->imagen))
-                        <input type="file" name="Imagen" id="Imagen" class="form-control" value="">
-                        @else <input class="form-control" type="file" name="Imagen" id="Imagen" value="" autofocus required>
-                        @endif
                     </div>
 
                     <br/>
                     
-                    <a class="btn btn-primary" href="{{ url('/producto/` +x+`/edit')}}"> Editar </a>
+                    
                 `
 
                 }
