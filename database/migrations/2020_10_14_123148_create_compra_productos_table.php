@@ -20,7 +20,7 @@ class CreateCompraProductosTable extends Migration
             $table->foreignId('idProductos')->constrained('productos');
             $table->integer('cantidad');
             $table->integer('porcentaje_ganancia');
-            $table->timestamp('fecha_caducidad');
+            $table->date('fecha_caducidad');
             $table->double('costo_unitario');
             $table->string('iva');
       });
