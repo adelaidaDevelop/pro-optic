@@ -87,36 +87,6 @@
                             </tr>
                         </thead>
                         <tbody id="info">
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Jabon palmollive</td>
-                                <td>asdasdasd</td>
-                                <td>lopesdasdasda</td>
-                                <td>lopesdasdasdafdfdflopesdasdasdafdfdflolopesdasdasdafdfdflopesdasdasdafdfdflopesdasdasdafdfdflpesdasdasdafdfdflopesdasdasd</td>
-                                <td><input value="1" min="1" max="1000"
-                                        type="number" /></td>
-                                <td>lopesdasdasda</td>
-                            </tr>
-                            @if(isset($_GET["datosP"]))
-                            {{$_GET["datosP"]}}
-                            @endif
-                            @if(isset($_GET["datosPs"]))
-                            @php
-                            $datosP =array();
-                            $datosP=$_GET["datosP"];
-                            @endphp
-                            @endif
-                            @if(isset($p))
-                            @foreach($p as $productos)
-                            <tr>
-                                <th scope="row">{{$loop->iteration}}</th>
-                                <td>{{$productos}}</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td colspan="1"><input type="number" /></td>
-                            </tr>
-                            @endforeach
-                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -145,7 +115,7 @@
                             <!--form method="get" action="{{url('/empleado')}}"-->
                             <!--{url('/departamento/'.$departamento->id.'/edit/')}}-->
                             <button class="btn btn-primary" type="button" style="background-color:#3366FF"
-                                onclick="o()" value="informacion" id="boton">
+                                onclick="realizarVenta()" value="informacion" id="boton">
                                 <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
                                 COBRAR
@@ -365,10 +335,39 @@ function cantidad(id)
     //const importeProducto = document.querySelector('#importe'+id);
 }
 
-function o()
+function realizarVenta()
 {
-    for(let c in productosVenta)
-        alert('entra a la funcion :o');
+    /*fetch(`/venta`, {
+            method: 'POST', // or 'PUT'
+            mode: 'no-cors', // no-cors, *cors, same-origin
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));*/
+    //for(let c in productosVenta)
+     //   alert('entra a la funcion :o');
+     let json = JSON.stringify(productosVenta)
+     $.ajax({
+      // metodo: puede ser POST, GET, etc
+      method: "POST",
+      // la URL de donde voy a hacer la petición
+      url: '/venta',
+      // los datos que voy a enviar para la relación
+      data: {
+        datos: json,
+        no : 'no se que le pasa',
+        //_token: $("meta[name='csrf-token']").attr("content")
+        _token: "{{ csrf_token() }}"
+      }
+      // si tuvo éxito la petición
+    }).done(function(respuesta)
+    {
+        alert(respuesta);
+        console.log(respuesta);//JSON.stringify(respuesta));
+    });
 }
 </script>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
