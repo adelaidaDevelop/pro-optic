@@ -34,6 +34,6 @@ class CreateSubproductosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subproductoos');
+        Schema::dropIfExists('subproductos');
     }
 }

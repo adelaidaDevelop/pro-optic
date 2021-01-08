@@ -48,41 +48,17 @@ class VentaController extends Controller
         $datosCodificados = json_decode($datos,true);
         $venta = Venta::create([
             'estado' => 'vendido',
-            //'created_at' => 'date:Y-m-d'
         ]);
-        //$productos = [];
+        
         foreach($datosCodificados as $datosProducto)
         {
-            
-           /* $producto = new Detalle_venta;([
-                'cantidad' => $datosProducto['cantidad'],
-                'producto' => $datosProducto['nombre'],
-                'subtotal' => $datos['subtotal'],
-                'idVentas' => $venta->id,
-            ]) ;
-            $venta->detalle_venta()->create($producto);*/
             $producto = new Detalle_venta;
             $producto->cantidad = $datosProducto['cantidad'];
             $producto->producto = $datosProducto['nombre'];
             $producto->subtotal = $datosProducto['subtotal'];
             $producto->idVentas = $venta->id;
             $producto->save();
-            //$productos[] = $producto;*/
-            //$producto->venta()->associate($venta);
-            /*$producto['cantidad'] = $datos['cantidad'];
-            $producto['producto'] = $datos['nombre'];
-            $producto['subtotal'] = $datos['subtotal'];
-            $producto['idVentas'] = $id;
-
-            $productos[] = $producto;*/
         }
-
-        /*Detalle_venta::create([
-            'cantidad' => $datosCodificados[0]['cantidad'],
-            'productos' => $datosCodificados[0]['nombre'],
-            'subtotal' => $datosCodificados[0]['subtotal'],
-            'idVentas' => 2,
-        ]);*/
 
         return "Si funciona";//view('Venta.index',compact('datosP'));
     }
