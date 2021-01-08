@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Detalle_venta extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'cantidad',
+        'producto',
+        'subtotal',
+        'idVentas',
+    ];
+
+    public function venta()
+    {
+        return $this->belongsTo(Venta::class,'idVentas');
+    }
 }

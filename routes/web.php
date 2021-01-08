@@ -33,7 +33,7 @@ Route::get('/departamento/buscador2', [DepartamentoController::class,'buscador2'
 
 Route::get('/departamento2', [DepartamentoController::class,'index2']);
 
-Route::get('/venta/productos', [VentaController::class,'productos']);
+Route::post('/venta/productos', [VentaController::class,'productos']);
 
 Route::resource('producto', ProductoController::class);
 
