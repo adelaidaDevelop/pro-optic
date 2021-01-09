@@ -101,7 +101,7 @@ class ProductoController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $departamento= Departamento::all();
+      //  $departamento= Departamento::all();
         $datosProducto=request()->except(['_token', '_method']);
 
         if($request->hasFile('Imagen')){
@@ -113,9 +113,9 @@ class ProductoController extends Controller
 
         Producto::where('id', '=',$id)->update($datosProducto);
 
-        $producto=Producto::findOrFail($id);
-        return view('producto.edit', compact('producto', 'departamento'));
-        
+       // $producto=Producto::findOrFail($id);
+       // return view('producto.edit', compact('producto', 'departamento'));
+        return redirect('producto');
     }
 
     /**
