@@ -154,7 +154,7 @@ PRODUCTOS
             </div>
             <div class="modal-body" style="width:500px;"  id="">
                 <!--BODY MODAL-->
-                <h6> BUSCAR PRODUCTO POR CODIGO O NOMBRE</h6>
+               <!-- <h6> BUSCAR PRODUCTO POR CODIGO O NOMBRE</h6>-->
                 <label for="codigoBarras">
                     <h5 class="text-primary">
                         <strong>
@@ -288,14 +288,22 @@ PRODUCTOS
         //Modal
         let datosProduct = "";
         let imagen= "";
+        let departamento = "";
         for (count10 in productos) {
             if (productos[count10].id === id) {
+                
+                for (count11 in d) {
+                    if (productos[count10].idDepartamento === d[count11].id) {
+                        departamento = d[count11].nombre;
+                    }
+                }
+
                 x=productos[count10].id;
+
                 datosProduct = 
                 `
                 <div class="col-md-4">
-                        <br />
-                        <br />
+                        <br/>
                         <label for="codigoBarras">
                             <h6> {{'CODIGO DE BARRAS'}}</h6>
                         </label>
@@ -303,15 +311,15 @@ PRODUCTOS
                         <label for="Nombre">
                             <h6>{{'NOMBRE'}}</h6>
                         </label>
-                        <br />
+                        <br /><br/><br/>
                         <label for="Descripcion">
                             <h6> {{'DESCRIPCION'}} </h6>
                         </label>
-                        <br /><br />
+                        <br /><br /> <br/> <br/>
                         <label for="MinimoStock">
                             <h6> {{'MINIMO STOCK'}}</h6>
                         </label>
-                        <br />
+                        <br /> <br/>
                         <label for="Receta">
                             <h6> {{'RECETA MEDICA'}} </h6>
                         </label>
@@ -343,7 +351,10 @@ PRODUCTOS
                             <option value="no" selected>no</option>
                         </select>
                         <br />
-                        
+
+                        <select class="form-control" name="Depa" id="Depa"  disabled>
+                            <option value="" selected>`+departamento+ ` </option>
+                        </select>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-1 text-center">
@@ -360,8 +371,6 @@ PRODUCTOS
                     </div>
 
                     <br/>
-                    
-                    
                 `
 
                 }
