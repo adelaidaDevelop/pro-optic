@@ -342,6 +342,7 @@ PRODUCTOS
                         <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required disabled>
                         ` + productos[count10].descripcion + `</textarea>
                         <br />
+                        
                         <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="`+ productos[count10].minimo_stock + `" autofocus required disabled>
                         <br />
 
