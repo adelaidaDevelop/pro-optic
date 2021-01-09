@@ -49,6 +49,8 @@ class ProductoController extends Controller
         //$datosProducto = request()->all();
         $datosProducto = request()->except('_token');
         $datosProducto['existencia']=0;
+        $datosProducto['costo']=0;
+        $datosProducto['precio']=0;
         if($request->hasFile('Imagen')){
             $datosProducto['Imagen']=$request->file('Imagen')->store('uploads','public');
         }
