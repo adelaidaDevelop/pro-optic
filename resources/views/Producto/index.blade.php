@@ -154,7 +154,7 @@ PRODUCTOS
             </div>
             <div class="modal-body" style="width:500px;"  id="">
                 <!--BODY MODAL-->
-                <h6> BUSCAR PRODUCTO POR CODIGO O NOMBRE</h6>
+               <!-- <h6> BUSCAR PRODUCTO POR CODIGO O NOMBRE</h6>-->
                 <label for="codigoBarras">
                     <h5 class="text-primary">
                         <strong>
@@ -288,14 +288,22 @@ PRODUCTOS
         //Modal
         let datosProduct = "";
         let imagen= "";
+        let departamento = "";
         for (count10 in productos) {
             if (productos[count10].id === id) {
+                
+                for (count11 in d) {
+                    if (productos[count10].idDepartamento === d[count11].id) {
+                        departamento = d[count11].nombre;
+                    }
+                }
+
                 x=productos[count10].id;
+
                 datosProduct = 
                 `
                 <div class="col-md-4">
-                        <br />
-                        <br />
+                        <br/>
                         <label for="codigoBarras">
                             <h6> {{'CODIGO DE BARRAS'}}</h6>
                         </label>
@@ -303,15 +311,15 @@ PRODUCTOS
                         <label for="Nombre">
                             <h6>{{'NOMBRE'}}</h6>
                         </label>
-                        <br />
+                        <br /><br/><br/>
                         <label for="Descripcion">
                             <h6> {{'DESCRIPCION'}} </h6>
                         </label>
-                        <br /><br />
+                        <br /><br /> <br/> <br/>
                         <label for="MinimoStock">
                             <h6> {{'MINIMO STOCK'}}</h6>
                         </label>
-                        <br />
+                        <br /> <br/>
                         <label for="Receta">
                             <h6> {{'RECETA MEDICA'}} </h6>
                         </label>
@@ -327,23 +335,26 @@ PRODUCTOS
                     
                         <br />
                         <!--El name debe ser igual al de la base de datos-->
-                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="` +productos[count10].codigoBarras+ `" required autocomplete="codigoBarras" autofocus>
+                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="` +productos[count10].codigoBarras+ `" required autocomplete="codigoBarras" autofocus disabled>
                         <br />
-                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required>
+                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required disabled>
                         <br />
-                        <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required>
+                        <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required disabled>
                         ` + productos[count10].descripcion + `</textarea>
                         <br />
-                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="`+ productos[count10].minimo_stock + `" autofocus required>
+                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="`+ productos[count10].minimo_stock + `" autofocus required disabled>
                         <br />
 
-                        <select class="form-control" name="Receta" id="Receta" required>
+                        <select class="form-control" name="Receta" id="Receta" required disabled>
                             <option value="">Elija una opcion</option>
                             <option value="si" selected>si</option>
                             <option value="no" selected>no</option>
                         </select>
                         <br />
-                        
+
+                        <select class="form-control" name="Depa" id="Depa"  disabled>
+                            <option value="" selected>`+departamento+ ` </option>
+                        </select>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-1 text-center">
@@ -354,16 +365,12 @@ PRODUCTOS
                         <br />
                         <img src="{{ asset('storage')}}/`+productos[count10].imagen+ ` " alt="" width="200">
                         <br /><br />
+                        
+                        <a class="btn btn-primary" href="{{ url('/producto/` +x+`/edit')}}"> Editar </a>
 
-                        @if(isset($producto->imagen))
-                        <input type="file" name="Imagen" id="Imagen" class="form-control" value="">
-                        @else <input class="form-control" type="file" name="Imagen" id="Imagen" value="" autofocus required>
-                        @endif
                     </div>
 
                     <br/>
-                    
-                    <a class="btn btn-primary" href="{{ url('/producto/` +x+`/edit')}}"> Editar </a>
                 `
 
                 }
