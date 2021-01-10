@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <br />
-                        <label for="codigoBarras">
+                        <label for="subtitulo">
                             <h5 class="text-primary">
                                 <strong>
                                     {{ $Modo== 'crear' ?'CREAR PRODUCTO' : 'EDITAR PRODUCTO' }}
@@ -36,7 +36,7 @@
                         <label for="Receta">
                             <h6> {{'RECETA MEDICA'}} </h6>
                         </label>
-                        <br/><br/>
+                        <br /><br />
                         <label for="idDepartamento">
                             <h6> {{'DEPARTAMENTO'}}</h6>
                         </label>

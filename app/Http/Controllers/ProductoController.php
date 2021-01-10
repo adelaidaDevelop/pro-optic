@@ -141,7 +141,6 @@ class ProductoController extends Controller
         $productosB['productos'] = Producto::where("id",'=',$request->texto)->get();
         return view('Producto.producto',$productosB);//compact('productoB'));
         //return compact('productoB');
-
     }
     public function buscador(Request $request)
     {
