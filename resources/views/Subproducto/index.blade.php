@@ -2,7 +2,7 @@
 
 @section('contenido')
 @section('subtitulo')
-PRODUCTOS
+SUBPRODUCTOS
 @endsection
 
 @section('opciones')
