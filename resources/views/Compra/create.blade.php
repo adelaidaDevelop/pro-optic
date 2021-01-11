@@ -265,23 +265,33 @@ function agregarProducto(id) {
 function quitarProducto() {
     alert('Ya se va a quitar, no te preocupes');
 }
-
+let ingresarProducto = 0;
 function crearProducto() {
     const cuerpoModal = document.querySelector('#cuerpoModal');
+    ingresarProducto = cuerpoModal.innerHTML;
     const tituloModal = document.querySelector('#exampleModalLabel');
     tituloModal.innerHTML =
-        `<label for="codigoBarras">
+        `<label for="codigoBarras" class="m-0">
         <h5 class="text-primary">
             <strong>
                 CREAR PRODUCTO
             </strong>
         </h5>
     </label>
-    `
-    //<form method="post" action="{{url('producto')}}" enctype="multipart/form-data">
+    `;
+    let departamentos = @json($departamentos);
+    let departamentosOpciones =""; 
+    for(let i in departamentos)
+    {
+        departamentosOpciones = departamentosOpciones +
+        `<option value="`+departamentos[i].id+`">`+departamentos[i].nombre+`</option>`
+    }
+    
+    //
+    //<form id="formularioProducto" enctype="multipart/form-data">
     let cuerpo = `
-    <form method="post" action="{{url('producto')}}" enctype="multipart/form-data">
-    {{ csrf_field() }}
+    <form id="formularioProducto" method="post" action="{{url('producto')}}" enctype="multipart/form-data">
+    
     <div class="row">
     <div class="col-6">
         <div class="form-group">
@@ -289,7 +299,7 @@ function crearProducto() {
                 <h6> CODIGO DE BARRAS</h6>
             </label>
             <div class="col">
-                <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="" required autocomplete="codigoBarras" autofocus>
+                <input type="text" name="codigoBarras" id="formCodigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="" required autocomplete="codigoBarras" autofocus>
             </div>
         </div>
         <div class="form-group">
@@ -297,7 +307,7 @@ function crearProducto() {
                 <h6>NOMBRE</h6>
             </label>
             <div class="col">
-                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="" autofocus required>
+                <input type="text" name="nombre" id="formNombre" class="form-control" placeholder="Nombre productos" value="" autofocus required>
             </div>
         </div>
         <div class="form-group">
@@ -305,7 +315,7 @@ function crearProducto() {
                 <h6>DESCRIPCION</h6>
             </label>
             <div class="col">
-                <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required>
+                <textarea name="descripcion" id="formDescripcion" class="form-control" placeholder="Descripcion del producto" rows="2" cols="23" required>
                 </textarea>
             </div>
         </div>
@@ -314,34 +324,31 @@ function crearProducto() {
                 <h6>MINIMO STOCK</h6>
             </label>
             <div class="col">
-                <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="" autofocus required>
+                <input type="number" name="minimo_stock" id="formMinimoStock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="" autofocus required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Receta" class="col col-form-label">
+                <h6>RECETA MEDICA</h6>
+            </label>
+            <div class="col">
+                <select class="form-control" name="receta" id="formReceta" required>
+                    <option value="">Elija una opcion</option>
+                    <option value="SI" selected>SI</option>
+                    <option value="NO" selected>NO</option>
+                </select>
             </div>
         </div>
         
     </div>
     <div class="col-6">
         <div class="form-group">
-            <label for="Receta" class="col col-form-label">
-                <h6>RECETA MEDICA</h6>
-            </label>
-            <div class="col">
-                <select class="form-control" name="Receta" id="Receta" required>
-                    <option value="">Elija una opcion</option>
-                    <option value="si" selected>si</option>
-                    <option value="no" selected>no</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
             <label for="Departamento" class="col col-form-label">
                 <h6>DEPARTAMENTO</h6>
             </label>
             <div class="col">
-                <select class="form-control" name="idDepartamento" id="idDepartamento" required>
-                    <option value="">Seleccione departamento</option>
-                    <option value=""></option>
-                    <option value="" selected></option>
-                    <option value=""></option>
+                <select class="form-control" name="idDepartamento" id="formDepartamento" required>
+                    `+departamentosOpciones+`
                 </select>
             </div>
         </div>
@@ -350,14 +357,19 @@ function crearProducto() {
                 <h5><strong>FOTO</strong></h5>
             </label>
             <div class="col">
-                <input class="form-control-file" type="file" name="Imagen" id="Imagen" value="" autofocus required>
+                <img id="imagenPrevisualizacion" class="img-fluid img-thumbnail mx-auto d-block">
+                <input class="form-control-file" type="file" name="Imagen"
+                    onchange="previsualizarImagen('formImagenProducto')" id="formImagenProducto" value="" autofocus required>
             </div>
         </div>
         
     </div>
     </div>
+    <button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar">CREAR PRODUCTO</button>
     </form>
     `;
+    //
+    
     cuerpoModal.innerHTML = cuerpo;
     /*fetch(`/producto/create`, {
             method: 'get'
@@ -368,6 +380,71 @@ function crearProducto() {
             //console.log(html);
         })*/
 }
+
+function previsualizarImagen(id)
+{
+    const seleccionImagen = document.querySelector('#'+id);
+    const imagen = document.querySelector('#imagenPrevisualizacion');
+    const archivos = seleccionImagen.files;
+    if (!archivos || !archivos.length) {
+        imagen.src = "";
+        return;
+    }
+    // Ahora tomamos el primer archivo, el cual vamos a previsualizar
+    const primerArchivo = archivos[0];
+    // Lo convertimos a un objeto de tipo objectURL
+    const objectURL = URL.createObjectURL(primerArchivo);
+    // Y a la fuente de la imagen le ponemos el objectURL
+    imagen.src = objectURL;
+}
+
+function nuevoProducto()
+{
+    const formulario = document.querySelector('#formularioProducto');
+    const codigoBarras = document.querySelector('#formCodigoBarras');
+    const nombre = document.querySelector('#formNombre');
+    const descripcion = document.querySelector('#formDescripcion');
+    const minimo_stock = document.querySelector('#formMinimoStock');
+    const receta = document.querySelector('#formReceta');
+    const departamento = document.querySelector('#formDepartamento');
+    const img = document.getElementById("formImagenProducto");
+    //const archivos = img.files;
+    //const objectURL = URL.createObjectURL(archiv);
+    //const img = document.querySelector('#imagenPrevisualizacion');
+    //const imagen = new FormData(document.getElementById("formImagenProducto"));//document.querySelector('#formImagenProducto');
+    //imagen.append('Imagen',archivos[0])
+    /*const productoNuevo = { codigoBarras:codigoBarras.value,nombre:nombre.value,
+    descripcion: descripcion.value,minimo_stock:minimo_stock.value,receta:receta.value,
+    departamento: departamento.value,imagen:imagen.value };*/
+    /*const productoNuevo ='_token='+"{{ csrf_token() }}"+'&codigoBarras='+codigoBarras.value+'&nombre='+nombre.value+
+    '&descripcion='+descripcion.value+'&minimo_stock='+minimo_stock.value+'&receta='+receta.value+
+    '&idDepartamento='+departamento.value+'&Imagen='+img;
+    console.log(productoNuevo);*/
+    //let json = JSON.stringify(productosVenta)
+    let datosProducto = new FormData(formulario);
+    datosProducto.append('_token', "{{ csrf_token() }}");
+    alert(datosProducto);
+     $.ajax({
+      // metodo: puede ser POST, GET, etc
+      method: "POST",
+      // la URL de donde voy a hacer la petición
+      url: '/producto',
+      // los datos que voy a enviar para la relación
+      data: datosProducto,
+      processData: false,  // tell jQuery not to process the data
+      contentType: false//productoNuevo,
+      // si tuvo éxito la petición
+    }).done(function(respuesta)
+    {
+        const cuerpoModal = document.querySelector('#cuerpoModal');
+        cuerpoModal.innerHTML = ingresarProducto;
+        buscarProducto();
+        //console.log(respuesta);//JSON.stringify(respuesta));
+    });
+    
+
+}
+
 </script>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 @endsection
