@@ -1,11 +1,11 @@
 <div class="row p-1 ">
     <div class="row border border-dark m-2 w-100">
         <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-9">
+            <div class="col-1"></div>
+            <div class="col-9">
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-4">
                         <br />
                         <label for="subtitulo">
                             <h5 class="text-primary">
@@ -44,7 +44,7 @@
 
                     </div>
                     <br />
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <br /><br /><br /><br />
                         <!--El name debe ser igual al de la base de datos-->
                         <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}" required autocomplete="codigoBarras" autofocus>
@@ -78,8 +78,8 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-1 text-center">
+                    <div class="col-1"></div>
+                    <div class="col-1 text-center">
                         <br /><br /><br />
                         <label for="Imagen">
                             <h5> <strong>{{'FOTO'}}</strong></h5>

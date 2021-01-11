@@ -9,7 +9,7 @@ PRODUCTOS
 
 <form method="post" action="{{url('producto')}}" enctype="multipart/form-data">
     {{ csrf_field() }}
-    @include('Subproducto.form', ['Modo' => 'crear'])
+    @include('producto.form', ['Modo' => 'crear'])
 </form>
 
 @endsection
