@@ -33,7 +33,8 @@ class CompraController extends Controller
     public function create()
     {
         $productos = Producto::all();
-        return view('Compra.create', compact('productos'));
+        $departamentos = Departamento::all();
+        return view('Compra.create', compact('productos','departamentos'));
     }
 
     /**
