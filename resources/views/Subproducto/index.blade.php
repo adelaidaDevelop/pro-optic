@@ -92,11 +92,12 @@ SUBPRODUCTOS
                         <thead class="table-secondary text-primary">
                             <tr>
                                 <th>#</th>
-                                <th>CODIGO</th>
                                 <th>PRODUCTO</th>
                                 <th>TOTAL PIEZAS</th>
-                                <th> EXISTENCIA</th>
                                 <th>PRECIO INDIVIDUAL</th>
+                                <th> EXISTENCIA</th>
+                                <th>OBSERVACION</th>
+                                <th>GANANCIA</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -104,12 +105,10 @@ SUBPRODUCTOS
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$subproducto->idProductos}}</td>
-
                                 <td>{{$subproducto->piezas}}</td>
                                 <td>{{$subproducto->precio_ind}} </td>
-                                <td>{{$subproducto->descripcion}} </td>
-                                <td>{{$subproducto->medida}} </td>
                                 <td>{{$subproducto->existencia}} </td>
+                                <td>{{$subproducto->observacion}} </td>
                                 <td>{{$subproducto->ganancia}} </td>
                                
                             </tr>

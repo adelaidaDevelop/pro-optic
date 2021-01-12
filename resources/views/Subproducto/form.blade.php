@@ -37,11 +37,11 @@
 
                 <div class="col-3">
                     <!--El name debe ser igual al de la base de datos-->
-                    <input class="mb-2" type="number" name="idProductos" id="idProductos" placeholder="Nombre producto" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:''}}" required>
+                    <input class="mb-2" type="number" name="idProductos" id="idProductos" placeholder="Nombre producto" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:'1'}}" required>
                    
                     <input class="mt-4 mb-2" type="number" name="piezas" id="piezas" placeholder="" value="{{ isset($subproducto->piezas)?$subproducto->piezas:''}}" required>
                    
-                    <input class="mt-4 mb-1" type="number" name="costo" id="costo" placeholder="0" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}"  disabled>
+                    <input class="mt-4 mb-1" type="number" name="costo_ind" id="costo" placeholder="" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}"  required>
                    
                     <input class="mt-4" type="number" name="precio_ind" id="precio_ind" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
 
@@ -74,7 +74,7 @@
 
                     <input class="mt-4" type="number" name="existencia" id="existencia" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
 
-                    <textarea class="mt-4" name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required>
+                    <textarea class="mt-4" name="observacion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required>
                     {{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
                     <br />
                 </div>
