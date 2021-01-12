@@ -89,17 +89,6 @@
                                     <td></td>
                                     <td></td>
                                 <tr>
-                                    <!--tr>
-                                        <td colspan="10">
-                                            <input class="form-control" id="buscarProducto"
-                                                onkeyup="buscarProducto()" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="date" value="2021-01-09" min="2021-01-09" max="2022-01-10" class="form-control" />
-                                        </td>
-                                    </tr-->
                             </tbody>
                         </table>
 
@@ -111,7 +100,7 @@
                         </button>
                     </div>
                     <div class="d-flex flex-row-reverse bd-highlight m-1 ">
-                        <button type="button" class="btn btn-secondary"> GUARDAR COMPRA</button>
+                        <button type="button" onclick="cargarProductos()" class="btn btn-secondary"> GUARDAR COMPRA</button>
                     </div>
 
                     <!--div class="col mt-1 mb-4 ml-4 mr-2">
@@ -169,11 +158,31 @@
 </div>
 <script>
 let productosCompra = [];
+let productos = [];
 
+function cargarProductos()
+{
+(async () => {
+    try {
+        let response = await fetch(`/producto/productos`);
+        if (response.ok) {
+            productos =  await response.json();
+            //console.log(response);
+        } else {
+            console.log("No responde :'v");
+            console.log(response);
+            throw new Error(response.statusText);
+        }
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+})();
+}
+cargarProductos();
 function buscarProducto() {
     const entrada = document.querySelector('#busquedaProducto');
     let productosEncontrados = document.querySelector('#consultaBusqueda');
-    const productos = @json($productos);
+    //const productos = @json($productos);
     let contador = 1;
     let cuerpo = "";
     for (let i in productos) {
@@ -247,7 +256,7 @@ function fechaActual() {
 }
 
 function agregarProducto(id) {
-    const productos = @json($productos);
+    //const productos = @json($productos);
 
     for (let i in productos) {
         if (productos[i].id === id) {
@@ -266,10 +275,12 @@ function quitarProducto() {
     alert('Ya se va a quitar, no te preocupes');
 }
 let ingresarProducto = 0;
+let ingresarProductoTitulo = 0;
 function crearProducto() {
     const cuerpoModal = document.querySelector('#cuerpoModal');
     ingresarProducto = cuerpoModal.innerHTML;
     const tituloModal = document.querySelector('#exampleModalLabel');
+    ingresarProductoTitulo = tituloModal;
     tituloModal.innerHTML =
         `<label for="codigoBarras" class="m-0">
         <h5 class="text-primary">
@@ -365,7 +376,7 @@ function crearProducto() {
         
     </div>
     </div>
-    <button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar">CREAR PRODUCTO</button>
+    <button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar" data-dismiss="modal">CREAR PRODUCTO</button>
     </form>
     `;
     //
@@ -423,7 +434,7 @@ function nuevoProducto()
     //let json = JSON.stringify(productosVenta)
     let datosProducto = new FormData(formulario);
     datosProducto.append('_token', "{{ csrf_token() }}");
-    alert(datosProducto);
+    //alert(datosProducto);
      $.ajax({
       // metodo: puede ser POST, GET, etc
       method: "POST",
@@ -434,11 +445,22 @@ function nuevoProducto()
       processData: false,  // tell jQuery not to process the data
       contentType: false//productoNuevo,
       // si tuvo éxito la petición
-    }).done(function(respuesta)
+    }).done(function(data)
     {
+        (async () => {
+    try {
+        cargarProductos();
         const cuerpoModal = document.querySelector('#cuerpoModal');
+        const tituloModal = document.querySelector('#exampleModalLabel');
         cuerpoModal.innerHTML = ingresarProducto;
+        tituloModal.innerHTML = ingresarProductoTitulo;
         buscarProducto();
+        agregarProducto(productos[productos.length - 1].id);
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+})();
+        
         //console.log(respuesta);//JSON.stringify(respuesta));
     });
     

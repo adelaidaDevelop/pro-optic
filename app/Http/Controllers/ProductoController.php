@@ -66,9 +66,18 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function show(Producto $producto)
+    public function show($producto)//Producto $producto)
     {
-        //
+        if($producto=="productos")
+        {
+            $productos = Producto::all();
+            $productosCodificados = json_encode($productos);
+            return $productos;//compact('productos');
+        }
+        else{
+            $id = Producto::where("nombre",'like',$request->nombre)->get();
+            return $id;
+        }
     }
     public function show2($id)
     {
