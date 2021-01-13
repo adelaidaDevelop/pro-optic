@@ -56,7 +56,6 @@ class SubproductoController extends Controller
         $datosSubproducto = request()->except('_token');
         $datosSubproducto['existencia']=0;
         $datosSubproducto['ganancia']=0; //calcular
-        
         Subproducto::insert($datosSubproducto);
 
        // return response()->json($datosSubproducto);
