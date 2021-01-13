@@ -16,8 +16,11 @@ class CreateComprasTable extends Migration
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
            // $table->id('id_compra');
-            $table->string('proveedor');
+            $table->foreignId('idProveedor')->constrained('proveedors');
+            //$table->string('proveedor');
+            $table->date('fecha_compra');
             $table->timestamps();
+            $table->foreignId('idEmpleado')->constrained('empleados');
         });
     }
 
@@ -28,6 +31,6 @@ class CreateComprasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('compraas');
+        Schema::dropIfExists('compras');
     }
 }

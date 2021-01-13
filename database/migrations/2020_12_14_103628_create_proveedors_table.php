@@ -17,7 +17,7 @@ class CreateProveedorsTable extends Migration
             $table->id();
             $table->string('RFC')->unique();
             $table->string('nombre')->unique();
-            $table->string('telefono')->unique();
+            $table->string('telefono');
             $table->string('direccion');
             $table->timestamps();
         });
