@@ -15,9 +15,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/venta">
                             
-                                <button class="btn btn-light" type="submit"  href="{{ url('/venta')}}" >VENTAS
+                                <button class="btn btn-light" type="submit" >VENTAS
                                     
                                 </button>
                                 
@@ -25,42 +25,42 @@
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">
-                                <button class="btn btn-light">
+                            <a class="nav-link" href="/compra">
+                                <button class="btn btn-light" >
                                     COMPRAS
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/producto">
                                 <button class="btn btn-light">
                                     PRODUCTOS
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/inventario">
                                 <button class="btn btn-light">
                                     INVENTARIO
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/empleado">
                                 <button class="btn btn-light">
                                     EMPLEADOS
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/cliente">
                                 <button class="btn btn-light">
                                     CLIENTES
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/corte">
                                 <button class="btn btn-light">
                                     CORTE
                                 </button>

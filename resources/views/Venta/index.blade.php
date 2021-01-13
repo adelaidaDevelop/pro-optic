@@ -338,18 +338,6 @@ function cantidad(id)
 
 function realizarVenta()
 {
-    /*fetch(`/venta`, {
-            method: 'POST', // or 'PUT'
-            mode: 'no-cors', // no-cors, *cors, same-origin
-            body: JSON.stringify(data), // data can be `string` or {object}!
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));*/
-    //for(let c in productosVenta)
-     //   alert('entra a la funcion :o');
      let json = JSON.stringify(productosVenta)
      $.ajax({
       // metodo: puede ser POST, GET, etc

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVentasTable extends Migration
+class CreateComprasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateVentasTable extends Migration
      */
     public function up()
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('compras', function (Blueprint $table) {
             $table->id();
-            $table->string('estado');
-            //$table->dateTime('created_at', $precision = 0);
+           // $table->id('id_compra');
+            $table->foreignId('idProveedor')->constrained('proveedors');
+            //$table->string('proveedor');
+            $table->date('fecha_compra');
             $table->timestamps();
             $table->foreignId('idEmpleado')->constrained('empleados');
         });
@@ -29,6 +31,6 @@ class CreateVentasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ventas');
+        Schema::dropIfExists('compras');
     }
 }
