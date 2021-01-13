@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compra;
+use App\Models\Compra_producto;
 use App\Models\Producto;
+use App\Models\Productos_caducidad;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CompraController extends Controller
 {
@@ -45,7 +48,42 @@ class CompraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$datosP= Producto::all();
+        //$datos['departamentos'] = Producto::paginate();
+        $datos = $request->input('datos');
+        $proveedor = $request->input('proveedor');
+        $datosCodificados = json_decode($datos,true);
+        $compra = Compra::create([
+            'proveedor' => $proveedor,
+        ]);
+        
+        foreach($datosCodificados as $datosProducto)
+        {
+            $producto = new Compra_producto;
+            $producto->idCompras = $compra->id;
+            $producto->idProductos = $datosProducto['id'];
+            $producto->cantidad = $datosProducto['cantidad'];
+            $producto->porcentaje_ganancia = $datosProducto['ganancia'];
+            $producto->fecha_caducidad = $datosProducto['caducidad'];
+            $producto->costo_unitario = $datosProducto['costo'];
+            $producto->iva = 'Si';
+            //$producto->fecha_caducidad = Carbon::createFromFormat( 'Y/m/d', $datosProducto['caducidad']);
+            $producto->save();
+            $actualizarProducto = Producto::find($datosProducto['id']);//->update(['existencia'=>]);
+            $actualizarProducto->existencia = $actualizarProducto['existencia'] + $datosProducto['cantidad'];
+            $actualizarProducto->costo = $datosProducto['costo'];
+            $actualizarProducto->precio = $datosProducto['precio'];
+            $actualizarProducto->save();
+
+            $productoCaducidad = new Productos_caducidad;
+            $productoCaducidad->idProducto = $datosProducto['id'];
+            $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
+            $productoCaducidad->cantidad = $datosProducto['cantidad'];
+            $productoCaducidad->save();
+        }
+
+        return true;//view('Venta.index',compact('datosP'));
+    
     }
 
     /**

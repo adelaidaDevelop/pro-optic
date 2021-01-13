@@ -48,8 +48,8 @@
                             <label class="col form-check-label  mx-2" for="flexCheckChecked">
                                 PROVEEDOR
                             </label>
-                            <select class="col form-control mr-3" name="idDepartamento" id="idDepartamento" required>
-                                <option value="">PROVEEDOR</option>
+                            <select class="col form-control mr-3" name="proveedor" id="proveedor" required>
+                                <option value="idProveedor">PROVEEDOR</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -100,7 +100,7 @@
                         </button>
                     </div>
                     <div class="d-flex flex-row-reverse bd-highlight m-1 ">
-                        <button type="button" onclick="cargarProductos()" class="btn btn-secondary"> GUARDAR COMPRA</button>
+                        <button type="button" onclick="guardarCompra()" class="btn btn-secondary"> GUARDAR COMPRA</button>
                     </div>
 
                     <!--div class="col mt-1 mb-4 ml-4 mr-2">
@@ -160,6 +160,20 @@
 let productosCompra = [];
 let productos = [];
 
+function buscarProductoEnCompra(idProducto)
+{
+    for(let count2 in productosCompra)
+    {
+        if(productosCompra[count2].id===idProducto)
+        {
+            
+            return true;
+        }
+    }
+    return false;
+};
+
+
 function cargarProductos()
 {
 (async () => {
@@ -207,11 +221,12 @@ function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganan
         codigoBarras: codigoBarras,
         nombre: nombre,
         cantidad: cantidad,
-        costo: costo,
+        costo: parseInt(costo),
         ganancia: ganancia,
         precio: precio,
         caducidad: caducidad
     };
+    console.log(producto)
     productosCompra.push(producto);
 }
 
@@ -226,19 +241,113 @@ function mostrarProductos() {
             <td>` + productosCompra[count1].nombre + `</td>
             <td><input  value="` + productosCompra[count1].cantidad + `" 
                 onchange="cantidad(` + productosCompra[count1].id + `)"  
-                id="valor` + productosCompra[count1].id + `" min="1" ` +
-            `" type="number"/>` + `</td>
-            <td>` + productosCompra[count1].costo + `</td>
-            <td>` + productosCompra[count1].ganancia + `</td>
-            <td>` + productosCompra[count1].precio + `</td>
-            <td><input type="date" value="` + productosCompra[count1].caducidad + `" min="` +
-            productosCompra[count1].caducidad + `" class="form-control" />
+                id="cantidad` + productosCompra[count1].id + `" min="1" ` +
+            ` type="number"/>` + `</td>
+            <td><input data-prefix="$"  value="` + productosCompra[count1].costo + `" 
+                onchange="costo(` + productosCompra[count1].id + `)"  
+                id="costo` + productosCompra[count1].id + `" min="0" ` +
+            ` type="number" data-decimals="2"/>`  + `</td>
+            <td><input data-prefix="%"  value="` + productosCompra[count1].ganancia + `" 
+                onchange="ganancia(` + productosCompra[count1].id + `)"  
+                id="ganancia` + productosCompra[count1].id + `" min="0" ` +
+            ` type="number"/>`  + `</td>
+            <td><input data-prefix="$"  value="` + productosCompra[count1].precio + `" 
+                onchange="precio(` + productosCompra[count1].id + `)"  
+                id="precio` + productosCompra[count1].id + `" min="0" ` +
+            ` type="number" data-decimals="2" />`  + `</td>
+            <td><input onchange="caducidad(`+productosCompra[count1].id+`)" type="date" value="` + productosCompra[count1].caducidad + `" min="` +
+            productosCompra[count1].caducidad + `" class="form-control" id="caducidad`+productosCompra[count1].id+`" />
             </td>
-            <td><button type="button" class="btn btn-secondary" onclick="quitarProducto()">QUITAR</button></td>
+            <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(`+productosCompra[count1].id+`)">QUITAR</button></td>
         `;
     }
     document.getElementById("productos").innerHTML = cuerpo;
-    $("input[type='number']").inputSpinner();
+    //$("input[type='number']").inputSpinner();
+}
+
+function cantidad(id)
+{
+    const valorProducto = document.querySelector('#cantidad'+id);
+    for(let i in productosCompra)
+    {
+        if(productosCompra[i].id=== id)
+        {
+            productosCompra[i].cantidad = parseInt(valorProducto.value);
+            console.log(productosCompra[i]);
+        }
+    }
+}
+
+function costo(id)
+{
+    const costoProducto = document.querySelector('#costo'+id);
+    for(let i in productosCompra)
+    {
+        if(productosCompra[i].id=== id)
+        {
+            productosCompra[i].costo = parseFloat(costoProducto.value);
+            console.log(productosCompra[i]);
+            let ganancia = ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
+            let costo = productosCompra[i].costo;
+            productosCompra[i].precio = costo + ganancia;
+            console.log(productosCompra[i].precio)
+            mostrarProductos();
+            //productosCompra[i].costo;
+        }
+    }
+}
+
+function ganancia(id)
+{
+    const gananciaProducto = document.querySelector('#ganancia'+id);
+    for(let i in productosCompra)
+    {
+        if(productosCompra[i].id=== id)
+        {
+            productosCompra[i].ganancia = parseInt(gananciaProducto.value);
+            console.log(productosCompra[i]);
+            let ganancia = ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
+            let costo = productosCompra[i].costo;
+            productosCompra[i].precio = costo + ganancia;
+            console.log(productosCompra[i].precio)
+            mostrarProductos();
+            //productosCompra[i].costo;
+        }
+    }
+}
+
+function precio(id)
+{
+    const precioProducto = document.querySelector('#precio'+id);
+    for(let i in productosCompra)
+    {
+        if(productosCompra[i].id=== id)
+        {
+            productosCompra[i].precio = parseFloat(precioProducto.value);
+            console.log(productosCompra[i]);
+            let costo = productosCompra[i].costo;
+            let precio =productosCompra[i].precio// ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
+            
+            productosCompra[i].ganancia =parseInt(((precio*100)/costo))-100;
+            console.log(productosCompra[i].precio)
+            mostrarProductos();
+            //productosCompra[i].costo;
+        }
+    }
+}
+
+function caducidad(id)
+{
+    const caducidadProducto = document.querySelector('#caducidad'+id);
+    for(let i in productosCompra)
+    {
+        if(productosCompra[i].id=== id)
+        {
+            productosCompra[i].caducidad = caducidadProducto.value;
+            
+            //productosCompra[i].costo;
+        }
+    }
 }
 
 function fechaActual() {
@@ -260,19 +369,29 @@ function agregarProducto(id) {
 
     for (let i in productos) {
         if (productos[i].id === id) {
+            if(!buscarProductoEnCompra(id))
+            {
             //agregarProductoACompra(id,codigoBarras,nombre,cantidad,costo,ganancia,precio,caducidad)
             agregarProductoACompra(productos[i].id, productos[i].codigoBarras, productos[i].nombre,
                 1, productos[i].costo, 15, productos[i].precio, fechaActual()
             );
-
+            }else alert("YA AGREGÓ ESTE PRODUCTO"); 
         }
     }
     mostrarProductos();
     console.log(productosCompra);
 }
 
-function quitarProducto() {
-    alert('Ya se va a quitar, no te preocupes');
+function quitarProducto(id) {
+
+    for(let i in productosCompra)
+    {
+        if(productosCompra[i].id === id)
+        productosCompra.splice( i, 1 );
+    }
+    mostrarProductos();
+    //var i = arr.indexOf( item );
+    //if ( i !== -1 )  
 }
 let ingresarProducto = 0;
 let ingresarProductoTitulo = 0;
@@ -382,14 +501,6 @@ function crearProducto() {
     //
     
     cuerpoModal.innerHTML = cuerpo;
-    /*fetch(`/producto/create`, {
-            method: 'get'
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById("cuerpoModal").innerHTML = html;
-            //console.log(html);
-        })*/
 }
 
 function previsualizarImagen(id)
@@ -465,6 +576,33 @@ function nuevoProducto()
     });
     
 
+}
+
+function guardarCompra()
+{
+    const proveedor = document.querySelector('#proveedor');
+    let json = JSON.stringify(productosCompra)
+     $.ajax({
+      // metodo: puede ser POST, GET, etc
+      method: "POST",
+      // la URL de donde voy a hacer la petición
+      url: '/compra',
+      // los datos que voy a enviar para la relación
+      data: {
+        datos: json,
+        proveedor:proveedor.value,
+        //_token: $("meta[name='csrf-token']").attr("content")
+        _token: "{{ csrf_token() }}"
+      }
+      // si tuvo éxito la petición
+    }).done(function(respuesta)
+    {
+        alert(respuesta);
+        console.log(respuesta);//JSON.stringify(respuesta));
+    }).fail( function( jqXHR, textStatus, errorThrown ) {
+    alert( 'Error!!' );
+    console.log(jqXHR, textStatus, errorThrown);
+});
 }
 
 </script>
