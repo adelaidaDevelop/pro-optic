@@ -124,7 +124,7 @@
             <div class="modal-header">
 
                 <h5 class="modal-title" id="exampleModalLabel">Ingresar Producto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button id="cerrar" type="button" class="close" onclick="cerrarModal()" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -149,7 +149,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="crearProducto()">NUEVO PRODUCTO</button>
                 </div>
             </div>
@@ -160,13 +160,24 @@
 let productosCompra = [];
 let productos = [];
 
+function cargarProveedores()
+{
+    const proveedor = document.querySelector('#proveedor');
+    let proveedores = @json($proveedores);
+    let cuerpo = "";
+    for(let i in proveedores)
+    {
+        cuerpo = cuerpo + `<option value="`+proveedores[i].id+`">`+proveedores[i].nombre+`</option>`
+    }
+    proveedor.innerHTML = cuerpo;
+}    
+cargarProveedores();
 function buscarProductoEnCompra(idProducto)
 {
     for(let count2 in productosCompra)
     {
         if(productosCompra[count2].id===idProducto)
         {
-            
             return true;
         }
     }
@@ -193,21 +204,36 @@ function cargarProductos()
 })();
 }
 cargarProductos();
+let ingresarProducto = document.querySelector('#cuerpoModal').innerHTML;
+let ingresarProductoTitulo = document.querySelector('#exampleModalLabel').innerHTML;
+//let botonCerrarModal = 0;
 function buscarProducto() {
+    //const cuerpoModal = document.querySelector('#cuerpoModal');
+    //ingresarProducto = cuerpoModal.innerHTML;
+    //const tituloModal = document.querySelector('#exampleModalLabel');
+    //const cerrar = document.querySelector('#cerrar');
+    //ingresarProductoTitulo = tituloModal.innerHTML;
     const entrada = document.querySelector('#busquedaProducto');
     let productosEncontrados = document.querySelector('#consultaBusqueda');
     //const productos = @json($productos);
     let contador = 1;
     let cuerpo = "";
+    let departamentos = @json($departamentos);
     for (let i in productos) {
         if (productos[i].nombre.toUpperCase().includes(entrada.value.toUpperCase())) {
+            let departamento = "No lo busca";
+            for(let o in departamentos)
+            {
+                if(productos[i].idDepartamento === departamentos[o].id)
+                    departamento = departamentos[o].nombre;
+            }
             cuerpo = cuerpo + `
             <tr onclick="agregarProducto(` + productos[i].id + `)" data-dismiss="modal">
                 <td>` + contador++ + `</td>
                 <td>` + productos[i].codigoBarras + `</td>
                 <td>` + productos[i].nombre + `</td>
                 <td>` + productos[i].existencia + `</td>
-                <td>` + productos[i].id + `</td>
+                <td>` + departamento + `</td>
             </tr>
             `;
         }
@@ -224,7 +250,7 @@ function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganan
         costo: parseInt(costo),
         ganancia: ganancia,
         precio: precio,
-        caducidad: caducidad
+        caducidad: caducidad,
     };
     console.log(producto)
     productosCompra.push(producto);
@@ -258,11 +284,14 @@ function mostrarProductos() {
             <td><input onchange="caducidad(`+productosCompra[count1].id+`)" type="date" value="` + productosCompra[count1].caducidad + `" min="` +
             productosCompra[count1].caducidad + `" class="form-control" id="caducidad`+productosCompra[count1].id+`" />
             </td>
-            <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(`+productosCompra[count1].id+`)">QUITAR</button></td>
+            <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(`+productosCompra[count1].id+`)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+</svg></i></button></td>
         `;
     }
     document.getElementById("productos").innerHTML = cuerpo;
-    //$("input[type='number']").inputSpinner();
+    $("input[type='number']").inputSpinner();
 }
 
 function cantidad(id)
@@ -371,13 +400,15 @@ function agregarProducto(id) {
         if (productos[i].id === id) {
             if(!buscarProductoEnCompra(id))
             {
+            
             //agregarProductoACompra(id,codigoBarras,nombre,cantidad,costo,ganancia,precio,caducidad)
             agregarProductoACompra(productos[i].id, productos[i].codigoBarras, productos[i].nombre,
-                1, productos[i].costo, 15, productos[i].precio, fechaActual()
+                1, productos[i].costo, 15, productos[i].precio, fechaActual(),departamento
             );
             }else alert("YA AGREGÓ ESTE PRODUCTO"); 
         }
     }
+    const entrada = document.querySelector('#busquedaProducto').value="";
     mostrarProductos();
     console.log(productosCompra);
 }
@@ -393,13 +424,17 @@ function quitarProducto(id) {
     //var i = arr.indexOf( item );
     //if ( i !== -1 )  
 }
-let ingresarProducto = 0;
-let ingresarProductoTitulo = 0;
+
 function crearProducto() {
     const cuerpoModal = document.querySelector('#cuerpoModal');
-    ingresarProducto = cuerpoModal.innerHTML;
+    //ingresarProducto = cuerpoModal.innerHTML;
     const tituloModal = document.querySelector('#exampleModalLabel');
-    ingresarProductoTitulo = tituloModal;
+    const cerrar = document.querySelector('#cerrar');
+    //ingresarProductoTitulo = tituloModal.innerHTML;
+    
+    //botonCerrarModal = cerrar.outerHTML;
+    //cerrar.onclick="cerrarModal()";
+    //cerrar.outerHTML = `<button id="cerrar" type="button" class="close" onclick="cerrarModal()" aria-label="Close">`
     tituloModal.innerHTML =
         `<label for="codigoBarras" class="m-0">
         <h5 class="text-primary">
@@ -495,8 +530,14 @@ function crearProducto() {
         
     </div>
     </div>
-    <button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar" data-dismiss="modal">CREAR PRODUCTO</button>
+    <!--button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar" data-dismiss="modal">CREAR PRODUCTO</button-->
     </form>
+    <div class="modal-footer">
+        <button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar" data-dismiss="modal">CREAR PRODUCTO</button>
+        <button type="button" class="btn btn-primary" onclick="cancelarProducto()">CANCELAR</button>
+        <button type="button" class="btn btn-secondary" onclick="cerrarModal()" data-dismiss="modal">Close</button>
+        
+    </div>
     `;
     //
     
@@ -530,19 +571,7 @@ function nuevoProducto()
     const receta = document.querySelector('#formReceta');
     const departamento = document.querySelector('#formDepartamento');
     const img = document.getElementById("formImagenProducto");
-    //const archivos = img.files;
-    //const objectURL = URL.createObjectURL(archiv);
-    //const img = document.querySelector('#imagenPrevisualizacion');
-    //const imagen = new FormData(document.getElementById("formImagenProducto"));//document.querySelector('#formImagenProducto');
-    //imagen.append('Imagen',archivos[0])
-    /*const productoNuevo = { codigoBarras:codigoBarras.value,nombre:nombre.value,
-    descripcion: descripcion.value,minimo_stock:minimo_stock.value,receta:receta.value,
-    departamento: departamento.value,imagen:imagen.value };*/
-    /*const productoNuevo ='_token='+"{{ csrf_token() }}"+'&codigoBarras='+codigoBarras.value+'&nombre='+nombre.value+
-    '&descripcion='+descripcion.value+'&minimo_stock='+minimo_stock.value+'&receta='+receta.value+
-    '&idDepartamento='+departamento.value+'&Imagen='+img;
-    console.log(productoNuevo);*/
-    //let json = JSON.stringify(productosVenta)
+    
     let datosProducto = new FormData(formulario);
     datosProducto.append('_token', "{{ csrf_token() }}");
     //alert(datosProducto);
@@ -578,6 +607,26 @@ function nuevoProducto()
 
 }
 
+function cancelarProducto()
+{
+    const cuerpoModal = document.querySelector('#cuerpoModal');
+    const tituloModal = document.querySelector('#exampleModalLabel');
+    cuerpoModal.innerHTML = ingresarProducto;
+    tituloModal.innerHTML = ingresarProductoTitulo;
+    buscarProducto();
+    
+}
+function cerrarModal()
+{
+    //const cerrar = document.querySelector('#cerrar');
+    const cuerpoModal = document.querySelector('#cuerpoModal');
+    const tituloModal = document.querySelector('#exampleModalLabel');
+    cuerpoModal.innerHTML = ingresarProducto;
+    tituloModal.innerHTML = ingresarProductoTitulo;
+    const entrada = document.querySelector('#busquedaProducto').value="";
+    //cerrar.outerHTML = botonCerrarModal;
+    $('#exampleModal').modal('hide');
+}
 function guardarCompra()
 {
     const proveedor = document.querySelector('#proveedor');

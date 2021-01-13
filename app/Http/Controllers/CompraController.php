@@ -7,6 +7,7 @@ use App\Models\Compra_producto;
 use App\Models\Producto;
 use App\Models\Productos_caducidad;
 use App\Models\Departamento;
+use App\Models\Proveedor;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -37,7 +38,8 @@ class CompraController extends Controller
     {
         $productos = Producto::all();
         $departamentos = Departamento::all();
-        return view('Compra.create', compact('productos','departamentos'));
+        $proveedores = Proveedor::all();
+        return view('Compra.create', compact('productos','departamentos','proveedores'));
     }
 
     /**
