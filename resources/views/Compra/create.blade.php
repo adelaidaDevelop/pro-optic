@@ -100,7 +100,8 @@
                         </button>
                     </div>
                     <div class="d-flex flex-row-reverse bd-highlight m-1 ">
-                        <button type="button" onclick="guardarCompra()" class="btn btn-secondary"> GUARDAR COMPRA</button>
+                        <button type="button" onclick="guardarCompra()" class="btn btn-secondary"> GUARDAR
+                            COMPRA</button>
                     </div>
 
                     <!--div class="col mt-1 mb-4 ml-4 mr-2">
@@ -124,7 +125,8 @@
             <div class="modal-header">
 
                 <h5 class="modal-title" id="exampleModalLabel">Ingresar Producto</h5>
-                <button id="cerrar" type="button" class="close" onclick="cerrarModal()" data-dismiss="modal" aria-label="Close">
+                <button id="cerrar" type="button" class="close" onclick="cerrarModal()" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -149,7 +151,8 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()"
+                        data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="crearProducto()">NUEVO PRODUCTO</button>
                 </div>
             </div>
@@ -160,39 +163,38 @@
 let productosCompra = [];
 let productos = [];
 
-function cargarProveedores()
-{
+function cargarProveedores() {
     const proveedor = document.querySelector('#proveedor');
     let proveedores = @json($proveedores);
     let cuerpo = "";
-    for(let i in proveedores)
-    {
-        cuerpo = cuerpo + `<option value="`+proveedores[i].id+`">`+proveedores[i].nombre+`</option>`
+    for (let i in proveedores) {
+        cuerpo = cuerpo + `<option value="` + proveedores[i].id + `">` + proveedores[i].nombre + `</option>`
     }
     proveedor.innerHTML = cuerpo;
-}    
+}
 cargarProveedores();
-function buscarProductoEnCompra(idProducto)
-{
-    for(let count2 in productosCompra)
-    {
-        if(productosCompra[count2].id===idProducto)
-        {
-            return true;
+
+function buscarProductoEnCompra(idProducto) {
+    if (productosCompra.length > 0)
+        for (let count2 in productosCompra) {
+            if (productosCompra[count2].id === idProducto) {
+                return true;
+            }
         }
-    }
     return false;
 };
 
 
-function cargarProductos()
-{
-(async () => {
+async function cargarProductos() {
+    let response = "Sin respuesta";
     try {
-        let response = await fetch(`/producto/productos`);
+        response = await fetch(`/producto/productos`);
         if (response.ok) {
-            productos =  await response.json();
+            productos = await response.json();
+            console.log(productos);
+            return productos;
             //console.log(response);
+
         } else {
             console.log("No responde :'v");
             console.log(response);
@@ -201,19 +203,56 @@ function cargarProductos()
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
-})();
+    //return response;
 }
 cargarProductos();
+//console.log(cargarProductos());
+//console.log(productos);
 let ingresarProducto = document.querySelector('#cuerpoModal').innerHTML;
 let ingresarProductoTitulo = document.querySelector('#exampleModalLabel').innerHTML;
 //let botonCerrarModal = 0;
-function buscarProducto() {
-    //const cuerpoModal = document.querySelector('#cuerpoModal');
-    //ingresarProducto = cuerpoModal.innerHTML;
-    //const tituloModal = document.querySelector('#exampleModalLabel');
-    //const cerrar = document.querySelector('#cerrar');
-    //ingresarProductoTitulo = tituloModal.innerHTML;
-    const entrada = document.querySelector('#busquedaProducto');
+async function buscarProducto() {
+    try {
+        //let response = await fetch(`/producto/productos`); //cargarProductos();
+        //if (response.ok) {
+        if (productos.length === 0)
+            productos = await cargarProductos(); // response.json();
+        const entrada = document.querySelector('#busquedaProducto');
+        let productosEncontrados = document.querySelector('#consultaBusqueda');
+        //const productos = @json($productos);
+        let contador = 1;
+        let cuerpo = "";
+        let departamentos = @json($departamentos);
+        for (let i in productos) {
+            if (productos[i].nombre.toUpperCase().includes(entrada.value.toUpperCase())) {
+                let departamento = "No lo busca";
+                for (let o in departamentos) {
+                    if (productos[i].idDepartamento === departamentos[o].id)
+                        departamento = departamentos[o].nombre;
+                }
+                cuerpo = cuerpo + `
+            <tr onclick="agregarProducto(` + productos[i].id + `)" data-dismiss="modal">
+                <td>` + contador++ + `</td>
+                <td>` + productos[i].codigoBarras + `</td>
+                <td>` + productos[i].nombre + `</td>
+                <td>` + productos[i].existencia + `</td>
+                <td>` + departamento + `</td>
+            </tr>
+            `;
+            }
+        }
+        productosEncontrados.innerHTML = cuerpo;
+
+        /*} else {
+            console.log("No responde :'v");
+            console.log(response);
+            throw new Error(response.statusText);
+        }*/
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+    //cargarProductos();
+    /*const entrada = document.querySelector('#busquedaProducto');
     let productosEncontrados = document.querySelector('#consultaBusqueda');
     //const productos = @json($productos);
     let contador = 1;
@@ -238,7 +277,7 @@ function buscarProducto() {
             `;
         }
     }
-    productosEncontrados.innerHTML = cuerpo;
+    productosEncontrados.innerHTML = cuerpo;*/
 };
 
 function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganancia, precio, caducidad) {
@@ -272,19 +311,21 @@ function mostrarProductos() {
             <td><input data-prefix="$"  value="` + productosCompra[count1].costo + `" 
                 onchange="costo(` + productosCompra[count1].id + `)"  
                 id="costo` + productosCompra[count1].id + `" min="0" ` +
-            ` type="number" data-decimals="2"/>`  + `</td>
+            ` type="number" data-decimals="2"/>` + `</td>
             <td><input data-prefix="%"  value="` + productosCompra[count1].ganancia + `" 
                 onchange="ganancia(` + productosCompra[count1].id + `)"  
                 id="ganancia` + productosCompra[count1].id + `" min="0" ` +
-            ` type="number"/>`  + `</td>
+            ` type="number"/>` + `</td>
             <td><input data-prefix="$"  value="` + productosCompra[count1].precio + `" 
                 onchange="precio(` + productosCompra[count1].id + `)"  
                 id="precio` + productosCompra[count1].id + `" min="0" ` +
-            ` type="number" data-decimals="2" />`  + `</td>
-            <td><input onchange="caducidad(`+productosCompra[count1].id+`)" type="date" value="` + productosCompra[count1].caducidad + `" min="` +
-            productosCompra[count1].caducidad + `" class="form-control" id="caducidad`+productosCompra[count1].id+`" />
+            ` type="number" data-decimals="2" />` + `</td>
+            <td><input onchange="caducidad(` + productosCompra[count1].id + `)" type="date" value="` + productosCompra[
+                count1].caducidad + `" min="` +
+            productosCompra[count1].caducidad + `" class="form-control" id="caducidad` + productosCompra[count1].id + `" />
             </td>
-            <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(`+productosCompra[count1].id+`)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(` + productosCompra[count1]
+            .id + `)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
 </svg></i></button></td>
@@ -294,29 +335,23 @@ function mostrarProductos() {
     $("input[type='number']").inputSpinner();
 }
 
-function cantidad(id)
-{
-    const valorProducto = document.querySelector('#cantidad'+id);
-    for(let i in productosCompra)
-    {
-        if(productosCompra[i].id=== id)
-        {
+function cantidad(id) {
+    const valorProducto = document.querySelector('#cantidad' + id);
+    for (let i in productosCompra) {
+        if (productosCompra[i].id === id) {
             productosCompra[i].cantidad = parseInt(valorProducto.value);
             console.log(productosCompra[i]);
         }
     }
 }
 
-function costo(id)
-{
-    const costoProducto = document.querySelector('#costo'+id);
-    for(let i in productosCompra)
-    {
-        if(productosCompra[i].id=== id)
-        {
+function costo(id) {
+    const costoProducto = document.querySelector('#costo' + id);
+    for (let i in productosCompra) {
+        if (productosCompra[i].id === id) {
             productosCompra[i].costo = parseFloat(costoProducto.value);
             console.log(productosCompra[i]);
-            let ganancia = ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
+            let ganancia = ((productosCompra[i].costo * productosCompra[i].ganancia) / 100)
             let costo = productosCompra[i].costo;
             productosCompra[i].precio = costo + ganancia;
             console.log(productosCompra[i].precio)
@@ -326,16 +361,13 @@ function costo(id)
     }
 }
 
-function ganancia(id)
-{
-    const gananciaProducto = document.querySelector('#ganancia'+id);
-    for(let i in productosCompra)
-    {
-        if(productosCompra[i].id=== id)
-        {
+function ganancia(id) {
+    const gananciaProducto = document.querySelector('#ganancia' + id);
+    for (let i in productosCompra) {
+        if (productosCompra[i].id === id) {
             productosCompra[i].ganancia = parseInt(gananciaProducto.value);
             console.log(productosCompra[i]);
-            let ganancia = ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
+            let ganancia = ((productosCompra[i].costo * productosCompra[i].ganancia) / 100)
             let costo = productosCompra[i].costo;
             productosCompra[i].precio = costo + ganancia;
             console.log(productosCompra[i].precio)
@@ -345,35 +377,29 @@ function ganancia(id)
     }
 }
 
-function precio(id)
-{
-    const precioProducto = document.querySelector('#precio'+id);
-    for(let i in productosCompra)
-    {
-        if(productosCompra[i].id=== id)
-        {
+function precio(id) {
+    const precioProducto = document.querySelector('#precio' + id);
+    for (let i in productosCompra) {
+        if (productosCompra[i].id === id) {
             productosCompra[i].precio = parseFloat(precioProducto.value);
             console.log(productosCompra[i]);
             let costo = productosCompra[i].costo;
-            let precio =productosCompra[i].precio// ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
-            
-            productosCompra[i].ganancia =parseInt(((precio*100)/costo))-100;
-            console.log(productosCompra[i].precio)
+            let precio = productosCompra[i].precio // ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
+
+            productosCompra[i].ganancia = parseInt(((precio * 100) / costo)) - 100;
+            console.log(productosCompra[i].precio);
             mostrarProductos();
             //productosCompra[i].costo;
         }
     }
 }
 
-function caducidad(id)
-{
-    const caducidadProducto = document.querySelector('#caducidad'+id);
-    for(let i in productosCompra)
-    {
-        if(productosCompra[i].id=== id)
-        {
+function caducidad(id) {
+    const caducidadProducto = document.querySelector('#caducidad' + id);
+    for (let i in productosCompra) {
+        if (productosCompra[i].id === id) {
             productosCompra[i].caducidad = caducidadProducto.value;
-            
+
             //productosCompra[i].costo;
         }
     }
@@ -398,27 +424,24 @@ function agregarProducto(id) {
 
     for (let i in productos) {
         if (productos[i].id === id) {
-            if(!buscarProductoEnCompra(id))
-            {
-            
-            //agregarProductoACompra(id,codigoBarras,nombre,cantidad,costo,ganancia,precio,caducidad)
-            agregarProductoACompra(productos[i].id, productos[i].codigoBarras, productos[i].nombre,
-                1, productos[i].costo, 15, productos[i].precio, fechaActual(),departamento
-            );
-            }else alert("YA AGREGÓ ESTE PRODUCTO"); 
+            if (!buscarProductoEnCompra(id)) {
+                //agregarProductoACompra(id,codigoBarras,nombre,cantidad,costo,ganancia,precio,caducidad)
+                agregarProductoACompra(productos[i].id, productos[i].codigoBarras, productos[i].nombre,
+                    1, productos[i].costo, 15, productos[i].precio, fechaActual()
+                );
+            } else alert("YA AGREGÓ ESTE PRODUCTO");
         }
     }
-    const entrada = document.querySelector('#busquedaProducto').value="";
+    const entrada = document.querySelector('#busquedaProducto').value = "";
     mostrarProductos();
     console.log(productosCompra);
 }
 
 function quitarProducto(id) {
 
-    for(let i in productosCompra)
-    {
-        if(productosCompra[i].id === id)
-        productosCompra.splice( i, 1 );
+    for (let i in productosCompra) {
+        if (productosCompra[i].id === id)
+            productosCompra.splice(i, 1);
     }
     mostrarProductos();
     //var i = arr.indexOf( item );
@@ -431,7 +454,7 @@ function crearProducto() {
     const tituloModal = document.querySelector('#exampleModalLabel');
     const cerrar = document.querySelector('#cerrar');
     //ingresarProductoTitulo = tituloModal.innerHTML;
-    
+
     //botonCerrarModal = cerrar.outerHTML;
     //cerrar.onclick="cerrarModal()";
     //cerrar.outerHTML = `<button id="cerrar" type="button" class="close" onclick="cerrarModal()" aria-label="Close">`
@@ -445,17 +468,16 @@ function crearProducto() {
     </label>
     `;
     let departamentos = @json($departamentos);
-    let departamentosOpciones =""; 
-    for(let i in departamentos)
-    {
+    let departamentosOpciones = "";
+    for (let i in departamentos) {
         departamentosOpciones = departamentosOpciones +
-        `<option value="`+departamentos[i].id+`">`+departamentos[i].nombre+`</option>`
+            `<option value="` + departamentos[i].id + `">` + departamentos[i].nombre + `</option>`
     }
-    
+
     //
     //<form id="formularioProducto" enctype="multipart/form-data">
     let cuerpo = `
-    <form id="formularioProducto" method="post" action="{{url('producto')}}" enctype="multipart/form-data">
+    <form id="formularioProducto" role="form" enctype="multipart/form-data">
     
     <div class="row">
     <div class="col-6">
@@ -480,8 +502,7 @@ function crearProducto() {
                 <h6>DESCRIPCION</h6>
             </label>
             <div class="col">
-                <textarea name="descripcion" id="formDescripcion" class="form-control" placeholder="Descripcion del producto" rows="2" cols="23" required>
-                </textarea>
+                <textarea name="descripcion" id="formDescripcion" class="form-control" placeholder="Descripcion del producto" rows="2" cols="23" required></textarea>
             </div>
         </div>
         <div class="form-group">
@@ -513,7 +534,7 @@ function crearProducto() {
             </label>
             <div class="col">
                 <select class="form-control" name="idDepartamento" id="formDepartamento" required>
-                    `+departamentosOpciones+`
+                    ` + departamentosOpciones + `
                 </select>
             </div>
         </div>
@@ -530,7 +551,7 @@ function crearProducto() {
         
     </div>
     </div>
-    <!--button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar" data-dismiss="modal">CREAR PRODUCTO</button-->
+    <!--button class="btn btn-outline-secondary" type="submit" id="btnEnviar" >CREAR PRODUCTO</button-->
     </form>
     <div class="modal-footer">
         <button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar" data-dismiss="modal">CREAR PRODUCTO</button>
@@ -540,13 +561,12 @@ function crearProducto() {
     </div>
     `;
     //
-    
+
     cuerpoModal.innerHTML = cuerpo;
 }
 
-function previsualizarImagen(id)
-{
-    const seleccionImagen = document.querySelector('#'+id);
+function previsualizarImagen(id) {
+    const seleccionImagen = document.querySelector('#' + id);
     const imagen = document.querySelector('#imagenPrevisualizacion');
     const archivos = seleccionImagen.files;
     if (!archivos || !archivos.length) {
@@ -561,99 +581,133 @@ function previsualizarImagen(id)
     imagen.src = objectURL;
 }
 
-function nuevoProducto()
-{
+function nuevoProducto() {
     const formulario = document.querySelector('#formularioProducto');
-    const codigoBarras = document.querySelector('#formCodigoBarras');
+    /*const codigoBarras = document.querySelector('#formCodigoBarras');
     const nombre = document.querySelector('#formNombre');
     const descripcion = document.querySelector('#formDescripcion');
     const minimo_stock = document.querySelector('#formMinimoStock');
     const receta = document.querySelector('#formReceta');
     const departamento = document.querySelector('#formDepartamento');
-    const img = document.getElementById("formImagenProducto");
-    
+    const img = document.getElementById("formImagenProducto");*/  
+
     let datosProducto = new FormData(formulario);
     datosProducto.append('_token', "{{ csrf_token() }}");
     //alert(datosProducto);
-     $.ajax({
-      // metodo: puede ser POST, GET, etc
-      method: "POST",
-      // la URL de donde voy a hacer la petición
-      url: '/producto',
-      // los datos que voy a enviar para la relación
-      data: datosProducto,
-      processData: false,  // tell jQuery not to process the data
-      contentType: false//productoNuevo,
-      // si tuvo éxito la petición
-    }).done(function(data)
-    {
-        (async () => {
-    try {
-        cargarProductos();
-        const cuerpoModal = document.querySelector('#cuerpoModal');
-        const tituloModal = document.querySelector('#exampleModalLabel');
-        cuerpoModal.innerHTML = ingresarProducto;
-        tituloModal.innerHTML = ingresarProductoTitulo;
-        buscarProducto();
-        agregarProducto(productos[productos.length - 1].id);
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-})();
-        
-        //console.log(respuesta);//JSON.stringify(respuesta));
-    });
-    
+
+    (async () => {
+        try {
+            var init = {
+                // el método de envío de la información será POST
+                method: "POST",
+                // el cuerpo de la petición es una cadena de texto 
+                // con los datos en formato JSON
+                body: datosProducto // convertimos el objeto a texto
+            };
+            let respuesta = await fetch('/producto/', init);
+            if (respuesta.ok) {
+                console.log(respuesta);
+                const cuerpoModal = document.querySelector('#cuerpoModal');
+                const tituloModal = document.querySelector('#exampleModalLabel');
+                cuerpoModal.innerHTML = ingresarProducto;
+                tituloModal.innerHTML = ingresarProductoTitulo;
+                await cargarProductos();
+                agregarProducto(productos[productos.length - 1].id);
+            }
+
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    })();
 
 }
 
-function cancelarProducto()
-{
+/*$('#formularioProducto').on('submit',"#btnEnviar", function(e) {
+    // evito que propague el submit
+    e.preventDefault();
+
+    // agrego la data del form a formData
+    //var formData = new FormData(this);
+    let datosProducto = new FormData(this);
+    //formData.append('_token', $('input[name=_token]').val());
+    //const formulario = document.querySelector('#formularioProducto');
+
+    //let datosProducto = new FormData(formulario);
+    datosProducto.append('_token', "{{ csrf_token() }}");
+    //alert(datosProducto);
+
+    (async () => {
+        try {
+            var init = {
+             // el método de envío de la información será POST
+            method: "POST",
+            // el cuerpo de la petición es una cadena de texto 
+            // con los datos en formato JSON
+            body: datosProducto // convertimos el objeto a texto
+            };
+            let respuesta = await fetch('/producto/', init);
+            if(respuesta.ok)
+            {
+                console.log(respuesta);
+                const cuerpoModal = document.querySelector('#cuerpoModal');
+                const tituloModal = document.querySelector('#exampleModalLabel');
+                cuerpoModal.innerHTML = ingresarProducto;
+                tituloModal.innerHTML = ingresarProductoTitulo;
+                await cargarProductos();
+                agregarProducto(productos[productos.length - 1].id);
+            }
+            
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    })();
+});
+*/
+
+function cancelarProducto() {
     const cuerpoModal = document.querySelector('#cuerpoModal');
     const tituloModal = document.querySelector('#exampleModalLabel');
     cuerpoModal.innerHTML = ingresarProducto;
     tituloModal.innerHTML = ingresarProductoTitulo;
     buscarProducto();
-    
+
 }
-function cerrarModal()
-{
+
+function cerrarModal() {
     //const cerrar = document.querySelector('#cerrar');
     const cuerpoModal = document.querySelector('#cuerpoModal');
     const tituloModal = document.querySelector('#exampleModalLabel');
     cuerpoModal.innerHTML = ingresarProducto;
     tituloModal.innerHTML = ingresarProductoTitulo;
-    const entrada = document.querySelector('#busquedaProducto').value="";
+    const entrada = document.querySelector('#busquedaProducto').value = "";
     //cerrar.outerHTML = botonCerrarModal;
     $('#exampleModal').modal('hide');
 }
-function guardarCompra()
-{
+
+function guardarCompra() {
     const proveedor = document.querySelector('#proveedor');
     let json = JSON.stringify(productosCompra)
-     $.ajax({
-      // metodo: puede ser POST, GET, etc
-      method: "POST",
-      // la URL de donde voy a hacer la petición
-      url: '/compra',
-      // los datos que voy a enviar para la relación
-      data: {
-        datos: json,
-        proveedor:proveedor.value,
-        //_token: $("meta[name='csrf-token']").attr("content")
-        _token: "{{ csrf_token() }}"
-      }
-      // si tuvo éxito la petición
-    }).done(function(respuesta)
-    {
+    $.ajax({
+        // metodo: puede ser POST, GET, etc
+        method: "POST",
+        // la URL de donde voy a hacer la petición
+        url: '/compra',
+        // los datos que voy a enviar para la relación
+        data: {
+            datos: json,
+            proveedor: proveedor.value,
+            //_token: $("meta[name='csrf-token']").attr("content")
+            _token: "{{ csrf_token() }}",
+        }
+        // si tuvo éxito la petición
+    }).done(function(respuesta) {
         alert(respuesta);
-        console.log(respuesta);//JSON.stringify(respuesta));
-    }).fail( function( jqXHR, textStatus, errorThrown ) {
-    alert( 'Error!!' );
-    console.log(jqXHR, textStatus, errorThrown);
-});
+        console.log(respuesta); //JSON.stringify(respuesta));
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        alert('Error!!');
+        console.log(jqXHR, textStatus, errorThrown);
+    });
 }
-
 </script>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 @endsection
