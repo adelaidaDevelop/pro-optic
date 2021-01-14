@@ -39,9 +39,11 @@ class SubproductoController extends Controller
     {
         //
        // $datosProd['producto'] = Producto::paginate(); necesito este: producto
+       $datosP= Producto::all();
         $subproducto2['subproducto']= SubProducto::paginate();
          $producto=Producto::all();
-         return view('Subproducto.agregar', compact('producto'));
+        
+         return view('Subproducto.agregar', compact('producto', 'datosP'));
     }
 
     /**
