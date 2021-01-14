@@ -56,7 +56,7 @@
                             <label class="form-check-label  mx-2" for="flexCheckChecked">
                                 FECHA
                             </label>
-                            <input type="date" value="2020-01-09" min="" class="form-control" />
+                            <input type="date" value="2020-01-09" min="" id="fechaCompra" class="form-control" />
                             <!--select class="form-control" name="idDepartamento" id="idDepartamento" required>
                                 <option value="">10/12/2020</option>
                             </select-->
@@ -477,7 +477,7 @@ function crearProducto() {
     //
     //<form id="formularioProducto" enctype="multipart/form-data">
     let cuerpo = `
-    <form id="formularioProducto" role="form" enctype="multipart/form-data">
+    <form class="needs-validation" novalidate id="formularioProducto" role="form" enctype="multipart/form-data">
     
     <div class="row">
     <div class="col-6">
@@ -487,6 +487,9 @@ function crearProducto() {
             </label>
             <div class="col">
                 <input type="text" name="codigoBarras" id="formCodigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="" required autocomplete="codigoBarras" autofocus>
+            </div>
+            <div class="invalid-feedback">
+                POR FAVOR INGRESE UN CODIGO DE BARRAS
             </div>
         </div>
         <div class="form-group">
@@ -554,7 +557,7 @@ function crearProducto() {
     <!--button class="btn btn-outline-secondary" type="submit" id="btnEnviar" >CREAR PRODUCTO</button-->
     </form>
     <div class="modal-footer">
-        <button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar" data-dismiss="modal">CREAR PRODUCTO</button>
+        <button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar" >CREAR PRODUCTO</button>
         <button type="button" class="btn btn-primary" onclick="cancelarProducto()">CANCELAR</button>
         <button type="button" class="btn btn-secondary" onclick="cerrarModal()" data-dismiss="modal">Close</button>
         
@@ -563,6 +566,8 @@ function crearProducto() {
     //
 
     cuerpoModal.innerHTML = cuerpo;
+
+
 }
 
 function previsualizarImagen(id) {
@@ -582,6 +587,23 @@ function previsualizarImagen(id) {
 }
 
 function nuevoProducto() {
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var bol = 0;
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      //form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          //event.preventDefault();
+          //event.stopPropagation();
+          console.log('Entra aqui');
+          bol = 1;
+          //return false;
+        }
+        form.classList.add('was-validated');
+      //}, false);
+    });
+    if(bol===1)
+        return false;
     const formulario = document.querySelector('#formularioProducto');
     /*const codigoBarras = document.querySelector('#formCodigoBarras');
     const nombre = document.querySelector('#formNombre');
@@ -613,6 +635,7 @@ function nuevoProducto() {
                 tituloModal.innerHTML = ingresarProductoTitulo;
                 await cargarProductos();
                 agregarProducto(productos[productos.length - 1].id);
+                $('#exampleModal').modal('hide');
             }
 
         } catch (err) {
@@ -686,6 +709,7 @@ function cerrarModal() {
 
 function guardarCompra() {
     const proveedor = document.querySelector('#proveedor');
+    const fechaCompra = document.querySelector('#fechaCompra');
     let json = JSON.stringify(productosCompra)
     $.ajax({
         // metodo: puede ser POST, GET, etc
@@ -696,6 +720,7 @@ function guardarCompra() {
         data: {
             datos: json,
             proveedor: proveedor.value,
+            fecha_compra: fechaCompra.value,
             //_token: $("meta[name='csrf-token']").attr("content")
             _token: "{{ csrf_token() }}",
         }
@@ -710,4 +735,23 @@ function guardarCompra() {
 }
 </script>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
+<script>
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
 @endsection

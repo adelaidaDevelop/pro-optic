@@ -9,6 +9,8 @@ class Compra extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'proveedor',
+        'idProveedor',
+        'fecha_compra',
+        'idEmpleado',
     ];
 }

@@ -71,7 +71,7 @@ class EmpleadoController extends Controller
         $datosEmpleado = Arr::add($datosEmpleado,'status','alta');
         //$datosEmpleado = Arr::add($datosEmpleado, 'price', 100);
         
-        $this->validator($request->all())->validate();
+        //$this->validator($request->all())->validate();
 
         
         //return $datosEmpleado;

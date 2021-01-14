@@ -54,9 +54,12 @@ class CompraController extends Controller
         //$datos['departamentos'] = Producto::paginate();
         $datos = $request->input('datos');
         $proveedor = $request->input('proveedor');
+        $fecha_compra = $request->input('fecha_compra');
         $datosCodificados = json_decode($datos,true);
         $compra = Compra::create([
-            'proveedor' => $proveedor,
+            'idProveedor' => $proveedor,
+            'fecha_compra' => $fecha_compra,
+            'idEmpleado' => 1,
         ]);
         
         foreach($datosCodificados as $datosProducto)
