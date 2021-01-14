@@ -4,21 +4,9 @@
     <div class="row" style="background:#ED4D46">
 
         @section('subtitulo')
-        DEPARTAMENTOS
+        PROVEEDORES
         @endsection
-        @section('opciones')
-        @if(isset($d))
-        <div class="col my-2 ml-5 px-1">
-            <form method="get" action="{{url('/empleado')}}">
-                <button class="btn btn-secondary" type="submit">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    AGREGAR EMPLEADO
-                </button>
-            </form>
-        </div>
-        @endif
-        @endsection
+
     </div>
     <div class="row p-1">
         <div class="row border border-dark m-2 w-100">
@@ -27,10 +15,10 @@
                     <!--input type="text" id="buscador" class="form-control my-2">
                         <button class="btn btn-info mb-2" id="boton">Buscar</button-->
 
-                    <h4 style="color:#4388CC">DEPARTAMENTOS</h4>
+                    <h4 style="color:#4388CC">PROVEEDORES</h4>
 
                     <div class="input-group">
-                        <input type="text" class="form-control my-1" placeholder="BUSCAR DEPARTAMENTO" id="texto">
+                        <input type="text" class="form-control my-1" placeholder="BUSCAR PROVEEDORES" id="texto">
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -46,13 +34,12 @@
                 <!--#FFFBF2"-->
                 @if(isset($d))
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/departamento/'.$d->id)}}"
-                        enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{url('/proveedor/'.$d->id)}}" enctype="multipart/form-data">
                         <div class="form-group">
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
                             <label for="ndepartamento">
-                                <h4 style="color:#4388CC">DEPARTAMENTO</h4>
+                                <h4 style="color:#4388CC">PROVEEDOR</h4>
                             </label>
                             <br />
                             <label for="Nombre">
@@ -64,27 +51,35 @@
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="form-control" name="nombre" id="nombre"
-                                            value="{{$d->nombre}}">
+                                        <input type="text" class="form-control" name="nombre" id="nombre" value="{{$d->nombre}}">
+                                        RFC
+                                        </label>
+                                        <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="rfc" id="rfc" value="{{$d->rfc}}">
+                                        <label for="telefono">
+                                            TELEFONO
+                                        </label>
+                                        <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" value="{{$d->telefono}}">
+                                        <label for="direccion">
+                                            DIRECCION
+                                        </label>
+                                        <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="direccion" id="direccion" value="{{$d->direccion}}">
 
                                     </div>
                                 </div>
 
                             </div>
                             <button class="btn btn-outline-secondary" type="submit">
-                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                    width="25px" height="25px">
+                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                                 GUARDAR CAMBIOS
                             </button>
                         </div>
                     </form>
                     <div class="row px-3 my-0">
-                        <form method="post" action="{{url('/departamento/'.$d->id)}}">
+                        <form method="post" action="{{url('/proveedor/'.$d->id)}}">
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
                             <button class="btn btn-outline-secondary my-3" type="submit">
-                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
-                                    width="25px" height="25px">
+                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                                 DAR DE BAJA
                             </button>
                         </form>
@@ -96,14 +91,14 @@
                 </div>
                 @else
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('departamento')}}" enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{url('proveedor')}}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <label for="nempleado">
-                            <h4 style="color:#4388CC">CREAR DEPARTAMENTO</h4>
+                            <h4 style="color:#4388CC">CREAR PROVEEDOR</h4>
                         </label>
                         <br />
                         <label for="Nombre">
-                            <h5>NUEVO DEPARTAMENTO</h5>
+                            <h5>NUEVO PROVEEDOR</h5>
                         </label>
                         <div class="form-row w-100">
                             <div class="col-7">
@@ -111,13 +106,24 @@
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="nombre" id="nombre">
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre">
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+                                    <label for="rfc">
+                                        RFC
+                                    </label>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="rfc" id="rfc">
+                                    <label for="telefono">
+                                        TELEFONO
+                                    </label>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono">
+                                    <label for="direccion">
+                                        DIRECCION
+                                    </label>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="direccion" id="direccion">
                                 </div>
                             </div>
 
@@ -125,9 +131,8 @@
                         <div class="form-row w-100">
                             <div class="form-group">
                                 <button class="btn btn-outline-secondary" type="submit">
-                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                        width="25px" height="25px">
-                                    GUARDAR DEPARTAMENTO
+                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                                    GUARDAR PROVEEDOR
                                 </button>
                             </div>
                         </div>
@@ -139,20 +144,22 @@
     </div>
 </div>
 </div>
+
 <script>
-const texto = document.querySelector('#texto'); 
-console.log(texto.value);
-function filtrar() {
-    document.getElementById("resultados").innerHTML = "";
-    fetch(`/departamento/buscador?texto=${texto.value}`, {
-            method: 'get'
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById("resultados").innerHTML = html
-        })
-}
-texto.addEventListener('keyup', filtrar);
-filtrar();
+    const texto = document.querySelector('#texto');
+
+
+    function filtrar() {
+        document.getElementById("resultados").innerHTML = "";
+        fetch(`/proveedor/buscador?texto=${texto.value}`, {
+                method: 'get'
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("resultados").innerHTML = html
+            })
+    }
+    texto.addEventListener('keyup', filtrar);
+    filtrar();
 </script>
 @endsection

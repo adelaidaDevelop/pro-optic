@@ -12,14 +12,14 @@
 </head>
 
 <body>
-    @if (count($departamentosB))
-    @foreach($departamentosB as $departamento)
-    <a href="{{url('/departamento/'.$departamento->id.'/edit/')}}" class="btn btn-light btn-block my-2 mx-1">{{$departamento->nombre}}</a-->
+    @if (count($proveedorB)) 
+    @foreach($proveedorB as $proveedor)
+    <a href="{{url('/proveedor/'.$proveedor->id.'/edit/')}}" class="btn btn-light btn-block my-2 mx-1">{{$proveedor->nombre}}</a-->
 
     @endforeach
     @else
     <div class="row">
-        <h5>No hay departamentos</h5>
+        <h5>No hay proveedores</h5>
     </div>
     @endif
 </body>

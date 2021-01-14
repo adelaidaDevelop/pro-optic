@@ -38,13 +38,13 @@
                     <!--El name debe ser igual al de la base de datos-->
                     <div id="costo_inicio">
                     <input class="mb-2" type="number" name="idProductos" id="idProductos" placeholder="Nombre producto" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:''}}" required disabled>
-
+                    <input class=" mt-4 mb-2" type="number" name="costoG1" id="costoG1" placeholder="0" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:'0'}}" required disabled>
                     </div>
                     <input class="mt-4 mb-2" type="number" onchange="calcularCostoInd()" name="piezas" id="piezas" placeholder="" value="{{ isset($subproducto->piezas)?$subproducto->piezas:''}}" required>
                     <div id= cost>
-                    <input class="mt-4 mb-1" type="number" name="costo_ind" id="costo" placeholder="" value="{{ isset($subproducto->costo_ind)?$subproducto->costo_ind:''}}" required>
+                    <input class="mt-3 mb-1" type="number" name="costo_ind" id="costo" placeholder="" value="{{ isset($subproducto->costo_ind)?$subproducto->costo_ind:''}}" required disabled>
                     </div>
-                    <input class="mt-4" type="number" name="precio_ind" id="precio_ind" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
+                    <input class="mt-3" type="number" name="precio_ind" id="precio_ind" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
                     
                 </div>
                 <div class="col-3 ">
@@ -135,7 +135,7 @@
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         let cuerpo = "";
         let contador = 1;
-        let costo = 0;
+      //  let costo = 0;
         for (count5 in productos) {
             if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                 cuerpo = cuerpo + `
@@ -147,10 +147,10 @@
             <td>` + productos[count5].idDepartamento + `</td>
         </tr>
         `;
-                costo = productos[count5].costo / piezas;
+               // costo = productos[count5].costo / piezas;
             }
         }
-        document.getElementById("costo").innerHTML = costo;
+      //  document.getElementById("costo").innerHTML = costo;
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
 
     };
@@ -158,24 +158,21 @@
     function agregarProducto(id) {
         let costoG=0;
         let costoAgregado="";
+        let name="";
         for (count4 in productos) {
             if (productos[count4].id === id) {
                 costoG= productos[count4].costo;
+                name= productos[count4].nombre;
                 costoAgregado =
                 `
-                <input class="mb-2" type="number" name="idProductos" id="idProductos" placeholder="`+productos[count4].nombre +`" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:'`+productos[count4].id+`'}}" required disabled>
-                <input class="mb-2" type="number" name="costoG2" id="costoG2" placeholder="`+costoG +`" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:'`+costoG+`'}}" required disabled>
-               
-                <label for="" class="mt-3">
-                        <h6>`+ costoG + `  </h6>
-                    </label>
+                <input class="mb-2" type="number" name="idProductos" id="idProductos" placeholder="`+name+`" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:'`+name+`'}}" required disabled>
+                <input class="mb-2 mt-4" type="number" name="costoG2" id="costoG2" placeholder="`+costoG +`" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:'`+costoG+`'}}" required disabled>
                 `;
                 
                 console.log(id);
             }
         }
         document.getElementById("costo_inicio").innerHTML = costoAgregado;
-
 
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         palabraBusqueda.value = "";
@@ -198,7 +195,7 @@
         console.log(costoInd);
         texto=
         `
-        <input class="mt-4 mb-1" type="number" name="costo_ind" id="costo" placeholder="`+costoInd+`" value="{{ isset($subproducto->costo_ind)?$subproducto->costo_ind:'`+costoInd+`'}}" required>
+        <input class="mt-4 mb-1" type="number" name="costo_ind" id="costo" placeholder="`+costoInd+`" value="{{ isset($subproducto->costo_ind)?$subproducto->costo_ind:'`+costoInd+`'}}" required disabled>
         
         `;
         document.getElementById("cost").innerHTML = texto;

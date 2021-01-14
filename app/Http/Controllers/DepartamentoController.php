@@ -36,7 +36,7 @@ class DepartamentoController extends Controller
      */
     public function create()
     {
-        return view('Departamento.create');
+       // return view('Departamento.create');
 
     }
 

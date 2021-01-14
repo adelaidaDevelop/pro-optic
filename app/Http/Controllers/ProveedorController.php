@@ -15,6 +15,8 @@ class ProveedorController extends Controller
     public function index()
     {
         //
+        $datos['proveedores'] = Proveedor::paginate();
+        return view('Proveedor.index',$datos);
     }
 
     /**
@@ -25,6 +27,7 @@ class ProveedorController extends Controller
     public function create()
     {
         //
+       // return view('Proveedor.create');
     }
 
     /**
@@ -36,6 +39,10 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
         //
+        $datosProveedor = request()->except('_token');
+        Proveedor::insert($datosProveedor);
+        
+        return redirect('proveedor');
     }
 
     /**
@@ -55,9 +62,13 @@ class ProveedorController extends Controller
      * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Proveedor $proveedor)
+    public function edit($id)
     {
         //
+        $datos['departamentos'] = Proveedor::paginate();
+        $datosD['d'] = Proveedor::findOrFail($id);
+        
+        return view('Proveedor.index',$datosD);
     }
 
     /**
@@ -67,9 +78,11 @@ class ProveedorController extends Controller
      * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Proveedor $proveedor)
+    public function update(Request $request, $id)
     {
-        //
+        $datosProveedor = request()->except(['_token','_method']);
+        Proveedor::where('id','=',$id)->update($datosProveedor);
+        return redirect('proveedor');
     }
 
     /**
@@ -78,8 +91,15 @@ class ProveedorController extends Controller
      * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Proveedor $proveedor)
+    public function destroy($id)//Departamento $departamento)
     {
-        //
+        Proveedor::destroy($id);
+        return redirect('proveedor');
+    }
+    public function buscador(Request $request)
+    {
+        $datosConsulta['proveedorB'] = Proveedor::where("nombre",'like',$request->texto."%")->get();
+        return view('Proveedor.form',$datosConsulta);
+        //return $datosConsulta;
     }
 }
