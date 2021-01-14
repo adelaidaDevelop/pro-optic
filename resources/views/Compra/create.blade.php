@@ -29,11 +29,11 @@
         @endsection
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 w-100">
             <!--CONSULTAR PRODUCTO -->
-            <div class="row border border-dark m-2 w-100">
+            <div class="row border mt-2 mb-2 border-dark">
                 <div class="col-12">
-                    <div class="row mx-2 mt-4">
+                    <div class="row mx-2 mt-3">
                         <label for="">
                             <h5 class="text-primary">
                                 <strong>
@@ -45,7 +45,7 @@
                     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
                     <div class="form-inline">
                         <div class="form-group">
-                            <label class="col form-check-label  mx-2" for="flexCheckChecked">
+                            <label class="col form-check-label" for="flexCheckChecked">
                                 PROVEEDOR
                             </label>
                             <select class="col form-control mr-3" name="proveedor" id="proveedor" required>
@@ -53,10 +53,10 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-check-label  mx-2" for="flexCheckChecked">
+                            <label class="form-check-label" for="flexCheckChecked">
                                 FECHA
                             </label>
-                            <input type="date" value="2020-01-09" min="" id="fechaCompra" class="form-control" />
+                            <input type="date" min="" id="fechaCompra" class="form-control mr-3" />
                             <!--select class="form-control" name="idDepartamento" id="idDepartamento" required>
                                 <option value="">10/12/2020</option>
                             </select-->
@@ -72,7 +72,7 @@
                                     <th>PRODUCTO</th>
                                     <th>CANTIDAD</th>
                                     <th>COSTO</th>
-                                    <th>GANANCIA %</th>
+                                    <th>GANANCIA</th>
                                     <th>PRECIO</th>
                                     <th>CADUCIDAD</th>
                                 </tr>
@@ -93,27 +93,18 @@
                         </table>
 
                     </div>
-                    <div class="row m-1">
+                    <div class="row mx-1 my-2">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
                             onclick="buscarProducto()">
                             AGREGAR PRODUCTO
                         </button>
-                    </div>
-                    <div class="d-flex flex-row-reverse bd-highlight m-1 ">
-                        <button type="button" onclick="guardarCompra()" class="btn btn-secondary"> GUARDAR
+                        <button type="button" onclick="verificarCompra()" class="btn btn-secondary d-flex ml-auto p-2"> GUARDAR
                             COMPRA</button>
                     </div>
-
-                    <!--div class="col mt-1 mb-4 ml-4 mr-2">
-                    <input type=" text" class="form-control" placeholder="Ingrese nombre del producto" />
-                    <ul class="nav flex-column nav-pills">
-                        <li class="btn btn-secondary nav-item m-1" onclick="producto()"><a class="nav-link">COCACOLA</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link">SABRITAS</a></li>
-                        <li class="nav-item"><a class="nav-link">CHETOS</a></li>
-                        <li class="nav-item"><a class="nav-link">PALMOLLIVE</a></li>
-                    </ul>
-                </div-->
+                    <!--div class="d-flex flex-row-reverse bd-highlight m-1 ">
+                        <button type="button" onclick="verificarCompra()" class="btn btn-secondary"> GUARDAR
+                            COMPRA</button>
+                    </div-->
                 </div>
             </div>
         </div>
@@ -158,6 +149,29 @@
             </div>
         </div>
     </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="confirmarCompraModal" tabindex="-1" role="dialog" aria-labelledby="confirmarCompraModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmarCompraModalLabel">CONFIRMAR COMPRA</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info" role="alert">
+            ¿ESTA SEGURO DE GUARDAR LA COMPRA?
+            SI PROCEDE YA NO SE MODIFICARÁ NI BORRARA EN EL FUTURO
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+        <button type="button" onclick="guardarCompra()" class="btn btn-primary">CONFIRMAR COMPRA</button>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
 let productosCompra = [];
@@ -242,43 +256,10 @@ async function buscarProducto() {
             }
         }
         productosEncontrados.innerHTML = cuerpo;
-
-        /*} else {
-            console.log("No responde :'v");
-            console.log(response);
-            throw new Error(response.statusText);
-        }*/
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
-    //cargarProductos();
-    /*const entrada = document.querySelector('#busquedaProducto');
-    let productosEncontrados = document.querySelector('#consultaBusqueda');
-    //const productos = @json($productos);
-    let contador = 1;
-    let cuerpo = "";
-    let departamentos = @json($departamentos);
-    for (let i in productos) {
-        if (productos[i].nombre.toUpperCase().includes(entrada.value.toUpperCase())) {
-            let departamento = "No lo busca";
-            for(let o in departamentos)
-            {
-                if(productos[i].idDepartamento === departamentos[o].id)
-                    departamento = departamentos[o].nombre;
-            }
-            cuerpo = cuerpo + `
-            <tr onclick="agregarProducto(` + productos[i].id + `)" data-dismiss="modal">
-                <td>` + contador++ + `</td>
-                <td>` + productos[i].codigoBarras + `</td>
-                <td>` + productos[i].nombre + `</td>
-                <td>` + productos[i].existencia + `</td>
-                <td>` + departamento + `</td>
-            </tr>
-            `;
-        }
-    }
-    productosEncontrados.innerHTML = cuerpo;*/
-};
+    };
 
 function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganancia, precio, caducidad) {
     let producto = {
@@ -332,7 +313,25 @@ function mostrarProductos() {
         `;
     }
     document.getElementById("productos").innerHTML = cuerpo;
-    $("input[type='number']").inputSpinner();
+    var props = {
+            decrementButton: "<strong>&minus;</strong>", // button text
+            incrementButton: "<strong>&plus;</strong>", // ..
+            groupClass: "", // css class of the resulting input-group
+            buttonsClass: "btn-outline-secondary",
+            buttonsWidth: "2rem",
+            textAlign: "center", // alignment of the entered number
+            autoDelay: 500, // ms threshold before auto value change
+            autoInterval: 50, // speed of auto value change
+            buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
+            locale: navigator.language, // the locale, per default detected automatically from the browser
+            template: // the template of the input
+                '<div class="input-group ${groupClass}">' +
+                '<div class="input-group-prepend"><button style="max-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
+                '<input type="text" inputmode="decimal" style="text-align: ${textAlign};" class="form-control form-control-text-input w-50"/>' +
+                '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
+                '</div>'
+        }
+    $("input[type='number']").inputSpinner(props);
 }
 
 function cantidad(id) {
@@ -645,48 +644,6 @@ function nuevoProducto() {
 
 }
 
-/*$('#formularioProducto').on('submit',"#btnEnviar", function(e) {
-    // evito que propague el submit
-    e.preventDefault();
-
-    // agrego la data del form a formData
-    //var formData = new FormData(this);
-    let datosProducto = new FormData(this);
-    //formData.append('_token', $('input[name=_token]').val());
-    //const formulario = document.querySelector('#formularioProducto');
-
-    //let datosProducto = new FormData(formulario);
-    datosProducto.append('_token', "{{ csrf_token() }}");
-    //alert(datosProducto);
-
-    (async () => {
-        try {
-            var init = {
-             // el método de envío de la información será POST
-            method: "POST",
-            // el cuerpo de la petición es una cadena de texto 
-            // con los datos en formato JSON
-            body: datosProducto // convertimos el objeto a texto
-            };
-            let respuesta = await fetch('/producto/', init);
-            if(respuesta.ok)
-            {
-                console.log(respuesta);
-                const cuerpoModal = document.querySelector('#cuerpoModal');
-                const tituloModal = document.querySelector('#exampleModalLabel');
-                cuerpoModal.innerHTML = ingresarProducto;
-                tituloModal.innerHTML = ingresarProductoTitulo;
-                await cargarProductos();
-                agregarProducto(productos[productos.length - 1].id);
-            }
-            
-        } catch (err) {
-            console.log("Error al realizar la petición AJAX: " + err.message);
-        }
-    })();
-});
-*/
-
 function cancelarProducto() {
     const cuerpoModal = document.querySelector('#cuerpoModal');
     const tituloModal = document.querySelector('#exampleModalLabel');
@@ -705,6 +662,19 @@ function cerrarModal() {
     const entrada = document.querySelector('#busquedaProducto').value = "";
     //cerrar.outerHTML = botonCerrarModal;
     $('#exampleModal').modal('hide');
+}
+
+function verificarCompra()
+{
+    if(productosCompra.length===0)
+    {
+        alert('NO TIENE NINGUN PRODUCTO AGREGADO');
+    }
+    else
+    {
+        $('#confirmarCompraModal').modal('show');
+    }
+        
 }
 
 function guardarCompra() {
@@ -726,32 +696,16 @@ function guardarCompra() {
         }
         // si tuvo éxito la petición
     }).done(function(respuesta) {
-        alert(respuesta);
+        alert('COMPRA GUARDADA EXITOSAMENTE');
+        productosCompra = [];
+        mostrarProductos();
+        $('#confirmarCompraModal').modal('hide');
         console.log(respuesta); //JSON.stringify(respuesta));
     }).fail(function(jqXHR, textStatus, errorThrown) {
-        alert('Error!!');
+        alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
         console.log(jqXHR, textStatus, errorThrown);
     });
 }
 </script>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
-<script>
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
-</script>
 @endsection
