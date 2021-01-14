@@ -66,7 +66,7 @@
                     <div class="row mt-1 mb-1 ml-1 mr-1 border border-dark" style="height:300px;overflow-y:auto;">
                         <table class="table table-bordered border-primary col-12">
                             <thead class="table-secondary text-primary">
-                                <tr>
+                                <tr class="text-center">
                                     <th>#</th>
                                     <th>CODIGO BARRAS</th>
                                     <th>PRODUCTO</th>
@@ -77,7 +77,7 @@
                                     <th>CADUCIDAD</th>
                                 </tr>
                             </thead>
-                            <tbody id="productos">
+                            <tbody class="text-center" id="productos">
                                 <tr>
                                     <td></td>
                                     <td></td>
@@ -438,11 +438,15 @@ function agregarProducto(id) {
 
 function quitarProducto(id) {
 
-    for (let i in productosCompra) {
+    let confirmacion = confirm("¿QUITAR PRODUCTO DE LA COMPRA?");
+    if(confirmacion == true)
+    {
+        for (let i in productosCompra) {
         if (productosCompra[i].id === id)
             productosCompra.splice(i, 1);
+        }
+        mostrarProductos();
     }
-    mostrarProductos();
     //var i = arr.indexOf( item );
     //if ( i !== -1 )  
 }
