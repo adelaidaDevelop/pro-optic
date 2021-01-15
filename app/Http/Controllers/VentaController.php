@@ -48,6 +48,7 @@ class VentaController extends Controller
         $datosCodificados = json_decode($datos,true);
         $venta = Venta::create([
             'estado' => 'vendido',
+            'idEmpleado' => 1,
         ]);
         
         foreach($datosCodificados as $datosProducto)
