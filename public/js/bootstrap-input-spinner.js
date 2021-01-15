@@ -97,7 +97,7 @@
             var suffix = $original.attr("data-suffix") || ""
 
             if (prefix) {
-                var prefixElement = $('<span class="input-group-text">' + prefix + '</span>')
+                var prefixElement = $('<span class="input-group-text mx-0 px-1">' + prefix + '</span>')
                 $inputGroup.find(".input-group-prepend").append(prefixElement)
             }
             if (suffix) {
