@@ -115,7 +115,7 @@
                             <!--form method="get" action="{{url('/empleado')}}"-->
                             <!--{url('/departamento/'.$departamento->id.'/edit/')}}-->
                             <button class="btn btn-primary" type="button" style="background-color:#3366FF"
-                                data-toggle="modal" data-target="#procesarVentaModal" value="informacion" id="boton">
+                                onclick="verificarVenta()" value="informacion" id="boton">
                                 <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
                                 COBRAR
@@ -168,13 +168,13 @@
     </div>
 </div>
 
-<div class="modal fade" id="procesarVentaModal" tabindex="-1" aria-labelledby="procesarVentaModalLabel"
+<div class="modal fade" id="confirmarVentaModal" tabindex="-1" aria-labelledby="confirmarVentaModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
 
-                <h5 class="modal-title" id="procesarVentaModalLabel">CONFIRMAR VENTA</h5>
+                <h5 class="modal-title" id="confirmarVentaModalLabel">CONFIRMAR VENTA</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -218,8 +218,8 @@
                 </div-->
                 <div class="col-12">
                     <ul class="nav nav-pills mb-3  d-flex justify-content-center" id="pills-tab" role="tablist">
-                        <li class="nav-item mx-1" role="presentation">
-                            <button class="btn mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/efectivo.png);width:80px;height:80px;
+                        <li class="nav-item mx-2" role="presentation">
+                            <button class="btn nav-link active mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/efectivo.png);width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-home"
                                 role="tab" aria-controls="pills-home" aria-selected="true">
                                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
@@ -229,8 +229,8 @@
                                 role="tab" aria-controls="pills-home" aria-selected="true"><img src="{{ asset('img\efectivo.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px"><h6 class="mx-auto">EFECTIVO</h6></a-->
                         </li>
-                        <li class="nav-item mx-1" role="presentation">
-                            <button class="btn mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/credito.png);width:80px;height:80px;
+                        <li class="nav-item mx-2" role="presentation">
+                            <button class="btn nav-link mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/credito.png);width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-profile"
                                 role="tab" aria-controls="pills-profile" aria-selected="true">
                                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
@@ -249,18 +249,18 @@
                             aria-labelledby="pills-home-tab">
                             <div class="col-6 mx-auto">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-5">
                                         <p>PAGÓ CON: </p>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-7">
                                         <input type="number" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-5">
                                         <p>SU CAMBIO: </p>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-7">
                                         <p>0.00</p>
                                     </div>
                                 </div>
@@ -270,26 +270,26 @@
                             aria-labelledby="pills-profile-tab">
                             <div class="col-8 mx-auto">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-3">
                                         <p>CLIENTE: </p>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-9">
                                         <input type="text" class="form-control" />
                                     </div>
                                 </div> 
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-3">
                                         <p>PAGÓ CON:</p>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-9">
                                         <input type="number" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-3">
                                         <p>AUN DEBE: </p>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-9">
                                         <p>0.00</p>
                                     </div>
                                 </div>
@@ -504,9 +504,23 @@ function realizarVenta() {
         console.log(respuesta); //JSON.stringify(respuesta));
     });
 }
+
+function verificarVenta()
+{
+    if(productosVenta.length===0)
+    {
+        alert('NO TIENE NINGUN PRODUCTO AGREGADO');
+    }
+    else
+    {
+        $('#confirmarVentaModal').modal('show');
+    }
+        
+}
+
 </script>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
-$("input[type='number']").inputSpinner()
+//$("input[type='number']").inputSpinner()
 </script>
 @endsection
