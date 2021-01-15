@@ -253,7 +253,7 @@
                                         <p>PAGÓ CON: </p>
                                     </div>
                                     <div class="col-7">
-                                        <input type="number" class="form-control" />
+                                        <input type="number" class="form-control" data-decimals="2" oninput="calcularCambio()" id="pago"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -261,7 +261,7 @@
                                         <p>SU CAMBIO: </p>
                                     </div>
                                     <div class="col-7">
-                                        <p>0.00</p>
+                                        <p id="cambio">$ 0.00</p>
                                     </div>
                                 </div>
                             </div>
@@ -327,9 +327,9 @@ function agregarProductoAVenta(id, codigoBarras, nombre, existencia, precio, can
     productosVenta.push(productos);
     console.log(productosVenta);
 };
-
-function total() {
-    let total = 0.00;
+let total=0;
+function calcularTotal() {
+    //let total = 0.00;
     for (count0 in productosVenta) {
         total = total + productosVenta[count0].subtotal;
 
@@ -360,7 +360,7 @@ function mostrarProductos() {
     }
     document.getElementById("info").innerHTML = cuerpo;
     $("input[type='number']").inputSpinner();
-    total();
+    calcularTotal();
     //min="1" max="` + productosVenta[count].existencia+`"
 };
 
@@ -477,8 +477,6 @@ function cantidad(id) {
             }
         }
         mostrarProductos()
-        //document.getElementById("importe"+id).innerHTML = productosVenta[count6].subtotal;
-        //total();
 
     }
     //const importeProducto = document.querySelector('#importe'+id);
@@ -505,6 +503,26 @@ function realizarVenta() {
     });
 }
 
+function calcularCambio()
+{
+    
+    const pago = document.querySelector('#pago');
+    const cambio = document.querySelector('#cambio');
+    if(parseFloat(pago.value)>total)
+    {
+        //alert('si entra');
+        let diferencia = parseFloat(pago.value)-parseFloat(total);
+        console.log(pago.value);
+        console.log(total);
+        cambio.textContent ="$" + diferencia;
+        //cambio.value = parseFloat(pago.value)-total;
+    }
+    else{
+        cambio.textContent ="$ 0.00"
+    }
+
+}
+
 function verificarVenta()
 {
     if(productosVenta.length===0)
@@ -517,6 +535,7 @@ function verificarVenta()
     }
         
 }
+
 
 </script>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
