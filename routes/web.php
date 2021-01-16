@@ -6,6 +6,7 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\SubproductoController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,7 @@ Route::get('/producto/buscador', [ProductoController::class,'buscador']);
 
 Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
 Route::get('/proveedor/buscador', [ProveedorController::class,'buscador']);
+Route::get('/cliente/buscador', [ClienteController::class,'buscador']);
 //Route::get('/departamento/buscadorProducto', [CompraController::class,'buscadorProducto']);
 
 //Route::get('/departamento/buscador2', [DepartamentoController::class,'buscador2']);
@@ -53,6 +55,8 @@ Route::resource('venta', VentaController::class);
 
 Route::get('emple', [EmpleadoController::class,'index2']);
 Route::resource('proveedor', ProveedorController::class);
+
+Route::resource('cliente', ClienteController::class);
 
 
 // RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO
