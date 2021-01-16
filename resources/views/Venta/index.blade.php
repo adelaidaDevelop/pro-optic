@@ -256,20 +256,20 @@
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab">
                             <div class="col-6 mx-auto">
-                                <div class="row">
+                                <div class="row my-1">
                                     <div class="col-5">
-                                        <p>PAGÓ CON: </p>
+                                        <p class="h5">PAGÓ CON: </p>
                                     </div>
                                     <div class="col-7">
                                         <input type="number" class="form-control" data-decimals="2" oninput="calcularCambio()" id="pago"/>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row my-1">
                                     <div class="col-5">
-                                        <p>SU CAMBIO: </p>
+                                        <p class="h5">SU CAMBIO: </p>
                                     </div>
                                     <div class="col-7">
-                                        <p id="cambio">$ 0.00</p>
+                                        <p class="h5" id="cambio">$ 0.00</p>
                                     </div>
                                 </div>
                             </div>
@@ -277,28 +277,28 @@
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel"
                             aria-labelledby="pills-profile-tab">
                             <div class="col-8 mx-auto">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <p>CLIENTE: </p>
+                                <div class="row my-1">
+                                    <div class="col-4">
+                                        <p  class="h5">CLIENTE: </p>
                                     </div>
-                                    <div class="col-9">
+                                    <div class="col-8">
                                         <input type="text" class="form-control" />
                                     </div>
                                 </div> 
-                                <div class="row">
-                                    <div class="col-3">
-                                        <p>PAGÓ CON:</p>
+                                <div class="row my-1">
+                                    <div class="col-4">
+                                        <p  class="h5">PAGÓ CON:</p>
                                     </div>
-                                    <div class="col-9">
+                                    <div class="col-8">
                                         <input type="number" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <p>AUN DEBE: </p>
+                                <div class="row my-1">
+                                    <div class="col-4">
+                                        <p class="h5">AUN DEBE: </p>
                                     </div>
-                                    <div class="col-9">
-                                        <p>0.00</p>
+                                    <div class="col-8">
+                                        <p class="h5">0.00</p>
                                     </div>
                                 </div>
                             </div>
@@ -308,8 +308,8 @@
                     </div>
                 </div>
                 <div id="pieModal" class="modal-footer">
-                    <button type="button" onclick="realizarVenta()" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
-                    <button type="button" onclick="realizarVenta()" class="btn btn-primary">SOLO COBRAR</button>
+                    <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
+                    <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">SOLO COBRAR</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -320,6 +320,28 @@
 <script>
 let productosVenta = [];
 const productos = @json($datosP);
+
+async function cargarProductos() {
+    let response = "Sin respuesta";
+    try {
+        response = await fetch(`/producto/productos`);
+        if (response.ok) {
+            productos = await response.json();
+            console.log(productos);
+            return productos;
+            //console.log(response);
+
+        } else {
+            console.log("No responde :'v");
+            console.log(response);
+            throw new Error(response.statusText);
+        }
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+    //return response;
+}
+
 
 function agregarProductoAVenta(id, codigoBarras, nombre, existencia, precio, cantidad, subtotal) {
     //console.log(id);
@@ -543,7 +565,8 @@ function cantidad(id) {
 }
 
 function realizarVentaEfectivo() {
-    let json = JSON.stringify(productosVenta)
+    let json = JSON.stringify(productosVenta);
+    const pago = document.querySelector('#pago');
     $.ajax({
         // metodo: puede ser POST, GET, etc
         method: "POST",
@@ -553,12 +576,16 @@ function realizarVentaEfectivo() {
         data: {
             datos: json,
             estado: 'vendido',
+            pago: parseFloat(pago.value),
             //_token: $("meta[name='csrf-token']").attr("content")
             _token: "{{ csrf_token() }}"
         }
         // si tuvo éxito la petición
     }).done(function(respuesta) {
-        alert(respuesta);
+        //alert(respuesta);
+        productosVenta = [];
+        mostrarProductos();
+        $('#confirmarVentaModal').modal('hide');
         console.log(respuesta); //JSON.stringify(respuesta));
     });
 }
@@ -594,7 +621,8 @@ function calcularCambio()
         let diferencia = parseFloat(pago.value)-parseFloat(total);
         console.log(parseFloat(pago.value));
         console.log(parseFloat(total));
-        cambio.textContent ="$" + diferencia;
+        cambio.innerHTML ="$ "+'<strong>'+diferencia+'</strong>';
+        //cambio.textContent ="$" + '<strong>'+diferencia+'</strong>';
         //cambio.value = parseFloat(pago.value)-total;
     }
     else{
