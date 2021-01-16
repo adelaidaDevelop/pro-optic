@@ -227,7 +227,8 @@
                 <div class="col-12">
                     <ul class="nav nav-pills mb-3  d-flex justify-content-center" id="pills-tab" role="tablist">
                         <li class="nav-item mx-2" role="presentation">
-                            <button onclick="modoPago('efectivo')" class="btn nav-link active mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/efectivo.png);width:80px;height:80px;
+                            <button onclick="modoPago('efectivo')" class="btn nav-link active mx-auto" type="button"
+                                value="informacion" id="boton" style="background-image: url(img/efectivo.png);width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-home"
                                 role="tab" aria-controls="pills-home" aria-selected="true">
                                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
@@ -238,7 +239,8 @@
                                     width="25px" height="25px"><h6 class="mx-auto">EFECTIVO</h6></a-->
                         </li>
                         <li class="nav-item mx-2" role="presentation">
-                            <button onclick="modoPago('credito')" class="btn nav-link mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/credito.png);width:80px;height:80px;
+                            <button onclick="modoPago('credito')" class="btn nav-link mx-auto" type="button"
+                                value="informacion" id="boton" style="background-image: url(img/credito.png);width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-profile"
                                 role="tab" aria-controls="pills-profile" aria-selected="true">
                                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
@@ -261,7 +263,8 @@
                                         <p class="h5">PAGÓ CON: </p>
                                     </div>
                                     <div class="col-7">
-                                        <input type="number" class="form-control" data-decimals="2" oninput="calcularCambio()" id="pago"/>
+                                        <input type="number" class="form-control" data-decimals="2"
+                                            oninput="calcularCambio()" id="pago" min=0 />
                                     </div>
                                 </div>
                                 <div class="row my-1">
@@ -279,15 +282,15 @@
                             <div class="col-8 mx-auto">
                                 <div class="row my-1">
                                     <div class="col-4">
-                                        <p  class="h5">CLIENTE: </p>
+                                        <p class="h5">CLIENTE: </p>
                                     </div>
                                     <div class="col-8">
                                         <input type="text" class="form-control" />
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row my-1">
                                     <div class="col-4">
-                                        <p  class="h5">PAGÓ CON:</p>
+                                        <p class="h5">PAGÓ CON:</p>
                                     </div>
                                     <div class="col-8">
                                         <input type="number" class="form-control" />
@@ -308,7 +311,8 @@
                     </div>
                 </div>
                 <div id="pieModal" class="modal-footer">
-                    <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
+                    <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">COBRAR E IMPRIMIR
+                        TICKET</button>
                     <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">SOLO COBRAR</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
@@ -319,7 +323,7 @@
 
 <script>
 let productosVenta = [];
-const productos = @json($datosP);
+let productos = @json($datosP);
 
 async function cargarProductos() {
     let response = "Sin respuesta";
@@ -327,7 +331,7 @@ async function cargarProductos() {
         response = await fetch(`/producto/productos`);
         if (response.ok) {
             productos = await response.json();
-            console.log(productos);
+            //console.log(productos);
             return productos;
             //console.log(response);
 
@@ -337,7 +341,7 @@ async function cargarProductos() {
             throw new Error(response.statusText);
         }
     } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
+        console.log("Error al realizar la petición de productos AJAX: " + err.message);
     }
     //return response;
 }
@@ -357,11 +361,12 @@ function agregarProductoAVenta(id, codigoBarras, nombre, existencia, precio, can
     productosVenta.push(productos);
     console.log(productosVenta);
 };
-let total=0;
+let total = 0;
+
 function calcularTotal() {
     total = 0.00;
     for (count0 in productosVenta) {
-        total = total + productosVenta[count0].subtotal;
+        total = parseFloat(total + productosVenta[count0].subtotal);
 
     }
     document.getElementById("total").innerHTML = "$ " + total;
@@ -386,7 +391,7 @@ function mostrarProductos() {
             ` type="number"/></td>
             <td id="importe` + productosVenta[count1].id + `">` + productosVenta[count1].subtotal + `</td>
             <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(` + productosVenta[count1]
-                .id + `)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            .id + `)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                 </svg></i></button>
@@ -396,26 +401,25 @@ function mostrarProductos() {
     }
     document.getElementById("info").innerHTML = cuerpo;
     var props = {
-            decrementButton: "<strong>&minus;</strong>", // button text
-            incrementButton: "<strong>&plus;</strong>", // ..
-            groupClass: "", // css class of the resulting input-group
-            buttonsClass: "btn-outline-secondary",
-            buttonsWidth: "2rem",
-            textAlign: "center", // alignment of the entered number
-            autoDelay: 500, // ms threshold before auto value change
-            autoInterval: 50, // speed of auto value change
-            buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
-            locale: navigator.language, // the locale, per default detected automatically from the browser
-            template: // the template of the input
-                '<div class="input-group ${groupClass}">' +
-                '<div class="input-group-prepend"><button style="min-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
-                '<input type="text" inputmode="decimal" style="text-align: ${textAlign};width:20px;" class="form-control form-control-text-input"/>' +
-                '<div class="input-group-append"><button style="min-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
-                '</div>'
-        }
-    for(let i in productosVenta)
-    {
-        $("input[id='valor"+productosVenta[i].id+"']").inputSpinner(props);
+        decrementButton: "<strong>&minus;</strong>", // button text
+        incrementButton: "<strong>&plus;</strong>", // ..
+        groupClass: "", // css class of the resulting input-group
+        buttonsClass: "btn-outline-secondary",
+        buttonsWidth: "2rem",
+        textAlign: "center", // alignment of the entered number
+        autoDelay: 500, // ms threshold before auto value change
+        autoInterval: 50, // speed of auto value change
+        buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
+        locale: navigator.language, // the locale, per default detected automatically from the browser
+        template: // the template of the input
+            '<div class="input-group ${groupClass}">' +
+            '<div class="input-group-prepend"><button style="min-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
+            '<input type="text" inputmode="decimal" style="text-align: ${textAlign};width:20px;" class="form-control form-control-text-input"/>' +
+            '<div class="input-group-append"><button style="min-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
+            '</div>'
+    }
+    for (let i in productosVenta) {
+        $("input[id='valor" + productosVenta[i].id + "']").inputSpinner(props);
     }
     calcularTotal();
     //min="1" max="` + productosVenta[count].existencia+`"
@@ -423,17 +427,16 @@ function mostrarProductos() {
 //$("input[type='number']").inputSpinner();
 function quitarProducto(id) {
 
-let confirmacion = confirm("¿QUITAR PRODUCTO DE LA VENTA?");
-if(confirmacion == true)
-{
-    for (let i in productosVenta) {
-    if (productosVenta[i].id === id)
-        productosVenta.splice(i, 1);
+    let confirmacion = confirm("¿QUITAR PRODUCTO DE LA VENTA?");
+    if (confirmacion == true) {
+        for (let i in productosVenta) {
+            if (productosVenta[i].id === id)
+                productosVenta.splice(i, 1);
+        }
+        mostrarProductos();
     }
-    mostrarProductos();
-}
-//var i = arr.indexOf( item );
-//if ( i !== -1 )  
+    //var i = arr.indexOf( item );
+    //if ( i !== -1 )  
 }
 
 
@@ -547,52 +550,59 @@ function cantidad(id) {
     */
     //console.log(valorProducto.max - valorProducto.value);
     //if(valorProducto.value >= valorProducto.min)
-      //  console.log(valorProducto.value - valorProducto.min);
-    if(parseInt(valorProducto.max) > parseInt(valorProducto.value))
+    //  console.log(valorProducto.value - valorProducto.min);
+    if (parseInt(valorProducto.max) > parseInt(valorProducto.value))
         console.log(parseInt(valorProducto.max) - parseInt(valorProducto.value));
     //if (valorProducto.value >= valorProducto.min && valorProducto.value <= valorProducto.max) {
-        
-        for (count6 in productosVenta) {
-            if (productosVenta[count6].id === id) {
-                productosVenta[count6].cantidad = parseInt(valorProducto.value);
-                productosVenta[count6].subtotal = productosVenta[count6].precio * productosVenta[count6].cantidad;
-            }
+
+    for (count6 in productosVenta) {
+        if (productosVenta[count6].id === id) {
+            productosVenta[count6].cantidad = parseInt(valorProducto.value);
+            productosVenta[count6].subtotal = productosVenta[count6].precio * productosVenta[count6].cantidad;
         }
-        mostrarProductos()
+    }
+    mostrarProductos()
 
     //}
     //const importeProducto = document.querySelector('#importe'+id);
 }
 
-function realizarVentaEfectivo() {
-    let json = JSON.stringify(productosVenta);
-    const pago = document.querySelector('#pago');
-    $.ajax({
-        // metodo: puede ser POST, GET, etc
-        method: "POST",
-        // la URL de donde voy a hacer la petición
-        url: '/venta',
-        // los datos que voy a enviar para la relación
-        data: {
-            datos: json,
-            estado: 'vendido',
-            pago: parseFloat(pago.value),
-            //_token: $("meta[name='csrf-token']").attr("content")
-            _token: "{{ csrf_token() }}"
-        }
-        // si tuvo éxito la petición
-    }).done(function(respuesta) {
-        //alert(respuesta);
-        productosVenta = [];
-        mostrarProductos();
-        $('#confirmarVentaModal').modal('hide');
-        console.log(respuesta); //JSON.stringify(respuesta));
-    });
+async function realizarVentaEfectivo() {
+    try {
+        let json = JSON.stringify(productosVenta);
+        const pago = document.querySelector('#pago');
+        let funcion = $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: '/venta',
+            // los datos que voy a enviar para la relación
+            data: {
+                datos: json,
+                estado: 'vendido',
+                pago: parseFloat(pago.value),
+                //_token: $("meta[name='csrf-token']").attr("content")
+                _token: "{{ csrf_token() }}"
+            }
+            // si tuvo éxito la petición
+        }).done(function(respuesta) {
+            //alert(respuesta);
+            productosVenta = [];
+            mostrarProductos();
+            $('#confirmarVentaModal').modal('hide');
+            console.log(respuesta); //JSON.stringify(respuesta));
+        });
+        await cargarProductos();
+        //console.log(p);
+        //console.log(funcion);
+    }catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
 }
 
 function realizarVentaCredito() {
     let json = JSON.stringify(productosVenta)
-    $.ajax({
+    let funcion = $.ajax({
         // metodo: puede ser POST, GET, etc
         method: "POST",
         // la URL de donde voy a hacer la petición
@@ -609,55 +619,50 @@ function realizarVentaCredito() {
         alert(respuesta);
         console.log(respuesta); //JSON.stringify(respuesta));
     });
+    console.log(funcion);
 }
-function calcularCambio()
-{
+
+function calcularCambio() {
     
     const pago = document.querySelector('#pago');
+
     const cambio = document.querySelector('#cambio');
-    if(parseFloat(pago.value)>total)
-    {
+    if (parseFloat(pago.value) > total) {
         //alert('si entra');
-        let diferencia = parseFloat(pago.value)-parseFloat(total);
+        let diferencia = parseFloat(pago.value) - parseFloat(total);
         console.log(parseFloat(pago.value));
         console.log(parseFloat(total));
-        cambio.innerHTML ="$ "+'<strong>'+diferencia+'</strong>';
+        cambio.innerHTML = "$ " + '<strong>' + diferencia + '</strong>';
         //cambio.textContent ="$" + '<strong>'+diferencia+'</strong>';
         //cambio.value = parseFloat(pago.value)-total;
-    }
-    else{
-        cambio.textContent ="$ 0.00"
+    } else {
+        cambio.textContent = "$ 0.00"
     }
 
 }
 
-function verificarVenta()
-{
-    if(productosVenta.length===0)
-    {
+function verificarVenta() {
+    if (productosVenta.length === 0) {
         alert('NO TIENE NINGUN PRODUCTO AGREGADO');
-    }
-    else
-    {
+    } else {
+        const pago = document.querySelector('#pago');
+        pago.value = parseFloat(total);
         $('#confirmarVentaModal').modal('show');
     }
-        
+
 }
 
-function modoPago(tipoPago)
-{
+function modoPago(tipoPago) {
     const pieModal = document.querySelector('#pieModal');
-    let cuerpo="";
-    if(tipoPago==='efectivo')
-    {
+    let cuerpo = "";
+    if (tipoPago === 'efectivo') {
         cuerpo = `
         <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
         <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">SOLO COBRAR</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     `;
     }
-    if(tipoPago==='credito')
-    {
+    if (tipoPago === 'credito') {
         cuerpo = `
         <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
         <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">SOLO COBRAR</button>
@@ -665,13 +670,12 @@ function modoPago(tipoPago)
     `;
     }
     pieModal.innerHTML = cuerpo;
-                    
-}
 
+}
 </script>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
-    let valor = $("input[type='number']").inputSpinner();
-    console.log(valor);
+let valor = $("input[type='number']").inputSpinner();
+console.log(valor);
 </script>
 @endsection
