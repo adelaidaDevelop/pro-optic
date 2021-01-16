@@ -58,7 +58,7 @@ Route::resource('proveedor', ProveedorController::class);
 
 Route::resource('cliente', ClienteController::class);
 
-
+Route::get('listaDeudor', [ClienteController::class,'listaDeudor']);
 // RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO
 
 //

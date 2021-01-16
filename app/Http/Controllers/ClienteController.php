@@ -99,4 +99,7 @@ class ClienteController extends Controller
         return view('cliente.form',$datosConsulta);
         //return $datosConsulta;
     }
+    public function listaDeudor(){
+        return view('ListaDeudor.index');
+    }
 }

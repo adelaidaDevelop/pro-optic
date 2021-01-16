@@ -24,12 +24,7 @@ SUBPRODUCTOS
             <div class="col-2 border border-primary mt-2 mb-4 ml-4 mr-2">
 
                 <br />
-                <select name="idDepartamento" id="idDepartamento" required>
-                    <option value="">DEPARTAMENTO</option>
-                    @foreach($d as $departamento)
-                    <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
-                    @endforeach
-                </select>
+                
                 <br /> <br />
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
