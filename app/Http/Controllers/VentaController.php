@@ -42,14 +42,16 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        $datosP= Producto::all();
-        $datos['departamentos'] = Producto::paginate();
+        //$datosP= Producto::all();
+        //$datos['departamentos'] = Producto::paginate();
         $datos = $request->input('datos');
         $estado = $request->input('estado');
+        $pago = $request->input('pago');
         $datosCodificados = json_decode($datos,true);
         $venta = Venta::create([
             'estado' => $estado,
             'idEmpleado' => 1,
+            'pago' => $pago,
         ]);
         
         foreach($datosCodificados as $datosProducto)
@@ -60,9 +62,14 @@ class VentaController extends Controller
             $producto->subtotal = $datosProducto['subtotal'];
             $producto->idVentas = $venta->id;
             $producto->save();
+
+            $actualizarProducto = Producto::find($datosProducto['id']);//->update(['existencia'=>]);
+            $actualizarProducto->existencia = $actualizarProducto['existencia'] - $datosProducto['cantidad'];
+            $actualizarProducto->save();
+
         }
 
-        return "Si funciona";//view('Venta.index',compact('datosP'));
+        return true;//view('Venta.index',compact('datosP'));
     }
 
     /**

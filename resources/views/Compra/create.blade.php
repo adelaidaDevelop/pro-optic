@@ -302,8 +302,8 @@ function mostrarProductos() {
                 id="precio` + productosCompra[count1].id + `" min="0" ` +
             ` type="number" data-decimals="2" />` + `</td>
             <td><input onchange="caducidad(` + productosCompra[count1].id + `)" type="date" value="` + productosCompra[
-                count1].caducidad + `" min="` +
-            productosCompra[count1].caducidad + `" class="form-control p-1 m-0" id="caducidad` + productosCompra[count1].id + `" />
+                count1].caducidad + `" min="` + productosCompra[count1].caducidad +
+                 `" class="form-control p-1 m-0" id="caducidad` + productosCompra[count1].id + `" style="width:145px" />
             </td>
             <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(` + productosCompra[count1]
             .id + `)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -327,7 +327,7 @@ function mostrarProductos() {
             template: // the template of the input
                 '<div class="input-group ${groupClass}">' +
                 '<div class="input-group-prepend"><button style="max-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
-                '<input type="text" inputmode="decimal" style="text-align: ${textAlign};width=80px;" class="form-control form-control-text-input"/>' +
+                '<input type="text" inputmode="decimal" style="text-align: ${textAlign};" class="form-control form-control-text-input"/>' +
                 '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
                 '</div>'
         }
