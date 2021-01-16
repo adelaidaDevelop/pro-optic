@@ -350,7 +350,7 @@ function calcularTotal() {
 function mostrarProductos() {
     let cuerpo = "";
     let contador = 1;
-    for (count1 in productosVenta) {
+    for (let count1 in productosVenta) {
         cuerpo = cuerpo + `
         <tr class="text-center">
             <th scope="row">` + contador++ + `</th>
@@ -358,10 +358,10 @@ function mostrarProductos() {
             <td>` + productosVenta[count1].nombre + `</td>
             <td>` + productosVenta[count1].existencia + `</td>
             <td>` + productosVenta[count1].precio + `</td>
-            <td><input  value="` + productosVenta[count1].cantidad + `" 
-                oninput="cantidad(` + productosVenta[count1].id + `)"  
-                id="valor` + productosVenta[count1].id + `" min="1" max="` + productosVenta[count1].existencia +
-            `" type="number"/></td>
+            <td><input  value=` + productosVenta[count1].cantidad + ` 
+                onchange="cantidad(` + productosVenta[count1].id + `)"  
+                id="valor` + productosVenta[count1].id + `" min=1 max=` + productosVenta[count1].existencia +
+            ` type="number"/></td>
             <td id="importe` + productosVenta[count1].id + `">` + productosVenta[count1].subtotal + `</td>
             <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(` + productosVenta[count1]
                 .id + `)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -373,12 +373,27 @@ function mostrarProductos() {
         `;
     }
     document.getElementById("info").innerHTML = cuerpo;
-    for(let count1 in productosVenta)
+    var props = {
+            decrementButton: "<strong>&minus;</strong>", // button text
+            incrementButton: "<strong>&plus;</strong>", // ..
+            groupClass: "", // css class of the resulting input-group
+            buttonsClass: "btn-outline-secondary",
+            buttonsWidth: "2rem",
+            textAlign: "center", // alignment of the entered number
+            autoDelay: 500, // ms threshold before auto value change
+            autoInterval: 50, // speed of auto value change
+            buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
+            locale: navigator.language, // the locale, per default detected automatically from the browser
+            template: // the template of the input
+                '<div class="input-group ${groupClass}">' +
+                '<div class="input-group-prepend"><button style="min-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
+                '<input type="text" inputmode="decimal" style="text-align: ${textAlign};width:20px;" class="form-control form-control-text-input"/>' +
+                '<div class="input-group-append"><button style="min-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
+                '</div>'
+        }
+    for(let i in productosVenta)
     {
-        $("input[id='valor"+productosVenta[count1].id+"']").inputSpinner();
-        $("input[id='importe"+productosVenta[count1].id+"']").inputSpinner();
-        //document.getElementById("valor"+productosVenta[count1].id).inputSpinner();
-        //document.getElementById("importe"+productosVenta[count1].id).inputSpinner();
+        $("input[id='valor"+productosVenta[i].id+"']").inputSpinner(props);
     }
     calcularTotal();
     //min="1" max="` + productosVenta[count].existencia+`"
@@ -504,17 +519,26 @@ function cantidad(id) {
     //alert('Si entro en la funcion'+id);
     const valorProducto = document.querySelector('#valor' + id);
     //alert(valorProducto.value);
-    if (valorProducto.value >= valorProducto.min && valorProducto.value <= valorProducto.max) {
-
+    /*console.log(valorProducto.value);
+    console.log(valorProducto.min);
+    console.log(valorProducto.max);
+    */
+    //console.log(valorProducto.max - valorProducto.value);
+    //if(valorProducto.value >= valorProducto.min)
+      //  console.log(valorProducto.value - valorProducto.min);
+    if(parseInt(valorProducto.max) > parseInt(valorProducto.value))
+        console.log(parseInt(valorProducto.max) - parseInt(valorProducto.value));
+    //if (valorProducto.value >= valorProducto.min && valorProducto.value <= valorProducto.max) {
+        
         for (count6 in productosVenta) {
             if (productosVenta[count6].id === id) {
-                productosVenta[count6].cantidad = valorProducto.value;
+                productosVenta[count6].cantidad = parseInt(valorProducto.value);
                 productosVenta[count6].subtotal = productosVenta[count6].precio * productosVenta[count6].cantidad;
             }
         }
         mostrarProductos()
 
-    }
+    //}
     //const importeProducto = document.querySelector('#importe'+id);
 }
 
