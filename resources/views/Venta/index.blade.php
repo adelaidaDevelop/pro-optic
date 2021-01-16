@@ -156,6 +156,14 @@
                             </tr>
                         </thead>
                         <tbody id="consultaBusqueda">
+                            <tr class="text-center">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -219,7 +227,7 @@
                 <div class="col-12">
                     <ul class="nav nav-pills mb-3  d-flex justify-content-center" id="pills-tab" role="tablist">
                         <li class="nav-item mx-2" role="presentation">
-                            <button class="btn nav-link active mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/efectivo.png);width:80px;height:80px;
+                            <button onclick="modoPago('efectivo')" class="btn nav-link active mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/efectivo.png);width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-home"
                                 role="tab" aria-controls="pills-home" aria-selected="true">
                                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
@@ -230,7 +238,7 @@
                                     width="25px" height="25px"><h6 class="mx-auto">EFECTIVO</h6></a-->
                         </li>
                         <li class="nav-item mx-2" role="presentation">
-                            <button class="btn nav-link mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/credito.png);width:80px;height:80px;
+                            <button onclick="modoPago('credito')" class="btn nav-link mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/credito.png);width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-profile"
                                 role="tab" aria-controls="pills-profile" aria-selected="true">
                                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
@@ -299,9 +307,9 @@
                             aria-labelledby="pills-contact-tab">...</div-->
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
-                    <button type="button" class="btn btn-primary">SOLO COBRAR</button>
+                <div id="pieModal" class="modal-footer">
+                    <button type="button" onclick="realizarVenta()" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
+                    <button type="button" onclick="realizarVenta()" class="btn btn-primary">SOLO COBRAR</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -329,7 +337,7 @@ function agregarProductoAVenta(id, codigoBarras, nombre, existencia, precio, can
 };
 let total=0;
 function calcularTotal() {
-    //let total = 0.00;
+    total = 0.00;
     for (count0 in productosVenta) {
         total = total + productosVenta[count0].subtotal;
 
@@ -351,18 +359,46 @@ function mostrarProductos() {
             <td>` + productosVenta[count1].existencia + `</td>
             <td>` + productosVenta[count1].precio + `</td>
             <td><input  value="` + productosVenta[count1].cantidad + `" 
-                onchange="cantidad(` + productosVenta[count1].id + `)"  
+                oninput="cantidad(` + productosVenta[count1].id + `)"  
                 id="valor` + productosVenta[count1].id + `" min="1" max="` + productosVenta[count1].existencia +
             `" type="number"/></td>
             <td id="importe` + productosVenta[count1].id + `">` + productosVenta[count1].subtotal + `</td>
+            <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(` + productosVenta[count1]
+                .id + `)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg></i></button>
+            </td>
         </tr>
         `;
     }
     document.getElementById("info").innerHTML = cuerpo;
-    $("input[type='number']").inputSpinner();
+    for(let count1 in productosVenta)
+    {
+        $("input[id='valor"+productosVenta[count1].id+"']").inputSpinner();
+        $("input[id='importe"+productosVenta[count1].id+"']").inputSpinner();
+        //document.getElementById("valor"+productosVenta[count1].id).inputSpinner();
+        //document.getElementById("importe"+productosVenta[count1].id).inputSpinner();
+    }
     calcularTotal();
     //min="1" max="` + productosVenta[count].existencia+`"
 };
+//$("input[type='number']").inputSpinner();
+function quitarProducto(id) {
+
+let confirmacion = confirm("¿QUITAR PRODUCTO DE LA VENTA?");
+if(confirmacion == true)
+{
+    for (let i in productosVenta) {
+    if (productosVenta[i].id === id)
+        productosVenta.splice(i, 1);
+    }
+    mostrarProductos();
+}
+//var i = arr.indexOf( item );
+//if ( i !== -1 )  
+}
+
 
 function buscarProductoEnVenta(idProducto) {
     for (count2 in productosVenta) {
@@ -482,7 +518,7 @@ function cantidad(id) {
     //const importeProducto = document.querySelector('#importe'+id);
 }
 
-function realizarVenta() {
+function realizarVentaEfectivo() {
     let json = JSON.stringify(productosVenta)
     $.ajax({
         // metodo: puede ser POST, GET, etc
@@ -492,7 +528,7 @@ function realizarVenta() {
         // los datos que voy a enviar para la relación
         data: {
             datos: json,
-            no: 'no se que le pasa',
+            estado: 'vendido',
             //_token: $("meta[name='csrf-token']").attr("content")
             _token: "{{ csrf_token() }}"
         }
@@ -503,6 +539,26 @@ function realizarVenta() {
     });
 }
 
+function realizarVentaCredito() {
+    let json = JSON.stringify(productosVenta)
+    $.ajax({
+        // metodo: puede ser POST, GET, etc
+        method: "POST",
+        // la URL de donde voy a hacer la petición
+        url: '/venta',
+        // los datos que voy a enviar para la relación
+        data: {
+            datos: json,
+            estado: 'credito',
+            //_token: $("meta[name='csrf-token']").attr("content")
+            _token: "{{ csrf_token() }}"
+        }
+        // si tuvo éxito la petición
+    }).done(function(respuesta) {
+        alert(respuesta);
+        console.log(respuesta); //JSON.stringify(respuesta));
+    });
+}
 function calcularCambio()
 {
     
@@ -512,8 +568,8 @@ function calcularCambio()
     {
         //alert('si entra');
         let diferencia = parseFloat(pago.value)-parseFloat(total);
-        console.log(pago.value);
-        console.log(total);
+        console.log(parseFloat(pago.value));
+        console.log(parseFloat(total));
         cambio.textContent ="$" + diferencia;
         //cambio.value = parseFloat(pago.value)-total;
     }
@@ -536,10 +592,34 @@ function verificarVenta()
         
 }
 
+function modoPago(tipoPago)
+{
+    const pieModal = document.querySelector('#pieModal');
+    let cuerpo="";
+    if(tipoPago==='efectivo')
+    {
+        cuerpo = `
+        <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
+        <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">SOLO COBRAR</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    `;
+    }
+    if(tipoPago==='credito')
+    {
+        cuerpo = `
+        <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
+        <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">SOLO COBRAR</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    `;
+    }
+    pieModal.innerHTML = cuerpo;
+                    
+}
 
 </script>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
-//$("input[type='number']").inputSpinner()
+    let valor = $("input[type='number']").inputSpinner();
+    console.log(valor);
 </script>
 @endsection

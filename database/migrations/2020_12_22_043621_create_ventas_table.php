@@ -15,10 +15,11 @@ class CreateVentasTable extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('idEmpleado')->constrained('empleados');
             $table->string('estado');
             //$table->dateTime('created_at', $precision = 0);
+            $table->double('pago');
             $table->timestamps();
-            $table->foreignId('idEmpleado')->constrained('empleados');
         });
     }
 

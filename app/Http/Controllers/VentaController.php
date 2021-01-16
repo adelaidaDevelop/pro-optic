@@ -45,9 +45,10 @@ class VentaController extends Controller
         $datosP= Producto::all();
         $datos['departamentos'] = Producto::paginate();
         $datos = $request->input('datos');
+        $estado = $request->input('estado');
         $datosCodificados = json_decode($datos,true);
         $venta = Venta::create([
-            'estado' => 'vendido',
+            'estado' => $estado,
             'idEmpleado' => 1,
         ]);
         

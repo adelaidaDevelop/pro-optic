@@ -9,5 +9,8 @@ class Departamento extends Model
 {
     use HasFactory;
     //protected $table = 'departamentos';
+    protected $fillable = [
+        'nombre',
+    ];
     public $timestamps = false;
 }
