@@ -18,7 +18,7 @@
                     <h4 style="color:#4388CC">CLIENTES</h4>
 
                     <div class="input-group">
-                        <input type="text" class="form-control my-1" placeholder="BUSCAR PROVEEDORES" id="texto">
+                        <input type="text" class="form-control my-1" placeholder="BUSCAR CLIENTE" id="texto">
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -117,7 +117,7 @@
                             <div class="form-group">
                                 <button class="btn btn-outline-secondary" type="submit">
                                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-                                    GUARDAR PROVEEDOR
+                                    GUARDAR CLIENTE
                                 </button>
                             </div>
                         </div>
