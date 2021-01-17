@@ -605,6 +605,7 @@ async function realizarVentaEfectivo() {
             productosVenta = [];
             mostrarProductos();
             $('#confirmarVentaModal').modal('hide');
+            $("input[id='pagoEfectivo']").val(0);
             console.log(respuesta); //JSON.stringify(respuesta));
         });
         await cargarProductos();
@@ -644,6 +645,7 @@ async function realizarVentaCredito() {
             productosVenta = [];
             mostrarProductos();
             $('#confirmarVentaModal').modal('hide');
+            $("input[id='pagoCredito']").val(0);
             console.log(respuesta); //JSON.stringify(respuesta));
         });
         await cargarProductos();
@@ -706,6 +708,8 @@ function verificarVenta() {
     } else {
         $("input[id='pagoEfectivo']").val(total);
         console.log(parseFloat(total));
+        calcularCambioEfectivo();
+        calcularDeudaCredito();
         $('#confirmarVentaModal').modal('show');
     }
 
@@ -720,7 +724,7 @@ function modoPago(tipoPago) {
         <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">SOLO COBRAR</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     `;
-
+    calcularCambioEfectivo();
 
     }
     if (tipoPago === 'credito') {
@@ -739,7 +743,7 @@ function modoPago(tipoPago) {
         `
         }
         clientes.innerHTML = opcionesCliente;
-
+        calcularDeudaCredito();
     }
     pieModal.innerHTML = cuerpo;
 

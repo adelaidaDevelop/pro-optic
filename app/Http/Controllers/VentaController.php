@@ -9,6 +9,7 @@ use App\Models\Cliente;
 use App\Models\Credito;
 use Illuminate\Http\Request;
 use App\Models\Detalle_venta;
+use App\Models\Pago;
 
 
 class VentaController extends Controller
@@ -63,6 +64,10 @@ class VentaController extends Controller
             $credito->idCliente = $cliente;
             $credito->idVenta = $venta->id;
             $credito->save();
+
+            $pagoCredito = new Pago;
+            $pagoCredito->cantidad = $pago;
+            $pagoCredito->idVenta = $venta->id;
 
         } else {
             $venta = Venta::create([
