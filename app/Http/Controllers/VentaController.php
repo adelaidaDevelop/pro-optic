@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Venta;
 use App\Models\Producto;
+use App\Models\Departamento;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 use App\Models\Detalle_venta;
 
 
 class VentaController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -18,9 +20,11 @@ class VentaController extends Controller
      */
     public function index()
     {
-        $datosP= Producto::all();
-        $datos['departamentos'] = Producto::paginate();
-        return view('Venta.index',compact('datosP'));
+        $datosP = Producto::all();
+        $departamentos = Departamento::all();
+        $clientes = Cliente::all();
+        //$datos['departamentos'] = Producto::paginate();
+        return view('Venta.index', compact('datosP', 'departamentos', 'clientes'));
         //return compact('datosP');
     }
 
@@ -42,20 +46,26 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        //$datosP= Producto::all();
-        //$datos['departamentos'] = Producto::paginate();
         $datos = $request->input('datos');
         $estado = $request->input('estado');
         $pago = $request->input('pago');
-        $datosCodificados = json_decode($datos,true);
-        $venta = Venta::create([
-            'estado' => $estado,
-            'idEmpleado' => 1,
-            'pago' => $pago,
-        ]);
-        
-        foreach($datosCodificados as $datosProducto)
-        {
+        $datosCodificados = json_decode($datos, true);
+
+        if ($request->has('cliente')) {
+            $venta = Venta::create([
+                'estado' => $estado,
+                'idEmpleado' => 1,
+            ]);
+            
+
+        } else {
+            $venta = Venta::create([
+                'estado' => $estado,
+                'idEmpleado' => 1,
+                'pago' => $pago,
+            ]);
+        }
+        foreach ($datosCodificados as $datosProducto) {
             $producto = new Detalle_venta;
             $producto->cantidad = $datosProducto['cantidad'];
             $producto->producto = $datosProducto['nombre'];
@@ -63,13 +73,12 @@ class VentaController extends Controller
             $producto->idVentas = $venta->id;
             $producto->save();
 
-            $actualizarProducto = Producto::find($datosProducto['id']);//->update(['existencia'=>]);
+            $actualizarProducto = Producto::find($datosProducto['id']); //->update(['existencia'=>]);
             $actualizarProducto->existencia = $actualizarProducto['existencia'] - $datosProducto['cantidad'];
             $actualizarProducto->save();
-
         }
 
-        return true;//view('Venta.index',compact('datosP'));
+        return true;
     }
 
     /**
@@ -122,6 +131,6 @@ class VentaController extends Controller
         //return view('Venta.formulario');
         $datos = $request->input('datos');
         $no = $request->input('no');
-        return $datos;//compact($datos);//compact('no');
+        return $datos; //compact($datos);//compact('no');
     }
 }

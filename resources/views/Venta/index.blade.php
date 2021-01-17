@@ -28,105 +28,107 @@
         </div>
         @endsection
     </div>
-    <div class="row p-1 ">
-        <div class="row border border-dark m-2 w-100">
-            @php
-            $var = 1;
-            @endphp
-            <div class="col">
-                <div class="row p-0 mt-1 ml-0 mr-0 mb-0">
-                    <!--div class="col-9">
-                    <form class="form-row" method=get action="{{url('venta?codigo=5')}}" enctype="multipart/form-data"-->
-                    <div class="col-4 m-0 px-0 pt-2 pb-0 ">
-                        <label for="nombre" class="font-weight-bold " style="color:#3366FF">
-                            <h4>CODIGO DEL PRODUCTO</h4>
-                        </label>
-                    </div>
-                    {{ csrf_field() }}
-                    <div class="col m-0 px-0 pt-1 pb-0 ">
-                        <input type="text" class="form-control @error('claveE') is-invalid @enderror"
-                            name="codigoBarras" id="codigoBarras" value="{{ old('claveE') }}"
-                            placeholder="Ingresar codigo de barras" required autocomplete="claveE" autofocus>
-                        @error('claveE')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                    <div class="col m-1 ">
-                        <button class="btn btn-primary" type="button" style="background-color:#3366FF"
-                            onclick="agregarPorCodigo()" value="informacion" id="botonAgregar">
-                            <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                                height="25px">
-                            AGREGAR PRODUCTO
-                        </button>
-                    </div>
-                    <!--form>
-                    </div-->
-                    <div class="col m-1">
-                        <button class="btn btn-primary" type="button" style="background-color:#3366FF"
-                            onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal"
-                            value="informacion" id="boton">
-                            <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                                height="25px">
-                            BUSCAR PRODUCTO
-                        </button>
-                    </div>
-                </div>
-                <div class="row m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
-                    <table class="table table-hover table-bordered" id="productos">
-                        <thead class="thead-light">
-                            <tr class="text-center">
-                                <th scope="col">#</th>
-                                <th scope="col">CODIGO_BARRAS</th>
-                                <th scope="col">PRODUCTO</th>
-                                <th scope="col">EXISTENCIA</th>
-                                <th scope="col">PRECIO</th>
-                                <th scope="col">CANTIDAD</th>
-                                <th scope="col">IMPORTE</th>
-                            </tr>
-                        </thead>
-                        <tbody id="info">
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row m-0 px-0">
-                    <div class="col my-2 ml-5 px-1">
-                        <div class="row">
-                            <form method="get" action="{{url('/empleado')}}">
-                                <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
-                                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar"
-                                        width="25px" height="25px">
-                                    AGREGAR TICKET
-                                </button>
-                            </form>
-                            <form method="get" action="{{url('/empleado')}}">
-                                <button class="btn btn-primary ml-5" type="submit" style="background-color:#3366FF">
-                                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar"
-                                        width="25px" height="25px">
-                                    ELIMINAR TICKET
-                                </button>
-                            </form>
+    <!--div class="row p-1 "-->
+    <div class="row border border-dark m-2 w-100">
+        @php
+        $var = 1;
+        @endphp
+        <div class="col-12">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 m-0 px-0 pt-2 pb-0 ">
+                            <label for="nombre" class="font-weight-bold " style="color:#3366FF">
+                                <h4>CODIGO DEL PRODUCTO</h4>
+                            </label>
                         </div>
-                    </div>
-                    <div class="col my-2 ml-5 mr-0 pr-0 ">
-                        <div class="d-flex flex-row-reverse">
-                            <h4 class="border border-dark ml-2 p-1" id="total">$ 0.00</h4>
-                            <!--form method="get" action="{{url('/empleado')}}"-->
-                            <!--{url('/departamento/'.$departamento->id.'/edit/')}}-->
+                        {{ csrf_field() }}
+                        <div class="col m-0 px-0 pt-1 pb-0 ">
+                            <input type="text" class="form-control @error('claveE') is-invalid @enderror"
+                                name="codigoBarras" id="codigoBarras" value="{{ old('claveE') }}"
+                                placeholder="Ingresar codigo de barras" required autocomplete="claveE" autofocus>
+                            @error('claveE')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="col m-1 ">
                             <button class="btn btn-primary" type="button" style="background-color:#3366FF"
-                                onclick="verificarVenta()" value="informacion" id="boton">
+                                onclick="agregarPorCodigo()" value="informacion" id="botonAgregar">
                                 <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
-                                COBRAR
+                                AGREGAR
                             </button>
-                            <!--/form-->
                         </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                    <button class="btn btn-primary" type="button" style="background-color:#3366FF"
+                        onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion"
+                        id="boton">
+                        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                            height="25px">
+                        BUSCAR PRODUCTO
+                    </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
+                <table class="table table-hover table-bordered" id="productos">
+                    <thead class="thead-light">
+                        <tr class="text-center">
+                            <th scope="col">#</th>
+                            <th scope="col">CODIGO_BARRAS</th>
+                            <th scope="col">PRODUCTO</th>
+                            <th scope="col">EXISTENCIA</th>
+                            <th scope="col">PRECIO</th>
+                            <th scope="col">CANTIDAD</th>
+                            <th scope="col">IMPORTE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="info">
+                    </tbody>
+                </table>
+            </div>
+            <div class="row m-0 px-0">
+                <div class="col my-2 ml-5 px-1">
+                    <div class="row">
+                        <form method="get" action="{{url('/empleado')}}">
+                            <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
+                                <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar"
+                                    width="25px" height="25px">
+                                AGREGAR TICKET
+                            </button>
+                        </form>
+                        <form method="get" action="{{url('/empleado')}}">
+                            <button class="btn btn-primary ml-5" type="submit" style="background-color:#3366FF">
+                                <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar"
+                                    width="25px" height="25px">
+                                ELIMINAR TICKET
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col my-2 ml-5 mr-0 pr-0 ">
+                    <div class="d-flex flex-row-reverse">
+                        <h4 class="border border-dark ml-2 p-1" id="total">$ 0.00</h4>
+                        <!--form method="get" action="{{url('/empleado')}}"-->
+                        <!--{url('/departamento/'.$departamento->id.'/edit/')}}-->
+                        <button class="btn btn-primary" type="button" style="background-color:#3366FF"
+                            onclick="verificarVenta()" value="informacion" id="boton">
+                            <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                                height="25px">
+                            COBRAR
+                        </button>
+                        <!--/form-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!--/div-->
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -264,7 +266,8 @@
                                     </div>
                                     <div class="col-7">
                                         <input type="number" class="form-control" data-decimals="2"
-                                            oninput="calcularCambio()" id="pago" min=0 />
+                                            oninput="calcularCambioEfectivo()" onchange="revisarPagoEfectivo()"
+                                            id="pagoEfectivo" min=0.00 />
                                     </div>
                                 </div>
                                 <div class="row my-1">
@@ -272,7 +275,7 @@
                                         <p class="h5">SU CAMBIO: </p>
                                     </div>
                                     <div class="col-7">
-                                        <p class="h5" id="cambio">$ 0.00</p>
+                                        <p class="h5" id="cambioEfectivo">$ 0.00</p>
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +288,10 @@
                                         <p class="h5">CLIENTE: </p>
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" class="form-control" />
+                                        <select class="col form-control mr-3" name="clientes" id="clientes" required>
+                                            <option value="0">NO HAY CLIENTES</option>
+                                        </select>
+                                        <!--input type="text" class="form-control" /-->
                                     </div>
                                 </div>
                                 <div class="row my-1">
@@ -293,7 +299,8 @@
                                         <p class="h5">PAGÓ CON:</p>
                                     </div>
                                     <div class="col-8">
-                                        <input type="number" class="form-control" />
+                                        <input type="number" oninput="calcularDeudaCredito()" id="pagoCredito"
+                                            data-decimals="2" value=0 class="form-control" />
                                     </div>
                                 </div>
                                 <div class="row my-1">
@@ -301,7 +308,7 @@
                                         <p class="h5">AUN DEBE: </p>
                                     </div>
                                     <div class="col-8">
-                                        <p class="h5">0.00</p>
+                                        <p class="h5" id="deudaCredito">$ 0.00</p>
                                     </div>
                                 </div>
                             </div>
@@ -523,15 +530,20 @@ function buscarProducto() {
     const palabraBusqueda = document.querySelector('#busquedaProducto');
     let cuerpo = "";
     let contador = 1;
-    for (count5 in productos) {
+    let departamentos = @json($departamentos);
+    for (let count5 in productos) {
         if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+            for (let d in departamentos) {
+                if (productos[count5].idDepartamento === departamentos[d].id)
+                    departamento = departamentos[d].nombre;
+            }
             cuerpo = cuerpo + `
         <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">
             <th scope="row">` + productos[count5].id + `</th>
             <td>` + productos[count5].codigoBarras + `</td>
             <td>` + productos[count5].nombre + `</td>
             <td>` + productos[count5].existencia + `</td>
-            <td>` + productos[count5].idDepartamento + `</td>
+            <td>` + departamento + `</td>
         </tr>
         `;
         }
@@ -570,7 +582,11 @@ function cantidad(id) {
 async function realizarVentaEfectivo() {
     try {
         let json = JSON.stringify(productosVenta);
-        const pago = document.querySelector('#pago');
+        const pago = document.querySelector('#pagoEfectivo');
+        if (pago.value.length === 0)
+            return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
+        if (parseFloat(pago.value) < parseFloat(total))
+            return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
         let funcion = $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
@@ -595,38 +611,51 @@ async function realizarVentaEfectivo() {
         await cargarProductos();
         //console.log(p);
         //console.log(funcion);
-    }catch (err) {
+    } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
 }
 
-function realizarVentaCredito() {
-    let json = JSON.stringify(productosVenta)
-    let funcion = $.ajax({
-        // metodo: puede ser POST, GET, etc
-        method: "POST",
-        // la URL de donde voy a hacer la petición
-        url: '/venta',
-        // los datos que voy a enviar para la relación
-        data: {
-            datos: json,
-            estado: 'credito',
-            //_token: $("meta[name='csrf-token']").attr("content")
-            _token: "{{ csrf_token() }}"
-        }
-        // si tuvo éxito la petición
-    }).done(function(respuesta) {
-        alert(respuesta);
-        console.log(respuesta); //JSON.stringify(respuesta));
-    });
-    console.log(funcion);
+async function realizarVentaCredito() {
+    let json = JSON.stringify(productosVenta);
+    const pago = document.querySelector('#pagoCredito');
+    const cliente = document.querySelector('#clientes');
+    if (pago.value.length === 0)
+        return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
+    if (parseFloat(pago.value) > parseFloat(total))
+        return alert('SI EL PAGO ES MAYOR MEJOR USE EL PAGO CON EFECTIVO');
+    try {
+        let funcion = $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: '/venta',
+            // los datos que voy a enviar para la relación
+            data: {
+                datos: json,
+                estado: 'credito',
+                pago: parseFloat(pago.value),
+                cliente: cliente.value,
+                //_token: $("meta[name='csrf-token']").attr("content")
+                _token: "{{ csrf_token() }}"
+            }
+            // si tuvo éxito la petición
+        }).done(function(respuesta) {
+            alert(respuesta);
+            console.log(respuesta); //JSON.stringify(respuesta));
+        });
+        await cargarProductos();
+        console.log(funcion);
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
 }
 
-function calcularCambio() {
-    
-    const pago = document.querySelector('#pago');
+function calcularCambioEfectivo() {
 
-    const cambio = document.querySelector('#cambio');
+    const pago = document.querySelector('#pagoEfectivo');
+
+    const cambio = document.querySelector('#cambioEfectivo');
     if (parseFloat(pago.value) > total) {
         //alert('si entra');
         let diferencia = parseFloat(pago.value) - parseFloat(total);
@@ -641,12 +670,40 @@ function calcularCambio() {
 
 }
 
+function calcularDeudaCredito() {
+
+    const pago = document.querySelector('#pagoCredito');
+
+    const deuda = document.querySelector('#deudaCredito');
+    if (parseFloat(pago.value) > 0) {
+        //alert('si entra');
+        let diferencia = parseFloat(total) - parseFloat(pago.value);
+        console.log(parseFloat(pago.value));
+        console.log(parseFloat(total));
+        deuda.innerHTML = "$ " + '<strong>' + diferencia + '</strong>';
+        //cambio.textContent ="$" + '<strong>'+diferencia+'</strong>';
+        //cambio.value = parseFloat(pago.value)-total;
+    } else {
+        deuda.textContent = "$ 0.00"
+    }
+
+}
+
+
+function revisarPagoEfectivo() {
+    const pago = document.querySelector('#pagoEfectivo');
+    console.log(pago.value.length);
+    //if(pago.value.length===0)
+    //  $("input[id='pagoEfectivo']").val(total);
+}
+
+
 function verificarVenta() {
     if (productosVenta.length === 0) {
         alert('NO TIENE NINGUN PRODUCTO AGREGADO');
     } else {
-        const pago = document.querySelector('#pago');
-        pago.value = parseFloat(total);
+        $("input[id='pagoEfectivo']").val(total);
+        console.log(parseFloat(total));
         $('#confirmarVentaModal').modal('show');
     }
 
@@ -661,6 +718,8 @@ function modoPago(tipoPago) {
         <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">SOLO COBRAR</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     `;
+
+
     }
     if (tipoPago === 'credito') {
         cuerpo = `
@@ -668,6 +727,17 @@ function modoPago(tipoPago) {
         <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">SOLO COBRAR</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     `;
+        let clientes = document.querySelector('#clientes');;
+        let opcionesCliente = "";
+        let cliente = @json($clientes);
+        for (let i in cliente) {
+            opcionesCliente = opcionesCliente +
+                `
+        <option value=` + cliente[i].id + `>` + cliente[i].nombre + `</option>
+        `
+        }
+        clientes.innerHTML = opcionesCliente;
+
     }
     pieModal.innerHTML = cuerpo;
 
