@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Credito;
+use App\Models\Pago;
 use Illuminate\Http\Request;
 
-class CreditoController extends Controller
+class PagoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,6 @@ class CreditoController extends Controller
     public function index()
     {
         //
-        return view('ListaDeudor.index');
     }
 
     /**
@@ -25,8 +24,7 @@ class CreditoController extends Controller
      */
     public function create()
     {
-        //Yo también gordi, ah bueno mi flakis :3
-        return view('ListaDeudor.create');
+        //
     }
 
     /**
@@ -37,20 +35,16 @@ class CreditoController extends Controller
      */
     public function store(Request $request)
     {
-         $datosProducto = request()->except('_token');
-         
-         Credito::insert($datosProducto);
- 
-         return redirect('credito');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Credito  $credito
+     * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function show(Credito $credito)
+    public function show(Pago $pago)
     {
         //
     }
@@ -58,10 +52,10 @@ class CreditoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Credito  $credito
+     * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function edit(Credito $credito)
+    public function edit(Pago $pago)
     {
         //
     }
@@ -70,10 +64,10 @@ class CreditoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Credito  $credito
+     * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Credito $credito)
+    public function update(Request $request, Pago $pago)
     {
         //
     }
@@ -81,10 +75,10 @@ class CreditoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Credito  $credito
+     * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Credito $credito)
+    public function destroy(Pago $pago)
     {
         //
     }
