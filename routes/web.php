@@ -7,6 +7,8 @@ use App\Http\Controllers\SubproductoController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\CreditoController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,6 +59,7 @@ Route::get('emple', [EmpleadoController::class,'index2']);
 Route::resource('proveedor', ProveedorController::class);
 
 Route::resource('cliente', ClienteController::class);
+Route::resource('credito', CreditoController::class);
 
 
 // RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO
