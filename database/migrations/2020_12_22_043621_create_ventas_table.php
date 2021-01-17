@@ -18,7 +18,7 @@ class CreateVentasTable extends Migration
             $table->foreignId('idEmpleado')->constrained('empleados');
             $table->string('estado');
             //$table->dateTime('created_at', $precision = 0);
-            $table->double('pago');
+            $table->double('pago')->nullable();
             $table->timestamps();
         });
     }
