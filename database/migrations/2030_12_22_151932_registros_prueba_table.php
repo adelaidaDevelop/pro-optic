@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use App\Models\Departamento;
 use App\Models\Proveedor;
 use App\Models\Producto;
+use App\Models\Cliente;
 
 class RegistrosPruebaTable extends Migration
 {
@@ -24,7 +25,7 @@ class RegistrosPruebaTable extends Migration
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin12345'),
         ]);
-        
+
         //CREACION DE EMPLEADOS
         $usuario = User::create([
             'username' => 'Heber',
@@ -45,8 +46,15 @@ class RegistrosPruebaTable extends Migration
         $empleado->save();
 
         //CREACION DE DEPARTAMENTOS
-        $departamento = Departamento::create(['nombre' => 'VENTA LIBRE'],['nombre' => 'PERFUMERIA'],
-        ['nombre' => 'PATENTE']);
+        $departamento = Departamento::create(
+            ['nombre' => 'VENTA LIBRE']
+        );
+        $departamento = Departamento::create(
+            ['nombre' => 'PERFUMERIA']
+        );
+        $departamento = Departamento::create(
+            ['nombre' => 'PATENTE']
+        );
 
         //CREACION DE PRODUCTOS
         $producto = new Producto;
@@ -63,17 +71,25 @@ class RegistrosPruebaTable extends Migration
         $producto->save();
 
         //CREACION DE PROVEEDOR
-        Proveedor::create(
-            [   'rfc' => 'DF5DF5DFDS5F',
+        Proveedor::create([
+                'rfc' => 'DF5DF5DFDS5F',
                 'nombre' => 'MARZAM',
                 'telefono' => '9516457898',
                 'direccion' => 'Muchos lugares'
-            ],
-            [   'rfc' => 'D6S568D6FSD4',
+            ]);
+
+        Proveedor::create([
+                'rfc' => 'D6S568D6FSD4',
                 'nombre' => 'NIVEA',
                 'telefono' => '9547894563',
                 'direccion' => 'Muchos lugares de qui'
             ]);
+
+        //CREACION DE CLIENTE
+        $cliente = new Cliente;
+        $cliente->nombre = 'ADELAIDA MOLINA REYES';
+        $cliente->telefono = '9512274920';
+        $cliente->save();
     }
 
     /**

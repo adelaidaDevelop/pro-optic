@@ -34,27 +34,26 @@
         $var = 1;
         @endphp
         <div class="col-12">
-            <div class="row">
-                <div class="col">
-                    <div class="row">
-                        <div class="col-4 m-0 px-0 pt-2 pb-0 ">
-                            <label for="nombre" class="font-weight-bold " style="color:#3366FF">
+            <div class="row mx-0 mt-2 mb-1 px-0">
+                <!--div class="col-9 m-0 px-0"-->
+                    <div class="form-group row col-9 my-1 mx-0 px-0">
+                        <!--div class="col"-->
+                            <label for="nombre" class="col-5-form-label font-weight-bold " style="color:#3366FF">
                                 <h4>CODIGO DEL PRODUCTO</h4>
                             </label>
-                        </div>
-                        {{ csrf_field() }}
-                        <div class="col m-0 px-0 pt-1 pb-0 ">
-                            <input type="text" class="form-control @error('claveE') is-invalid @enderror"
-                                name="codigoBarras" id="codigoBarras" value="{{ old('claveE') }}"
-                                placeholder="Ingresar codigo de barras" required autocomplete="claveE" autofocus>
-                            @error('claveE')
+                        <!--/div-->
+                        <div class="col-4">
+                            <input type="text" class="form-control  mx-auto @error('codigoBarras') is-invalid @enderror"
+                                name="codigoBarras" id="codigoBarras" value="{{ old('codigoBarras') }}"
+                                placeholder="Ingresar codigo de barras" required autocomplete="codigoBarras" autofocus>
+                            @error('codigoBarras')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
-                        <div class="col m-1 ">
-                            <button class="btn btn-primary" type="button" style="background-color:#3366FF"
+                        <div class="col-3">
+                            <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
                                 onclick="agregarPorCodigo()" value="informacion" id="botonAgregar">
                                 <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
@@ -62,18 +61,18 @@
                             </button>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="row">
-                    <button class="btn btn-primary" type="button" style="background-color:#3366FF"
-                        onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion"
-                        id="boton">
-                        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                            height="25px">
-                        BUSCAR PRODUCTO
-                    </button>
+                <!--/div-->
+                <!--div class="col-3 m-0 px-0"-->
+                    <div class="form-group row my-1 ml-auto mr-0 px-0 ">
+                        <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
+                            onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal"
+                            value="informacion" id="boton">
+                            <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                                height="25px">
+                            BUSCAR PRODUCTO
+                        </button>
                     </div>
-                </div>
+                <!--/div-->
             </div>
             <div class="row m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
                 <table class="table table-hover table-bordered" id="productos">
@@ -641,7 +640,10 @@ async function realizarVentaCredito() {
             }
             // si tuvo éxito la petición
         }).done(function(respuesta) {
-            alert(respuesta);
+            //alert(respuesta);
+            productosVenta = [];
+            mostrarProductos();
+            $('#confirmarVentaModal').modal('hide');
             console.log(respuesta); //JSON.stringify(respuesta));
         });
         await cargarProductos();

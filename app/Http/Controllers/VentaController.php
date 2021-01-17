@@ -6,6 +6,7 @@ use App\Models\Venta;
 use App\Models\Producto;
 use App\Models\Departamento;
 use App\Models\Cliente;
+use App\Models\Credito;
 use Illuminate\Http\Request;
 use App\Models\Detalle_venta;
 
@@ -52,11 +53,16 @@ class VentaController extends Controller
         $datosCodificados = json_decode($datos, true);
 
         if ($request->has('cliente')) {
+            $cliente = $request->input('cliente');
             $venta = Venta::create([
                 'estado' => $estado,
                 'idEmpleado' => 1,
             ]);
-            
+            $credito = new Credito;
+            $credito->estado = $estado;
+            $credito->idCliente = $cliente;
+            $credito->idVenta = $venta->id;
+            $credito->save();
 
         } else {
             $venta = Venta::create([
