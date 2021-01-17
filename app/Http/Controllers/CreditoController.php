@@ -25,7 +25,7 @@ class CreditoController extends Controller
      */
     public function create()
     {
-        //ya me apuro amor, te amo :3
+        //Yo también gordi, ah bueno mi flakis :3
         return view('ListaDeudor.create');
     }
 
