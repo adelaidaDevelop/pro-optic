@@ -66,8 +66,9 @@ class VentaController extends Controller
             $credito->save();
 
             $pagoCredito = new Pago;
-            $pagoCredito->cantidad = $pago;
+            $pagoCredito->monto = $pago;
             $pagoCredito->idVenta = $venta->id;
+            $pagoCredito->save();
 
         } else {
             $venta = Venta::create([
@@ -79,7 +80,8 @@ class VentaController extends Controller
         foreach ($datosCodificados as $datosProducto) {
             $producto = new Detalle_venta;
             $producto->cantidad = $datosProducto['cantidad'];
-            $producto->producto = $datosProducto['nombre'];
+            $producto->idProductos = $datosProducto['id'];
+            $producto->precio_ind= $datosProducto['precio'];
             $producto->subtotal = $datosProducto['subtotal'];
             $producto->idVentas = $venta->id;
             $producto->save();
