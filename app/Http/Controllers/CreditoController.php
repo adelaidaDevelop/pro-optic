@@ -7,6 +7,7 @@ use App\Models\Cliente;
 use App\Models\Venta;
 use App\Models\Producto;
 use App\Models\Detalle_venta;
+use App\Models\Pago;
 
 
 
@@ -26,7 +27,8 @@ class CreditoController extends Controller
         $ventas= Venta::all();
         $detalleVentas= Detalle_venta::all();
         $productos = Producto::all();
-          return view('ListaDeudor.index', compact( 'credito', 'cliente','ventas','detalleVentas', 'productos'));
+        $pagos= Pago::all();
+          return view('ListaDeudor.index', compact( 'credito', 'cliente','ventas','detalleVentas', 'productos','pagos'));
     }
 
     /**

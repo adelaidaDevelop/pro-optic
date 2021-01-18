@@ -67,12 +67,15 @@ SUBPRODUCTOS
     const ventas = @json($ventas);
     const detalleVentas = @json($detalleVentas);
     const productos = @json($productos);
+    const pagos = @json($pagos);
 
     function buscarProducto() {
 
         const palabraBusqueda = document.querySelector('#busquedaCliente');
         let cuerpo = "";
-        let contador = 1;
+        let contador = 0;
+        let cont=0;
+
 
         for (count in creditos) {
             let name = "";
@@ -81,6 +84,7 @@ SUBPRODUCTOS
             let debe = 0.0;
             let descripcion = "";
             let total = 0;
+            let pago=0;
             for (count1 in clientes) {
 
                 if (creditos[count].idCliente === clientes[count1].id) {
@@ -97,18 +101,35 @@ SUBPRODUCTOS
                         if (ventas[count2].id == detalleVentas[count3].idVentas) {
                             // for(count4 in productos){
                             // if( detalleVentas[count3].idProductos == productos[count4].id ){  
-                            total = total + subtotal;
+                            total = total + detalleVentas[count3].subtotal;
+                            console.log("total1");
+                            console.log(total);
                         }
                     }
-                    debe = total - ventas[count2].pago;
+                    for (count4 in pagos) {
+                        if (ventas[count2].id == pagos[count4].idVenta) {
+                            pago = pago + pagos[count4].monto;
+                            console.log("pago1");
+                            console.log(pago);
+                        }
+                    }
+                    console.log("total2");
+                    console.log(total);
+                    console.log("pago2");
+                    console.log(pago);
+                    console.log("debe");
+                    debe = total - pago;
+                    console.log(debe);
                     descripcion = ventas[count2].id;
 
                 }
 
             }
-            AQUI
+            cont= cont+1;
+
             cuerpo = cuerpo + `
-        <tr onclick="agregarProducto(` + creditos[count5].id + `)" data-dismiss="modal">
+        <tr onclick="agregarProducto(` + creditos[count].id + `)" data-dismiss="modal">
+            <td>` + cont + `</td>    
             <th scope="row">` + name + `</th>
             <td>` + fechaVenta + `</td>
             <td>` + debe + `</td>
