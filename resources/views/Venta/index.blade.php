@@ -249,7 +249,7 @@
                             <div class="col-6 mx-auto">
                                 <div class="row my-1">
                                     <div class="col-5">
-                                        <p class="h5">ABONÓ CON: </p>
+                                        <p class="h5">PAGÓ CON: </p>
                                     </div>
                                     <div class="col-7">
                                         <input type="number" class="form-control" data-decimals="2" oninput="calcularCambioEfectivo()" onchange="revisarPagoEfectivo()" id="pagoEfectivo" min=0.00 />
@@ -280,7 +280,7 @@
                                 </div>
                                 <div class="row my-1">
                                     <div class="col-4">
-                                        <p class="h5">PAGÓ CON:</p>
+                                        <p class="h5">ABONÓ CON:</p>
                                     </div>
                                     <div class="col-8">
                                         <input type="number" oninput="calcularDeudaCredito()" id="pagoCredito" data-decimals="2" value=0 class="form-control" />
