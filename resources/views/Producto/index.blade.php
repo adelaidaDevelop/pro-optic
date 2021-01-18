@@ -152,9 +152,9 @@ PRODUCTOS
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="width:500px;"  id="">
+            <div class="modal-body" style="width:500px;" id="">
                 <!--BODY MODAL-->
-               <!-- <h6> BUSCAR PRODUCTO POR CODIGO O NOMBRE</h6>-->
+                <!-- <h6> BUSCAR PRODUCTO POR CODIGO O NOMBRE</h6>-->
                 <label for="codigoBarras">
                     <h5 class="text-primary">
                         <strong>
@@ -171,7 +171,7 @@ PRODUCTOS
  -->
                 </div>
                 <!--INFORMACION PRODUCTOS-->
-                <div class="row" id="resultados" >
+                <div class="row" id="resultados">
                 </div>
 
             </div>
@@ -186,63 +186,12 @@ PRODUCTOS
 <!-- END MODAL-->
 
 <!--POP UP-->
-<script>
-    const texto = document.querySelector('#verMas');
-    const buscar = document.querySelector('#texto');
-
-    function info($id) {
-        document.getElementById("resultados").innerHTML = "Aqui se esta modificando";
-        fetch(`/producto/buscarProducto?texto=${$id}`, {
-                method: 'get'
-            })
-            .then(response => response.text())
-            .then(html => {
-                 document.getElementById("resultados").innerHTML = html
-            })
-    }
-
-
-    function filtrar() {
-        document.getElementById("resultBusq").innerHTML = "";
-        fetch(`/producto/buscador?texto=${texto.value}`, {
-                method: 'get'
-            })
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById("resultBusq").innerHTML = html
-            })
-    }
-
-    buscar.addEventListener('keyup', filtrar);
-    filtrar();
-</script>
 
 <!-- SCRIPT-->
-
 <script>
     let productosVenta = [];
     const productos = @json($datosP);
     const d = @json($depa);
-
-    function agregarPorCodigo() {
-        const codigo = document.querySelector('#codigoBarras');
-        //location.href= location.href+'?codigo='+codigo.value;
-
-        for (count3 in productos) {
-            if (productos[count3].codigoBarras === codigo.value) {
-
-                //agregarProductoAVenta(id,codigoBarras,nombre,existencia,precio,cantidad,subtotal)
-                /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
-                productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
-                if (!buscarProductoEnVenta(productos[count3].id))
-                    agregarProductoAVenta(productos[count3].id, productos[count3].codigoBarras, productos[count3].nombre,
-                        6, 22, 1, 22);
-                mostrarProductos();
-            }
-        }
-        codigo.value = "";
-    };
-
 
     function buscarProducto() {
 
@@ -284,24 +233,23 @@ PRODUCTOS
 
 
     function info4(id) {
-
         //Modal
         let datosProduct = "";
-        let imagen= "";
+        let imagen = "";
         let departamento = "";
         for (count10 in productos) {
             if (productos[count10].id === id) {
-                
+
                 for (count11 in d) {
                     if (productos[count10].idDepartamento === d[count11].id) {
                         departamento = d[count11].nombre;
                     }
                 }
 
-                x=productos[count10].id;
+                x = productos[count10].id;
 
-                datosProduct = 
-                `
+                datosProduct =
+                    `
                 <div class="col-md-4">
                         <br/>
                         <label for="codigoBarras">
@@ -335,7 +283,7 @@ PRODUCTOS
                     
                         <br />
                         <!--El name debe ser igual al de la base de datos-->
-                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="` +productos[count10].codigoBarras+ `" required autocomplete="codigoBarras" autofocus disabled>
+                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="` + productos[count10].codigoBarras + `" required autocomplete="codigoBarras" autofocus disabled>
                         <br />
                         <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required disabled>
                         <br />
@@ -343,7 +291,7 @@ PRODUCTOS
                         ` + productos[count10].descripcion + `</textarea>
                         <br />
                         
-                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="`+ productos[count10].minimo_stock + `" autofocus required disabled>
+                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="` + productos[count10].minimo_stock + `" autofocus required disabled>
                         <br />
 
                         <select class="form-control" name="Receta" id="Receta" required disabled>
@@ -354,7 +302,7 @@ PRODUCTOS
                         <br />
 
                         <select class="form-control" name="Depa" id="Depa"  disabled>
-                            <option value="" selected>`+departamento+ ` </option>
+                            <option value="" selected>` + departamento + ` </option>
                         </select>
                     </div>
                     <div class="col-md-1"></div>
@@ -364,43 +312,20 @@ PRODUCTOS
                             <h5> <strong>{{'FOTO'}}</strong></h5>
                         </label required>
                         <br />
-                        <img src="{{ asset('storage')}}/`+productos[count10].imagen+ ` " alt="" width="200">
+                        <img src="{{ asset('storage')}}/` + productos[count10].imagen + ` " alt="" width="200">
                         <br /><br />
                         
-                        <a class="btn btn-primary" href="{{ url('/producto/` +x+`/edit')}}"> Editar </a>
+                        <a class="btn btn-primary" href="{{ url('/producto/` + x + `/edit')}}"> Editar </a>
 
                     </div>
 
                     <br/>
                 `
 
-                }
+            }
         }
         document.getElementById("resultados").innerHTML = datosProduct;
     };
-
-    function agregarProducto(id) {
-        for (count4 in productos) {
-            if (productos[count4].id === id) {
-                /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
-                    productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
-                console.log(id);
-                console.log(productos[count4].id);
-                if (!buscarProductoEnVenta(id)) {
-                    console.log(productos[count4].id);
-                    agregarProductoAVenta(productos[count4].id, productos[count4].codigoBarras, productos[count4].nombre,
-                        6, 22, 1, 22);
-                }
-                console.log(productos[count4].id);
-                mostrarProductos();
-                //productosVenta.push(productos[count]);
-            }
-        }
-        const palabraBusqueda = document.querySelector('#busquedaProducto');
-        palabraBusqueda.value = "";
-        //venta();
-    };
-
     buscarProducto()
 </script>
 

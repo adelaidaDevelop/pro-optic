@@ -14,9 +14,9 @@ class CreateDetalleVentasTable extends Migration
     public function up()
     {
         Schema::create('detalle_ventas', function (Blueprint $table) {
-            $table->id();
-            $table->double('cantidad', 8, 2);
-            $table->string('producto');
+            $table->integer('cantidad');
+            $table->foreignId('idProductos')->constrained('productos');
+            $table->double('precio_ind', 8, 2);
             $table->double('subtotal', 8, 2);
             $table->foreignId('idVentas')->constrained('ventas');
             $table->timestamps();

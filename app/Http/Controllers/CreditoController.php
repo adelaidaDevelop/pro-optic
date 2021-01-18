@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Credito;
+use App\Models\Cliente;
+use App\Models\Venta;
+use App\Models\Producto;
+use App\Models\Detalle_venta;
+
+
+
 use Illuminate\Http\Request;
 
 class CreditoController extends Controller
@@ -14,8 +21,12 @@ class CreditoController extends Controller
      */
     public function index()
     {
-        //
-        return view('ListaDeudor.index');
+        $credito= Credito::all();
+        $cliente= Cliente::all();
+        $ventas= Venta::all();
+        $detalleVentas= Detalle_venta::all();
+        $productos = Producto::all();
+          return view('ListaDeudor.index', compact( 'credito', 'cliente','ventas','detalleVentas', 'productos'));
     }
 
     /**
@@ -25,7 +36,6 @@ class CreditoController extends Controller
      */
     public function create()
     {
-        //Yo también gordi, ah bueno mi flakis :3
         return view('ListaDeudor.create');
     }
 
