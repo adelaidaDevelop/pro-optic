@@ -64,11 +64,13 @@ class VentaController extends Controller
             $credito->idCliente = $cliente;
             $credito->idVenta = $venta->id;
             $credito->save();
-
+            if($pago > 0)
+            {
             $pagoCredito = new Pago;
             $pagoCredito->monto = $pago;
             $pagoCredito->idVenta = $venta->id;
             $pagoCredito->save();
+            }
 
         } else {
             $venta = Venta::create([
