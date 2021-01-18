@@ -229,7 +229,7 @@ function cargarCompras() {
             if (proveedores[p].id === compras[i].idProveedor)
                 proveedor = proveedores[p].nombre;
         }
-
+        
         let costoTotal = 0;
         for (let p in compra_producto) {
             if (compra_producto[p].idCompras === compras[i].id) {
