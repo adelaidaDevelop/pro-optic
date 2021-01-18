@@ -4,7 +4,7 @@
 COMPRAS
 @endsection
 @section('opciones')
-<div class="col my-2 ml-5 px-1">
+<div class="col my-2 ml-5 pl-1">
     <form method="get" action="{{url('/compra/create/')}}">
         <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
             <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
@@ -15,7 +15,7 @@ COMPRAS
 @endsection
 <!--div class="row p-1 "-->
 <!--CONSULTAR PRODUCTO -->
-<div class="row border border-dark m-2 w-100">
+<div class="row border border-dark my-2 ml-2 mr-2 pr-3">
     <div class="row col-12 mx-2 mt-2">
         <label for="">
             <h5 class="text-primary">
@@ -25,48 +25,52 @@ COMPRAS
             </h5>
         </label>
     </div>
-    <div class="row col-12">
-        <div class="col-2 border border-primary mt-0 mb-4 ml-4 mr-2">
-            <select class="my-2" name="idDepartamento" id="idDepartamento" required>
-                <option value="">PROVEEDOR</option>
-                @foreach($d as $departamento)
-                <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
+    <div class="row col-12 ml-2 mr-0 mt-2">
+        <div class="col-3 border border-primary mt-0 mb-4 ml-0">
+            <label for="" class="col-form-label font-weight-bold">FILTRAR:</label>
+            <select class="form-control my-2" name="opcionProveedor" id="opcionProveedor" 
+                onchange="filtrarCompras()" required>
+                <option value="0">PROVEEDOR</option>
+                @foreach($proveedores as $proveedor)
+                <option value="{{ $proveedor['id']}}"> {{$proveedor['nombre']}}</option>
                 @endforeach
             </select>
-
-            <select class="my-2" name="idDepartamento" id="idDepartamento" required>
-                <option value="">PAGADO</option>
-                @foreach($d as $departamento)
-                <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
-                @endforeach
+            <!--div class="input-group">
+                <div class="input-group-text">
+                    <input type="checkbox" value="" id="pagado" checked>
+                    <label class="ml-1 my-0" for="pagado">
+                        PAGADO
+                    </label>
+                </div>
+            </div-->
+            <select class="form-control my-2" name="pagoCompra" id="pagoCompra" required>
+                <option value="0">ESTADO</option>
+                <option value="1">PAGADO</option>
+                <option value="2">CREDITO</option>
             </select>
+            <div class="form-group border border-secondary my-auto p-1">
+                <div class="input-group-text">
+                    <input type="checkbox" value="" id="flexCheckChecked">
+                    <label class="ml-1 my-0" for="flexCheckChecked">
+                        FECHA
+                    </label>
 
-
-
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                <label class="form-check-label text-primary" for="flexCheckChecked">
-                    FECHA
-                </label>
-
+                </div>
+                <div class="input-group my-1 mx-0">
+                    <div class="input-group-prepend">
+                        <label for="fechaInicio" class="input-group-text">DE: </label>
+                    </div>
+                    <input type="date" min="" id="fechaInicio" class="form-control" />
+                </div>
+                <div class="input-group my-1 mx-0">
+                    <div class="input-group-prepend">
+                        <label for="fechaFinal" class="input-group-text">A: </label>
+                    </div>
+                    <input type="date" min="" id="fechaFinal" class="form-control" />
+                </div>
             </div>
-
-            DE
-            <select class="my-2" name="idDepartamento" id="idDepartamento" required>
-                <option value="">10/12/2020</option>
-                @foreach($d as $departamento)
-                <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
-                @endforeach
-            </select>
-            <br />
-            A
-            <select class="my-2" name="idDepartamento" id="idDepartamento" required>
-                <option value="">15/12/2020</option>
-                @foreach($d as $departamento)
-                <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
-                @endforeach
-            </select>
-            <!--
+        </div>
+        <!--
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
                 <label class="form-check-label" for="flexCheckChecked">
@@ -74,43 +78,40 @@ COMPRAS
                 </label>
             </div>
             -->
-        </div>
         <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-        <div class="col-9 border border-secondary mt-0 mb-4 ml-4 mr-2">
-            <div class="form-group row w-100">
-                <div class="row col my-2">
-                    <div class="col input-group">
+        <div class="col-9 border border-secondary mt-0 mb-4 ml-0 mr-0 pb-1">
+            <div class="form-group row m-0 p-0">
+                <div class="row col my-2 ml-0 p-0">
+                    <div class="col input-group ml-0 px-0">
                         <!-- <input type="text" class="form-control border-primary " size="15" placeholder="BUSCAR PRODUCTO" id="texto">-->
-                        <input type="text" class="form-control border-primary" placeholder="BUSCAR COMPRA"
+                        <input type="text" class="form-control border-primary ml-0 mr-1" placeholder="BUSCAR COMPRA"
                             id="busquedaCompra" onkeyup="mostrarCompras()">
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
                     </div>
-                    <a title="buscar" href="" class="text-dark ">
-                        <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px"
-                            height="40px" /></a>
-                    <div class="mt-2 mx-2">
+                    <!--a title="buscar" href="" class="text-dark "-->
+                    <img class="ml- p-1" src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar"
+                        width="40px" height="40px" for="busquedaCompra" />
+                    <!---/a-->
+                    <!--div class="mt-2 mx-2"-->
 
-                    </div>
                 </div>
-                <div class="row col my-2">
-                    <label for="" class="mx-3 mt-2">
+                <div class="row col my-2 ml-2 p-0" id="modoBusqueda">
+                    <label for="modoBusqueda" class="mx-3 mt-2">
                         <h6> BUSCAR POR:</h6>
                     </label>
 
-
-                    <div class=" form-check mt-2">
-                        <input class="form-check-input" type="radio" value="producto" onchange="seleccion()"
-                            name="btnRadio" id="btnProducto">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            PRODUCTO
+                    <!--div class="input-group-prepend m-0"-->
+                    <div class="input-group-text my-auto">
+                        <input type="radio" value="producto" onchange="seleccion()" name="btnRadio" id="btnProducto">
+                        <label class="ml-1 my-0" for="btnProducto">PRODUCTO
                         </label>
                     </div>
-                    <div class="mx-4 form-check mt-2">
-                        <input class="form-check-input" type="radio" value="folio" onchange="seleccion()"
-                            name="btnRadio" id="btnFolio" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
+                    <!--/div-->
+                    <div class="input-group-text ml-1 my-auto">
+                        <input type="radio" value="folio" onchange="seleccion()" name="btnRadio" id="btnFolio" checked>
+                        <label class="ml-1 my-0" for="btnFolio">
                             FOLIO
                         </label>
                     </div>
@@ -118,8 +119,8 @@ COMPRAS
             </div>
 
             <!-- TABLA -->
-            <div class="row m-0 p-0" style="height:350px;overflow-y:auto;">
-                <table class="table table-bordered border-primary col-12 " id="productos">
+            <div class="row mx-0 mt-0 mb-2 p-0 border border-dark" style="height:350px;overflow-y:auto;">
+                <table class="table table-bordered table-bordered" id="productos">
                     <thead class="table-secondary text-primary text-center">
                         <tr>
                             <th>#</th>
@@ -229,7 +230,7 @@ function cargarCompras() {
             if (proveedores[p].id === compras[i].idProveedor)
                 proveedor = proveedores[p].nombre;
         }
-        
+
         let costoTotal = 0;
         for (let p in compra_producto) {
             if (compra_producto[p].idCompras === compras[i].id) {
@@ -255,25 +256,21 @@ function cargarCompras() {
 
 
 };
-
+let comprasAuxiliar = []
 function mostrarCompras() {
     const busquedaCompra = document.querySelector('#busquedaCompra');
     let cuerpo = "";
     let contador = 1;
-    let comprasAuxiliar = []; //comprasActuales;
+    comprasAuxiliar = []; //comprasActuales;
     if (busquedaCompra.value.length > 0) {
         for (let i in comprasActuales) {
 
             if (tipoBusqueda === 'producto') {
-                for(let p in productos)
-                {
-                    if(productos[p].nombre.toUpperCase().includes(busquedaCompra.value.toUpperCase()))
-                    {
-                        for(let cp in compra_producto)
-                        {
-                            if(compra_producto[cp].idProductos === productos[p].id)
-                            {
-                                if(compra_producto[cp].idCompras === comprasActuales[i].id)
+                for (let p in productos) {
+                    if (productos[p].nombre.toUpperCase().includes(busquedaCompra.value.toUpperCase())) {
+                        for (let cp in compra_producto) {
+                            if (compra_producto[cp].idProductos === productos[p].id) {
+                                if (compra_producto[cp].idCompras === comprasActuales[i].id)
                                     comprasAuxiliar.push(comprasActuales[i]);
                             }
                         }
@@ -286,9 +283,7 @@ function mostrarCompras() {
             }
 
         }
-    }
-    else
-    {
+    } else {
         comprasAuxiliar = comprasActuales;
     }
     for (let i in comprasAuxiliar) {
@@ -321,6 +316,12 @@ function seleccion() {
     //alert(btn.value);
 }
 seleccion();
+
+function filtrarCompras()
+{
+    let opcionProveedor = document.querySelector('#opcionProveedor');
+    console.log(opcionProveedor.value);
+}
 
 function verDetalleCompra(id) {
     let cuerpo = "";

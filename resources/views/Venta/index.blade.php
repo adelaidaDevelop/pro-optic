@@ -249,7 +249,7 @@
                             <div class="col-6 mx-auto">
                                 <div class="row my-1">
                                     <div class="col-5">
-                                        <p class="h5">PAGÓ CON: </p>
+                                        <p class="h5">ABONÓ CON: </p>
                                     </div>
                                     <div class="col-7">
                                         <input type="number" class="form-control" data-decimals="2" oninput="calcularCambioEfectivo()" onchange="revisarPagoEfectivo()" id="pagoEfectivo" min=0.00 />
@@ -606,8 +606,8 @@
         const cliente = document.querySelector('#clientes');
         if (pago.value.length === 0)
             return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
-        if (parseFloat(pago.value) > parseFloat(total))
-            return alert('SI EL PAGO ES MAYOR MEJOR USE EL PAGO CON EFECTIVO');
+        if (parseFloat(pago.value) >= parseFloat(total))
+            return alert('SI EL PAGO ES MAYOR O IGUAL A LA COMPRA MEJOR USE EL PAGO CON EFECTIVO');
         try {
             let funcion = $.ajax({
                 // metodo: puede ser POST, GET, etc
