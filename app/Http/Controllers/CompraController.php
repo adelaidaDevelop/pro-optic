@@ -20,11 +20,12 @@ class CompraController extends Controller
      */
     public function index()
     {
-        $datosProd['producto'] = Producto::paginate();
+        $compras = Compra::all();
         $depas['d']= Departamento::paginate();
-        $departamento= Departamento::all();
-        $datosP= Producto::all();
-        return view('Compra.index',$depas, compact('departamento','datosP'));
+        $proveedores= Proveedor::all();
+        $productos= Producto::all();
+        $compra_producto = Compra_producto::all();
+        return view('Compra.index',$depas, compact('productos','proveedores','compra_producto','compras'));
         //return view('Compra.index');
 
     }
@@ -60,6 +61,7 @@ class CompraController extends Controller
             'idProveedor' => $proveedor,
             'fecha_compra' => $fecha_compra,
             'idEmpleado' => 1,
+            'estado' =>'pagado',
         ]);
         
         foreach($datosCodificados as $datosProducto)

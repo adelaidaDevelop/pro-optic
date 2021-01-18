@@ -17,10 +17,11 @@ class CreateComprasTable extends Migration
             $table->id();
            // $table->id('id_compra');
             $table->foreignId('idProveedor')->constrained('proveedors');
-            //$table->string('proveedor');
+            $table->string('estado');
             $table->date('fecha_compra');
-            $table->timestamps();
             $table->foreignId('idEmpleado')->constrained('empleados');
+            $table->timestamps();
+            
         });
     }
 
