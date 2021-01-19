@@ -12,6 +12,7 @@ use App\Models\Pago;
 
 
 use Illuminate\Http\Request;
+use SebastianBergmann\Environment\Console;
 
 class CreditoController extends Controller
 {
@@ -28,6 +29,7 @@ class CreditoController extends Controller
         $detalleVentas= Detalle_venta::all();
         $productos = Producto::all();
         $pagos= Pago::all();
+        
           return view('ListaDeudor.index', compact( 'credito', 'cliente','ventas','detalleVentas', 'productos','pagos'));
     }
 
@@ -50,9 +52,7 @@ class CreditoController extends Controller
     public function store(Request $request)
     {
          $datosProducto = request()->except('_token');
-         
          Credito::insert($datosProducto);
- 
          return redirect('credito');
     }
 
@@ -99,5 +99,17 @@ class CreditoController extends Controller
     public function destroy(Credito $credito)
     {
         //
+    }
+
+    public function datosNuevos()
+    {
+        $credito= Credito::all();
+        $cliente= Cliente::all();
+        $ventas= Venta::all();
+        $detalleVentas= Detalle_venta::all();
+        $productos = Producto::all();
+        $pagos= Pago::all();
+        
+          return  compact( 'credito', 'cliente','ventas','detalleVentas', 'productos','pagos');
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CreditoController;
+use App\Http\Controllers\PagoController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +41,6 @@ Route::get('/cliente/buscador', [ClienteController::class,'buscador']);
 //Route::get('/departamento/buscador2', [DepartamentoController::class,'buscador2']);
 
 Route::get('/departamento2', [DepartamentoController::class,'index2']);
-
 Route::post('/venta/productos', [VentaController::class,'productos']);
 
 Route::resource('producto', ProductoController::class);
@@ -60,6 +60,9 @@ Route::resource('proveedor', ProveedorController::class);
 
 Route::resource('cliente', ClienteController::class);
 Route::resource('credito', CreditoController::class);
+Route::get('/datosNuevos', [CreditoController::class,'datosNuevos']);
+Route::resource('pago', PagoController::class);
+
 
 
 // RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO

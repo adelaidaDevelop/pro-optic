@@ -35,8 +35,22 @@ class PagoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $monto = $request->input('monto');
+        $idVenta= $request->input('idVenta');
+        
+       // if ($request->has('venta')) {
+           
+            if($monto > 0)
+            {
+            $pago = new Pago;
+            $pago->monto = $monto;
+            $pago->idVenta = $idVenta;
+            $pago->save();
+            }
+        return true;
     }
+
+    
 
     /**
      * Display the specified resource.
