@@ -1,10 +1,8 @@
 @extends('header2')
-
 @section('contenido')
 @section('subtitulo')
 SUBPRODUCTOS
 @endsection
-
 @section('opciones')
 @endsection
 
@@ -165,7 +163,7 @@ SUBPRODUCTOS
                     <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">COBRAR E IMPRIMIR
                         TICKET</button>
                     <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">SOLO COBRAR</button>
-                    <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -180,9 +178,13 @@ SUBPRODUCTOS
     const detalleVentas = @json($detalleVentas);
     const productos = @json($productos);
     const pagos = @json($pagos);
-    
+
     let idVent = 0;
-    let idVent2=0;
+    let idVent2 = 0;
+    let restoFinal = 0;
+    let totalCompra=0;
+
+    buscarCreditos();
 
     function buscarCreditos() {
 
@@ -245,7 +247,7 @@ SUBPRODUCTOS
             console.log("pago");
             console.log(pago);
             debe2 = total - pago;
-        
+
 
             if (debe2 > 0) {
 
@@ -281,60 +283,53 @@ SUBPRODUCTOS
 
         </tr>
         `;
+
+
+            }
+            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        };
+    }
+      
+        let totalResta = 0;
+
+        function calcularDeudaCredito() {
+            const abono2 = document.querySelector('#abono');
+            const debe = document.querySelector('#restoDeuda');
+            if (parseFloat(abono2.value) > 0) {
+                //alert('si entra');
+                let diferencia = parseFloat(totalResta) - parseFloat(abono2.value);
+
+                debe.innerHTML = "$ " + '<strong>' + diferencia + '</strong>';
+                //cambio.textContent ="$" + '<strong>'+diferencia+'</strong>';
+                //cambio.value = parseFloat(pago.value)-total;
+            } else {
+                debe.textContent = "$ 0.00"
             }
         }
-        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-    };
-    /*
-    function restoDebe(id) {
-        let debe = 0;
-        
-        debe = parseFloat(debe + productosVenta[count0].subtotal);
-        document.getElementById("total").innerHTML = "$ " + debe;
-        document.getElementById("totalCobrar").textContent = "$ " + debe;
 
-    }
-*/
-    let totalResta = 0;
+        function modalVerMas(id) {
+            let cant = 0;
+            let subtotal = 0;
+            let precioUni = 0;
+            let nombreP = "";
+            let cuerpo2 = "";
+            let cont2 = 0;
+            for (count6 in detalleVentas) {
+                if (detalleVentas[count6].idVentas == id) {
+                    cant = detalleVentas[count6].cantidad;
+                    subtotal = detalleVentas[count6].subtotal;
+                    precioUni = detalleVentas[count6].precio_ind;
+                    for (count7 in productos) {
+                        if (productos[count7].id == detalleVentas[count6].idProductos) {
+                            nombreP = productos[count7].nombre;
+                        }
 
-    function calcularDeudaCredito() {
-        const abono2 = document.querySelector('#abono');
-        const debe = document.querySelector('#restoDeuda');
-        if (parseFloat(abono2.value) > 0) {
-            //alert('si entra');
-            let diferencia = parseFloat(totalResta) - parseFloat(abono2.value);
-
-            debe.innerHTML = "$ " + '<strong>' + diferencia + '</strong>';
-            //cambio.textContent ="$" + '<strong>'+diferencia+'</strong>';
-            //cambio.value = parseFloat(pago.value)-total;
-        } else {
-            debe.textContent = "$ 0.00"
-        }
-    }
-
-    function modalVerMas(id) {
-        let cant = 0;
-        let subtotal = 0;
-        let precioUni = 0;
-        let nombreP = "";
-        let cuerpo2 = "";
-        let cont2 = 0;
-        for (count6 in detalleVentas) {
-            if (detalleVentas[count6].idVentas == id) {
-                cant = detalleVentas[count6].cantidad;
-                subtotal = detalleVentas[count6].subtotal;
-                precioUni = detalleVentas[count6].precio_ind;
-                for (count7 in productos) {
-                    if (productos[count7].id == detalleVentas[count6].idProductos) {
-                        nombreP = productos[count7].nombre;
                     }
-
                 }
-            }
 
-        }
-        cont2 = cont2 + 1;
-        cuerpo2 = cuerpo2 + `
+            }
+            cont2 = cont2 + 1;
+            cuerpo2 = cuerpo2 + `
         <tr onclick="" data-dismiss="modal">
             <th scope="row">` + cont2 + `</th>
             <td>` + nombreP + `</td>    
@@ -343,114 +338,92 @@ SUBPRODUCTOS
             <td>` + precioUni + `</td>
         </tr>
         `;
-        document.getElementById("cuerpoModal").innerHTML = cuerpo2;
-    };
+            document.getElementById("cuerpoModal").innerHTML = cuerpo2;
+        };
 
-    function modalAbonar(id) {
-        idVent2=id;
-        $("input[id='abono']").val(0);
-        document.getElementById("restoDeuda").textContent = "$ " + 0.00;
-
-        let pagado = 0;
-        let total2 = 0;
-        for (count8 in pagos) {
-            if (pagos[count8].idVenta == id) {
-                pagado = pagado + pagos[count8].monto;
-            }
-        }
-        for (count9 in detalleVentas) {
-            if (detalleVentas[count9].idVentas == id) {
-                total2 = total2 + detalleVentas[count9].subtotal;
-            }
-        }
-        if (total2 > pagado) {
-            let debe = 0;
-            debe = total2 - pagado;
-            totalResta = debe
-            //console.log("si entra");
-            // document.getElementById("total").innerHTML = "$ " + debe;
-            console.log(debe);
-            document.getElementById("totalDebe").textContent = "$ " + debe;
-        } else {}
-    }
-
-    buscarCreditos()
-
-    //PAGO
-
-    async function realizarVentaCredito() {
-        // let json = JSON.stringify(productosVenta);
-        const pago = document.querySelector('#abono');
-        // const cliente = document.querySelector('#clientes');
-
-
-        if (pago.value.length === 0)
-            return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
-        if (parseFloat(pago.value) > parseFloat(totalResta))
-            return alert('El abono es mayor al adeudo');
-        try {
-            let funcion = $.ajax({
-                // metodo: puede ser POST, GET, etc
-                method: "POST",
-                // la URL de donde voy a hacer la petición
-                url: '/pago',
-                // los datos que voy a enviar para la relación
-                data: {
-                    // datos: json,
-                    idVenta: idVent2,
-                    monto: parseFloat(pago.value),
-                    _token: "{{ csrf_token() }}"
+        function modalAbonar(id) {
+            idVent2 = id;
+            $("input[id='abono']").val(0);
+            document.getElementById("restoDeuda").textContent = "$ " + 0.00;
+            let pagado = 0;
+            let total2 = 0;
+            for (count8 in pagos) {
+                if (pagos[count8].idVenta == id) {
+                    pagado = pagado + pagos[count8].monto;
                 }
-            }).done(function(respuesta) {
-                //  mostrarProductos();
-               // console.log("fall1");
-               //  buscarProducto();
-                $('#confirmarVentaModal').modal('hide');
-                $("input[id='abono']").val(0);
-                
-                location.reload();
-                console.log(respuesta); //JSON.stringify(respuesta));
-            });
-            console.log(funcion);
-            //  await cargarCredito();
-        } catch (err) {
-            console.log("Error al realizar la petición AJAX: " + err.message);
-        }
-    }
-
-    async function cargarCredito(){
-        /*
-        let response = "Sin respuesta";
-        try {
-            response = await fetch(`/producto/productos`);
-            if (response.ok) {
-                productos = await response.json();
-                //console.log(productos);
-                return productos;
-                //console.log(response);
-
-            } else {
-                console.log("No responde :'v");
-                console.log(response);
-                throw new Error(response.statusText);
             }
-        } catch (err) {
-            console.log("Error al realizar la petición de productos AJAX: " + err.message);
+            for (count9 in detalleVentas) {
+                if (detalleVentas[count9].idVentas == id) {
+                    total2 = total2 + detalleVentas[count9].subtotal;
+                }
+            }
+            if (total2 > pagado) {
+                let debe = 0;
+                debe = total2 - pagado;
+                totalResta = debe
+                totalCompra= total2;
+                //console.log("si entra");
+                // document.getElementById("total").innerHTML = "$ " + debe;
+                console.log(debe);
+                document.getElementById("totalDebe").textContent = "$ " + debe;
+            } else {
+                restoFinal = diferencia;
+
+            }
         }
-        */
 
-        fetch(`/datosNuevos/`, {
-            method: 'get'
-        })
-        .then(response => response.text())
-        .then(html => {
-           // buscarCreditos();
-        })
+       
 
-    }
+        //PAGO
 
-   
-
+        async function realizarVentaCredito() {
+            // let json = JSON.stringify(productosVenta);
+            const pago = document.querySelector('#abono');
+            // const cliente = document.querySelector('#clientes');
+            console.log("total resta:");
+            console.log(totalResta);
+            //if (pago.value.length == 0)
+              //  return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
+            if (parseFloat(pago.value) === 0)
+                return alert('EL ABONO DEBE SER MAYOR A CERO');
+        /*
+            if (pago.value.length === 0)
+                return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
+            if (parseFloat(pago.value) > parseFloat(totalResta))
+                return alert('El abono es mayor al adeudo');
+                */
+            try {
+                let funcion = $.ajax({
+                    // metodo: puede ser POST, GET, etc
+                    method: "POST",
+                    // la URL de donde voy a hacer la petición
+                    url: '/pago',
+                    // los datos que voy a enviar para la relación
+                    data: {
+                        // datos: json,
+                        totalCompra: parseFloat(totalCompra),
+                        totalResta: parseFloat(totalResta),
+                        // restoFinal: restoFinal,
+                        idVenta: idVent2,
+                        monto: parseFloat(pago.value),
+                        _token: "{{ csrf_token() }}"
+                    }
+                }).done(function(respuesta) {
+                    //  mostrarProductos();
+                    // console.log("fall1");
+                    //  buscarProducto();
+                    $('#confirmarVentaModal').modal('hide');
+                    $("input[id='abono']").val(0);
+                    location.reload();
+                    console.log(respuesta); //JSON.stringify(respuesta));
+                });
+                console.log(funcion);
+                //  await cargarCredito();
+            } catch (err) {
+                console.log("Error al realizar la petición AJAX: " + err.message);
+            }
+        }
+       
 </script>
 
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
@@ -458,5 +431,5 @@ SUBPRODUCTOS
     let valor = $("input[type='number']").inputSpinner();
     console.log(valor);
 </script>
-
+ 
 @endsection

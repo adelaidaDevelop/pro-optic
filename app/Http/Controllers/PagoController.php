@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pago;
+use App\Models\Venta;
 use Illuminate\Http\Request;
 
 class PagoController extends Controller
@@ -37,9 +38,25 @@ class PagoController extends Controller
     {
         $monto = $request->input('monto');
         $idVenta= $request->input('idVenta');
+        $totalResta= $request->input('totalResta');
+        $totalCompra = $request->input('totalCompra');
         
-       // if ($request->has('venta')) {
-           
+        if ($monto == $totalResta) {
+            if($monto > 0)
+            {
+            $pago = new Pago;
+            $pago->monto = $monto;
+            $pago->idVenta = $idVenta;
+            $pago->save();
+           // $datosProducto=request()->except(['_token', '_method']);
+            $actEstadoVenta = Venta::find($idVenta);
+            $actEstadoVenta->estado= "pagado";
+            $actEstadoVenta->pago=$totalCompra;
+            $actEstadoVenta->save();
+          //  Producto::where('id', '=',$idVenta)->update($datosProducto);
+            }
+        } else {
+            
             if($monto > 0)
             {
             $pago = new Pago;
@@ -47,6 +64,7 @@ class PagoController extends Controller
             $pago->idVenta = $idVenta;
             $pago->save();
             }
+        }
         return true;
     }
 
