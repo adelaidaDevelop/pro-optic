@@ -50,24 +50,46 @@ COMPRAS
             </select>
             <div class="form-group border border-secondary my-auto p-1">
                 <div class="input-group-text">
-                    <input type="checkbox" name="fechaRegistroCompra" id="fechaRegistroCompra"
+                    <input type="checkbox" name="fechaCompra" id="fechaCompra"
                         onchange="filtrarCompras()">
-                    <label class="ml-1 my-0" for="fechaRegistroCompra">
-                        FECHA
+                    <label class="ml-1 my-0" for="fechaCompra">
+                        FECHA COMPRA
                     </label>
 
                 </div>
                 <div class="input-group my-1 mx-0">
                     <div class="input-group-prepend">
-                        <label for="fechaInicio" class="input-group-text">DE: </label>
+                        <label for="fechaInicioC" class="input-group-text">DE: </label>
                     </div>
-                    <input type="date" min="" id="fechaInicio" onchange="filtrarCompras()" class="form-control" />
+                    <input type="date" min="" id="fechaInicioC" onchange="filtrarCompras()" class="form-control" />
                 </div>
                 <div class="input-group my-1 mx-0">
                     <div class="input-group-prepend">
-                        <label for="fechaFinal" class="input-group-text">A: </label>
+                        <label for="fechaFinalC" class="input-group-text">A: </label>
                     </div>
-                    <input type="date" min="" onchange="filtrarCompras()" id="fechaFinal" class="form-control" />
+                    <input type="date" min="" onchange="filtrarCompras()" id="fechaFinalC" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group border border-secondary my-auto p-1">
+                <div class="input-group-text">
+                    <input type="checkbox" name="fechaRegistro" id="fechaRegistro"
+                        onchange="filtrarCompras()">
+                    <label class="ml-1 my-0" for="fechaRegistro">
+                        FECHA REGISTRO
+                    </label>
+
+                </div>
+                <div class="input-group my-1 mx-0">
+                    <div class="input-group-prepend">
+                        <label for="fechaInicioR" class="input-group-text">DE: </label>
+                    </div>
+                    <input type="date" min="" id="fechaInicioR" onchange="filtrarCompras()" class="form-control" />
+                </div>
+                <div class="input-group my-1 mx-0">
+                    <div class="input-group-prepend">
+                        <label for="fechaFinalR" class="input-group-text">A: </label>
+                    </div>
+                    <input type="date" min="" onchange="filtrarCompras()" id="fechaFinalR" class="form-control" />
                 </div>
             </div>
         </div>
@@ -244,8 +266,8 @@ function cargarCompras() {
         let compra = {
             id: compras[i].id,
             proveedor: proveedor,
-            fechaCompra: fechaCompra.toLocaleDateString(),
-            fechaRegistro: fechaCreacion.toLocaleDateString(),
+            fechaCompra: fechaCompra,//.toLocaleDateString(),
+            fechaRegistro: fechaCreacion,//.toLocaleDateString(),
             estado: compras[i].estado,
             costoTotal: costoTotal
         };
@@ -301,34 +323,75 @@ function seleccion() {
     //console.log(btn);
     //alert(btn.value);
 }
-$('input[id="fechaInicio"]').prop('disabled', true);
-$('input[id="fechaFinal"]').prop('disabled', true);
+$('input[id="fechaInicioC"]').prop('disabled', true);
+$('input[id="fechaFinalC"]').prop('disabled', true);
+$('input[id="fechaInicioR"]').prop('disabled', true);
+$('input[id="fechaFinalR"]').prop('disabled', true);
 
-function verificarFechas() {
-    let btn = document.querySelector('input[name="fechaRegistroCompra"]:checked');
-    //let btn = document.querySelector('input[name="fechaRegistroCompra"]:checked');
+function comparacionFecha(fechaC,fechaI,fechaF)
+{
+    if(fechaC.getFullYear()>=fechaI.getFullYear() && fechaC.getFullYear()<=fechaF.getFullYear())
+    {
+        if(fechaC.getMonth()>=fechaI.getMonth() && fechaC.getMonth()<=fechaF.getMonth())
+        {
+            if(fechaC.getDate()>=fechaI.getDate() && fechaC.getDate()<=fechaF.getDate())
+                return true;
+        }
+    }
+    return false;
+}
+
+function verificarFechasCompra() {
+    let btn = document.querySelector('input[name="fechaCompra"]:checked');
 
     if (btn != null) {
-        let fechaInicio = document.querySelector('#fechaInicio');
-        let fechaFin = document.querySelector('#fechaFinal');
-        $('input[id="fechaInicio"]').prop('disabled', false);
+        let fechaInicio = document.querySelector('#fechaInicioC');
+        let fechaFin = document.querySelector('#fechaFinalC');
+        $('input[id="fechaInicioC"]').prop('disabled', false);
         if (fechaInicio.value.length > 0) {
             fechaFin.min = fechaInicio.value;
-            $('input[id="fechaFinal"]').prop('disabled', false);
+            $('input[id="fechaFinalC"]').prop('disabled', false);
             
             if (fechaFin.value.length > 0) {
                 let fechaI = new Date(fechaInicio.value);
                 let fechaF = new Date(fechaFin.value);
                 if(fechaI.getTime()>fechaF.getTime())
                 {
-                    $("input[id='fechaFinal']").val(fechaInicio.value);
+                    $("input[id='fechaFinalC']").val(fechaInicio.value);
                 }
                 return true;
             }
         }
     } else {
-        $('input[id="fechaInicio"]').prop('disabled', true);
-        $('input[id="fechaFinal"]').prop('disabled', true);
+        $('input[id="fechaInicioC"]').prop('disabled', true);
+        $('input[id="fechaFinalC"]').prop('disabled', true);
+    }
+    return false;
+}
+function verificarFechasRegistro() {
+    let btn = document.querySelector('input[name="fechaRegistro"]:checked');
+
+    if (btn != null) {
+        let fechaInicio = document.querySelector('#fechaInicioR');
+        let fechaFin = document.querySelector('#fechaFinalR');
+        $('input[id="fechaInicioR"]').prop('disabled', false);
+        if (fechaInicio.value.length > 0) {
+            fechaFin.min = fechaInicio.value;
+            $('input[id="fechaFinalR"]').prop('disabled', false);
+            
+            if (fechaFin.value.length > 0) {
+                let fechaI = new Date(fechaInicio.value);
+                let fechaF = new Date(fechaFin.value);
+                if(fechaI.getTime()>fechaF.getTime())
+                {
+                    $("input[id='fechaFinalR']").val(fechaInicio.value);
+                }
+                return true;
+            }
+        }
+    } else {
+        $('input[id="fechaInicioR"]').prop('disabled', true);
+        $('input[id="fechaFinalR"]').prop('disabled', true);
     }
     return false;
 }
@@ -381,18 +444,49 @@ function filtrarCompras() {
         comprasAuxiliar = comprasAuxiliar2;
         comprasAuxiliar2 = [];
     }
-    let btn = document.querySelector('input[name="fechaRegistroCompra"]:checked');
 
-    if (verificarFechas()) {
-        let fechaInicio = document.querySelector('#fechaInicio');
-        let fechaFin = document.querySelector('#fechaFinal');
+    if (verificarFechasCompra()) {
+        let fechaInicio = document.querySelector('#fechaInicioC');
+        let fechaFin = document.querySelector('#fechaFinalC');
         let fechaI = new Date(fechaInicio.value);
         let fechaF = new Date(fechaFin.value);
+        fechaI.setDate(fechaI.getDate()+1);
+        fechaF.setDate(fechaF.getDate()+1);
         for(let i in comprasAuxiliar)
         {
             //
-            let fechaC = new Date(comprasAuxiliar[i].fechaCompra);
-            if(fechaC.getTime()>=fechaI.getTime() && fechaC.getTime()<=fechaF.getTime())
+            let fechaC = comprasAuxiliar[i].fechaCompra;
+            
+            //if(fechaC.getTime()>=fechaI.getTime() && fechaC.getTime()<=fechaF.getTime())
+            if(comparacionFecha(fechaC,fechaI,fechaF))
+            {
+                comprasAuxiliar2.push(comprasAuxiliar[i]);
+            }
+            
+        }
+        comprasAuxiliar = comprasAuxiliar2;
+        comprasAuxiliar2 = [];
+        /*if(fechaF.getTime()>fechaI.getTime())
+            alert('es mayor');
+        if(fechaF.getTime()==fechaI.getTime())
+            alert('es igual');
+        console.log(fechaF)*/
+    }
+    if (verificarFechasRegistro()) {
+        let fechaInicio = document.querySelector('#fechaInicioR');
+        let fechaFin = document.querySelector('#fechaFinalR');
+        let fechaI = new Date(fechaInicio.value);
+        let fechaF = new Date(fechaFin.value);
+        fechaI.setDate(fechaI.getDate()+1);
+        fechaF.setDate(fechaF.getDate()+1);
+        for(let i in comprasAuxiliar)
+        {
+            //console.log(comprasAuxiliar[i].fechaCompra);
+            //console.log(comprasAuxiliar[i].fechaRegistro);
+            let fechaR = comprasAuxiliar[i].fechaRegistro;//new Date(comprasAuxiliar[i].fechaRegistro);
+            
+            //if(fechaR.getTime()>=fechaI.getTime() && fechaR.getTime()<=fechaF.getTime())
+            if(comparacionFecha(fechaR,fechaI,fechaF))
             {
                 comprasAuxiliar2.push(comprasAuxiliar[i]);
             }
@@ -407,13 +501,19 @@ function filtrarCompras() {
         console.log(fechaF)*/
     }
     for (let i in comprasAuxiliar) {
+        //const fechaCreacion = new Date(comprasAuxiliar[i].created_at);
+        //const fechaCompra = new Date(comprasAuxiliar[i].fecha_compra)
+        //let fechaCompra = comprasAuxiliar[i].fechaCompra.getDate();
+        //console.log(fechaCompra);
+        //comprasAuxiliar[i].fechaCompra.setDate(comprasAuxiliar[i].fechaCompra.getDate() + 1);
         cuerpo = cuerpo + `
             <tr>
                 <th scope="row">` + contador++ + `</th>
                 <td>` + comprasAuxiliar[i].id + `</td>
                 <td>` + comprasAuxiliar[i].proveedor + `</td>
-                <td>` + comprasAuxiliar[i].fechaCompra + `</td>
-                <td>` + comprasAuxiliar[i].fechaRegistro + `</td>
+                <td>` + comprasAuxiliar[i].fechaCompra.toLocaleDateString() + `</td>
+                <td>` + comprasAuxiliar[i].fechaRegistro.toLocaleDateString()+ ` `+
+                comprasAuxiliar[i].fechaRegistro.toLocaleTimeString() + `</td>
                 <td>` + comprasAuxiliar[i].estado + `</td>
                 <td>` + comprasAuxiliar[i].costoTotal + `</td>
                 <td><button class="btn btn-light" onclick="verDetalleCompra(` +
@@ -433,11 +533,11 @@ function verDetalleCompra(id) {
         if (compra_producto[c].idCompras === id) {
             let producto = 0;
             for (let p in productos) {
-                console.log(productos[p].id);
-                console.log(compra_producto[c].idProductos);
-                console.log('//');
+                //console.log(productos[p].id);
+                //console.log(compra_producto[c].idProductos);
+                //console.log('//');
                 if (productos[p].id === compra_producto[c].idProductos) {
-                    console.log(producto);
+                    //console.log(producto);
                     producto = {
                         id: productos[p].id,
                         codigoBarras: productos[p].codigoBarras,
