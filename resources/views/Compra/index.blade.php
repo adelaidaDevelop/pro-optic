@@ -4,7 +4,7 @@
 COMPRAS
 @endsection
 @section('opciones')
-<div class="col my-2 ml-5 px-1">
+<div class="col my-2 ml-5 pl-1">
     <form method="get" action="{{url('/compra/create/')}}">
         <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
             <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
@@ -15,7 +15,7 @@ COMPRAS
 @endsection
 <!--div class="row p-1 "-->
 <!--CONSULTAR PRODUCTO -->
-<div class="row border border-dark m-2 w-100">
+<div class="row border border-dark my-2 ml-2 mr-2 pr-3">
     <div class="row col-12 mx-2 mt-2">
         <label for="">
             <h5 class="text-primary">
@@ -25,48 +25,75 @@ COMPRAS
             </h5>
         </label>
     </div>
-    <div class="row col-12">
-        <div class="col-2 border border-primary mt-0 mb-4 ml-4 mr-2">
-            <select class="my-2" name="idDepartamento" id="idDepartamento" required>
-                <option value="">PROVEEDOR</option>
-                @foreach($d as $departamento)
-                <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
+    <div class="row col-12 ml-2 mr-0 mt-2">
+        <div class="col-3 border border-primary mt-0 mb-4 ml-0">
+            <label for="" class="col-form-label font-weight-bold">FILTRAR:</label>
+            <select class="form-control my-2" name="opcionProveedor" id="opcionProveedor" onchange="filtrarCompras()"
+                required>
+                <option value="0">PROVEEDOR</option>
+                @foreach($proveedores as $proveedor)
+                <option value="{{ $proveedor['nombre']}}"> {{$proveedor['nombre']}}</option>
                 @endforeach
             </select>
-
-            <select class="my-2" name="idDepartamento" id="idDepartamento" required>
-                <option value="">PAGADO</option>
-                @foreach($d as $departamento)
-                <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
-                @endforeach
+            <!--div class="input-group">
+                <div class="input-group-text">
+                    <input type="checkbox" value="" id="pagado" checked>
+                    <label class="ml-1 my-0" for="pagado">
+                        PAGADO
+                    </label>
+                </div>
+            </div-->
+            <select class="form-control my-2" name="pagoCompra" id="pagoCompra" onchange="filtrarCompras()" required>
+                <option value="0">ESTADO</option>
+                <option value="pagado">PAGADO</option>
+                <option value="credito">CREDITO</option>
             </select>
+            <div class="form-group border border-secondary my-auto p-1">
+                <div class="input-group-text">
+                    <input type="checkbox" name="fechaCompra" id="fechaCompra"
+                        onchange="filtrarCompras()">
+                    <label class="ml-1 my-0" for="fechaCompra">
+                        FECHA COMPRA
+                    </label>
 
-
-
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                <label class="form-check-label text-primary" for="flexCheckChecked">
-                    FECHA
-                </label>
-
+                </div>
+                <div class="input-group my-1 mx-0">
+                    <div class="input-group-prepend">
+                        <label for="fechaInicioC" class="input-group-text">DE: </label>
+                    </div>
+                    <input type="date" min="" id="fechaInicioC" onchange="filtrarCompras()" class="form-control" />
+                </div>
+                <div class="input-group my-1 mx-0">
+                    <div class="input-group-prepend">
+                        <label for="fechaFinalC" class="input-group-text">A: </label>
+                    </div>
+                    <input type="date" min="" onchange="filtrarCompras()" id="fechaFinalC" class="form-control" />
+                </div>
             </div>
+            <div class="form-group border border-secondary my-auto p-1">
+                <div class="input-group-text">
+                    <input type="checkbox" name="fechaRegistro" id="fechaRegistro"
+                        onchange="filtrarCompras()">
+                    <label class="ml-1 my-0" for="fechaRegistro">
+                        FECHA REGISTRO
+                    </label>
 
-            DE
-            <select class="my-2" name="idDepartamento" id="idDepartamento" required>
-                <option value="">10/12/2020</option>
-                @foreach($d as $departamento)
-                <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
-                @endforeach
-            </select>
-            <br />
-            A
-            <select class="my-2" name="idDepartamento" id="idDepartamento" required>
-                <option value="">15/12/2020</option>
-                @foreach($d as $departamento)
-                <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
-                @endforeach
-            </select>
-            <!--
+                </div>
+                <div class="input-group my-1 mx-0">
+                    <div class="input-group-prepend">
+                        <label for="fechaInicioR" class="input-group-text">DE: </label>
+                    </div>
+                    <input type="date" min="" id="fechaInicioR" onchange="filtrarCompras()" class="form-control" />
+                </div>
+                <div class="input-group my-1 mx-0">
+                    <div class="input-group-prepend">
+                        <label for="fechaFinalR" class="input-group-text">A: </label>
+                    </div>
+                    <input type="date" min="" onchange="filtrarCompras()" id="fechaFinalR" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <!--
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
                 <label class="form-check-label" for="flexCheckChecked">
@@ -74,43 +101,40 @@ COMPRAS
                 </label>
             </div>
             -->
-        </div>
         <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-        <div class="col-9 border border-secondary mt-0 mb-4 ml-4 mr-2">
-            <div class="form-group row w-100">
-                <div class="row col my-2">
-                    <div class="col input-group">
+        <div class="col-9 border border-secondary mt-0 mb-4 ml-0 mr-0 pb-1">
+            <div class="form-group row m-0 p-0">
+                <div class="row col my-2 ml-0 p-0">
+                    <div class="col input-group ml-0 px-0">
                         <!-- <input type="text" class="form-control border-primary " size="15" placeholder="BUSCAR PRODUCTO" id="texto">-->
-                        <input type="text" class="form-control border-primary" placeholder="BUSCAR COMPRA"
+                        <input type="text" class="form-control border-primary ml-0 mr-1" placeholder="BUSCAR COMPRA"
                             id="busquedaCompra" onkeyup="mostrarCompras()">
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
                     </div>
-                    <a title="buscar" href="" class="text-dark ">
-                        <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px"
-                            height="40px" /></a>
-                    <div class="mt-2 mx-2">
+                    <!--a title="buscar" href="" class="text-dark "-->
+                    <img class="ml- p-1" src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar"
+                        width="40px" height="40px" for="busquedaCompra" />
+                    <!---/a-->
+                    <!--div class="mt-2 mx-2"-->
 
-                    </div>
                 </div>
-                <div class="row col my-2">
-                    <label for="" class="mx-3 mt-2">
+                <div class="row col my-2 ml-2 p-0" id="modoBusqueda">
+                    <label for="modoBusqueda" class="mx-3 mt-2">
                         <h6> BUSCAR POR:</h6>
                     </label>
 
-
-                    <div class=" form-check mt-2">
-                        <input class="form-check-input" type="radio" value="producto" onchange="seleccion()"
-                            name="btnRadio" id="btnProducto">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            PRODUCTO
+                    <!--div class="input-group-prepend m-0"-->
+                    <div class="input-group-text my-auto">
+                        <input type="radio" value="producto" onchange="seleccion()" name="btnRadio" id="btnProducto">
+                        <label class="ml-1 my-0" for="btnProducto">PRODUCTO
                         </label>
                     </div>
-                    <div class="mx-4 form-check mt-2">
-                        <input class="form-check-input" type="radio" value="folio" onchange="seleccion()"
-                            name="btnRadio" id="btnFolio" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
+                    <!--/div-->
+                    <div class="input-group-text ml-1 my-auto">
+                        <input type="radio" value="folio" onchange="seleccion()" name="btnRadio" id="btnFolio" checked>
+                        <label class="ml-1 my-0" for="btnFolio">
                             FOLIO
                         </label>
                     </div>
@@ -118,8 +142,8 @@ COMPRAS
             </div>
 
             <!-- TABLA -->
-            <div class="row m-0 p-0" style="height:350px;overflow-y:auto;">
-                <table class="table table-bordered border-primary col-12 " id="productos">
+            <div class="row mx-0 mt-0 mb-2 p-0 border border-dark" style="height:350px;overflow-y:auto;">
+                <table class="table table-bordered table-bordered" id="productos">
                     <thead class="table-secondary text-primary text-center">
                         <tr>
                             <th>#</th>
@@ -242,8 +266,8 @@ function cargarCompras() {
         let compra = {
             id: compras[i].id,
             proveedor: proveedor,
-            fechaCompra: fechaCompra.toLocaleDateString(),
-            fechaRegistro: fechaCreacion.toLocaleDateString(),
+            fechaCompra: fechaCompra,//.toLocaleDateString(),
+            fechaRegistro: fechaCreacion,//.toLocaleDateString(),
             estado: compras[i].estado,
             costoTotal: costoTotal
         };
@@ -255,25 +279,21 @@ function cargarCompras() {
 
 
 };
+let comprasAuxiliar = []
 
 function mostrarCompras() {
     const busquedaCompra = document.querySelector('#busquedaCompra');
-    let cuerpo = "";
-    let contador = 1;
-    let comprasAuxiliar = []; //comprasActuales;
+
+    comprasAuxiliar = []; //comprasActuales;
     if (busquedaCompra.value.length > 0) {
         for (let i in comprasActuales) {
 
             if (tipoBusqueda === 'producto') {
-                for(let p in productos)
-                {
-                    if(productos[p].nombre.toUpperCase().includes(busquedaCompra.value.toUpperCase()))
-                    {
-                        for(let cp in compra_producto)
-                        {
-                            if(compra_producto[cp].idProductos === productos[p].id)
-                            {
-                                if(compra_producto[cp].idCompras === comprasActuales[i].id)
+                for (let p in productos) {
+                    if (productos[p].nombre.toUpperCase().includes(busquedaCompra.value.toUpperCase())) {
+                        for (let cp in compra_producto) {
+                            if (compra_producto[cp].idProductos === productos[p].id) {
+                                if (compra_producto[cp].idCompras === comprasActuales[i].id)
                                     comprasAuxiliar.push(comprasActuales[i]);
                             }
                         }
@@ -286,28 +306,11 @@ function mostrarCompras() {
             }
 
         }
-    }
-    else
-    {
+    } else {
         comprasAuxiliar = comprasActuales;
     }
-    for (let i in comprasAuxiliar) {
-        cuerpo = cuerpo + `
-            <tr>
-                <th scope="row">` + contador++ + `</th>
-                <td>` + comprasAuxiliar[i].id + `</td>
-                <td>` + comprasAuxiliar[i].proveedor + `</td>
-                <td>` + comprasAuxiliar[i].fechaCompra + `</td>
-                <td>` + comprasAuxiliar[i].fechaRegistro + `</td>
-                <td>` + comprasAuxiliar[i].estado + `</td>
-                <td>` + comprasAuxiliar[i].costoTotal + `</td>
-                <td><button class="btn btn-light" onclick="verDetalleCompra(` +
-            comprasAuxiliar[i].id + `)" data-toggle="modal" data-target="#detalleCompraModal"
-                type="button">VER MAS</button></td>
-            </tr>
-        `;
-    }
-    document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+
+    filtrarCompras();
 
 }
 cargarCompras();
@@ -320,7 +323,209 @@ function seleccion() {
     //console.log(btn);
     //alert(btn.value);
 }
+$('input[id="fechaInicioC"]').prop('disabled', true);
+$('input[id="fechaFinalC"]').prop('disabled', true);
+$('input[id="fechaInicioR"]').prop('disabled', true);
+$('input[id="fechaFinalR"]').prop('disabled', true);
+
+function comparacionFecha(fechaC,fechaI,fechaF)
+{
+    if(fechaC.getFullYear()>=fechaI.getFullYear() && fechaC.getFullYear()<=fechaF.getFullYear())
+    {
+        if(fechaC.getMonth()>=fechaI.getMonth() && fechaC.getMonth()<=fechaF.getMonth())
+        {
+            if(fechaC.getDate()>=fechaI.getDate() && fechaC.getDate()<=fechaF.getDate())
+                return true;
+        }
+    }
+    return false;
+}
+
+function verificarFechasCompra() {
+    let btn = document.querySelector('input[name="fechaCompra"]:checked');
+
+    if (btn != null) {
+        let fechaInicio = document.querySelector('#fechaInicioC');
+        let fechaFin = document.querySelector('#fechaFinalC');
+        $('input[id="fechaInicioC"]').prop('disabled', false);
+        if (fechaInicio.value.length > 0) {
+            fechaFin.min = fechaInicio.value;
+            $('input[id="fechaFinalC"]').prop('disabled', false);
+            
+            if (fechaFin.value.length > 0) {
+                let fechaI = new Date(fechaInicio.value);
+                let fechaF = new Date(fechaFin.value);
+                if(fechaI.getTime()>fechaF.getTime())
+                {
+                    $("input[id='fechaFinalC']").val(fechaInicio.value);
+                }
+                return true;
+            }
+        }
+    } else {
+        $('input[id="fechaInicioC"]').prop('disabled', true);
+        $('input[id="fechaFinalC"]').prop('disabled', true);
+    }
+    return false;
+}
+function verificarFechasRegistro() {
+    let btn = document.querySelector('input[name="fechaRegistro"]:checked');
+
+    if (btn != null) {
+        let fechaInicio = document.querySelector('#fechaInicioR');
+        let fechaFin = document.querySelector('#fechaFinalR');
+        $('input[id="fechaInicioR"]').prop('disabled', false);
+        if (fechaInicio.value.length > 0) {
+            fechaFin.min = fechaInicio.value;
+            $('input[id="fechaFinalR"]').prop('disabled', false);
+            
+            if (fechaFin.value.length > 0) {
+                let fechaI = new Date(fechaInicio.value);
+                let fechaF = new Date(fechaFin.value);
+                if(fechaI.getTime()>fechaF.getTime())
+                {
+                    $("input[id='fechaFinalR']").val(fechaInicio.value);
+                }
+                return true;
+            }
+        }
+    } else {
+        $('input[id="fechaInicioR"]').prop('disabled', true);
+        $('input[id="fechaFinalR"]').prop('disabled', true);
+    }
+    return false;
+}
+
 seleccion();
+
+function filtrarCompras() {
+    let opcionProveedor = document.querySelector('#opcionProveedor');
+    let opcionPago = document.querySelector('#pagoCompra');
+    let comprasRespaldo = comprasActuales;
+    let comprasAuxiliar2 = [];
+    let cuerpo = "";
+    let contador = 1;
+    if (opcionProveedor.value != "0") {
+        for (let i in comprasAuxiliar) {
+            if (comprasAuxiliar[i].proveedor === opcionProveedor.value) {
+                comprasAuxiliar2.push(comprasAuxiliar[i]);
+
+            }
+        }
+        comprasAuxiliar = comprasAuxiliar2;
+        comprasAuxiliar2 = [];
+        /*for (let i in comprasAuxiliar2) {
+            cuerpo = cuerpo + `
+            <tr>
+                <th scope="row">` + contador++ + `</th>
+                <td>` + comprasAuxiliar2[i].id + `</td>
+                <td>` + comprasAuxiliar2[i].proveedor + `</td>
+                <td>` + comprasAuxiliar2[i].fechaCompra + `</td>
+                <td>` + comprasAuxiliar2[i].fechaRegistro + `</td>
+                <td>` + comprasAuxiliar2[i].estado + `</td>
+                <td>` + comprasAuxiliar2[i].costoTotal + `</td>
+                <td><button class="btn btn-light" onclick="verDetalleCompra(` +
+                comprasAuxiliar2[i].id + `)" data-toggle="modal" data-target="#detalleCompraModal"
+                type="button">VER MAS</button></td>
+            </tr>
+        `;
+        }
+        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        */
+    }
+    if (opcionPago.value != "0") {
+        for (let i in comprasAuxiliar) {
+            if (comprasAuxiliar[i].estado === opcionPago.value) {
+                comprasAuxiliar2.push(comprasAuxiliar[i]);
+
+            }
+
+        }
+        comprasAuxiliar = comprasAuxiliar2;
+        comprasAuxiliar2 = [];
+    }
+
+    if (verificarFechasCompra()) {
+        let fechaInicio = document.querySelector('#fechaInicioC');
+        let fechaFin = document.querySelector('#fechaFinalC');
+        let fechaI = new Date(fechaInicio.value);
+        let fechaF = new Date(fechaFin.value);
+        fechaI.setDate(fechaI.getDate()+1);
+        fechaF.setDate(fechaF.getDate()+1);
+        for(let i in comprasAuxiliar)
+        {
+            //
+            let fechaC = comprasAuxiliar[i].fechaCompra;
+            
+            //if(fechaC.getTime()>=fechaI.getTime() && fechaC.getTime()<=fechaF.getTime())
+            if(comparacionFecha(fechaC,fechaI,fechaF))
+            {
+                comprasAuxiliar2.push(comprasAuxiliar[i]);
+            }
+            
+        }
+        comprasAuxiliar = comprasAuxiliar2;
+        comprasAuxiliar2 = [];
+        /*if(fechaF.getTime()>fechaI.getTime())
+            alert('es mayor');
+        if(fechaF.getTime()==fechaI.getTime())
+            alert('es igual');
+        console.log(fechaF)*/
+    }
+    if (verificarFechasRegistro()) {
+        let fechaInicio = document.querySelector('#fechaInicioR');
+        let fechaFin = document.querySelector('#fechaFinalR');
+        let fechaI = new Date(fechaInicio.value);
+        let fechaF = new Date(fechaFin.value);
+        fechaI.setDate(fechaI.getDate()+1);
+        fechaF.setDate(fechaF.getDate()+1);
+        for(let i in comprasAuxiliar)
+        {
+            //console.log(comprasAuxiliar[i].fechaCompra);
+            //console.log(comprasAuxiliar[i].fechaRegistro);
+            let fechaR = comprasAuxiliar[i].fechaRegistro;//new Date(comprasAuxiliar[i].fechaRegistro);
+            
+            //if(fechaR.getTime()>=fechaI.getTime() && fechaR.getTime()<=fechaF.getTime())
+            if(comparacionFecha(fechaR,fechaI,fechaF))
+            {
+                comprasAuxiliar2.push(comprasAuxiliar[i]);
+            }
+            
+        }
+        comprasAuxiliar = comprasAuxiliar2;
+        comprasAuxiliar2 = [];
+        /*if(fechaF.getTime()>fechaI.getTime())
+            alert('es mayor');
+        if(fechaF.getTime()==fechaI.getTime())
+            alert('es igual');
+        console.log(fechaF)*/
+    }
+    for (let i in comprasAuxiliar) {
+        //const fechaCreacion = new Date(comprasAuxiliar[i].created_at);
+        //const fechaCompra = new Date(comprasAuxiliar[i].fecha_compra)
+        //let fechaCompra = comprasAuxiliar[i].fechaCompra.getDate();
+        //console.log(fechaCompra);
+        //comprasAuxiliar[i].fechaCompra.setDate(comprasAuxiliar[i].fechaCompra.getDate() + 1);
+        cuerpo = cuerpo + `
+            <tr>
+                <th scope="row">` + contador++ + `</th>
+                <td>` + comprasAuxiliar[i].id + `</td>
+                <td>` + comprasAuxiliar[i].proveedor + `</td>
+                <td>` + comprasAuxiliar[i].fechaCompra.toLocaleDateString() + `</td>
+                <td>` + comprasAuxiliar[i].fechaRegistro.toLocaleDateString()+ ` `+
+                comprasAuxiliar[i].fechaRegistro.toLocaleTimeString() + `</td>
+                <td>` + comprasAuxiliar[i].estado + `</td>
+                <td>` + comprasAuxiliar[i].costoTotal + `</td>
+                <td><button class="btn btn-light" onclick="verDetalleCompra(` +
+            comprasAuxiliar[i].id + `)" data-toggle="modal" data-target="#detalleCompraModal"
+                type="button">VER MAS</button></td>
+            </tr>
+        `;
+    }
+    comprasAuxiliar = comprasRespaldo;
+    document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+    //console.log(opcionProveedor.value);
+}
 
 function verDetalleCompra(id) {
     let cuerpo = "";
@@ -328,11 +533,11 @@ function verDetalleCompra(id) {
         if (compra_producto[c].idCompras === id) {
             let producto = 0;
             for (let p in productos) {
-                console.log(productos[p].id);
-                console.log(compra_producto[c].idProductos);
-                console.log('//');
+                //console.log(productos[p].id);
+                //console.log(compra_producto[c].idProductos);
+                //console.log('//');
                 if (productos[p].id === compra_producto[c].idProductos) {
-                    console.log(producto);
+                    //console.log(producto);
                     producto = {
                         id: productos[p].id,
                         codigoBarras: productos[p].codigoBarras,

@@ -280,7 +280,7 @@
                                 </div>
                                 <div class="row my-1">
                                     <div class="col-4">
-                                        <p class="h5">PAGÓ CON:</p>
+                                        <p class="h5">ABONÓ CON:</p>
                                     </div>
                                     <div class="col-8">
                                         <input type="number" oninput="calcularDeudaCredito()" id="pagoCredito" data-decimals="2" value=0 class="form-control" />
@@ -606,8 +606,8 @@
         const cliente = document.querySelector('#clientes');
         if (pago.value.length === 0)
             return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
-        if (parseFloat(pago.value) > parseFloat(total))
-            return alert('SI EL PAGO ES MAYOR MEJOR USE EL PAGO CON EFECTIVO');
+        if (parseFloat(pago.value) >= parseFloat(total))
+            return alert('SI EL PAGO ES MAYOR O IGUAL A LA COMPRA MEJOR USE EL PAGO CON EFECTIVO');
         try {
             let funcion = $.ajax({
                 // metodo: puede ser POST, GET, etc

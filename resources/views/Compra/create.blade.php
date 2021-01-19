@@ -6,23 +6,12 @@
         COMPRAS
         @endsection
         @section('opciones')
-        @if(isset($datosEmpleado))
-        <div class="col my-2 ml-5 px-1">
-            <form method="get" action="{{url('/empleado')}}">
+        <div class="col my-2 ml-5 pl-1">
+            <form method="get" action="{{url('/compra/')}}">
                 <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
                     <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                         height="25px">
-                    AGREGAR EMPLEADO
-                </button>
-            </form>
-        </div>
-        @endif
-        <div class="col my-2 ml-5 px-1">
-            <form method="get" action="{{url('/empleado')}}">
-                <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    EMPLEADOS DADOS DE BAJA
+                    CONSULTAR COMPRAS
                 </button>
             </form>
         </div>
@@ -98,7 +87,8 @@
                             onclick="buscarProducto()">
                             AGREGAR PRODUCTO
                         </button>
-                        <button type="button" onclick="verificarCompra()" class="btn btn-secondary d-flex ml-auto p-2"> GUARDAR
+                        <button type="button" onclick="verificarCompra()" class="btn btn-secondary d-flex ml-auto p-2">
+                            GUARDAR
                             COMPRA</button>
                     </div>
                     <!--div class="d-flex flex-row-reverse bd-highlight m-1 ">
@@ -151,27 +141,28 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="confirmarCompraModal" tabindex="-1" role="dialog" aria-labelledby="confirmarCompraModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmarCompraModalLabel">CONFIRMAR COMPRA</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="alert alert-info" role="alert">
-            ¿ESTA SEGURO DE GUARDAR LA COMPRA?
-            SI PROCEDE YA NO SE MODIFICARÁ NI BORRARA EN EL FUTURO
+<div class="modal fade" id="confirmarCompraModal" tabindex="-1" role="dialog"
+    aria-labelledby="confirmarCompraModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmarCompraModalLabel">CONFIRMAR COMPRA</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info" role="alert">
+                    ¿ESTA SEGURO DE GUARDAR LA COMPRA?
+                    SI PROCEDE YA NO SE MODIFICARÁ NI BORRARA EN EL FUTURO
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+                <button type="button" onclick="guardarCompra()" class="btn btn-primary">CONFIRMAR COMPRA</button>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
-        <button type="button" onclick="guardarCompra()" class="btn btn-primary">CONFIRMAR COMPRA</button>
-      </div>
     </div>
-  </div>
 </div>
 <script>
 let productosCompra = [];
@@ -259,7 +250,7 @@ async function buscarProducto() {
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
-    };
+};
 
 function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganancia, precio, caducidad) {
     let producto = {
@@ -303,7 +294,7 @@ function mostrarProductos() {
             ` type="number" data-decimals="2" />` + `</td>
             <td><input onchange="caducidad(` + productosCompra[count1].id + `)" type="date" value="` + productosCompra[
                 count1].caducidad + `" min="` + productosCompra[count1].caducidad +
-                 `" class="form-control p-1 m-0" id="caducidad` + productosCompra[count1].id + `" style="width:145px" />
+            `" class="form-control p-1 m-0" id="caducidad` + productosCompra[count1].id + `" style="width:145px" />
             </td>
             <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(` + productosCompra[count1]
             .id + `)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -314,24 +305,24 @@ function mostrarProductos() {
     }
     document.getElementById("productos").innerHTML = cuerpo;
     var props = {
-            decrementButton: "<strong>&minus;</strong>", // button text
-            incrementButton: "<strong>&plus;</strong>", // ..
-            groupClass: "", // css class of the resulting input-group
-            buttonsClass: "btn-outline-secondary",
-            buttonsWidth: "2rem",
-            textAlign: "center", // alignment of the entered number
-            autoDelay: 500, // ms threshold before auto value change
-            autoInterval: 50, // speed of auto value change
-            buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
-            locale: navigator.language, // the locale, per default detected automatically from the browser
-            template: // the template of the input
-                '<div class="input-group ${groupClass}">' +
-                '<div class="input-group-prepend"><button style="max-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
-                '<input type="text" inputmode="decimal" style="text-align: ${textAlign};" class="form-control form-control-text-input"/>' +
-                '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
-                '</div>'
-        }
-        $("input[type='number']").inputSpinner(props);
+        decrementButton: "<strong>&minus;</strong>", // button text
+        incrementButton: "<strong>&plus;</strong>", // ..
+        groupClass: "", // css class of the resulting input-group
+        buttonsClass: "btn-outline-secondary",
+        buttonsWidth: "2rem",
+        textAlign: "center", // alignment of the entered number
+        autoDelay: 500, // ms threshold before auto value change
+        autoInterval: 50, // speed of auto value change
+        buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
+        locale: navigator.language, // the locale, per default detected automatically from the browser
+        template: // the template of the input
+            '<div class="input-group ${groupClass}">' +
+            '<div class="input-group-prepend"><button style="max-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
+            '<input type="text" inputmode="decimal" style="text-align: ${textAlign};" class="form-control form-control-text-input"/>' +
+            '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
+            '</div>'
+    }
+    $("input[type='number']").inputSpinner(props);
 }
 
 function cantidad(id) {
@@ -439,11 +430,10 @@ function agregarProducto(id) {
 function quitarProducto(id) {
 
     let confirmacion = confirm("¿QUITAR PRODUCTO DE LA COMPRA?");
-    if(confirmacion == true)
-    {
+    if (confirmacion == true) {
         for (let i in productosCompra) {
-        if (productosCompra[i].id === id)
-            productosCompra.splice(i, 1);
+            if (productosCompra[i].id === id)
+                productosCompra.splice(i, 1);
         }
         mostrarProductos();
     }
@@ -594,18 +584,18 @@ function nuevoProducto() {
     // Loop over them and prevent submission
     var bol = 0;
     var validation = Array.prototype.filter.call(forms, function(form) {
-      //form.addEventListener('submit', function(event) {
+        //form.addEventListener('submit', function(event) {
         if (form.checkValidity() === false) {
-          //event.preventDefault();
-          //event.stopPropagation();
-          console.log('Entra aqui');
-          bol = 1;
-          //return false;
+            //event.preventDefault();
+            //event.stopPropagation();
+            console.log('Entra aqui');
+            bol = 1;
+            //return false;
         }
         form.classList.add('was-validated');
-      //}, false);
+        //}, false);
     });
-    if(bol===1)
+    if (bol === 1)
         return false;
     const formulario = document.querySelector('#formularioProducto');
     /*const codigoBarras = document.querySelector('#formCodigoBarras');
@@ -614,7 +604,7 @@ function nuevoProducto() {
     const minimo_stock = document.querySelector('#formMinimoStock');
     const receta = document.querySelector('#formReceta');
     const departamento = document.querySelector('#formDepartamento');
-    const img = document.getElementById("formImagenProducto");*/  
+    const img = document.getElementById("formImagenProducto");*/
 
     let datosProducto = new FormData(formulario);
     datosProducto.append('_token', "{{ csrf_token() }}");
@@ -668,17 +658,13 @@ function cerrarModal() {
     $('#exampleModal').modal('hide');
 }
 
-function verificarCompra()
-{
-    if(productosCompra.length===0)
-    {
+function verificarCompra() {
+    if (productosCompra.length === 0) {
         alert('NO TIENE NINGUN PRODUCTO AGREGADO');
-    }
-    else
-    {
+    } else {
         $('#confirmarCompraModal').modal('show');
     }
-        
+
 }
 
 function guardarCompra() {
