@@ -238,8 +238,6 @@ let comprasActuales = [];
 let tipoBusqueda = "";
 
 function cargarCompras() {
-
-
     //let contador = 1;
     comprasActuales = [];
     for (let i in compras) {
@@ -294,7 +292,8 @@ function mostrarCompras() {
                         for (let cp in compra_producto) {
                             if (compra_producto[cp].idProductos === productos[p].id) {
                                 if (compra_producto[cp].idCompras === comprasActuales[i].id)
-                                    comprasAuxiliar.push(comprasActuales[i]);
+                                    if(!comprasAuxiliar.includes(comprasActuales[i]))
+                                        comprasAuxiliar.push(comprasActuales[i]);
                             }
                         }
                     }
