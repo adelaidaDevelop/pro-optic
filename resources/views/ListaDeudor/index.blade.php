@@ -1,10 +1,8 @@
 @extends('header2')
-
 @section('contenido')
 @section('subtitulo')
 SUBPRODUCTOS
 @endsection
-
 @section('opciones')
 @endsection
 
@@ -59,6 +57,118 @@ SUBPRODUCTOS
         </div>
     </div>
 </div>
+<!--MODAL-->
+
+<div class="modal fade" id="detalleCompraModal" tabindex="-1" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="modalVerMas"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                </div>
+                <div class="row" style="height:200px;overflow:auto;">
+                    <table class="table table-hover table-bordered" id="productos">
+                        <thead class="thead-light">
+                            <tr class="text-center">
+                                <th scope="col">#</th>
+                                <th scope="col">PRODUCTO</th>
+                                <th scope="col">CANTIDAD</th>
+                                <th scope="col">SUBTOTAL</th>
+                                <th scope="col">PRECIO IND.</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center" id="cuerpoModal">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL PARA ABONAR-->
+<div class="modal fade" id="confirmarVentaModal" tabindex="-1" aria-labelledby="confirmarVentaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="confirmarVentaModalLabel">ABONO</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h1>ABONAR</h1>
+                        </div>
+                        <div class="col-12">
+                            <p class="text-center">DEBE</p>
+                        </div>
+                        <div class="col-12">
+                            <h1 class="text-center" id="totalDebe">$ 0.00</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <ul class="nav nav-pills mb-3  d-flex justify-content-center" id="pills-tab" role="tablist">
+
+                        <li class="nav-item mx-2" role="presentation">
+                            <button onclick="" class="btn nav-link mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/credito.png);width:80px;height:80px;
+                            background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true" disabled>
+                                <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
+                            </button>
+                            <h6 class="mx-auto">EFECTIVO</h6>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+
+                        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <div class="col-8 mx-auto">
+
+                                <div class="row my-1">
+                                    <div class="col-4">
+                                        <p class="h5">ABONÓ:</p>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="number" oninput="calcularDeudaCredito()" id="abono" data-decimals="2" value=0 class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-4">
+                                        <p class="h5">AUN DEBE: </p>
+                                    </div>
+                                    <div class="col-8">
+                                        <p class="h5" id="restoDeuda">$ 0.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pieModal" class="modal-footer">
+                    <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">COBRAR E IMPRIMIR
+                        TICKET</button>
+                    <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">SOLO COBRAR</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- SCRIPT-->
 <script>
@@ -69,176 +179,257 @@ SUBPRODUCTOS
     const productos = @json($productos);
     const pagos = @json($pagos);
 
-    function buscarProducto() {
+    let idVent = 0;
+    let idVent2 = 0;
+    let restoFinal = 0;
+    let totalCompra=0;
+
+    buscarCreditos();
+
+    function buscarCreditos() {
 
         const palabraBusqueda = document.querySelector('#busquedaCliente');
         let cuerpo = "";
         let contador = 0;
-        let cont=0;
+        let cont = 0;
 
 
         for (count in creditos) {
             let name = "";
+            let name2 = "";
             let fechaVenta = "";
+            let fechaVenta2 = "";
+            // const fechaCreacion = new Date(compras[i].created_at);
             let folio = 0;
+            let folio2 = 0;
             let debe = 0.0;
+            let debe2 = 0.0;
             let descripcion = "";
+            let descripcion2 = "";
             let total = 0;
-            let pago=0;
+            let pago = 0;
+            let id = 0;
+            //NOMBRE CLIENTE    
             for (count1 in clientes) {
-
                 if (creditos[count].idCliente === clientes[count1].id) {
-                    name = clientes[count1].nombre;
+                    name2 = clientes[count1].nombre;
                 }
             }
+            //Buscar los credios en ventas
             for (count2 in ventas) {
-
                 if (creditos[count].idVenta === ventas[count2].id) {
-                    fechaVenta = ventas[count2].created_at;
-                    folio = ventas[count2].id;
-
+                    //fechaVenta = ventas[count2].created_at;
+                    fechaVenta2 = new Date(ventas[count2].created_at);
+                    fechaVenta2.getTime();
+                    folio2 = ventas[count2].id;
+                    //CALCULAR TOTAL DE LA VENTA
                     for (count3 in detalleVentas) {
                         if (ventas[count2].id == detalleVentas[count3].idVentas) {
-                            // for(count4 in productos){
-                            // if( detalleVentas[count3].idProductos == productos[count4].id ){  
+                            id = ventas[count2].id;
                             total = total + detalleVentas[count3].subtotal;
-                            console.log("total1");
-                            console.log(total);
                         }
                     }
+                    //CALCULAR PAGOS HECHOS
                     for (count4 in pagos) {
                         if (ventas[count2].id == pagos[count4].idVenta) {
                             pago = pago + pagos[count4].monto;
-                            console.log("pago1");
-                            console.log(pago);
                         }
                     }
-                    console.log("total2");
+                    descripcion2 = ventas[count2].id;
+                    console.log("total: ");
                     console.log(total);
-                    console.log("pago2");
+                    console.log("pago");
                     console.log(pago);
-                    console.log("debe");
-                    debe = total - pago;
-                    console.log(debe);
-                    descripcion = ventas[count2].id;
-
                 }
-
             }
-            cont= cont+1;
+            console.log("total: ");
+            console.log(total);
+            console.log("pago");
+            console.log(pago);
+            debe2 = total - pago;
 
-            cuerpo = cuerpo + `
-        <tr onclick="agregarProducto(` + creditos[count].id + `)" data-dismiss="modal">
+
+            if (debe2 > 0) {
+
+
+                idVent = id;
+                console.log("idVenta");
+                console.log(idVent);
+                cont = cont + 1;
+                console.log("id es");
+                console.log(id);
+                name = name2;
+                fechaVenta = fechaVenta2;
+                debe = debe2;
+                console.log("debe: ");
+                console.log(debe);
+                folio = folio2;
+                cuerpo = cuerpo + `
+        <tr onclick="" data-dismiss="modal">
             <td>` + cont + `</td>    
             <th scope="row">` + name + `</th>
-            <td>` + fechaVenta + `</td>
-            <td>` + debe + `</td>
+            <td>` + fechaVenta.toLocaleDateString() + `</td>
+
+            <td id="d">` + debe + `</td>
             <td>` + folio + `</td>
+            <td>` +
+                    `<button class="btn btn-light" onclick="modalVerMas(` + idVent + `)" data-toggle="modal" data-target="#detalleCompraModal"
+                type="button">VER MAS</button>
+            </td>
+            <td>` +
+                    `<button class="btn btn-light" onclick="modalAbonar(` + idVent + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
+                type="button">ABONAR</button>
+            </td>
+
         </tr>
         `;
-        }
-        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-    };
-
-    function modalVerMas(id) {
 
 
+            }
+            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        };
     }
+      
+        let totalResta = 0;
 
-    function info4(id) {
-        //Modal
-        let datosProduct = "";
-        let imagen = "";
-        let departamento = "";
-        for (count10 in creditos) {
-            if (creditos[count10].id === id) {
+        function calcularDeudaCredito() {
+            const abono2 = document.querySelector('#abono');
+            const debe = document.querySelector('#restoDeuda');
+            if (parseFloat(abono2.value) > 0) {
+                //alert('si entra');
+                let diferencia = parseFloat(totalResta) - parseFloat(abono2.value);
 
-                for (count11 in d) {
-                    if (creditos[count10].idDepartamento === d[count11].id) {
-                        departamento = d[count11].nombre;
+                debe.innerHTML = "$ " + '<strong>' + diferencia + '</strong>';
+                //cambio.textContent ="$" + '<strong>'+diferencia+'</strong>';
+                //cambio.value = parseFloat(pago.value)-total;
+            } else {
+                debe.textContent = "$ 0.00"
+            }
+        }
+
+        function modalVerMas(id) {
+            let cant = 0;
+            let subtotal = 0;
+            let precioUni = 0;
+            let nombreP = "";
+            let cuerpo2 = "";
+            let cont2 = 0;
+            for (count6 in detalleVentas) {
+                if (detalleVentas[count6].idVentas == id) {
+                    cant = detalleVentas[count6].cantidad;
+                    subtotal = detalleVentas[count6].subtotal;
+                    precioUni = detalleVentas[count6].precio_ind;
+                    for (count7 in productos) {
+                        if (productos[count7].id == detalleVentas[count6].idProductos) {
+                            nombreP = productos[count7].nombre;
+                        }
+
                     }
                 }
 
-                x = creditos[count10].id;
-                datosProduct =
-                    `
-                <div class="col-md-4">
-                        <br/>
-                        <label for="codigoBarras">
-                            <h6> {{'CODIGO DE BARRAS'}}</h6>
-                        </label>
-                        <br />
-                        <label for="Nombre">
-                            <h6>{{'NOMBRE'}}</h6>
-                        </label>
-                        <br /><br/><br/>
-                        <label for="Descripcion">
-                            <h6> {{'DESCRIPCION'}} </h6>
-                        </label>
-                        <br /><br /> <br/> <br/>
-                        <label for="MinimoStock">
-                            <h6> {{'MINIMO STOCK'}}</h6>
-                        </label>
-                        <br /> <br/>
-                        <label for="Receta">
-                            <h6> {{'RECETA MEDICA'}} </h6>
-                        </label>
-                        <br /><br />
-                        <label for="idDepartamento">
-                            <h6> {{'DEPARTAMENTO'}}</h6>
-                        </label>
-                        <br />
-                    </div>
-                    <br />
+            }
+            cont2 = cont2 + 1;
+            cuerpo2 = cuerpo2 + `
+        <tr onclick="" data-dismiss="modal">
+            <th scope="row">` + cont2 + `</th>
+            <td>` + nombreP + `</td>    
+            <td>` + cant + `</td>
+            <td>` + subtotal + `</td>
+            <td>` + precioUni + `</td>
+        </tr>
+        `;
+            document.getElementById("cuerpoModal").innerHTML = cuerpo2;
+        };
 
-                    <div class="col-md-6">
-                    
-                        <br />
-                        <!--El name debe ser igual al de la base de datos-->
-                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="` + creditos[count10].codigoBarras + `" required autocomplete="codigoBarras" autofocus disabled>
-                        <br />
-                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="` + creditos[count10].nombre + ` " autofocus required disabled>
-                        <br />
-                        <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required disabled>
-                        ` + creditos[count10].descripcion + `</textarea>
-                        <br />
-                        
-                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="` + creditos[count10].minimo_stock + `" autofocus required disabled>
-                        <br />
+        function modalAbonar(id) {
+            idVent2 = id;
+            $("input[id='abono']").val(0);
+            document.getElementById("restoDeuda").textContent = "$ " + 0.00;
+            let pagado = 0;
+            let total2 = 0;
+            for (count8 in pagos) {
+                if (pagos[count8].idVenta == id) {
+                    pagado = pagado + pagos[count8].monto;
+                }
+            }
+            for (count9 in detalleVentas) {
+                if (detalleVentas[count9].idVentas == id) {
+                    total2 = total2 + detalleVentas[count9].subtotal;
+                }
+            }
+            if (total2 > pagado) {
+                let debe = 0;
+                debe = total2 - pagado;
+                totalResta = debe
+                totalCompra= total2;
+                //console.log("si entra");
+                // document.getElementById("total").innerHTML = "$ " + debe;
+                console.log(debe);
+                document.getElementById("totalDebe").textContent = "$ " + debe;
+            } else {
+                restoFinal = diferencia;
 
-                        <select class="form-control" name="Receta" id="Receta" required disabled>
-                            <option value="">Elija una opcion</option>
-                            <option value="si" selected>si</option>
-                            <option value="no" selected>no</option>
-                        </select>
-                        <br />
-
-                        <select class="form-control" name="Depa" id="Depa"  disabled>
-                            <option value="" selected>` + departamento + ` </option>
-                        </select>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-1 text-center">
-                        <br /><br />
-                        <label for="Imagen">
-                            <h5> <strong>{{'FOTO'}}</strong></h5>
-                        </label required>
-                        <br />
-                        <img src="{{ asset('storage')}}/` + creditos[count10].imagen + ` " alt="" width="200">
-                        <br /><br />
-                        
-                        <a class="btn btn-primary" href="{{ url('/producto/` + x + `/edit')}}"> Editar </a>
-
-                    </div>
-
-                    <br/>
-                `
             }
         }
-        document.getElementById("resultados").innerHTML = datosProduct;
-    };
-    buscarProducto()
+
+       
+
+        //PAGO
+
+        async function realizarVentaCredito() {
+            // let json = JSON.stringify(productosVenta);
+            const pago = document.querySelector('#abono');
+            // const cliente = document.querySelector('#clientes');
+            console.log("total resta:");
+            console.log(totalResta);
+            //if (pago.value.length == 0)
+              //  return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
+            if (parseFloat(pago.value) === 0)
+                return alert('EL ABONO DEBE SER MAYOR A CERO');
+        /*
+            if (pago.value.length === 0)
+                return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
+            if (parseFloat(pago.value) > parseFloat(totalResta))
+                return alert('El abono es mayor al adeudo');
+                */
+            try {
+                let funcion = $.ajax({
+                    // metodo: puede ser POST, GET, etc
+                    method: "POST",
+                    // la URL de donde voy a hacer la petición
+                    url: '/pago',
+                    // los datos que voy a enviar para la relación
+                    data: {
+                        // datos: json,
+                        totalCompra: parseFloat(totalCompra),
+                        totalResta: parseFloat(totalResta),
+                        // restoFinal: restoFinal,
+                        idVenta: idVent2,
+                        monto: parseFloat(pago.value),
+                        _token: "{{ csrf_token() }}"
+                    }
+                }).done(function(respuesta) {
+                    //  mostrarProductos();
+                    // console.log("fall1");
+                    //  buscarProducto();
+                    $('#confirmarVentaModal').modal('hide');
+                    $("input[id='abono']").val(0);
+                    location.reload();
+                    console.log(respuesta); //JSON.stringify(respuesta));
+                });
+                console.log(funcion);
+                //  await cargarCredito();
+            } catch (err) {
+                console.log("Error al realizar la petición AJAX: " + err.message);
+            }
+        }
+       
 </script>
 
-
+<script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
+<script>
+    let valor = $("input[type='number']").inputSpinner();
+    console.log(valor);
+</script>
+ 
 @endsection

@@ -121,9 +121,6 @@ class ProductoController extends Controller
         }
 
         Producto::where('id', '=',$id)->update($datosProducto);
-
-       // $producto=Producto::findOrFail($id);
-       // return view('producto.edit', compact('producto', 'departamento'));
         return redirect('producto');
     }
 
