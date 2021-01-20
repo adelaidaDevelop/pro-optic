@@ -15,7 +15,6 @@ class Compra_producto extends Model
         'porcentaje_ganancia',
         'fecha_caducidad',
         'costo_unitario',
-        'iva',
     ];
     public $timestamps = false;
     protected $casts = [

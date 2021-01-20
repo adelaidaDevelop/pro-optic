@@ -8,6 +8,7 @@ use App\Models\Producto;
 use App\Models\Productos_caducidad;
 use App\Models\Departamento;
 use App\Models\Proveedor;
+use App\Models\Pago_compra;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -55,14 +56,29 @@ class CompraController extends Controller
         //$datos['departamentos'] = Producto::paginate();
         $datos = $request->input('datos');
         $proveedor = $request->input('proveedor');
+        $estado = $request->input('estado');
         $fecha_compra = $request->input('fecha_compra');
+        $iva = $request->input('iva');
         $datosCodificados = json_decode($datos,true);
         $compra = Compra::create([
             'idProveedor' => $proveedor,
             'fecha_compra' => $fecha_compra,
             'idEmpleado' => 1,
-            'estado' =>'pagado',
+            'estado' =>$estado,
+            'IVA' => $iva,
         ]);
+        if($estado =='credito')
+        {
+            $pagoCompra = $request->input('pago');
+            if($pagoCompra>0)
+            {
+                $pago = new Pago_compra;
+                $pago->monto = $pagoCompra;
+                $pago->idCompra = $compra->id;
+                $pago->save();
+            }
+            
+        }
         
         foreach($datosCodificados as $datosProducto)
         {
@@ -73,7 +89,7 @@ class CompraController extends Controller
             $producto->porcentaje_ganancia = $datosProducto['ganancia'];
             $producto->fecha_caducidad = $datosProducto['caducidad'];
             $producto->costo_unitario = $datosProducto['costo'];
-            $producto->iva = 'Si';
+            //$producto->iva = 'Si';
             //$producto->fecha_caducidad = Carbon::createFromFormat( 'Y/m/d', $datosProducto['caducidad']);
             $producto->save();
             $actualizarProducto = Producto::find($datosProducto['id']);//->update(['existencia'=>]);

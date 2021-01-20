@@ -20,11 +20,11 @@
     <div class="row">
         <div class="col-12 w-100">
             <!--CONSULTAR PRODUCTO -->
-            <div class="row border mt-2 mb-2 border-dark">
+            <div class="row border mt-2 mb-2 mx-0 border-dark">
                 <div class="col-12">
-                    <div class="row mx-2 mt-3">
+                    <div class="row mx-1 mt-1 mb-0">
                         <label for="">
-                            <h5 class="text-primary">
+                            <h5 class="text-primary m-0 p-0">
                                 <strong>
                                     INGRESAR PRODUCTOS
                                 </strong>
@@ -32,23 +32,55 @@
                         </label>
                     </div>
                     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <label class="col form-check-label" for="flexCheckChecked">
-                                PROVEEDOR
-                            </label>
-                            <select class="col form-control mr-3" name="proveedor" id="proveedor" required>
-                                <option value="idProveedor">PROVEEDOR</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-check-label" for="flexCheckChecked">
-                                FECHA
-                            </label>
-                            <input type="date" min="" id="fechaCompra" class="form-control mr-3" />
-                            <!--select class="form-control" name="idDepartamento" id="idDepartamento" required>
+
+                    <div class="form-inline ml-1 mr-1 mb-2">
+                        <div class="form-group border border-secondary my-auto ml-0 mr-1 p-1">
+                            <div class="form-group">
+                                <label class="col form-check-label" for="flexCheckChecked">
+                                    PROVEEDOR
+                                </label>
+                                <select class="col form-control mr-3" name="proveedor" id="proveedor" required>
+                                    <option value="idProveedor">PROVEEDOR</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label" for="flexCheckChecked">
+                                    FECHA
+                                </label>
+                                <input type="date" min="" id="fechaCompra" class="form-control mr-3" />
+                                <!--select class="form-control" name="idDepartamento" id="idDepartamento" required>
                                 <option value="">10/12/2020</option>
                             </select-->
+                            </div>
+                        </div>
+                        <div class="form-group border border-secondary my-auto mx-auto p-1">
+                            <div class="input-group-text my-auto mx-auto">
+                                <input type="checkbox" name="iva" id="iva" onchange="activarIva()">
+                                <label class="ml-1 my-0" for="iva">
+                                    IVA
+                                </label>
+
+                            </div>
+                            <!--div class="input-group my-0 mx-0 px-0 border"-->
+                            <input type="number" id="inputIva" data-prefix="%" name="inputIva" value=15 min=0
+                                class="form-control" />
+                            <!--/div-->
+                        </div>
+                        <div class="form-group border border-secondary my-auto ml-auto p-1">
+                            <div class="input-group-text mr-0">
+                                <input type="checkbox" name="credito" id="credito" onchange="activarCredito()">
+                                <label class="ml-1 my-0" for="credito">
+                                    CREDITO
+                                </label>
+
+                            </div>
+                            <div class="input-group my-0 mx-auto px-0" id="formCredito">
+                                <div class="input-group-prepend my-auto mx-0 px-0">
+                                    <p class="h5 my-auto mx-0 px-0 text-right">ABONO INICIAL:</p>
+                                </div>
+                                <input type="number" data-prefix="$" id="pagoCredito" name="pagoCredito"
+                                    data-decimals="2" value=0 min=0 class="form-control" />
+                            </div>
                         </div>
                     </div>
                     <!-- TABLA -->
@@ -100,6 +132,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -164,6 +197,8 @@
         </div>
     </div>
 </div>
+
+<script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
 let productosCompra = [];
 let productos = [];
@@ -266,6 +301,51 @@ function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganan
     console.log(producto)
     productosCompra.push(producto);
 }
+var preProps = {
+    decrementButton: "<strong>&minus;</strong>", // button text
+    incrementButton: "<strong>&plus;</strong>", // ..
+    groupClass: "my-0 mx-1 p-0", // css class of the resulting input-group
+    buttonsClass: "btn-outline-secondary",
+    buttonsWidth: "2rem",
+    textAlign: "center", // alignment of the entered number
+    autoDelay: 500, // ms threshold before auto value change
+    autoInterval: 50, // speed of auto value change
+    buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
+    locale: navigator.language, // the locale, per default detected automatically from the browser
+    template: // the template of the input
+        '<div class="input-group ${groupClass}">' +
+        '<div class="input-group-prepend"><button style="max-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
+        '<input type="text" inputmode="decimal" style="text-align: ${textAlign};width:100px;" class="form-control form-control-text-input"/>' +
+        '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
+        '</div>'
+}
+$("input[name='pagoCredito']").inputSpinner(preProps);
+$("input[name='inputIva']").inputSpinner(preProps);
+$('input[id="pagoCredito"]').prop('disabled', true);
+$('input[id="inputIva"]').prop('disabled', true);
+
+function activarCredito() {
+    let btn = document.querySelector('input[name="credito"]:checked');
+    if (btn != null) {
+        $('input[id="pagoCredito"]').prop('disabled', false);
+    } else {
+        $('input[id="pagoCredito"]').prop('disabled', true);
+    }
+}
+
+function activarIva() {
+    let btn = document.querySelector('input[name="iva"]:checked');
+    if (btn != null) {
+        $('input[id="inputIva"]').prop('disabled', false);
+
+    } else {
+        $('input[id="inputIva"]').prop('disabled', true);
+    }
+    for (let count1 in productosCompra) {
+        costo(productosCompra[count1].id);
+    }
+
+}
 
 function mostrarProductos() {
     let cuerpo = "";
@@ -276,19 +356,19 @@ function mostrarProductos() {
             <th scope="row">` + contador++ + `</th>
             <td>` + productosCompra[count1].codigoBarras + `</td>
             <td>` + productosCompra[count1].nombre + `</td>
-            <td><input  value="` + productosCompra[count1].cantidad + `" 
+            <td><input name="cantidad" value="` + productosCompra[count1].cantidad + `" 
                 onchange="cantidad(` + productosCompra[count1].id + `)"  
                 id="cantidad` + productosCompra[count1].id + `" min="1" ` +
             ` type="number"/>` + `</td>
-            <td><input data-prefix="$"  value="` + productosCompra[count1].costo + `" 
+            <td><input name="costo" data-prefix="$"  value="` + productosCompra[count1].costo + `" 
                 onchange="costo(` + productosCompra[count1].id + `)"  
                 id="costo` + productosCompra[count1].id + `" min="0" ` +
             ` type="number" data-decimals="2"/>` + `</td>
-            <td><input data-prefix="%"  value="` + productosCompra[count1].ganancia + `" 
+            <td><input name="ganancia" data-prefix="%"  value="` + productosCompra[count1].ganancia + `" 
                 onchange="ganancia(` + productosCompra[count1].id + `)"  
                 id="ganancia` + productosCompra[count1].id + `" min="0" ` +
             ` type="number"/>` + `</td>
-            <td><input data-prefix="$"  value="` + productosCompra[count1].precio + `" 
+            <td><input name="precio" data-prefix="$"  value="` + productosCompra[count1].precio + `" 
                 onchange="precio(` + productosCompra[count1].id + `)"  
                 id="precio` + productosCompra[count1].id + `" min="0" ` +
             ` type="number" data-decimals="2" />` + `</td>
@@ -322,9 +402,15 @@ function mostrarProductos() {
             '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
             '</div>'
     }
-    $("input[type='number']").inputSpinner(props);
-}
+    //$("input[name='pagoCredito']").inputSpinner("destroy");
+    $("input[name='cantidad']").inputSpinner(props);
+    $("input[name='costo']").inputSpinner(props);
+    $("input[name='ganancia']").inputSpinner(props);
+    $("input[name='precio']").inputSpinner(props);
+    //activarIva();
 
+}
+//mostrarProductos();
 function cantidad(id) {
     const valorProducto = document.querySelector('#cantidad' + id);
     for (let i in productosCompra) {
@@ -340,10 +426,17 @@ function costo(id) {
     for (let i in productosCompra) {
         if (productosCompra[i].id === id) {
             productosCompra[i].costo = parseFloat(costoProducto.value);
-            console.log(productosCompra[i]);
+            //console.log(productosCompra[i]);
             let ganancia = ((productosCompra[i].costo * productosCompra[i].ganancia) / 100)
             let costo = productosCompra[i].costo;
             productosCompra[i].precio = costo + ganancia;
+            let btnIva = document.querySelector('input[name="iva"]:checked');
+            if (btnIva != null) {
+                let iva = document.querySelector('input[name="inputIva"]');
+                //console.log(iva)
+                let costoIva = ((parseFloat(productosCompra[i].costo) * parseFloat(iva.value)) / 100);
+                productosCompra[i].precio = parseFloat(productosCompra[i].precio) + parseFloat(costoIva);
+            }
             console.log(productosCompra[i].precio)
             mostrarProductos();
             //productosCompra[i].costo;
@@ -360,6 +453,13 @@ function ganancia(id) {
             let ganancia = ((productosCompra[i].costo * productosCompra[i].ganancia) / 100)
             let costo = productosCompra[i].costo;
             productosCompra[i].precio = costo + ganancia;
+
+            let btnIva = document.querySelector('input[name="iva"]:checked');
+            if (btnIva != null) {
+                let iva = document.querySelector('input[name="inputIva"]');
+                let costoIva = ((parseFloat(productosCompra[i].costo) * parseFloat(iva.value)) / 100);
+                productosCompra[i].precio = parseFloat(productosCompra[i].precio) + parseFloat(costoIva);
+            }
             console.log(productosCompra[i].precio)
             mostrarProductos();
             //productosCompra[i].costo;
@@ -372,12 +472,30 @@ function precio(id) {
     for (let i in productosCompra) {
         if (productosCompra[i].id === id) {
             productosCompra[i].precio = parseFloat(precioProducto.value);
-            console.log(productosCompra[i]);
+            //console.log(productosCompra[i]);
             let costo = productosCompra[i].costo;
-            let precio = productosCompra[i].precio // ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
-
-            productosCompra[i].ganancia = parseInt(((precio * 100) / costo)) - 100;
-            console.log(productosCompra[i].precio);
+            let precio = productosCompra[i].precio; // ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
+            console.log(precio);
+            let mult = precio * 100;
+            mult = mult.toFixed(2);
+            console.log(mult);
+            let div = parseInt(mult / costo);
+            console.log(div);
+            let resultado = parseInt(div - 100);
+            productosCompra[i].ganancia = resultado; //parseInt(((precio*100)/costo)-100);
+            //console.log(resultado);
+            let btnIva = document.querySelector('input[name="iva"]:checked');
+            if (btnIva != null) {
+                let iva = document.querySelector('input[name="inputIva"]');
+                //let costoIva = ((parseFloat(productosCompra[i].costo) * parseFloat(iva))/100);
+                //let ganancia = ((productosCompra[i].precio*100)/productosCompra[i].costo)-parseInt(iva.value)
+                //productosCompra[i].precio = parseFloat(productosCompra[i].precio)+ parseFloat(costoIva);
+                //console.log(productosCompra[i].ganancia);
+                console.log(parseInt(iva.value));
+                console.log(productosCompra[i].ganancia);
+                productosCompra[i].ganancia = parseInt(productosCompra[i].ganancia - iva.value);
+            }
+            //console.log(productosCompra[i].ganancia);
             mostrarProductos();
             //productosCompra[i].costo;
         }
@@ -415,15 +533,18 @@ function agregarProducto(id) {
     for (let i in productos) {
         if (productos[i].id === id) {
             if (!buscarProductoEnCompra(id)) {
+
+                let ganancia = ((productos[i].precio * 100) / (productos[i].costo)) - 100;
                 //agregarProductoACompra(id,codigoBarras,nombre,cantidad,costo,ganancia,precio,caducidad)
                 agregarProductoACompra(productos[i].id, productos[i].codigoBarras, productos[i].nombre,
-                    1, productos[i].costo, 15, productos[i].precio, fechaActual()
+                    1, productos[i].costo, ganancia, productos[i].precio, fechaActual()
                 );
             } else alert("YA AGREGÓ ESTE PRODUCTO");
         }
     }
     const entrada = document.querySelector('#busquedaProducto').value = "";
     mostrarProductos();
+    activarIva();
     console.log(productosCompra);
 }
 
@@ -667,35 +788,82 @@ function verificarCompra() {
 
 }
 
-function guardarCompra() {
-    const proveedor = document.querySelector('#proveedor');
-    const fechaCompra = document.querySelector('#fechaCompra');
-    let json = JSON.stringify(productosCompra)
-    $.ajax({
-        // metodo: puede ser POST, GET, etc
-        method: "POST",
-        // la URL de donde voy a hacer la petición
-        url: '/compra',
-        // los datos que voy a enviar para la relación
-        data: {
-            datos: json,
-            proveedor: proveedor.value,
-            fecha_compra: fechaCompra.value,
-            //_token: $("meta[name='csrf-token']").attr("content")
-            _token: "{{ csrf_token() }}",
+async function guardarCompra() {
+    try {
+        const proveedor = document.querySelector('#proveedor');
+        const fechaCompra = document.querySelector('#fechaCompra');
+        let json = JSON.stringify(productosCompra);
+        let estado = "pagado";
+        let iva = null;
+        let btnIva = document.querySelector('input[name="credito"]:checked');
+        if (btnIva != null)
+            iva = document.querySelector('#inputIva');
+        let btn = document.querySelector('input[name="credito"]:checked');
+        if (btn != null) {
+            estado = "credito";
         }
-        // si tuvo éxito la petición
-    }).done(function(respuesta) {
-        alert('COMPRA GUARDADA EXITOSAMENTE');
-        productosCompra = [];
-        mostrarProductos();
-        $('#confirmarCompraModal').modal('hide');
-        console.log(respuesta); //JSON.stringify(respuesta));
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
-        console.log(jqXHR, textStatus, errorThrown);
-    });
+        const pagoCredito = document.querySelector('#pagoCredito');
+        //if (parseFloat(pagoCredito.value) > 0) {
+
+        $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: '/compra',
+            // los datos que voy a enviar para la relación
+            data: {
+                estado: estado,
+                iva: iva,
+                pago: parseFloat(pagoCredito.value),
+                datos: json,
+                proveedor: proveedor.value,
+                fecha_compra: fechaCompra.value,
+                //_token: $("meta[name='csrf-token']").attr("content")
+                _token: "{{ csrf_token() }}",
+            }
+            // si tuvo éxito la petición
+        }).done(function(respuesta) {
+            alert('COMPRA GUARDADA EXITOSAMENTE');
+            productosCompra = [];
+            mostrarProductos();
+            $('#confirmarCompraModal').modal('hide');
+            console.log(respuesta); //JSON.stringify(respuesta));
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+        //}
+        /*} else {
+            $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: '/compra',
+                // los datos que voy a enviar para la relación
+                data: {
+                    estado: estado,
+                    datos: json,
+                    proveedor: proveedor.value,
+                    fecha_compra: fechaCompra.value,
+                    //_token: $("meta[name='csrf-token']").attr("content")
+                    _token: "{{ csrf_token() }}",
+                }
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                alert('COMPRA GUARDADA EXITOSAMENTE');
+                productosCompra = [];
+                mostrarProductos();
+                $('#confirmarCompraModal').modal('hide');
+                console.log(respuesta); //JSON.stringify(respuesta));
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }*/
+        await cargarProductos();
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
 }
 </script>
-<script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 @endsection

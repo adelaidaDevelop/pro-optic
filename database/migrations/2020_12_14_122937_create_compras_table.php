@@ -19,6 +19,7 @@ class CreateComprasTable extends Migration
             $table->foreignId('idProveedor')->constrained('proveedors');
             $table->string('estado');
             $table->date('fecha_compra');
+            $table->integer('IVA')->nullable();
             $table->foreignId('idEmpleado')->constrained('empleados');
             $table->timestamps();
             
