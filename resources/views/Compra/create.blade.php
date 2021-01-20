@@ -62,7 +62,8 @@
 
                             </div>
                             <!--div class="input-group my-0 mx-0 px-0 border"-->
-                                <input type="number" id="inputIva" data-prefix="%" name="inputIva" value=15 class="form-control" />
+                            <input type="number" id="inputIva" data-prefix="%" name="inputIva" value=15 min=0
+                                class="form-control" />
                             <!--/div-->
                         </div>
                         <div class="form-group border border-secondary my-auto ml-auto p-1">
@@ -77,8 +78,8 @@
                                 <div class="input-group-prepend my-auto mx-0 px-0">
                                     <p class="h5 my-auto mx-0 px-0 text-right">ABONO INICIAL:</p>
                                 </div>
-                                <input type="number" data-prefix="$" id="pagoCredito" name="pagoCredito" data-decimals="2" value=0
-                                    class="form-control" />
+                                <input type="number" data-prefix="$" id="pagoCredito" name="pagoCredito"
+                                    data-decimals="2" value=0 min=0 class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -336,9 +337,14 @@ function activarIva() {
     let btn = document.querySelector('input[name="iva"]:checked');
     if (btn != null) {
         $('input[id="inputIva"]').prop('disabled', false);
+
     } else {
         $('input[id="inputIva"]').prop('disabled', true);
     }
+    for (let count1 in productosCompra) {
+        costo(productosCompra[count1].id);
+    }
+
 }
 
 function mostrarProductos() {
@@ -401,7 +407,7 @@ function mostrarProductos() {
     $("input[name='costo']").inputSpinner(props);
     $("input[name='ganancia']").inputSpinner(props);
     $("input[name='precio']").inputSpinner(props);
-
+    //activarIva();
 
 }
 //mostrarProductos();
@@ -421,15 +427,16 @@ function costo(id) {
         if (productosCompra[i].id === id) {
             productosCompra[i].costo = parseFloat(costoProducto.value);
             //console.log(productosCompra[i]);
-            let btnIva = document.querySelector('input[name="iva"]:checked');
-            if(btnIva!= null)
-            {
-                let iva = document.querySelector('input[name="inputIva"]');
-                console.log("si esta activo");
-            }
             let ganancia = ((productosCompra[i].costo * productosCompra[i].ganancia) / 100)
             let costo = productosCompra[i].costo;
             productosCompra[i].precio = costo + ganancia;
+            let btnIva = document.querySelector('input[name="iva"]:checked');
+            if (btnIva != null) {
+                let iva = document.querySelector('input[name="inputIva"]');
+                //console.log(iva)
+                let costoIva = ((parseFloat(productosCompra[i].costo) * parseFloat(iva.value)) / 100);
+                productosCompra[i].precio = parseFloat(productosCompra[i].precio) + parseFloat(costoIva);
+            }
             console.log(productosCompra[i].precio)
             mostrarProductos();
             //productosCompra[i].costo;
@@ -446,6 +453,13 @@ function ganancia(id) {
             let ganancia = ((productosCompra[i].costo * productosCompra[i].ganancia) / 100)
             let costo = productosCompra[i].costo;
             productosCompra[i].precio = costo + ganancia;
+
+            let btnIva = document.querySelector('input[name="iva"]:checked');
+            if (btnIva != null) {
+                let iva = document.querySelector('input[name="inputIva"]');
+                let costoIva = ((parseFloat(productosCompra[i].costo) * parseFloat(iva.value)) / 100);
+                productosCompra[i].precio = parseFloat(productosCompra[i].precio) + parseFloat(costoIva);
+            }
             console.log(productosCompra[i].precio)
             mostrarProductos();
             //productosCompra[i].costo;
@@ -458,12 +472,30 @@ function precio(id) {
     for (let i in productosCompra) {
         if (productosCompra[i].id === id) {
             productosCompra[i].precio = parseFloat(precioProducto.value);
-            console.log(productosCompra[i]);
+            //console.log(productosCompra[i]);
             let costo = productosCompra[i].costo;
-            let precio = productosCompra[i].precio // ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
-
-            productosCompra[i].ganancia = parseInt(((precio * 100) / costo)) - 100;
-            console.log(productosCompra[i].precio);
+            let precio = productosCompra[i].precio; // ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
+            console.log(precio);
+            let mult = precio * 100;
+            mult = mult.toFixed(2);
+            console.log(mult);
+            let div = parseInt(mult / costo);
+            console.log(div);
+            let resultado = parseInt(div - 100);
+            productosCompra[i].ganancia = resultado; //parseInt(((precio*100)/costo)-100);
+            //console.log(resultado);
+            let btnIva = document.querySelector('input[name="iva"]:checked');
+            if (btnIva != null) {
+                let iva = document.querySelector('input[name="inputIva"]');
+                //let costoIva = ((parseFloat(productosCompra[i].costo) * parseFloat(iva))/100);
+                //let ganancia = ((productosCompra[i].precio*100)/productosCompra[i].costo)-parseInt(iva.value)
+                //productosCompra[i].precio = parseFloat(productosCompra[i].precio)+ parseFloat(costoIva);
+                //console.log(productosCompra[i].ganancia);
+                console.log(parseInt(iva.value));
+                console.log(productosCompra[i].ganancia);
+                productosCompra[i].ganancia = parseInt(productosCompra[i].ganancia - iva.value);
+            }
+            //console.log(productosCompra[i].ganancia);
             mostrarProductos();
             //productosCompra[i].costo;
         }
@@ -501,15 +533,18 @@ function agregarProducto(id) {
     for (let i in productos) {
         if (productos[i].id === id) {
             if (!buscarProductoEnCompra(id)) {
+
+                let ganancia = ((productos[i].precio * 100) / (productos[i].costo)) - 100;
                 //agregarProductoACompra(id,codigoBarras,nombre,cantidad,costo,ganancia,precio,caducidad)
                 agregarProductoACompra(productos[i].id, productos[i].codigoBarras, productos[i].nombre,
-                    1, productos[i].costo, 15, productos[i].precio, fechaActual()
+                    1, productos[i].costo, ganancia, productos[i].precio, fechaActual()
                 );
             } else alert("YA AGREGÓ ESTE PRODUCTO");
         }
     }
     const entrada = document.querySelector('#busquedaProducto').value = "";
     mostrarProductos();
+    activarIva();
     console.log(productosCompra);
 }
 
@@ -759,67 +794,72 @@ async function guardarCompra() {
         const fechaCompra = document.querySelector('#fechaCompra');
         let json = JSON.stringify(productosCompra);
         let estado = "pagado";
+        let iva = null;
+        let btnIva = document.querySelector('input[name="credito"]:checked');
+        if (btnIva != null)
+            iva = document.querySelector('#inputIva');
         let btn = document.querySelector('input[name="credito"]:checked');
         if (btn != null) {
             estado = "credito";
-
-            const pagoCredito = document.querySelector('#pagoCredito');
-            //if (parseFloat(pagoCredito.value) > 0) {
-
-            $.ajax({
-                // metodo: puede ser POST, GET, etc
-                method: "POST",
-                // la URL de donde voy a hacer la petición
-                url: '/compra',
-                // los datos que voy a enviar para la relación
-                data: {
-                    estado: estado,
-                    pago: parseFloat(pagoCredito.value),
-                    datos: json,
-                    proveedor: proveedor.value,
-                    fecha_compra: fechaCompra.value,
-                    //_token: $("meta[name='csrf-token']").attr("content")
-                    _token: "{{ csrf_token() }}",
-                }
-                // si tuvo éxito la petición
-            }).done(function(respuesta) {
-                alert('COMPRA GUARDADA EXITOSAMENTE');
-                productosCompra = [];
-                mostrarProductos();
-                $('#confirmarCompraModal').modal('hide');
-                console.log(respuesta); //JSON.stringify(respuesta));
-            }).fail(function(jqXHR, textStatus, errorThrown) {
-                alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
-                console.log(jqXHR, textStatus, errorThrown);
-            });
-            //}
-        } else {
-            $.ajax({
-                // metodo: puede ser POST, GET, etc
-                method: "POST",
-                // la URL de donde voy a hacer la petición
-                url: '/compra',
-                // los datos que voy a enviar para la relación
-                data: {
-                    estado: estado,
-                    datos: json,
-                    proveedor: proveedor.value,
-                    fecha_compra: fechaCompra.value,
-                    //_token: $("meta[name='csrf-token']").attr("content")
-                    _token: "{{ csrf_token() }}",
-                }
-                // si tuvo éxito la petición
-            }).done(function(respuesta) {
-                alert('COMPRA GUARDADA EXITOSAMENTE');
-                productosCompra = [];
-                mostrarProductos();
-                $('#confirmarCompraModal').modal('hide');
-                console.log(respuesta); //JSON.stringify(respuesta));
-            }).fail(function(jqXHR, textStatus, errorThrown) {
-                alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
-                console.log(jqXHR, textStatus, errorThrown);
-            });
         }
+        const pagoCredito = document.querySelector('#pagoCredito');
+        //if (parseFloat(pagoCredito.value) > 0) {
+
+        $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: '/compra',
+            // los datos que voy a enviar para la relación
+            data: {
+                estado: estado,
+                iva: iva,
+                pago: parseFloat(pagoCredito.value),
+                datos: json,
+                proveedor: proveedor.value,
+                fecha_compra: fechaCompra.value,
+                //_token: $("meta[name='csrf-token']").attr("content")
+                _token: "{{ csrf_token() }}",
+            }
+            // si tuvo éxito la petición
+        }).done(function(respuesta) {
+            alert('COMPRA GUARDADA EXITOSAMENTE');
+            productosCompra = [];
+            mostrarProductos();
+            $('#confirmarCompraModal').modal('hide');
+            console.log(respuesta); //JSON.stringify(respuesta));
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+        //}
+        /*} else {
+            $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: '/compra',
+                // los datos que voy a enviar para la relación
+                data: {
+                    estado: estado,
+                    datos: json,
+                    proveedor: proveedor.value,
+                    fecha_compra: fechaCompra.value,
+                    //_token: $("meta[name='csrf-token']").attr("content")
+                    _token: "{{ csrf_token() }}",
+                }
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                alert('COMPRA GUARDADA EXITOSAMENTE');
+                productosCompra = [];
+                mostrarProductos();
+                $('#confirmarCompraModal').modal('hide');
+                console.log(respuesta); //JSON.stringify(respuesta));
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }*/
         await cargarProductos();
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);

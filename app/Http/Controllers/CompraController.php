@@ -58,12 +58,14 @@ class CompraController extends Controller
         $proveedor = $request->input('proveedor');
         $estado = $request->input('estado');
         $fecha_compra = $request->input('fecha_compra');
+        $iva = $request->input('iva');
         $datosCodificados = json_decode($datos,true);
         $compra = Compra::create([
             'idProveedor' => $proveedor,
             'fecha_compra' => $fecha_compra,
             'idEmpleado' => 1,
             'estado' =>$estado,
+            'IVA' => $iva,
         ]);
         if($estado =='credito')
         {
@@ -87,7 +89,7 @@ class CompraController extends Controller
             $producto->porcentaje_ganancia = $datosProducto['ganancia'];
             $producto->fecha_caducidad = $datosProducto['caducidad'];
             $producto->costo_unitario = $datosProducto['costo'];
-            $producto->iva = 'Si';
+            //$producto->iva = 'Si';
             //$producto->fecha_caducidad = Carbon::createFromFormat( 'Y/m/d', $datosProducto['caducidad']);
             $producto->save();
             $actualizarProducto = Producto::find($datosProducto['id']);//->update(['existencia'=>]);

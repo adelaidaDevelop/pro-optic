@@ -22,7 +22,7 @@ class CreateCompraProductosTable extends Migration
             $table->integer('porcentaje_ganancia');
             $table->date('fecha_caducidad');
             $table->double('costo_unitario');
-            $table->string('iva');
+            //$table->string('iva');
       });
     }
 

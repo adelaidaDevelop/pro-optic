@@ -44,7 +44,7 @@
                 <!--div class="col-9 m-0 px-0"-->
                 <div class="form-group row col-9 my-1 mx-0 px-0">
                     <!--div class="col"-->
-                    <label for="nombre" class="col-5-form-label font-weight-bold " style="color:#3366FF">
+                    <label for="nombre" class="col-5-form-label font-weight-bold my-auto pt-1" style="color:#3366FF">
                         <h4>CODIGO DEL PRODUCTO</h4>
                     </label>
                     <!--/div-->
