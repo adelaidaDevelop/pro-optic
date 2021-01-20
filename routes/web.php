@@ -9,6 +9,7 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CreditoController;
 use App\Http\Controllers\PagoController;
+use App\Http\Controllers\DevolucionController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +63,8 @@ Route::resource('cliente', ClienteController::class);
 Route::resource('credito', CreditoController::class);
 Route::get('/datosNuevos', [CreditoController::class,'datosNuevos']);
 Route::resource('pago', PagoController::class);
+
+Route::resource('devolucion', DevolucionController::class);
 
 
 

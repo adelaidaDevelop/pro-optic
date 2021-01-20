@@ -27,7 +27,7 @@
 
         <!-- BOTON DEVOLUCION-->
         <div class="col my-2 ml-5 px-1">
-            <button type="button" class="btn btn-primary" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4(  id )" value="id">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalleCompraModal" id="ver" onclick=" return info4(  id )" value="id">
                 <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                 DEVOLUCION
             </button>
@@ -310,6 +310,7 @@
         </div>
     </div>
 </div>
+<!-- -->
 
 <script>
     let productosVenta = [];
