@@ -19,7 +19,6 @@ class CreateVentasTable extends Migration
             $table->string('estado')->nullable();
             //$table->dateTime('created_at', $precision = 0);
             $table->double('pago')->nullable();
-            
             $table->timestamps();
         });
     }
