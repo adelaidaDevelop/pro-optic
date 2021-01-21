@@ -1,7 +1,7 @@
 @extends('header2')
 @section('contenido')
 @section('subtitulo')
-SUBPRODUCTOS
+CREDITOS
 @endsection
 @section('opciones')
 @endsection
