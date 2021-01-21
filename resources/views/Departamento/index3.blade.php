@@ -7,17 +7,15 @@
         DEPARTAMENTOS
         @endsection
         @section('opciones')
-        @if(isset($d))
-        <div class="col my-2 ml-5 px-1">
-            <form method="get" action="{{url('/empleado')}}">
-                <button class="btn btn-secondary" type="submit">
+        <div class="col my-2 ml-5 pl-1">
+            <form method="get" action="{{url('/departamento/create')}}">
+                <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
                     <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                         height="25px">
-                    AGREGAR EMPLEADO
+                    NUEVO DEPARTAMENTO
                 </button>
             </form>
         </div>
-        @endif
         @endsection
     </div>
     <div class="row p-1">
@@ -140,8 +138,9 @@
 </div>
 </div>
 <script>
-const texto = document.querySelector('#texto'); 
+const texto = document.querySelector('#texto');
 console.log(texto.value);
+
 function filtrar() {
     document.getElementById("resultados").innerHTML = "";
     fetch(`/departamento/buscador?texto=${texto.value}`, {

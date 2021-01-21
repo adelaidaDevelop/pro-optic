@@ -521,6 +521,7 @@ function filtrarCompras() {
             </tr>
         `;
     }
+    //console.log(comprasAuxiliar);
     comprasAuxiliar = comprasRespaldo;
     document.getElementById("consultaBusqueda").innerHTML = cuerpo;
     //console.log(opcionProveedor.value);
@@ -547,6 +548,7 @@ function verDetalleCompra(id) {
 
             let precio = parseFloat(compra_producto[c].costo_unitario) *
                 parseFloat(compra_producto[c].porcentaje_ganancia);
+            precio = (precio/100)+compra_producto[c].costo_unitario;
             cuerpo = cuerpo +
                 `
             <tr>
