@@ -6,6 +6,14 @@ PRODUCTOS
 @endsection
 
 @section('opciones')
+<div class="col my-2 ml-5 pl-1">
+    <form method="get" action="{{url('/departamento/')}}">
+        <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
+            <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+            DEPARTAMENTOS
+        </button>
+    </form>
+</div>
 @endsection
 
 <div class="row p-1 ">
