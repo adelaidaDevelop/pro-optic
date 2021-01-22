@@ -104,7 +104,7 @@ class VentaController extends Controller
      */
     public function show(Venta $venta)
     {
-        //
+        return view('Venta.ticket');
     }
 
     /**
