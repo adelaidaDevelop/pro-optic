@@ -312,7 +312,8 @@
     </div>
 </div>
 <!-- -->
-
+<div id="impresion">
+</div>
 <script>
     let productosVenta = [];
     let productos = @json($datosP);
@@ -634,8 +635,11 @@
                 $("input[id='pagoCredito']").val(0);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
+            let imp = await fetch(`/venta/ticket`);
+            let impJ = await imp.text();
+            document.querySelector('#impresion').innerHTML = impJ;
             await cargarProductos();
-            console.log(funcion);
+           // console.log(impJ.html);
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }

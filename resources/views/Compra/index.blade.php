@@ -50,8 +50,7 @@ COMPRAS
             </select>
             <div class="form-group border border-secondary my-auto p-1">
                 <div class="input-group-text">
-                    <input type="checkbox" name="fechaCompra" id="fechaCompra"
-                        onchange="filtrarCompras()">
+                    <input type="checkbox" name="fechaCompra" id="fechaCompra" onchange="filtrarCompras()">
                     <label class="ml-1 my-0" for="fechaCompra">
                         FECHA COMPRA
                     </label>
@@ -72,8 +71,7 @@ COMPRAS
             </div>
             <div class="form-group border border-secondary my-auto p-1">
                 <div class="input-group-text">
-                    <input type="checkbox" name="fechaRegistro" id="fechaRegistro"
-                        onchange="filtrarCompras()">
+                    <input type="checkbox" name="fechaRegistro" id="fechaRegistro" onchange="filtrarCompras()">
                     <label class="ml-1 my-0" for="fechaRegistro">
                         FECHA REGISTRO
                     </label>
@@ -180,6 +178,80 @@ COMPRAS
                 </button>
             </div>
             <div class="modal-body">
+                <div class="row" style="height:200px;overflow:auto;">
+                    <table class="table table-hover table-bordered" id="productos">
+                        <thead class="thead-light">
+                            <tr class="text-center">
+                                <th scope="col">#</th>
+                                <th scope="col">CODIGO_BARRAS</th>
+                                <th scope="col">PRODUCTO</th>
+                                <th scope="col">CANTIDAD</th>
+                                <th scope="col">COSTO</th>
+                                <th scope="col">GANANCIA</th>
+                                <th scope="col">PRECIO</th>
+                                <th scope="col">CADUCIDAD</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center" id="detalle_compra">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-8 mx-auto">
+                <div class="row my-auto">
+                    <div class="col-4">
+                        <p class="h5">TOTAL: </p>
+                    </div>
+                    <div class="col-8">
+                        <p class="h5" id="totalCompra">$ 0.00</p>
+                    </div>
+                </div>
+                <div class="row my-auto">
+                    <div class="col-4">
+                        <p class="h5">DEBE: </p>
+                    </div>
+                    <div class="col-8">
+                        <p class="h5" id="deuda">$ 0.00</p>
+                    </div>
+                </div>
+                <div class="row my-auto">
+                    <div class="col-4">
+                        <p class="h5">ABONAR:</p>
+                    </div>
+                    <div class="col-8">
+                        <input type="number" oninput="calcularDeudaCredito()" id="pagoCredito" data-decimals="2" value=0
+                            class="form-control" />
+                    </div>
+                </div>
+                <div class="row my-auto">
+                    <div class="col-4">
+                        <p class="h5">AUN DEBERÍA: </p>
+                    </div>
+                    <div class="col-8">
+                        <p class="h5" id="deudaCredito">$ 0.00</p>
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--div class="modal fade" id="detalleCompraModal" tabindex="-1" aria-labelledby="detalleCompraModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="detalleCompraModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
                 <div class="row">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
@@ -207,7 +279,7 @@ COMPRAS
             </div>
         </div>
     </div>
-</div>
+</div-->
 
 <script>
 const texto = document.querySelector('#ver');
@@ -264,8 +336,8 @@ function cargarCompras() {
         let compra = {
             id: compras[i].id,
             proveedor: proveedor,
-            fechaCompra: fechaCompra,//.toLocaleDateString(),
-            fechaRegistro: fechaCreacion,//.toLocaleDateString(),
+            fechaCompra: fechaCompra, //.toLocaleDateString(),
+            fechaRegistro: fechaCreacion, //.toLocaleDateString(),
             estado: compras[i].estado,
             costoTotal: costoTotal
         };
@@ -292,7 +364,7 @@ function mostrarCompras() {
                         for (let cp in compra_producto) {
                             if (compra_producto[cp].idProductos === productos[p].id) {
                                 if (compra_producto[cp].idCompras === comprasActuales[i].id)
-                                    if(!comprasAuxiliar.includes(comprasActuales[i]))
+                                    if (!comprasAuxiliar.includes(comprasActuales[i]))
                                         comprasAuxiliar.push(comprasActuales[i]);
                             }
                         }
@@ -327,13 +399,10 @@ $('input[id="fechaFinalC"]').prop('disabled', true);
 $('input[id="fechaInicioR"]').prop('disabled', true);
 $('input[id="fechaFinalR"]').prop('disabled', true);
 
-function comparacionFecha(fechaC,fechaI,fechaF)
-{
-    if(fechaC.getFullYear()>=fechaI.getFullYear() && fechaC.getFullYear()<=fechaF.getFullYear())
-    {
-        if(fechaC.getMonth()>=fechaI.getMonth() && fechaC.getMonth()<=fechaF.getMonth())
-        {
-            if(fechaC.getDate()>=fechaI.getDate() && fechaC.getDate()<=fechaF.getDate())
+function comparacionFecha(fechaC, fechaI, fechaF) {
+    if (fechaC.getFullYear() >= fechaI.getFullYear() && fechaC.getFullYear() <= fechaF.getFullYear()) {
+        if (fechaC.getMonth() >= fechaI.getMonth() && fechaC.getMonth() <= fechaF.getMonth()) {
+            if (fechaC.getDate() >= fechaI.getDate() && fechaC.getDate() <= fechaF.getDate())
                 return true;
         }
     }
@@ -350,12 +419,11 @@ function verificarFechasCompra() {
         if (fechaInicio.value.length > 0) {
             fechaFin.min = fechaInicio.value;
             $('input[id="fechaFinalC"]').prop('disabled', false);
-            
+
             if (fechaFin.value.length > 0) {
                 let fechaI = new Date(fechaInicio.value);
                 let fechaF = new Date(fechaFin.value);
-                if(fechaI.getTime()>fechaF.getTime())
-                {
+                if (fechaI.getTime() > fechaF.getTime()) {
                     $("input[id='fechaFinalC']").val(fechaInicio.value);
                 }
                 return true;
@@ -367,6 +435,7 @@ function verificarFechasCompra() {
     }
     return false;
 }
+
 function verificarFechasRegistro() {
     let btn = document.querySelector('input[name="fechaRegistro"]:checked');
 
@@ -377,12 +446,11 @@ function verificarFechasRegistro() {
         if (fechaInicio.value.length > 0) {
             fechaFin.min = fechaInicio.value;
             $('input[id="fechaFinalR"]').prop('disabled', false);
-            
+
             if (fechaFin.value.length > 0) {
                 let fechaI = new Date(fechaInicio.value);
                 let fechaF = new Date(fechaFin.value);
-                if(fechaI.getTime()>fechaF.getTime())
-                {
+                if (fechaI.getTime() > fechaF.getTime()) {
                     $("input[id='fechaFinalR']").val(fechaInicio.value);
                 }
                 return true;
@@ -449,19 +517,17 @@ function filtrarCompras() {
         let fechaFin = document.querySelector('#fechaFinalC');
         let fechaI = new Date(fechaInicio.value);
         let fechaF = new Date(fechaFin.value);
-        fechaI.setDate(fechaI.getDate()+1);
-        fechaF.setDate(fechaF.getDate()+1);
-        for(let i in comprasAuxiliar)
-        {
+        fechaI.setDate(fechaI.getDate() + 1);
+        fechaF.setDate(fechaF.getDate() + 1);
+        for (let i in comprasAuxiliar) {
             //
             let fechaC = comprasAuxiliar[i].fechaCompra;
-            
+
             //if(fechaC.getTime()>=fechaI.getTime() && fechaC.getTime()<=fechaF.getTime())
-            if(comparacionFecha(fechaC,fechaI,fechaF))
-            {
+            if (comparacionFecha(fechaC, fechaI, fechaF)) {
                 comprasAuxiliar2.push(comprasAuxiliar[i]);
             }
-            
+
         }
         comprasAuxiliar = comprasAuxiliar2;
         comprasAuxiliar2 = [];
@@ -476,20 +542,18 @@ function filtrarCompras() {
         let fechaFin = document.querySelector('#fechaFinalR');
         let fechaI = new Date(fechaInicio.value);
         let fechaF = new Date(fechaFin.value);
-        fechaI.setDate(fechaI.getDate()+1);
-        fechaF.setDate(fechaF.getDate()+1);
-        for(let i in comprasAuxiliar)
-        {
+        fechaI.setDate(fechaI.getDate() + 1);
+        fechaF.setDate(fechaF.getDate() + 1);
+        for (let i in comprasAuxiliar) {
             //console.log(comprasAuxiliar[i].fechaCompra);
             //console.log(comprasAuxiliar[i].fechaRegistro);
-            let fechaR = comprasAuxiliar[i].fechaRegistro;//new Date(comprasAuxiliar[i].fechaRegistro);
-            
+            let fechaR = comprasAuxiliar[i].fechaRegistro; //new Date(comprasAuxiliar[i].fechaRegistro);
+
             //if(fechaR.getTime()>=fechaI.getTime() && fechaR.getTime()<=fechaF.getTime())
-            if(comparacionFecha(fechaR,fechaI,fechaF))
-            {
+            if (comparacionFecha(fechaR, fechaI, fechaF)) {
                 comprasAuxiliar2.push(comprasAuxiliar[i]);
             }
-            
+
         }
         comprasAuxiliar = comprasAuxiliar2;
         comprasAuxiliar2 = [];
@@ -505,19 +569,24 @@ function filtrarCompras() {
         //let fechaCompra = comprasAuxiliar[i].fechaCompra.getDate();
         //console.log(fechaCompra);
         //comprasAuxiliar[i].fechaCompra.setDate(comprasAuxiliar[i].fechaCompra.getDate() + 1);
+        let btnVerCredito = "";
+        if (comprasAuxiliar[i].estado == 'credito')
+            btnVerCredito = `<button class="btn btn-light" onclick="verDetalleCompra(` +
+            comprasAuxiliar[i].id + `)" data-toggle="modal" data-target="#detalleCompraModal"
+                type="button">VER CREDITO</button>`;
         cuerpo = cuerpo + `
             <tr>
                 <th scope="row">` + contador++ + `</th>
                 <td>` + comprasAuxiliar[i].id + `</td>
                 <td>` + comprasAuxiliar[i].proveedor + `</td>
                 <td>` + comprasAuxiliar[i].fechaCompra.toLocaleDateString() + `</td>
-                <td>` + comprasAuxiliar[i].fechaRegistro.toLocaleDateString()+ ` `+
-                comprasAuxiliar[i].fechaRegistro.toLocaleTimeString() + `</td>
+                <td>` + comprasAuxiliar[i].fechaRegistro.toLocaleDateString() + ` ` +
+            comprasAuxiliar[i].fechaRegistro.toLocaleTimeString() + `</td>
                 <td>` + comprasAuxiliar[i].estado + `</td>
                 <td>` + comprasAuxiliar[i].costoTotal + `</td>
                 <td><button class="btn btn-light" onclick="verDetalleCompra(` +
             comprasAuxiliar[i].id + `)" data-toggle="modal" data-target="#detalleCompraModal"
-                type="button">VER MAS</button></td>
+                type="button">VER MAS</button>` + btnVerCredito + `</td>
             </tr>
         `;
     }
@@ -529,6 +598,8 @@ function filtrarCompras() {
 
 function verDetalleCompra(id) {
     let cuerpo = "";
+    let contador = 1;
+    let costoTotal = 0;
     for (let c in compra_producto) {
         if (compra_producto[c].idCompras === id) {
             let producto = 0;
@@ -548,11 +619,11 @@ function verDetalleCompra(id) {
 
             let precio = parseFloat(compra_producto[c].costo_unitario) *
                 parseFloat(compra_producto[c].porcentaje_ganancia);
-            precio = (precio/100)+compra_producto[c].costo_unitario;
+            precio = (precio / 100) + compra_producto[c].costo_unitario;
             cuerpo = cuerpo +
                 `
             <tr>
-                <th scope="row">` + (parseInt(c) + 1) + `</th>
+                <th scope="row">` + contador++ + `</th>
                 <td>` + producto.codigoBarras + `</td>
                 <td>` + producto.nombre + `</td>
                 <td>` + compra_producto[c].cantidad + `</td>
@@ -562,11 +633,12 @@ function verDetalleCompra(id) {
                 <td>` + compra_producto[c].fecha_caducidad + `</td>
             </tr>
             `;
+            costoTotal = costoTotal + (compra_producto[c].costo_unitario * compra_producto[c].cantidad);
 
         }
-
-        document.getElementById("detalle_compra").innerHTML = cuerpo;
     }
+    document.getElementById("detalle_compra").innerHTML = cuerpo;
+    document.getElementById("totalCompra").textContent = "$ "+costoTotal;
 }
 /*
         for (count4 in productos) {
