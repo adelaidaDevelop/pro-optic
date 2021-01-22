@@ -14,7 +14,7 @@ class PagoCompraController extends Controller
      */
     public function index()
     {
-        //
+        return 'retorna algo';
     }
 
     /**
@@ -44,9 +44,17 @@ class PagoCompraController extends Controller
      * @param  \App\Models\Pago_compra  $pago_compra
      * @return \Illuminate\Http\Response
      */
-    public function show(Pago_compra $pago_compra)
+    public function show($idCompra)//Pago_compra $pago_compra)
     {
-        //
+        if($idCompra == 'pagos')
+            return Pago_compra::all();
+        //$pagos = NULL;
+        $pagos = Pago_compra::where('idCompra','=',$idCompra);
+        if(isset($pagos))
+            return 'pagos no encontrados';
+        else
+            return $pagos;
+        //var_dump();
     }
 
     /**
