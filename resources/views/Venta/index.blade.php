@@ -7,7 +7,7 @@
         @endsection
         @section('opciones')
         @if(isset($datosEmpleado))
-        <div class="col my-2 ml-5 px-1">
+        <div class="col-1 my-2 ml-5 px-1">
             <form method="get" action="{{url('/empleado')}}">
                 <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
                     <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
@@ -16,7 +16,7 @@
             </form>
         </div>
         @endif
-        <div class="col my-2 ml-5 px-1">
+        <div class="col-2 my-2 ml-5 px-1">
             <form method="get" action="{{url('/empleado')}}">
                 <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
                     <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
@@ -26,11 +26,12 @@
         </div>
 
         <!-- BOTON DEVOLUCION-->
-        <div class="col my-2 ml-5 px-1">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalleCompraModal" id="ver" onclick=" return info4(  id )" value="id">
+        <div class="col-2 my-2 ml-0 px-1">
+           
+            <a class="btn btn-primary" href="{{ url('/devolucion')}}">
                 <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-                DEVOLUCION
-            </button>
+                DEVOLUCION </a>
+            </a>
         </div>
         @endsection
     </div>

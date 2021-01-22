@@ -6,6 +6,16 @@
         @section('subtitulo')
         CLIENTES
         @endsection
+        @section('opciones')
+       
+        <!-- BOTON DEVOLUCION-->
+        <div class="col-1 my-2 ml-5 px-1">
+            <a class="btn btn-primary" href="{{ url('/credito')}}">
+                <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                LISTA DEUDORES </a>
+            </a>
+        </div>
+        @endsection
 
     </div>
     <div class="row p-1">
@@ -52,11 +62,11 @@
                                             NOMBRE
                                         </label>
                                         <input type="text" class="form-control" name="nombre" id="nombre" value="{{$d->nombre}}">
-                                       <label for="telefono">
+                                        <label for="telefono">
                                             TELEFONO
                                         </label>
                                         <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" value="{{$d->telefono}}">
-                                       
+
                                     </div>
                                 </div>
 
@@ -105,11 +115,11 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
-                                      <label for="telefono">
+                                    <label for="telefono">
                                         TELEFONO
                                     </label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono">
-                                   </div>
+                                </div>
                             </div>
 
                         </div>
