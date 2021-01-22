@@ -6,13 +6,20 @@ PRODUCTOS
 @endsection
 
 @section('opciones')
-<div class="col my-2 ml-5 pl-1">
+<div class="col-0 my-2 ml-5 px-1">
     <form method="get" action="{{url('/departamento/')}}">
         <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
             <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
             DEPARTAMENTOS
         </button>
     </form>
+</div>
+<!--BOTON CREAR EMPLEADO-->
+<div class="col-0 my-2 ml-5 px-1 ">
+    <a class="btn btn-primary" href="{{ url('/producto/create')}}">
+        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        NUEVO PRODUCTO </a>
+    </a>
 </div>
 @endsection
 
@@ -185,7 +192,7 @@ PRODUCTOS
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               
+
             </div>
         </div>
     </div>
