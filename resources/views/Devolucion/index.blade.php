@@ -20,8 +20,6 @@ DEVOLUCION
     <div class="row border border-dark m-2 col ">
         <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
         <div class="col-12  mt-1 mb-4 mx-0">
-
-
             <div class="row  px-0 col-5 input-group my-4">
                 <h4 class=" mx-0 px-0 my-auto"> FOLIO</h4>
                 <input type="number" class="form-control ml-4" size="15" placeholder="Folio" id="busquedaFolio" onkeyup="buscarFolio()">
@@ -74,7 +72,26 @@ DEVOLUCION
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
+                <div class="form-group  my-auto p-1 col-4 mb-3 ml-4">
+                    <div class=" input-group-text">
+                        <input type="checkbox" name="fechaCompra" id="fechaCompra" onchange="filtrarCompras()">
+                        <label class="ml-1 my-0" for="fechaCompra">
+                            FECHA COMPRA
+                        </label>
+
+                    </div>
+                    <div class="input-group my-1 mx-0">
+                        <div class="input-group-prepend">
+                            <label for="fechaInicioC" class="input-group-text">DE: </label>
+                        </div>
+                        <input type="date" min="" id="fechaInicioC" onchange="filtrarCompras()" class="form-control" />
+                    </div>
+                    <div class="input-group my-1 mx-0">
+                        <div class="input-group-prepend">
+                            <label for="fechaFinalC" class="input-group-text">A: </label>
+                        </div>
+                        <input type="date" min="" onchange="filtrarCompras()" id="fechaFinalC" class="form-control" />
+                    </div>
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
                     <table class="table table-hover table-bordered" id="productos">

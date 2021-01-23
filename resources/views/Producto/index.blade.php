@@ -74,13 +74,13 @@ PRODUCTOS
                         <div class="mt-2 mx-2"> </div>
                         <h6 class="mx-3 mt-2"> BUSCAR POR:</h6>
                         <div class=" form-check mt-2">
-                            <input class="form-check-input" type="radio" value="folio" name="checkbox2" onchange="" id="codigoBusq">
+                            <input class="form-check-input" type="radio" value="folio" name="checkbox2" onchange="buscarFolioNombre()" id="codigoBusq">
                             <label class="form-check-label" for="flexRadioDefault1">
                                 CODIGO
                             </label>
                         </div>
                         <div class="mx-4 form-check mt-2">
-                            <input class="form-check-input" type="radio" value="nombre" name="checkbox2" onchange="" id="nombreBusq" checked>
+                            <input class="form-check-input" type="radio" value="nombre" name="checkbox2" onchange="buscarFolioNombre()" id="nombreBusq" checked>
                             <label class="form-check-label" for="flexRadioDefault2">
                                 NOMBRE
                             </label>
