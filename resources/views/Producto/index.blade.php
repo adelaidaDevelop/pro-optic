@@ -26,21 +26,20 @@ PRODUCTOS
 <div class="row p-1 ">
     <!--CONSULTAR PRODUCTO -->
     <div class="row border border-dark m-2 w-100">
-        <div class="row col-12 mx-2 mt-4">
-            <label for="">
-                <h5 class="text-primary">
-                    <strong>
-                        CONSULTAR PRODUCTO
-                    </strong>
-                </h5>
-            </label>
+        <div class="row col-12 mx-2 mt-2 mb-4">
+            <h4 class="text-primary">
+                <strong>
+                    CONSULTAR PRODUCTO
+                </strong>
+            </h4>
+
         </div>
         <div class="row col-12">
             <div class="col-2 border border-primary mt-2 mb-4 ml-4 mr-2">
 
                 <br />
-                <select name="idDepartamento" id="idDepartamento" required>
-                    <option value="">DEPARTAMENTO</option>
+                <select name="idDepartamento" id="idDepartamento" onchange="buscarPorDepas()" required>
+                    <option value="0">DEPARTAMENTO</option>
                     @foreach($d as $departamento)
                     <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
                     @endforeach
@@ -68,34 +67,20 @@ PRODUCTOS
             <div class="col-9  mt-1 mb-4 ml-4 mr-2">
                 <div class="form-group w-100">
                     <div class="row my-2">
-                        <div class="col-6 input-group">
-                            <!-- <input type="text" class="form-control border-primary " size="15" placeholder="BUSCAR PRODUCTO" id="texto">-->
-                            <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarProducto()">
-
-                            <!--div class="input-group-append">
-                        <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
-                        </div-->
-                        </div>
+                        <input class="form-control  mt-1 col-4 mr-3 " type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarFolioNombre()">
 
                         <a title="buscar" href="" class="text-dark ">
                             <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
-                        <div class="mt-2 mx-2">
-
-                        </div>
-
-                        <label for="" class="mx-3 mt-2">
-                            <h6> BUSCAR POR:</h6>
-                        </label>
-
-
+                        <div class="mt-2 mx-2"> </div>
+                        <h6 class="mx-3 mt-2"> BUSCAR POR:</h6>
                         <div class=" form-check mt-2">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <input class="form-check-input" type="radio" value="folio" name="checkbox2" onchange="" id="codigoBusq">
                             <label class="form-check-label" for="flexRadioDefault1">
                                 CODIGO
                             </label>
                         </div>
                         <div class="mx-4 form-check mt-2">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                            <input class="form-check-input" type="radio" value="nombre" name="checkbox2" onchange="" id="nombreBusq" checked>
                             <label class="form-check-label" for="flexRadioDefault2">
                                 NOMBRE
                             </label>
@@ -144,15 +129,9 @@ PRODUCTOS
                 <!--ENCABEZADO -->
                 <div class="container-fluid">
                     <div class="row" style="background:#3366FF">
-                        <div class="container-fluid align-self-center">
-                            <nav class="navbar navbar-expand-lg navbar-light w-100 " style="height: 20px;background-color:#3366FF;">
-                                <h6 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">
-                                    INFORMACION DEL PRODUCTO
-                                </h6>
-
-                            </nav>
-                            <br />
-                        </div>
+                        <h6 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">
+                            INFORMACION DEL PRODUCTO
+                        </h6>
                     </div>
 
                     <div class="row" style="background:#ED4D46">
@@ -207,6 +186,7 @@ PRODUCTOS
     let productosVenta = [];
     const productos = @json($datosP);
     const d = @json($depa);
+    let opcFolioNombre = "";
 
     function buscarProducto() {
 
@@ -244,7 +224,6 @@ PRODUCTOS
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
 
     };
-
 
 
     function info4(id) {
@@ -341,7 +320,96 @@ PRODUCTOS
         }
         document.getElementById("resultados").innerHTML = datosProduct;
     };
-    buscarProducto()
+
+    function buscarFolioNombre() {
+        let seleccion = document.querySelector('input[name="checkbox2"]:checked');
+        opcFolioNombre = seleccion.value;
+        if (opcFolioNombre === 'nombre') {
+            console.log(opcFolioNombre);
+            buscarProducto();
+        }
+        if (opcFolioNombre === 'folio') {
+            console.log(opcFolioNombre);
+            buscarPorFolio();
+        }
+    }
+
+    function buscarPorFolio() {
+        const palabraBusqueda = document.querySelector('#busquedaProducto');
+        let cuerpo = "";
+        let contador = 1;
+        for (count20 in productos) {
+            if (productos[count20].codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                let departamento = "";
+                for (count21 in d) {
+                    if (productos[count20].idDepartamento === d[count21].id) {
+                        departamento = d[count21].nombre;
+                    }
+                }
+                let id = productos[count20].id;
+                cuerpo = cuerpo + `
+        <tr onclick="agregarProducto(` + productos[count20].id + `)" data-dismiss="modal">
+            <th scope="row">` + productos[count20].id + `</th>
+            <td>` + productos[count20].codigoBarras + `</td>
+            <td>` + productos[count20].nombre + `</td>
+            <td>` + productos[count20].existencia + `</td>
+           <td>` + departamento + `</td>
+           <td>` + `0` + `</td>
+            <td>` + `0` + `</td>
+            <td>` +
+                    ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
+               VER MAS
+              </button>
+            </td>            
+        </tr>
+        `;
+            }
+        }
+        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+    };
+
+    function buscarPorDepas() {
+        let depa = document.querySelector('#idDepartamento');
+      //  const palabraBusqueda = document.querySelector('#busquedaProducto');
+            let cuerpo = "";
+            let contador = 1;
+   
+        if (depa.value != "0") {
+            for (count20 in productos) {
+               // if (productos[count20].idDepartamento.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                if (productos[count20].idDepartamento == parseInt(depa.value)) {
+                    let departamento = "";
+                    for (count21 in d) {
+                        if (productos[count20].idDepartamento === d[count21].id) {
+                            departamento = d[count21].nombre;
+                        }
+                    }
+                    let id = productos[count20].id;
+                    cuerpo = cuerpo + `
+        <tr onclick="agregarProducto(` + productos[count20].id + `)" data-dismiss="modal">
+            <th scope="row">` + productos[count20].id + `</th>
+            <td>` + productos[count20].codigoBarras + `</td>
+            <td>` + productos[count20].nombre + `</td>
+            <td>` + productos[count20].existencia + `</td>
+           <td>` + departamento + `</td>
+           <td>` + `0` + `</td>
+            <td>` + `0` + `</td>
+            <td>` +
+                        ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
+               VER MAS
+              </button>
+            </td>            
+        </tr>
+        `;
+                }
+            }
+            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+
+
+        }
+    }
+
+    buscarProducto();
 </script>
 
 @endsection
