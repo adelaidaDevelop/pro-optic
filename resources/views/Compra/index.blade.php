@@ -196,40 +196,7 @@ COMPRAS
                         </tbody>
                     </table>
                 </div>
-                <div class="col-8 mx-auto">
-                    <!--div class="row my-auto">
-                        <div class="col-4">
-                            <p class="h5">TOTAL: </p>
-                        </div>
-                        <div class="col-8">
-                            <p class="h5" id="totalCompra">$ 0.00</p>
-                        </div>
-                    </div>
-                    <div class="row my-auto">
-                        <div class="col-4">
-                            <p class="h5">DEBE: </p>
-                        </div>
-                        <div class="col-8">
-                            <p class="h5" id="deuda">$ 0.00</p>
-                        </div>
-                    </div>
-                    <div class="row my-auto">
-                        <div class="col-4">
-                            <p class="h5">ABONAR:</p>
-                        </div>
-                        <div class="col-8">
-                            <input type="number" oninput="calcularDeudaCredito()" id="pagoCredito" data-decimals="2"
-                                value=0 class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row my-auto">
-                        <div class="col-4">
-                            <p class="h5">AUN DEBERÍA: </p>
-                        </div>
-                        <div class="col-8">
-                            <p class="h5" id="deudaCredito">$ 0.00</p>
-                        </div>
-                    </div-->
+                <div class="col-8 mx-auto" id ="creditoCompra">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -639,6 +606,43 @@ function verDetalleCompra(id) {
     }
     document.getElementById("detalle_compra").innerHTML = cuerpo;
     document.getElementById("totalCompra").textContent = "$ " + costoTotal;
+}
+function verCreditoCompra(id)
+{
+    /*<!--div class="row my-auto">
+                        <div class="col-4">
+                            <p class="h5">TOTAL: </p>
+                        </div>
+                        <div class="col-8">
+                            <p class="h5" id="totalCompra">$ 0.00</p>
+                        </div>
+                    </div>
+                    <div class="row my-auto">
+                        <div class="col-4">
+                            <p class="h5">DEBE: </p>
+                        </div>
+                        <div class="col-8">
+                            <p class="h5" id="deuda">$ 0.00</p>
+                        </div>
+                    </div>
+                    <div class="row my-auto">
+                        <div class="col-4">
+                            <p class="h5">ABONAR:</p>
+                        </div>
+                        <div class="col-8">
+                            <input type="number" oninput="calcularDeudaCredito()" id="pagoCredito" data-decimals="2"
+                                value=0 class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row my-auto">
+                        <div class="col-4">
+                            <p class="h5">AUN DEBERÍA: </p>
+                        </div>
+                        <div class="col-8">
+                            <p class="h5" id="deudaCredito">$ 0.00</p>
+                        </div>
+                    </div-->
+                    */
 }
 /*
         for (count4 in productos) {
