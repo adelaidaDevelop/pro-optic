@@ -539,7 +539,7 @@ function filtrarCompras() {
         let btnVerCredito = "";
         if (comprasAuxiliar[i].estado == 'credito')
             btnVerCredito = `<button class="btn btn-light" onclick="verDetalleCompra(` +
-            comprasAuxiliar[i].id + `)" data-toggle="modal" data-target="#detalleCompraModal"
+            comprasAuxiliar[i].id +`)" data-toggle="modal" data-target="#detalleCompraModal"
                 type="button">VER CREDITO</button>`;
         cuerpo = cuerpo + `
             <tr>
@@ -552,7 +552,7 @@ function filtrarCompras() {
                 <td>` + comprasAuxiliar[i].estado + `</td>
                 <td>` + comprasAuxiliar[i].costoTotal + `</td>
                 <td><button class="btn btn-light" onclick="verDetalleCompra(` +
-            comprasAuxiliar[i].id + `)" data-toggle="modal" data-target="#detalleCompraModal"
+            comprasAuxiliar[i].id+`,'`+comprasAuxiliar[i].estado+`'`+`)" data-toggle="modal" data-target="#detalleCompraModal"
                 type="button">VER MAS</button>` + btnVerCredito + `</td>
             </tr>
         `;
@@ -563,7 +563,7 @@ function filtrarCompras() {
     //console.log(opcionProveedor.value);
 }
 
-function verDetalleCompra(id) {
+function verDetalleCompra(id,estado) {
     let cuerpo = "";
     let contador = 1;
     let costoTotal = 0;
@@ -605,10 +605,72 @@ function verDetalleCompra(id) {
         }
     }
     document.getElementById("detalle_compra").innerHTML = cuerpo;
-    document.getElementById("totalCompra").textContent = "$ " + costoTotal;
+    //console.log(costoTotal);
+    //document.getElementById("totalCompra").textContent = "$ ";// + costoTotal;
+    //console.log(estado);
+    document.getElementById("creditoCompra").innerHTML = "";
+    if(estado == 'credito')
+    verCreditoCompra(id,costoTotal);
 }
-function verCreditoCompra(id)
+async function verCreditoCompra(id,costoTotal)
 {
+    try {
+        response = await fetch(`/pagoCompra/${id}`);
+        let cuerpo = "";
+        if (response.ok) {
+            pagosCompra = await response.json();
+            console.log(pagosCompra);
+            let pagos = 0;
+            for(let i in pagosCompra)
+            {
+                pagos = pagos + pagosCompra[i].monto;
+            }
+                cuerpo = cuerpo + `<div class="row my-auto">
+                        <div class="col-4">
+                            <p class="h5">TOTAL: </p>
+                        </div>
+                        <div class="col-8">
+                            <p class="h5" id="totalCompra">$ `+costoTotal+`</p>
+                        </div>
+                    </div>
+                    <div class="row my-auto">
+                        <div class="col-4">
+                            <p class="h5">DEBE: </p>
+                        </div>
+                        <div class="col-8">
+                            <p class="h5" id="deuda">$`+(costoTotal-pagos)+`</p>
+                        </div>
+                    </div>
+                    <div class="row my-auto">
+                        <div class="col-4">
+                            <p class="h5">ABONAR:</p>
+                        </div>
+                        <div class="col-8">
+                            <input type="number" oninput="calcularDeudaCredito()" id="pagoCredito" data-decimals="2"
+                                value=0 class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row my-auto">
+                        <div class="col-4">
+                            <p class="h5">AUN DEBERÍA: </p>
+                        </div>
+                        <div class="col-8">
+                            <p class="h5" id="deudaCredito">$ 0.00</p>
+                        </div>
+                    </div>`;
+            document.getElementById("creditoCompra").innerHTML = cuerpo;
+            //return productos;
+            //console.log(response);
+
+        } else {
+            console.log("No responde :'v");
+            console.log(response);
+            throw new Error(response.statusText);
+        }
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+    //return response;    
     /*<!--div class="row my-auto">
                         <div class="col-4">
                             <p class="h5">TOTAL: </p>
