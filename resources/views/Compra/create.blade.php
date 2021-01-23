@@ -792,10 +792,11 @@ async function guardarCompra() {
     try {
         const proveedor = document.querySelector('#proveedor');
         const fechaCompra = document.querySelector('#fechaCompra');
+        //if(fechaCompra.value.l)
         let json = JSON.stringify(productosCompra);
         let estado = "pagado";
         let iva = null;
-        let btnIva = document.querySelector('input[name="credito"]:checked');
+        let btnIva = document.querySelector('input[name="iva"]:checked');
         if (btnIva != null)
             iva = document.querySelector('#inputIva');
         let btn = document.querySelector('input[name="credito"]:checked');

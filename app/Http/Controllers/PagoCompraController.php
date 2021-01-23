@@ -49,10 +49,10 @@ class PagoCompraController extends Controller
         if($idCompra == 'pagos')
             return Pago_compra::all();
         //$pagos = NULL;
-        $pagos = Pago_compra::where('idCompra','=',$idCompra);
-        if(isset($pagos))
-            return 'pagos no encontrados';
-        else
+        $pagos = Pago_compra::where('idCompra','=',$idCompra)->get();
+        //if(isset($pagos))
+          //  return 'pagos no encontrados';
+        //else
             return $pagos;
         //var_dump();
     }
