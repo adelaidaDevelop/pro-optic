@@ -196,7 +196,7 @@ COMPRAS
                         </tbody>
                     </table>
                 </div>
-                <div class="col-8 mx-auto" id ="creditoCompra">
+                <div class="col-4 mx-auto" id ="creditoCompra">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -247,7 +247,7 @@ COMPRAS
         </div>
     </div>
 </div-->
-
+<script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
 const texto = document.querySelector('#ver');
 
@@ -537,10 +537,10 @@ function filtrarCompras() {
         //console.log(fechaCompra);
         //comprasAuxiliar[i].fechaCompra.setDate(comprasAuxiliar[i].fechaCompra.getDate() + 1);
         let btnVerCredito = "";
-        if (comprasAuxiliar[i].estado == 'credito')
+        /*if (comprasAuxiliar[i].estado == 'credito')
             btnVerCredito = `<button class="btn btn-light" onclick="verDetalleCompra(` +
             comprasAuxiliar[i].id +`)" data-toggle="modal" data-target="#detalleCompraModal"
-                type="button">VER CREDITO</button>`;
+                type="button">VER CREDITO</button>`;*/
         cuerpo = cuerpo + `
             <tr>
                 <th scope="row">` + contador++ + `</th>
@@ -626,39 +626,66 @@ async function verCreditoCompra(id,costoTotal)
                 pagos = pagos + pagosCompra[i].monto;
             }
                 cuerpo = cuerpo + `<div class="row my-auto">
-                        <div class="col-4">
+                        <div class="col-6">
                             <p class="h5">TOTAL: </p>
                         </div>
-                        <div class="col-8">
+                        <div class="col-6">
                             <p class="h5" id="totalCompra">$ `+costoTotal+`</p>
                         </div>
                     </div>
                     <div class="row my-auto">
-                        <div class="col-4">
+                        <div class="col-6">
                             <p class="h5">DEBE: </p>
                         </div>
-                        <div class="col-8">
-                            <p class="h5" id="deuda">$`+(costoTotal-pagos)+`</p>
+                        <div class="col-6">
+                            <p class="h5" id="deuda">$ `+(costoTotal-pagos)+`</p>
                         </div>
                     </div>
                     <div class="row my-auto">
-                        <div class="col-4">
+                        <div class="col-6">
                             <p class="h5">ABONAR:</p>
                         </div>
-                        <div class="col-8">
-                            <input type="number" oninput="calcularDeudaCredito()" id="pagoCredito" data-decimals="2"
+                        <div class="col-6">
+                            <input type="number" data-prefix="$" oninput="calcularDeudaCredito()" id="pagoCredito" data-decimals="2"
                                 value=0 class="form-control" />
+                            
                         </div>
                     </div>
                     <div class="row my-auto">
-                        <div class="col-4">
+                        <div class="col-6">
                             <p class="h5">AUN DEBERÍA: </p>
                         </div>
-                        <div class="col-8">
+                        <div class="col-6">
                             <p class="h5" id="deudaCredito">$ 0.00</p>
                         </div>
-                    </div>`;
+                    </div>
+                    <div class="row my-auto">
+                        <div class="col-6">
+                            <button class="btn border border-dark">ABONAR</button>
+                        </div>
+                    </div>`
+                    
+                    ;
             document.getElementById("creditoCompra").innerHTML = cuerpo;
+            var preProps = {
+    decrementButton: "<strong>&minus;</strong>", // button text
+    incrementButton: "<strong>&plus;</strong>", // ..
+    groupClass: "my-0 mx-1 p-0", // css class of the resulting input-group
+    buttonsClass: "btn-outline-secondary",
+    buttonsWidth: "2rem",
+    textAlign: "center", // alignment of the entered number
+    autoDelay: 500, // ms threshold before auto value change
+    autoInterval: 50, // speed of auto value change
+    buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
+    locale: navigator.language, // the locale, per default detected automatically from the browser
+    template: // the template of the input
+        '<div class="input-group ${groupClass}">' +
+        '<div class="input-group-prepend"><button style="max-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
+        '<input type="text" inputmode="decimal" style="text-align: ${textAlign};" class="form-control form-control-text-input"/>' +
+        '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
+        '</div>'
+}
+            $("input[id='pagoCredito']").inputSpinner(preProps);
             //return productos;
             //console.log(response);
 
