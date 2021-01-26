@@ -36,7 +36,13 @@ class PagoCompraController extends Controller
     public function store(Request $request)
     {
         //
-        return request();
+        $id = $request->input('id');
+        $pago = new Pago_compra;
+        $pago->monto = 50;
+        $pago->idCompra = $id;
+        $pago->save();
+
+        return true;
     }
 
     /**

@@ -716,7 +716,7 @@ async function abonarPago(id)
                         },
                 // el cuerpo de la petición es una cadena de texto 
                 // con los datos en formato JSON
-                body:  id// convertimos el objeto a texto
+                body:  {id:id}// convertimos el objeto a texto
             };
         let btnAux = document.getElementById("etiquetaAbonar").innerHTML;
         document.getElementById("etiquetaAbonar").innerHTML = `
