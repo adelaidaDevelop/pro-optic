@@ -21,6 +21,12 @@ PRODUCTOS
         NUEVO PRODUCTO </a>
     </a>
 </div>
+<div class="col-0 my-2 ml-5 px-1 ">
+    <a class="btn btn-primary" href="{{ url('/producto/create')}}">
+        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        VER OFERTAS </a>
+    </a>
+</div>
 @endsection
 
 <div class="row p-1 ">
@@ -149,13 +155,7 @@ PRODUCTOS
             <div class="modal-body" style="width:500px;" id="">
                 <!--BODY MODAL-->
                 <!-- <h6> BUSCAR PRODUCTO POR CODIGO O NOMBRE</h6>-->
-                <label for="codigoBarras">
-                    <h5 class="text-primary">
-                        <strong>
-                            PRODUCTO
-                        </strong>
-                    </h5>
-                </label>
+               
                 <div class="col-6 input-group">
                     <!--BUSCADOR-->
                     <!--
@@ -309,7 +309,7 @@ PRODUCTOS
                         <img src="{{ asset('storage')}}/` + productos[count10].imagen + ` " alt="" width="200">
                         <br /><br />
                         
-                        <a class="btn btn-primary" href="{{ url('/producto/` + x + `/edit')}}"> Editar </a>
+                        <a class="btn btn-primary" href="{{ url('/producto/` + x + `/edit')}}"> EDITAR PRODUCTO </a>
 
                     </div>
 
