@@ -73,15 +73,15 @@ PRODUCTOS
                             <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
                         <div class="mt-2 mx-2"> </div>
                         <h6 class="mx-3 mt-2"> BUSCAR POR:</h6>
-                        <div class=" form-check mt-2">
-                            <input class="form-check-input" type="radio" value="folio" name="checkbox2" onchange="buscarFolioNombre()" id="codigoBusq">
-                            <label class="form-check-label" for="flexRadioDefault1">
+                        <div class=" input-group-text my-auto">
+                            <input  type="radio" value="folio" name="checkbox2" onchange="buscarFolioNombre()" id="codigoBusq">
+                            <label class="ml-1 my-0" for="codigoBusq" >
                                 CODIGO
                             </label>
                         </div>
-                        <div class="mx-4 form-check mt-2">
-                            <input class="form-check-input" type="radio" value="nombre" name="checkbox2" onchange="buscarFolioNombre()" id="nombreBusq" checked>
-                            <label class="form-check-label" for="flexRadioDefault2">
+                        <div class=" input-group-text  ml-1 my-auto ">
+                            <input  type="radio" value="nombre" name="checkbox2" onchange="buscarFolioNombre()" id="nombreBusq" checked>
+                            <label class="ml-1 my-0" for="nombreBusq">
                                 NOMBRE
                             </label>
                         </div>
