@@ -196,7 +196,8 @@ COMPRAS
                         </tbody>
                     </table>
                 </div>
-                <div class="col-4 mx-auto" id ="creditoCompra">
+                <div class="row" id ="creditoCompra">
+                
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -625,7 +626,8 @@ async function verCreditoCompra(id,costoTotal)
             {
                 pagos = pagos + pagosCompra[i].monto;
             }
-                cuerpo = cuerpo + `<div class="row my-auto">
+                cuerpo = cuerpo + `<div class="col-4 mx-auto border border-dark p-2"  >
+                <div class="row my-auto">
                         <div class="col-6">
                             <p class="h5">TOTAL: </p>
                         </div>
@@ -646,7 +648,7 @@ async function verCreditoCompra(id,costoTotal)
                             <p class="h5">ABONAR:</p>
                         </div>
                         <div class="col-6">
-                            <input type="number" data-prefix="$" oninput="calcularDeudaCredito()" id="pagoCredito" data-decimals="2"
+                            <input type="number" data-prefix="$" id="pagoCredito" data-decimals="2"
                                 value=0 class="form-control" />
                             
                         </div>
@@ -660,11 +662,11 @@ async function verCreditoCompra(id,costoTotal)
                         </div>
                     </div>
                     <div class="row my-auto">
-                        <div class="col-6">
-                            <button class="btn border border-dark">ABONAR</button>
+                        <div class="col-6" id="etiquetaAbonar">
+                            <button class="btn border border-dark" type="button" onclick="abonarPago(`+id+`)" >ABONAR</button>
                         </div>
+                    </div>
                     </div>`
-                    
                     ;
             document.getElementById("creditoCompra").innerHTML = cuerpo;
             var preProps = {
@@ -697,41 +699,53 @@ async function verCreditoCompra(id,costoTotal)
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
-    //return response;    
-    /*<!--div class="row my-auto">
-                        <div class="col-4">
-                            <p class="h5">TOTAL: </p>
-                        </div>
-                        <div class="col-8">
-                            <p class="h5" id="totalCompra">$ 0.00</p>
-                        </div>
-                    </div>
-                    <div class="row my-auto">
-                        <div class="col-4">
-                            <p class="h5">DEBE: </p>
-                        </div>
-                        <div class="col-8">
-                            <p class="h5" id="deuda">$ 0.00</p>
-                        </div>
-                    </div>
-                    <div class="row my-auto">
-                        <div class="col-4">
-                            <p class="h5">ABONAR:</p>
-                        </div>
-                        <div class="col-8">
-                            <input type="number" oninput="calcularDeudaCredito()" id="pagoCredito" data-decimals="2"
-                                value=0 class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row my-auto">
-                        <div class="col-4">
-                            <p class="h5">AUN DEBERÍA: </p>
-                        </div>
-                        <div class="col-8">
-                            <p class="h5" id="deudaCredito">$ 0.00</p>
-                        </div>
-                    </div-->
-                    */
+}
+
+async function abonarPago(id)
+{
+    try {
+        console.log('Entra');
+        let _token =  "{{ csrf_token() }}";
+        var init = {
+                // el método de envío de la información será POST
+                method: "POST",
+                headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                // el cuerpo de la petición es una cadena de texto 
+                // con los datos en formato JSON
+                body:  id// convertimos el objeto a texto
+            };
+        let btnAux = document.getElementById("etiquetaAbonar").innerHTML;
+        document.getElementById("etiquetaAbonar").innerHTML = `
+        <button class="btn border border-dark" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Loading...
+        </button>`;
+        let respuesta = await fetch('/pagoCompra/', init);
+        let cuerpo = "";
+        if (respuesta.ok) {
+            console.log('Si me respondió :3');
+            console.log(respuesta);
+            document.getElementById("etiquetaAbonar").innerHTML = btnAux;
+            /*pagosCompra = await response.json();
+            console.log(pagosCompra);
+            let pagos = 0;
+            for(let i in pagosCompra)
+            {
+                pagos = pagos + pagosCompra[i].monto;
+            }*/
+
+        } else {
+            console.log("No responde :'v");
+            console.log(respuesta);
+            throw new Error(respuesta.statusText);
+        }
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
 }
 /*
         for (count4 in productos) {
