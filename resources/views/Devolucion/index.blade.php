@@ -12,7 +12,7 @@ DEVOLUCION
         <label for="">
             <h3 class="text-primary">
                 <strong>
-                    DEVOLUCION
+                    DEVOLUCION3
                 </strong>
             </h3>
         </label>
@@ -74,23 +74,23 @@ DEVOLUCION
             <div class="modal-body">
                 <div class="form-group  my-auto p-1 col-4 mb-3 ml-4">
                     <div class=" input-group-text">
-                        <input type="checkbox" name="fechaCompra" id="fechaCompra" onchange="filtrarCompras()">
-                        <label class="ml-1 my-0" for="fechaCompra">
-                            FECHA COMPRA
+                        <input type="checkbox" name="fechaVenta" id="fechaVenta" onchange="filtrarCompras()">
+                        <label class="ml-1 my-0" for="fechaVenta">
+                            BUSCAR VENTAS POR FECHA
                         </label>
 
                     </div>
                     <div class="input-group my-1 mx-0">
                         <div class="input-group-prepend">
-                            <label for="fechaInicioC" class="input-group-text">DE: </label>
+                            <label for="fechaInicio" class="input-group-text">DE: </label>
                         </div>
-                        <input type="date" min="" id="fechaInicioC" onchange="filtrarCompras()" class="form-control" />
+                        <input type="date" min="" id="fechaInicio" onchange="filtrarCompras()" class="form-control" />
                     </div>
                     <div class="input-group my-1 mx-0">
                         <div class="input-group-prepend">
-                            <label for="fechaFinalC" class="input-group-text">A: </label>
+                            <label for="fechaFinal" class="input-group-text">A: </label>
                         </div>
-                        <input type="date" min="" onchange="filtrarCompras()" id="fechaFinalC" class="form-control" />
+                        <input type="date" min="" onchange="filtrarCompras()" id="fechaFinal" class="form-control" />
                     </div>
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
@@ -323,6 +323,95 @@ DEVOLUCION
                 `;
         }
         document.getElementById("tablaVenta").innerHTML = cuerpo;
+    };
+
+
+    function filtrarCompras() {
+        let cuerpo = "";
+        let contador = 1;
+        let cont = 0;
+        let emple = "";
+        let fecha = "";
+
+        if (verificarFechas()) {
+            console.log("Verifico ok");
+            let fechaInicio = document.querySelector('#fechaInicio');
+            let fechaFin = document.querySelector('#fechaFinal');
+            let fechaI = new Date(fechaInicio.value);
+            let fechaF = new Date(fechaFin.value);
+            fechaI.setDate(fechaI.getDate() + 1);
+            fechaF.setDate(fechaF.getDate() + 1);
+
+            for (let j in ventas) {
+
+                let total = 0;
+                fecha = new Date(ventas[j].created_at);
+                fecha.setDate(fecha.getDate() + 1);
+                cont = cont + 1;
+                console.log(fecha.toLocaleDateString());
+                console.log(fechaI.toLocaleDateString());
+
+                if (fecha.getTime() >= fechaI.getTime()) {
+                    console.log("minimo");
+                    if (fecha.getTime() <= fechaF.getTime()) {
+                        console.log("maximo");
+
+                        for (count21 in detalleVenta) {
+                            if (detalleVenta[count21].idVentas == ventas[j].id) {
+                                total = total + detalleVenta[count21].subtotal
+                            }
+                        }
+
+                        for (count6 in empleados) {
+                            if (empleados[count6].id == ventas[j].idEmpleado) {
+                                emple = empleados[count6].nombre + " " + empleados[count6].apellidos
+                            }
+                        }
+                                        cuerpo = cuerpo + `
+                        <tr onclick="" data-dismiss="modal">
+
+                        <th scope="row">` + cont + `</th>
+                        <td>` + ventas[j].id + `</td>
+                        <td>` + emple + `</td>
+                        <td>` + ventas[j].estado + `</td>
+                        <td>` + ventas[j].pago + `</td>
+                        <td>  </td>
+                        <td>` + total + `</td> 
+                        <td>` + fecha.toLocaleDateString() + `</td> 
+                        <td>` + fecha.toLocaleTimeString() + `</td>   
+                    </tr>
+                    `;
+                    }
+                }else { console.log("no entra");}
+            }
+        }else { console.log("No verifico bien");}
+        document.getElementById("tablaVenta").innerHTML = cuerpo;
+    };
+
+    function verificarFechas() {
+        let btn = document.querySelector('input[name="fechaVenta"]:checked');
+
+        if (btn != null) {
+            let fechaInicio = document.querySelector('#fechaInicio');
+            let fechaFin = document.querySelector('#fechaFinal');
+            $('input[id="fechaInicio"]').prop('disabled', false);
+            if (fechaInicio.value.length > 0) {
+                fechaFin.min = fechaInicio.value;
+                $('input[id="fechaFinal"]').prop('disabled', false);
+                if (fechaFin.value.length > 0) {
+                    let fechaI = new Date(fechaInicio.value);
+                    let fechaF = new Date(fechaFin.value);
+                    if (fechaI.getTime() > fechaF.getTime()) {
+                        $("input[id='fechaFinal']").val(fechaInicio.value);
+                    }
+                    return true;
+                }
+            }
+        } else {
+            $('input[id="fechaInicio"]').prop('disabled', true);
+            $('input[id="fechaFinal"]').prop('disabled', true);
+        }
+        return false;
     };
 </script>
 @endsection
