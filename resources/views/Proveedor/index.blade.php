@@ -9,7 +9,7 @@
 
     </div>
     <div class="row p-1">
-        <div class="row border border-dark m-2 w-100">
+        <div class="row border border-dark m-2 mt-4 w-100">
             <div class="col-4 border border-dark mt-4 mb-4 ml-4 mr-2">
                 <div class="row px-3 py-3 m-0">
                     <!--input type="text" id="buscador" class="form-control my-2">
@@ -39,7 +39,7 @@
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
                             <label for="ndepartamento">
-                                <h4 style="color:#4388CC">PROVEEDOR</h4>
+                                <h4 style="color:#4388CC">EDITAR PROVEEDOR</h4>
                             </label>
                             <br />
                             <label for="Nombre">
@@ -69,7 +69,7 @@
 
                             </div>
                             <button class="btn btn-outline-secondary" type="submit">
-                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                                 GUARDAR CAMBIOS
                             </button>
                         </div>
@@ -79,7 +79,7 @@
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
                             <button class="btn btn-outline-secondary my-3" type="submit">
-                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                                 DAR DE BAJA
                             </button>
                         </form>
@@ -131,7 +131,7 @@
                         <div class="form-row w-100">
                             <div class="form-group">
                                 <button class="btn btn-outline-secondary" type="submit">
-                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                                     GUARDAR PROVEEDOR
                                 </button>
                             </div>

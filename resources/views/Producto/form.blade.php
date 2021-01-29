@@ -1,104 +1,92 @@
-<div class="row p-1 ">
-    <div class="row border border-dark m-2 w-100">
+<div class="row ">
+<div class="text-primary p-1">
+<h4>
+<strong class="ml-4 "> 
+{{ $Modo == 'crear' ? 'NUEVO PRODUCTO': 'EDITAR PRODUCTO'}}
+</strong>
+</h4>
+</div>
+</div>
 
-        <div class="col-2"></div>
-        <div class="col-3">
-            <br />
-            <label for="subtitulo">
-                <h5 class="text-primary">
-                    <strong>
-                        {{ $Modo== 'crear' ?'CREAR PRODUCTO' : 'EDITAR PRODUCTO' }}
-                    </strong>
-                </h5>
-            </label>
-            <br /><br />
-
-
-            <label for="codigoBarras">
-                <h6> {{'CODIGO DE BARRAS'}}</h6>
-            </label>
-            <br /> <br />
-            <label for="Nombre">
-                <h6>{{'NOMBRE'}}</h6>
-            </label>
-            <br /> <br /><br />
-            <label for="Descripcion">
-                <h6> {{'DESCRIPCION'}} </h6>
-            </label>
-            <br /><br /><br /><br />
-            <label for="MinimoStock">
-                <h6> {{'MINIMO STOCK'}}</h6>
-            </label>
-            <br /><br />
-            <label for="Receta">
-                <h6> {{'RECETA MEDICA'}} </h6>
-            </label>
-            <br /><br />
-            <label for="idDepartamento">
-                <h6> {{'DEPARTAMENTO'}}</h6>
-            </label>
-            <br /><br />
-
-        </div>
+<div class="row p-1 border border-dark m-2 w-100 ">
+    <div class="col-2"></div>
+    <div class="col-2 ">
+        <label for="codigoBarras">
+            <h5 class="mb-3 mt-3"> {{'CODIGO DE BARRAS'}}</h5>
+        </label>
         <br />
-        <div class="col-3">
-            <br /><br /><br /><br />
-            <!--El name debe ser igual al de la base de datos-->
-            <input type="text" name="codigoBarras" id="codigoBarras" class="form-control" placeholder="Ingresar codigo de barras" value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}" required autocomplete="codigoBarras" autofocus>
-            <br />
-            <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="{{ isset($producto->nombre)?$producto->nombre:''}}" autofocus required>
-            <br />
-            <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required>
-            {{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
-            <br />
-            <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" autofocus required>
-            <br />
-
-            <select class="form-control" name="Receta" id="Receta" required>
-                <option value="">Elija una opcion</option>
-                <option value="si" selected>si</option>
-                <option value="no" selected>no</option>
-            </select>
-            <br />
-            <select class="form-control" name="idDepartamento" id="idDepartamento" required>
-                <option value="">Seleccione departamento</option>
-                @foreach($departamento as $departamento)
-                @if(isset($producto))
-                @if( $producto->idDepartamento == $departamento->id)
-                <option value="{{ $departamento['id']}}" selected> {{$departamento['nombre']}}</option>
-                @else
-                <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
-                @endif
-                @else
-                <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
-                @endif
-                @endforeach
-            </select>
-        </div>
-        <div class="col-1"></div>
-        <div class="col-3 text-center">
-            <br /><br /><br />
-            <label for="Imagen">
-                <h5> <strong>{{'FOTO'}}</strong></h5>
-            </label required>
-            @if(isset($producto->imagen))
-            <br />
-            <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200">
-            <br /><br />
-            @endif
-            @if(isset($producto->imagen))
-            <input type="file" name="Imagen" id="Imagen" class="form-control" value="">
-            @else <input class="form-control" type="file" name="Imagen" id="Imagen" value="" autofocus required>
-            @endif
-        </div>
-        <br /> <br /><br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+        <label for="Nombre">
+            <h5 class="mb-3">{{'NOMBRE'}}</h5>
+        </label>
+        <br />
+        <label for="Descripcion">
+            <h5 class="mb-5"> {{'DESCRIPCION'}} </h5>
+        </label>
+        <br />
+        <label for="MinimoStock">
+            <h5 class="mb-4"> {{'MINIMO STOCK'}}</h5>
+        </label>
+        <br />
+        <label for="Receta">
+            <h5 class="mb-4"> {{'RECETA MEDICA'}} </h5>
+        </label>
+        <br />
+        <label for="idDepartamento">
+            <h5 class="mb-3"> {{'DEPARTAMENTO'}}</h5>
+        </label>
 
     </div>
+    <div class="col-4">
+        <!--El name debe ser igual al de la base de datos-->
+        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control mb-2 mt-3" placeholder="Ingresar codigo de barras" value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}" required autocomplete="codigoBarras" autofocus>
 
+        <input type="text" name="nombre" id="nombre" class="form-control mb-3" placeholder="Nombre productos" value="{{ isset($producto->nombre)?$producto->nombre:''}}" autofocus required>
+
+        <textarea name="descripcion" id="descripcion" class="form-control mb-3" placeholder="Descripcion del producto" rows="2" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
+
+        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control mb-3" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" autofocus required>
+
+
+        <select class="form-control mb-3" name="Receta" id="Receta" required>
+            <option value="">Elija una opcion</option>
+            <option value="si" selected>si</option>
+            <option value="no" selected>no</option>
+        </select>
+        <select class="form-control mb-3" name="idDepartamento" id="idDepartamento" required>
+            <option value="">Seleccione departamento</option>
+            @foreach($departamento as $departamento)
+            @if(isset($producto))
+            @if( $producto->idDepartamento == $departamento->id)
+            <option value="{{ $departamento['id']}}" selected> {{$departamento['nombre']}}</option>
+            @else
+            <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
+            @endif
+            @else
+            <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
+            @endif
+            @endforeach
+        </select>
+    </div>
+    <div class="col-1"></div>
+    <div class="col-3 text-center mt-3">
+        <label for="Imagen">
+            <h5> <strong>{{'FOTO'}}</strong></h5>
+        </label required>
+        @if(isset($producto->imagen))
+        <br />
+        <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200">
+
+        @endif
+        @if(isset($producto->imagen))
+        <input type="file" name="Imagen" id="Imagen" class="form-control" value="">
+        @else <input class="form-control" type="file" name="Imagen" id="Imagen" value="" autofocus required>
+        @endif
+    </div>
 </div>
+</div>
+
 <div class="row text-right w-100">
     <div class="col-md-6"> </div>
-
     <div class="col-md-6">
         <button class="btn btn-outline-secondary" type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
             <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">{{ $Modo== 'crear' ?'GUARDAR PRODUCTO' : 'EDITAR PRODUCTO' }}
