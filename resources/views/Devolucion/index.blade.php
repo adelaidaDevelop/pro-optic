@@ -8,22 +8,27 @@ DEVOLUCION
 
 <div class="row p-1 ">
     <!--CONSULTAR PRODUCTO -->
-    <div class="row col-12 mx-2 w-100">
-        <label for="">
-            <h3 class="text-primary">
-                <strong>
-                    DEVOLUCION3
-                </strong>
-            </h3>
-        </label>
+    <div class="row col-12 ml-2 w-100">
+
+        <h4 class="text-primary ml-2 my-2">
+            <strong>
+                DEVOLUCION
+            </strong>
+        </h4>
     </div>
-    <div class="row border border-dark m-2 col ">
+    <div class="row border border-dark m-2 ml-4 mr-4 col ">
         <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-        <div class="col-12  mt-1 mb-4 mx-0">
-            <div class="row  px-0 col-5 input-group my-4">
-                <h4 class=" mx-0 px-0 my-auto"> FOLIO</h4>
-                <input type="number" class="form-control ml-4" size="15" placeholder="Folio" id="busquedaFolio" onkeyup="buscarFolio()">
-                <button class="btn btn-outline-info ml-4 " onclick="modalVenta()" data-toggle="modal" data-target="#buscarVenta" type="button">BUSCAR VENTA</button>
+        <div class="col mt-1 mb-4 ml-4 mr-4">
+            <div class="row  px-0 col-8 input-group my-4">
+                <h4 class="col-1 mx-0 px-0 my-auto"> FOLIO:</h4>
+                <input type="number" class="form-control col-4 my-auto" size="15" placeholder="Folio" id="busquedaFolio" onkeyup="buscarFolio()">
+                <a title="buscar" href="" class="text-dark ml-2 mr-5 my-auto">
+                    <img src="{{ asset('img\search.svg') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
+                <div class="col-2 ml-5"> </div>
+                <button class=" btn btn-outline-info my-auto " onclick="modalVenta()" data-toggle="modal" data-target="#buscarVenta" type="button">
+                    BUSCAR VENTA
+                    <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="35px" height="35px" />
+                </button>
             </div>
             <div class="row ">
                 <h5 id="sinResult" class="border mx-0 px-0"></h5>
@@ -31,13 +36,13 @@ DEVOLUCION
 
             <!-- TABLA -->
             <div class="row ">
-                <h3 class="  mx-0 px-0 "> PRODUCTOS </h3>
+                <h4 class="text-primary  mx-0 px-0 "> PRODUCTOS </h4>
             </div>
 
 
             <div class="row border" style="height:350px;overflow-y:auto;">
 
-                <table class="table table-bordered border-primary col-12 ">
+                <table class="table table-bordered border-primary  ">
 
                     <thead class="table-secondary text-primary">
                         <tr>
@@ -367,7 +372,7 @@ DEVOLUCION
                                 emple = empleados[count6].nombre + " " + empleados[count6].apellidos
                             }
                         }
-                                        cuerpo = cuerpo + `
+                        cuerpo = cuerpo + `
                         <tr onclick="" data-dismiss="modal">
 
                         <th scope="row">` + cont + `</th>
@@ -382,9 +387,13 @@ DEVOLUCION
                     </tr>
                     `;
                     }
-                }else { console.log("no entra");}
+                } else {
+                    console.log("no entra");
+                }
             }
-        }else { console.log("No verifico bien");}
+        } else {
+            console.log("No verifico bien");
+        }
         document.getElementById("tablaVenta").innerHTML = cuerpo;
     };
 

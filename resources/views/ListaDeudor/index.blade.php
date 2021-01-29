@@ -6,19 +6,18 @@ CREDITOS
 @section('opciones')
 @endsection
 
-<div class="row p-1 ">
+
     <!--CONSULTAR PRODUCTO -->
-    <div class="row col-12 mx-2 w-100">
+    <div class="row col ml-1 mt-2 mb-2 ">
         <h4 class="text-primary">
             <strong>
                 LISTA DEUDORES
             </strong>
         </h4>
-
     </div>
-    <div class="row border border-dark m-2 w-100 ">
+    <div class="row col border border-dark ml-0 mr-0 mb-4 ">
         <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-        <div class="row   mt-1 mb-4 ml-4 mr-2">
+        <div class="row  mb-4  mr-2 ">
             <div class="row col-6  form-group input-group my-4 ml-3">
                 <input type="text" class="form-control border-primary " size="15" placeholder="BUSCAR CLIENTE" id="busquedaCliente" onkeyup="buscarCliente()">
                 <a title="buscar" href="" class="text-dark  ml-2 ">
@@ -27,7 +26,7 @@ CREDITOS
 
 
             <!-- TABLA -->
-            <div class="row w-100 " style="height:350px;overflow-y:auto;">
+            <div class="row w-100 " style="height:300px;overflow-y:auto;">
                 <table class="table table-bordered border-primary ml-5  ">
                     <thead class="table-secondary text-primary">
                         <tr>
@@ -49,7 +48,7 @@ CREDITOS
         </div>
 
     </div>
-</div>
+
 <!--MODAL-->
 
 <div class="modal fade" id="detalleCompraModal" tabindex="-1" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
