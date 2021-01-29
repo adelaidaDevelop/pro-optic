@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pago_compra;
+use App\Models\Proveedor;
+use App\Models\Compra;
 use Illuminate\Http\Request;
 
 class PagoCompraController extends Controller
@@ -14,7 +16,11 @@ class PagoCompraController extends Controller
      */
     public function index()
     {
-        return 'retorna algo';
+        $pagosCompra = Pago_compra::all(); 
+        $compras = Compra::all();
+        $proveedores = Proveedor::all(); 
+        return view('PagoCompra.index',compact('pagosCompra','compras','proveedores'));
+
     }
 
     /**
@@ -37,12 +43,13 @@ class PagoCompraController extends Controller
     {
         //
         $id = $request->input('id');
-        $pago = new Pago_compra;
-        $pago->monto = 50;
-        $pago->idCompra = $id;
-        $pago->save();
+        $pago = $request->input('pago');
+        $pagoCompra = new Pago_compra;
+        $pagoCompra->monto = $pago;
+        $pagoCompra->idCompra = $id;
+        $pagoCompra->save();
 
-        return true;
+        return $request;
     }
 
     /**

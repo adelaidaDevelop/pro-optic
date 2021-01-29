@@ -115,9 +115,19 @@ class CompraController extends Controller
      * @param  \App\Models\Compra  $compra
      * @return \Illuminate\Http\Response
      */
-    public function show(Compra $compra)
+    public function show($compra)
     {
-        //
+        if($compra=="compras")
+        {
+            $compras = Compra::all();
+            //$productosCodificados = json_encode($productos);
+            return $compras;//compact('productos');
+        }
+        /*else{
+            $id = Compra::where("nombre",'like',$request->nombre)->get();
+            return $id;
+        }*/
+        return 'No hay nada';
     }
 
     /**
@@ -138,9 +148,11 @@ class CompraController extends Controller
      * @param  \App\Models\Compra  $compra
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Compra $compra)
+    public function update($id)//Request $request,$id)//, Compra $compra)
     {
-        //
+        Compra::where('id','=',$id)->update(['estado' => 'pagado']);
+        //$estado = $request->input('estado');
+        return $id;//'Obvio que retorno algo :v';
     }
 
     /**

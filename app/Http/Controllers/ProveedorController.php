@@ -51,9 +51,16 @@ class ProveedorController extends Controller
      * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function show(Proveedor $proveedor)
+    public function show($proveedor)
     {
-        //
+        if($proveedor == 'proveedor')
+            return Proveedor::all();
+        //$pagos = NULL;
+        $proveedores = Proveedor::where('id','=',$idCompra)->get();
+        //if(isset($pagos))
+          //  return 'pagos no encontrados';
+        //else
+            return $pagos;
     }
 
     /**

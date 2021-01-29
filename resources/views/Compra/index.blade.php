@@ -12,10 +12,18 @@ COMPRAS
         </button>
     </form>
 </div>
+<div class="col my-2 ml-5 pl-1">
+    <form method="get" action="{{url('/pagoCompra/')}}">
+        <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
+            <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+            PAGOS
+        </button>
+    </form>
+</div>
 @endsection
 <!--div class="row p-1 "-->
 <!--CONSULTAR PRODUCTO -->
-<div class="row border border-dark my-2 ml-2 mr-2 pr-3">
+<div class="row border border-dark my-2 ml-2 mr-2 pr-3" id="pagina">
     <div class="row col-12 mx-2 mt-2">
         <label for="">
             <h5 class="text-primary">
@@ -196,8 +204,8 @@ COMPRAS
                         </tbody>
                     </table>
                 </div>
-                <div class="row" id ="creditoCompra">
-                
+                <div class="row" id="creditoCompra">
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -269,7 +277,7 @@ function info($id) {
 
 <script>
 let productosVenta = [];
-const compras = @json($compras);
+let compras = @json($compras);
 const proveedores = @json($proveedores);
 const compra_producto = @json($compra_producto);
 const productos = @json($productos);
@@ -277,44 +285,65 @@ let comprasActuales = [];
 
 let tipoBusqueda = "";
 
-function cargarCompras() {
-    //let contador = 1;
-    comprasActuales = [];
-    for (let i in compras) {
-        //if (compras[i].id.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-        //if (compras[i].id == palabraBusqueda.value) {
-        const fechaCreacion = new Date(compras[i].created_at);
-        const fechaCompra = new Date(compras[i].fecha_compra)
-        fechaCompra.setDate(fechaCompra.getDate() + 1);
-        let proveedor = "";
-        for (let p in proveedores) {
-            if (proveedores[p].id === compras[i].idProveedor)
-                proveedor = proveedores[p].nombre;
-        }
 
-        let costoTotal = 0;
-        for (let p in compra_producto) {
-            if (compra_producto[p].idCompras === compras[i].id) {
-                let subtotal = parseFloat(compra_producto[p].cantidad) *
-                    parseFloat(compra_producto[p].costo_unitario);
-                costoTotal = parseFloat(costoTotal) + parseFloat(subtotal);
+
+async function cargarCompras() {
+    //let contador = 1;
+    try {
+        comprasActuales = [];
+        //let response = "";
+        if (compras.length == 0) {
+            let response = await fetch(`/compra/compras`);
+            if (response.ok) {
+                console.log(compras);
+                console.log("Si me responde");
+                compras = await response.json();
+                console.log(compras);
+                //return productos;
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        }
+        console.log("Si me responde aqui tambien");
+        for (let i in compras) {
+            //if (compras[i].id.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+            //if (compras[i].id == palabraBusqueda.value) {
+            const fechaCreacion = new Date(compras[i].created_at);
+            const fechaCompra = new Date(compras[i].fecha_compra)
+            fechaCompra.setDate(fechaCompra.getDate() + 1);
+            let proveedor = "";
+            for (let p in proveedores) {
+                if (proveedores[p].id === compras[i].idProveedor)
+                    proveedor = proveedores[p].nombre;
             }
 
+            let costoTotal = 0;
+            for (let p in compra_producto) {
+                if (compra_producto[p].idCompras === compras[i].id) {
+                    let subtotal = parseFloat(compra_producto[p].cantidad) *
+                        parseFloat(compra_producto[p].costo_unitario);
+                    costoTotal = parseFloat(costoTotal) + parseFloat(subtotal);
+                }
+
+            }
+            let compra = {
+                id: compras[i].id,
+                proveedor: proveedor,
+                fechaCompra: fechaCompra, //.toLocaleDateString(),
+                fechaRegistro: fechaCreacion, //.toLocaleDateString(),
+                estado: compras[i].estado,
+                costoTotal: costoTotal
+            };
+
+            comprasActuales.push(compra);
+
+            //}
         }
-        let compra = {
-            id: compras[i].id,
-            proveedor: proveedor,
-            fechaCompra: fechaCompra, //.toLocaleDateString(),
-            fechaRegistro: fechaCreacion, //.toLocaleDateString(),
-            estado: compras[i].estado,
-            costoTotal: costoTotal
-        };
-
-        comprasActuales.push(compra);
-
-        //}
+    } catch (err) {
+        console.log("Error al realizar la petición de productos AJAX: " + err.message);
     }
-
 
 };
 let comprasAuxiliar = []
@@ -352,8 +381,24 @@ function mostrarCompras() {
     filtrarCompras();
 
 }
-cargarCompras();
-mostrarCompras();
+
+async function cargarComprasPagina()
+{
+    try{
+        let paginaAux = document.querySelector('#busquedaCompra').innerHTML;
+        document.querySelector('#busquedaCompra').innerHTML = `<div class="text-center">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    </div>`;
+        await cargarCompras();
+        document.querySelector('#busquedaCompra').innerHTML = paginaAux;
+        mostrarCompras();
+    }catch (err) {
+        console.log("Error al realizar la petición de productos AJAX: " + err.message);
+    }
+}
+cargarComprasPagina();
 
 function seleccion() {
     let btn = document.querySelector('input[name="btnRadio"]:checked');
@@ -553,7 +598,7 @@ function filtrarCompras() {
                 <td>` + comprasAuxiliar[i].estado + `</td>
                 <td>` + comprasAuxiliar[i].costoTotal + `</td>
                 <td><button class="btn btn-light" onclick="verDetalleCompra(` +
-            comprasAuxiliar[i].id+`,'`+comprasAuxiliar[i].estado+`'`+`)" data-toggle="modal" data-target="#detalleCompraModal"
+            comprasAuxiliar[i].id + `,'` + comprasAuxiliar[i].estado + `'` + `)" data-toggle="modal" data-target="#detalleCompraModal"
                 type="button">VER MAS</button>` + btnVerCredito + `</td>
             </tr>
         `;
@@ -564,7 +609,7 @@ function filtrarCompras() {
     //console.log(opcionProveedor.value);
 }
 
-function verDetalleCompra(id,estado) {
+function verDetalleCompra(id, estado) {
     let cuerpo = "";
     let contador = 1;
     let costoTotal = 0;
@@ -610,11 +655,10 @@ function verDetalleCompra(id,estado) {
     //document.getElementById("totalCompra").textContent = "$ ";// + costoTotal;
     //console.log(estado);
     document.getElementById("creditoCompra").innerHTML = "";
-    if(estado == 'credito')
-    verCreditoCompra(id,costoTotal);
+    if (estado == 'credito')
+        verCreditoCompra(id, costoTotal);
 }
-async function verCreditoCompra(id,costoTotal)
-{
+async function verCreditoCompra(id, costoTotal) {
     try {
         response = await fetch(`/pagoCompra/${id}`);
         let cuerpo = "";
@@ -622,17 +666,16 @@ async function verCreditoCompra(id,costoTotal)
             pagosCompra = await response.json();
             console.log(pagosCompra);
             let pagos = 0;
-            for(let i in pagosCompra)
-            {
+            for (let i in pagosCompra) {
                 pagos = pagos + pagosCompra[i].monto;
             }
-                cuerpo = cuerpo + `<div class="col-4 mx-auto border border-dark p-2"  >
+            cuerpo = cuerpo + `<div class="col-4 mx-auto border border-dark p-2"  >
                 <div class="row my-auto">
                         <div class="col-6">
                             <p class="h5">TOTAL: </p>
                         </div>
                         <div class="col-6">
-                            <p class="h5" id="totalCompra">$ `+costoTotal+`</p>
+                            <p class="h5" id="totalCompra">$ ` + costoTotal + `</p>
                         </div>
                     </div>
                     <div class="row my-auto">
@@ -640,7 +683,7 @@ async function verCreditoCompra(id,costoTotal)
                             <p class="h5">DEBE: </p>
                         </div>
                         <div class="col-6">
-                            <p class="h5" id="deuda">$ `+(costoTotal-pagos)+`</p>
+                            <p class="h5" id="deuda">$ ` + (costoTotal - pagos) + `</p>
                         </div>
                     </div>
                     <div class="row my-auto">
@@ -648,7 +691,7 @@ async function verCreditoCompra(id,costoTotal)
                             <p class="h5">ABONAR:</p>
                         </div>
                         <div class="col-6">
-                            <input type="number" data-prefix="$" id="pagoCredito" data-decimals="2"
+                            <input type="number" data-prefix="$" oninput="calcularDeuda(` + (costoTotal - pagos) + `)" id="pagoCredito" data-decimals="2"
                                 value=0 class="form-control" />
                             
                         </div>
@@ -658,35 +701,35 @@ async function verCreditoCompra(id,costoTotal)
                             <p class="h5">AUN DEBERÍA: </p>
                         </div>
                         <div class="col-6">
-                            <p class="h5" id="deudaCredito">$ 0.00</p>
+                            <p class="h5" id="deudaCredito">$ ` + (costoTotal - pagos) + `</p>
                         </div>
                     </div>
                     <div class="row my-auto">
                         <div class="col-6" id="etiquetaAbonar">
-                            <button class="btn border border-dark" type="button" onclick="abonarPago(`+id+`)" >ABONAR</button>
+                            <button class="btn border border-dark" type="button" onclick="abonarPago(` + id + `,` + (
+                costoTotal - pagos) + `)" >ABONAR</button>
                         </div>
                     </div>
-                    </div>`
-                    ;
+                    </div>`;
             document.getElementById("creditoCompra").innerHTML = cuerpo;
             var preProps = {
-    decrementButton: "<strong>&minus;</strong>", // button text
-    incrementButton: "<strong>&plus;</strong>", // ..
-    groupClass: "my-0 mx-1 p-0", // css class of the resulting input-group
-    buttonsClass: "btn-outline-secondary",
-    buttonsWidth: "2rem",
-    textAlign: "center", // alignment of the entered number
-    autoDelay: 500, // ms threshold before auto value change
-    autoInterval: 50, // speed of auto value change
-    buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
-    locale: navigator.language, // the locale, per default detected automatically from the browser
-    template: // the template of the input
-        '<div class="input-group ${groupClass}">' +
-        '<div class="input-group-prepend"><button style="max-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
-        '<input type="text" inputmode="decimal" style="text-align: ${textAlign};" class="form-control form-control-text-input"/>' +
-        '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
-        '</div>'
-}
+                decrementButton: "<strong>&minus;</strong>", // button text
+                incrementButton: "<strong>&plus;</strong>", // ..
+                groupClass: "my-0 mx-1 p-0", // css class of the resulting input-group
+                buttonsClass: "btn-outline-secondary",
+                buttonsWidth: "2rem",
+                textAlign: "center", // alignment of the entered number
+                autoDelay: 500, // ms threshold before auto value change
+                autoInterval: 50, // speed of auto value change
+                buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
+                locale: navigator.language, // the locale, per default detected automatically from the browser
+                template: // the template of the input
+                    '<div class="input-group ${groupClass}">' +
+                    '<div class="input-group-prepend"><button style="max-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
+                    '<input type="text" inputmode="decimal" style="text-align: ${textAlign};" class="form-control form-control-text-input"/>' +
+                    '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
+                    '</div>'
+            }
             $("input[id='pagoCredito']").inputSpinner(preProps);
             //return productos;
             //console.log(response);
@@ -701,23 +744,38 @@ async function verCreditoCompra(id,costoTotal)
     }
 }
 
-async function abonarPago(id)
-{
+function calcularDeuda(deuda) {
+    pagoCredito = document.getElementById("pagoCredito");
+    pagoCredito = parseFloat(pagoCredito.value);
+    console.log(deuda);
+    console.log(pagoCredito);
+    if (pagoCredito >= 0 && pagoCredito <= deuda)
+        document.getElementById("deudaCredito").textContent = "$ " + (deuda - pagoCredito);
+    else
+        document.getElementById("deudaCredito").textContent = "CANTIDAD NO VALIDA";
+}
+async function abonarPago(id, adeudo) {
     try {
         console.log('Entra');
-        let _token =  "{{ csrf_token() }}";
+        //let _token =  "{{ csrf_token() }}";
+        let pago = parseFloat(document.getElementById("pagoCredito").value);
+        if (pago <= 0 || pago > adeudo)
+            return alert('POR FAVOR INGRESE UNA CANTIDAD VALIDA')
+        const datos = new FormData();
+        datos.append('id', id);
+        datos.append('pago', pago);
+
         var init = {
-                // el método de envío de la información será POST
-                method: "POST",
-                headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                // el cuerpo de la petición es una cadena de texto 
-                // con los datos en formato JSON
-                body:  {id:id}// convertimos el objeto a texto
-            };
+            // el método de envío de la información será POST
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            // el cuerpo de la petición es una cadena de texto 
+            // con los datos en formato JSON
+            body: datos
+        };
         let btnAux = document.getElementById("etiquetaAbonar").innerHTML;
         document.getElementById("etiquetaAbonar").innerHTML = `
         <button class="btn border border-dark" type="button" disabled>
@@ -728,15 +786,42 @@ async function abonarPago(id)
         let cuerpo = "";
         if (respuesta.ok) {
             console.log('Si me respondió :3');
-            console.log(respuesta);
+            let r = await respuesta.json();
+            console.log(r);
             document.getElementById("etiquetaAbonar").innerHTML = btnAux;
-            /*pagosCompra = await response.json();
-            console.log(pagosCompra);
-            let pagos = 0;
-            for(let i in pagosCompra)
-            {
-                pagos = pagos + pagosCompra[i].monto;
-            }*/
+            if (pago == adeudo) {
+                const datosCompra = new FormData();
+                datosCompra.append('estado', 'pagado');
+                //datosCompra.append('_token',"{{ csrf_token() }}");
+                var initUpdate = {
+                    // el método de envío de la información será POST
+                    method: 'PATCH',
+                    //mode: 'no-cors',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        'Content-Type': 'multipart/form-data'
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    // el cuerpo de la petición es una cadena de texto 
+                    // con los datos en formato JSON
+                    body: datosCompra
+                };
+                //console.log(init);
+                console.log(init);
+                let respuestaCompra = await fetch(`/compra/${id}`, initUpdate);
+                if (respuestaCompra.ok) {
+                    let rC = await respuestaCompra.json();
+                    console.log(rC);
+                    
+                    alert('TU DEUDA ESTA SALDADA');
+                    compras = [];
+                    await cargarComprasPagina();
+                    console.log(compras);
+                }
+
+            }
+            
+            $('#detalleCompraModal').modal('hide');
 
         } else {
             console.log("No responde :'v");
