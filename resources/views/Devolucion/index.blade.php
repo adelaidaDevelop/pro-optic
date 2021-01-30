@@ -21,7 +21,7 @@ DEVOLUCION
         <div class="col mt-1 mb-4 ml-4 mr-4">
             <div class="row  px-0 col-8 input-group my-4">
                 <h4 class="col-1 mx-0 px-0 my-auto"> FOLIO:</h4>
-                <input type="number" class="form-control col-4 my-auto" size="15" placeholder="Folio" id="busquedaFolio" onkeyup="buscarFolio()">
+                <input type="number" min=0 class="form-control col-4 my-auto ml-3" size="15" placeholder="Folio" id="busquedaFolio" onkeyup="buscarFolio()">
                 <a title="buscar" href="" class="text-dark ml-2 mr-5 my-auto">
                     <img src="{{ asset('img\search.svg') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
                 <div class="col-2 ml-5"> </div>
@@ -177,27 +177,31 @@ DEVOLUCION
     let cantTotal = 0;
 
     function buscarFolio() {
-        const palabraBusqueda = document.querySelector('#busquedaFolio');
-        let cuerpo = "";
-        let contador = 1;
-        let folio = parseInt(palabraBusqueda.value);
-        //let idVenta = 0;
-        let cont = 0;
-        for (count in ventas) {
-            if (ventas[count].id == folio) {
-                //  idVenta = ventas[count].id;
-                for (count2 in detalleVenta) {
-                    if (detalleVenta[count2].idVentas == ventas[count].id) {
-                        for (count3 in productos) {
-                            if (productos[count3].id == detalleVenta[count2].idProductos) {
-                                document.getElementById("sinResult").innerHTML = "";
-                                cont = cont + 1;
-                                idProductoD = productos[count3].id;
-                                idVentaD = ventas[count].id
-                                cantTotal = detalleVenta[count2].cantidad;
+        let folioB = document.querySelector('#busquedaFolio');
+        let num = parseInt(folioB.value);
+        if (num >= 0) {
+
+            const palabraBusqueda = document.querySelector('#busquedaFolio');
+            let cuerpo = "";
+            let contador = 1;
+            let folio = parseInt(palabraBusqueda.value);
+            //let idVenta = 0;
+            let cont = 0;
+            for (count in ventas) {
+                if (ventas[count].id == folio) {
+                    //  idVenta = ventas[count].id;
+                    for (count2 in detalleVenta) {
+                        if (detalleVenta[count2].idVentas == ventas[count].id) {
+                            for (count3 in productos) {
+                                if (productos[count3].id == detalleVenta[count2].idProductos) {
+                                    document.getElementById("sinResult").innerHTML = "";
+                                    cont = cont + 1;
+                                    idProductoD = productos[count3].id;
+                                    idVentaD = ventas[count].id
+                                    cantTotal = detalleVenta[count2].cantidad;
 
 
-                                cuerpo = cuerpo + `
+                                    cuerpo = cuerpo + `
                     <tr onclick="" data-dismiss="modal">
 
                     <th scope="row">` + cont + `</th>
@@ -206,21 +210,26 @@ DEVOLUCION
                     <td>` + productos[count3].precio + `</td>
                     <td>` + detalleVenta[count2].subtotal + `</td> 
                     <td>` +
-                                    `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
+                                        `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
                 type="button">DEVOLVER</button>
             </td>        
                 </tr>
                 `;
+                                }
                             }
-                        }
 
+                        }
                     }
+                } else {
+                    //document.getElementById("sinResult").innerHTML = "Folio no encontrado";
                 }
-            } else {
-                //document.getElementById("sinResult").innerHTML = "Folio no encontrado";
             }
+            document.getElementById("tablaProductos").innerHTML = cuerpo;
+        } else {
+            //document.getElementById("busquedaFolio").innerHTML = "";
+            $("input[id='busquedaFolio']").val("");
+           // return alert("Folio invalido")
         }
-        document.getElementById("tablaProductos").innerHTML = cuerpo;
     };
 
     function calcularTotalD(id) {

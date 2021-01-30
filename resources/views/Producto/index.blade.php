@@ -7,7 +7,7 @@ PRODUCTOS
 @section('opciones')
 <div class="col-0 my-2 p-1">
     <form method="get" action="{{url('/departamento/')}}">
-        <button class="btn btn-secondary ml-4 p-1" type="submit" >
+        <button class="btn btn-secondary ml-4 p-1" type="submit">
             <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
             DEPARTAMENTOS
         </button>
@@ -59,9 +59,11 @@ PRODUCTOS
                     <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
                     @endforeach
                 </select>
-                <div class=" input-group-text mt-4 p-1  ">
+                <div class=" input-group-text mt-4 px-0 py-auto ">
                     <input class="" type="checkbox" value="existencia" name="bajosExistencia" id="bajosExistencia" onchange="buscarBajosExistencia()">
-                        <h6 class=" ml-1 my-auto text-primary"> BAJOS DE EXISTENCIA</h6>
+                    <h6 class="text-primary ml-1 my-auto ">
+                        BAJOS DE EXISTENCIA
+                    </h6>
                 </div>
 
 
@@ -158,11 +160,11 @@ PRODUCTOS
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body  col-12"  id="">
+            <div class="modal-body  col-12" id="">
                 <!--BODY MODAL-->
                 <!-- <h6> BUSCAR PRODUCTO POR CODIGO O NOMBRE</h6>-->
 
-               
+
                 <!--INFORMACION PRODUCTOS-->
                 <div class="row  " id="resultados">
                 </div>
@@ -238,6 +240,9 @@ PRODUCTOS
                         departamento = d[count11].nombre;
                     }
                 }
+           
+
+                
 
                 x = productos[count10].id;
 
@@ -281,10 +286,8 @@ PRODUCTOS
                         <br />
                         <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="` + productos[count10].minimo_stock + `" autofocus required disabled>
                         <br />
-                        <select class="form-control" name="Receta" id="Receta" required disabled>
-                            <option value="">Elija una opcion</option>
-                            <option value="si" selected>si</option>
-                            <option value="no" selected>no</option>
+                        <select class="form-control" name="Receta" id="Receta"  disabled>
+                            <option value="" selected>` + productos[count10].receta + ` </option>
                         </select>
                         <br />
                         <select class="form-control" name="Depa" id="Depa"  disabled>

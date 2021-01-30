@@ -47,14 +47,29 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         //$datosProducto = request()->all();
+        
         $datosProducto = request()->except('_token');
         $datosProducto['existencia']=0;
         $datosProducto['costo']=0;
         $datosProducto['precio']=0;
-        if($request->hasFile('Imagen')){
-            $datosProducto['Imagen']=$request->file('Imagen')->store('uploads','public');
+        if($request->hasFile('imagen')){
+            $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
         }
-        Producto::insert($datosProducto);
+        Producto::create($datosProducto);
+
+
+
+/*
+        $producto= new Producto;
+        $producto->existencia = 0;
+        $producto->costo=0;
+        $producto->precio= 0;
+
+        if($request->hasFile('Imagen')){
+        $producto->Imagen = $request->file('Imagen')->store('uploads','public');
+        }
+        $producto->save();
+*/
 
        // return response()->json($datosProducto);
         return redirect('producto');
@@ -113,11 +128,11 @@ class ProductoController extends Controller
       //  $departamento= Departamento::all();
         $datosProducto=request()->except(['_token', '_method']);
 
-        if($request->hasFile('Imagen')){
+        if($request->hasFile('imagen')){
             $producto=Producto::findOrFail($id);
             //borrar fotografia antigua
             Storage::delete('public/'.$producto->imagen);
-            $datosProducto['Imagen']=$request->file('Imagen')->store('uploads','public');
+            $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
         }
 
         Producto::where('id', '=',$id)->update($datosProducto);

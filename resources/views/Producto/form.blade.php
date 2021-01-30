@@ -47,10 +47,10 @@
         <input type="number" name="minimo_stock" id="minimo_stock" class="form-control mb-3" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" autofocus required>
 
 
-        <select class="form-control mb-3" name="Receta" id="Receta" required>
-            <option value="">Elija una opcion</option>
-            <option value="si" selected>si</option>
-            <option value="no" selected>no</option>
+        <select class="form-control mb-3" name="receta" id="receta" required>
+            <option value="" selected>Elija una opcion</option>
+            <option value="si" >si</option>
+            <option value="no" >no</option>
         </select>
         <select class="form-control mb-3" name="idDepartamento" id="idDepartamento" required>
             <option value="">Seleccione departamento</option>
@@ -69,7 +69,7 @@
     </div>
     <div class="col-1"></div>
     <div class="col-3 text-center mt-3">
-        <label for="Imagen">
+        <label for="imagen">
             <h5> <strong>{{'FOTO'}}</strong></h5>
         </label required>
         @if(isset($producto->imagen))
@@ -78,8 +78,8 @@
 
         @endif
         @if(isset($producto->imagen))
-        <input type="file" name="Imagen" id="Imagen" class="form-control" value="">
-        @else <input class="form-control" type="file" name="Imagen" id="Imagen" value="" autofocus required>
+        <input type="file" name="imagen" id="imagen" class="form-control" value="">
+        @else <input class="form-control" type="file" name="imagen" id="imagen" value="" autofocus required>
         @endif
     </div>
 </div>
