@@ -11,6 +11,7 @@ use App\Http\Controllers\CreditoController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\PagoCompraController;
 use App\Http\Controllers\DevolucionController;
+use App\Http\Controllers\ProductosCaducidadController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -67,6 +68,7 @@ Route::resource('pago', PagoController::class);
 Route::resource('pagoCompra', PagoCompraController::class);
 
 Route::resource('devolucion', DevolucionController::class);
+Route::resource('productosCaducidad', ProductosCaducidadController::class);
 
 
 
