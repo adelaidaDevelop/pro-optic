@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\CaducidadProductos', 
+        'App\Console\Commands\CaducidadProductos',
+        'App\Console\Commands\ExistenciaProductos' 
     ];
 
     /**
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('caducidad:productos')->everyMinute();
+        $schedule->command('existencia:productos')->everyMinute();
     }
 
     /**

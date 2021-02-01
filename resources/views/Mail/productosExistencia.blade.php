@@ -12,27 +12,23 @@
 </head>
 
 <body>
-    <p><strong>Asunto:</strong>Posibles productos a caducar</p>
-    <p><strong>Contenido:</strong>A continuacion se muestra un informe de los productos que
-    estan posibles a caducar para ponerlos en oferta</p>
+    <p><strong>Asunto:</strong>{{$asunto}}</p>
+    <p style="color:#ed4d46" class="text-primary"><strong>Contenido:</strong>A continuacion se muestra un informe de los productos que
+    tienen un stock bajo</p>
     <table class="table table-bordered border-primary col-12">
         <thead class="table-secondary text-primary">
             <tr class="text-center">
+                <th>CODIGO DE BARRAS</th>
                 <th>PRODUCTO</th>
-                <th>#</th>
-                <th>CADUCIDAD</th>
+                <th>STOCK</th>
             </tr>
         </thead>
         <tbody class="text-center" id="productos">
-        @foreach($productosCaducidad as $pC)
+        @foreach($productos as $p)
             <tr>
-                @foreach($productos as $p)
-                @if($p->id == $pC->idProducto)
-                <td>{{$p->nombre}}</td>
-                @endif
-                @endforeach
-                <td>{{$pC['cantidad']}}</td>
-                <td>{{$pC['fecha_caducidad']}}</td>
+                <td style="text-align:center">{{$p->codigoBarras}}</td>
+                <td style="text-align:center">{{$p->nombre}}</td>
+                <td style="text-align:center">{{$p->existencia}}</td>
             <tr>
         @endforeach
         </tbody>

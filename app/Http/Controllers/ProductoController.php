@@ -75,7 +75,7 @@ class ProductoController extends Controller
             return $productos;//compact('productos');
         }
         else{
-            $id = Producto::where("nombre",'like',$request->nombre)->get();
+            $id = Producto::whereColumn('minimo_stock','>=','existencia')->get();
             return $id;
         }
     }

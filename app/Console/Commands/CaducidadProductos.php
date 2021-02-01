@@ -44,9 +44,11 @@ class CaducidadProductos extends Command
     public function handle()
     {
         //Mail::to('adhel1997@gmail.com')->send(new EnviarMail);////('Este es un correo de prueba'));
-        $productosCaducidad = Productos_caducidad::all();
+        /*$productosCaducidad = Productos_caducidad::all();
         $productos = Producto::all();
-        $vista =  view('ProductosCaducidad.index',compact('productosCaducidad','productos'));
-        Mail::to('hzhm1997@gmail.com')->send(new EnviarMail($vista));//return 0;
+        $vista = 'titulo';//view('ProductosCaducidad.index',compact('productosCaducidad','productos'));
+        */
+        $titulo = "Este sera el titulo";
+        Mail::to('hzhm1997@gmail.com')->send(new EnviarMail($titulo,'caducidad'));//return 0;
     }
 }
