@@ -48,7 +48,7 @@ class CaducidadProductos extends Command
         $productos = Producto::all();
         $vista = 'titulo';//view('ProductosCaducidad.index',compact('productosCaducidad','productos'));
         */
-        $titulo = "Este sera el titulo";
-        Mail::to('hzhm1997@gmail.com')->send(new EnviarMail($titulo,'caducidad'));//return 0;
+        $titulo = "PRODUCTOS PROXIMOS A CADUCAR";
+        Mail::to('hzhm1997@gmail.com')->send(new EnviarMail($titulo,'caducidad',$titulo,NULL));//return 0;
     }
 }

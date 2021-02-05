@@ -13,6 +13,8 @@ use App\Http\Controllers\PagoCompraController;
 use App\Http\Controllers\DevolucionController;
 use App\Http\Controllers\ProductosCaducidadController;
 
+use App\Http\Controllers\EcommerceController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +31,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('/', EcommerceController::class);
+
 Route::get('/empleado/buscadorEmpleado', [EmpleadoController::class,'buscadorEmpleado']);
 
 Route::get('/producto/buscarProducto', [ProductoController::class,'buscarProducto']);

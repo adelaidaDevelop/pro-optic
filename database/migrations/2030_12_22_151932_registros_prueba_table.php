@@ -65,7 +65,7 @@ class RegistrosPruebaTable extends Migration
         $producto->descripcion = 'ETILICO SIN DESNATURALIZAR';
         $producto->imagen = 'uploads\zMlAh4qsuAy38QGtRaABBogpx7rYeKIW6xSTXfKj.jpg';
         $producto->minimo_stock = 10;
-        $producto->existencia = 12;
+        //$producto->existencia = 12;
         $producto->costo = 15;
         $producto->precio = 18;
         $producto->save();

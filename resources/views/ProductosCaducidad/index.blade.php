@@ -28,11 +28,11 @@
             <tr>
                 @foreach($productos as $p)
                 @if($p->id == $pC->idProducto)
-                <td>{{$p->nombre}}</td>
+                <td style="text-align:center">{{$p->nombre}}</td>
                 @endif
                 @endforeach
-                <td>{{$pC['cantidad']}}</td>
-                <td>{{$pC['fecha_caducidad']}}</td>
+                <td style="text-align:center">{{$pC['cantidad']}}</td>
+                <td style="text-align:center">{{$pC['fecha_caducidad']}}</td>
             <tr>
         @endforeach
         </tbody>

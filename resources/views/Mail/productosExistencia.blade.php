@@ -12,9 +12,9 @@
 </head>
 
 <body>
-    <p><strong>Asunto:</strong>{{$asunto}}</p>
-    <p style="color:#ed4d46" class="text-primary"><strong>Contenido:</strong>A continuacion se muestra un informe de los productos que
-    tienen un stock bajo</p>
+    <!--p><strong>Asunto:</strong>{{$asunto}}</p-->
+    <p style="color:#ed4d46" class="text-primary">A continuacion se muestra
+     un informe de los productos que estan bajos de stock</p>
     <table class="table table-bordered border-primary col-12">
         <thead class="table-secondary text-primary">
             <tr class="text-center">

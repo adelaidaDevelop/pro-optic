@@ -51,7 +51,7 @@
                         <!-- Authentication Links -->
                         @guest
                         <li class="nav-item">
-                            <a } class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))
                         <li class="nav-item">
@@ -68,8 +68,6 @@
                             <a id="navbarDropdown" class="text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->username }}
                             </a>
-
-
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" class="text-white" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -89,13 +87,9 @@
             </nav>
         
     </div>
-    <!--<main class="py-4">-->
-
-    <!-- </main>-->
 
 
     @yield('content')
-
 
 </body>
 

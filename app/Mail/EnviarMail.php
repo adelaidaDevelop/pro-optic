@@ -26,7 +26,7 @@ class EnviarMail extends Mailable
      */
     public function __construct($titulo,$tipomsg,$asunto,$datos)
     {
-        $this->subject = $titulo;
+        $this->subject = $asunto;
         $this->tipomsg = $tipomsg;
         $this->asunto = $asunto;
         $this->datos = $datos;
