@@ -10,5 +10,6 @@ class EcommerceController extends Controller
     {
         $productos = Producto::all();
         return view('Ecommerce.index',compact('productos'));
+        //return session('sucursal');
     }
 }

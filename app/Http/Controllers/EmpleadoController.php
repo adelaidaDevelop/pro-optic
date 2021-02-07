@@ -27,6 +27,7 @@ class EmpleadoController extends Controller
         // return view('Empleado.index2');//,$datos);
          return view('Empleado.index2');
        // return view('Empleado.index');//,$datos);
+       
     }
     /*
     public function index2()

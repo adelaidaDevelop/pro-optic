@@ -44,9 +44,13 @@ class SucursalController extends Controller
      * @param  \App\Models\Sucursal  $sucursal
      * @return \Illuminate\Http\Response
      */
-    public function show(Sucursal $sucursal)
+    public function show($id)//Sucursal $sucursal)
     {
-        //
+        if($id == "todos")
+        {
+            $sucursales = Sucursal::all();
+            return $sucursales;
+        }
     }
 
     /**

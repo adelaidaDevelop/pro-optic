@@ -15,6 +15,8 @@ use App\Http\Controllers\ProductosCaducidadController;
 
 use App\Http\Controllers\EcommerceController;
 
+use App\Http\Controllers\LoginClienteController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,9 +30,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Auth::routes();
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
+
+Route::get('/loginCliente', [LoginClienteController::class,'login'])->name('Login');
 
 Route::resource('/', EcommerceController::class);
 
@@ -53,7 +57,6 @@ Route::post('/venta/productos', [VentaController::class,'productos']);
 
 Route::resource('producto', ProductoController::class);
 
-Route::resource('departamento', DepartamentoController::class);
 
 Route::resource('compra', CompraController::class);
 
