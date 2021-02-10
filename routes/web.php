@@ -11,6 +11,7 @@ use App\Http\Controllers\CreditoController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\PagoCompraController;
 use App\Http\Controllers\DevolucionController;
+use App\Http\Controllers\ReporteController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -65,9 +66,16 @@ Route::resource('credito', CreditoController::class);
 Route::get('/datosNuevos', [CreditoController::class,'datosNuevos']);
 Route::resource('pago', PagoController::class);
 Route::resource('pagoCompra', PagoCompraController::class);
-
 Route::resource('devolucion', DevolucionController::class);
+Route::resource('corteCaja', ReporteController::class);
+Route::get('reporteInventario', [ReporteController::class,'index2']);
+Route::get('reporteVentas', [ReporteController::class,'index3']);
 
+Route::get('/datosDevoluciones', [DevolucionController::class,'datoDev']);
+Route::get('/datosVentas', [DevolucionController::class,'datosVenta']);
+Route::get('/datosdetalleVenta', [DevolucionController::class,'datosDetalleVenta']);
+Route::get('/datosProducto', [DevolucionController::class,'datosProducto']);
+Route::get('/datosEmpleado', [DevolucionController::class,'datosEmpleado']);
 
 
 // RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO

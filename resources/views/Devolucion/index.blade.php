@@ -51,6 +51,7 @@ DEVOLUCION
                             <th>PRODUCTO</th>
                             <th>PRECIO IND.</th>
                             <th> SUBTOTAL</th>
+                            <th>CANT. DEVUELTOS</th>
                             <th>DEVOLVER</th>
                         </tr>
                     </thead>
@@ -168,69 +169,115 @@ DEVOLUCION
 
 <!-- SCRIPT-->
 <script>
-    const ventas = @json($ventas);
-    const detalleVenta = @json($detalleVenta);
-    const productos = @json($productos);
-    const empleados = @json($empleados);
+    let ventas = @json($ventas);
+    let detalleVenta = @json($detalleVenta);
+    let productos = @json($productos);
+    let empleados = @json($empleados);
+    let devolucions = @json($devolucions);
     let idProductoD = 0;
     let idVentaD = 0;
     let cantTotal = 0;
+    //let cantPD = 0;
+    // let cantProd = 0;
+    let diferencia = 0;
+
+
 
     function buscarFolio() {
-        let folioB = document.querySelector('#busquedaFolio');
-        let num = parseInt(folioB.value);
-        if (num >= 0) {
-
-            const palabraBusqueda = document.querySelector('#busquedaFolio');
-            let cuerpo = "";
-            let contador = 1;
+        let cont = 0;
+        console.log("Entra a la funcion de buscar folio");
+        // let cantDevuelto =0;
+        //   cargarDatos();
+        let botonDev = "";
+        //  let num = parseInt(folioB.value);
+        //   if (num >= 0) {
+        let palabraBusqueda = document.querySelector('#busquedaFolio');
+        let cuerpo = "";
+        let contador = 1;
+        console.log("PalBusq: ", palabraBusqueda.value);
+        console.log("lentht:", palabraBusqueda.value.length);
+        if (palabraBusqueda.value.length > 0) {
             let folio = parseInt(palabraBusqueda.value);
             //let idVenta = 0;
-            let cont = 0;
             for (count in ventas) {
+                console.log("folio: ", folio)
                 if (ventas[count].id == folio) {
+                    console.log("Ventas");
                     //  idVenta = ventas[count].id;
                     for (count2 in detalleVenta) {
                         if (detalleVenta[count2].idVentas == ventas[count].id) {
+                            cont = cont + 1;
                             for (count3 in productos) {
                                 if (productos[count3].id == detalleVenta[count2].idProductos) {
                                     document.getElementById("sinResult").innerHTML = "";
-                                    cont = cont + 1;
-                                    idProductoD = productos[count3].id;
-                                    idVentaD = ventas[count].id
-                                    cantTotal = detalleVenta[count2].cantidad;
-
-
+                                    // idProductoD = productos[count3].id;
+                                    //idVentaD = ventas[count].id;
+                                    // cantTotal = detalleVenta[count2].cantidad;
+                                    console.log("De esta venta por cada producto que se vendi en esta venta entra");
+                                    let cantPD = 0; //CHECAR
+                                    for (count51 in devolucions) {
+                                        console.log("devoluNo");
+                                        //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
+                                        if (ventas[count].id == devolucions[count51].idVenta) {
+                                            if (devolucions[count51].idProducto == productos[count3].id) {
+                                                cantPD = cantPD + devolucions[count51].cantProducto;
+                                                console.log("Si entra en esta parte");
+                                            }
+                                        }
+                                    }
+                                    //  let cantDev = document.querySelector('#cantIPD');
+                                    //  let cantDev2 = parseInt(cantDev.value);
+                                    // cantProd = 0;
+                                    // cantProd = detalleVenta[count2].cantidad;
+                                    // diferencia = 0;
+                                    //  diferencia = detalleVenta[count2].cantidad - cantPD;
+                                    // console.log(cantPD, cantProd);
+                                    if (cantPD < detalleVenta[count2].cantidad) {
+                                        botonDev = `<button class="btn btn-light" onclick="idProdDV(` + productos[count3].id + `,` + ventas[count].id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)" data-toggle="modal" data-target="#devolucion"
+                                            type="button">DEVOLVER</button>`;
+                                    } else {
+                                        botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
+                                            type="button" disabled >DEVOLVER</button>`;
+                                    }
                                     cuerpo = cuerpo + `
-                    <tr onclick="" data-dismiss="modal">
-
-                    <th scope="row">` + cont + `</th>
-                    <td>` + detalleVenta[count2].cantidad + `</td>
-                    <td>` + productos[count3].nombre + `</td>
-                    <td>` + productos[count3].precio + `</td>
-                    <td>` + detalleVenta[count2].subtotal + `</td> 
-                    <td>` +
-                                        `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
-                type="button">DEVOLVER</button>
-            </td>        
-                </tr>
-                `;
+                                            <tr onclick="" data-dismiss="modal">
+                                            <th scope="row">` + cont + `</th>
+                                            <td>` + detalleVenta[count2].cantidad + `</td>
+                                            <td>` + productos[count3].nombre + `</td>
+                                            <td>` + productos[count3].precio + `</td>
+                                            <td>` + detalleVenta[count2].subtotal + `</td> 
+                                            <td>` + cantPD + `</td> 
+                                            <td>` + botonDev + `
+                                            </td>        
+                                                </tr>
+                                                `;
                                 }
                             }
 
                         }
                     }
-                } else {
-                    //document.getElementById("sinResult").innerHTML = "Folio no encontrado";
                 }
+
+                //document.getElementById("sinResult").innerHTML = "Folio no encontrado";
+
+
             }
-            document.getElementById("tablaProductos").innerHTML = cuerpo;
-        } else {
-            //document.getElementById("busquedaFolio").innerHTML = "";
-            $("input[id='busquedaFolio']").val("");
-           // return alert("Folio invalido")
         }
+        //  console.log("folio vacio");
+        document.getElementById("tablaProductos").innerHTML = cuerpo;
+        //  } else {
+        //   $("input[id='busquedaFolio']").val("");
+        //  }
     };
+
+    function idProdDV(idP, idV, cantDV, cPD) {
+        console.log("Entro verify");
+        idProductoD = idP;
+        idVentaD = idV;
+        cantTotal = cantDV;
+        let cantPD2 = cPD;
+        diferencia = cantTotal - cantPD2;
+    }
 
     function calcularTotalD(id) {
         totalDevolver = 0;
@@ -249,26 +296,21 @@ DEVOLUCION
         document.getElementById("totalD").innerHTML = totalDevolver;
     };
     //CREAR DEVOLUCION
-    function devolver() {
+    async function devolver() {
 
         let cantidad = document.querySelector('#cantidad');
         let detalle = document.querySelector('#detalleD');
         let total = document.querySelector('#totalD');
         let cant2 = parseInt(cantidad.value);
         let detalle2 = detalle.value;
-
         if (cant2 > 0) {
-            if (cant2 <= cantTotal) {
+            if (cant2 <= diferencia) {
                 if (detalle2.length == 0) {
                     return alert('AGREGAR DETALLE DE LA DEVOLUCION');
                 } else {
 
-                    console.log(cant2);
-                    console.log(detalle2);
-                    console.log(parseFloat(total.textContent));
-
                     try {
-                        let funcion = $.ajax({
+                        let funcion = await $.ajax({
                             // metodo: puede ser POST, GET, etc
                             method: "POST",
                             // la URL de donde voy a hacer la petición
@@ -283,23 +325,139 @@ DEVOLUCION
                                 _token: "{{ csrf_token() }}"
                             }
                         }).done(function(respuesta) {
-                            $('#confirmarVentaModal').modal('hide');
+
+                            $('#devolucion').modal('hide');
                             $("input[id='totalD']").val(0);
-                            //location.reload();
+                            // location.reload();
+                            
                             console.log(respuesta); //JSON.stringify(respuesta));
                         });
+                        
                         console.log(funcion);
                     } catch (err) {
                         console.log("Error al realizar la petición AJAX: " + err.message);
                     }
+
+                   // await cargarVentas();
+                  //  await cargarDetalleVenta();
+                   // await cargarProductos();
+                  //  await cargarDevoluciones();
+                   // await cargarEmpleados();
+                    await cargarDevolucion();
+                    buscarFolio();
                 }
             } else {
-                return alert('El máximo de productos adquiridos es: ' + cantTotal + ', ingrese una cantidad menor');
+                return alert('El máximo de productos a devolver es: ' + diferencia + ', ingrese una cantidad menor');
             }
         } else {
             return alert('DEBE INGRESAR UNA CANTIDAD VALIDA DE PRODUCTOS A DEVOLVER');
         }
 
+    };
+
+    async function cargarDevolucion() {
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/datosDevoluciones`);
+            if (response.ok) {
+                devolucions = await response.json();
+                console.log(devolucions);
+                return devolucions;
+                //console.log(response);
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición de productos AJAX: " + err.message);
+        }
+        //return response;
+    }
+/*
+    async function cargarDevoluciones() {
+        console.log("cargo devoluciones");
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/devolucion/datoDev`);
+            if (response.ok) {
+                devolucions = await response.json();
+                console.log(devolucions);
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
+*/
+    async function cargarVentas() {
+        console.log("carg  ventas");
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/datosVentas`);
+            if (response.ok) {8
+                ventas = await response;
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
+
+
+    async function cargarDetalleVenta() {
+        console.log("cargo detalle ventas");
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/datosdetalleVenta`);
+            if (response.ok) {
+                detalleVenta = await response.json();
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
+    async function cargarProductos() {
+        console.log("cargo productos");
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/datosProducto`);
+            if (response.ok) {
+                productos = await response.json();
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
+    async function cargarEmpleados() {
+        console.log("carg  Empl");
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/datosEmpleado`);
+            if (response.ok) {
+                empleados = await response.json();
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
     };
 
     function modalVenta() {
@@ -364,7 +522,8 @@ DEVOLUCION
                 cont = cont + 1;
                 console.log(fecha.toLocaleDateString());
                 console.log(fechaI.toLocaleDateString());
-
+                console.log("fecha: ");
+                console.log(fecha.getTime());
                 if (fecha.getTime() >= fechaI.getTime()) {
                     console.log("minimo");
                     if (fecha.getTime() <= fechaF.getTime()) {
@@ -408,7 +567,6 @@ DEVOLUCION
 
     function verificarFechas() {
         let btn = document.querySelector('input[name="fechaVenta"]:checked');
-
         if (btn != null) {
             let fechaInicio = document.querySelector('#fechaInicio');
             let fechaFin = document.querySelector('#fechaFinal');
@@ -419,6 +577,7 @@ DEVOLUCION
                 if (fechaFin.value.length > 0) {
                     let fechaI = new Date(fechaInicio.value);
                     let fechaF = new Date(fechaFin.value);
+                    console.log(fechaI);
                     if (fechaI.getTime() > fechaF.getTime()) {
                         $("input[id='fechaFinal']").val(fechaInicio.value);
                     }

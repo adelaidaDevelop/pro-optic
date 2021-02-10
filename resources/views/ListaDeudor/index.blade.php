@@ -7,47 +7,47 @@ CREDITOS
 @endsection
 
 
-    <!--CONSULTAR PRODUCTO -->
-    <div class="row col ml-1 mt-2 mb-2 ">
-        <h4 class="text-primary">
-            <strong>
-                LISTA DEUDORES
-            </strong>
-        </h4>
-    </div>
-    <div class="row col border border-dark ml-0 mr-0 mb-4 ">
-        <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-        <div class="row  mb-4  mr-2 ">
-            <div class="row col-6  form-group input-group my-4 ml-3">
-                <input type="text" class="form-control border-primary " size="15" placeholder="BUSCAR CLIENTE" id="busquedaCliente" onkeyup="buscarCliente()">
-                <a title="buscar" href="" class="text-dark  ml-2 ">
-                    <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
-            </div>
+<!--CONSULTAR PRODUCTO -->
+<div class="row col ml-1 mt-2 mb-2 ">
+    <h4 class="text-primary">
+        <strong>
+            LISTA DEUDORES
+        </strong>
+    </h4>
+</div>
+<div class="row col border border-dark ml-0 mr-0 mb-4 ">
+    <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
+    <div class="row  mb-4  mr-2 ">
+        <div class="row col-6  form-group input-group my-4 ml-3">
+            <input type="text" class="form-control border-primary " size="15" placeholder="BUSCAR CLIENTE" id="busquedaCliente" onkeyup="buscarCliente()">
+            <a title="buscar" href="" class="text-dark  ml-2 ">
+                <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
+        </div>
 
 
-            <!-- TABLA -->
-            <div class="row w-100 " style="height:300px;overflow-y:auto;">
-                <table class="table table-bordered border-primary ml-5  ">
-                    <thead class="table-secondary text-primary">
-                        <tr>
-                            <th>#</th>
-                            <th>NOMBRE</th>
-                            <th>FECHA VENTA</th>
-                            <th>DEBE</th>
-                            <th> FOLIO</th>
-                            <th>DESCRIPCION</th>
-                            <th> </th>
-                        </tr>
-                    </thead>
-                    <tbody id="consultaBusqueda">
+        <!-- TABLA -->
+        <div class="row w-100 " style="height:300px;overflow-y:auto;">
+            <table class="table table-bordered border-primary ml-5  ">
+                <thead class="table-secondary text-primary">
+                    <tr>
+                        <th>#</th>
+                        <th>NOMBRE</th>
+                        <th>FECHA VENTA</th>
+                        <th>DEBE</th>
+                        <th> FOLIO</th>
+                        <th>DESCRIPCION</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody id="consultaBusqueda">
 
-                    </tbody>
-                </table>
-            </div>
-
+                </tbody>
+            </table>
         </div>
 
     </div>
+
+</div>
 
 <!--MODAL-->
 
@@ -175,14 +175,15 @@ CREDITOS
     let idVent2 = 0;
     let restoFinal = 0;
     let totalCompra = 0;
+    let totalResta = 0;
 
     buscarCreditos();
 
     function buscarCreditos() {
         const palabraBusqueda = document.querySelector('#busquedaCliente');
         let cuerpo = "";
-        let contador = 0;
-        let cont = 0;
+        let contCred = 0;
+
         for (count in creditos) {
             let name = "";
             let name2 = "";
@@ -198,10 +199,12 @@ CREDITOS
             let total = 0;
             let pago = 0;
             let id = 0;
+
             //NOMBRE CLIENTE    
             for (count1 in clientes) {
                 if (creditos[count].idCliente === clientes[count1].id) {
                     name2 = clientes[count1].nombre;
+                    contCred = contCred + 1;
                 }
             }
             //Buscar los credios en ventas
@@ -230,38 +233,37 @@ CREDITOS
             debe2 = total - pago;
             if (debe2 > 0) {
                 idVent = id;
-                cont = cont + 1;
+                //  cont = cont + 1;
                 name = name2;
                 fechaVenta = fechaVenta2;
                 debe = debe2;
                 folio = folio2;
                 cuerpo = cuerpo + `
-        <tr onclick="" data-dismiss="modal">
-            <td>` + cont + `</td>    
-            <th scope="row">` + name + `</th>
-            <td>` + fechaVenta.toLocaleDateString() + `</td>
+                    <tr onclick="" data-dismiss="modal">
+                        <td>` + contCred + `</td>    
+                        <th scope="row">` + name + `</th>
+                        <td>` + fechaVenta.toLocaleDateString() + `</td>
 
-            <td id="d">` + debe + `</td>
-            <td>` + folio + `</td>
-            <td>` +
+                        <td id="d">` + debe + `</td>
+                        <td>` + folio + `</td>
+                        <td>` +
                     `<button class="btn btn-light" onclick="modalVerMas(` + idVent + `)" data-toggle="modal" data-target="#detalleCompraModal"
-                type="button">VER MAS</button>
-            </td>
-            <td>` +
+                            type="button">VER MAS</button>
+                        </td>
+                        <td>` +
                     `<button class="btn btn-light" onclick="modalAbonar(` + idVent + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
-                type="button">ABONAR</button>
-            </td>
+                            type="button">ABONAR</button>
+                        </td>
 
-        </tr>
-        `;
-
-
+                    </tr>
+                    `;
             }
-            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-        };
-    }
+           
+        }
+        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+    };
 
-    let totalResta = 0;
+    
 
     function calcularDeudaCredito() {
         const abono2 = document.querySelector('#abono');
@@ -359,6 +361,7 @@ CREDITOS
         for (count11 in clientes) {
             if (clientes[count11].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                 cont = cont + 1;
+                console.log(cont);
                 nombre = clientes[count11].nombre;
                 idCliente = clientes[count11].id;
                 for (count12 in creditos) {
@@ -464,13 +467,9 @@ CREDITOS
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-    }
+    };
 </script>
 
-<script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
-<script>
-    let valor = $("input[type='number']").inputSpinner();
-    console.log(valor);
-</script>
+
 
 @endsection

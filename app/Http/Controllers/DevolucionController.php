@@ -23,8 +23,8 @@ class DevolucionController extends Controller
         $detalleVenta= Detalle_venta::all();
         $productos= Producto::all();
         $empleados= Empleado::all();
-        
-        return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados'));
+        $devolucions = Devolucion::all();
+        return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions'));
     }
 
     /**
@@ -51,8 +51,6 @@ class DevolucionController extends Controller
         $totalDevolucion= $request->input('total');
         $idProducto= $request->input('idProducto');
         $idVenta= $request->input('idVenta');
-
-       
             $devolucion = new Devolucion;
             $devolucion->idProducto = $idProducto;
             $devolucion->idVenta = $idVenta;
@@ -60,13 +58,7 @@ class DevolucionController extends Controller
             $devolucion->detalle= $detalle;
             $devolucion->totalDevolucion = $totalDevolucion;
             $devolucion->save();
-        /*
-            $actualizarProducto = Producto::find($datosProducto['id']); //->update(['existencia'=>]);
-            $actualizarProducto->existencia = $actualizarProducto['existencia'] - $datosProducto['cantidad'];
-            $actualizarProducto->save();
-        
-            */
-
+    
         return true;
     }
 
@@ -114,4 +106,32 @@ class DevolucionController extends Controller
     {
         //
     }
+    public function datosDevoluciones(){
+        $devolucions = Devolucion::all();
+        return compact('devolucions');
+    }
+    public function datosVenta(){
+        $ventas= Venta::all();
+        return compact('ventas');
+    }
+    
+    public function datosDetalleVenta(){
+        $detalleVenta= Detalle_venta::all();
+        return compact('detalleVenta');
+    }
+    public function datosProducto(){
+        $productos= Producto::all();
+        return compact('productos');
+    }
+    public function datosEmpleado(){
+        $empleados= Empleado::all();
+        return compact('empleados');
+    }
+
+    public function datoDev()
+    {
+        $devolucions = Devolucion::all();
+        return $devolucions;
+    }
+
 }
