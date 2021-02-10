@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
-class isEmpleado
+
+class isCliente
 {
     /**
      * Handle an incoming request.
@@ -18,32 +19,22 @@ class isEmpleado
      */
     public function handle(Request $request, Closure $next)
     {
-        if(session()->has('idEmpleado'))
+        if(session()->has('idCliente'))
         {
             if(Auth::check())
             {
-                if(Auth::user()->tipo == 0)
+                if(Auth::user()->tipo == 2)
                 {
                     return $next($request);
                 }
                 Auth::logout();
             }
-            $idEmpleado = session('idEmpleado');
-            Auth::loginUsingId($idEmpleado);
+            $idCliente = session('idCliente');
+            Auth::loginUsingId($idCliente);
             
         }
         else
-        {
             Auth::logout();
-            return redirect('/puntoVenta/login');
-        }
-            
-        if(Auth::check())
-            {
-                $idEmpleado = Auth::user()->id;
-                session(['idEmpleado' => $idEmpleado]); 
-            }
-        
         return $next($request);
     }
 }

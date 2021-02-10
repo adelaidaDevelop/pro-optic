@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
+use Illuminate\Support\Facades\Auth;
 class Authenticate extends Middleware
 {
     /**
@@ -15,17 +16,40 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('login');
+            
+            //return route('login');
+            return redirect('/');
         }
-        
-        /*if(Auth::check())
+        /*if(session()->has('idEmpleado'))
         {
-            if(Auth::user()->tipo == 0)
+            return redirect('/');
+            //$idEmpleado = session('idEmpleado');
+            //Auth::loginUsingId($idEmpleado);
+        }
+        if(!Auth::check())
+        {
+            if(session()->has('idEmpleado'))
+            {
+                $idEmpleado = session('idEmpleado');
+                Auth::loginUsingId($idEmpleado);
+            }else
+            {
+                if (! $request->expectsJson()) {
+                    return route('login');
+                }
+            }
+        }*/
+        
+        /*if(Auth::check()) 
+        {
+            /*if(Auth::user()->tipo == 0)
                 return redirect(RouteServiceProvider::HOME);
             if(Auth::user()->tipo == 1)
                 return redirect(RouteServiceProvider::HOME);
             if(Auth::user()->tipo == 2)
-                return redirect('/');
+                //session(['idCliente' => 'Si esta cambiando']);
+                return 'Si entra aqui';
+                //session(['idCliente' => Auth::user()->id]);
         }*/
     }
 }

@@ -4,7 +4,7 @@
     <h4 class="text-primary mx-auto"><strong> INICIO DE SESION</strong></h4>
 </div>
 <div class="row col-6 mx-auto p-3 border">
-    <form method="POST" class="mx-auto" action="{{ route('login') }}">
+    <form method="POST" class="mx-auto" action="{{ url('loginCliente') }}">
         @csrf
         <div class="form-group">
             <label for="email"><strong>Correo Electronico</strong></label>
@@ -50,43 +50,5 @@
         <a href="#" class=" mx-auto text-center">¿Olvidaste tu contraseña?</a>
     </div>
 </div>
-<script>
-let sucursales;
-async function cargarSucursales() {
-    try {
-        let response = await fetch(`/sucursal/todos`);
-        if (response.ok) {
-            sucursales = await response.json();
 
-        } else {
-            console.log("No responde :'v");
-            console.log(response);
-            throw new Error(response.statusText);
-        }
-
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-}
-
-function mostrarSucursales() {
-    let cuerpo = "";
-    for (let i in sucursales) {
-        cuerpo = cuerpo +
-            `<option value="` + sucursales[i].id + `">` + sucursales[i].direccion + `</option>`;
-    }
-    document.querySelector('#opcionSucursal').innerHTML = cuerpo;
-}
-
-async function iniciar() {
-    try {
-        await cargarSucursales();
-        mostrarSucursales();
-
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-}
-iniciar();
-</script>
 @endsection

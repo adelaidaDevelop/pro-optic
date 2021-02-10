@@ -54,7 +54,7 @@
                 <!--#FFFBF2"-->
                 @if(isset($datosEmpleado))
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/empleado/'.$datosEmpleado->id)}}"
+                    <form class="w-100" method="post" action="{{url('puntoVenta/empleado/'.$datosEmpleado->id)}}"
                         enctype="multipart/form-data">
                         <div class="form-group">
                             {{ csrf_field() }}

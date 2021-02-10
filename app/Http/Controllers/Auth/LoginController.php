@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Auth;
+use Illuminate\Http\Request;
+
 class LoginController extends Controller
 {
     /*
@@ -36,6 +39,69 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        //$this->middleware('guest')->except('logout');
+        //$this->middleware('isEmpleado');
+    }
+
+    public function login()
+    {
+        if(session()->has('idEmpleado'))
+        {
+            if(Auth::check())
+            {
+                if(Auth::user()->tipo == 0)
+                {
+                    return redirect('/puntoVenta/home');
+                }
+                Auth::logout();
+            }
+            $idEmpleado = session('idEmpleado');
+            Auth::loginUsingId($idEmpleado);
+            return redirect('/puntoVenta/home');
+            
+        }     
+        return view('auth.login');
+        //
+        //return 'Si entra aqui';
+    }
+    public function loginPost(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            if(Auth::user()->tipo == 0)
+            {
+                $request->session()->regenerate();
+                session(['idEmpleado' => Auth::user()->id]);
+                session(['sucursal' => $request->input('opcionSucursal')]);
+                return redirect('/puntoVenta/venta');//->intended('/');
+            }
+            Auth::logout();
+        }
+
+        return redirect('puntoVenta/login')->withErrors([
+            'email' => 'El email y/o la contraseña son incorrectos',
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        /*$idCliente = NULL;
+        if(session()->has('idCliente'))
+        {
+            $idCliente = session('idCliente');
+        }*/
+        //$request->session()->invalidate();
+        $request->session()->regenerate();
+
+        $request->session()->regenerateToken();
+        /*if($idCliente != NULL)
+        {
+            session(['idCliente'])
+        }*/
+        session()->forget('idEmpleado');
+        return redirect('puntoVenta/login');
+        //return 'Tambien entra a esta funcion';
     }
 }

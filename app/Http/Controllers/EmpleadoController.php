@@ -18,6 +18,14 @@ class EmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        //$this->middleware('auth');
+        //$this->middleware('isEmpleado');
+        
+    }
+
     public function index()
     {
         //return view('Empleado.index');

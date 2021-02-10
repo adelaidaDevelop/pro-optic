@@ -34,9 +34,16 @@ use Illuminate\Support\Facades\Route;
     return view('welcome');
 });*/
 
-Route::get('/loginCliente', [LoginClienteController::class,'login'])->name('Login');
+Route::get('/loginCliente', [LoginClienteController::class,'login'])->name('Login')->middleware('isCliente');
+Route::post('/loginCliente', [LoginClienteController::class,'loginPost'])->name('Login');
+Route::post('/logoutCliente', [LoginClienteController::class,'logout'])->name('Login');
 
-Route::resource('/', EcommerceController::class);
+Route::resource('/', EcommerceController::class)->middleware('isCliente');
+Route::get('/idCliente', [EcommerceController::class,'idCliente']);
+Route::get('/idEmpleado', [EcommerceController::class,'idEmpleado']);
+Route::get('/idSucursal', [EcommerceController::class,'idSucursal']);
+
+
 
 Route::get('/empleado/buscadorEmpleado', [EmpleadoController::class,'buscadorEmpleado']);
 
@@ -62,10 +69,6 @@ Route::resource('compra', CompraController::class);
 
 Route::resource('subproducto', SubproductoController::class);
 
-Route::resource('empleado', EmpleadoController::class)->middleware('auth');
-
-Route::resource('venta', VentaController::class);
-
 Route::get('emple', [EmpleadoController::class,'index2']);
 Route::resource('proveedor', ProveedorController::class);
 
@@ -82,9 +85,6 @@ Route::resource('productosCaducidad', ProductosCaducidadController::class);
 
 // RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO
 
-//
 
+//Auth::routes();
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

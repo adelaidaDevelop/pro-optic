@@ -123,7 +123,7 @@
                                     height="100px" />
                                 <br /><br />
 
-                                <form method="POST" action="{{ route('login') }}">
+                                <form method="POST" action="{{ url('puntoVenta/login') }}">
                                     @csrf
                                     <div class="row" style="background:#A9CCE3">
                                         <div class="col-3" style="background:#A9CCE3"></div>
@@ -221,7 +221,7 @@
     let sucursales;
     async function cargarSucursales() {
         try {
-            let response = await fetch(`/sucursal/todos`);
+            let response = await fetch(`/puntoVenta/sucursal/todos`);
             if (response.ok) {
                 sucursales = await response.json();
 

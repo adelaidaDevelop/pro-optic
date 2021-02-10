@@ -22,20 +22,15 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                //if(Auth::user()->tipo == 2)
-                    //return redirect('/');
                 return redirect(RouteServiceProvider::HOME);
             }
         }
-        /*if(Auth::check())
+        if(session()->has('idEmpleado'))
         {
-            if(Auth::user()->tipo == 0)
-                return redirect(RouteServiceProvider::HOME);
-            if(Auth::user()->tipo == 1)
-                return redirect(RouteServiceProvider::HOME);
-            if(Auth::user()->tipo == 2)
-                return redirect('/');
-        }*/
+            $idEmpleado = session('idEmpleado');
+            Auth::loginUsingId($idEmpleado);
+            return redirect('login');// redirect('/');
+        }    
         $sucursal = $request->input('opcionSucursal');
         session(['sucursal' => $sucursal]);
         return $next($request);

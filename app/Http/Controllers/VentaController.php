@@ -15,6 +15,12 @@ use App\Models\Pago;
 class VentaController extends Controller
 {
 
+    public function __construct()
+    {
+        //$this->middleware('auth');
+        $this->middleware('isEmpleado');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +33,7 @@ class VentaController extends Controller
         $clientes = Cliente::all();
         //$datos['departamentos'] = Producto::paginate();
         return view('Venta.index', compact('datosP', 'departamentos', 'clientes'));
-        //return compact('datosP');
+    //    return session('idEmpleado');
     }
 
     /**

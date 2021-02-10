@@ -35,13 +35,13 @@
                 <img src="{{ asset('img\usuario.png') }}" class="p-1" alt="LOGO" height="40px">
             </a>
             <li class="nav-item">
-                <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
+                <a class="nav-link text-white" href="{{ url('loginCliente') }}">{{ __('Login') }}</a>
             </li>
-            @if (Route::has('register'))
+            <!--@ if (Route:d:has('register'))
             <li class="nav-item">
-                <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Register') }}</a>
+                <a class="nav-link text-white" href="{ route('register') }}">{{ __('Register') }}</a>
             </li>
-            @endif
+            endif-->
             @else
             <li class="nav-item dropdown">
                 <!--
@@ -59,12 +59,12 @@
                     <a class="dropdown-item" class="text-primary" href="#" onclick="">
                         {{ Auth::user()->username }}
                     </a>
-                    <a class="dropdown-item" class="text-primary" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    <a class="dropdown-item" class="text-primary" href="{{ url('logoutCliente') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}
                     </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    <form id="logout-form" action="{{ url('logoutCliente') }}" method="POST" class="d-none">
                         @csrf
                     </form>
 

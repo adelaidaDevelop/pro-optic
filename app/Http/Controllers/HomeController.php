@@ -13,8 +13,8 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('isEmpleado');
+        //$this->middleware('auth');
+        //$this->middleware('isEmpleado');
         
     }
 
@@ -25,8 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+    //    return session('idEmpleado');
         //return view('home');
-        return redirect('venta');//view('Venta.index');
+        return redirect('puntoVenta/venta');//view('Venta.index');
        // return view('header2');
     //  return view('layouts.app');
     }
