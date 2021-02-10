@@ -16,7 +16,7 @@ class Producto extends Model
         'descripcion',
         'imagen',
         'minimo_stock',
-        'existencia',
+        //'existencia',
         'costo',
         'precio',
     ];

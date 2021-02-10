@@ -25,7 +25,14 @@ class RedirectIfAuthenticated
                 return redirect(RouteServiceProvider::HOME);
             }
         }
-
+        if(session()->has('idEmpleado'))
+        {
+            $idEmpleado = session('idEmpleado');
+            Auth::loginUsingId($idEmpleado);
+            return redirect('login');// redirect('/');
+        }    
+        $sucursal = $request->input('opcionSucursal');
+        session(['sucursal' => $sucursal]);
         return $next($request);
     }
 }

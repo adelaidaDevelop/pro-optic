@@ -32,7 +32,11 @@ return [
     |            "postmark", "log", "array"
     |
     */
-
+    /*'mailers' => [
+        'sendgrid' => [
+            'transport' => 'sendgrid',
+        ],
+    ],*/
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
@@ -43,6 +47,10 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'auth_mode' => null,
+        ],
+
+        'sendgrid' => [
+            'transport' => 'sendgrid',
         ],
 
         'ses' => [

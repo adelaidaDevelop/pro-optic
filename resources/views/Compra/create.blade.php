@@ -806,7 +806,7 @@ async function guardarCompra() {
         const pagoCredito = document.querySelector('#pagoCredito');
         //if (parseFloat(pagoCredito.value) > 0) {
 
-        $.ajax({
+        await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
@@ -829,38 +829,34 @@ async function guardarCompra() {
             mostrarProductos();
             $('#confirmarCompraModal').modal('hide');
             console.log(respuesta); //JSON.stringify(respuesta));
+
         }).fail(function(jqXHR, textStatus, errorThrown) {
             alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
         });
-        //}
-        /*} else {
-            $.ajax({
-                // metodo: puede ser POST, GET, etc
-                method: "POST",
-                // la URL de donde voy a hacer la petición
-                url: '/compra',
-                // los datos que voy a enviar para la relación
-                data: {
-                    estado: estado,
-                    datos: json,
-                    proveedor: proveedor.value,
-                    fecha_compra: fechaCompra.value,
-                    //_token: $("meta[name='csrf-token']").attr("content")
-                    _token: "{{ csrf_token() }}",
-                }
-                // si tuvo éxito la petición
-            }).done(function(respuesta) {
-                alert('COMPRA GUARDADA EXITOSAMENTE');
-                productosCompra = [];
-                mostrarProductos();
-                $('#confirmarCompraModal').modal('hide');
-                console.log(respuesta); //JSON.stringify(respuesta));
-            }).fail(function(jqXHR, textStatus, errorThrown) {
-                alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
-                console.log(jqXHR, textStatus, errorThrown);
-            });
-        }*/
+        await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: '/productosCaducidad/',
+            // los datos que voy a enviar para la relación
+            data: {
+                datos: json,
+                //_token: $("meta[name='csrf-token']").attr("content")
+                _token: "{{ csrf_token() }}",
+            }
+            // si tuvo éxito la petición
+        }).done(function(respuesta) {
+            //alert('COMPRA GUARDADA EXITOSAMENTE');
+            //productosCompra = [];
+            //mostrarProductos();
+            //$('#confirmarCompraModal').modal('hide');
+            console.log(respuesta); //JSON.stringify(respuesta));
+            
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            //alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
+            console.log(jqXHR, textStatus, errorThrown);
+        });
         await cargarProductos();
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);

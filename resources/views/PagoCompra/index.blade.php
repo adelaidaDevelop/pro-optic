@@ -36,14 +36,15 @@ PAGOS
 
                 <!--div class="input-group-prepend m-0"-->
                 <div class="input-group-text my-auto">
-                    <input type="radio" value="folio" onchange="seleccion()" name="btnRadio" id="btnFolio">
-                    <label class="ml-1 my-0" for="btnFolio">FOLIO
+                    <input type="radio" value="folio" onchange="seleccion()" name="btnRadio" id="btnFolio"
+                    checked>
+                    <label class="ml-1 my-0 " for="btnFolio">FOLIO
                     </label>
                 </div>
                 <!--/div-->
                 <div class="input-group-text ml-1 my-auto">
                     <input type="radio" value="proveedor" onchange="seleccion()" name="btnRadio" id="btnProveedor"
-                        checked>
+                        >
                     <label class="ml-1 my-0" for="btnProveedor">
                         PROVEEDOR
                     </label>

@@ -11,7 +11,15 @@ use App\Http\Controllers\CreditoController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\PagoCompraController;
 use App\Http\Controllers\DevolucionController;
+<<<<<<< HEAD
 use App\Http\Controllers\ReporteController;
+=======
+use App\Http\Controllers\ProductosCaducidadController;
+
+use App\Http\Controllers\EcommerceController;
+
+use App\Http\Controllers\LoginClienteController;
+>>>>>>> 02b12e43b32383a2c0060323c4416386a60e6c3f
 
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +34,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Auth::routes();
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
+
+Route::get('/loginCliente', [LoginClienteController::class,'login'])->name('Login')->middleware('isCliente');
+Route::post('/loginCliente', [LoginClienteController::class,'loginPost'])->name('Login');
+Route::post('/logoutCliente', [LoginClienteController::class,'logout'])->name('Login');
+
+Route::resource('/', EcommerceController::class)->middleware('isCliente');
+Route::get('/idCliente', [EcommerceController::class,'idCliente']);
+Route::get('/idEmpleado', [EcommerceController::class,'idEmpleado']);
+Route::get('/idSucursal', [EcommerceController::class,'idSucursal']);
+
+
+
 Route::get('/empleado/buscadorEmpleado', [EmpleadoController::class,'buscadorEmpleado']);
 
 Route::get('/producto/buscarProducto', [ProductoController::class,'buscarProducto']);
@@ -48,15 +68,10 @@ Route::post('/venta/productos', [VentaController::class,'productos']);
 
 Route::resource('producto', ProductoController::class);
 
-Route::resource('departamento', DepartamentoController::class);
 
 Route::resource('compra', CompraController::class);
 
 Route::resource('subproducto', SubproductoController::class);
-
-Route::resource('empleado', EmpleadoController::class)->middleware('auth');
-
-Route::resource('venta', VentaController::class);
 
 Route::get('emple', [EmpleadoController::class,'index2']);
 Route::resource('proveedor', ProveedorController::class);
@@ -67,6 +82,7 @@ Route::get('/datosNuevos', [CreditoController::class,'datosNuevos']);
 Route::resource('pago', PagoController::class);
 Route::resource('pagoCompra', PagoCompraController::class);
 Route::resource('devolucion', DevolucionController::class);
+<<<<<<< HEAD
 Route::resource('corteCaja', ReporteController::class);
 Route::get('reporteInventario', [ReporteController::class,'index2']);
 Route::get('reporteVentas', [ReporteController::class,'index3']);
@@ -76,13 +92,14 @@ Route::get('/datosVentas', [DevolucionController::class,'datosVenta']);
 Route::get('/datosdetalleVenta', [DevolucionController::class,'datosDetalleVenta']);
 Route::get('/datosProducto', [DevolucionController::class,'datosProducto']);
 Route::get('/datosEmpleado', [DevolucionController::class,'datosEmpleado']);
+=======
+Route::resource('productosCaducidad', ProductosCaducidadController::class);
+
+>>>>>>> 02b12e43b32383a2c0060323c4416386a60e6c3f
 
 
 // RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO
 
-//
 
+//Auth::routes();
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
