@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use App\Models\Departamento;
+use App\Models\Sucursal_producto;
 use Illuminate\Http\Request;
 //para poder borrar informacion de los registros de la carpeta uploads de storage
 use Illuminate\Support\Facades\Storage;
@@ -21,9 +22,9 @@ class ProductoController extends Controller
         $depas['d']= Departamento::paginate();
         $datosP= Producto::all();
         $depa= Departamento::all();
-          return view('Producto.index',$depas, compact('depa', 'datosP'));
-      
-       
+        $idSucursal = session('sucursal');
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
+          return $productosSucursal;//view('Producto.index',$depas, compact('depa', 'datosP', 'productosSucursal'));
     }
 
     /**

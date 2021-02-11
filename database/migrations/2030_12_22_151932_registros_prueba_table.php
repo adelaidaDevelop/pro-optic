@@ -9,6 +9,8 @@ use App\Models\Departamento;
 use App\Models\Proveedor;
 use App\Models\Producto;
 use App\Models\Cliente;
+use App\Models\Sucursal;
+use App\Models\Sucursal_producto;
 
 class RegistrosPruebaTable extends Migration
 {
@@ -24,6 +26,8 @@ class RegistrosPruebaTable extends Migration
             'username' => 'Administrador',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin12345'),
+            'tipo' => 0,
+
         ]);
 
         //CREACION DE EMPLEADOS
@@ -31,6 +35,7 @@ class RegistrosPruebaTable extends Migration
             'username' => 'Heber',
             'email' => 'hzhm1997@gmail.com',
             'password' => Hash::make('heber12345'),
+            'tipo' => 2
         ]);
 
         $empleado = new Empleado;
@@ -69,6 +74,20 @@ class RegistrosPruebaTable extends Migration
         $producto->costo = 15;
         $producto->precio = 18;
         $producto->save();
+        
+        $producto2 = new Producto;
+        $producto2->idDepartamento = $departamento->id;
+        $producto2->codigoBarras = '759684437151';
+        $producto2->nombre = 'ACETONA JALOMA 120ml';
+        $producto2->receta = 'NO';
+        $producto2->descripcion = 'ETILICO SIN DESNATURALIZAR';
+        $producto2->imagen = 'uploads\zMlAh4qsuAy38QGtRaABBogpx7rYeKIW6xSTXfKj.jpg';
+        $producto2->minimo_stock = 10;
+        //$producto->existencia = 12;
+        $producto2->costo = 8;
+        $producto2->precio = 15;
+        $producto2->save();
+
 
         //CREACION DE PROVEEDOR
         Proveedor::create([
@@ -90,6 +109,25 @@ class RegistrosPruebaTable extends Migration
         $cliente->nombre = 'ADELAIDA MOLINA REYES';
         $cliente->telefono = '9512274920';
         $cliente->save();
+
+        $sucursal = new Sucursal;
+        $sucursal->direccion ='SAN FELIPE 23, SAN MARTIN MEXICAPAN';
+        $sucursal->telefono = '9512456511';
+        $sucursal->save();
+
+        $productosSucursal = new Sucursal_producto;
+        $productosSucursal->idSucursal= $sucursal->id;
+        $productosSucursal->idProducto= $producto->id;
+        $productosSucursal->existencia = 10;
+        $productosSucursal->save();
+
+        $productosSucursal2 = new Sucursal_producto;
+        $productosSucursal2->idSucursal= $sucursal->id;
+        $productosSucursal2->idProducto= $producto2->id;
+        $productosSucursal2->existencia = 10;
+        $productosSucursal2->save();
+
+
     }
 
     /**

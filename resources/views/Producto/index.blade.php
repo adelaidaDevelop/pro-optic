@@ -189,7 +189,10 @@ PRODUCTOS
     const d = @json($depa);
     let opcFolioNombre = "";
     let opcBajosE = "";
+    let productosSucursal= @json($productosSucursal);
+    console.log(productosSucursal);
 
+    //console.log(sucursales);
     function buscarProducto() {
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         let cuerpo = "";
@@ -202,6 +205,7 @@ PRODUCTOS
                         departamento = d[count8].nombre;
                     }
                 }
+               
                 let id = productos[count5].id;
                 cuerpo = cuerpo + `
         <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">

@@ -79,7 +79,7 @@
         @endif
         @if(isset($producto->imagen))
         <input type="file" name="imagen" id="imagen" class="form-control" value="">
-        @else <input class="form-control" type="file" name="imagen" id="imagen" value="" autofocus required>
+        @else <input class="form-control" type="file" name="imagen" id="imagen" value="" autofocus >
         @endif
     </div>
 </div>
