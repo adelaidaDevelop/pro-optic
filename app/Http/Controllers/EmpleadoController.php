@@ -94,7 +94,7 @@ class EmpleadoController extends Controller
         $user = User::latest('id')->first();
         $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$user->id);
         Empleado::insert($datosEmpleado);
-        return redirect('empleado');
+        return redirect('puntoVenta/empleado');
         //return $user->id;
         
     }
@@ -136,9 +136,9 @@ class EmpleadoController extends Controller
     {
         //$datos['empleados'] = Departamento::paginate();
         $datosEmpleado = Empleado::findOrFail($id);
-        
-        return view('Empleado.index',compact('datosEmpleado'));
-        //return compact('datosEmpleado');
+        $users = User::where('id','=',$datosEmpleado->idUsuario)->first();
+        return view('Empleado.index2',compact('datosEmpleado','users'));
+        //return $users;//compact('datosEmpleado');
     }
 
     /**
@@ -150,9 +150,28 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $datosEmpleado = request()->except(['_token','_method']);
-        Empleado::where('id','=',$id)->update($datosEmpleado);
-        return redirect('empleado');
+        if($request->has('status'))
+        {
+
+            Empleado::where('id','=',$id)->update(['status' => $request->input('status')]);
+            return redirect('puntoVenta/empleado/'.$id.'/edit');
+        }
+        if($request->has('passwordChange'))
+        {
+            Empleado::where('id','=',$id)->update(['password' => Hash::make($request->input('passwordChange'))]);
+            return redirect('puntoVenta/empleado/'.$id.'/edit');
+        }
+        else
+        {
+            
+            $datosEmpleado = request()->except(['_token','_method','email','username']);
+            Empleado::where('id','=',$id)->update($datosEmpleado);
+            return redirect('puntoVenta/empleado/'.$id.'/edit');
+        }
+        {
+
+        }
+        //'password' => Hash::make($request['password'])
     }
 
     /**
@@ -166,13 +185,13 @@ class EmpleadoController extends Controller
         //Empleado::destroy($id);
         $dato = (['status'=>'baja']);;
         Empleado::where('id','=',$id)->update($dato);
-        return redirect('empleado');
+        return redirect('puntoVenta/empleado');
     }
 
     public function buscadorEmpleado(Request $request)
     {
-        $datosConsulta['empleados'] = Empleado::where("nombre",'like',$request->texto."%")->
-        where("status",'=','alta')->orderBy('nombre')->get();
+        $datosConsulta['empleados'] = Empleado::where("nombre",'like',$request->texto."%")->orderBy('nombre')->get();
+        //where("status",'=','alta')->orderBy('nombre')->get();
         return view('Empleado.empleados',$datosConsulta);
         //return $datosConsulta;
     }

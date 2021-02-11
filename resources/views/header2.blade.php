@@ -15,52 +15,49 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/venta">
-                            
+                            <a class="nav-link" href="/puntoVenta/venta">
                                 <button class="btn btn-light" type="submit" >VENTAS
                                     
                                 </button>
-                                
-                                
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/compra">
+                            <a class="nav-link" href="/puntoVenta/compra">
                                 <button class="btn btn-light" >
                                     COMPRAS
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/producto">
+                            <a class="nav-link" href="/puntoVenta/producto">
                                 <button class="btn btn-light">
                                     PRODUCTOS
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/inventario">
+                            <a class="nav-link" href="/puntoVenta/inventario">
                                 <button class="btn btn-light">
                                     INVENTARIO
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/empleado">
+                            <a class="nav-link" href="/puntoVenta/empleado">
                                 <button class="btn btn-light">
                                     EMPLEADOS
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/cliente">
+                            <a class="nav-link" href="/puntoVenta/cliente">
                                 <button class="btn btn-light">
                                     CLIENTES
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/corte">
+                            <a class="nav-link" href="/puntoVenta/corte">
                                 <button class="btn btn-light">
                                     CORTE
                                 </button>
