@@ -14,7 +14,7 @@ class Empleado extends Model
         'apellidos',
         'claveE',
         'telefono',
-        'cargo',
+        //'cargo',
         'curp',
         'domicilio',
         'idUsuario',

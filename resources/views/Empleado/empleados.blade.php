@@ -14,9 +14,11 @@
 <body>
     @if (count($empleados))
     @foreach($empleados as $empleado)
-    
+        @if($empleado->status == 'baja')
+        <a href="{{url('puntoVenta/empleado/'.$empleado->id.'/edit/')}}" class="btn btn-light btn-block my-2 border border-dark" style="color:white;background-color:#ED4D46">{{$empleado->nombre}}</a>
+        @else
         <a href="{{url('puntoVenta/empleado/'.$empleado->id.'/edit/')}}" class="btn btn-light btn-block my-2 border border-dark" style="color:#3366FF">{{$empleado->nombre}}</a>
-    
+        @endif
     @endforeach
     @else
     <div class="row">

@@ -75,12 +75,14 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
+        return $this->validator($request->all())->validate();
+
+        /*$datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
         $dato = ['status','alta'];
         $datosEmpleado = Arr::add($datosEmpleado,'status','alta');
         //$datosEmpleado = Arr::add($datosEmpleado, 'price', 100);
         
-        //$this->validator($request->all())->validate();
+        $this->validator($request->all())->validate();
 
         
         //return $datosEmpleado;
@@ -94,8 +96,7 @@ class EmpleadoController extends Controller
         $user = User::latest('id')->first();
         $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$user->id);
         Empleado::insert($datosEmpleado);
-        return redirect('empleado');
-        //return $user->id;
+        return redirect('puntoVenta/empleado');*/
         
     }
 
@@ -136,9 +137,9 @@ class EmpleadoController extends Controller
     {
         //$datos['empleados'] = Departamento::paginate();
         $datosEmpleado = Empleado::findOrFail($id);
-        
-        return view('Empleado.index',compact('datosEmpleado'));
-        //return compact('datosEmpleado');
+        $users = User::where('id','=',$datosEmpleado->idUsuario)->first();
+        return view('Empleado.index2',compact('datosEmpleado','users'));
+        //return $users;//compact('datosEmpleado');
     }
 
     /**
@@ -150,9 +151,42 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $datosEmpleado = request()->except(['_token','_method']);
-        Empleado::where('id','=',$id)->update($datosEmpleado);
-        return redirect('empleado');
+        if($request->has('status'))
+        {
+            $rules = [
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ];
+            $mesages = [
+                'password.required' => 'Por favor escriba su contrseña',
+                'password.min' => 'La contraseña debe tener al menos 8 caracteres',
+                
+            ];
+
+                $validator = Validator::make($request->all(), $rules, $mesages);
+            return $validator->fails();
+            /*if($validator->fails()):
+                return back()->withErrors($validator)->with('message','Se ha producido un error')->with(
+                    'typealert','danger');
+            endif;
+            Empleado::where('id','=',$id)->update(['status' => $request->input('status')]);
+            return redirect('puntoVenta/empleado/'.$id.'/edit');*/
+        }
+        if($request->has('passwordChange'))
+        {
+            Empleado::where('id','=',$id)->update(['password' => Hash::make($request->input('passwordChange'))]);
+            return redirect('puntoVenta/empleado/'.$id.'/edit');
+        }
+        else
+        {
+            
+            $datosEmpleado = request()->except(['_token','_method','email','username']);
+            Empleado::where('id','=',$id)->update($datosEmpleado);
+            return redirect('puntoVenta/empleado/'.$id.'/edit');
+        }
+        {
+
+        }
+        //'password' => Hash::make($request['password'])
     }
 
     /**
@@ -166,13 +200,13 @@ class EmpleadoController extends Controller
         //Empleado::destroy($id);
         $dato = (['status'=>'baja']);;
         Empleado::where('id','=',$id)->update($dato);
-        return redirect('empleado');
+        return redirect('puntoVenta/empleado');
     }
 
     public function buscadorEmpleado(Request $request)
     {
-        $datosConsulta['empleados'] = Empleado::where("nombre",'like',$request->texto."%")->
-        where("status",'=','alta')->orderBy('nombre')->get();
+        $datosConsulta['empleados'] = Empleado::where("nombre",'like',$request->texto."%")->orderBy('nombre')->get();
+        //where("status",'=','alta')->orderBy('nombre')->get();
         return view('Empleado.empleados',$datosConsulta);
         //return $datosConsulta;
     }
