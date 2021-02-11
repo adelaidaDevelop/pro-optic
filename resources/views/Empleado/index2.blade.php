@@ -484,13 +484,14 @@
 
                     </div>
                     <div class="row mx-auto" id="alertaPassword">
-                        
+
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                <button type="button" class="btn btn-primary" id="continuar" onclick="actualizarPassword()">CONTINUAR</button>
+                <button type="button" class="btn btn-primary" id="continuar"
+                    onclick="actualizarPassword()">CONTINUAR</button>
             </div>
         </div>
     </div>
@@ -499,27 +500,59 @@
 const texto = document.querySelector('#texto');
 //$('.svg').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
 
-function actualizarPassword() {
-    let cambio = document.getElementById("passwordChange");
-    
-    if(cambio.value.length > 0)
-    {
-        document.getElementById("cuerpoModal").innerHTML = 
-        `<div class="alert alert-success" role="alert">
-            <h4 class="alert-heading">Contraseña actualizada</h4>
-            <p>¡Tu contraseña se ha actualizado exitosamente!</p>
-            <hr>
-            <p class="mb-0">Cierre este mensaje para continuar</p>
-        </div>`;
-        $('#continuar').hide();
-    }else{
-        document.getElementById("alertaPassword").innerHTML = 
-        `<div class="alert alert-danger" role="alert">
-            La contraseña debe tener al menos 8 caracteres
-        </div>`;
+async function actualizarPassword() {
+    try {
+        let cambio = document.getElementById("passwordChange");
+        let id = {{$datosEmpleado->id}};
+        const datos = new FormData();
+        //datos.append('id', id);
+        datos.append('passwordChange', cambio.value);
+       // //if (cambio.value.length > 0) {
+            var initUpdate = {
+                // el método de envío de la información será POST
+                method: 'PUT',
+                //mode: 'no-cors',
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    'Content-Type': 'multipart/form-data'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                // el cuerpo de la petición es una cadena de texto 
+                // con los datos en formato JSON
+                body: datos
+            };
+            //console.log(init);
+            //console.log(init);
+            let respuestaCompra = await fetch(`/puntoVenta/empleado/${id}`, initUpdate);
+            if (respuestaCompra.ok) {
+                console.log(respuestaCompra);
+                /*let rC = await respuestaCompra.json();
+                console.log(rC);
+
+                alert('TU DEUDA ESTA SALDADA');
+                compras = [];
+                await cargarComprasPagina();
+                console.log(compras);*/
+            }
+            /*document.getElementById("cuerpoModal").innerHTML =
+                `<div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Contraseña actualizada</h4>
+                <p>¡Tu contraseña se ha actualizado exitosamente!</p>
+                <hr>
+                <p class="mb-0">Cierre este mensaje para continuar</p>
+            </div>`;
+            $('#continuar').hide();*/
+        /*} else {
+            document.getElementById("alertaPassword").innerHTML =
+                `<div class="alert alert-danger" role="alert">
+                    La contraseña debe tener al menos 8 caracteres
+                    </div>`;
+        }*/
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
     }
-    
 }
+
 function mostrarPassword() {
 
     var cambio = document.getElementById("passwordChange");

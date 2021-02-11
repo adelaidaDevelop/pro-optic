@@ -75,12 +75,14 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
+        return $this->validator($request->all())->validate();
+
+        /*$datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
         $dato = ['status','alta'];
         $datosEmpleado = Arr::add($datosEmpleado,'status','alta');
         //$datosEmpleado = Arr::add($datosEmpleado, 'price', 100);
         
-        //$this->validator($request->all())->validate();
+        $this->validator($request->all())->validate();
 
         
         //return $datosEmpleado;
@@ -94,8 +96,7 @@ class EmpleadoController extends Controller
         $user = User::latest('id')->first();
         $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$user->id);
         Empleado::insert($datosEmpleado);
-        return redirect('puntoVenta/empleado');
-        //return $user->id;
+        return redirect('puntoVenta/empleado');*/
         
     }
 
@@ -152,9 +153,23 @@ class EmpleadoController extends Controller
     {
         if($request->has('status'))
         {
+            $rules = [
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ];
+            $mesages = [
+                'password.required' => 'Por favor escriba su contrseña',
+                'password.min' => 'La contraseña debe tener al menos 8 caracteres',
+                
+            ];
 
+                $validator = Validator::make($request->all(), $rules, $mesages);
+            return $validator->fails();
+            /*if($validator->fails()):
+                return back()->withErrors($validator)->with('message','Se ha producido un error')->with(
+                    'typealert','danger');
+            endif;
             Empleado::where('id','=',$id)->update(['status' => $request->input('status')]);
-            return redirect('puntoVenta/empleado/'.$id.'/edit');
+            return redirect('puntoVenta/empleado/'.$id.'/edit');*/
         }
         if($request->has('passwordChange'))
         {
