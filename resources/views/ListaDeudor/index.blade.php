@@ -180,11 +180,13 @@ CREDITOS
     buscarCreditos();
 
     function buscarCreditos() {
+
         const palabraBusqueda = document.querySelector('#busquedaCliente');
         let cuerpo = "";
         let contCred = 0;
 
         for (count in creditos) {
+
             let name = "";
             let name2 = "";
             let fechaVenta = "";
@@ -204,7 +206,7 @@ CREDITOS
             for (count1 in clientes) {
                 if (creditos[count].idCliente === clientes[count1].id) {
                     name2 = clientes[count1].nombre;
-                    contCred = contCred + 1;
+
                 }
             }
             //Buscar los credios en ventas
@@ -232,6 +234,9 @@ CREDITOS
             }
             debe2 = total - pago;
             if (debe2 > 0) {
+                contCred = contCred + 1;
+                console.log("credits");
+                console.log(contCred);
                 idVent = id;
                 //  cont = cont + 1;
                 name = name2;
@@ -258,12 +263,12 @@ CREDITOS
                     </tr>
                     `;
             }
-           
+
         }
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
     };
 
-    
+
 
     function calcularDeudaCredito() {
         const abono2 = document.querySelector('#abono');
