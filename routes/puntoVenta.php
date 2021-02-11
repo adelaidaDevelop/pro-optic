@@ -22,7 +22,6 @@ Route::prefix('/puntoVenta')->group(function()
     Route::post('/logout', [LoginController::class,'logout'])->name('Login');
     
     
-
     Route::middleware('isEmpleado')->group(function () {
         Route::resource('empleado', EmpleadoController::class);
         //Route::get('/login', [LoginController::class,'login'])->name('Login');
