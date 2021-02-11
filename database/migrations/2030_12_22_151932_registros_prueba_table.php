@@ -43,7 +43,6 @@ class RegistrosPruebaTable extends Migration
         $empleado->apellidos = 'Hernandez Martinez';
         $empleado->claveE = '12345';
         $empleado->telefono = '9513547350';
-        $empleado->cargo = 'cajero';
         $empleado->curp = 'HEMH970804HOCRRB00';
         $empleado->domicilio = 'VALERIO TRUJANO 318';
         $empleado->idUsuario = $usuario->id;
