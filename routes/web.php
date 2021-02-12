@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginClienteController;
 use Illuminate\Support\Facades\Route;
 
 //ade
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\SubproductoController;
 use App\Http\Controllers\ProveedorController;
@@ -18,6 +19,11 @@ use App\Http\Controllers\DevolucionController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ProductosCaducidadController;
 
+
+use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\VentaController;
+use App\Http\Controllers\DepartamentoController;
+use App\Http\Controllers\ProductoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

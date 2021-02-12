@@ -93,8 +93,9 @@ class ProductoController extends Controller
             return $productos;//compact('productos');
         }
         else{
-            $id = Producto::whereColumn('minimo_stock','>=','existencia')->get();
-            return $id;
+            //$existencia = Producto::where("")
+            //$id = Producto::whereColumn('minimo_stock','>=','existencia')->get();
+            //return $id;
         }
     }
     public function show2($id)

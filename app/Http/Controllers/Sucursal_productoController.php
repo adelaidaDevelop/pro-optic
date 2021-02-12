@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\cr;
 use Illuminate\Http\Request;
 
-class Sucursal_producto extends Controller
+class Sucursal_productoController extends Controller
 {
     /**
      * Display a listing of the resource.
