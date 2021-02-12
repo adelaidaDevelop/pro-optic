@@ -24,7 +24,6 @@ SUBPRODUCTOS
             <div class="col-2 border border-primary mt-2 mb-4 ml-4 mr-2">
 
                 <br />
-                
                 <br /> <br />
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
@@ -41,9 +40,7 @@ SUBPRODUCTOS
                 </label>
             </div>
             -->
-
             </div>
-
             <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
             <div class="col-9  mt-1 mb-4 ml-4 mr-2">
                 <div class="form-group w-100">
@@ -92,23 +89,10 @@ SUBPRODUCTOS
                                 <th>PRECIO INDIVIDUAL</th>
                                 <th> EXISTENCIA</th>
                                 <th>OBSERVACION</th>
-                                <th>GANANCIA</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach($subproducto as $subproducto)
-                            <tr>
-                                <td>{{$loop->iteration}}</td>
-                                <td>{{$subproducto->idProductos}}</td>
-                                <td>{{$subproducto->piezas}}</td>
-                                <td>{{$subproducto->precio_ind}} </td>
-                                <td>{{$subproducto->existencia}} </td>
-                                <td>{{$subproducto->observacion}} </td>
-                                <td>{{$subproducto->ganancia}} </td>
-                               
-                            </tr>
+                        <tbody id="cuerpo">
 
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -118,5 +102,34 @@ SUBPRODUCTOS
     </div>
 </div>
 
+<script>
+    let subproducto = @json($subproductos);
+    let productos = @json($productos);
+
+    buscarSubproductos();
+
+    function buscarSubproductos() {
+        let cont=0;
+        let cuerpo="";
+        for (count in subproducto) {
+            for (count2 in productos) {
+                if (subproducto[count].idProductos == productos[count2].id) {
+                    cont = cont+1;
+                    cuerpo = cuerpo + `
+                        <tr onclick="" data-dismiss="modal">
+                        <th >` + cont + `</th>
+                        <td>` + productos[count2].nombre + `</td>
+                        <td>` + subproducto[count].piezas + `</td>
+                        <td>` + subproducto[count].precio_ind + `</td>
+                        <td>` + subproducto[count].existencia + `</td>
+                        <td>` + subproducto[count].observacion + `</td>  
+                    </tr>
+                    `;
+                }
+            }
+        }
+        document.getElementById("cuerpo").innerHTML = cuerpo;
+    };
+</script>
 
 @endsection

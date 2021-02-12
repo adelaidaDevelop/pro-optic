@@ -41,7 +41,7 @@ CLIENTES
             <!--#FFFBF2"-->
             @if(isset($d))
             <div class="row px-3 py-3 m-0">
-                <form class="w-100" method="post" action="{{url('/cliente/'.$d->id)}}" enctype="multipart/form-data">
+                <form class="w-100" method="post" action="{{url('/puntoVenta/cliente/'.$d->id)}}" enctype="multipart/form-data">
                     <div class="form-group">
                         {{ csrf_field() }}
                         {{ method_field('PATCH')}}
@@ -75,7 +75,7 @@ CLIENTES
                     </div>
                 </form>
                 <div class="row px-3 my-0">
-                    <form method="post" action="{{url('/cliente/'.$d->id)}}">
+                    <form method="post" action="{{url('/puntoVenta/cliente/'.$d->id)}}">
                         {{csrf_field()}}
                         {{ method_field('DELETE')}}
                         <button class="btn btn-outline-secondary my-3 ml-1" type="submit">
@@ -91,7 +91,7 @@ CLIENTES
             </div>
             @else
             <div class="row px-3 py-3 m-0">
-                <form class="w-100" method="post" action="{{url('cliente')}}" enctype="multipart/form-data">
+                <form class="w-100" method="post" action="{{url('/puntoVenta/cliente')}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <label for="nempleado">
                         <h4 style="color:#4388CC">CREAR CLIENTE</h4>

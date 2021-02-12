@@ -503,7 +503,7 @@ const texto = document.querySelector('#texto');
 async function actualizarPassword() {
     try {
         let cambio = document.getElementById("passwordChange");
-        let id = {{$datosEmpleado->id}};
+        let id = 1;//{datosEmpleado->id}};
         const datos = new FormData();
         //datos.append('id', id);
         datos.append('passwordChange', cambio.value);

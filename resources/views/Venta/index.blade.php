@@ -27,7 +27,7 @@
 
         <!-- BOTON DEVOLUCION-->
         <div class="col-2 my-2 ml-0 px-1">
-           
+
             <a class="btn btn-primary" href="{{ url('/devolucion')}}">
                 <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                 DEVOLUCION </a>
@@ -222,7 +222,7 @@
                 <div class="col-12">
                     <ul class="nav nav-pills mb-3  d-flex justify-content-center" id="pills-tab" role="tablist">
                         <li class="nav-item mx-2" role="presentation">
-                            <button onclick="modoPago('efectivo')" class="btn nav-link active mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/efectivo.png);width:80px;height:80px;
+                            <button onclick="modoPago('efectivo')" class="btn nav-link active mx-auto" type="button" value="informacion" id="boton" style="background-image: url(/img/efectivo.png);width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
                                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
                             </button>
@@ -232,7 +232,7 @@
                                     width="25px" height="25px"><h6 class="mx-auto">EFECTIVO</h6></a-->
                         </li>
                         <li class="nav-item mx-2" role="presentation">
-                            <button onclick="modoPago('credito')" class="btn nav-link mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/credito.png);width:80px;height:80px;
+                            <button onclick="modoPago('credito')" class="btn nav-link mx-auto" type="button" value="informacion" id="boton" style="background-image: url(/img/credito.png);width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true">
                                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
                             </button>
@@ -317,6 +317,8 @@
 <script>
     let productosVenta = [];
     let productos = @json($datosP);
+    let productosSucursal = @json($productosSucursal);
+    console.log(productosSucursal);
 
     async function cargarProductos() {
         let response = "Sin respuesta";
@@ -370,6 +372,7 @@
     function mostrarProductos() {
         let cuerpo = "";
         let contador = 1;
+
         for (let count1 in productosVenta) {
             cuerpo = cuerpo + `
         <tr class="text-center">
@@ -453,24 +456,27 @@
     function agregarPorCodigo() {
         const codigo = document.querySelector('#codigoBarras');
         //location.href= location.href+'?codigo='+codigo.value;
+        for (let x in productosSucursal) {
+            for (count3 in productos) {
+                if (productos[count3].id === productosSucursal[x].idProducto) {
+                    if (productos[count3].codigoBarras === codigo.value) {
 
-        for (count3 in productos) {
-            if (productos[count3].codigoBarras === codigo.value) {
-
-                //agregarProductoAVenta(id,codigoBarras,nombre,existencia,precio,cantidad,subtotal)
-                /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
-                productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
-                if (!buscarProductoEnVenta(productos[count3].id)) {
-                    if (productos[count3].existencia > 0) {
-                        agregarProductoAVenta(productos[count3].id, productos[count3].codigoBarras, productos[count3]
-                            .nombre,
-                            productos[count3].existencia, productos[count3].precio, 1, productos[count3].precio);
-                        mostrarProductos();
-                    } else
-                        alert('PRODUCTO SIN EXISTENCIA');
+                        //agregarProductoAVenta(id,codigoBarras,nombre,existencia,precio,cantidad,subtotal)
+                        /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
+                        productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
+                        if (!buscarProductoEnVenta(productos[count3].id)) {
+                            if (productos[count3].existencia > 0) {
+                                agregarProductoAVenta(productos[count3].id, productos[count3].codigoBarras, productos[count3]
+                                    .nombre,
+                                    productos[count3].existencia, productos[count3].precio, 1, productos[count3].precio);
+                                mostrarProductos();
+                            } else
+                                alert('PRODUCTO SIN EXISTENCIA');
+                        }
+                    }
                 }
-            }
 
+            }
         }
 
         codigo.value = "";
@@ -479,30 +485,34 @@
     };
 
     function agregarProducto(id) {
-        for (let count4 in productos) {
-            if (productos[count4].id === id) {
-                /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
-                    productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
-                console.log(id);
-                console.log(productos[count4].id);
-                if (!buscarProductoEnVenta(productos[count4].id)) {
-                    if (productos[count4].existencia > 0) {
-                        agregarProductoAVenta(productos[count4].id, productos[count4].codigoBarras,
-                            productos[count4].nombre,
-                            productos[count4].existencia, productos[count4].precio, 1, productos[count4].precio);
-                        mostrarProductos();
-                    } else
-                        alert('PRODUCTO SIN EXISTENCIA');
+        for (let x in productosSucursal) {
+            for (let count4 in productos) {
+                if (productos[count4].id === productosSucursal[x].idProducto) {
+                    if (productos[count4].id === id) {
+                        /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
+                            productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
+                        console.log(id);
+                        console.log(productos[count4].id);
+                        if (!buscarProductoEnVenta(productos[count4].id)) {
+                            if (productosSucursal[x].existencia > 0) {
+                                agregarProductoAVenta(productos[count4].id, productos[count4].codigoBarras,
+                                    productos[count4].nombre,
+                                    productosSucursal[x].existencia, productos[count4].precio, 1, productos[count4].precio);
+                                mostrarProductos();
+                            } else
+                                alert('PRODUCTO SIN EXISTENCIA');
+                        }
+                        /*if(!buscarProductoEnVenta(id))
+                        {
+                            console.log(productos[count4].id);
+                            agregarProductoAVenta(productos[count4].id,productos[count4].codigoBarras,productos[count4].nombre,
+                            productos[count4].existencia,productos[count4].precio,1,productos[count4].precio);
+                        }
+                        console.log(productos[count4].id);  
+                        mostrarProductos();*/
+                        //productosVenta.push(productos[count]);
+                    }
                 }
-                /*if(!buscarProductoEnVenta(id))
-                {
-                    console.log(productos[count4].id);
-                    agregarProductoAVenta(productos[count4].id,productos[count4].codigoBarras,productos[count4].nombre,
-                    productos[count4].existencia,productos[count4].precio,1,productos[count4].precio);
-                }
-                console.log(productos[count4].id);  
-                mostrarProductos();*/
-                //productosVenta.push(productos[count]);
             }
         }
         const palabraBusqueda = document.querySelector('#busquedaProducto');
@@ -517,22 +527,27 @@
         let cuerpo = "";
         let contador = 1;
         let departamentos = @json($departamentos);
-        for (let count5 in productos) {
-            if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                for (let d in departamentos) {
-                    if (productos[count5].idDepartamento === departamentos[d].id)
-                        departamento = departamentos[d].nombre;
+        for (let x in productosSucursal) {
+            for (let count5 in productos) {
+                if (productos[count5].id === productosSucursal[x].idProducto) {
+                    if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                        for (let d in departamentos) {
+                            if (productos[count5].idDepartamento === departamentos[d].id)
+                                departamento = departamentos[d].nombre;
+                        }
+                        cuerpo = cuerpo + `
+                            <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">
+                                <th scope="row">` + productos[count5].id + `</th>
+                                <td>` + productos[count5].codigoBarras + `</td>
+                                <td>` + productos[count5].nombre + `</td>
+                                <td>` + productosSucursal[x].existencia + `</td>
+                                <td>` + departamento + `</td>
+                            </tr>
+                            `;
+                    }
                 }
-                cuerpo = cuerpo + `
-        <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">
-            <th scope="row">` + productos[count5].id + `</th>
-            <td>` + productos[count5].codigoBarras + `</td>
-            <td>` + productos[count5].nombre + `</td>
-            <td>` + productos[count5].existencia + `</td>
-            <td>` + departamento + `</td>
-        </tr>
-        `;
             }
+
         }
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
 
@@ -577,7 +592,7 @@
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
-                url: '/venta',
+                url: '/puntoVenta/venta',
                 // los datos que voy a enviar para la relación
                 data: {
                     datos: json,
@@ -616,7 +631,7 @@
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
-                url: '/venta',
+                url: '/puntoVenta/venta',
                 // los datos que voy a enviar para la relación
                 data: {
                     datos: json,
@@ -639,7 +654,7 @@
             let impJ = await imp.text();
             document.querySelector('#impresion').innerHTML = impJ;
             await cargarProductos();
-           // console.log(impJ.html);
+            // console.log(impJ.html);
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
