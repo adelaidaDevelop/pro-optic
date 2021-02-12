@@ -97,10 +97,15 @@ class VentaController extends Controller
             $producto->idVentas = $venta->id;
             $producto->save();
 
-            $actualizarProducto = Sucursal_producto::where('idProducto','=',$datosProducto['id'])->where('idSucursal','=',session('sucursal'))->first(); //->update(['existencia'=>]);
-            //return $datosProducto['cantidad'];
-            $actualizarProducto->existencia = $actualizarProducto['existencia'] - $datosProducto['cantidad'];
-            //return $actualizarProducto->save();
+            $productosSucursal = Sucursal_producto::where('idProducto','=',$datosProducto['id'])
+            ->where('idSucursal','=',session('sucursal'));//->update(['existencia'=>'11']);
+            $existencia = $productosSucursal->first()->existencia - $datosProducto['cantidad'];
+            $productosSucursal->update(['existencia'=> $existencia]);
+            //$actualizarProducto = new Sucursal_producto;//return $datosProducto['cantidad'];
+            //$actualizarProducto->idSucursal = session('sucursal');
+            //$actualizarProducto->
+            //$actualizarProducto->existencia = $productosSucursal['existencia'] - $datosProducto['cantidad'];
+            //return $actualizarProducto;//->save();
         }
 
         return true;
