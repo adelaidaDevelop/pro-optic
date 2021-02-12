@@ -29,6 +29,9 @@
         @endsection
     </div>
     <div class="row p-1 ">
+        <!--{ {Session::get('cambios')}}
+        { {session('cambios')}}
+        @ if(session()->has('cambios')) Si lo recibo @ else No lo recibo @ endif-->
         <div class="row border border-dark m-2 w-100">
             <div class="col-4 border border-dark mt-4 mb-4 ml-4 mr-2">
                 <div class="row px-3 py-3 m-0">
@@ -52,6 +55,160 @@
             </div>
             <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">
                 <!--#FFFBF2"-->
+                @if(isset($admin))
+                <div class="row px-3 pt-3 m-0">
+                    <form class="w-100" method="post" action="{{url('puntoVenta/empleado/0')}}"
+                        enctype="multipart/form-data">
+                        <div class="form-group">
+                            {{ csrf_field() }}
+                            {{ method_field('PATCH')}}
+                            <label for="nempleado">
+                                <h4 style="color:#4388CC">ADMINISTRADOR</h4>
+                            </label>
+                            <br />
+                            <label for="Nombre">
+                                <h5>{{$admin->username}}</h5>
+                            </label>
+                            <fieldset disabled id="formEditar">
+
+                                <div class="form-col w-100">
+                                    <div class="form-row">
+                                        <div class="form-group col-6">
+                                            <label for="nombre">
+                                                USUARIO
+                                            </label>
+                                            <input type="text"
+                                                class="form-control @error('username') is-invalid @enderror"
+                                                name="username" id="username" value="@if(session()->has('cambios')){{old('username')}}@else{{$admin->username}}@endif"
+                                                placeholder="Ingresar usuario" required autocomplete="username"
+                                                autofocus>
+                                            @error('username')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="nombre">
+                                                EMAIL
+                                            </label>
+                                            <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                                name="email" id="email" value="@if(session()->has('cambios')){{old('email')}}@else{{$admin->email}}@endif"
+                                                placeholder="Ingresar correo electronico" required autocomplete="email"
+                                                autofocus>
+                                            @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-6">
+                                            <label for="nombre">
+                                                DOMICILIO DE LA SUCURSAL
+                                            </label>
+                                            <textarea name="domicilio" id="domicilio"
+                                                class="form-control @error('domicilio') is-invalid @enderror"
+                                                placeholder="Ingresar domicilio completo"
+                                                value="" required autocomplete="domicilio"
+                                                autofocus>@if(session()->has('cambios')){{old('domicilio')}}@else{{$sucursal->direccion}}@endif</textarea>
+                                            @error('domicilio')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="telefono">
+                                                TELEFONO DE LA SUCURSAL
+                                            </label>
+                                            <input type="text"
+                                                class="form-control @error('telefono') is-invalid @enderror"
+                                                name="telefono" id="telefono" value="@if(session()->has('cambios')){{old('telefono')}}@else{{$sucursal->telefono}}@endif"
+                                                placeholder="Ingresar telefono" required autocomplete="telefono"
+                                                autofocus>
+                                            @error('telefono')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                            <div class="form-row d-flex flex-row-reverse px-1">
+                                <a class="btn btn-outline-secondary" type="button" id="btnFormCancelar"
+                                    href="{{url('puntoVenta/empleado/0/edit/')}}">
+                                    <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
+                                        width="25px" height="25px">
+                                    CANCELAR
+                                </a>
+                                <button class="btn btn-outline-secondary mr-auto" type="submit" id="btnForm">
+                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
+                                        width="25px" height="25px">
+                                    GUARDAR CAMBIOS
+                                </button>
+                                <button class="btn btn-outline-secondary mr-auto" type="button" id="btnEditar"
+                                    onclick="habilitar()">
+                                    <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
+                                        width="25px" height="25px">
+                                    EDITAR DATOS
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row px-3 mb-4">
+                    @if(isset($datosEmpleado))
+                    @if($datosEmpleado->status == 'alta')
+                    <div class="col-auto ">
+                        <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
+                            data-target="#modalPassword" value="SI">
+                            <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                                height="25px">
+                            CAMBIAR CONTRASEÑA
+                        </button>
+                    </div>
+                    <div class="col-auto ml-auto mr-0">
+                        <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
+                            {{csrf_field()}}
+                            {{ method_field('PUT')}}
+                            <input type="" id="status" name="status" value="baja" style="display:none">
+                            <button class="btn btn-outline-secondary" type="submit" value="SI">
+                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
+                                    width="25px" height="25px">
+                                DAR DE BAJA
+                            </button>
+                        </form>
+                    </div>
+
+                    @else
+                    <div class="col-4">
+                        <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
+                            {{csrf_field()}}
+                            {{ method_field('PUT')}}
+                            <input type="" id="status" name="status" value="alta" style="display:none">
+
+                            <button class="btn btn-outline-secondary" type="submit" value="SI">
+                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
+                                    width="25px" height="25px">
+                                DAR DE ALTA
+                            </button>
+                        </form>
+                    </div>
+                    @endif
+                    @endif
+                    <!--button class="btn btn-outline-secondary my-3" type="button" onclick="habilitar()">
+                        <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                            height="25px">
+                        Habilitar
+                    </button-->
+                </div>
+                
+                @else
                 @if(isset($datosEmpleado))
                 <div class="row px-3 pt-3 m-0">
                     <form class="w-100" method="post" action="{{url('puntoVenta/empleado/'.$datosEmpleado->id)}}"
@@ -65,7 +222,7 @@
                             </label>
                             <br />
                             <label for="Nombre">
-                                <h5>{{$datosEmpleado->nombre}}</h5>
+                                <h5>{{$datosEmpleado->nombre}} {{$datosEmpleado->apellidos}}</h5>
                             </label>
                             <fieldset disabled id="formEditar">
 
@@ -77,7 +234,7 @@
                                             </label>
                                             <input type="text" id="nombre"
                                                 class="form-control @error('nombre') is-invalid @enderror" name="nombre"
-                                                value="{{$datosEmpleado->nombre}}" placeholder="Ingresar nombre(s)"
+                                                value="@if(session()->has('cambios')){{old('nombre')}}@else{{$datosEmpleado->nombre}}@endif" placeholder="Ingresar nombre(s)"
                                                 required autocomplete="nombre" autofocus>
                                             @error('nombre')
                                             <span class="invalid-feedback" role="alert">
@@ -91,7 +248,7 @@
                                             </label>
                                             <input type="text"
                                                 class="form-control @error('apellidos') is-invalid @enderror"
-                                                name="apellidos" id="apellidos" value="{{$datosEmpleado->apellidos}}"
+                                                name="apellidos" id="apellidos" value="@if(session()->has('cambios')){{old('apellidos')}}@else{{$datosEmpleado->apellidos}}@endif"
                                                 placeholder="Ingresar apellidos" required autocomplete="apellidos"
                                                 autofocus>
                                             @error('apellidos')
@@ -106,14 +263,11 @@
                                             <label for="nombre">
                                                 DOMICILIO
                                             </label>
-                                            <!--input type="text" class="form-control @error('domicilio') is-invalid @enderror"
-                                    name="domicilio" id="domicilio" value="{{ old('domicilio') }}" required
-                                    autocomplete="domicilio" autofocus-->
                                             <textarea name="domicilio" id="domicilio"
                                                 class="form-control @error('domicilio') is-invalid @enderror"
                                                 placeholder="Ingresar domicilio completo"
                                                 value="{{$datosEmpleado->domicilio}}" required autocomplete="domicilio"
-                                                autofocus>{{$datosEmpleado->domicilio}}</textarea>
+                                                autofocus>@if(session()->has('cambios')){{ old('domicilio')}}@else{{$datosEmpleado->domicilio}}@endif</textarea>
                                             @error('domicilio')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -126,7 +280,7 @@
                                                 CURP
                                             </label>
                                             <input type="text" class="form-control @error('curp') is-invalid @enderror"
-                                                name="curp" id="curp" value="{{$datosEmpleado->curp}}"
+                                                name="curp" id="curp" value="@if(session()->has('cambios')){{ old('curp') }}@else{{$datosEmpleado->curp}}@endif"
                                                 placeholder="Ingresar curp" required autocomplete="curp" autofocus>
                                             @error('curp')
                                             <span class="invalid-feedback" role="alert">
@@ -141,7 +295,7 @@
                                                 EMAIL
                                             </label>
                                             <input type="text" class="form-control @error('email') is-invalid @enderror"
-                                                name="email" id="email" value="{{$users->email}}"
+                                                name="email" id="email" value="@if(session()->has('cambios')){{old('email')}}@else{{$users->email}}@endif"
                                                 placeholder="Ingresar correo electronico" required autocomplete="email"
                                                 autofocus>
                                             @error('email')
@@ -156,7 +310,7 @@
                                             </label>
                                             <input type="text"
                                                 class="form-control @error('telefono') is-invalid @enderror"
-                                                name="telefono" id="telefono" value="{{$datosEmpleado->telefono}}"
+                                                name="telefono" id="telefono" value="@if(session()->has('cambios')){{old('telefono')}}@else{{$datosEmpleado->telefono}}@endif"
                                                 placeholder="Ingresar telefono" required autocomplete="telefono"
                                                 autofocus>
                                             @error('telefono')
@@ -174,7 +328,7 @@
                                             </label>
                                             <input type="text"
                                                 class="form-control @error('claveE') is-invalid @enderror" name="claveE"
-                                                id="claveE" value="{{$datosEmpleado->claveE}}"
+                                                id="claveE" value="@if(session()->has('cambios')){{old('claveE')}}@else{{$datosEmpleado->claveE}}@endif"
                                                 placeholder="Ingresar clave para operaciones" required
                                                 autocomplete="claveE" autofocus>
                                             @error('claveE')
@@ -189,7 +343,7 @@
                                             </label>
                                             <input type="text"
                                                 class="form-control @error('username') is-invalid @enderror"
-                                                name="username" id="username" value="{{$users->username}}"
+                                                name="username" id="username" value="@if(session()->has('cambios')){{old('username')}}@else{{$users->username}}@endif"
                                                 placeholder="Ingresar usuario" required autocomplete="username"
                                                 autofocus>
                                             @error('username')
@@ -439,6 +593,7 @@
                     </form>
                 </div>
                 @endif
+                @endif
             </div>
         </div>
     </div>
@@ -456,40 +611,31 @@
             <div class="modal-body" id="cuerpoModal">
                 <div class="form-group m-2">
                     <label for="exampleInputEmail1">NUEVA CONTRASEÑA</label>
-                    <div class="input-group has-validation mb-3">
-                        <input type="password" id=passwordChange
-                            class="form-control @error('passwordChange') is-invalid @enderror"
+                    <div class="input-group mb-3">
+                        <input type="password" id="passwordChange" class="form-control"
                             placeholder=" Ingrese su nueva contraseña" aria-label=" Recipient's username"
                             aria-describedby="button-addon2" required>
-
                         <div class="input-group-append">
                             <button class="btn btn-dark" onclick="mostrarPassword()">
-
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="m-0 btn-dark" viewBox="0 0 16 16" id="iconPassword">
+                                    class="m-0" viewBox="0 0 16 16" id="iconPassword">
                                     <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
                                     <path
                                         d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
                                 </svg>
                             </button>
-
                         </div>
-
-                        <div class="invalid-feedback">
-                            La contraseña debe tener al menos 8 caracteres
-                        </div>
-                        <!--span class="invalid-feedback" role="alert">
-                            <strong>Falla</strong>
-                        </span-->
-
+                        <span class="invalid-feedback ">
+                            <strong id="alertaPassword"></strong>
+                        </span>
                     </div>
-                    <div class="row mx-auto" id="alertaPassword">
+                    <!--div class="row mx-auto" id="alertaPassword">
 
-                    </div>
+                    </div-->
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                <button type="button" class="btn btn-secondary" onclick="cuerpoModalOriginal()" data-dismiss="modal">CERRAR</button>
                 <button type="button" class="btn btn-primary" id="continuar"
                     onclick="actualizarPassword()">CONTINUAR</button>
             </div>
@@ -499,55 +645,67 @@
 <script>
 const texto = document.querySelector('#texto');
 //$('.svg').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
-
+let cuerpoModal = document.getElementById("cuerpoModal").innerHTML;
+function cuerpoModalOriginal(){
+    document.getElementById("cuerpoModal").innerHTML = cuerpoModal;
+    $('#continuar').show();
+}
 async function actualizarPassword() {
     try {
         let cambio = document.getElementById("passwordChange");
-        let id = {{$datosEmpleado->id}};
-        const datos = new FormData();
-        //datos.append('id', id);
-        datos.append('passwordChange', cambio.value);
-       // //if (cambio.value.length > 0) {
-            var initUpdate = {
-                // el método de envío de la información será POST
-                method: 'PUT',
-                //mode: 'no-cors',
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    'Content-Type': 'multipart/form-data'
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                // el cuerpo de la petición es una cadena de texto 
-                // con los datos en formato JSON
-                body: datos
-            };
-            //console.log(init);
-            //console.log(init);
-            let respuestaCompra = await fetch(`/puntoVenta/empleado/${id}`, initUpdate);
-            if (respuestaCompra.ok) {
-                console.log(respuestaCompra);
-                /*let rC = await respuestaCompra.json();
-                console.log(rC);
-
-                alert('TU DEUDA ESTA SALDADA');
-                compras = [];
-                await cargarComprasPagina();
-                console.log(compras);*/
-            }
-            /*document.getElementById("cuerpoModal").innerHTML =
-                `<div class="alert alert-success" role="alert">
-                <h4 class="alert-heading">Contraseña actualizada</h4>
-                <p>¡Tu contraseña se ha actualizado exitosamente!</p>
-                <hr>
-                <p class="mb-0">Cierre este mensaje para continuar</p>
-            </div>`;
-            $('#continuar').hide();*/
-        /*} else {
+        let respuestaCompra;
+        let espacio = /\s/;
+        if (espacio.test(cambio.value)) {
             document.getElementById("alertaPassword").innerHTML =
-                `<div class="alert alert-danger" role="alert">
-                    La contraseña debe tener al menos 8 caracteres
+            "La contraseña no debe tener espacios"; //respuestaCompra;
+            $('#passwordChange').removeClass('is-valid').addClass('is-invalid');
+            return;
+        }
+        if (cambio.value.length > 0) {
+            if (cambio.value.length >= 8) {
+                let id = @if(isset($datosEmpleado)) {{ $users->id }}
+                @else null @endif;
+                const url = "{{url('/')}}/puntoVenta/empleado/" + id;
+                console.log(url);
+                let datos = new FormData();
+                datos.append('_token', "{{ csrf_token() }}");
+                datos.append('passwordChange', cambio.value);
+                respuestaCompra = await $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: {
+                        'passwordChange': cambio.value,
+                        '_token': "{{ csrf_token() }}",
+                    },
+                    //processData: false,  // tell jQuery not to process the data
+                    //contentType: false,
+                    success: function(data) {
+                        //alert(data);
+                    }
+                });
+                console.log(respuestaCompra);
+                if (respuestaCompra == "") {
+                    console.log('Todo esta bien');
+                    document.getElementById("cuerpoModal").innerHTML =
+                        `<div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Contraseña actualizada</h4>
+                        <p>¡Tu contraseña se ha actualizado exitosamente!</p>
+                        <hr>
+                        <p class="mb-0">Cierre este mensaje para continuar</p>
                     </div>`;
-        }*/
+                    $('#continuar').hide();
+                }
+            } else {
+                document.getElementById("alertaPassword").innerHTML =
+                    "La contraseña debe tener al menos 8 caracteres"; //respuestaCompra;
+                $('#passwordChange').removeClass('is-valid').addClass('is-invalid');
+            }
+
+        } else {
+            document.getElementById("alertaPassword").innerHTML =
+            "Por favor escriba su contraseña"; //respuestaCompra;
+            $('#passwordChange').removeClass('is-valid').addClass('is-invalid');
+        }
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
@@ -599,6 +757,9 @@ function habilitar() {
     //document.getElementById("btnForm").show();
     //alert('Entra');
 }
+@if(session()->has('cambios'))
+habilitar();
+@endif
 </script>
 
 @endsection

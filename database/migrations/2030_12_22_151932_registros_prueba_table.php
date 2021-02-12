@@ -46,7 +46,7 @@ class RegistrosPruebaTable extends Migration
         $empleado->curp = 'HEMH970804HOCRRB00';
         $empleado->domicilio = 'VALERIO TRUJANO 318';
         $empleado->idUsuario = $usuario->id;
-        $empleado->status = 'activo';
+        $empleado->status = 'alta';
         $empleado->save();
 
         //CREACION DE DEPARTAMENTOS

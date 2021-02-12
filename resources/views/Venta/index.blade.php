@@ -6,25 +6,6 @@
         VENTAS
         @endsection
         @section('opciones')
-        @if(isset($datosEmpleado))
-        <div class="col-1 my-2 ml-5 px-1">
-            <form method="get" action="{{url('/empleado')}}">
-                <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-                    AGREGAR EMPLEADO
-                </button>
-            </form>
-        </div>
-        @endif
-        <div class="col-2 my-2 ml-5 px-1">
-            <form method="get" action="{{url('/empleado')}}">
-                <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-                    EMPLEADOS DADOS DE BAJA
-                </button>
-            </form>
-        </div>
-
         <!-- BOTON DEVOLUCION-->
         <div class="col-2 my-2 ml-0 px-1">
            

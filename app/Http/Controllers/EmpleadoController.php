@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleado;
 use App\Models\User;
+use App\Models\Sucursal;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -75,45 +76,44 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->validator($request->all())->validate();
-
-        /*$datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
+        $this->validator($request->all())->validate();
+        //return 'si lo valida';
+        $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
         $dato = ['status','alta'];
         $datosEmpleado = Arr::add($datosEmpleado,'status','alta');
         //$datosEmpleado = Arr::add($datosEmpleado, 'price', 100);
         
-        $this->validator($request->all())->validate();
-
-        
-        //return $datosEmpleado;
-
+        //$this->validator($request->all())->validate();
         User::create([
             'username' => $request['username'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
+            'tipo' => 0,
         ]);
 
         $user = User::latest('id')->first();
         $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$user->id);
-        Empleado::insert($datosEmpleado);
-        return redirect('puntoVenta/empleado');*/
+        //$empleado = new Empleado;
+        Empleado::create($datosEmpleado);
+        //Empleado::insert($datosEmpleado);
+        return redirect('puntoVenta/empleado');
         
     }
 
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'nombre' => ['required', 'string', 'max:30'],
-            'apellidos' => ['required', 'string', 'max:30'],
-            'domicilio' => ['required', 'string', 'max:50'],
-            'curp' => ['required', 'string', 'max:18','unique:empleados'],
-            'telefono' => ['required', 'string', 'max:10'],
-            'cargo' => ['required', 'string', 'max:30'],
-            'claveE' => ['required', 'string', 'max:5','unique:empleados'],
-            'username' => ['required', 'string', 'max:255','unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+                'nombre' => ['required', 'string', 'max:30'],
+                'apellidos' => ['required', 'string', 'max:30'],
+                'domicilio' => ['required', 'string', 'max:50'],
+                'curp' => ['required', 'string', 'max:18','unique:empleados'],
+                'telefono' => ['required', 'string', 'max:10'],
+                'claveE' => ['required', 'string', 'max:5','unique:empleados'],
+                'username' => ['required', 'string', 'max:255','unique:users'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+        
     }
 
     /**
@@ -136,9 +136,17 @@ class EmpleadoController extends Controller
     public function edit($id)//Empleado $empleado)
     {
         //$datos['empleados'] = Departamento::paginate();
-        $datosEmpleado = Empleado::findOrFail($id);
-        $users = User::where('id','=',$datosEmpleado->idUsuario)->first();
-        return view('Empleado.index2',compact('datosEmpleado','users'));
+        if($id == 0)
+        {
+            $admin = User::findOrFail(1);
+            $sucursal = Sucursal::findOrFail(session('sucursal'));
+            return view('Empleado.index2',compact('admin','sucursal'));
+        }
+        else{
+            $datosEmpleado = Empleado::findOrFail($id);
+            $users = User::where('id','=',$datosEmpleado->idUsuario)->first();
+            return view('Empleado.index2',compact('datosEmpleado','users'));
+        }
         //return $users;//compact('datosEmpleado');
     }
 
@@ -153,40 +161,81 @@ class EmpleadoController extends Controller
     {
         if($request->has('status'))
         {
-            $rules = [
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
-            ];
-            $mesages = [
-                'password.required' => 'Por favor escriba su contrseña',
-                'password.min' => 'La contraseña debe tener al menos 8 caracteres',
-                
-            ];
-
-                $validator = Validator::make($request->all(), $rules, $mesages);
-            return $validator->fails();
-            /*if($validator->fails()):
-                return back()->withErrors($validator)->with('message','Se ha producido un error')->with(
-                    'typealert','danger');
-            endif;
             Empleado::where('id','=',$id)->update(['status' => $request->input('status')]);
-            return redirect('puntoVenta/empleado/'.$id.'/edit');*/
+            return redirect('puntoVenta/empleado/'.$id.'/edit');
         }
         if($request->has('passwordChange'))
         {
-            Empleado::where('id','=',$id)->update(['password' => Hash::make($request->input('passwordChange'))]);
-            return redirect('puntoVenta/empleado/'.$id.'/edit');
+            
+            $rules = [
+                'passwordChange' => ['required', 'string', 'min:8'],
+            ];
+            $mesages = [
+                'passwordChange.required' => 'Por favor escriba su contraseña',
+                'passwordChange.min' => 'La contraseña debe tener al menos 8 caracteres',
+                
+            ];
+            
+            $validator = Validator::make($request->all(), $rules, $mesages);
+            
+            if($validator->fails())
+                return $validator->errors()->first();
+            //return 'Si entra';
+            /*if($validator->fails()):
+                return back()->withErrors($validator)->with('message','Se ha producido un error')->with(
+                    'typealert','danger');
+            endif;*/
+            User::where('id','=',$id)->update(['password' => Hash::make($request->input('passwordChange'))]);
+            return;
+            //return redirect('puntoVenta/empleado/'.$id.'/edit');
         }
         else
         {
-            
+            $datos = []; //$request->all();
+            $empleado = Empleado::findOrFail($id);
+            $user = User::where('id','=',$empleado->idUsuario)->first();
+            if($request->input('nombre') != $empleado->nombre)
+                $datos = Arr::add($datos,'nombre',$request->input('nombre'));
+            if($request->input('apellidos') != $empleado->apellidos)
+                $datos = Arr::add($datos,'apellidos',$request->input('apellidos'));
+            if($request->input('domicilio') != $empleado->domicilio)
+                $datos = Arr::add($datos,'domicilio',$request->input('domicilio'));
+            if($request->input('curp') != $empleado->curp)
+                $datos = Arr::add($datos,'curp',$request->input('curp'));
+            if($request->input('email') != $user->email)
+                $datos = Arr::add($datos,'email',$request->input('email'));
+            if($request->input('telefono') != $empleado->telefono)
+                $datos = Arr::add($datos,'telefono',$request->input('telefono'));
+            if($request->input('claveE') != $empleado->claveE)
+                $datos = Arr::add($datos,'claveE',$request->input('claveE'));
+            if($request->input('username') != $user->username)
+                $datos = Arr::add($datos,'username',$request->input('username'));
+            //return 'Si llega hasta aqui';
+            //$this->validator($request->all())->validate();
+            $validacion =  Validator::make($datos, [
+                'nombre' => ['string', 'max:30','min:3'],
+                'apellidos' => ['string', 'max:30','min:3'],
+                'domicilio' => ['string', 'max:50','min:3'],
+                'curp' => ['string','min:18' ,'max:18','unique:empleados'],
+                'telefono' => ['string', 'max:10','min:7'],
+                'claveE' => ['string', 'max:5','unique:empleados','min:5'],
+                'username' => ['string', 'max:255','unique:users','min:3'],
+                'email' => ['string', 'email', 'max:255', 'unique:users','min:5'],
+            ]);
+            if($validacion->fails()):
+                return back()->withErrors($validacion)->with( ['cambios' => true] )->withInput($request->all());
+            endif;
+            $validacion->validate();
             $datosEmpleado = request()->except(['_token','_method','email','username']);
+            $datosUser = request()->only(['email','username']);
             Empleado::where('id','=',$id)->update($datosEmpleado);
+            User::where('id','=',$user->id)->update($datosUser);
             return redirect('puntoVenta/empleado/'.$id.'/edit');
-        }
-        {
-
+            //return $datos;
         }
         //'password' => Hash::make($request['password'])
+        
+        return 'No lo reconoce';
     }
 
     /**
@@ -206,8 +255,9 @@ class EmpleadoController extends Controller
     public function buscadorEmpleado(Request $request)
     {
         $datosConsulta['empleados'] = Empleado::where("nombre",'like',$request->texto."%")->orderBy('nombre')->get();
+        $admin = User::findOrFail(1);
         //where("status",'=','alta')->orderBy('nombre')->get();
-        return view('Empleado.empleados',$datosConsulta);
+        return view('Empleado.empleados',$datosConsulta,compact('admin'));
         //return $datosConsulta;
     }
 
