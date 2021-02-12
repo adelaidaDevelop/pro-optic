@@ -6,6 +6,7 @@ use App\Models\Subproducto;
 use App\Models\Producto;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
+use App\Models\Sucursal_producto;
 
 class SubproductoController extends Controller
 {
@@ -16,11 +17,9 @@ class SubproductoController extends Controller
      */
     public function index()
     {
-        $datosProd['prod'] = Producto::paginate();
-        $subproducto2['subproducto']= Subproducto::paginate();
-        $depas['d']= Departamento::paginate();
-      //  $productos['prod']= Producto::paginate();
-          return view('Subproducto.index',$subproducto2,$depas);
+        $subproductos = Subproducto::all();
+        $productos = Producto::all();
+          return view('Subproducto.index',compact('subproductos', 'productos'));
 
 /*
           $datosProd['producto'] = Producto::paginate();
@@ -42,8 +41,10 @@ class SubproductoController extends Controller
        $datosP= Producto::all();
         $subproducto2['subproducto']= SubProducto::paginate();
          $producto=Producto::all();
-        
-         return view('Subproducto.agregar', compact('producto', 'datosP'));
+         $depas = Departamento::all();
+        //$idSucursal = session('sucursal');
+        //$productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
+         return view('Subproducto.agregar', compact('producto', 'datosP', 'productosSucursal','depas'));
     }
 
     /**
@@ -55,11 +56,12 @@ class SubproductoController extends Controller
     public function store(Request $request)
     {
         //
-        $datosSubproducto = request()->except('_token');
-        $datosSubproducto['existencia']=0;
-        $datosSubproducto['ganancia']=0; //calcular
-        Subproducto::insert($datosSubproducto);
-
+       // $datosSubproducto = request()->except('_token');
+        $datosSubproducto = $request->except('_token');
+       // $datosSubproducto['existencia']=0;
+      //  $datosSubproducto['ganancia']=0; //calcular
+       Subproducto::insert($datosSubproducto);
+//return $datosSubproducto;
        // return response()->json($datosSubproducto);
         return redirect('subproducto');
     }

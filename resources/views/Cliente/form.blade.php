@@ -14,7 +14,7 @@
 <body>
     @if (count($clienteB)) 
     @foreach($clienteB as $cliente)
-    <a href="{{url('/cliente/'.$cliente->id.'/edit/')}}" class="btn btn-light btn-block my-2 mx-1">{{$cliente->nombre}}</a-->
+    <a href="{{url('/puntoVenta/cliente/'.$cliente->id.'/edit/')}}" class="btn btn-light btn-block my-2 mx-1">{{$cliente->nombre}}</a-->
 
     @endforeach
     @else

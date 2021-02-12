@@ -189,45 +189,47 @@ PRODUCTOS
     const d = @json($depa);
     let opcFolioNombre = "";
     let opcBajosE = "";
-    let productosSucursal= @json($productosSucursal);
-    console.log(productosSucursal);
+    let productosSucursal = @json($productosSucursal);
 
     //console.log(sucursales);
     function buscarProducto() {
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         let cuerpo = "";
         let contador = 1;
-        for (count5 in productos) {
-            if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                let departamento = "";
-                for (count8 in d) {
-                    if (productos[count5].idDepartamento === d[count8].id) {
-                        departamento = d[count8].nombre;
+
+        for (let x in productosSucursal) {
+            for (count5 in productos) {
+                if (productos[count5].id === productosSucursal[x].idProducto) {
+                    if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                        let departamento = "";
+                        for (count8 in d) {
+                            if (productos[count5].idDepartamento === d[count8].id) {
+                                departamento = d[count8].nombre;
+                            }
+                        }
+                        let id = productos[count5].id;
+                        cuerpo = cuerpo + `
+                        <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">
+                            <th scope="row">` + productos[count5].id + `</th>
+                            <td>` + productos[count5].codigoBarras + `</td>
+                            <td>` + productos[count5].nombre + `</td>
+                            <td>` + productosSucursal[x].existencia + `</td>
+                        <td>` + departamento + `</td>
+
+                        <td>` + `0` + `</td>
+                            <td>` + `0` + `</td>
+                            <td>` +
+                            ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
+                            VER MAS
+                            </button>
+                            </td>            
+                        </tr>
+                        `;
                     }
                 }
-               
-                let id = productos[count5].id;
-                cuerpo = cuerpo + `
-        <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">
-            <th scope="row">` + productos[count5].id + `</th>
-            <td>` + productos[count5].codigoBarras + `</td>
-            <td>` + productos[count5].nombre + `</td>
-            <td>` + productos[count5].existencia + `</td>
-           <td>` + departamento + `</td>
-
-           <td>` + `0` + `</td>
-            <td>` + `0` + `</td>
-            <td>` +
-                    ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
-               VER MAS
-              </button>
-            </td>            
-        </tr>
-        `;
             }
         }
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-
     };
 
 
@@ -236,22 +238,18 @@ PRODUCTOS
         let datosProduct = "";
         let imagen = "";
         let departamento = "";
-        for (count10 in productos) {
-            if (productos[count10].id === id) {
-
-                for (count11 in d) {
-                    if (productos[count10].idDepartamento === d[count11].id) {
-                        departamento = d[count11].nombre;
-                    }
-                }
-           
-
-                
-
-                x = productos[count10].id;
-
-                datosProduct =
-                    `
+        for (let x in productosSucursal) {
+            for (count10 in productos) {
+                if (productos[count10].id === productosSucursal[x].idProducto) {
+                    if (productos[count10].id === id) {
+                        for (count11 in d) {
+                            if (productos[count10].idDepartamento === d[count11].id) {
+                                departamento = d[count11].nombre;
+                            }
+                        }
+                        x = productos[count10].id;
+                        datosProduct =
+                            `
                 <div class="col-3">
                         <br/>
                         <label for="codigoBarras">
@@ -313,7 +311,8 @@ PRODUCTOS
 
                     <br/>
                 `
-
+                    }
+                }
             }
         }
         document.getElementById("resultados").innerHTML = datosProduct;
@@ -336,31 +335,35 @@ PRODUCTOS
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         let cuerpo = "";
         let contador = 1;
-        for (count20 in productos) {
-            if (productos[count20].codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                let departamento = "";
-                for (count21 in d) {
-                    if (productos[count20].idDepartamento === d[count21].id) {
-                        departamento = d[count21].nombre;
+        for (let x in productosSucursal) {
+            for (count20 in productos) {
+                if (productos[count20].id === productosSucursal[x].idProducto) {
+                    if (productos[count20].codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                        let departamento = "";
+                        for (count21 in d) {
+                            if (productos[count20].idDepartamento === d[count21].id) {
+                                departamento = d[count21].nombre;
+                            }
+                        }
+                        let id = productos[count20].id;
+                        cuerpo = cuerpo + `
+                            <tr onclick="agregarProducto(` + productos[count20].id + `)" data-dismiss="modal">
+                                <th scope="row">` + productos[count20].id + `</th>
+                                <td>` + productos[count20].codigoBarras + `</td>
+                                <td>` + productos[count20].nombre + `</td>
+                                <td>` + productosSucursal[x].existencia + `</td>
+                            <td>` + departamento + `</td>
+                            <td>` + `0` + `</td>
+                                <td>` + `0` + `</td>
+                                <td>` +
+                            ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
+                                VER MAS
+                                </button>
+                                </td>            
+                            </tr>
+                            `;
                     }
                 }
-                let id = productos[count20].id;
-                cuerpo = cuerpo + `
-        <tr onclick="agregarProducto(` + productos[count20].id + `)" data-dismiss="modal">
-            <th scope="row">` + productos[count20].id + `</th>
-            <td>` + productos[count20].codigoBarras + `</td>
-            <td>` + productos[count20].nombre + `</td>
-            <td>` + productos[count20].existencia + `</td>
-           <td>` + departamento + `</td>
-           <td>` + `0` + `</td>
-            <td>` + `0` + `</td>
-            <td>` +
-                    ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
-               VER MAS
-              </button>
-            </td>            
-        </tr>
-        `;
             }
         }
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
@@ -372,32 +375,36 @@ PRODUCTOS
         let cuerpo = "";
         let contador = 1;
         if (depa.value != "0") {
-            for (count20 in productos) {
-                // if (productos[count20].idDepartamento.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                if (productos[count20].idDepartamento == parseInt(depa.value)) {
-                    let departamento = "";
-                    for (count21 in d) {
-                        if (productos[count20].idDepartamento === d[count21].id) {
-                            departamento = d[count21].nombre;
+            for (let x in productosSucursal) {
+                for (count20 in productos) {
+                    if (productos[count5].id === productosSucursal[x].idProducto) {
+                        // if (productos[count20].idDepartamento.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                        if (productos[count20].idDepartamento === parseInt(depa.value)) {
+                            let departamento = "";
+                            for (count21 in d) {
+                                if (productos[count20].idDepartamento === d[count21].id) {
+                                    departamento = d[count21].nombre;
+                                }
+                            }
+                            let id = productos[count20].id;
+                            cuerpo = cuerpo + `
+                                <tr onclick="agregarProducto(` + productos[count20].id + `)" data-dismiss="modal">
+                                    <th scope="row">` + productos[count20].id + `</th>
+                                    <td>` + productos[count20].codigoBarras + `</td>
+                                    <td>` + productos[count20].nombre + `</td>
+                                    <td>` + productosSucursal[x].existencia + `</td>
+                                <td>` + departamento + `</td>
+                                <td>` + `0` + `</td>
+                                    <td>` + `0` + `</td>
+                                    <td>` +
+                                ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
+                                    VER MAS
+                                    </button>
+                                    </td>            
+                                </tr>
+                                `;
                         }
                     }
-                    let id = productos[count20].id;
-                    cuerpo = cuerpo + `
-        <tr onclick="agregarProducto(` + productos[count20].id + `)" data-dismiss="modal">
-            <th scope="row">` + productos[count20].id + `</th>
-            <td>` + productos[count20].codigoBarras + `</td>
-            <td>` + productos[count20].nombre + `</td>
-            <td>` + productos[count20].existencia + `</td>
-           <td>` + departamento + `</td>
-           <td>` + `0` + `</td>
-            <td>` + `0` + `</td>
-            <td>` +
-                        ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
-               VER MAS
-              </button>
-            </td>            
-        </tr>
-        `;
                 }
             }
             document.getElementById("consultaBusqueda").innerHTML = cuerpo;
@@ -428,33 +435,36 @@ PRODUCTOS
 
     function bajosExistencias() {
         let cuerpo = "";
-
-        for (count30 in productos) {
-            if (productos[count30].existencia <= productos[count30].minimo_stock) {
-                // if (productos[count20].idDepartamento.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                let departamento = "";
-                for (count21 in d) {
-                    if (productos[count30].idDepartamento === d[count21].id) {
-                        departamento = d[count21].nombre;
+        for (let x in productosSucursal) {
+            for (count30 in productos) {
+                if (productos[count5].id === productosSucursal[x].idProducto) {
+                    if (productos[count30].existencia <= productos[count30].minimo_stock) {
+                        // if (productos[count20].idDepartamento.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                        let departamento = "";
+                        for (count21 in d) {
+                            if (productos[count30].idDepartamento === d[count21].id) {
+                                departamento = d[count21].nombre;
+                            }
+                        }
+                        let id = productos[count30].id;
+                        cuerpo = cuerpo + `
+                                        <tr onclick="agregarProducto(` + productos[count30].id + `)" data-dismiss="modal">
+                                            <th scope="row">` + productos[count30].id + `</th>
+                                            <td>` + productos[count30].codigoBarras + `</td>
+                                            <td>` + productos[count30].nombre + `</td>
+                                            <td>` + productosSucursal[x].existencia + `</td>
+                                        <td>` + departamento + `</td>
+                                        <td>` + `0` + `</td>
+                                            <td>` + `0` + `</td>
+                                            <td>` +
+                            ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
+                                            VER MAS
+                                            </button>
+                                            </td>            
+                                        </tr>
+                                        `;
                     }
                 }
-                let id = productos[count30].id;
-                cuerpo = cuerpo + `
-        <tr onclick="agregarProducto(` + productos[count30].id + `)" data-dismiss="modal">
-            <th scope="row">` + productos[count30].id + `</th>
-            <td>` + productos[count30].codigoBarras + `</td>
-            <td>` + productos[count30].nombre + `</td>
-            <td>` + productos[count30].existencia + `</td>
-           <td>` + departamento + `</td>
-           <td>` + `0` + `</td>
-            <td>` + `0` + `</td>
-            <td>` +
-                    ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
-               VER MAS
-              </button>
-            </td>            
-        </tr>
-        `;
             }
         }
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;

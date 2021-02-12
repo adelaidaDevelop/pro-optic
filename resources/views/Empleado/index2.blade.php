@@ -653,6 +653,7 @@ function cuerpoModalOriginal(){
 async function actualizarPassword() {
     try {
         let cambio = document.getElementById("passwordChange");
+<<<<<<< HEAD
         let respuestaCompra;
         let espacio = /\s/;
         if (espacio.test(cambio.value)) {
@@ -683,6 +684,30 @@ async function actualizarPassword() {
                         //alert(data);
                     }
                 });
+=======
+        let id = 1;//{datosEmpleado->id}};
+        const datos = new FormData();
+        //datos.append('id', id);
+        datos.append('passwordChange', cambio.value);
+       // //if (cambio.value.length > 0) {
+            var initUpdate = {
+                // el método de envío de la información será POST
+                method: 'PUT',
+                //mode: 'no-cors',
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    'Content-Type': 'multipart/form-data'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                // el cuerpo de la petición es una cadena de texto 
+                // con los datos en formato JSON
+                body: datos
+            };
+            //console.log(init);
+            //console.log(init);
+            let respuestaCompra = await fetch(`/puntoVenta/empleado/${id}`, initUpdate);
+            if (respuestaCompra.ok) {
+>>>>>>> b29f2f833344c3167ef7bd21e4d32d650c46bf48
                 console.log(respuestaCompra);
                 if (respuestaCompra == "") {
                     console.log('Todo esta bien');

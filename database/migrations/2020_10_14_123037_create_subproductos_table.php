@@ -19,10 +19,10 @@ class CreateSubproductosTable extends Migration
             $table->foreignId('idProductos')->constrained('productos');
             $table->integer('piezas');
             $table->double('precio_ind');
-            $table->double('costo_ind');
+          //  $table->double('costo_ind');
             $table->string('observacion');
             $table->integer('existencia');
-            $table->double('ganancia');
+          //  $table->double('ganancia');
             $table->timestamps();
         });
     }

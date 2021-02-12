@@ -39,7 +39,7 @@ class ClienteController extends Controller
         $datosCliente = request()->except('_token');
         Cliente::insert($datosCliente);
         
-        return redirect('cliente');
+        return redirect('puntoVenta/cliente');
     }
 
     /**
@@ -79,7 +79,7 @@ class ClienteController extends Controller
     {
         $datosCliente = request()->except(['_token','_method']);
         Cliente::where('id','=',$id)->update($datosCliente);
-        return redirect('cliente');
+        return redirect('puntoVenta/cliente');
     }
 
     /**
@@ -91,7 +91,7 @@ class ClienteController extends Controller
     public function destroy($id)//Departamento $departamento)
     {
         Cliente::destroy($id);
-        return redirect('cliente');
+        return redirect('puntoVenta/cliente');
     }
     public function buscador(Request $request)
     {

@@ -10,6 +10,7 @@ use App\Models\Credito;
 use Illuminate\Http\Request;
 use App\Models\Detalle_venta;
 use App\Models\Pago;
+use App\Models\Sucursal_producto;
 
 
 class VentaController extends Controller
@@ -32,7 +33,9 @@ class VentaController extends Controller
         $departamentos = Departamento::all();
         $clientes = Cliente::all();
         //$datos['departamentos'] = Producto::paginate();
-        return view('Venta.index', compact('datosP', 'departamentos', 'clientes'));
+        $idSucursal = session('sucursal');
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
+        return view('Venta.index', compact('datosP', 'departamentos', 'clientes','productosSucursal'));
     //    return session('idEmpleado');
     }
 
