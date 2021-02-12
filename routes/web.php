@@ -61,7 +61,6 @@ Route::get('/idSucursal', [EcommerceController::class,'idSucursal']);
     Route::get('/departamento2', [DepartamentoController::class,'index2']);
     Route::post('/venta/productos', [VentaController::class,'productos']);
 
-    Route::resource('compra', CompraController::class);
 
     Route::resource('subproducto', SubproductoController::class);
 

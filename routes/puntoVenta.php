@@ -42,6 +42,7 @@ Route::prefix('/puntoVenta')->group(function()
         //Route::get('/login', [LoginController::class,'login'])->name('Login');
         //->middleware('isEmpleado');
         Route::resource('venta', VentaController::class);
+        Route::resource('compra', CompraController::class);
     });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
