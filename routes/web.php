@@ -50,8 +50,8 @@ Route::get('/idSucursal', [EcommerceController::class,'idSucursal']);
 
 
     //Rutas ade
-    Route::resource('cliente', ClienteController::class);
-    Route::resource('producto', ProductoController::class);
+    
+    
     Route::get('/datosDevoluciones', [DevolucionController::class,'datoDev']);
     Route::get('/datosVentas', [DevolucionController::class,'datosVenta']);
     Route::get('/datosdetalleVenta', [DevolucionController::class,'datosDetalleVenta']);

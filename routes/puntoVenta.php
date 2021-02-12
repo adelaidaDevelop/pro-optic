@@ -34,8 +34,8 @@ Route::prefix('/puntoVenta')->group(function()
     Route::post('/logout', [LoginController::class,'logout'])->name('Login');
 
 
-    
-
+    Route::resource('cliente', ClienteController::class);
+    Route::resource('producto', ProductoController::class);
 
     Route::middleware('isEmpleado')->group(function () {
         Route::resource('empleado', EmpleadoController::class);
