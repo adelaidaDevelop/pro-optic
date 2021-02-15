@@ -5,7 +5,7 @@ COMPRAS
 @endsection
 @section('opciones')
 <div class="col my-2 ml-5 pl-1">
-    <form method="get" action="{{url('/compra/create/')}}">
+    <form method="get" action="{{url('/puntoVenta/compra/create/')}}">
         <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
             <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
             CREAR COMPRA
@@ -293,7 +293,7 @@ async function cargarCompras() {
         comprasActuales = [];
         //let response = "";
         if (compras.length == 0) {
-            let response = await fetch(`/compra/compras`);
+            let response = await fetch(`/puntoVenta/compra/compras`);
             if (response.ok) {
                 console.log(compras);
                 console.log("Si me responde");
@@ -808,7 +808,7 @@ async function abonarPago(id, adeudo) {
                 };
                 //console.log(init);
                 console.log(init);
-                let respuestaCompra = await fetch(`/compra/${id}`, initUpdate);
+                let respuestaCompra = await fetch(`/puntoVenta/compra/${id}`, initUpdate);
                 if (respuestaCompra.ok) {
                     let rC = await respuestaCompra.json();
                     console.log(rC);
