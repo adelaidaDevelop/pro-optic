@@ -1,11 +1,11 @@
 <div class="row ">
-<div class="text-primary p-1">
-<h4>
-<strong class="ml-4 "> 
-{{ $Modo == 'crear' ? 'NUEVO PRODUCTO': 'EDITAR PRODUCTO'}}
-</strong>
-</h4>
-</div>
+    <div class="text-primary p-1">
+        <h4>
+            <strong class="ml-4 ">
+                {{ $Modo == 'crear' ? 'NUEVO PRODUCTO': 'EDITAR PRODUCTO'}}
+            </strong>
+        </h4>
+    </div>
 </div>
 
 <div class="row p-1 border border-dark m-2 w-100 ">
@@ -34,23 +34,17 @@
         <label for="idDepartamento">
             <h5 class="mb-3"> {{'DEPARTAMENTO'}}</h5>
         </label>
-
     </div>
     <div class="col-4">
         <!--El name debe ser igual al de la base de datos-->
         <input type="text" name="codigoBarras" id="codigoBarras" class="form-control mb-2 mt-3" placeholder="Ingresar codigo de barras" value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}" required autocomplete="codigoBarras" autofocus>
-
-        <input type="text" name="nombre" id="nombre" class="form-control mb-3" placeholder="Nombre productos" value="{{ isset($producto->nombre)?$producto->nombre:''}}" autofocus required>
-
+        <input type="text" name="nombre" id="nombre" onkeyup="convertirMayuscula(id)" class="form-control mb-3" placeholder="Nombre productos" value="{{ isset($producto->nombre)?$producto->nombre:''}}" autofocus required>
         <textarea name="descripcion" id="descripcion" class="form-control mb-3" placeholder="Descripcion del producto" rows="2" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
-
         <input type="number" name="minimo_stock" id="minimo_stock" class="form-control mb-3" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" autofocus required>
-
-
         <select class="form-control mb-3" name="receta" id="receta" required>
             <option value="" selected>Elija una opcion</option>
-            <option value="si" >si</option>
-            <option value="no" >no</option>
+            <option value="si">si</option>
+            <option value="no">no</option>
         </select>
         <select class="form-control mb-3" name="idDepartamento" id="idDepartamento" required>
             <option value="">Seleccione departamento</option>
@@ -75,15 +69,14 @@
         @if(isset($producto->imagen))
         <br />
         <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200">
-
         @endif
         @if(isset($producto->imagen))
         <input type="file" name="imagen" id="imagen" class="form-control" value="">
-        @else <input class="form-control" type="file" name="imagen" id="imagen" value="" autofocus >
+        @else <input class="form-control" type="file" name="imagen" id="imagen" value="" autofocus>
         @endif
     </div>
 </div>
-</div>
+
 
 <div class="row text-right w-100">
     <div class="col-md-6"> </div>
@@ -91,7 +84,12 @@
         <button class="btn btn-outline-secondary" type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
             <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">{{ $Modo== 'crear' ?'GUARDAR PRODUCTO' : 'EDITAR PRODUCTO' }}
         </button>
-        <a title="Regresar" href="{{url('producto')}}" class="text-dark">
+        <a title="Regresar" href="{{url('/puntoVenta/producto')}}" class="text-dark">
             <img src="{{ asset('img\regresar2.png') }}" class="img-thumbnail" alt="Regresar" width="50px" height="50px" />CANCELAR</a>
     </div>
 </div>
+<script>
+ function convertirMayuscula(nameInput){
+        let cadenaConv= nameInput.toUpperCase(); 
+    }
+</script>

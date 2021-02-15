@@ -57,9 +57,16 @@
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/puntoVenta/corte">
+                            <a class="nav-link" href="/puntoVenta/corteCaja">
                                 <button class="btn btn-light">
                                     CORTE
+                                </button>
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/puntoVenta/reporteInventario">
+                                <button class="btn btn-light">
+                                    REPORTES
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>

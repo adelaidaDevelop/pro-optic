@@ -15,19 +15,15 @@ class CreateProductosTable extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
-            //$table->id('id_producto');
-            //$table->foreign('id_departamento')->references('id_departamento')->on('departamentoos');
-            $table->foreignId('idDepartamento')->constrained('departamentos');
-           // $table->foreign('id')->references('id')->on('departamentoos');
-            $table->string('codigoBarras')->unique();
+            $table->string('codigoBarras')->unique()->nullable();
             $table->string('nombre')->unique();
-            $table->string('receta');
-            $table->string('descripcion');
             $table->string('imagen');
-            $table->integer('minimo_stock');
-            //$table->unsignedInteger('existencia');
-            $table->double('costo', 6, 2);
-            $table->double('precio', 6, 2);
+            $table->string('descripcion');
+            $table->string('receta');
+            //$table->integer('minimo_stock');
+            //$table->double('costo', 6, 2);
+            //$table->double('precio', 6, 2);
+            $table->foreignId('idDepartamento')->constrained('departamentos');
             $table->timestamps();
         });
     }

@@ -22,7 +22,7 @@ class RegistrosPruebaTable extends Migration
     public function up()
     {
         //CREACION DE USUARIOS
-        User::create([
+        /*User::create([
             'username' => 'Administrador',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin12345'),
@@ -126,7 +126,7 @@ class RegistrosPruebaTable extends Migration
         $productosSucursal2->existencia = 10;
         $productosSucursal2->save();
 
-
+            */
     }
 
     /**

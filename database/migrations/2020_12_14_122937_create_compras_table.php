@@ -15,12 +15,11 @@ class CreateComprasTable extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
-           // $table->id('id_compra');
-            $table->foreignId('idProveedor')->constrained('proveedors');
-            $table->string('estado');
             $table->date('fecha_compra');
             $table->integer('IVA')->nullable();
-            $table->foreignId('idEmpleado')->constrained('empleados');
+            $table->string('estado');
+            $table->foreignId('idSucursalEmpleado')->constrained('sucursal_empleados');
+            $table->foreignId('idProveedor')->constrained('proveedors');
             $table->timestamps();
             
         });

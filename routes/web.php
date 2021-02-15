@@ -73,8 +73,8 @@ Route::get('/idSucursal', [EcommerceController::class,'idSucursal']);
     Route::resource('pago', PagoController::class);
     Route::resource('pagoCompra', PagoCompraController::class);
     Route::resource('devolucion', DevolucionController::class);
-    Route::resource('corteCaja', ReporteController::class);
-    Route::get('reporteInventario', [ReporteController::class,'index2']);
+    
+    
     Route::get('reporteVentas', [ReporteController::class,'index3']);
 
     Route::get('/empleado/buscadorEmpleado', [EmpleadoController::class,'buscadorEmpleado']);

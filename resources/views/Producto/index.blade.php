@@ -470,6 +470,11 @@ PRODUCTOS
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
     };
     buscarProducto();
+
+    function convertirMayuscula(nameInput){
+        let cadenaConv= nameInput.toUpperCase(); 
+        let depa = document.querySelector('#idDepartamento');
+    }
 </script>
 
 @endsection
