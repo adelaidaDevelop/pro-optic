@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSucursalProductosTable extends Migration
+class CreateOfertasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateSucursalProductosTable extends Migration
      */
     public function up()
     {
-        Schema::create('sucursal_productos', function (Blueprint $table) {
-            $table->foreignId('idSucursal')->constrained('sucursals');
-            $table->foreignId('idProducto')->constrained('productos');
+        Schema::create('ofertas', function (Blueprint $table) {
+            //$table->id();
+            $table->foreignId('idSucursalProducto')->constrained('sucursal_productos');
+            $table->unsignedInteger('cantidad');
             $table->unsignedInteger('existencia');
+            $table->date('fecha_caducidad');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateSucursalProductosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sucursal_productos');
+        Schema::dropIfExists('ofertas');
     }
 }

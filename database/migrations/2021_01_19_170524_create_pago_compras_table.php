@@ -14,8 +14,8 @@ class CreatePagoComprasTable extends Migration
     public function up()
     {
         Schema::create('pago_compras', function (Blueprint $table) {
-            $table->double('monto',6,2);
             $table->foreignId('idCompra')->constrained('compras');
+            $table->double('monto',6,2);
             $table->timestamps();
         });
     }

@@ -16,10 +16,9 @@ class CreateProductosCaducidadTable extends Migration
     public function up()
     {
         Schema::create('productos_caducidad', function (Blueprint $table) {
-           // $table->foreign('id')->references('id')->on('productoos');
-           $table->foreignId('idProducto')->constrained('productos');
+            $table->foreignId('idSucursalProducto')->constrained('sucursal_productos');
+            $table->unsignedInteger('cantidad');
             $table->date('fecha_caducidad');
-            $table->integer('cantidad');
             $table->timestamps();
         });
     }

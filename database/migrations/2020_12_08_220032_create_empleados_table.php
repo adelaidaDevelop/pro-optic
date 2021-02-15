@@ -16,18 +16,14 @@ class CreateEmpleadosTable extends Migration
         Schema::create('empleados', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('apellidos');
-            $table->String('claveE')->unique();
-            $table->string('telefono');
-            //$table->string('cargo');
+            $table->string('apellidosPaterno');
+            $table->string('apellidosMaterno');
             $table->string('curp');
+            $table->string('telefono');
             $table->string('domicilio');
-            $table->foreignId('idUsuario')->constrained('users');
-           // $table->string('usuario');
-           // $table->string('contra');
-            //$table->string('correo');
-            
+            $table->String('claveE')->unique();
             $table->string('status');
+            $table->foreignId('idUsuario')->constrained('users');
             $table->timestamps();
         });
     }

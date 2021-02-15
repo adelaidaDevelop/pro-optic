@@ -36,6 +36,8 @@ Route::prefix('/puntoVenta')->group(function()
 
     Route::resource('cliente', ClienteController::class);
     Route::resource('producto', ProductoController::class);
+    Route::resource('corteCaja', ReporteController::class);
+    Route::get('reporteInventario', [ReporteController::class,'index2']);
 
     Route::middleware('isEmpleado')->group(function () {
         Route::resource('empleado', EmpleadoController::class);

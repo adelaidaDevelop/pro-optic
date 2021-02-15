@@ -60,7 +60,10 @@ class ProductoController extends Controller
         }
         Producto::create($datosProducto);
 
-
+       // $datosSucProd = 
+       // $sucursal_producto = new Sucursal_producto;
+       // $sucursal_producto['idSucursal'] = session('sucursal');
+       //$sucursal_producto['idProducto'] =  
 
 /*
         $producto= new Producto;
@@ -73,9 +76,8 @@ class ProductoController extends Controller
         }
         $producto->save();
 */
-
        // return response()->json($datosProducto);
-        return redirect('producto');
+        return redirect('/puntoVenta/producto');
     }
 
     /**
