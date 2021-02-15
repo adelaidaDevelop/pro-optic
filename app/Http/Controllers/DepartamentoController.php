@@ -51,7 +51,7 @@ class DepartamentoController extends Controller
         $datosDepartamento = request()->except('_token');
         Departamento::insert($datosDepartamento);
         
-        return redirect('departamento');
+        return redirect('puntoVenta/departamento');
     }
 
     /**
@@ -92,7 +92,7 @@ class DepartamentoController extends Controller
     {
         $datosDepartamento = request()->except(['_token','_method']);
         Departamento::where('id','=',$id)->update($datosDepartamento);
-        return redirect('departamento');
+        return redirect('puntoVenta/departamento');
     }
 
     /**
@@ -104,7 +104,7 @@ class DepartamentoController extends Controller
     public function destroy($id)//Departamento $departamento)
     {
         Departamento::destroy($id);
-        return redirect('departamento');
+        return redirect('puntoVenta/departamento');
     }
 
     public function buscador(Request $request)
