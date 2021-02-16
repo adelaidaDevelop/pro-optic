@@ -6,7 +6,7 @@ PRODUCTOS
 
 @section('opciones')
 <div class="col-0 my-2 p-1">
-    <form method="get" action="{{url('/departamento/')}}">
+    <form method="get" action="{{url('/puntoVenta/departamento/')}}">
         <button class="btn btn-secondary ml-4 p-1" type="submit">
             <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
             DEPARTAMENTOS
