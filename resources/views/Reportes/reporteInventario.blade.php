@@ -164,7 +164,7 @@ REPORTES
                                 <th scope="col">PRECIO IND.</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center" id="cuerpoModal">
+                        <tbody class="text-center text-uppercase" id="cuerpoModal">
                         </tbody>
                     </table>
                 </div>

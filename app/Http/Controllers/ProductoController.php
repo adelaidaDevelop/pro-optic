@@ -19,7 +19,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $datosProd['producto'] = Producto::paginate();
+        //$datosProd['producto'] = Producto::paginate();
         $depas['d']= Departamento::paginate();
         $datosP= Producto::all();
         $depa= Departamento::all();

@@ -22,7 +22,7 @@ class RegistrosPruebaTable extends Migration
     public function up()
     {
         //CREACION DE USUARIOS
-        /*User::create([
+        User::create([
             'username' => 'Administrador',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin12345'),
@@ -40,13 +40,14 @@ class RegistrosPruebaTable extends Migration
 
         $empleado = new Empleado;
         $empleado->nombre = 'Heber Zabdiel';
-        $empleado->apellidos = 'Hernandez Martinez';
-        $empleado->claveE = '12345';
-        $empleado->telefono = '9513547350';
+        $empleado->apellidoPaterno = 'Hernandez';
+        $empleado->apellidoMaterno = 'Martinez';
         $empleado->curp = 'HEMH970804HOCRRB00';
-        $empleado->domicilio = 'VALERIO TRUJANO 318';
-        $empleado->idUsuario = $usuario->id;
+        $empleado->telefono = '9513547350';
+        $empleado->domicilio = 'Valerio trujano 318, barrio san Juan, zimatlan';
+        $empleado->claveE = '12345';
         $empleado->status = 'alta';
+        $empleado->idUsuario = $usuario->id;
         $empleado->save();
 
         //CREACION DE DEPARTAMENTOS
@@ -62,51 +63,51 @@ class RegistrosPruebaTable extends Migration
 
         //CREACION DE PRODUCTOS
         $producto = new Producto;
-        $producto->idDepartamento = $departamento->id;
         $producto->codigoBarras = '7501607705006';
         $producto->nombre = 'ALCOHOL ROJO 96 500ML';
-        $producto->receta = 'NO';
-        $producto->descripcion = 'ETILICO SIN DESNATURALIZAR';
         $producto->imagen = 'uploads\zMlAh4qsuAy38QGtRaABBogpx7rYeKIW6xSTXfKj.jpg';
-        $producto->minimo_stock = 10;
+        $producto->descripcion = 'ETILICO SIN DESNATURALIZAR';
+        $producto->receta = 'NO';
+        $producto->idDepartamento = $departamento->id;
+    //  $producto->minimo_stock = 10;
         //$producto->existencia = 12;
-        $producto->costo = 15;
-        $producto->precio = 18;
+      //  $producto->costo = 15;
+      //  $producto->precio = 18;
         $producto->save();
-        
         $producto2 = new Producto;
-        $producto2->idDepartamento = $departamento->id;
         $producto2->codigoBarras = '759684437151';
         $producto2->nombre = 'ACETONA JALOMA 120ml';
-        $producto2->receta = 'NO';
-        $producto2->descripcion = 'ETILICO SIN DESNATURALIZAR';
         $producto2->imagen = 'uploads\zMlAh4qsuAy38QGtRaABBogpx7rYeKIW6xSTXfKj.jpg';
-        $producto2->minimo_stock = 10;
+        $producto2->descripcion = 'ETILICO SIN DESNATURALIZAR';
+        $producto2->receta = 'NO';
+        $producto2->idDepartamento = $departamento->id;
+     //   $producto2->minimo_stock = 10;
         //$producto->existencia = 12;
-        $producto2->costo = 8;
-        $producto2->precio = 15;
+      //  $producto2->costo = 8;
+       // $producto2->precio = 15;
         $producto2->save();
-
 
         //CREACION DE PROVEEDOR
         Proveedor::create([
                 'rfc' => 'DF5DF5DFDS5F',
                 'nombre' => 'MARZAM',
                 'telefono' => '9516457898',
-                'direccion' => 'Muchos lugares'
+                'direccion' => 'Sin especificar'
             ]);
 
         Proveedor::create([
                 'rfc' => 'D6S568D6FSD4',
                 'nombre' => 'NIVEA',
                 'telefono' => '9547894563',
-                'direccion' => 'Muchos lugares de qui'
+                'direccion' => 'Sin especificar'
             ]);
 
         //CREACION DE CLIENTE
         $cliente = new Cliente;
         $cliente->nombre = 'ADELAIDA MOLINA REYES';
         $cliente->telefono = '9512274920';
+        $cliente->domicilio = 'SIN ESPECIFICAR';
+        $cliente->idUsuario = $usuario->id;
         $cliente->save();
 
         $sucursal = new Sucursal;
@@ -115,18 +116,25 @@ class RegistrosPruebaTable extends Migration
         $sucursal->save();
 
         $productosSucursal = new Sucursal_producto;
+        $productosSucursal->costo = 10;
+        $productosSucursal->precio = 10;
+        $productosSucursal->existencia = 10;
+        $productosSucursal->minimoStock = 10;
         $productosSucursal->idSucursal= $sucursal->id;
         $productosSucursal->idProducto= $producto->id;
-        $productosSucursal->existencia = 10;
         $productosSucursal->save();
 
         $productosSucursal2 = new Sucursal_producto;
+        $productosSucursal2->costo = 5;
+        $productosSucursal2->precio = 15;
+        $productosSucursal2->existencia = 8;
+        $productosSucursal2->minimoStock = 6;
         $productosSucursal2->idSucursal= $sucursal->id;
-        $productosSucursal2->idProducto= $producto2->id;
-        $productosSucursal2->existencia = 10;
+        $productosSucursal2->idProducto= $producto->id;
         $productosSucursal2->save();
 
-            */
+
+            
     }
 
     /**

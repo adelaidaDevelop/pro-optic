@@ -2,6 +2,6 @@
     {{ csrf_field() }}
     <h1> Editar departamento</h1>
     <label for="Nombre">{{'Nombre'}}</label> 
-    <input type="text" name="nombre" id="nombre" value="">
+    <input class="text-uppercase " type="text" name="nombre" id="nombre" value="">
     <input type="submit" value="Agregar">
 </form>

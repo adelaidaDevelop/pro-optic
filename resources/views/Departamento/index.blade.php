@@ -68,7 +68,7 @@
                 <br/>
                 <label for="Nombre"><h3>{{$d->nombre}}</h3></label>
                 <br>
-                <input type="text" class="form-control" name="nombre" id="nombre" value="{{$d->nombre}}">
+                <input type="text" class="text-uppercase  form-control" name="nombre" id="nombre" value="{{$d->nombre}}">
                 <br/>
                 <button class="btn btn-outline-secondary" type="submit">
                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
@@ -85,7 +85,7 @@
                 <br/>
                 <label for="Nombre"><h3>{{'Nombre'}}</h3></label>
                 <br/>
-                <input type="text" class="form-control" name="nombre" id="nombre" value="">
+                <input type="text" class="text-uppercase  form-control" name="nombre" id="nombre" value="">
                 <br/>
                 <!--input type="submit" value="Guardar Departamento"-->
                 <button class="btn btn-outline-secondary" type="submit">

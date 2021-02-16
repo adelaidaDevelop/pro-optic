@@ -41,7 +41,7 @@
                     <h4 style="color:#4388CC">EMPLEADOS</h4>
 
                     <div class="input-group">
-                        <input type="text" class="form-control my-1" placeholder="BUSCAR EMPLEADO" id="texto">
+                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR EMPLEADO" id="texto">
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -77,7 +77,7 @@
                                             <label for="nombre">
                                                 USUARIO
                                             </label>
-                                            <input type="text"
+                                            <input class="text-uppercase " type="text"
                                                 class="form-control @error('username') is-invalid @enderror"
                                                 name="username" id="username" value="@if(session()->has('cambios')){{old('username')}}@else{{$admin->username}}@endif"
                                                 placeholder="Ingresar usuario" required autocomplete="username"
@@ -92,7 +92,7 @@
                                             <label for="nombre">
                                                 EMAIL
                                             </label>
-                                            <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                            <input type="text" class="text-uppercase  form-control @error('email') is-invalid @enderror"
                                                 name="email" id="email" value="@if(session()->has('cambios')){{old('email')}}@else{{$admin->email}}@endif"
                                                 placeholder="Ingresar correo electronico" required autocomplete="email"
                                                 autofocus>
@@ -109,7 +109,7 @@
                                                 DOMICILIO DE LA SUCURSAL
                                             </label>
                                             <textarea name="domicilio" id="domicilio"
-                                                class="form-control @error('domicilio') is-invalid @enderror"
+                                                class="text-uppercase  form-control @error('domicilio') is-invalid @enderror"
                                                 placeholder="Ingresar domicilio completo"
                                                 value="" required autocomplete="domicilio"
                                                 autofocus>@if(session()->has('cambios')){{old('domicilio')}}@else{{$sucursal->direccion}}@endif</textarea>
@@ -123,7 +123,7 @@
                                             <label for="telefono">
                                                 TELEFONO DE LA SUCURSAL
                                             </label>
-                                            <input type="text"
+                                            <input class="text-uppercase " type="text"
                                                 class="form-control @error('telefono') is-invalid @enderror"
                                                 name="telefono" id="telefono" value="@if(session()->has('cambios')){{old('telefono')}}@else{{$sucursal->telefono}}@endif"
                                                 placeholder="Ingresar telefono" required autocomplete="telefono"
@@ -232,7 +232,7 @@
                                             <label for="nombre">
                                                 NOMBRE
                                             </label>
-                                            <input type="text" id="nombre"
+                                            <input class="text-uppercase " type="text" id="nombre"
                                                 class="form-control @error('nombre') is-invalid @enderror" name="nombre"
                                                 value="@if(session()->has('cambios')){{old('nombre')}}@else{{$datosEmpleado->nombre}}@endif" placeholder="Ingresar nombre(s)"
                                                 required autocomplete="nombre" autofocus>
@@ -246,7 +246,7 @@
                                             <label for="nombre">
                                                 APELLIDOS
                                             </label>
-                                            <input type="text"
+                                            <input class="text-uppercase " type="text"
                                                 class="form-control @error('apellidos') is-invalid @enderror"
                                                 name="apellidos" id="apellidos" value="@if(session()->has('cambios')){{old('apellidos')}}@else{{$datosEmpleado->apellidos}}@endif"
                                                 placeholder="Ingresar apellidos" required autocomplete="apellidos"
@@ -264,7 +264,7 @@
                                                 DOMICILIO
                                             </label>
                                             <textarea name="domicilio" id="domicilio"
-                                                class="form-control @error('domicilio') is-invalid @enderror"
+                                                class="text-uppercase  form-control @error('domicilio') is-invalid @enderror"
                                                 placeholder="Ingresar domicilio completo"
                                                 value="{{$datosEmpleado->domicilio}}" required autocomplete="domicilio"
                                                 autofocus>@if(session()->has('cambios')){{ old('domicilio')}}@else{{$datosEmpleado->domicilio}}@endif</textarea>
@@ -279,7 +279,7 @@
                                             <label for="nombre">
                                                 CURP
                                             </label>
-                                            <input type="text" class="form-control @error('curp') is-invalid @enderror"
+                                            <input class="text-uppercase " type="text" class="form-control @error('curp') is-invalid @enderror"
                                                 name="curp" id="curp" value="@if(session()->has('cambios')){{ old('curp') }}@else{{$datosEmpleado->curp}}@endif"
                                                 placeholder="Ingresar curp" required autocomplete="curp" autofocus>
                                             @error('curp')
@@ -294,7 +294,7 @@
                                             <label for="nombre">
                                                 EMAIL
                                             </label>
-                                            <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                            <input class="text-uppercase " type="text" class="form-control @error('email') is-invalid @enderror"
                                                 name="email" id="email" value="@if(session()->has('cambios')){{old('email')}}@else{{$users->email}}@endif"
                                                 placeholder="Ingresar correo electronico" required autocomplete="email"
                                                 autofocus>
@@ -308,7 +308,7 @@
                                             <label for="telefono">
                                                 TELEFONO
                                             </label>
-                                            <input type="text"
+                                            <input class="text-uppercase " type="text"
                                                 class="form-control @error('telefono') is-invalid @enderror"
                                                 name="telefono" id="telefono" value="@if(session()->has('cambios')){{old('telefono')}}@else{{$datosEmpleado->telefono}}@endif"
                                                 placeholder="Ingresar telefono" required autocomplete="telefono"
@@ -326,7 +326,7 @@
                                             <label for="nombre">
                                                 CLAVE
                                             </label>
-                                            <input type="text"
+                                            <input class="text-uppercase " type="text"
                                                 class="form-control @error('claveE') is-invalid @enderror" name="claveE"
                                                 id="claveE" value="@if(session()->has('cambios')){{old('claveE')}}@else{{$datosEmpleado->claveE}}@endif"
                                                 placeholder="Ingresar clave para operaciones" required
@@ -341,7 +341,7 @@
                                             <label for="nombre">
                                                 USUARIO
                                             </label>
-                                            <input type="text"
+                                            <input class="text-uppercase " type="text"
                                                 class="form-control @error('username') is-invalid @enderror"
                                                 name="username" id="username" value="@if(session()->has('cambios')){{old('username')}}@else{{$users->username}}@endif"
                                                 placeholder="Ingresar usuario" required autocomplete="username"
@@ -442,7 +442,7 @@
                                         NOMBRE
                                     </label>
                                     <input type="text" id="nombre"
-                                        class="form-control @error('nombre') is-invalid @enderror" name="nombre"
+                                        class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre"
                                         id="nombre" value="{{ old('nombre') }}" placeholder="Ingresar nombre(s)"
                                         required autocomplete="nombre" autofocus>
                                     @error('nombre')
@@ -455,7 +455,7 @@
                                     <label for="nombre">
                                         APELLIDOS
                                     </label>
-                                    <input type="text" class="form-control @error('apellidos') is-invalid @enderror"
+                                    <input type="text" class="text-uppercase  form-control @error('apellidos') is-invalid @enderror"
                                         name="apellidos" id="apellidos" value="{{ old('apellidos') }}"
                                         placeholder="Ingresar apellidos" required autocomplete="apellidos" autofocus>
                                     @error('apellidos')
@@ -474,7 +474,7 @@
                                     name="domicilio" id="domicilio" value="{{ old('domicilio') }}" required
                                     autocomplete="domicilio" autofocus-->
                                     <textarea name="domicilio" id="domicilio"
-                                        class="form-control @error('domicilio') is-invalid @enderror"
+                                        class="text-uppercase  form-control @error('domicilio') is-invalid @enderror"
                                         placeholder="Ingresar domicilio completo" value="{{ old('domicilio') }}"
                                         required autocomplete="domicilio" autofocus></textarea>
                                     @error('domicilio')
@@ -488,7 +488,7 @@
                                     <label for="nombre">
                                         CURP
                                     </label>
-                                    <input type="text" class="form-control @error('curp') is-invalid @enderror"
+                                    <input type="text" class="text-uppercase  form-control @error('curp') is-invalid @enderror"
                                         name="curp" id="curp" value="{{ old('curp') }}" placeholder="Ingresar curp"
                                         required autocomplete="curp" autofocus>
                                     @error('curp')
@@ -503,7 +503,7 @@
                                     <label for="nombre">
                                         EMAIL
                                     </label>
-                                    <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                    <input type="text" class="text-uppercase  form-control @error('email') is-invalid @enderror"
                                         name="email" id="email" value="{{ old('email') }}"
                                         placeholder="Ingresar correo electronico" required autocomplete="email"
                                         autofocus>
@@ -517,7 +517,7 @@
                                     <label for="telefono">
                                         TELEFONO
                                     </label>
-                                    <input type="text" class="form-control @error('telefono') is-invalid @enderror"
+                                    <input type="text" class="text-uppercase  form-control @error('telefono') is-invalid @enderror"
                                         name="telefono" id="telefono" value="{{ old('telefono') }}"
                                         placeholder="Ingresar telefono" required autocomplete="telefono" autofocus>
                                     @error('telefono')
@@ -532,7 +532,7 @@
                                     <label for="nombre">
                                         CLAVE
                                     </label>
-                                    <input type="text" class="form-control @error('claveE') is-invalid @enderror"
+                                    <input type="text" class="text-uppercase  form-control @error('claveE') is-invalid @enderror"
                                         name="claveE" id="claveE" value="{{ old('claveE') }}"
                                         placeholder="Ingresar clave para operaciones" required autocomplete="claveE"
                                         autofocus>
@@ -546,7 +546,7 @@
                                     <label for="nombre">
                                         USUARIO
                                     </label>
-                                    <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                    <input type="text" class="text-uppercase  form-control @error('username') is-invalid @enderror"
                                         name="username" id="username" value="{{ old('username') }}"
                                         placeholder="Ingresar usuario" required autocomplete="username" autofocus>
                                     @error('username')
@@ -561,7 +561,7 @@
                                     <label for="nombre">
                                         CONTRASEÑA
                                     </label>
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                    <input type="password" class="text-uppercase  form-control @error('password') is-invalid @enderror"
                                         name="password" id="password" placeholder="Ingresar contraseña" required
                                         autocomplete="new-password" autofocus>
                                     @error('password')
@@ -575,7 +575,7 @@
                                         {{ __('CONFIRMAR CONTRASEÑA') }}
 
                                     </label>
-                                    <input type="password" class="form-control" name="password_confirmation"
+                                    <input type="password" class="text-uppercase  form-control" name="password_confirmation"
                                         id="password-confirm" placeholder="Ingresar de nuevo contraseña" required
                                         autocomplete="new-password">
                                 </div>

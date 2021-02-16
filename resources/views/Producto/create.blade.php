@@ -7,7 +7,7 @@ PRODUCTOS
 @section('opciones')
 @endsection
 
-<form method="post" action="{{url('puntoVenta/producto')}}" enctype="multipart/form-data">
+<form method="post" action="{{url('/puntoVenta/producto')}}" enctype="multipart/form-data">
     {{ csrf_field() }}
     @include('producto.form', ['Modo' => 'crear'])
 </form>

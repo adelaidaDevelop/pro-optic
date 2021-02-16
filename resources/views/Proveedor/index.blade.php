@@ -18,7 +18,7 @@
                     <h4 style="color:#4388CC">PROVEEDORES</h4>
 
                     <div class="input-group">
-                        <input type="text" class="form-control my-1" placeholder="BUSCAR PROVEEDORES" id="texto">
+                        <input type="text" class="form-control text-uppercase my-1" placeholder="BUSCAR PROVEEDORES" id="texto">
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -51,18 +51,18 @@
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="form-control" name="nombre" id="nombre" value="{{$d->nombre}}">
+                                        <input type="text" class="text-uppercase form-control " name="nombre" id="nombre" value="{{$d->nombre}}">
                                         RFC
                                         </label>
-                                        <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="rfc" id="rfc" value="{{$d->rfc}}">
+                                        <input type="text" class="text-uppercase form-control  @error('nombre') is-invalid @enderror" name="rfc" id="rfc" value="{{$d->rfc}}">
                                         <label for="telefono">
                                             TELEFONO
                                         </label>
-                                        <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" value="{{$d->telefono}}">
+                                        <input type="text" class="text-uppercase form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" value="{{$d->telefono}}">
                                         <label for="direccion">
                                             DIRECCION
                                         </label>
-                                        <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="direccion" id="direccion" value="{{$d->direccion}}">
+                                        <input type="text" class="text-uppercase form-control @error('nombre') is-invalid @enderror" name="direccion" id="direccion" value="{{$d->direccion}}">
 
                                     </div>
                                 </div>
