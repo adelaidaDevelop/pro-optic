@@ -7,6 +7,7 @@
         DEPARTAMENTOS
         @endsection
         @section('opciones')
+        @if(isset($d))
         <div class="col my-2 ml-5 pl-1">
             <form method="get" action="{{url('/puntoVenta/departamento/create')}}">
                 <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
@@ -16,6 +17,7 @@
                 </button>
             </form>
         </div>
+        @endif
         @endsection
     </div>
     <div class="row p-1">

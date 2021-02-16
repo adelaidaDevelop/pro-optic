@@ -14,8 +14,9 @@
 <body>
     @if (count($departamentosB))
     @foreach($departamentosB as $departamento)
-    <a href="{{url('/departamento/'.$departamento->id.'/edit/')}}" class="btn btn-light btn-block my-2 mx-1">{{$departamento->nombre}}</a-->
-
+    <a href="{{url('/puntoVenta/departamento/'.$departamento->id.'/edit/')}}" class="btn btn-light btn-block my-2 mx-1 border border-dark 
+    @if($departamento->id == 0) disabled @endif">{{$departamento->nombre}}</a>
+    
     @endforeach
     @else
     <div class="row">
