@@ -233,7 +233,7 @@
 
                                 <div class="form-col w-100">
                                     <div class="form-row">
-                                        <div class="form-group col-6">
+                                        <div class="form-group col">
                                             <label for="nombre">
                                                 NOMBRE
                                             </label>
@@ -252,7 +252,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="apellidoPaterno">
                                                 APELLIDO PATERNO
                                             </label>
                                             <input type="text"
@@ -268,7 +268,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="apellidoMaterno">
                                                 APELLIDO MATERNO
                                             </label>
                                             <input type="text"
@@ -286,7 +286,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="domicilio">
                                                 DOMICILIO
                                             </label>
                                             <textarea name="domicilio" id="domicilio"
@@ -302,7 +302,7 @@
                                         </div>
 
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="curp">
                                                 CURP
                                             </label>
                                             <input type="text"
@@ -319,7 +319,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="email">
                                                 EMAIL
                                             </label>
                                             <input type="text"
@@ -354,7 +354,7 @@
 
                                     <div class="form-row">
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="claveE">
                                                 CLAVE
                                             </label>
                                             <input type="text"
@@ -370,7 +370,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="username">
                                                 USUARIO
                                             </label>
                                             <input type="text"
@@ -426,7 +426,7 @@
                         <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {{csrf_field()}}
                             {{ method_field('PUT')}}
-                            <input type="" id="status" name="status" value="baja" style="display:none">
+                            <input id="status" name="status" value="baja" style="display:none">
                             <button class="btn btn-outline-secondary" type="submit" value="SI">
                                 <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
@@ -434,9 +434,8 @@
                             </button>
                         </form>
                     </div>
-
                     @else
-                    <div class="col-4">
+                    <div class="col-auto ml-auto mr-0">
                         <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {{csrf_field()}}
                             {{ method_field('PUT')}}
@@ -450,11 +449,17 @@
                         </form>
                     </div>
                     @endif
-                    <!--button class="btn btn-outline-secondary my-3" type="button" onclick="habilitar()">
-                        <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                            height="25px">
-                        Habilitar
-                    </button-->
+                    <div class="col-auto mr-0">
+                        <form method="post" id="formEliminar" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
+                            {{csrf_field()}}
+                            {{ method_field('DELETE')}}
+                            <button class="btn btn-outline-danger" onclick="eliminarEmpleado()" type="submit" value="SI">
+                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
+                                    width="25px" height="25px">
+                                ELIMINAR
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 @else
                 <div class="row px-3 py-3 m-0">
@@ -487,7 +492,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="apellidoPaterno">
                                         APELLIDO PATERNO
                                     </label>
                                     <input type="text"
@@ -502,7 +507,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="apellidoMaterno">
                                         APELLIDO MATERNO
                                     </label>
                                     <input type="text"
@@ -519,7 +524,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="domicilio">
                                         DOMICILIO
                                     </label>
                                     <!--input type="text" class="form-control @error('domicilio') is-invalid @enderror"
@@ -537,7 +542,7 @@
                                 </div>
 
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="curp">
                                         CURP
                                     </label>
                                     <input type="text"
@@ -553,7 +558,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="email">
                                         EMAIL
                                     </label>
                                     <input type="text"
@@ -584,7 +589,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="claveE">
                                         CLAVE
                                     </label>
                                     <input type="text"
@@ -599,7 +604,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="username">
                                         USUARIO
                                     </label>
                                     <input type="text"
@@ -615,7 +620,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="password">
                                         CONTRASEÑA
                                     </label>
                                     <input type="password" class="form-control @error('password') is-invalid @enderror"
@@ -701,6 +706,15 @@
     </div>
 </div>
 <script>
+function eliminarEmpleado() {
+    var form = document.getElementById('formEliminar');
+    form.addEventListener('submit', function(event) {
+        // si es false entonces que no haga el submit
+        if (!confirm('¿ESTA SEGURO QUE DESEA ELIMINAR ESTE EMPLEADO?')) {
+             event.preventDefault();
+        }
+    }, false);
+};
 const texto = document.querySelector('#texto');
 //$('.svg').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
 let cuerpoModal = document.getElementById("cuerpoModal").innerHTML;
@@ -722,11 +736,7 @@ async function actualizarPassword() {
         }
         if (cambio.value.length > 0) {
             if (cambio.value.length >= 8) {
-                let id = @if(isset($datosEmpleado)) {
-                    {
-                        $users - > id
-                    }
-                }
+                let id = @if(isset($datosEmpleado)) {{$users->id}}
                 @else null @endif;
                 const url = "{{url('/')}}/puntoVenta/empleado/" + id;
                 console.log(url);
