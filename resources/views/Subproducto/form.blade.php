@@ -37,7 +37,7 @@
                 <div class="col-3">
                     <!--El name debe ser igual al de la base de datos-->
                   
-                        <input class="mb-2" type="text" name="idProductos" id="idProductos" placeholder="Nombre producto" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:''}}" required >
+                        <input class="mb-2 text-uppercase" type="text" name="idProductos" id="idProductos" placeholder="Nombre producto" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:''}}" required >
                         
                         <input class=" mt-4 mb-2" type="number" name="costo_indC" id="costo_indC" placeholder=""   disabled>
                    
@@ -97,7 +97,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarProducto()">
+                    <input type="text" class="form-control mx-2 my-3 text-uppercase" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarProducto()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
                     <table class="table table-hover table-bordered" id="productos">

@@ -46,7 +46,7 @@ SUBPRODUCTOS
                 <div class="form-group w-100">
                     <div class="row my-2">
                         <div class="col-6 input-group">
-                            <input type="text" class="form-control border-primary " size="15" placeholder="BUSCAR PRODUCTO" id="texto">
+                            <input type="text" class="form-control text-uppercase border-primary " size="15" placeholder="BUSCAR PRODUCTO" id="texto">
                             <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->

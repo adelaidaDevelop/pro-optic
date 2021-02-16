@@ -15,7 +15,7 @@ PRODUCTOS
 </div>
 <!--BOTON CREAR EMPLEADO-->
 <div class="col-0 my-2 ml-3 p-1 ">
-    <a class="btn btn-secondary p-1" href="{{ url('/producto/create')}}">
+    <a class="btn btn-secondary p-1" href="{{ url('/puntoVenta/producto/create')}}">
         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
         NUEVO PRODUCTO </a>
     </a>
@@ -79,10 +79,10 @@ PRODUCTOS
             </div>
 
             <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-            <div class="col-9   mb-4 ml-4 mr-2">
+            <div class="col-8   mb-4 ml-4 mr-2">
                 <div class="form-group w-100">
                     <div class="row my-0">
-                        <input class="form-control   col-4 mr-3 " type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarFolioNombre()">
+                        <input class="form-control text-uppercase  col-4 mr-3 " type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarFolioNombre()">
                         <a title="buscar" href="" class="text-dark ">
                             <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
                         <div class="mt-2 mx-2"> </div>
@@ -119,7 +119,7 @@ PRODUCTOS
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
-                        <tbody id="consultaBusqueda">
+                        <tbody id="consultaBusqueda" class="text-uppercase ">
 
                         </tbody>
                     </table>
@@ -280,19 +280,19 @@ PRODUCTOS
                     <div class="col-5">
                         <br />
                         <!--El name debe ser igual al de la base de datos-->
-                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control " placeholder="Ingresar codigo de barras" value="` + productos[count10].codigoBarras + `" required autocomplete="codigoBarras" autofocus disabled>
+                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase " placeholder="Ingresar codigo de barras" value="` + productos[count10].codigoBarras + `" required autocomplete="codigoBarras" autofocus disabled>
                         <br />
-                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required disabled>
+                        <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required disabled>
                         <br />
-                        <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del producto" rows="3" cols="23" required disabled>` + productos[count10].descripcion + `</textarea>
+                        <textarea name="descripcion" id="descripcion" class="form-control text-uppercase" placeholder="Descripcion del producto" rows="3" cols="23" required disabled>` + productos[count10].descripcion + `</textarea>
                         <br />
-                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="` + productos[count10].minimo_stock + `" autofocus required disabled>
+                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control text-uppercase" placeholder="Ingrese el minimo de productos permitidos" value="` + productos[count10].minimo_stock + `" autofocus required disabled>
                         <br />
-                        <select class="form-control" name="Receta" id="Receta"  disabled>
+                        <select class="form-control text-uppercase" name="Receta" id="Receta"  disabled>
                             <option value="" selected>` + productos[count10].receta + ` </option>
                         </select>
                         <br />
-                        <select class="form-control" name="Depa" id="Depa"  disabled>
+                        <select class="form-control text-uppercase" name="Depa" id="Depa"  disabled>
                             <option value="" selected>` + departamento + ` </option>
                         </select>
                     </div>
@@ -305,7 +305,7 @@ PRODUCTOS
                         <img src="{{ asset('storage')}}/` + productos[count10].imagen + ` " alt="" width="200">
                         <br /><br />
                         
-                        <a class="btn btn-primary" href="{{ url('/producto/` + x + `/edit')}}"> EDITAR PRODUCTO </a>
+                        <a class="btn btn-primary" href="{{ url('/puntoVenta/producto/` + x + `/edit')}}"> EDITAR PRODUCTO </a>
 
                     </div>
 

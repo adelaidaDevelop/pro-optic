@@ -37,16 +37,26 @@
     </div>
     <div class="col-4">
         <!--El name debe ser igual al de la base de datos-->
-        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control mb-2 mt-3" placeholder="Ingresar codigo de barras" value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}" required autocomplete="codigoBarras" autofocus>
-        <input type="text" name="nombre" id="nombre" onkeyup="convertirMayuscula(id)" class="form-control mb-3" placeholder="Nombre productos" value="{{ isset($producto->nombre)?$producto->nombre:''}}" autofocus required>
-        <textarea name="descripcion" id="descripcion" class="form-control mb-3" placeholder="Descripcion del producto" rows="2" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
-        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control mb-3" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" autofocus required>
-        <select class="form-control mb-3" name="receta" id="receta" required>
+        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase mb-2 mt-3" placeholder="Ingresar codigo de barras" value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}" required autocomplete="codigoBarras" autofocus>
+        <input type="text" name="nombre" id="nombre" class="text-uppercase  form-control mb-3" placeholder="Nombre productos" value="{{ isset($producto->nombre)?$producto->nombre:''}}" autofocus required>
+        <textarea name="descripcion" id="descripcion" class="text-uppercase form-control  mb-3" placeholder="Descripcion del producto" rows="2" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
+        <input type="number" min=0 name="minimo_stock" id="minimo_stock" class="form-control text-uppercase mb-3" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" autofocus required>
+        <!--<select class="form-control text-uppercase mb-3" name="receta" id="receta" required>
             <option value="" selected>Elija una opcion</option>
-            <option value="si">si</option>
-            <option value="no">no</option>
+            <option value="si">SI</option>
+            <option value="no">NO</option>
         </select>
-        <select class="form-control mb-3" name="idDepartamento" id="idDepartamento" required>
+        -->
+        @if(isset($producto))
+        <label for="" class="mb-3"> {{ $producto->receta }}</label>
+        @else
+        <select class="form-control text-uppercase mb-3" name="receta" id="receta" required>
+            <option value="" selected>Elija una opcion</option>
+            <option value="si">SI</option>
+            <option value="no">NO</option>
+        </select>
+        @endif
+        <select class="form-control text-uppercase mb-3" name="idDepartamento" id="idDepartamento" required>
             <option value="">Seleccione departamento</option>
             @foreach($departamento as $departamento)
             @if(isset($producto))
@@ -89,7 +99,7 @@
     </div>
 </div>
 <script>
- function convertirMayuscula(nameInput){
-        let cadenaConv= nameInput.toUpperCase(); 
+    function convertirMayuscula(nameInput) {
+        let cadenaConv = nameInput.toUpperCase();
     }
 </script>

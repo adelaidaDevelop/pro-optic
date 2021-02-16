@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Credito;
+use App\Models\Venta_cliente;
 use App\Models\Cliente;
 use App\Models\Venta;
 use App\Models\Producto;
 use App\Models\Detalle_venta;
-use App\Models\Pago;
+use App\Models\Pago_venta;
 
 
 
@@ -23,12 +23,12 @@ class CreditoController extends Controller
      */
     public function index()
     {
-        $credito= Credito::all();
+        $credito= Venta_cliente::all();
         $cliente= Cliente::all();
         $ventas= Venta::all();
         $detalleVentas= Detalle_venta::all();
         $productos = Producto::all();
-        $pagos= Pago::all();
+        $pagos= Pago_venta::all();
         
           return view('ListaDeudor.index', compact( 'credito', 'cliente','ventas','detalleVentas', 'productos','pagos'));
     }
@@ -52,7 +52,7 @@ class CreditoController extends Controller
     public function store(Request $request)
     {
          $datosProducto = request()->except('_token');
-         Credito::insert($datosProducto);
+         Venta_cliente::insert($datosProducto);
          return redirect('credito');
     }
 
@@ -62,7 +62,7 @@ class CreditoController extends Controller
      * @param  \App\Models\Credito  $credito
      * @return \Illuminate\Http\Response
      */
-    public function show(Credito $credito)
+    public function show(Venta_cliente $credito)
     {
         //
     }
@@ -73,7 +73,7 @@ class CreditoController extends Controller
      * @param  \App\Models\Credito  $credito
      * @return \Illuminate\Http\Response
      */
-    public function edit(Credito $credito)
+    public function edit(Venta_cliente $credito)
     {
         //
     }
@@ -85,7 +85,7 @@ class CreditoController extends Controller
      * @param  \App\Models\Credito  $credito
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Credito $credito)
+    public function update(Request $request, Venta_cliente $credito)
     {
         //
     }
@@ -96,19 +96,19 @@ class CreditoController extends Controller
      * @param  \App\Models\Credito  $credito
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Credito $credito)
+    public function destroy(Venta_cliente $credito)
     {
         //
     }
 
     public function datosNuevos()
     {
-        $credito= Credito::all();
+        $credito= Venta_cliente::all();
         $cliente= Cliente::all();
         $ventas= Venta::all();
         $detalleVentas= Detalle_venta::all();
         $productos = Producto::all();
-        $pagos= Pago::all();
+        $pagos= Pago_venta::all();
         
           return  compact( 'credito', 'cliente','ventas','detalleVentas', 'productos','pagos');
     }
