@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use App\Models\User;
 use App\Models\Sucursal;
+use App\Models\SucursalEmpleado;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -84,19 +85,23 @@ class EmpleadoController extends Controller
         //$datosEmpleado = Arr::add($datosEmpleado, 'price', 100);
         
         //$this->validator($request->all())->validate();
-        User::create([
+        $usuario = User::create([
             'username' => $request['username'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'tipo' => 0,
         ]);
 
-        $user = User::latest('id')->first();
-        $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$user->id);
+        //$user = User::latest('id')->first();
+        $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$usuario->id);
         //$empleado = new Empleado;
-        Empleado::create($datosEmpleado);
+        $empleado = Empleado::create($datosEmpleado);
+        $SucursalEmpleado = new Sucursal_empleado;
+        $SucursalEmpleado->idEmpleado = $datosEmpleado->id;
+        $SucursalEmpleado->idSucursal = session('sucursal');
+        $SucursalEmpleado->save();
         //Empleado::insert($datosEmpleado);
-        return redirect('puntoVenta/empleado');
+        return redirect('puntoVenta/empleado/'.$datosEmpleado->id.'/edit');
         
     }
 
@@ -104,7 +109,8 @@ class EmpleadoController extends Controller
     {
         return Validator::make($data, [
                 'nombre' => ['required', 'string', 'max:30'],
-                'apellidos' => ['required', 'string', 'max:30'],
+                'apellidoPaterno' => ['required', 'string', 'max:30'],
+                'apellidoMaterno' => ['required', 'string', 'max:30'],
                 'domicilio' => ['required', 'string', 'max:50'],
                 'curp' => ['required', 'string', 'max:18','unique:empleados'],
                 'telefono' => ['required', 'string', 'max:10'],

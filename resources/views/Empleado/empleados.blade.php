@@ -12,13 +12,13 @@
 </head>
 
 <body>
-    <a href="{{url('puntoVenta/empleado/0/edit/')}}" class="btn btn-success btn-block my-2 border border-dark">{{$admin->username}}</a>    
+    <a href="{{url('puntoVenta/empleado/0/edit/')}}" class="btn btn-success btn-block my-2 border border-dark text-uppercase">{{$admin->username}}</a>    
     @if (count($empleados))
     @foreach($empleados as $empleado)
         @if($empleado->status == 'baja')
-        <a href="{{url('puntoVenta/empleado/'.$empleado->id.'/edit/')}}" class="btn btn-light btn-block my-2 border border-dark" style="color:white;background-color:#ED4D46">{{$empleado->nombre}} {{$empleado->apellidos}}</a>
+        <a href="{{url('puntoVenta/empleado/'.$empleado->id.'/edit/')}}" class="btn btn-light btn-block my-2 border border-dark text-uppercase" style="color:white;background-color:#ED4D46">{{$empleado->nombre}} {{$empleado->apellidos}}</a>
         @else
-        <a href="{{url('puntoVenta/empleado/'.$empleado->id.'/edit/')}}" class="btn btn-light btn-block my-2 border border-dark" style="color:#3366FF">{{$empleado->nombre}} {{$empleado->apellidos}}</a>
+        <a href="{{url('puntoVenta/empleado/'.$empleado->id.'/edit/')}}" class="btn btn-light btn-block my-2 border border-dark text-uppercase" style="color:#3366FF">{{$empleado->nombre}} {{$empleado->apellidos}}</a>
         @endif
     @endforeach
     @else
