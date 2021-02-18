@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departamento;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class DepartamentoController extends Controller
@@ -36,7 +37,7 @@ class DepartamentoController extends Controller
      */
     public function create()
     {
-       // return view('Departamento.create');
+        return redirect('puntoVenta/departamento');
 
     }
 
@@ -73,6 +74,8 @@ class DepartamentoController extends Controller
      */
     public function edit($id)//Departamento $departamento)
     {
+        if($id == 0)
+          return redirect('puntoVenta/departamento');
         $datos['departamentos'] = Departamento::paginate();
         $datosD['d'] = Departamento::findOrFail($id);
         
@@ -103,22 +106,17 @@ class DepartamentoController extends Controller
      */
     public function destroy($id)//Departamento $departamento)
     {
+        //if($id == 0)
+          //  return back()->with(['departamento' => false]);
+        Producto::where('idDepartamento','=',$id)->update(['idDepartamento' => 0]);
         Departamento::destroy($id);
         return redirect('puntoVenta/departamento');
     }
 
-    public function buscador(Request $request)
+    protected function buscador(Request $request)
     {
         $datosConsulta['departamentosB'] = Departamento::where("nombre",'like',$request->texto."%")->get();
         return view('Departamento.form',$datosConsulta);
         //return $datosConsulta;
     }
-/*
-    public function buscador2(Request $request)
-    {
-        $datosConsulta['departamentosB'] = Departamento::where("nombre",'like',$request->texto."%")->get();
-        return view('Departamento.form2',$datosConsulta);
-        //return $datosConsulta;
-    }
-    */
 }

@@ -41,7 +41,8 @@
                     <h4 style="color:#4388CC">EMPLEADOS</h4>
 
                     <div class="input-group">
-                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR EMPLEADO" id="texto">
+                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR EMPLEADO"
+                            id="texto">
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -77,9 +78,10 @@
                                             <label for="nombre">
                                                 USUARIO
                                             </label>
-                                            <input class="text-uppercase " type="text"
-                                                class="form-control @error('username') is-invalid @enderror"
-                                                name="username" id="username" value="@if(session()->has('cambios')){{old('username')}}@else{{$admin->username}}@endif"
+                                            <input type="text"
+                                                class="form-control @error('username') is-invalid @enderror text-uppercase"
+                                                name="username" id="username"
+                                                value="@if(session()->has('cambios')){{old('username')}}@else{{$admin->username}}@endif"
                                                 placeholder="Ingresar usuario" required autocomplete="username"
                                                 autofocus>
                                             @error('username')
@@ -92,8 +94,10 @@
                                             <label for="nombre">
                                                 EMAIL
                                             </label>
-                                            <input type="text" class="text-uppercase  form-control @error('email') is-invalid @enderror"
-                                                name="email" id="email" value="@if(session()->has('cambios')){{old('email')}}@else{{$admin->email}}@endif"
+                                            <input type="text"
+                                                class="text-uppercase  form-control @error('email') is-invalid @enderror"
+                                                name="email" id="email"
+                                                value="@if(session()->has('cambios')){{old('email')}}@else{{$admin->email}}@endif"
                                                 placeholder="Ingresar correo electronico" required autocomplete="email"
                                                 autofocus>
                                             @error('email')
@@ -110,8 +114,8 @@
                                             </label>
                                             <textarea name="domicilio" id="domicilio"
                                                 class="text-uppercase  form-control @error('domicilio') is-invalid @enderror"
-                                                placeholder="Ingresar domicilio completo"
-                                                value="" required autocomplete="domicilio"
+                                                placeholder="Ingresar domicilio completo" value="" required
+                                                autocomplete="domicilio"
                                                 autofocus>@if(session()->has('cambios')){{old('domicilio')}}@else{{$sucursal->direccion}}@endif</textarea>
                                             @error('domicilio')
                                             <span class="invalid-feedback" role="alert">
@@ -125,7 +129,8 @@
                                             </label>
                                             <input class="text-uppercase " type="text"
                                                 class="form-control @error('telefono') is-invalid @enderror"
-                                                name="telefono" id="telefono" value="@if(session()->has('cambios')){{old('telefono')}}@else{{$sucursal->telefono}}@endif"
+                                                name="telefono" id="telefono"
+                                                value="@if(session()->has('cambios')){{old('telefono')}}@else{{$sucursal->telefono}}@endif"
                                                 placeholder="Ingresar telefono" required autocomplete="telefono"
                                                 autofocus>
                                             @error('telefono')
@@ -207,7 +212,7 @@
                         Habilitar
                     </button-->
                 </div>
-                
+
                 @else
                 @if(isset($datosEmpleado))
                 <div class="row px-3 pt-3 m-0">
@@ -222,36 +227,23 @@
                             </label>
                             <br />
                             <label for="Nombre">
-                                <h5>{{$datosEmpleado->nombre}} {{$datosEmpleado->apellidos}}</h5>
+                                <h5>{{$datosEmpleado->nombre}} {{$datosEmpleado->apellidoPaterno}} {{$datosEmpleado->apellidoMaterno}}</h5>
                             </label>
                             <fieldset disabled id="formEditar">
 
                                 <div class="form-col w-100">
                                     <div class="form-row">
-                                        <div class="form-group col-6">
+                                        <div class="form-group col">
                                             <label for="nombre">
                                                 NOMBRE
                                             </label>
-                                            <input class="text-uppercase " type="text" id="nombre"
-                                                class="form-control @error('nombre') is-invalid @enderror" name="nombre"
-                                                value="@if(session()->has('cambios')){{old('nombre')}}@else{{$datosEmpleado->nombre}}@endif" placeholder="Ingresar nombre(s)"
-                                                required autocomplete="nombre" autofocus>
-                                            @error('nombre')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="nombre">
-                                                APELLIDOS
-                                            </label>
-                                            <input class="text-uppercase " type="text"
-                                                class="form-control @error('apellidos') is-invalid @enderror"
-                                                name="apellidos" id="apellidos" value="@if(session()->has('cambios')){{old('apellidos')}}@else{{$datosEmpleado->apellidos}}@endif"
-                                                placeholder="Ingresar apellidos" required autocomplete="apellidos"
+                                            <input type="text" id="nombre"
+                                                class="form-control @error('nombre') is-invalid @enderror text-uppercase"
+                                                name="nombre"
+                                                value="@if(session()->has('cambios')){{old('nombre')}}@else{{$datosEmpleado->nombre}}@endif"
+                                                placeholder="Ingresar nombre(s)" required autocomplete="nombre"
                                                 autofocus>
-                                            @error('apellidos')
+                                            @error('nombre')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -260,7 +252,41 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="apellidoPaterno">
+                                                APELLIDO PATERNO
+                                            </label>
+                                            <input type="text"
+                                                class="form-control @error('apellidoPaterno') is-invalid @enderror text-uppercase"
+                                                name="apellidoPaterno" id="apellidoPaterno"
+                                                value="@if(session()->has('cambios')){{old('apellidoPaterno')}}@else{{$datosEmpleado->apellidoPaterno}}@endif"
+                                                placeholder="Ingresar apellido paterno" required autocomplete="apellidoPaterno"
+                                                autofocus>
+                                            @error('apellidoPaterno')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="apellidoMaterno">
+                                                APELLIDO MATERNO
+                                            </label>
+                                            <input type="text"
+                                                class="form-control @error('apellidoMaterno') is-invalid @enderror text-uppercase"
+                                                name="apellidoMaterno" id="apellidoMaterno"
+                                                value="@if(session()->has('cambios')){{old('apellidoMaterno')}}@else{{$datosEmpleado->apellidoMaterno}}@endif"
+                                                placeholder="Ingresar apellido materno" required autocomplete="apellidoMaterno"
+                                                autofocus>
+                                            @error('apellidoPaterno')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-6">
+                                            <label for="domicilio">
                                                 DOMICILIO
                                             </label>
                                             <textarea name="domicilio" id="domicilio"
@@ -276,11 +302,13 @@
                                         </div>
 
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="curp">
                                                 CURP
                                             </label>
-                                            <input class="text-uppercase " type="text" class="form-control @error('curp') is-invalid @enderror"
-                                                name="curp" id="curp" value="@if(session()->has('cambios')){{ old('curp') }}@else{{$datosEmpleado->curp}}@endif"
+                                            <input type="text"
+                                                class="form-control @error('curp') is-invalid @enderror text-uppercase"
+                                                name="curp" id="curp"
+                                                value="@if(session()->has('cambios')){{ old('curp') }}@else{{$datosEmpleado->curp}}@endif"
                                                 placeholder="Ingresar curp" required autocomplete="curp" autofocus>
                                             @error('curp')
                                             <span class="invalid-feedback" role="alert">
@@ -291,11 +319,13 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="email">
                                                 EMAIL
                                             </label>
-                                            <input class="text-uppercase " type="text" class="form-control @error('email') is-invalid @enderror"
-                                                name="email" id="email" value="@if(session()->has('cambios')){{old('email')}}@else{{$users->email}}@endif"
+                                            <input type="text"
+                                                class="form-control @error('email') is-invalid @enderror text-uppercase"
+                                                name="email" id="email"
+                                                value="@if(session()->has('cambios')){{old('email')}}@else{{$users->email}}@endif"
                                                 placeholder="Ingresar correo electronico" required autocomplete="email"
                                                 autofocus>
                                             @error('email')
@@ -308,9 +338,10 @@
                                             <label for="telefono">
                                                 TELEFONO
                                             </label>
-                                            <input class="text-uppercase " type="text"
-                                                class="form-control @error('telefono') is-invalid @enderror"
-                                                name="telefono" id="telefono" value="@if(session()->has('cambios')){{old('telefono')}}@else{{$datosEmpleado->telefono}}@endif"
+                                            <input type="text"
+                                                class="form-control @error('telefono') is-invalid @enderror text-uppercase"
+                                                name="telefono" id="telefono"
+                                                value="@if(session()->has('cambios')){{old('telefono')}}@else{{$datosEmpleado->telefono}}@endif"
                                                 placeholder="Ingresar telefono" required autocomplete="telefono"
                                                 autofocus>
                                             @error('telefono')
@@ -323,12 +354,13 @@
 
                                     <div class="form-row">
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="claveE">
                                                 CLAVE
                                             </label>
-                                            <input class="text-uppercase " type="text"
+                                            <input type="text"
                                                 class="form-control @error('claveE') is-invalid @enderror" name="claveE"
-                                                id="claveE" value="@if(session()->has('cambios')){{old('claveE')}}@else{{$datosEmpleado->claveE}}@endif"
+                                                id="claveE"
+                                                value="@if(session()->has('cambios')){{old('claveE')}}@else{{$datosEmpleado->claveE}}@endif"
                                                 placeholder="Ingresar clave para operaciones" required
                                                 autocomplete="claveE" autofocus>
                                             @error('claveE')
@@ -338,12 +370,13 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-6">
-                                            <label for="nombre">
+                                            <label for="username">
                                                 USUARIO
                                             </label>
-                                            <input class="text-uppercase " type="text"
-                                                class="form-control @error('username') is-invalid @enderror"
-                                                name="username" id="username" value="@if(session()->has('cambios')){{old('username')}}@else{{$users->username}}@endif"
+                                            <input type="text"
+                                                class="form-control @error('username') is-invalid @enderror text-uppercase"
+                                                name="username" id="username"
+                                                value="@if(session()->has('cambios')){{old('username')}}@else{{$users->username}}@endif"
                                                 placeholder="Ingresar usuario" required autocomplete="username"
                                                 autofocus>
                                             @error('username')
@@ -393,7 +426,7 @@
                         <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {{csrf_field()}}
                             {{ method_field('PUT')}}
-                            <input type="" id="status" name="status" value="baja" style="display:none">
+                            <input id="status" name="status" value="baja" style="display:none">
                             <button class="btn btn-outline-secondary" type="submit" value="SI">
                                 <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
@@ -401,9 +434,8 @@
                             </button>
                         </form>
                     </div>
-
                     @else
-                    <div class="col-4">
+                    <div class="col-auto ml-auto mr-0">
                         <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {{csrf_field()}}
                             {{ method_field('PUT')}}
@@ -417,11 +449,17 @@
                         </form>
                     </div>
                     @endif
-                    <!--button class="btn btn-outline-secondary my-3" type="button" onclick="habilitar()">
-                        <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                            height="25px">
-                        Habilitar
-                    </button-->
+                    <div class="col-auto mr-0">
+                        <form method="post" id="formEliminar" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
+                            {{csrf_field()}}
+                            {{ method_field('DELETE')}}
+                            <button class="btn btn-outline-danger" onclick="eliminarEmpleado()" type="submit" value="SI">
+                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
+                                    width="25px" height="25px">
+                                ELIMINAR
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 @else
                 <div class="row px-3 py-3 m-0">
@@ -437,28 +475,15 @@
                         </label>
                         <div class="form-col w-100">
                             <div class="form-row">
-                                <div class="form-group col-6">
+                                <div class="form-group col">
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
                                     <input type="text" id="nombre"
-                                        class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre"
-                                        id="nombre" value="{{ old('nombre') }}" placeholder="Ingresar nombre(s)"
-                                        required autocomplete="nombre" autofocus>
+                                        class="text-uppercase  form-control @error('nombre') is-invalid @enderror"
+                                        name="nombre" id="nombre" value="{{ old('nombre') }}"
+                                        placeholder="Ingresar nombre(s)" required autocomplete="nombre" autofocus>
                                     @error('nombre')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="nombre">
-                                        APELLIDOS
-                                    </label>
-                                    <input type="text" class="text-uppercase  form-control @error('apellidos') is-invalid @enderror"
-                                        name="apellidos" id="apellidos" value="{{ old('apellidos') }}"
-                                        placeholder="Ingresar apellidos" required autocomplete="apellidos" autofocus>
-                                    @error('apellidos')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -467,7 +492,39 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="apellidoPaterno">
+                                        APELLIDO PATERNO
+                                    </label>
+                                    <input type="text"
+                                        class="text-uppercase  form-control @error('apellidoPaterno') is-invalid @enderror"
+                                        name="apellidoPaterno" id="apellidoPaterno" value="{{ old('apellidoPaterno') }}"
+                                        placeholder="Ingresar apellido paterno" required autocomplete="apellidoPaterno"
+                                        autofocus>
+                                    @error('apellidoPaterno')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="apellidoMaterno">
+                                        APELLIDO MATERNO
+                                    </label>
+                                    <input type="text"
+                                        class="text-uppercase  form-control @error('apellidoMaterno') is-invalid @enderror"
+                                        name="apellidoMaterno" id="apellidoMaterno" value="{{ old('apellidoMaterno') }}"
+                                        placeholder="Ingresar apellido materno" required autocomplete="apellidoMaterno"
+                                        autofocus>
+                                    @error('apellidoMaterno')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-6">
+                                    <label for="domicilio">
                                         DOMICILIO
                                     </label>
                                     <!--input type="text" class="form-control @error('domicilio') is-invalid @enderror"
@@ -485,10 +542,11 @@
                                 </div>
 
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="curp">
                                         CURP
                                     </label>
-                                    <input type="text" class="text-uppercase  form-control @error('curp') is-invalid @enderror"
+                                    <input type="text"
+                                        class="text-uppercase  form-control @error('curp') is-invalid @enderror"
                                         name="curp" id="curp" value="{{ old('curp') }}" placeholder="Ingresar curp"
                                         required autocomplete="curp" autofocus>
                                     @error('curp')
@@ -500,10 +558,11 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="email">
                                         EMAIL
                                     </label>
-                                    <input type="text" class="text-uppercase  form-control @error('email') is-invalid @enderror"
+                                    <input type="text"
+                                        class="text-uppercase  form-control @error('email') is-invalid @enderror"
                                         name="email" id="email" value="{{ old('email') }}"
                                         placeholder="Ingresar correo electronico" required autocomplete="email"
                                         autofocus>
@@ -517,7 +576,8 @@
                                     <label for="telefono">
                                         TELEFONO
                                     </label>
-                                    <input type="text" class="text-uppercase  form-control @error('telefono') is-invalid @enderror"
+                                    <input type="text"
+                                        class="text-uppercase  form-control @error('telefono') is-invalid @enderror"
                                         name="telefono" id="telefono" value="{{ old('telefono') }}"
                                         placeholder="Ingresar telefono" required autocomplete="telefono" autofocus>
                                     @error('telefono')
@@ -529,10 +589,11 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="claveE">
                                         CLAVE
                                     </label>
-                                    <input type="text" class="text-uppercase  form-control @error('claveE') is-invalid @enderror"
+                                    <input type="text"
+                                        class="text-uppercase  form-control @error('claveE') is-invalid @enderror"
                                         name="claveE" id="claveE" value="{{ old('claveE') }}"
                                         placeholder="Ingresar clave para operaciones" required autocomplete="claveE"
                                         autofocus>
@@ -543,10 +604,11 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="username">
                                         USUARIO
                                     </label>
-                                    <input type="text" class="text-uppercase  form-control @error('username') is-invalid @enderror"
+                                    <input type="text"
+                                        class="text-uppercase  form-control @error('username') is-invalid @enderror"
                                         name="username" id="username" value="{{ old('username') }}"
                                         placeholder="Ingresar usuario" required autocomplete="username" autofocus>
                                     @error('username')
@@ -558,11 +620,11 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6">
-                                    <label for="nombre">
+                                    <label for="password">
                                         CONTRASEÑA
                                     </label>
-                                    <input type="password" class="text-uppercase  form-control @error('password') is-invalid @enderror"
-                                        name="password" id="password" placeholder="Ingresar contraseña" required
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                        name="password" id="password" placeholder="INGRESAR CONTRASEÑA" required
                                         autocomplete="new-password" autofocus>
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -575,8 +637,8 @@
                                         {{ __('CONFIRMAR CONTRASEÑA') }}
 
                                     </label>
-                                    <input type="password" class="text-uppercase  form-control" name="password_confirmation"
-                                        id="password-confirm" placeholder="Ingresar de nuevo contraseña" required
+                                    <input type="password" class="form-control" name="password_confirmation"
+                                        id="password-confirm" placeholder="INGRESAR CONTRASEÑA NUEVAMENTE" required
                                         autocomplete="new-password">
                                 </div>
                             </div>
@@ -635,7 +697,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="cuerpoModalOriginal()" data-dismiss="modal">CERRAR</button>
+                <button type="button" class="btn btn-secondary" onclick="cuerpoModalOriginal()"
+                    data-dismiss="modal">CERRAR</button>
                 <button type="button" class="btn btn-primary" id="continuar"
                     onclick="actualizarPassword()">CONTINUAR</button>
             </div>
@@ -643,10 +706,20 @@
     </div>
 </div>
 <script>
+function eliminarEmpleado() {
+    var form = document.getElementById('formEliminar');
+    form.addEventListener('submit', function(event) {
+        // si es false entonces que no haga el submit
+        if (!confirm('¿ESTA SEGURO QUE DESEA ELIMINAR ESTE EMPLEADO?')) {
+             event.preventDefault();
+        }
+    }, false);
+};
 const texto = document.querySelector('#texto');
 //$('.svg').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
 let cuerpoModal = document.getElementById("cuerpoModal").innerHTML;
-function cuerpoModalOriginal(){
+
+function cuerpoModalOriginal() {
     document.getElementById("cuerpoModal").innerHTML = cuerpoModal;
     $('#continuar').show();
 }
@@ -657,13 +730,13 @@ async function actualizarPassword() {
         let espacio = /\s/;
         if (espacio.test(cambio.value)) {
             document.getElementById("alertaPassword").innerHTML =
-            "La contraseña no debe tener espacios"; //respuestaCompra;
+                "La contraseña no debe tener espacios"; //respuestaCompra;
             $('#passwordChange').removeClass('is-valid').addClass('is-invalid');
             return;
         }
         if (cambio.value.length > 0) {
             if (cambio.value.length >= 8) {
-                let id = @if(isset($datosEmpleado)) {{ $users->id }}
+                let id = @if(isset($datosEmpleado)) {{$users->id}}
                 @else null @endif;
                 const url = "{{url('/')}}/puntoVenta/empleado/" + id;
                 console.log(url);
@@ -703,7 +776,7 @@ async function actualizarPassword() {
 
         } else {
             document.getElementById("alertaPassword").innerHTML =
-            "Por favor escriba su contraseña"; //respuestaCompra;
+                "Por favor escriba su contraseña"; //respuestaCompra;
             $('#passwordChange').removeClass('is-valid').addClass('is-invalid');
         }
     } catch (err) {

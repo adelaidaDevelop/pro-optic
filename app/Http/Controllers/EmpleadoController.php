@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use App\Models\User;
 use App\Models\Sucursal;
+use App\Models\Sucursal_empleado;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,22 +30,9 @@ class EmpleadoController extends Controller
 
     public function index()
     {
-        //return view('Empleado.index');
-        //return view('Empleado.sesion1');
-        //$datos['departamentos'] = Departamento::paginate();
-        //return view('header2');//,$datos);
-        // return view('Empleado.index2');//,$datos);
-         return view('Empleado.index2');
-       // return view('Empleado.index');//,$datos);
+        return view('Empleado.index2');
        
     }
-    /*
-    public function index2()
-    {
-        
-        return view('Empleado.sesion1');//,$datos);
-
-    }*/
     /**
      * Show the form for creating a new resource.
      *
@@ -53,19 +41,7 @@ class EmpleadoController extends Controller
 
     public function create(array $data)
     {
-        Empleado::create([
-            'nombre' => 'Adelaida',
-            'apellidos' => 'Molina Reyes',
-            'claveE' => '123457',
-            'telefono' => '9512274920',
-            'cargo' => 'administrador',
-            'curp' => 'DDFSD6SDF5DF4D',
-            'domicilio' => 'Libertad 12',
-            'usuario' => $data['name'],
-            'contra' => $data['password'],
-            'correo' => $data['email'],
-            'status' =>'alta',
-        ]);
+        return view('Empleado.index2');
     }
 
     /**
@@ -81,22 +57,23 @@ class EmpleadoController extends Controller
         $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
         $dato = ['status','alta'];
         $datosEmpleado = Arr::add($datosEmpleado,'status','alta');
-        //$datosEmpleado = Arr::add($datosEmpleado, 'price', 100);
-        
-        //$this->validator($request->all())->validate();
-        User::create([
+        $usuario = User::create([
             'username' => $request['username'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'tipo' => 0,
         ]);
 
-        $user = User::latest('id')->first();
-        $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$user->id);
+        //$user = User::latest('id')->first();
+        $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$usuario->id);
         //$empleado = new Empleado;
-        Empleado::create($datosEmpleado);
+        $empleado = Empleado::create($datosEmpleado);
+        $SucursalEmpleado = new Sucursal_empleado;
+        $SucursalEmpleado->idEmpleado = $empleado->id;
+        $SucursalEmpleado->idSucursal = session('sucursal');
+        $SucursalEmpleado->save();
         //Empleado::insert($datosEmpleado);
-        return redirect('puntoVenta/empleado');
+        return redirect('puntoVenta/empleado/'.$empleado->id.'/edit');
         
     }
 
@@ -104,7 +81,8 @@ class EmpleadoController extends Controller
     {
         return Validator::make($data, [
                 'nombre' => ['required', 'string', 'max:30'],
-                'apellidos' => ['required', 'string', 'max:30'],
+                'apellidoPaterno' => ['required', 'string', 'max:30'],
+                'apellidoMaterno' => ['required', 'string', 'max:30'],
                 'domicilio' => ['required', 'string', 'max:50'],
                 'curp' => ['required', 'string', 'max:18','unique:empleados'],
                 'telefono' => ['required', 'string', 'max:10'],
@@ -196,8 +174,10 @@ class EmpleadoController extends Controller
             $user = User::where('id','=',$empleado->idUsuario)->first();
             if($request->input('nombre') != $empleado->nombre)
                 $datos = Arr::add($datos,'nombre',$request->input('nombre'));
-            if($request->input('apellidos') != $empleado->apellidos)
-                $datos = Arr::add($datos,'apellidos',$request->input('apellidos'));
+            if($request->input('apellidoPaterno') != $empleado->apellidoPaterno)
+                $datos = Arr::add($datos,'apellidoPaterno',$request->input('apellidoPaterno'));
+            if($request->input('apellidoMaterno') != $empleado->apellidoMaterno)
+                $datos = Arr::add($datos,'apellidoMaterno',$request->input('apellidoMaterno'));
             if($request->input('domicilio') != $empleado->domicilio)
                 $datos = Arr::add($datos,'domicilio',$request->input('domicilio'));
             if($request->input('curp') != $empleado->curp)
@@ -246,9 +226,9 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
-        //Empleado::destroy($id);
-        $dato = (['status'=>'baja']);;
-        Empleado::where('id','=',$id)->update($dato);
+        Empleado::destroy($id);
+        //$dato = (['status'=>'baja']);;
+        //Empleado::where('id','=',$id)->update($dato);
         return redirect('puntoVenta/empleado');
     }
 
