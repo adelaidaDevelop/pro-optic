@@ -147,7 +147,6 @@ PRODUCTOS
                             INFORMACION DEL PRODUCTO
                         </h6>
                     </div>
-
                     <div class="row" style="background:#ED4D46">
                         <h6 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">
                             PRODUCTO
@@ -207,17 +206,19 @@ PRODUCTOS
                                 departamento = d[count8].nombre;
                             }
                         }
+
                         let id = productos[count5].id;
+
                         cuerpo = cuerpo + `
-                        <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">
+                        <tr onclick="" data-dismiss="modal">
                             <th scope="row">` + productos[count5].id + `</th>
                             <td>` + productos[count5].codigoBarras + `</td>
                             <td>` + productos[count5].nombre + `</td>
                             <td>` + productosSucursal[x].existencia + `</td>
                         <td>` + departamento + `</td>
 
-                        <td>` + `0` + `</td>
-                            <td>` + `0` + `</td>
+                        <td>` + productosSucursal[x].costo + `</td>
+                            <td>` + productosSucursal[x].precio + `</td>
                             <td>` +
                             ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
                             VER MAS
@@ -235,82 +236,89 @@ PRODUCTOS
 
     function info4(id) {
         //Modal
+        //let x1= 0;
         let datosProduct = "";
         let imagen = "";
         let departamento = "";
-        for (let x in productosSucursal) {
+        let ms = 0;
+        for (let j in productosSucursal) {
             for (count10 in productos) {
-                if (productos[count10].id === productosSucursal[x].idProducto) {
+                if (productos[count10].id === productosSucursal[j].idProducto) {
                     if (productos[count10].id === id) {
                         for (count11 in d) {
                             if (productos[count10].idDepartamento === d[count11].id) {
                                 departamento = d[count11].nombre;
                             }
                         }
+                        x1= productos[count10].id;
                         x = productos[count10].id;
+                        console.log(x);
+                        ms = productosSucursal[j].minimoStock;
                         datosProduct =
                             `
-                <div class="col-3">
-                        <br/>
-                        <label for="codigoBarras">
-                            <h6 class="ml-4"> {{'CODIGO DE BARRAS'}}</h6>
-                        </label>
-                       <br/>
-                        <label for="Nombre">
-                            <h6  class="ml-4 mt-4">{{'NOMBRE'}}</h6>
-                        </label>
-                        <br /><br/>
-                        <label for="Descripcion">
-                            <h6  class="ml-4"> {{'DESCRIPCION'}} </h6>
-                        </label>
-                        <br /><br /> <br/> <br/>
-                        <label for="MinimoStock">
-                            <h6  class="ml-4"> {{'MINIMO STOCK'}}</h6>
-                        </label>
-                        <br /> <br/>
-                        <label for="Receta">
-                            <h6  class="ml-4"> {{'RECETA MEDICA'}} </h6>
-                        </label>
-                        <br /><br />
-                        <label for="idDepartamento">
-                            <h6  class="ml-4"> {{'DEPARTAMENTO'}}</h6>
-                        </label>
-                        <br />
-                    </div>
-                    <div class="col-5">
-                        <br />
-                        <!--El name debe ser igual al de la base de datos-->
-                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase " placeholder="Ingresar codigo de barras" value="` + productos[count10].codigoBarras + `" required autocomplete="codigoBarras" autofocus disabled>
-                        <br />
-                        <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required disabled>
-                        <br />
-                        <textarea name="descripcion" id="descripcion" class="form-control text-uppercase" placeholder="Descripcion del producto" rows="3" cols="23" required disabled>` + productos[count10].descripcion + `</textarea>
-                        <br />
-                        <input type="number" name="minimo_stock" id="minimo_stock" class="form-control text-uppercase" placeholder="Ingrese el minimo de productos permitidos" value="` + productos[count10].minimo_stock + `" autofocus required disabled>
-                        <br />
-                        <select class="form-control text-uppercase" name="Receta" id="Receta"  disabled>
-                            <option value="" selected>` + productos[count10].receta + ` </option>
-                        </select>
-                        <br />
-                        <select class="form-control text-uppercase" name="Depa" id="Depa"  disabled>
-                            <option value="" selected>` + departamento + ` </option>
-                        </select>
-                    </div>
-                    <div class="col-4 text-center">
-                        <br /><br />
-                        <label for="Imagen">
-                            <h5> <strong>{{'FOTO'}}</strong></h5>
-                        </label required>
-                        <br />
-                        <img src="{{ asset('storage')}}/` + productos[count10].imagen + ` " alt="" width="200">
-                        <br /><br />
-                        
-                        <a class="btn btn-primary" href="{{ url('/puntoVenta/producto/` + x + `/edit')}}"> EDITAR PRODUCTO </a>
+                                <div class="col-3">
+                                        <br/>
+                                        <label for="codigoBarras">
+                                            <h6 class="ml-4"> {{'CODIGO DE BARRAS'}}</h6>
+                                        </label>
+                                    <br/>
+                                        <label for="Nombre">
+                                            <h6  class="ml-4 mt-4">{{'NOMBRE'}}</h6>
+                                        </label>
+                                        <br /><br/>
+                                        <label for="Descripcion">
+                                            <h6  class="ml-4"> {{'DESCRIPCION'}} </h6>
+                                        </label>
+                                        <br /><br /> <br/> <br/>
+                                        <label for="MinimoStock">
+                                            <h6  class="ml-4"> {{'MINIMO STOCK'}}</h6>
+                                        </label>
+                                        <br /> <br/>
+                                        <label for="Receta">
+                                            <h6  class="ml-4"> {{'RECETA MEDICA'}} </h6>
+                                        </label>
+                                        <br /><br />
+                                        <label for="idDepartamento">
+                                            <h6  class="ml-4"> {{'DEPARTAMENTO'}}</h6>
+                                        </label>
+                                        <br />
+                                    </div>
+                                    <div class="col-5">
+                                        <br />
+                                        <!--El name debe ser igual al de la base de datos-->
+                                        <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase " placeholder="Ingresar codigo de barras" value="` + productos[count10].codigoBarras + `" required autocomplete="codigoBarras" autofocus disabled>
+                                        <br />
+                                        <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required disabled>
+                                        <br />
+                                        <textarea name="descripcion" id="descripcion" class="form-control text-uppercase" placeholder="Descripcion del producto" rows="3" cols="23" required disabled>` + productos[count10].descripcion + `</textarea>
+                                        <br />
+                                        <input type="number" name="minimoStock" id="minimoStock" class="form-control text-uppercase" placeholder="Ingrese el minimo de productos permitidos" value="` + ms + `" autofocus required disabled>
+                                        <br />
+                                        <select class="form-control text-uppercase" name="Receta" id="Receta"  disabled>
+                                            <option value="" selected>` + productos[count10].receta + ` </option>
+                                        </select>
+                                        <br />
+                                        <select class="form-control text-uppercase" name="Depa" id="Depa"  disabled>
+                                            <option value="" selected>` + departamento + ` </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <br /><br />
+                                        <label for="Imagen">
+                                            <h5> <strong>{{'FOTO'}}</strong></h5>
+                                        </label required>
+                                        <br />
+                                        <img src="{{ asset('storage')}}/` + productos[count10].imagen + ` " alt="" width="200">
+                                        <br /><br />
+                                        <a class="btn btn-primary" href="{{ url('/puntoVenta/producto/`+x+`/edit')}}"> EDITAR PRODUCTO </a>
+                                        <br/><br/>
+                                        
+                                        <a class="btn btn-danger" data-method="delete" data-confirm="Are you sure?" href="{{ url('/puntoVenta/productoEli/`+x+`', [`+x+`])}}"> ELIMINAR PRODUCTO </a>
+                                        
+                                    </div>
 
-                    </div>
-
-                    <br/>
-                `
+                                    <br/>
+                                `;
                     }
                 }
             }
@@ -319,7 +327,7 @@ PRODUCTOS
     };
 
     function buscarFolioNombre() {
-        let seleccion = document.querySelector('input[name="checkbox2"]:checked');
+        let seleccion = document.querySelector("input[name='checkbox2']:checked");
         opcFolioNombre = seleccion.value;
         if (opcFolioNombre === 'nombre') {
             console.log(opcFolioNombre);
@@ -329,7 +337,7 @@ PRODUCTOS
             console.log(opcFolioNombre);
             buscarPorFolio();
         }
-    }
+    };
 
     function buscarPorFolio() {
         const palabraBusqueda = document.querySelector('#busquedaProducto');
@@ -347,7 +355,7 @@ PRODUCTOS
                         }
                         let id = productos[count20].id;
                         cuerpo = cuerpo + `
-                            <tr onclick="agregarProducto(` + productos[count20].id + `)" data-dismiss="modal">
+                            <tr onclick="" data-dismiss="modal">
                                 <th scope="row">` + productos[count20].id + `</th>
                                 <td>` + productos[count20].codigoBarras + `</td>
                                 <td>` + productos[count20].nombre + `</td>
@@ -388,14 +396,14 @@ PRODUCTOS
                             }
                             let id = productos[count20].id;
                             cuerpo = cuerpo + `
-                                <tr onclick="agregarProducto(` + productos[count20].id + `)" data-dismiss="modal">
+                                <tr onclick="" data-dismiss="modal">
                                     <th scope="row">` + productos[count20].id + `</th>
                                     <td>` + productos[count20].codigoBarras + `</td>
                                     <td>` + productos[count20].nombre + `</td>
                                     <td>` + productosSucursal[x].existencia + `</td>
                                 <td>` + departamento + `</td>
-                                <td>` + `0` + `</td>
-                                    <td>` + `0` + `</td>
+                                <td>` + productosSucursal[x].costo + `</td>
+                                    <td>` + productosSucursal.precio + `</td>
                                     <td>` +
                                 ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
                                     VER MAS
@@ -448,7 +456,7 @@ PRODUCTOS
                         }
                         let id = productos[count30].id;
                         cuerpo = cuerpo + `
-                                        <tr onclick="agregarProducto(` + productos[count30].id + `)" data-dismiss="modal">
+                                        <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + productos[count30].id + `</th>
                                             <td>` + productos[count30].codigoBarras + `</td>
                                             <td>` + productos[count30].nombre + `</td>
@@ -471,10 +479,7 @@ PRODUCTOS
     };
     buscarProducto();
 
-    function convertirMayuscula(nameInput){
-        let cadenaConv= nameInput.toUpperCase(); 
-        let depa = document.querySelector('#idDepartamento');
-    }
+
 </script>
 
 @endsection

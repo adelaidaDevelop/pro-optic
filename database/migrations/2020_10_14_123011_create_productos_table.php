@@ -17,7 +17,7 @@ class CreateProductosTable extends Migration
             $table->id();
             $table->string('codigoBarras')->unique()->nullable();
             $table->string('nombre')->unique();
-            $table->string('imagen');
+            $table->string('imagen')->nullable();
             $table->string('descripcion');
             $table->string('receta');
             //$table->integer('minimo_stock');

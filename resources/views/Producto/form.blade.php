@@ -40,7 +40,7 @@
         <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase mb-2 mt-3" placeholder="Ingresar codigo de barras" value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:''}}" required autocomplete="codigoBarras" autofocus>
         <input type="text" name="nombre" id="nombre" class="text-uppercase  form-control mb-3" placeholder="Nombre productos" value="{{ isset($producto->nombre)?$producto->nombre:''}}" autofocus required>
         <textarea name="descripcion" id="descripcion" class="text-uppercase form-control  mb-3" placeholder="Descripcion del producto" rows="2" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
-        <input type="number" min=0 name="minimo_stock" id="minimo_stock" class="form-control text-uppercase mb-3" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($producto->minimo_stock)?$producto->minimo_stock:''}}" autofocus required>
+        <input type="number" min=0 name="minimoStock" id="minimoStock" class="form-control text-uppercase mb-3" placeholder="Ingrese el minimo de productos permitidos" value="{{ isset($sucursalProd->id)?$sucursalProd->minimoStock:''}}" autofocus required>
         <!--<select class="form-control text-uppercase mb-3" name="receta" id="receta" required>
             <option value="" selected>Elija una opcion</option>
             <option value="si">SI</option>
@@ -86,8 +86,6 @@
         @endif
     </div>
 </div>
-
-
 <div class="row text-right w-100">
     <div class="col-md-6"> </div>
     <div class="col-md-6">
@@ -98,8 +96,3 @@
             <img src="{{ asset('img\regresar2.png') }}" class="img-thumbnail" alt="Regresar" width="50px" height="50px" />CANCELAR</a>
     </div>
 </div>
-<script>
-    function convertirMayuscula(nameInput) {
-        let cadenaConv = nameInput.toUpperCase();
-    }
-</script>

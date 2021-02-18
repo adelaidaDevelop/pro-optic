@@ -12,5 +12,8 @@ class Sucursal_producto extends Model
         'idSucursal',
         'idProducto',
         'existencia',
+        'costo',
+        'precio',
+        'minimoStock'
     ];
 }

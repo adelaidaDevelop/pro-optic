@@ -20,9 +20,10 @@ use App\Http\Controllers\PagoCompraController;
 use App\Http\Controllers\DevolucionController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ProductosCaducidadController;
-
-
+use App\Models\Producto;
+use App\Models\Sucursal_producto;
 use Illuminate\Support\Facades\Route;
+
 Route::prefix('/puntoVenta')->group(function()
 {
     Route::resource('departamento', DepartamentoController::class);//->middleware('auth');
@@ -34,10 +35,15 @@ Route::prefix('/puntoVenta')->group(function()
     Route::post('/logout', [LoginController::class,'logout'])->name('Login');
 
 
+    Route::get('productoEli/{id}', function($id){
+        $producto = Sucursal_producto::where('idProducto','=',$id)->delete();
+        return redirect()->back();
+    });
     Route::resource('cliente', ClienteController::class);
     Route::resource('producto', ProductoController::class);
     Route::resource('corteCaja', ReporteController::class);
     Route::get('reporteInventario', [ReporteController::class,'index2']);
+    //Route::get('eliminar/{id}', [ProductoController::class,'eliminar']);
 
     Route::middleware('isEmpleado')->group(function () {
         Route::resource('empleado', EmpleadoController::class);

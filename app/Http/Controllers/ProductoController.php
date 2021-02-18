@@ -24,7 +24,7 @@ class ProductoController extends Controller
         $datosP= Producto::all();
         $depa= Departamento::all();
         $idSucursal = session('sucursal');
-        $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
          
           return view('Producto.index',$depas, compact('depa', 'datosP','productosSucursal' ));
     }
@@ -49,16 +49,23 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //$datosProducto = request()->all();
-        
-        $datosProducto = request()->except('_token');
-        $datosProducto['existencia']=0;
-        $datosProducto['costo']=0;
-        $datosProducto['precio']=0;
+        $datosProducto = request()->except('_token', 'minimoStock');
+      //  $datosProducto['existencia']=0;
+     //   $datosProducto['costo']=0;
+     //   $datosProducto['precio']=0;
         if($request->hasFile('imagen')){
             $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
         }
-        Producto::create($datosProducto);
+        //Producto::create($datosProducto);
+        $producto = Producto::create($datosProducto);
+      //  $datosMS= request()->except('_token', 'minimoStock');
+        $datosSP['costo']= 0;
+       $datosSP['precio']= 0;
+       $datosSP['existencia']= 0;
+       $datosSP['minimoStock']= $request->input('minimoStock');//$datosProducto['minimoStock'];
+       $datosSP['idSucursal'] = session('sucursal');
+       $datosSP['idProducto'] = $producto->id;
+        Sucursal_producto::create($datosSP);
 
        // $datosSucProd = 
        // $sucursal_producto = new Sucursal_producto;
@@ -118,8 +125,10 @@ class ProductoController extends Controller
         //
         $departamento= Departamento::all();
         $producto= Producto::findOrFail($id);
+        //$sucursalProd = Sucursal_producto::where('idProducto', '=', $producto->id)->first()->get();
         return view('Producto.edit', compact('producto', 'departamento'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -130,18 +139,20 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-      //  $departamento= Departamento::all();
-        $datosProducto=request()->except(['_token', '_method']);
-
-        if($request->hasFile('imagen')){
-            $producto=Producto::findOrFail($id);
-            //borrar fotografia antigua
-            Storage::delete('public/'.$producto->imagen);
-            $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
-        }
-
-        Producto::where('id', '=',$id)->update($datosProducto);
+        $datosProducto = request()->except('_token', 'minimoStock');
+       if($request->hasFile('imagen')){
+        $producto=Producto::findOrFail($id);
+        Storage::delete('public/'.$producto->imagen);
+        $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
+    }
+        $producto = Producto::where('id', '=', $id)->update($datosProducto);
+        //  $datosSP['costo']= 0;
+        // $datosSP['precio']= 0;
+        // $datosSP['existencia']= 0;
+       //  $datosSP['minimoStock']= $request->input('minimoStock');
+      //   $datosSP['idProducto'] = $producto->id;
+       //   Sucursal_producto::create($datosSP);
+        ///
         return redirect('producto');
     }
 
@@ -152,15 +163,24 @@ class ProductoController extends Controller
      * @return \Illuminate\Http\Response
      */
     //public function destroy(Producto $producto)
+    public function eliminar($id){
+        $producto= Producto::findOrFail($id);
+        return view('Producto/delete', compact('producto'));
+    }
+
     public function destroy($id)
     {
+       // return "HOLA";
         //buscaar todos los datos que corresponden a este id
         $producto= Producto::findOrFail($id);
+      //  $producto= Producto::where('idProducto', '=', $id);
 
-        if( Storage::delete('public/'.$producto->imagen)){
-            Producto::destroy($id);
-        }
-        return redirect('producto');
+       // if( Storage::delete('public/'.$producto->imagen)){
+            //Producto::destroy($producto->id);
+            Producto::destroy($producto->$id);
+       // } 
+       // return redirect('puntoVenta/producto');
+       return "HOLA";
     }
 
     public function buscarProducto(Request $request)
