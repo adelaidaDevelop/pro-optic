@@ -25,6 +25,7 @@ class SucursalProductoController extends Controller
     public function create()
     {
         //
+       
     }
 
     /**
@@ -33,10 +34,13 @@ class SucursalProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         //
         
+    }
+    public function crear($id){
+        return "creado";
     }
 
     /**

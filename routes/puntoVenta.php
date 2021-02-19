@@ -39,8 +39,10 @@ Route::prefix('/puntoVenta')->group(function()
 
     //AGREGAR PRODUCTOS A SUCURSAL DESDE STOCK
     Route::get('/producto/stock', [ProductoController::class,'stock']);
+    Route::get('/sucursalProducto/crear/{id}', [SucursalProductoController::class,'crear']);
+    
     //Sucursal producto
-   // Route::get('sucursalProducto', SucursalProductoController::class);
+     Route::resource('sucursalProducto', SucursalProductoController::class);
 
 
     Route::get('productoEli/{id}', function($id){

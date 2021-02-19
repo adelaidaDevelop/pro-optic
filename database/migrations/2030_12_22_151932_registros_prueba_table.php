@@ -113,6 +113,7 @@ class RegistrosPruebaTable extends Migration
         $sucursal = new Sucursal;
         $sucursal->direccion ='SAN FELIPE 23, SAN MARTIN MEXICAPAN';
         $sucursal->telefono = '9512456511';
+        $sucursal->status = 1;
         $sucursal->save();
 
         $productosSucursal = new Sucursal_producto;
