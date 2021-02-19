@@ -19,6 +19,7 @@ class CreateSucursalProductosTable extends Migration
             $table->unsignedInteger('precio');
             $table->unsignedInteger('existencia');
             $table->unsignedInteger('minimoStock');
+            $table->unsignedInteger('status');
             $table->foreignId('idSucursal')->constrained('sucursals');
             $table->foreignId('idProducto')->constrained('productos');
             $table->timestamps();

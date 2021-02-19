@@ -20,6 +20,7 @@ use App\Http\Controllers\PagoCompraController;
 use App\Http\Controllers\DevolucionController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ProductosCaducidadController;
+use App\Http\Controllers\SucursalProductoController;
 use App\Models\Producto;
 use App\Models\Sucursal_producto;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,19 @@ Route::prefix('/puntoVenta')->group(function()
         $producto = Sucursal_producto::where('idProducto','=',$id)->delete();
         return redirect()->back();
     });
+/*
+    Route::get('productoEli2/{id}', function($id){
+        $producto = Sucursal_producto::where('idProducto','=',$id)->get();
+        $datosSP['status']= 0;
+        $producto->update($datosSP);
+        return redirect()->back();
+    });
+    */
+
+    //ELIMINAR PRODUCTOS DE SUCURSAL
+    Route::get('productoEli3/{id}', [ProductoController::class,'eliminar3']);
+
+
     Route::resource('cliente', ClienteController::class);
     Route::resource('producto', ProductoController::class);
     Route::resource('corteCaja', ReporteController::class);

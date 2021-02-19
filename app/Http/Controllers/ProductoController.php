@@ -25,7 +25,6 @@ class ProductoController extends Controller
         $depa= Departamento::all();
         $idSucursal = session('sucursal');
         $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
-         
           return view('Producto.index',$depas, compact('depa', 'datosP','productosSucursal' ));
     }
 
@@ -56,34 +55,19 @@ class ProductoController extends Controller
         if($request->hasFile('imagen')){
             $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
         }
-        //Producto::create($datosProducto);
         $producto = Producto::create($datosProducto);
-      //  $datosMS= request()->except('_token', 'minimoStock');
         $datosSP['costo']= 0;
        $datosSP['precio']= 0;
        $datosSP['existencia']= 0;
        $datosSP['minimoStock']= $request->input('minimoStock');//$datosProducto['minimoStock'];
+       $datosSP['status']= 1;
        $datosSP['idSucursal'] = session('sucursal');
        $datosSP['idProducto'] = $producto->id;
         Sucursal_producto::create($datosSP);
-
-       // $datosSucProd = 
-       // $sucursal_producto = new Sucursal_producto;
-       // $sucursal_producto['idSucursal'] = session('sucursal');
-       //$sucursal_producto['idProducto'] =  
-
-/*
-        $producto= new Producto;
-        $producto->existencia = 0;
-        $producto->costo=0;
-        $producto->precio= 0;
-
-        if($request->hasFile('Imagen')){
-        $producto->Imagen = $request->file('Imagen')->store('uploads','public');
-        }
-        $producto->save();
-*/
        // return response()->json($datosProducto);
+      // TempData["success"] = "registro grabado";
+     //::success('this is a test message');
+    
         return redirect('/puntoVenta/producto');
     }
 
@@ -125,8 +109,10 @@ class ProductoController extends Controller
         //
         $departamento= Departamento::all();
         $producto= Producto::findOrFail($id);
-        //$sucursalProd = Sucursal_producto::where('idProducto', '=', $producto->id)->first()->get();
-        return view('Producto.edit', compact('producto', 'departamento'));
+       // $sucursalProd = Sucursal_producto::where('idProducto', '=', $id)->get();
+        $idSucursal = session('sucursal');
+        $sucursalProd = Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
+     return view('Producto.edit', compact('producto', 'departamento', 'sucursalProd'));
     }
 
 
@@ -145,15 +131,21 @@ class ProductoController extends Controller
         Storage::delete('public/'.$producto->imagen);
         $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
     }
-        $producto = Producto::where('id', '=', $id)->update($datosProducto);
+        $producto = Producto::findOrFail($id);
+        $producto->update($datosProducto);
+
+
+       // $producto = Producto::where('id', '=', $id)->update($datosProducto);
+
         //  $datosSP['costo']= 0;
         // $datosSP['precio']= 0;
         // $datosSP['existencia']= 0;
-       //  $datosSP['minimoStock']= $request->input('minimoStock');
-      //   $datosSP['idProducto'] = $producto->id;
+         $datosSP['minimoStock']= $request->input('minimoStock');
+         $sp = Sucursal_producto::where('idProducto', '=', $id);
+         $sp->update($datosSP);
        //   Sucursal_producto::create($datosSP);
         ///
-        return redirect('producto');
+        return redirect('puntoVenta/producto');
     }
 
     /**
@@ -194,5 +186,14 @@ class ProductoController extends Controller
         $datosConsulta['departamentosB'] = Producto::where("nombre",'like',$request->texto."%")->get();
         return view('Departamento.form',$datosConsulta);
         //return $datosConsulta;
+    }
+    public function eliminar3($id){
+            $producto = Sucursal_producto::where('idProducto','=',$id)->first();
+            $dato['status']= 0;
+           $producto->update($dato);
+           // Sucursal_producto::where('idProducto',$id)->first()->update($dato);
+
+            return redirect()->back();
+        
     }
 }

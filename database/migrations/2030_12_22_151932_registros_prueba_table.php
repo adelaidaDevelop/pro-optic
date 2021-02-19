@@ -120,6 +120,7 @@ class RegistrosPruebaTable extends Migration
         $productosSucursal->precio = 10;
         $productosSucursal->existencia = 10;
         $productosSucursal->minimoStock = 10;
+        $productosSucursal->status = 1;
         $productosSucursal->idSucursal= $sucursal->id;
         $productosSucursal->idProducto= $producto->id;
         $productosSucursal->save();
@@ -129,8 +130,9 @@ class RegistrosPruebaTable extends Migration
         $productosSucursal2->precio = 15;
         $productosSucursal2->existencia = 8;
         $productosSucursal2->minimoStock = 6;
+        $productosSucursal2->status = 1;
         $productosSucursal2->idSucursal= $sucursal->id;
-        $productosSucursal2->idProducto= $producto->id;
+        $productosSucursal2->idProducto= $producto2->id;
         $productosSucursal2->save();
 
 
