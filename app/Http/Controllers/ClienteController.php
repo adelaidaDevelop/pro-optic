@@ -64,7 +64,6 @@ class ClienteController extends Controller
         //
       //  $datos['departamentos'] = Cliente::paginate();
         $datosD['d'] = Cliente::findOrFail($id);
-        
         return view('Cliente.index',$datosD);
     }
 

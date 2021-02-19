@@ -37,6 +37,11 @@ Route::prefix('/puntoVenta')->group(function()
     Route::post('/login', [LoginController::class,'loginPost'])->name('Login');
     Route::post('/logout', [LoginController::class,'logout'])->name('Login');
 
+    //AGREGAR PRODUCTOS A SUCURSAL DESDE STOCK
+    Route::get('/producto/stock', [ProductoController::class,'stock']);
+    //Sucursal producto
+    Route::get('sucursalProducto', SucursalProductoController::class);
+
 
     Route::get('productoEli/{id}', function($id){
         $producto = Sucursal_producto::where('idProducto','=',$id)->delete();

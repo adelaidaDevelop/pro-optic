@@ -18,13 +18,13 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //$datosProd['producto'] = Producto::paginate();
         $depas['d']= Departamento::paginate();
         $datosP= Producto::all();
         $depa= Departamento::all();
         $idSucursal = session('sucursal');
         $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
-          return view('Producto.index',$depas, compact('depa', 'datosP','productosSucursal' ));
+     //   return $idSucursal;
+         return view('Producto.index',$depas, compact('depa', 'datosP','productosSucursal' ));
     }
 
     /**
@@ -51,6 +51,7 @@ class ProductoController extends Controller
       //  $datosProducto['existencia']=0;
      //   $datosProducto['costo']=0;
      //   $datosProducto['precio']=0;
+     $idSucursal = session('sucursal');
         if($request->hasFile('imagen')){
             $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
         }
@@ -60,9 +61,9 @@ class ProductoController extends Controller
        $datosSP['existencia']= 0;
        $datosSP['minimoStock']= $request->input('minimoStock');//$datosProducto['minimoStock'];
        $datosSP['status']= 1;
-       $datosSP['idSucursal'] = session('sucursal');
+       $datosSP['idSucursal'] = $idSucursal;
        $datosSP['idProducto'] = $producto->id;
-        Sucursal_producto::create($datosSP);
+       Sucursal_producto::create($datosSP);
        // return response()->json($datosProducto);
       // TempData["success"] = "registro grabado";
      //::success('this is a test message');
@@ -122,6 +123,15 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
+    public function stock(){
+        //$depas['d']= Departamento::paginate();
+        $productos= Producto::all();
+        $depa= Departamento::all();
+       // $idSucursal = session('sucursal');
+      ///  $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
+        return view('Producto.stockV', compact('productos', 'depa'));
+        
+    }
     public function update(Request $request, $id)
     {
         $datosProducto = request()->except('_token', 'minimoStock');

@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AdministracionController;
 use App\Http\Controllers\EcommerceController;
 
 use App\Http\Controllers\LoginClienteController;
@@ -85,6 +85,8 @@ Route::get('/idSucursal', [EcommerceController::class,'idSucursal']);
     Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
     Route::get('/proveedor/buscador', [ProveedorController::class,'buscador']);
     Route::get('/cliente/buscador', [ClienteController::class,'buscador']);
+    Route::get('/administracion/buscador', [AdministracionController::class,'buscador']);
+
 
 
 

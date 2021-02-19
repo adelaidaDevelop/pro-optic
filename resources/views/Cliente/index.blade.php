@@ -39,6 +39,7 @@ CLIENTES
         </div>
         <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">
             <!--#FFFBF2"-->
+            <!--EDIT-->
             @if(isset($d))
             <div class="row px-3 py-3 m-0">
                 <form class="w-100" method="post" action="{{url('/puntoVenta/cliente/'.$d->id)}}" enctype="multipart/form-data">
@@ -63,7 +64,6 @@ CLIENTES
                                         TELEFONO
                                     </label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" value="{{$d->telefono}}">
-
                                 </div>
                             </div>
 
@@ -139,8 +139,6 @@ CLIENTES
 
 <script>
     const texto = document.querySelector('#texto');
-
-
     function filtrar() {
         document.getElementById("resultados").innerHTML = "";
         fetch(`/cliente/buscador?texto=${texto.value}`, {

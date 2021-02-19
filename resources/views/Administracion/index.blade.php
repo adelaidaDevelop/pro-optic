@@ -25,7 +25,7 @@ ADMINISTRACION
                     <h4 style="color:#4388CC">SUCURSALES</h4>
 
                     <div class="input-group">
-                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR DEPARTAMENTO"
+                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR SUCURSALES"
                             id="texto">
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
@@ -40,19 +40,20 @@ ADMINISTRACION
             </div>
             <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">
                 <!--#FFFBF2"-->
+                <!--EDITAR  -->
                 @if(isset($d))
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/puntoVenta/departamento/'.$d->id)}}"
+                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion/'.$d->id)}}"
                         enctype="multipart/form-data">
                         <div class="form-group">
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
                             <label for="ndepartamento">
-                                <h4 style="color:#4388CC">DEPARTAMENTO</h4>
+                                <h4 style="color:#4388CC">SUCURSAL</h4>
                             </label>
                             <br />
                             <label for="Nombre">
-                                <h5>{{$d->nombre}}</h5>
+                                <h5>{{$d->direccion}}</h5>
                             </label>
                             <div class="form-row w-100">
                                 <div class="col-7">
@@ -60,9 +61,11 @@ ADMINISTRACION
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="text-uppercase  form-control" name="nombre"
-                                            id="nombre" value="{{$d->nombre}}">
-
+                                        <input type="text" class="form-control" onkeyup="mayus(this);" name="direccion"
+                                            id="direccion" value="{{$d->direccion}}">
+                                        <label for="">TELEFONO</label>
+                                        <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono"
+                                            id="telefono" value="{{$d->telefono}}">
                                     </div>
                                 </div>
 
@@ -75,7 +78,7 @@ ADMINISTRACION
                         </div>
                     </form>
                     <div class="row px-3 my-0">
-                        <form method="post" action="{{url('/puntoVenta/departamento/'.$d->id)}}">
+                        <form method="post" action="{{url('/puntoVenta/administracion/'.$d->id)}}">
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
                             <button class="btn btn-outline-secondary my-3" type="submit">
@@ -87,35 +90,39 @@ ADMINISTRACION
                     </div>
                 </div>
                 <div class="row mx-1 my-1 ">
-
-
                 </div>
                 @else
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/puntoVenta/departamento')}}"
+                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion')}}"
                         enctype="multipart/form-data">
+                        <!--NUEVA SUCURSAL-->
                         {{ csrf_field() }}
                         <label for="nempleado">
-                            <h4 style="color:#4388CC">CREAR DEPARTAMENTO</h4>
+                            <h4 style="color:#4388CC">CREAR SUCURSAL</h4>
                         </label>
                         <br />
                         <label for="Nombre">
-                            <h5>NUEVO DEPARTAMENTO</h5>
+                            <h5>NUEVA SUCURSAL</h5>
                         </label>
                         <div class="form-row w-100">
                             <div class="col-7">
                                 <div class="form-group">
                                     <label for="nombre">
-                                        NOMBRE
+                                        DIRECCION
                                     </label>
                                     <input type="text"
-                                        class="text-uppercase  form-control @error('nombre') is-invalid @enderror"
-                                        name="nombre" id="nombre">
+                                        class="form-control @error('nombre') is-invalid @enderror"
+                                        name="direccion" id="direccion" onkeyup="mayus(this);">
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+                                    <label for="nombre">
+                                        TELEFONO
+                                    </label>
+                                    <input type="number" class=" form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono">
+                                    
                                 </div>
                             </div>
 
@@ -125,7 +132,7 @@ ADMINISTRACION
                                 <button class="btn btn-outline-secondary" type="submit">
                                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
                                         width="25px" height="25px">
-                                    GUARDAR DEPARTAMENTO
+                                    GUARDAR SUCURSAL
                                 </button>
                             </div>
                         </div>
@@ -137,7 +144,9 @@ ADMINISTRACION
     </div>
 </div>
 </div>
+
 <script>
+/*
 const texto = document.querySelector('#texto');
 console.log(texto.value);
 
@@ -153,8 +162,10 @@ function filtrar() {
 }
 texto.addEventListener('keyup', filtrar);
 filtrar();
+*/
 </script>
 <script>
+/*
 let sucursales = [];
 async function cargarSucursales() {
     let response = "Sin respuesta";
@@ -187,5 +198,42 @@ function mostrarSucursales() {
     }
 }
 cargarSucursales();
+*/
 </script>
+<script>
+    const texto = document.querySelector('#texto');
+//MAYUSCULA
+    function mayus(e) {
+        e.value = e.value.toUpperCase();
+        const ppb = document.querySelector('#codigoBarras');
+        console.log(ppb.value);
+    }
+
+    //SOLO NUMEROS
+    $("input[name='telefono']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
+
+    function filtrar() {
+        document.getElementById("resultados").innerHTML = "";
+        fetch(`/administracion/buscador?texto=${texto.value}`, {
+                method: 'get'
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("resultados").innerHTML = html
+            })
+    }
+    texto.addEventListener('keyup', filtrar);
+    filtrar();
+</script>
+
 @endsection

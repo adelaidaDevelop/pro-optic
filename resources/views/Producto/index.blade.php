@@ -21,6 +21,12 @@ PRODUCTOS
     </a>
 </div>
 <div class="col-0 my-2 ml-3 p-1 ">
+    <a class="btn btn-secondary p-1" href="{{ url('/puntoVenta/producto/stock')}}">
+        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        AGREGAR DE STOCK </a>
+    </a>
+</div>
+<div class="col-0 my-2 ml-3 p-1 ">
     <a class="btn btn-secondary" href="{{ url('/producto/create')}}">
         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
         OFERTAS </a>
