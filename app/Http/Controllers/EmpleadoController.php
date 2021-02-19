@@ -55,8 +55,8 @@ class EmpleadoController extends Controller
         $this->validator($request->all())->validate();
         //return 'si lo valida';
         $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
-        $dato = ['status','alta'];
-        $datosEmpleado = Arr::add($datosEmpleado,'status','alta');
+        //$dato = ['status','alta'];
+        //$datosEmpleado = Arr::add($datosEmpleado,'status','alta');
         $usuario = User::create([
             'username' => $request['username'],
             'email' => $request['email'],
@@ -68,10 +68,10 @@ class EmpleadoController extends Controller
         $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$usuario->id);
         //$empleado = new Empleado;
         $empleado = Empleado::create($datosEmpleado);
-        $SucursalEmpleado = new Sucursal_empleado;
+        /*$SucursalEmpleado = new Sucursal_empleado;
         $SucursalEmpleado->idEmpleado = $empleado->id;
         $SucursalEmpleado->idSucursal = session('sucursal');
-        $SucursalEmpleado->save();
+        $SucursalEmpleado->save();*/
         //Empleado::insert($datosEmpleado);
         return redirect('puntoVenta/empleado/'.$empleado->id.'/edit');
         

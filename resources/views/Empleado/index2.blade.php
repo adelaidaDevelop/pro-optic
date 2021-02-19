@@ -6,7 +6,7 @@
         EMPLEADOS
         @endsection
         @section('opciones')
-        @if(isset($datosEmpleado))
+        @if(isset($datosEmpleado) || isset($admin))
         <div class="col my-2 ml-5 px-1">
             <form method="get" action="{{url('/puntoVenta/empleado')}}">
                 <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
@@ -169,7 +169,7 @@
                 <div class="row px-3 mb-4">
                     @if(isset($datosEmpleado))
                     @if($datosEmpleado->status == 'alta')
-                    <div class="col-auto ">
+                    <!--div class="col-auto ">
                         <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
                             data-target="#modalPassword" value="SI">
                             <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
@@ -188,10 +188,10 @@
                                 DAR DE BAJA
                             </button>
                         </form>
-                    </div>
+                    </div-->
 
                     @else
-                    <div class="col-4">
+                    <!--div class="col-4">
                         <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {{csrf_field()}}
                             {{ method_field('PUT')}}
@@ -200,10 +200,10 @@
                             <button class="btn btn-outline-secondary" type="submit" value="SI">
                                 <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
-                                DAR DE ALTA
+                                DAR DE ALTA?
                             </button>
                         </form>
-                    </div>
+                    </div-->
                     @endif
                     @endif
                     <!--button class="btn btn-outline-secondary my-3" type="button" onclick="habilitar()">
@@ -227,7 +227,7 @@
                             </label>
                             <br />
                             <label for="Nombre">
-                                <h5>{{$datosEmpleado->nombre}} {{$datosEmpleado->apellidoPaterno}} {{$datosEmpleado->apellidoMaterno}}</h5>
+                                <h5 class="text-uppercase">{{$datosEmpleado->nombre}} {{$datosEmpleado->apellidoPaterno}} {{$datosEmpleado->apellidoMaterno}}</h5>
                             </label>
                             <fieldset disabled id="formEditar">
 
@@ -414,7 +414,7 @@
                 </div>
                 <div class="row px-3 mb-4">
                     @if($datosEmpleado->status == 'alta')
-                    <div class="col-auto ">
+                    <!--div class="col-auto ">
                         <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
                             data-target="#modalPassword" value="SI">
                             <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
@@ -433,9 +433,9 @@
                                 DAR DE BAJA
                             </button>
                         </form>
-                    </div>
+                    </div-->
                     @else
-                    <div class="col-auto ml-auto mr-0">
+                    <!--div class="col-auto ml-auto mr-0">
                         <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {{csrf_field()}}
                             {{ method_field('PUT')}}
@@ -447,7 +447,7 @@
                                 DAR DE ALTA
                             </button>
                         </form>
-                    </div>
+                    </div-->
                     @endif
                     <!--div class="col-auto mr-0">
                         <form method="post" id="formEliminar" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
@@ -655,7 +655,7 @@
                 @endif
             </div>
         </div>
-        <button class="btn btn-outline-secondary" type="button" onclick="validarCURP()"> testear curp</button>
+        <!--button class="btn btn-outline-secondary" type="button" onclick="validarCURP()"> testear curp</button-->
     </div>
 </div>
 <div class="modal fade" id="modalPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
