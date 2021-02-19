@@ -473,6 +473,7 @@ CREDITOS
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     };
+
 </script>
 
 
