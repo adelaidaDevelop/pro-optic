@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Compra_producto;
+use App\Models\Detalle_compra;
 use Illuminate\Http\Request;
 
-class CompraProductoController extends Controller
+class DetalleCompraController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class CompraProductoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Compra_producto  $compra_producto
+     * @param  \App\Models\Detalle_compra  $Detalle_compra
      * @return \Illuminate\Http\Response
      */
-    public function show(Compra_producto $compra_producto)
+    public function show(Detalle_compra $Detalle_compra)
     {
         //
     }
@@ -52,10 +52,10 @@ class CompraProductoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Compra_producto  $compra_producto
+     * @param  \App\Models\Detalle_compra  $Detalle_compra
      * @return \Illuminate\Http\Response
      */
-    public function edit(Compra_producto $compra_producto)
+    public function edit(Detalle_compra $Detalle_compra)
     {
         //
     }
@@ -64,10 +64,10 @@ class CompraProductoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Compra_producto  $compra_producto
+     * @param  \App\Models\Detalle_compra  $Detalle_compra
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Compra_producto $compra_producto)
+    public function update(Request $request, Detalle_compra $Detalle_compra)
     {
         //
     }
@@ -75,10 +75,10 @@ class CompraProductoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Compra_producto  $compra_producto
+     * @param  \App\Models\Detalle_compra  $Detalle_compra
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Compra_producto $compra_producto)
+    public function destroy(Detalle_compra $Detalle_compra)
     {
         //
     }

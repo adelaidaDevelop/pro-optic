@@ -17,15 +17,15 @@
             </form>
         </div>
         @endif
-        <div class="col my-2 ml-5 px-1">
+        <!--div class="col my-2 ml-5 px-1">
             <form method="get" action="{{url('/empleado')}}">
                 <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                    <img src="{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                         height="25px">
                     EMPLEADOS DADOS DE BAJA
                 </button>
             </form>
-        </div>
+        </div-->
         @endsection
     </div>
     <div class="row p-1 ">
@@ -449,17 +449,17 @@
                         </form>
                     </div>
                     @endif
-                    <div class="col-auto mr-0">
+                    <!--div class="col-auto mr-0">
                         <form method="post" id="formEliminar" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
-                            {{csrf_field()}}
-                            {{ method_field('DELETE')}}
-                            <button class="btn btn-outline-danger" onclick="eliminarEmpleado()" type="submit" value="SI">
+                            {csrf_field()}}
+                            { method_field('DELETE')}}
+                            <button class="btn btn-outline-danger" type="submit" value="SI">
                                 <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
                                 ELIMINAR
                             </button>
                         </form>
-                    </div>
+                    </div-->
                 </div>
                 @else
                 <div class="row px-3 py-3 m-0">
@@ -527,13 +527,10 @@
                                     <label for="domicilio">
                                         DOMICILIO
                                     </label>
-                                    <!--input type="text" class="form-control @error('domicilio') is-invalid @enderror"
-                                    name="domicilio" id="domicilio" value="{{ old('domicilio') }}" required
-                                    autocomplete="domicilio" autofocus-->
                                     <textarea name="domicilio" id="domicilio"
                                         class="text-uppercase  form-control @error('domicilio') is-invalid @enderror"
                                         placeholder="Ingresar domicilio completo" value="{{ old('domicilio') }}"
-                                        required autocomplete="domicilio" autofocus></textarea>
+                                        required autocomplete="domicilio" autofocus>{{ old('domicilio') }}</textarea>
                                     @error('domicilio')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -578,7 +575,7 @@
                                     </label>
                                     <input type="text"
                                         class="text-uppercase  form-control @error('telefono') is-invalid @enderror"
-                                        name="telefono" id="telefono" value="{{ old('telefono') }}"
+                                        name="telefono" id="telefono" value="{{ old('telefono') }}" 
                                         placeholder="Ingresar telefono" required autocomplete="telefono" autofocus>
                                     @error('telefono')
                                     <span class="invalid-feedback" role="alert">
@@ -658,6 +655,7 @@
                 @endif
             </div>
         </div>
+        <button class="btn btn-outline-secondary" type="button" onclick="validarCURP()"> testear curp</button>
     </div>
 </div>
 <div class="modal fade" id="modalPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -706,15 +704,16 @@
     </div>
 </div>
 <script>
-function eliminarEmpleado() {
+/*function eliminarEmpleado() {
     var form = document.getElementById('formEliminar');
     form.addEventListener('submit', function(event) {
         // si es false entonces que no haga el submit
         if (!confirm('¿ESTA SEGURO QUE DESEA ELIMINAR ESTE EMPLEADO?')) {
              event.preventDefault();
+             event.stopPropagation();
         }
     }, false);
-};
+};*/
 const texto = document.querySelector('#texto');
 //$('.svg').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
 let cuerpoModal = document.getElementById("cuerpoModal").innerHTML;
@@ -723,6 +722,21 @@ function cuerpoModalOriginal() {
     document.getElementById("cuerpoModal").innerHTML = cuerpoModal;
     $('#continuar').show();
 }
+$('input').bind('keypress',function(tecla){
+    if (this.value.length == 0 & tecla.charCode == 32)
+        return false;
+});
+$("input[name='telefono']").bind('keypress',function(tecla){
+    if(this.value.length>=10) return false;
+    let code = tecla.charCode;
+    if(code==8) { // backspace.
+      return true;
+    } else if(code>=48 && code<=57) { // is a number.
+      return true;
+    } else{ // other keys.
+      return false;
+    }
+});
 async function actualizarPassword() {
     try {
         let cambio = document.getElementById("passwordChange");
@@ -833,6 +847,41 @@ function habilitar() {
 @if(session()->has('cambios'))
 habilitar();
 @endif
+
+async function validarCURP()
+{
+    /*var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch("https://conectame.ddns.net/rest/api.php?m=curp&user=prueba&pass=sC%7D9pW1Q%5Dc&val=CAHF620818HMNLNL00", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));*/
+  fetch("https://curp-renapo.p.rapidapi.com/v1/curp", {
+	"method": "POST",
+	"headers": {
+		"content-type": "application/json",
+		"x-rapidapi-key": "b623edd2admsh440d6b4a0e1a901p1ffa3fjsnad6fb2b0d4b4",
+		"x-rapidapi-host": "curp-renapo.p.rapidapi.com"
+	},
+	"body": {
+		"birthdate": "18/08/1962",
+		"entity_birth": "MN",
+		"mothers_maiden_name": "HINOJOSA",
+		"names": "FELIPE DE JESUS",
+		"paternal_surname": "CALDERON",
+		"sex": "H"
+	}
+})
+.then(response => {
+	console.log(response);
+})
+.catch(err => {
+	console.error(err);
+});
+}
 </script>
 
 @endsection

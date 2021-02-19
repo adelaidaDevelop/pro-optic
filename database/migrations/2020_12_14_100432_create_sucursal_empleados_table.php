@@ -17,6 +17,7 @@ class CreateSucursalEmpleadosTable extends Migration
             $table->id();
             $table->foreignId('idSucursal')->constrained('sucursals');
             $table->foreignId('idEmpleado')->constrained('empleados');
+            $table->string('status');
             $table->timestamps();
         });
     }

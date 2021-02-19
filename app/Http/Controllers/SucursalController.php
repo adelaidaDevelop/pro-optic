@@ -46,7 +46,7 @@ class SucursalController extends Controller
      */
     public function show($id)//Sucursal $sucursal)
     {
-        if($id == "todos")
+        if($id == "sucursales")
         {
             $sucursales = Sucursal::all();
             return $sucursales;

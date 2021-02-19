@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compra;
-use App\Models\Compra_producto;
+use App\Models\Detalle_compra;
 use App\Models\Producto;
 use App\Models\Productos_caducidad;
 use App\Models\Departamento;
@@ -25,7 +25,7 @@ class CompraController extends Controller
         $depas['d']= Departamento::paginate();
         $proveedores= Proveedor::all();
         $productos= Producto::all();
-        $compra_producto = Compra_producto::all();
+        $compra_producto = Detalle_compra::all();
         return view('Compra.index',$depas, compact('productos','proveedores','compra_producto','compras'));
         //return view('Compra.index');
 
@@ -82,7 +82,7 @@ class CompraController extends Controller
         
         foreach($datosCodificados as $datosProducto)
         {
-            $producto = new Compra_producto;
+            $producto = new Detalle_compra;
             $producto->idCompras = $compra->id;
             $producto->idProductos = $datosProducto['id'];
             $producto->cantidad = $datosProducto['cantidad'];

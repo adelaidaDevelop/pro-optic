@@ -43,11 +43,19 @@
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
+                            @if(session('idEmpleado') == 1)
+                            <a class="nav-link" href="/puntoVenta/administracion">
+                                <button class="btn btn-light">
+                                    ADMINISTRACION
+                                </button>
+                                <span class="sr-only">(current)</span></a>
+                                @else
                             <a class="nav-link" href="/puntoVenta/empleado">
                                 <button class="btn btn-light">
                                     EMPLEADOS
                                 </button>
                                 <span class="sr-only">(current)</span></a>
+                                @endif
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="/puntoVenta/cliente">

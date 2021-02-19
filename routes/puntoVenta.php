@@ -9,6 +9,7 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\AdministracionController;
 
 //ade
 use App\Http\Controllers\CompraController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\ProductosCaducidadController;
 use Illuminate\Support\Facades\Route;
 Route::prefix('/puntoVenta')->group(function()
 {
+    Route::resource('administracion', AdministracionController::class);
     Route::resource('departamento', DepartamentoController::class);//->middleware('auth');
 
     Route::resource('sucursal', SucursalController::class);

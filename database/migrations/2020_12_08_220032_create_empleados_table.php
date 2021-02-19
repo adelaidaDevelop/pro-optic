@@ -22,7 +22,7 @@ class CreateEmpleadosTable extends Migration
             $table->string('telefono');
             $table->string('domicilio');
             $table->String('claveE')->unique();
-            $table->string('status');
+            //$table->string('status');
             $table->foreignId('idUsuario')->constrained('users');
             $table->timestamps();
         });

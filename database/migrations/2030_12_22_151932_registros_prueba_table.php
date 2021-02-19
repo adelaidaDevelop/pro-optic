@@ -31,7 +31,7 @@ class RegistrosPruebaTable extends Migration
         ]);
 
         //CREACION DE EMPLEADOS
-        $usuario = User::create([
+        /*$usuario = User::create([
             'username' => 'Heber',
             'email' => 'hzhm1997@gmail.com',
             'password' => Hash::make('heber12345'),
@@ -49,7 +49,7 @@ class RegistrosPruebaTable extends Migration
         $empleado->status = 'alta';
         $empleado->idUsuario = $usuario->id;
         $empleado->save();
-
+*/
         //CREACION DE DEPARTAMENTOS
         $departamento = Departamento::create(
             ['nombre' => 'VENTA LIBRE']
@@ -103,13 +103,13 @@ class RegistrosPruebaTable extends Migration
             ]);
 
         //CREACION DE CLIENTE
-        $cliente = new Cliente;
+        /*$cliente = new Cliente;
         $cliente->nombre = 'ADELAIDA MOLINA REYES';
         $cliente->telefono = '9512274920';
         $cliente->domicilio = 'SIN ESPECIFICAR';
         $cliente->idUsuario = $usuario->id;
         $cliente->save();
-
+*/
         $sucursal = new Sucursal;
         $sucursal->direccion ='SAN FELIPE 23, SAN MARTIN MEXICAPAN';
         $sucursal->telefono = '9512456511';

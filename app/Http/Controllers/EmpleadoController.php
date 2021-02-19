@@ -226,10 +226,12 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
+        $empleado = Empleado::findOrFail($id);
+        User::destroy($empleado->idUsuario);
         Empleado::destroy($id);
         //$dato = (['status'=>'baja']);;
         //Empleado::where('id','=',$id)->update($dato);
-        return redirect('puntoVenta/empleado');
+        return $empleado->idUsuario;//redirect('puntoVenta/empleado');
     }
 
     public function buscadorEmpleado(Request $request)

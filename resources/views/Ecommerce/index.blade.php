@@ -9,6 +9,7 @@
         </ol>
     </nav>
 </div-->
+<button class="btn btn-secondary" onclick="validarCURP()">testear</button>
 <div class="row">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -61,4 +62,31 @@
         @endforeach
     </div>
 </div>
+<script>
+    async function validarCURP()
+{
+    fetch("https://curp-renapo.p.rapidapi.com/v1/curp", {
+	"method": "POST",
+	"headers": {
+		"content-type": "application/json",
+		"x-rapidapi-key": "b623edd2admsh440d6b4a0e1a901p1ffa3fjsnad6fb2b0d4b4",
+		"x-rapidapi-host": "curp-renapo.p.rapidapi.com"
+	},
+	"body": {
+		"birthdate": "18/08/1962",
+		"entity_birth": "MN",
+		"mothers_maiden_name": "HINOJOSA",
+		"names": "FELIPE DE JESUS",
+		"paternal_surname": "CALDERON",
+		"sex": "H"
+	}
+})
+.then(response => {
+	console.log(response);
+})
+.catch(err => {
+	console.error(err);
+});
+}
+</script>
 @endsection
