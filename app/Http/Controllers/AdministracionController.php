@@ -31,6 +31,7 @@ class AdministracionController extends Controller
     public function store(Request $request)
     {
         $datosCliente = request()->except('_token');
+        $datosCliente['status'] = 1;
         Sucursal::insert($datosCliente);
         
         return redirect('puntoVenta/administracion');
@@ -45,7 +46,11 @@ class AdministracionController extends Controller
 
     public function destroy($id)//Departamento $departamento)
     {
-        Sucursal::destroy($id);
+        $sucursal['status'] =0;
+        $suc2 = Sucursal::findOrFail($id);
+        $suc2->update($sucursal);
+      //  Sucursal::destroy($id);
+    //  Sucursal::where('id','=',$id)->update($datosCliente);
         return redirect('puntoVenta/administracion');
     }
 

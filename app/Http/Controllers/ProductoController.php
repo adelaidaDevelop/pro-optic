@@ -124,12 +124,9 @@ class ProductoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function stock(){
-        //$depas['d']= Departamento::paginate();
         $productos= Producto::all();
         $depa= Departamento::all();
-       // $idSucursal = session('sucursal');
-      ///  $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
-        return view('Producto.stockV', compact('productos', 'depa'));
+      return view('Producto.stockV', compact('productos', 'depa'));
         
     }
     public function update(Request $request, $id)

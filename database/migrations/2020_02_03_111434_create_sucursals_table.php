@@ -17,6 +17,7 @@ class CreateSucursalsTable extends Migration
             $table->id();
             $table->string('direccion');
             $table->string('telefono');
+            $table->unsignedInteger('status');
             $table->timestamps();
         });
     }
