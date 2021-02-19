@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
+use App\Models\Empleado;
+
+use App\Models\Sucursal_empleado;
 use Illuminate\Support\Facades\Auth;
 
 class isEmpleado
@@ -24,7 +27,14 @@ class isEmpleado
             {
                 if(Auth::user()->tipo == 0)
                 {
-                    return $next($request);
+                    if(Auth::user()->id == 1)
+                        return $next($request);
+                    $id = Auth::user()->id;
+                    $empleado = Empleado::where('idUsuario','=',$id)->get()->first();
+                    $sucursalEmpleado = Sucursal_empleado::where('idSucursal','=',session('sucursal'))
+                    ->where('idEmpleado','=',$empleado->id)->get()->first();
+                    if($sucursalEmpleado->count() && $sucursalEmpleado->status == 'alta')
+                        return $next($request);
                 }
                 Auth::logout();
             }

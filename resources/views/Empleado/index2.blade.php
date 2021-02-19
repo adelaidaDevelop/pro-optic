@@ -17,15 +17,24 @@
             </form>
         </div>
         @endif
-        <!--div class="col my-2 ml-5 px-1">
-            <form method="get" action="{{url('/empleado')}}">
+        <div class="col my-2 ml-5 pl-1">
+            <form method="get" action="{{url('/puntoVenta/administracion/')}}">
                 <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
-                    <img src="{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                         height="25px">
-                    EMPLEADOS DADOS DE BAJA
+                    SUCURSALES
                 </button>
             </form>
-        </div-->
+        </div>
+        <div class="col my-2 pl-1">
+            <form method="get" action="{{url('/puntoVenta/empleado/')}}">
+                <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
+                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                        height="25px">
+                    EMPLEADOS
+                </button>
+            </form>
+        </div>
         @endsection
     </div>
     <div class="row p-1 ">
@@ -227,7 +236,8 @@
                             </label>
                             <br />
                             <label for="Nombre">
-                                <h5 class="text-uppercase">{{$datosEmpleado->nombre}} {{$datosEmpleado->apellidoPaterno}} {{$datosEmpleado->apellidoMaterno}}</h5>
+                                <h5 class="text-uppercase">{{$datosEmpleado->nombre}}
+                                    {{$datosEmpleado->apellidoPaterno}} {{$datosEmpleado->apellidoMaterno}}</h5>
                             </label>
                             <fieldset disabled id="formEditar">
 
@@ -259,8 +269,8 @@
                                                 class="form-control @error('apellidoPaterno') is-invalid @enderror text-uppercase"
                                                 name="apellidoPaterno" id="apellidoPaterno"
                                                 value="@if(session()->has('cambios')){{old('apellidoPaterno')}}@else{{$datosEmpleado->apellidoPaterno}}@endif"
-                                                placeholder="Ingresar apellido paterno" required autocomplete="apellidoPaterno"
-                                                autofocus>
+                                                placeholder="Ingresar apellido paterno" required
+                                                autocomplete="apellidoPaterno" autofocus>
                                             @error('apellidoPaterno')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -275,8 +285,8 @@
                                                 class="form-control @error('apellidoMaterno') is-invalid @enderror text-uppercase"
                                                 name="apellidoMaterno" id="apellidoMaterno"
                                                 value="@if(session()->has('cambios')){{old('apellidoMaterno')}}@else{{$datosEmpleado->apellidoMaterno}}@endif"
-                                                placeholder="Ingresar apellido materno" required autocomplete="apellidoMaterno"
-                                                autofocus>
+                                                placeholder="Ingresar apellido materno" required
+                                                autocomplete="apellidoMaterno" autofocus>
                                             @error('apellidoPaterno')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -575,7 +585,7 @@
                                     </label>
                                     <input type="text"
                                         class="text-uppercase  form-control @error('telefono') is-invalid @enderror"
-                                        name="telefono" id="telefono" value="{{ old('telefono') }}" 
+                                        name="telefono" id="telefono" value="{{ old('telefono') }}"
                                         placeholder="Ingresar telefono" required autocomplete="telefono" autofocus>
                                     @error('telefono')
                                     <span class="invalid-feedback" role="alert">
@@ -722,19 +732,19 @@ function cuerpoModalOriginal() {
     document.getElementById("cuerpoModal").innerHTML = cuerpoModal;
     $('#continuar').show();
 }
-$('input').bind('keypress',function(tecla){
+$('input').bind('keypress', function(tecla) {
     if (this.value.length == 0 & tecla.charCode == 32)
         return false;
 });
-$("input[name='telefono']").bind('keypress',function(tecla){
-    if(this.value.length>=10) return false;
+$("input[name='telefono']").bind('keypress', function(tecla) {
+    if (this.value.length >= 10) return false;
     let code = tecla.charCode;
-    if(code==8) { // backspace.
-      return true;
-    } else if(code>=48 && code<=57) { // is a number.
-      return true;
-    } else{ // other keys.
-      return false;
+    if (code == 8) { // backspace.
+        return true;
+    } else if (code >= 48 && code <= 57) { // is a number.
+        return true;
+    } else { // other keys.
+        return false;
     }
 });
 async function actualizarPassword() {
@@ -750,7 +760,7 @@ async function actualizarPassword() {
         }
         if (cambio.value.length > 0) {
             if (cambio.value.length >= 8) {
-                let id = @if(isset($datosEmpleado)) {{$users->id}}
+                let id = @if(isset($datosEmpleado)) {{$users-> id}}
                 @else null @endif;
                 const url = "{{url('/')}}/puntoVenta/empleado/" + id;
                 console.log(url);
@@ -848,8 +858,7 @@ function habilitar() {
 habilitar();
 @endif
 
-async function validarCURP()
-{
+async function validarCURP() {
     /*var requestOptions = {
   method: 'GET',
   redirect: 'follow'
@@ -859,28 +868,28 @@ fetch("https://conectame.ddns.net/rest/api.php?m=curp&user=prueba&pass=sC%7D9pW1
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));*/
-  fetch("https://curp-renapo.p.rapidapi.com/v1/curp", {
-	"method": "POST",
-	"headers": {
-		"content-type": "application/json",
-		"x-rapidapi-key": "b623edd2admsh440d6b4a0e1a901p1ffa3fjsnad6fb2b0d4b4",
-		"x-rapidapi-host": "curp-renapo.p.rapidapi.com"
-	},
-	"body": {
-		"birthdate": "18/08/1962",
-		"entity_birth": "MN",
-		"mothers_maiden_name": "HINOJOSA",
-		"names": "FELIPE DE JESUS",
-		"paternal_surname": "CALDERON",
-		"sex": "H"
-	}
-})
-.then(response => {
-	console.log(response);
-})
-.catch(err => {
-	console.error(err);
-});
+    fetch("https://curp-renapo.p.rapidapi.com/v1/curp", {
+            "method": "POST",
+            "headers": {
+                "content-type": "application/json",
+                "x-rapidapi-key": "b623edd2admsh440d6b4a0e1a901p1ffa3fjsnad6fb2b0d4b4",
+                "x-rapidapi-host": "curp-renapo.p.rapidapi.com"
+            },
+            "body": {
+                "birthdate": "18/08/1962",
+                "entity_birth": "MN",
+                "mothers_maiden_name": "HINOJOSA",
+                "names": "FELIPE DE JESUS",
+                "paternal_surname": "CALDERON",
+                "sex": "H"
+            }
+        })
+        .then(response => {
+            console.log(response);
+        })
+        .catch(err => {
+            console.error(err);
+        });
 }
 </script>
 
