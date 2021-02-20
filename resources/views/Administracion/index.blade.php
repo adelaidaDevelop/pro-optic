@@ -14,12 +14,7 @@ ADMINISTRACION
 </div>
 
 <div class="col-1 my-2 ml-3 p-1 ">
-<<<<<<< HEAD
-    <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver"
-        onclick="return datosTablaSuc()" value="">
-=======
     <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver" onclick="datosTablaSuc()" value="">
->>>>>>> 94fea8b23bc41594fbc7f92e952f8294a99f681b
         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
         ALTA SUCURSALES
     </button>
@@ -109,6 +104,11 @@ ADMINISTRACION
                             data-toggle="modal" data-target="#empleadosModal">
                             <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                                 height="25px">
+<<<<<<< HEAD
+=======
+                        <button class="btn btn-outline-secondary my-3 mr-5" onclick="empleadosSucursal()" type="button" data-toggle="modal" data-target="#empleadosModal">
+                            <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+>>>>>>> cbce6a34c51d53b04d8f29b9699c8dde7118e45f
                             EMPLEADOS
                         </button>
                         <form method="post" class="ml-auto" action="{{url('/puntoVenta/administracion/'.$d->id)}}">
