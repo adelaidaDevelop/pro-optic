@@ -104,11 +104,6 @@ ADMINISTRACION
                             data-toggle="modal" data-target="#empleadosModal">
                             <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                                 height="25px">
-<<<<<<< HEAD
-=======
-                        <button class="btn btn-outline-secondary my-3 mr-5" onclick="empleadosSucursal()" type="button" data-toggle="modal" data-target="#empleadosModal">
-                            <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
->>>>>>> cbce6a34c51d53b04d8f29b9699c8dde7118e45f
                             EMPLEADOS
                         </button>
                         <form method="post" class="ml-auto" action="{{url('/puntoVenta/administracion/'.$d->id)}}">
