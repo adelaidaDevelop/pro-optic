@@ -29,21 +29,28 @@ PRODUCTOS
 <script>
     let productos = @json($productos);
     let deptos = @json($depa);
+    let producto_sucursal = @json($productosSucursal);
 
 
     function cargarProductos() {
-
+        let bandera = true;
         let cuerpo = "";
         let contador = 0;
         let departamento = "";
         for (let t in productos) {
-            for (count in deptos) {
-                if (productos[t].idDepartamento === deptos[count].id) {
-                    departamento = deptos[count].nombre;
+            for (let x in producto_sucursal) {
+                if (productos[t].id === producto_sucursal[x].idProducto) {
+                    bandera = false;
                 }
             }
-            contador = contador + 1;
-            cuerpo = cuerpo + `
+            if (bandera === true) {
+                for (count in deptos) {
+                    if (productos[t].idDepartamento === deptos[count].id) {
+                        departamento = deptos[count].nombre;
+                    }
+                }
+                contador = contador + 1;
+                cuerpo = cuerpo + `
                  <tr onclick="" data-dismiss="modal">
                  <th scope="row">` + contador + `</th>
                    <td>` + productos[t].codigoBarras + `</td>
@@ -51,11 +58,12 @@ PRODUCTOS
                    <td>` + departamento + `</td>
                     <td>` +
 
-                ` 
+                    ` 
                 <a class="btn btn-primary" href="{{ url('/puntoVenta/agregarProdStock/` + productos[t].id + `')}}"> AGREGAR </a>
                  </td>            
                             </tr>
                             `;
+            }
         }
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
     }
