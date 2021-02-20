@@ -14,7 +14,8 @@ ADMINISTRACION
 </div>
 
 <div class="col-1 my-2 ml-3 p-1 ">
-    <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver" onclick="return datosTablaSuc()" value="">
+    <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver"
+        onclick="return datosTablaSuc()" value="">
         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
         ALTA SUCURSALES
     </button>
@@ -42,7 +43,8 @@ ADMINISTRACION
                     <h4 style="color:#4388CC">SUCURSALES</h4>
 
                     <div class="input-group">
-                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR SUCURSALES" id="texto">
+                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR SUCURSALES"
+                            id="texto">
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -59,7 +61,8 @@ ADMINISTRACION
                 <!--EDITAR  -->
                 @if(isset($d))
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion/'.$d->id)}}" enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion/'.$d->id)}}"
+                        enctype="multipart/form-data">
                         <div class="form-group">
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
@@ -76,21 +79,25 @@ ADMINISTRACION
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="form-control" onkeyup="mayus(this);" name="direccion" id="direccion" value="{{$d->direccion}}">
+                                        <input type="text" class="form-control" onkeyup="mayus(this);" name="direccion"
+                                            id="direccion" value="{{$d->direccion}}">
                                         <label for="">TELEFONO</label>
-                                        <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono" id="telefono" value="{{$d->telefono}}">
+                                        <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono"
+                                            id="telefono" value="{{$d->telefono}}">
                                     </div>
                                 </div>
 
                             </div>
                             <button class="btn btn-outline-secondary" type="submit">
-                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
+                                    width="25px" height="25px">
                                 GUARDAR CAMBIOS
                             </button>
                         </div>
                     </form>
                     <div class="row px-3 my-0">
-                        <button class="btn btn-outline-secondary my-3 mr-5" onclick="empleadosSucursal()" type="button" data-toggle="modal" data-target="#empleadosModal">
+                        <button class="btn btn-outline-secondary my-3 mr-5" onclick="empleadosSucursal()" type="button"
+                            data-toggle="modal" data-target="#empleadosModal">
                             <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                                 height="25px">
                             EMPLEADOS
@@ -110,7 +117,8 @@ ADMINISTRACION
                 </div>
                 @else
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion')}}" enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion')}}"
+                        enctype="multipart/form-data">
                         <!--NUEVA SUCURSAL-->
                         {{ csrf_field() }}
                         <label for="nempleado">
@@ -146,7 +154,8 @@ ADMINISTRACION
                         <div class="form-row w-100">
                             <div class="form-group">
                                 <button class="btn btn-outline-secondary" type="submit">
-                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
+                                        width="25px" height="25px">
                                     GUARDAR SUCURSAL
                                 </button>
                             </div>
@@ -158,14 +167,12 @@ ADMINISTRACION
         </div>
     </div>
 </div>
-<div class="modal fade" id="empleadosModal" tabindex="-1" aria-labelledby="empleadosModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
+
 
 
 <!-- MODAL-->
-<div class="modal fade modal_sucursales_inactivas" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade modal_sucursales_inactivas" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="width:900px;height:500px;">
             <div class="modal-header w-100 ">
@@ -210,8 +217,16 @@ ADMINISTRACION
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="empleadosModal" tabindex="-1" aria-labelledby="empleadosModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
             <div class="modal-body" id="cuerpoEmpleadosModal">
-            Aqui van los empleados
+                Aqui van los empleados
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="cerrarModal()"
@@ -223,7 +238,7 @@ ADMINISTRACION
 </div>
 
 <script>
-    /*
+/*
 const texto = document.querySelector('#texto');
 console.log(texto.value);
 
@@ -242,20 +257,18 @@ filtrar();
 */
 </script>
 <script>
-async function empleadosSucursal()
-{
+async function empleadosSucursal() {
     let body = document.querySelector('#cuerpoEmpleadosModal');
     body.innerHTML = "NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
     try {
-        let id = @if(isset($sucursal)) {{$sucursal->id}} @else 0 @endif;
+        let id = @if(isset($sucursal)) {{$sucursal->id}}
+        @else 0 @endif;
         response = await fetch(`/puntoVenta/sucursalEmpleado/${id}`);
         if (response.ok) {
             empleados = await response.json();
-            if(empleados.length>0)
-            {
-                for(let i in empleados)
-                {
-                    
+            if (empleados.length > 0) {
+                for (let i in empleados) {
+
                 }
             }
             console.log(empleados);
@@ -270,7 +283,7 @@ async function empleadosSucursal()
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
-    
+
 }
 /*
 let sucursales = [];
@@ -308,27 +321,27 @@ cargarSucursales();
 */
 </script>
 <script>
-    let Suc_Inac = @json($sucursalesInac);
-    const texto = document.querySelector('#texto');
-    //MAYUSCULA
-    function mayus(e) {
-        e.value = e.value.toUpperCase();
-        const ppb = document.querySelector('#codigoBarras');
-        console.log(ppb.value);
-    }
+let Suc_Inac = @json($sucursalesInac);
+const texto = document.querySelector('#texto');
+//MAYUSCULA
+function mayus(e) {
+    e.value = e.value.toUpperCase();
+    const ppb = document.querySelector('#codigoBarras');
+    console.log(ppb.value);
+}
 
-    //SOLO NUMEROS
-    $("input[name='telefono']").bind('keypress', function(tecla) {
-        if (this.value.length >= 10) return false;
-        let code = tecla.charCode;
-        if (code == 8) { // backspace.
-            return true;
-        } else if (code >= 48 && code <= 57) { // is a number.
-            return true;
-        } else { // other keys.
-            return false;
-        }
-    });
+//SOLO NUMEROS
+$("input[name='telefono']").bind('keypress', function(tecla) {
+    if (this.value.length >= 10) return false;
+    let code = tecla.charCode;
+    if (code == 8) { // backspace.
+        return true;
+    } else if (code >= 48 && code <= 57) { // is a number.
+        return true;
+    } else { // other keys.
+        return false;
+    }
+});
 const texto = document.querySelector('#texto');
 //MAYUSCULA
 function mayus(e) {
@@ -361,7 +374,7 @@ $("input[name='telefono']").bind('keypress', function(tecla) {
                     <td>` + Suc_Inac[t].direccion + `</td>
                     <td>` + Suc_Inac[t].telefono + `</td>
                     <td>` +
-                  ` 
+                ` 
                     <a class="btn btn-primary" href="{{ url('/puntoVenta/altaSucursal/` + Suc_Inac[t].id + `')}}"> ALTA </a>
                                            
 
