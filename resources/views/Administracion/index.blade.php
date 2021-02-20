@@ -4,20 +4,14 @@
 ADMINISTRACION
 @endsection
 @section('opciones')
-<<<<<<< HEAD
-<div class="col-1 my-2 ml-5 pl-1">
-    <form method="get" action="{{url('/compra/')}}">
-=======
 <div class="col my-2 ml-5 pl-1">
     <form method="get" action="{{url('/puntoVenta/administracion/')}}">
->>>>>>> d6134d0ebcb7df617d68a5eca6ce9de945350b5d
         <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
             <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
             SUCURSALES
         </button>
     </form>
 </div>
-<<<<<<< HEAD
 
 <div class="col-1 my-2 ml-3 p-1 ">
     <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver" onclick="return datosTablaSuc()" value="">
@@ -27,7 +21,6 @@ ADMINISTRACION
 </div>
 
 
-=======
 <div class="col my-2 pl-1">
     <form method="get" action="{{url('/puntoVenta/empleado/')}}">
         <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
@@ -36,7 +29,6 @@ ADMINISTRACION
         </button>
     </form>
 </div>
->>>>>>> d6134d0ebcb7df617d68a5eca6ce9de945350b5d
 @endsection
 <div class="container-fluid">
 
@@ -106,14 +98,9 @@ ADMINISTRACION
                         <form method="post" class="ml-auto" action="{{url('/puntoVenta/administracion/'.$d->id)}}">
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
-<<<<<<< HEAD
-                            <button class="btn btn-outline-secondary my-3" type="submit">
-                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-=======
                             <button class="btn btn-outline-secondary my-3 ml-auto" type="submit">
                                 <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
->>>>>>> d6134d0ebcb7df617d68a5eca6ce9de945350b5d
                                 DAR DE BAJA
                             </button>
                         </form>
@@ -139,12 +126,8 @@ ADMINISTRACION
                                     <label for="nombre">
                                         DIRECCION
                                     </label>
-<<<<<<< HEAD
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="direccion" id="direccion" onkeyup="mayus(this);">
-=======
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror"
                                         name="direccion" id="direccion" onkeyup="mayus(this);">
->>>>>>> d6134d0ebcb7df617d68a5eca6ce9de945350b5d
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -153,12 +136,8 @@ ADMINISTRACION
                                     <label for="nombre">
                                         TELEFONO
                                     </label>
-<<<<<<< HEAD
-                                    <input type="number" class=" form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono">
-=======
                                     <input type="number" class=" form-control @error('nombre') is-invalid @enderror"
                                         name="telefono" id="telefono">
->>>>>>> d6134d0ebcb7df617d68a5eca6ce9de945350b5d
 
                                 </div>
                             </div>
@@ -184,7 +163,6 @@ ADMINISTRACION
         <div class="modal-content">
             <div class="modal-header">
 
-<<<<<<< HEAD
 
 <!-- MODAL-->
 <div class="modal fade modal_sucursales_inactivas" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -226,7 +204,6 @@ ADMINISTRACION
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
-=======
                 <h5 class="modal-title" id="empleadosModalLabel">EMPLEADOS</h5>
                 <button id="cerrar" type="button" class="close" onclick="cerrarModal()" data-dismiss="modal"
                     aria-label="Close">
@@ -240,15 +217,11 @@ ADMINISTRACION
                 <button type="button" class="btn btn-secondary" onclick="cerrarModal()"
                     data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="crearProducto()">NUEVO PRODUCTO</button>
->>>>>>> d6134d0ebcb7df617d68a5eca6ce9de945350b5d
             </div>
         </div>
     </div>
 </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> d6134d0ebcb7df617d68a5eca6ce9de945350b5d
 <script>
     /*
 const texto = document.querySelector('#texto');
@@ -269,16 +242,12 @@ filtrar();
 */
 </script>
 <script>
-<<<<<<< HEAD
-    /*
-=======
 async function empleadosSucursal()
 {
     let body = document.querySelector('#cuerpoEmpleadosModal');
     body.innerHTML = "Modificando modal";
 }
 /*
->>>>>>> d6134d0ebcb7df617d68a5eca6ce9de945350b5d
 let sucursales = [];
 async function cargarSucursales() {
     let response = "Sin respuesta";
@@ -314,7 +283,6 @@ cargarSucursales();
 */
 </script>
 <script>
-<<<<<<< HEAD
     let Suc_Inac = @json($sucursalesInac);
     const texto = document.querySelector('#texto');
     //MAYUSCULA
@@ -336,7 +304,6 @@ cargarSucursales();
             return false;
         }
     });
-=======
 const texto = document.querySelector('#texto');
 //MAYUSCULA
 function mayus(e) {
@@ -344,7 +311,6 @@ function mayus(e) {
     const ppb = document.querySelector('#codigoBarras');
     console.log(ppb.value);
 }
->>>>>>> d6134d0ebcb7df617d68a5eca6ce9de945350b5d
 
 //SOLO NUMEROS
 $("input[name='telefono']").bind('keypress', function(tecla) {
@@ -357,7 +323,6 @@ $("input[name='telefono']").bind('keypress', function(tecla) {
     } else { // other keys.
         return false;
     }
-<<<<<<< HEAD
 
     function datosTablaSuc() {
         let cuerpo = "";
@@ -418,7 +383,6 @@ $("input[name='telefono']").bind('keypress', function(tecla) {
     };
     texto.addEventListener('keyup', filtrar);
     filtrar();
-=======
 });
 
 function filtrar() {
@@ -433,7 +397,6 @@ function filtrar() {
 }
 texto.addEventListener('keyup', filtrar);
 filtrar();
->>>>>>> d6134d0ebcb7df617d68a5eca6ce9de945350b5d
 </script>
 
 @endsection
