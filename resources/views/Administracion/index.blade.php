@@ -247,7 +247,8 @@ async function empleadosSucursal()
     let body = document.querySelector('#cuerpoEmpleadosModal');
     body.innerHTML = "NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
     try {
-        response = await fetch(`/puntoVenta/sucursalEmpleado/{{$sucursal->id}}`);
+        let id = @if(isset($sucursal)) {{$sucursal->id}} @else 0 @endif;
+        response = await fetch(`/puntoVenta/sucursalEmpleado/${id}`);
         if (response.ok) {
             empleados = await response.json();
             if(empleados.length>0)
