@@ -181,7 +181,6 @@ ADMINISTRACION
 
 
 
-<<<<<<< HEAD
 <!-- MODAL-->
 <div class="modal fade modal_sucursales_inactivas" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
@@ -251,66 +250,6 @@ ADMINISTRACION
 
 <script>
 /*
-=======
-                <!-- MODAL-->
-                <div class="modal fade modal_sucursales_inactivas" id="modal_suc_inac" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg " role="document">
-                        <div class="modal-content" style="width:900px;height:500px;">
-                            <div class="modal-header w-100 ">
-                                <!--ENCABEZADO -->
-                                <div class="container-fluid">
-                                    <div class="row" style="background:#3366FF">
-                                        <br />
-                                    </div>
-                                    <div class="row" style="background:#ED4D46">
-                                        <h6 class="font-weight-bold my-2 ml-4 px-1 text-center" style="color:#FFFFFF">
-                                            SUCURSALES DADAS DE BAJA: INACTIVAS
-                                        </h6>
-                                    </div>
-                                </div>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <!-- <span aria-hidden="true">&times;</span>-->
-                                </button>
-                            </div>
-                            <div class="modal-body  col-12" id="">
-                                <!-- TABLA -->
-                                <div class="row w-100 " style="height:300px;overflow-y:auto;">
-                                    <table class="table table-bordered border-primary ml-5  ">
-                                        <thead class="table-secondary text-primary">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>DIRECCION</th>
-                                                <th>TELEFONO</th>
-                                                <th> </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="filaTablas">
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
-                                <h5 class="modal-title" id="empleadosModalLabel">EMPLEADOS</h5>
-                                <button id="cerrar" type="button" class="close" onclick="cerrarModal()" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body" id="cuerpoEmpleadosModal">
-                                Aqui van los empleados
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" onclick="cerrarModal()" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="agregarEmpleado()">AGREGAR EMPLEADO</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <script>
-                    /*
->>>>>>> 94fea8b23bc41594fbc7f92e952f8294a99f681b
 const texto = document.querySelector('#texto');
 console.log(texto.value);
 
@@ -327,7 +266,6 @@ function filtrar() {
 texto.addEventListener('keyup', filtrar);
 filtrar();
 */
-<<<<<<< HEAD
 </script>
 <script>
 async function empleadosSucursal() {
@@ -495,40 +433,6 @@ $("input[name='telefono']").bind('keypress', function(tecla) {
     texto.addEventListener('keyup', filtrar);
     filtrar();
 });
-=======
-                </script>
-                <script>
-                    async function empleadosSucursal() {
-                        let body = document.querySelector('#cuerpoEmpleadosModal');
-                        body.innerHTML = "NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
-                        try {
-                            let id = @if(isset($sucursal)) {
-                                {
-                                    $sucursal - > id
-                                }
-                            }
-                            @else 0 @endif;
-                            response = await fetch(`/puntoVenta/sucursalEmpleado/${id}`);
-                            if (response.ok) {
-                                empleados = await response.json();
-                                if (empleados.length > 0) {
-                                    for (let i in empleados) {
-
-                                    }
-                                }
-                                console.log(empleados);
-                                //return productos;
-                                //console.log(response);
-
-                            } else {
-                                console.log("No responde :'v");
-                                console.log(response);
-                                throw new Error(response.statusText);
-                            }
-                        } catch (err) {
-                            console.log("Error al realizar la petición AJAX: " + err.message);
-                        }
->>>>>>> 94fea8b23bc41594fbc7f92e952f8294a99f681b
 
                     }
                     /*
