@@ -17,6 +17,20 @@ class SucursalController extends Controller
         //
     }
 
+    public function darAltaSucursal($id){
+        $sucursal = Sucursal::findOrFail($id);
+        $dato['status'] = 1;
+        $sucursal->update($dato);
+        return redirect('puntoVenta/administracion');
+
+    }
+
+    public function sucu_inactivas(){
+        $sucursalesInac = Sucursal::where('status', '=', 0)->get();
+        //return $sucursalesInac;
+        return compact('sucursalesInac');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

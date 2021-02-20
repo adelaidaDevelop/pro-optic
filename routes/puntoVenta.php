@@ -45,7 +45,12 @@ Route::prefix('/puntoVenta')->group(function()
     
     //Sucursal producto
      Route::resource('sucursalProducto', SucursalProductoController::class);
-
+     //RUTA SUCURSALES INACTIVAS
+     Route::get('/sucursalesInactivos', [SucursalController::class,'sucu_inactivas']);
+    // dar alta sucursal
+    Route::get('/altaSucursal/{id}', [SucursalController::class,'darAltaSucursal']);
+    //AGREGAR PRODUCTOS DEL STOCK A LA SUCURSAL ACTUAL
+    Route::get('/agregarProdStock/{id}', [SucursalProductoController::class,'agregarProdStock_Suc']);
 
     Route::get('productoEli/{id}', function($id){
         $producto = Sucursal_producto::where('idProducto','=',$id)->delete();

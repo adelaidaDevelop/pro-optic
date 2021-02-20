@@ -270,20 +270,6 @@ CREDITOS
 
 
 
-    function calcularDeudaCredito() {
-        const abono2 = document.querySelector('#abono');
-        const debe = document.querySelector('#restoDeuda');
-        if (parseFloat(abono2.value) > 0) {
-            //alert('si entra');
-            let diferencia = parseFloat(totalResta) - parseFloat(abono2.value);
-
-            debe.innerHTML = "$ " + '<strong>' + diferencia + '</strong>';
-            //cambio.textContent ="$" + '<strong>'+diferencia+'</strong>';
-            //cambio.value = parseFloat(pago.value)-total;
-        } else {
-            debe.textContent = "$ 0.00"
-        }
-    }
 
     function modalVerMas(id) {
         let cant = 0;

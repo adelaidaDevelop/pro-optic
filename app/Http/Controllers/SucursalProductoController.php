@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sucursal;
 use App\Models\Sucursal_producto;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class SucursalProductoController extends Controller
@@ -43,6 +45,7 @@ class SucursalProductoController extends Controller
         return "creado";
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -52,6 +55,21 @@ class SucursalProductoController extends Controller
     public function show(Sucursal_producto $sucursal_producto)
     {
         //
+    }
+
+    public function agregarProdStock_Suc($id){
+        $producto= Producto::findOrFail($id);
+        $datosSP['costo']= 0;
+        $datosSP['precio']= 0;
+        $datosSP['existencia']= 0;
+        $datosSP['minimoStock']= 0 ;//$datosProducto['minimoStock'];
+        $datosSP['status']= 1;
+        $idSucursal = session('sucursal');
+        $datosSP['idSucursal'] = $idSucursal;
+        $datosSP['idProducto'] = $producto->id;
+        Sucursal_producto::create($datosSP);
+
+         return redirect('/puntoVenta/producto');
     }
 
     /**

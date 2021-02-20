@@ -12,6 +12,15 @@ ADMINISTRACION
         </button>
     </form>
 </div>
+
+<div class="col-1 my-2 ml-3 p-1 ">
+    <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver" onclick="return datosTablaSuc()" value="">
+        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        ALTA SUCURSALES
+    </button>
+</div>
+
+
 <div class="col my-2 pl-1">
     <form method="get" action="{{url('/puntoVenta/empleado/')}}">
         <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
@@ -33,8 +42,7 @@ ADMINISTRACION
                     <h4 style="color:#4388CC">SUCURSALES</h4>
 
                     <div class="input-group">
-                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR SUCURSALES"
-                            id="texto">
+                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR SUCURSALES" id="texto">
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -51,8 +59,7 @@ ADMINISTRACION
                 <!--EDITAR  -->
                 @if(isset($d))
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion/'.$d->id)}}"
-                        enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion/'.$d->id)}}" enctype="multipart/form-data">
                         <div class="form-group">
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
@@ -69,18 +76,15 @@ ADMINISTRACION
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="form-control" onkeyup="mayus(this);" name="direccion"
-                                            id="direccion" value="{{$d->direccion}}">
+                                        <input type="text" class="form-control" onkeyup="mayus(this);" name="direccion" id="direccion" value="{{$d->direccion}}">
                                         <label for="">TELEFONO</label>
-                                        <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono"
-                                            id="telefono" value="{{$d->telefono}}">
+                                        <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono" id="telefono" value="{{$d->telefono}}">
                                     </div>
                                 </div>
 
                             </div>
                             <button class="btn btn-outline-secondary" type="submit">
-                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                    width="25px" height="25px">
+                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                                 GUARDAR CAMBIOS
                             </button>
                         </div>
@@ -106,8 +110,7 @@ ADMINISTRACION
                 </div>
                 @else
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion')}}"
-                        enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion')}}" enctype="multipart/form-data">
                         <!--NUEVA SUCURSAL-->
                         {{ csrf_field() }}
                         <label for="nempleado">
@@ -143,8 +146,7 @@ ADMINISTRACION
                         <div class="form-row w-100">
                             <div class="form-group">
                                 <button class="btn btn-outline-secondary" type="submit">
-                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                        width="25px" height="25px">
+                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                                     GUARDAR SUCURSAL
                                 </button>
                             </div>
@@ -161,6 +163,47 @@ ADMINISTRACION
         <div class="modal-content">
             <div class="modal-header">
 
+
+<!-- MODAL-->
+<div class="modal fade modal_sucursales_inactivas" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content" style="width:900px;height:500px;">
+            <div class="modal-header w-100 ">
+                <!--ENCABEZADO -->
+                <div class="container-fluid">
+                    <div class="row" style="background:#3366FF">
+                        <br />
+                    </div>
+                    <div class="row" style="background:#ED4D46">
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 text-center" style="color:#FFFFFF">
+                            SUCURSALES DADAS DE BAJA: INACTIVAS
+                        </h6>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <!-- <span aria-hidden="true">&times;</span>-->
+                </button>
+            </div>
+            <div class="modal-body  col-12" id="">
+                <!-- TABLA -->
+                <div class="row w-100 " style="height:300px;overflow-y:auto;">
+                    <table class="table table-bordered border-primary ml-5  ">
+                        <thead class="table-secondary text-primary">
+                            <tr>
+                                <th>#</th>
+                                <th>DIRECCION</th>
+                                <th>TELEFONO</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                        <tbody id="filaTablas">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
                 <h5 class="modal-title" id="empleadosModalLabel">EMPLEADOS</h5>
                 <button id="cerrar" type="button" class="close" onclick="cerrarModal()" data-dismiss="modal"
                     aria-label="Close">
@@ -178,8 +221,9 @@ ADMINISTRACION
         </div>
     </div>
 </div>
+
 <script>
-/*
+    /*
 const texto = document.querySelector('#texto');
 console.log(texto.value);
 
@@ -263,6 +307,27 @@ cargarSucursales();
 */
 </script>
 <script>
+    let Suc_Inac = @json($sucursalesInac);
+    const texto = document.querySelector('#texto');
+    //MAYUSCULA
+    function mayus(e) {
+        e.value = e.value.toUpperCase();
+        const ppb = document.querySelector('#codigoBarras');
+        console.log(ppb.value);
+    }
+
+    //SOLO NUMEROS
+    $("input[name='telefono']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
 const texto = document.querySelector('#texto');
 //MAYUSCULA
 function mayus(e) {
@@ -282,6 +347,66 @@ $("input[name='telefono']").bind('keypress', function(tecla) {
     } else { // other keys.
         return false;
     }
+
+    function datosTablaSuc() {
+        let cuerpo = "";
+        let cont = 0;
+        sucursales0();
+        for (let t in Suc_Inac) {
+            cont = cont + 1;
+            cuerpo = cuerpo + `
+                    <tr>
+                    <th >` + cont + `</th>
+                    <td>` + Suc_Inac[t].direccion + `</td>
+                    <td>` + Suc_Inac[t].telefono + `</td>
+                    <td>` +
+                  ` 
+                    <a class="btn btn-primary" href="{{ url('/puntoVenta/altaSucursal/` + Suc_Inac[t].id + `')}}"> ALTA </a>
+                                           
+
+                    </td>        
+                    </tr>
+                     `;
+        }
+        document.getElementById("filaTablas").innerHTML = cuerpo;
+    }
+    //reucperar sucursales inactivas
+    async function sucursales0() {
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/sucursalesInactivos`);
+            if (response.ok) {
+                Suc_Inac = await response.json();
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+
+
+
+    async function cargarEmpleados() {
+        console.log("carg  Empl");
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/datosEmpleado`);
+            if (response.ok) {
+                empleados = await response.json();
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
+    texto.addEventListener('keyup', filtrar);
+    filtrar();
 });
 
 function filtrar() {
