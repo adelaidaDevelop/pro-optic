@@ -16,7 +16,8 @@ class AdministracionController extends Controller
     public function index()
     {
         $sucursalesInac = Sucursal::where('status', '=', 0)->get();
-        return view('Administracion.index', compact('sucursalesInac'));
+      //  $sucursalesInac = Sucursal::where('status', '=', 0)->get();
+        return view('Administracion.index', $sucursalesInac);
     }
 
     public function empleados()

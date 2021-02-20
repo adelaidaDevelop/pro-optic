@@ -27,8 +27,8 @@ class SucursalController extends Controller
 
     public function sucu_inactivas(){
         $sucursalesInac = Sucursal::where('status', '=', 0)->get();
-        //return $sucursalesInac;
-        return compact('sucursalesInac');
+        return $sucursalesInac;
+        //return compact('sucursalesInac');
     }
 
     /**
