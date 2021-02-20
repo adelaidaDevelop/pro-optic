@@ -173,7 +173,7 @@ ADMINISTRACION
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="cerrarModal()"
                     data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="crearProducto()">NUEVO PRODUCTO</button>
+                <button type="button" class="btn btn-primary" onclick="agregarEmpleado()">AGREGAR EMPLEADO</button>
             </div>
         </div>
     </div>
@@ -201,7 +201,31 @@ filtrar();
 async function empleadosSucursal()
 {
     let body = document.querySelector('#cuerpoEmpleadosModal');
-    body.innerHTML = "Modificando modal";
+    body.innerHTML = "NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
+    try {
+        response = await fetch(`/puntoVenta/sucursalEmpleado/{{$sucursal->id}}`);
+        if (response.ok) {
+            empleados = await response.json();
+            if(empleados.length>0)
+            {
+                for(let i in empleados)
+                {
+                    
+                }
+            }
+            console.log(empleados);
+            //return productos;
+            //console.log(response);
+
+        } else {
+            console.log("No responde :'v");
+            console.log(response);
+            throw new Error(response.statusText);
+        }
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+    
 }
 /*
 let sucursales = [];

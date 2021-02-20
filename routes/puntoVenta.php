@@ -7,6 +7,7 @@ use App\Http\Controllers\VentaController;
 
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\SucursalController;
+use App\Http\Controllers\SucursalEmpleadoController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\AdministracionController;
@@ -32,6 +33,7 @@ Route::prefix('/puntoVenta')->group(function()
     Route::resource('departamento', DepartamentoController::class);//->middleware('auth');
 
     Route::resource('sucursal', SucursalController::class);
+    Route::resource('sucursalEmpleado', SucursalEmpleadoController::class);
 
     Route::get('/login', [LoginController::class,'login'])->name('Login');//->middleware('isEmpleado');
     Route::post('/login', [LoginController::class,'loginPost'])->name('Login');

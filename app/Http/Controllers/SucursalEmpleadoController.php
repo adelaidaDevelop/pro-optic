@@ -44,9 +44,12 @@ class SucursalEmpleadoController extends Controller
      * @param  \App\Models\Sucursal_empleado  $sucursal_empleado
      * @return \Illuminate\Http\Response
      */
-    public function show(Sucursal_empleado $sucursal_empleado)
+    public function show($sucursal)//Sucursal_empleado $sucursal_empleado)
     {
-        //
+        $sucursal_empleado = Sucursal_empleado::where('idSucursal','=',$sucursal)->get();
+        //if($sucursal_empleado->count())
+            return $sucursal_empleado;
+        //return 'No hay empleados';
     }
 
     /**

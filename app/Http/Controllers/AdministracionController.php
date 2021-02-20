@@ -26,7 +26,8 @@ class AdministracionController extends Controller
     public function edit($id)
     {
         $datosD['d'] = Sucursal::findOrFail($id);
-        return view('Administracion.index',$datosD);
+        $sucursal = Sucursal::findOrFail($id);
+        return view('Administracion.index',$datosD,compact('sucursal'));
     }
     public function store(Request $request)
     {
