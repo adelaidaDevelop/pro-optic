@@ -15,7 +15,8 @@ class AdministracionController extends Controller
 
     public function index()
     {
-        return view('Administracion.index');
+        $sucursalesInac = Sucursal::where('status', '=', 0)->get();
+        return view('Administracion.index', compact('sucursalesInac'));
     }
 
     public function empleados()
@@ -32,7 +33,8 @@ class AdministracionController extends Controller
     {
         $datosCliente = request()->except('_token');
         $datosCliente['status'] = 1;
-        Sucursal::insert($datosCliente);
+        //Sucursal::insert($datosCliente);
+        Sucursal::create($datosCliente);
         
         return redirect('puntoVenta/administracion');
     }
@@ -56,6 +58,7 @@ class AdministracionController extends Controller
 
     public function buscador(Request $request)
     {
+      //  $idSucursal = session('sucursal');
         $datosConsulta['clienteB'] = Sucursal::where("direccion",'like',$request->texto."%")->get();
         return view('Administracion.form',$datosConsulta);
         //return $datosConsulta;

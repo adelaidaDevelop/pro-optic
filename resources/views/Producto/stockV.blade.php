@@ -52,12 +52,7 @@ PRODUCTOS
                     <td>` +
 
                 ` 
-                <form method="post" action="{{url('/puntoVenta/sucursalProducto/crear/'.`+productos[t].id+` )}}" enctype="multipart/form-data">
-                {{ csrf_field() }}
-
-                <button type="button" class="btn btn-outline-info"  value=""> agregar </button>
-                </form>
-
+                <a class="btn btn-primary" href="{{ url('/puntoVenta/agregarProdStock/` + productos[t].id + `')}}"> AGREGAR </a>
                  </td>            
                             </tr>
                             `;
