@@ -196,11 +196,12 @@ class ProductoController extends Controller
         //return $datosConsulta;
     }
     public function eliminar3($id){
-            $producto = Sucursal_producto::where('idProducto','=',$id)->first();
+        $idSucursal = session('sucursal');
+      //  $productosSucursal= Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
+            $producto = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('idProducto','=',$id);
             $dato['status']= 0;
            $producto->update($dato);
            // Sucursal_producto::where('idProducto',$id)->first()->update($dato);
-
             return redirect()->back();
         
     }
