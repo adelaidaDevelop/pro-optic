@@ -3,27 +3,37 @@
 @section('subtitulo')
 PRODUCTOS
 @endsection
-
 @section('opciones')
 @endsection
+<div class="row p-1 ">
+    <div class="row col-12 ml-2 w-100">
+        <h4 class="text-primary ml-2 my-2">
+            <strong>
+                STOCK DE PRODUCTOS
+            </strong>
+        </h4>
+    </div>
+    <div class="row border border-primary m-2 ml-4 mr-4 col ">
+        <div class="col mt-1 mb-4 ml-4 mr-4">
+            <!-- TABLA -->
+            <div class="row border mt-4" style="height:350px;overflow-y:auto;">
+                <table class="table table-bordered border-primary">
+                    <thead class="table-secondary text-primary">
+                        <tr>
+                            <th>#</th>
+                            <th>CODIGO BARRAS</th>
+                            <th>NOMBRE</th>
+                            <th>DEPARTAMENTO</th>
+                            <th>ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody id="consultaBusqueda">
 
-<!-- TABLA -->
-<div class="row  text-center  " style="height:350px;overflow-y:auto;">
-    <table class="table table-bordered border-primary ">
-        <thead class="table-secondary text-primary">
-
-            <tr>
-                <th>#</th>
-                <th>CODIGO BARRAS</th>
-                <th>NOMBRE</th>
-                <th>DEPARTAMENTO</th>
-                <th>ACCIONES</th>
-            </tr>
-        </thead>
-        <tbody id="consultaBusqueda">
-
-        </tbody>
-    </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -37,10 +47,13 @@ PRODUCTOS
         let cuerpo = "";
         let contador = 0;
         let departamento = "";
+
         for (let t in productos) {
+            bandera = true;
             for (let x in producto_sucursal) {
                 if (productos[t].id === producto_sucursal[x].idProducto) {
                     bandera = false;
+                    console.log("entro");
                 }
             }
             if (bandera === true) {
@@ -49,6 +62,7 @@ PRODUCTOS
                         departamento = deptos[count].nombre;
                     }
                 }
+                console.log("entro0Vez");
                 contador = contador + 1;
                 cuerpo = cuerpo + `
                  <tr onclick="" data-dismiss="modal">
@@ -67,11 +81,6 @@ PRODUCTOS
         }
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
     }
-
-    function inserta(id) {
-
-    }
-
     cargarProductos();
 </script>
 
