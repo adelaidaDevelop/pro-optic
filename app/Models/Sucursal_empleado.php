@@ -11,5 +11,6 @@ class Sucursal_empleado extends Model
     protected $fillable = [
         'idSucursal',
         'idEmpleado',
+        'status',
     ];
 }

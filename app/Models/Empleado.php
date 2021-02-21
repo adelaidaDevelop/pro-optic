@@ -19,6 +19,6 @@ class Empleado extends Model
         'curp',
         'domicilio',
         'idUsuario',
-        'status',
+        //'status',
     ];
 }

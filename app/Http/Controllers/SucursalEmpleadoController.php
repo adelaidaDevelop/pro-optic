@@ -35,7 +35,12 @@ class SucursalEmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sucursal_empleado = new Sucursal_empleado;
+        $sucursal_empleado->idSucursal = $request->input('idSucursal');
+        $sucursal_empleado->idEmpleado = $request->input('idEmpleado');
+        $sucursal_empleado->status = 'alta';
+        $sucursal_empleado->save();
+        return true;
     }
 
     /**
