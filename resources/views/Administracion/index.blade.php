@@ -205,14 +205,14 @@ ADMINISTRACION
 <div class="modal fade" id="empleadosModal" tabindex="-1" aria-labelledby="empleadosModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" id="cabezaEmpleadosModal">
             </div>
             <div class="modal-body" id="cuerpoEmpleadosModal">
                 Aqui van los empleados
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="cerrarModal()" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="cargarEmpleados()">AGREGAR EMPLEADO</button>
+                <button type="button" class="btn btn-primary" onclick="mostrarEmpleados()">AGREGAR EMPLEADO</button>
             </div>
         </div>
     </div>
@@ -222,8 +222,45 @@ ADMINISTRACION
 <script>
     let SucursalEmpleados = [];
     let empleados = [];
+    let sucursal = @json($sucursal);
     let idSucursal = @if(isset($sucursal)) "{{$sucursal->id}}"@else 0 @endif;
+    async function cargarEmpleados() {
+        let body = document.querySelector('#cuerpoEmpleadosModal');
+        body.innerHTML = "";//NO HAY NINGUN EMPLEADO EN LA EMPRESA";
+        let cuerpo = `<div class="row mx-auto my-auto p-5"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
+        try {
+            let response = await fetch(`/puntoVenta/empleado/empleados`);
+            if (response.ok) {
+                
+                console.log("Los empleados son:");
+                empleados = await response.json();
+                /*if(empleados.length>0)
+                {
+                    for(let i in empleados)
+                    {
+                        cuerpo = cuerpo + `<a class="btn btn-secondary btn-block text-uppercase border"
+                        onclick="agregarEmpleado(`+empleados[i].id+`)">`+empleados[i].nombre +` `+ 
+                        empleados[i].apellidoPaterno+` `+empleados[i].apellidoMaterno+`</a>`;
+                    }
+
+                    body.innerHTML = cuerpo;
+                }
+                else{
+                    body.innerHTML = "NO HAY NINGUN EMPLEADO EN LA EMPRESA";
+                }*/
+                console.log(empleados);
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
     async function empleadosSucursal() {
+        let header = document.querySelector('#cabezaEmpleadosModal');
+        header.innerHTML = `<h5><strong class="text-uppercase">empleados de la sucursal `+sucursal.direccion+`</strong></h5>`;
         let body = document.querySelector('#cuerpoEmpleadosModal');
         body.innerHTML = "";//NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
         let cuerpo = "";
@@ -234,9 +271,19 @@ ADMINISTRACION
                 console.log("Las sucursales son:");
                 SucursalEmpleados = await response.json();
                 if (SucursalEmpleados.length > 0) {
+                    await cargarEmpleados();
+                    cuerpo = `<ul class="list-group">`;
                     for (let i in SucursalEmpleados) {
-                        cuerpo = cuerpo + SucursalEmpleados[i].direccion+``;
+                        for(let e in empleados)
+                        {
+                            if(SucursalEmpleados[i].idEmpleado == empleados[e].id)
+                            {
+                                cuerpo = cuerpo + `<li class="list-group-item text-uppercase">`+empleados[e].nombre+`</li>`;
+                            }
+                        }
+                        
                     }
+                    cuerpo = cuerpo + `</ul>`;
                     body.innerHTML = cuerpo;
                 }
                 else{
@@ -255,40 +302,34 @@ ADMINISTRACION
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
-    async function cargarEmpleados() {
+    
+    async function mostrarEmpleados()
+    {
         let body = document.querySelector('#cuerpoEmpleadosModal');
         body.innerHTML = "";//NO HAY NINGUN EMPLEADO EN LA EMPRESA";
-        let cuerpo = `<div class="row mx-auto my-auto p-5"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
+        let cuerpo = `<div class="row mx-auto my-auto p-1"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
         try {
-            let response = await fetch(`/puntoVenta/empleado/empleados`);
-            if (response.ok) {
-                
-                console.log("Los empleados son:");
-                empleados = await response.json();
-                if(empleados.length>0)
+            await cargarEmpleados();
+            for(let i in empleados)
+            {
+                let bandera = true;
+                for(let s in SucursalEmpleados)
                 {
-                    for(let i in empleados)
-                    {
-                        cuerpo = cuerpo + `<a class="btn btn-secondary btn-block text-uppercase border"
+                    if(SucursalEmpleados[s].idEmpleado == empleados[i].id)
+                        bandera = false;
+                }
+                if(bandera)
+                {
+                    cuerpo = cuerpo + `<a class="btn btn-secondary btn-block text-uppercase border"
                         onclick="agregarEmpleado(`+empleados[i].id+`)">`+empleados[i].nombre +` `+ 
                         empleados[i].apellidoPaterno+` `+empleados[i].apellidoMaterno+`</a>`;
-                    }
-
-                    body.innerHTML = cuerpo;
                 }
-                else{
-                    body.innerHTML = "NO HAY NINGUN EMPLEADO EN LA EMPRESA";
-                }
-                console.log(empleados);
-            } else {
-                console.log("No responde :'v");
-                console.log(response);
-                throw new Error(response.statusText);
             }
+            body.innerHTML = cuerpo;
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-    };
+    }
 
     async function agregarEmpleado(idEmpleado)
     {
