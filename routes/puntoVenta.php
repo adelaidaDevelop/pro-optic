@@ -51,8 +51,11 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('/altaSucursal/{id}', [SucursalController::class,'darAltaSucursal']);
     //AGREGAR PRODUCTOS DEL STOCK A LA SUCURSAL ACTUAL
     Route::get('/agregarProdStock/{id}', [SucursalProductoController::class,'agregarProdStock_Suc']);
-
-    Route::get('productoEli/{id}', function($id){
+    //DEVOLVER PRODUCTOS EN BAJA DE ESTA SUCURSAL
+    Route::get('/productos_baja', [SucursalProductoController::class,'productos_baja']);
+    //DAR DE ALTA PRODUCTOS DADAS DE BAJA EN ESTA SUCURSAL
+      Route::get('altaProductoS/{id}', [SucursalProductoController::class,'altaProductoS']);
+   Route::get('productoEli/{id}', function($id){
         $producto = Sucursal_producto::where('idProducto','=',$id)->delete();
         return redirect()->back();
     });
@@ -67,8 +70,7 @@ Route::prefix('/puntoVenta')->group(function()
 
     //ELIMINAR PRODUCTOS DE SUCURSAL
     Route::get('productoEli3/{id}', [ProductoController::class,'eliminar3']);
-
-
+    
     Route::resource('cliente', ClienteController::class);
     Route::resource('producto', ProductoController::class);
     Route::resource('corteCaja', ReporteController::class);
