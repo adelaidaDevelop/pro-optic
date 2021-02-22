@@ -75,9 +75,16 @@ class SucursalEmpleadoController extends Controller
      * @param  \App\Models\Sucursal_empleado  $sucursal_empleado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sucursal_empleado $sucursal_empleado)
+    public function update(Request $request,$id)//Request $request, Sucursal_empleado $sucursal_empleado)
     {
-        //
+        if($request->has('status'))
+        {
+            Sucursal_empleado::findOrFail($id)->update(['status' => $request->input('status')]);
+            //where('id','=',$id)->update(['status' => $request->input('status')]);
+            //return redirect('puntoVenta/empleado/'.$id.'/edit');
+            return true;
+        }
+        return $request;
     }
 
     /**
