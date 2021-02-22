@@ -280,13 +280,20 @@ ADMINISTRACION
                             if(SucursalEmpleados[i].idEmpleado == empleados[e].id)
                             {
                                 let status = "";
+                                let botonAltaBaja = "";
                                 if(SucursalEmpleados[i].status == 'alta')
                                 {
                                     status = `<span class="badge badge-success badge-pill">ACTIVO</span>`;
+                                    botonAltaBaja = `<button class="btn btn-danger" onclick="cambiarStatusEmpleado('baja',`+
+                                    SucursalEmpleados[i].id
+                                    +`)">DAR DE BAJA</button>`;
                                 }
                                 else
                                 {
                                     status = `<span class="badge badge-danger badge-pill">INACTIVO</span>`;
+                                    botonAltaBaja = `<button class="btn btn-success" onclick="cambiarStatusEmpleado('alta',`+
+                                    SucursalEmpleados[i].id
+                                    +`)">DAR DE ALTA</button>`;
                                 }
                                 cuerpo = cuerpo + `<ul class="list-group list-group-horizontal-sm my-1 border border-dark">
                                 <li class="list-group-item text-uppercase col-7">`+
@@ -294,8 +301,8 @@ ADMINISTRACION
                                 `</li>
                                 <li class="list-group-item text-uppercase col-2 mx-auto">`+
                                 status + `</li>
-                                <li class="list-group-item text-uppercase col-3 mx-auto">`+
-                                 `<button class="btn btn-secondary">DAR DE BAJA</button></li></ul>`;
+                                <li class="list-group-item text-uppercase col-3 mx-auto">`+ botonAltaBaja +
+                                 `</li></ul>`;
                                 //<li class="list-group-item">`+
                                 //empleados[e].nombre+`</</li>`;
                             }
@@ -322,6 +329,40 @@ ADMINISTRACION
         }
     }
     
+    async function cambiarStatusEmpleado(status,idSucursalEmpleado)
+    {
+        try {
+            const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/" + idSucursalEmpleado;
+            let respuesta = await $.ajax({
+                url: url,
+                type: 'PUT',
+                data: {
+                    'status': status,
+                    '_token': "{{ csrf_token() }}",
+                },
+                //processData: false,  // tell jQuery not to process the data
+                //contentType: false,
+                success: function(data) {
+                    //alert(data);                    }
+                }
+            });
+            console.log(respuesta);
+            if(respuesta == true)
+            {
+                await empleadosSucursal();
+                alert('El empleado se ha dado de '+status);
+
+            }
+            else
+            {
+                alert('El empleado no se dio de '+status);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+
+
     async function mostrarEmpleados()
     {
         let body = document.querySelector('#cuerpoEmpleadosModal');
@@ -377,7 +418,7 @@ ADMINISTRACION
                 // con los datos en formato JSON
                 body: datos // convertimos el objeto a texto
             };
-            let response = await fetch(`/puntoVenta/sucursalEmpleado`,init);
+            let response = await fetch(`/puntoVenta/sucursalEmpleado/`,init);
             if (response.ok) {
                 
                 console.log(response.text());
