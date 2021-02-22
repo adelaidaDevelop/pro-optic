@@ -85,9 +85,9 @@ class SucursalController extends Controller
      * @param  \App\Models\Sucursal  $sucursal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sucursal $sucursal)
+    public function update(Request $request,$id)//, Sucursal $sucursal)
     {
-        //
+
     }
 
     /**
@@ -96,8 +96,11 @@ class SucursalController extends Controller
      * @param  \App\Models\Sucursal  $sucursal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sucursal $sucursal)
+    public function destroy($id)//Sucursal $sucursal)
     {
-        //
+        $sucursal['status'] =0;
+        $suc2 = Sucursal::findOrFail($id);
+        $suc2->update($sucursal);
+        return redirect('puntoVenta/administracion');
     }
 }

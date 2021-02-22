@@ -95,7 +95,7 @@ ADMINISTRACION
                             <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                             EMPLEADOS
                         </button>
-                        <form method="post" class="ml-auto" action="{{url('/puntoVenta/administracion/'.$d->id)}}">
+                        <form method="post" class="ml-auto" action="{{url('/puntoVenta/sucursal/'.$d->id)}}">
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
                             <button class="btn btn-outline-secondary my-3 ml-auto" type="submit">
