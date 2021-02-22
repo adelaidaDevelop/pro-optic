@@ -537,7 +537,7 @@ PRODUCTOS
                                             <a class="btn btn-primary" href="{{ url('/puntoVenta/producto/` + x + `/edit')}}"> EDITAR PRODUCTO </a>
                                             <br/><br/>
                                             
-                                            <a class="btn btn-danger" data-method="delete" onclick="return confirm('¿Estas seguro de que deseas eliminar?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> ELIMINAR PRODUCTO </a>
+                                            <a class="btn btn-danger" data-method="delete" onclick="return confirm('¿Estas seguro de que deseas eliminar?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> DAR DE BAJA </a>
                                             
                                         </div>
 
