@@ -736,6 +736,16 @@ $('input').bind('keypress', function(tecla) {
     if (this.value.length == 0 & tecla.charCode == 32)
         return false;
 });
+$("input[type='text']").bind('keyup', function(tecla) {
+    this.value = this.value.toUpperCase();
+    //if (this.value.length == 0 & tecla.charCode == 32)
+      //  return false;
+});
+$("textarea").bind('keyup', function(tecla) {
+    this.value = this.value.toUpperCase();
+    //if (this.value.length == 0 & tecla.charCode == 32)
+      //  return false;
+});
 $("input[name='telefono']").bind('keypress', function(tecla) {
     if (this.value.length >= 10) return false;
     let code = tecla.charCode;
