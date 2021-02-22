@@ -7,6 +7,9 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Auth;
+
+use App\Models\Empleado;
+use App\Models\Sucursal_empleado;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -45,26 +48,41 @@ class LoginController extends Controller
 
     public function login()
     {
-        if(session()->has('idEmpleado'))
+        if(session()->has('idUsuario'))
         {
             if(Auth::check())
             {
                 if(Auth::user()->tipo == 0)
                 {
                     if(Auth::user()->id == 1)
+                    {
                         return redirect('/puntoVenta/home');
-                    $id = Auth::user()->id;
+                    }
+                        $id = Auth::user()->id;
+                        $empleado = Empleado::where('idUsuario','=',$id)->get()->first();
+                        $sucursalEmpleado = Sucursal_empleado::where('idSucursal','=',session('sucursal'))
+                        ->where('idEmpleado','=',$empleado->id)->get()->first();
+                        
+                        if(!empty($sucursalEmpleado) && $sucursalEmpleado->status == 'alta')
+                        {
+        //                    return redirect('/puntoVenta/home');
+                        //$request->session()->regenerate();
+                        session(['idUsuario' => Auth::user()->id]);
+                        session(['sucursal' => session('sucursal')]);
+                        return redirect('/puntoVenta/venta');//->intended('/');
+                        }
+                    /*$id = Auth::user()->id;
                     $empleado = Empleado::where('idUsuario','=',$id)->get()->first();
                     $sucursalEmpleado = Sucursal_empleado::where('idSucursal','=',session('sucursal'))
                     ->where('idEmpleado','=',$empleado->id)->get()->first();
                     if($sucursalEmpleado->count() && $sucursalEmpleado->status == 'alta')
-                        return redirect('/puntoVenta/home');
+                        return redirect('/puntoVenta/home');*/
                     
                 }
                 Auth::logout();
             }
-            $idEmpleado = session('idEmpleado');
-            Auth::loginUsingId($idEmpleado);
+            $idUsuario = session('idUsuario');
+            Auth::loginUsingId($idUsuario);
             return redirect('/puntoVenta/home');
             
         }     
@@ -79,10 +97,26 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             if(Auth::user()->tipo == 0)
             {
+                if(Auth::user()->id == 1)
+                {
+                    $request->session()->regenerate();
+                    session(['idUsuario' => Auth::user()->id]);
+                    session(['sucursal' => $request->input('opcionSucursal')]);
+                    return redirect('/puntoVenta/venta');
+                }
+                $id = Auth::user()->id;
+                $empleado = Empleado::where('idUsuario','=',$id)->get()->first();
+                $sucursalEmpleado = Sucursal_empleado::where('idSucursal','=',$request->input('opcionSucursal'))
+                ->where('idEmpleado','=',$empleado->id)->get()->first();
+                //return $sucursalEmpleado;
+                if(!empty($sucursalEmpleado) && $sucursalEmpleado->status == 'alta')
+                {
+//                    
                 $request->session()->regenerate();
-                session(['idEmpleado' => Auth::user()->id]);
+                session(['idUsuario' => Auth::user()->id]);
                 session(['sucursal' => $request->input('opcionSucursal')]);
-                return redirect('/puntoVenta/venta');//->intended('/');
+                return redirect('/puntoVenta/home');//redirect('/puntoVenta/venta');//->intended('/');
+                }
             }
             Auth::logout();
         }
@@ -108,7 +142,7 @@ class LoginController extends Controller
         {
             session(['idCliente'])
         }*/
-        session()->forget('idEmpleado');
+        session()->forget('idUsuario');
         return redirect('puntoVenta/login');
         //return 'Tambien entra a esta funcion';
     }
