@@ -52,13 +52,20 @@ class RegistrosPruebaTable extends Migration
 */
         //CREACION DE DEPARTAMENTOS
         $departamento = Departamento::create(
-            ['nombre' => 'VENTA LIBRE']
+            ['nombre' => 'SIN DEPARTAMENTO',
+             'status' => 1]
         );
         $departamento = Departamento::create(
-            ['nombre' => 'PERFUMERIA']
+            ['nombre' => 'VENTA LIBRE',
+             'status' => 1]
         );
         $departamento = Departamento::create(
-            ['nombre' => 'PATENTE']
+            ['nombre' => 'PERFUMERIA',
+             'status' => 1]
+        );
+        $departamento = Departamento::create(
+            ['nombre' => 'PATENTE',
+            'status' => 1]
         );
 
         //CREACION DE PRODUCTOS

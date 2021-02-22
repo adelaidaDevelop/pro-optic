@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Reporte;
 use App\Models\Venta;
-use App\Models\Pago;
+use App\Models\Pago_venta;
 use App\Models\Devolucion;
 use App\Models\Pago_compra;
 use App\Models\Compra;
 use App\Models\Empleado;
 use App\Models\Producto;
-use App\Models\Compra_producto;
 use App\Models\Departamento;
 use App\Models\Detalle_venta;
 
@@ -26,7 +25,7 @@ class ReporteController extends Controller
     public function index()
     {
         $ventas = Venta::all();
-        $pagos = Pago::all();
+        $pagos = Pago_venta::all();
         $devoluciones = Devolucion::all();
         $pagoCompras= Pago_compra::all();
         $compras = Compra::all();
@@ -40,7 +39,7 @@ class ReporteController extends Controller
     {
         $cajero = Empleado::all();
         $compras= Compra::all();
-        $compraProductos= Compra_producto::all();
+        $compraProductos= Compra::all();
         $productos= Producto::all();
         $devoluciones= Devolucion::all();
         $departamentos= Departamento::all();

@@ -11,6 +11,7 @@ class Departamento extends Model
     //protected $table = 'departamentos';
     protected $fillable = [
         'nombre',
+        'status'
     ];
    // public $timestamps = false;
 }
