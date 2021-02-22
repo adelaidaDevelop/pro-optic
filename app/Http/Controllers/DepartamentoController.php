@@ -50,7 +50,8 @@ class DepartamentoController extends Controller
     public function store(Request $request)
     {
         $datosDepartamento = request()->except('_token');
-        Departamento::insert($datosDepartamento);
+        $datosDepartamento['status'] = 1;
+        Departamento::create($datosDepartamento);
         
         return redirect('puntoVenta/departamento');
     }
@@ -108,7 +109,13 @@ class DepartamentoController extends Controller
     {
         //if($id == 0)
           //  return back()->with(['departamento' => false]);
-        Producto::where('idDepartamento','=',$id)->update(['idDepartamento' => 0]);
+        //Producto::where('idDepartamento','=',$id)->update(['idDepartamento' => 0]);
+        $actProdDepa = Producto::where('idDepartamento', '=',$id);
+        $actDepa['idDepartamento'] = 1;
+        $actProdDepa->update($actDepa);
+       // $baja['status'] = 0;
+       // $depa = Departamento::findOrFail($id);
+       // $depa->update($baja);
         Departamento::destroy($id);
         return redirect('puntoVenta/departamento');
     }

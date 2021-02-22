@@ -68,7 +68,7 @@ PRODUCTOS
                     FILTRAR POR:
                 </h6>
                 <select class="mt-1" name="idDepartamento" id="idDepartamento" onchange="deptoOpc()" required>
-                    <option value="0">DEPARTAMENTO</option>
+                    <option value="">DEPARTAMENTO</option>
                     @foreach($d as $departamento)
                     <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
                     @endforeach
@@ -176,12 +176,12 @@ PRODUCTOS
         <div class="modal-content" style="width:900px;height:500px;">
             <div class="modal-header w-100 ">
                 <!--ENCABEZADO -->
-                <div class="container-fluid">
+                <div class="container-fluid ">
                     <div class="row" style="background:#3366FF">
                         <br />
                     </div>
-                    <div class="row" style="background:#ED4D46">
-                        <h6 class="font-weight-bold my-2 ml-4 px-1 text-center" style="color:#FFFFFF">
+                    <div class="row " style="background:#ED4D46">
+                        <h6 class="font-weight-bold my-2  px-1 mx-auto " style="color:#FFFFFF">
                             PRODUCTOS DADOS DE BAJA EN ESTA SUCURSAL
                         </h6>
                     </div>
@@ -312,7 +312,8 @@ PRODUCTOS
                     if (productos[count5].id === productosSucursal[x].idProducto) {
 
                         let depa = document.querySelector('#idDepartamento');
-                        if (depa.value != "0") {
+                       // if (depa.value != "0") {
+                        if (depa.value != "") {
                             if (productos[count5].idDepartamento === parseInt(depa.value)) {
                                 let departamento = "";
                                 for (count21 in d) {

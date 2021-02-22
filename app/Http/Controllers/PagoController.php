@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pago;
+use App\Models\Pago_venta;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 
@@ -44,7 +44,7 @@ class PagoController extends Controller
         if ($monto == $totalResta) {
             if($monto > 0)
             {
-            $pago = new Pago;
+            $pago = new Pago_venta;
             $pago->monto = $monto;
             $pago->idVenta = $idVenta;
             $pago->save();

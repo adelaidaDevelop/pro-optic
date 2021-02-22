@@ -1,5 +1,5 @@
 <div class="row ">
-    <div class="text-primary p-1">
+    <div class="text-primary p-1 mt-2">
         <h4>
             <strong class="ml-4 ">
                 {{ $Modo == 'crear' ? 'NUEVO PRODUCTO': 'EDITAR PRODUCTO'}}
@@ -39,7 +39,7 @@
         <input type="number" name="minimoStock" min="1" id="minimoStock" class="form-control mb-4 mt-4" placeholder="Nombre productos" value="" autofocus required>
         @endif
 
-        <select class="form-control text-uppercase" name="receta" id="receta">
+        <select class="form-control text-uppercase" name="receta" id="receta" required>
             <option value="">Seleccione</option>
             @if(isset($producto))
             @if( $producto->receta === "SI")

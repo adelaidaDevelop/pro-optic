@@ -56,7 +56,7 @@
                             </label>
                             <br />
                             <label for="Nombre">
-                                <h5>{{$d->nombre}}</h5>
+                                <h3>{{$d->nombre}}</h3>
                             </label>
                             <div class="form-row w-100">
                                 <div class="col-7">
