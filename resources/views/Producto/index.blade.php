@@ -22,7 +22,7 @@ PRODUCTOS
 </div>
 <div class="col-0 my-2 ml-3 p-1 ">
     <a class="btn btn-secondary p-1" href="{{ url('/puntoVenta/producto/stock')}}">
-        <img src="{{ asset('img\agregar_stock.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        <img src="{{ asset('img\agregar_stock.png') }}" class="img-thumbnail" alt="Editar" width="28px" height="28px">
         AGREGAR DE STOCK </a>
     </a>
 </div>
@@ -246,6 +246,7 @@ PRODUCTOS
         folioNombreBandera = true;
         depaBandera = false;
         bajosExisBandera = false;
+
         //desseleccionar opc bajos de existencia
         /*
         let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
@@ -259,6 +260,8 @@ PRODUCTOS
             }
         }
         */
+        filtroProducto();
+
     }
 
     function deptoOpc() {
@@ -282,13 +285,15 @@ PRODUCTOS
         depaBandera = false;
         bajosExisBandera = false;
         // nombreBandera = true; //checar
-        buscarFiltroNombre()
+        
+        buscarFiltroNombre();
     }
 
     function buscarFiltroNombre() {
         productosList = [];
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         for (let x in productosSucursal) {
+
             for (count5 in productos) {
                 if (productos[count5].id === productosSucursal[x].idProducto) {
                     //BUSCAR PRODUCTOS SUCURSAL TODOS SIN FILTRO
@@ -402,7 +407,6 @@ PRODUCTOS
                         if (seleccion != null) {
                             opcBajosE = seleccion.value;
                             if (opcBajosE === 'existencia') {
-                                //bajosExistencias();
                                 console.log("si entra");
                                 if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
                                     // if (productos[count20].idDepartamento.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
@@ -553,7 +557,8 @@ PRODUCTOS
                                             <a class="btn btn-primary" href="{{ url('/puntoVenta/producto/` + x + `/edit')}}"> EDITAR PRODUCTO </a>
                                             <br/><br/>
                                             
-                                            <a class="btn btn-danger" data-method="delete" onclick="return confirm('¿Estas seguro de que deseas eliminar?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> DAR DE BAJA </a>
+                                            <a class="btn btn-danger" data-method="delete" onclick="return confirm('¿Estas seguro de que deseas eliminar?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                                             DAR DE BAJA </a> 
                                             
                                         </div>
 
@@ -569,7 +574,7 @@ PRODUCTOS
     function refrescar() {
         console.log("refrescar");
         location.reload();
-    }
+    };
 
     //
     async function productosEnBajaSucursal() {
@@ -601,7 +606,7 @@ PRODUCTOS
         }
         document.getElementById("filaTablas").innerHTML = cuerpo;
 
-    }
+    };
     //reucperar sucursales inactivas
     async function productos0() {
         let response = "Sin respuesta";
@@ -617,7 +622,7 @@ PRODUCTOS
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-    }
+    };
 
 
     /*

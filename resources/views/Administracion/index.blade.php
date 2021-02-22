@@ -4,16 +4,16 @@
 ADMINISTRACION
 @endsection
 @section('opciones')
-<div class="col my-2 ml-5 pl-1">
+<div class=" my-2 ml-5 p-1">
     <form method="get" action="{{url('/puntoVenta/administracion/')}}">
-        <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
+        <button class="btn btn-secondary p-1" type="submit" >
             <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
             SUCURSALES
         </button>
     </form>
 </div>
 
-<div class="col-1 my-2 ml-3 p-1 ">
+<div class=" my-2 ml-3 p-1 ">
     <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver" onclick=" return datosTablaSuc()" value="">
         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
         ALTA SUCURSALES
@@ -22,9 +22,9 @@ ADMINISTRACION
 
 
 
-<div class="col my-2 pl-1">
+<div class="ml-3 my-2 p-1">
     <form method="get" action="{{url('/puntoVenta/empleado/')}}">
-        <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
+        <button class="btn btn-secondary p-1" type="submit" >
             <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
             EMPLEADOS
         </button>
