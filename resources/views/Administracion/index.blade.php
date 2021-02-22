@@ -222,7 +222,7 @@ ADMINISTRACION
 <script>
     let SucursalEmpleados = [];
     let empleados = [];
-    let sucursal = @json($sucursal);
+    let sucursal = @if(isset($sucursal)) @json($sucursal) @else [] @endif;
     let idSucursal = @if(isset($sucursal)) "{{$sucursal->id}}"@else 0 @endif;
     async function cargarEmpleados() {
         let body = document.querySelector('#cuerpoEmpleadosModal');
@@ -272,18 +272,37 @@ ADMINISTRACION
                 SucursalEmpleados = await response.json();
                 if (SucursalEmpleados.length > 0) {
                     await cargarEmpleados();
-                    cuerpo = `<ul class="list-group">`;
+                    //cuerpo =;
                     for (let i in SucursalEmpleados) {
                         for(let e in empleados)
                         {
+
                             if(SucursalEmpleados[i].idEmpleado == empleados[e].id)
                             {
-                                cuerpo = cuerpo + `<li class="list-group-item text-uppercase">`+empleados[e].nombre+`</li>`;
+                                let status = "";
+                                if(SucursalEmpleados[i].status == 'alta')
+                                {
+                                    status = `<span class="badge badge-success badge-pill">ACTIVO</span>`;
+                                }
+                                else
+                                {
+                                    status = `<span class="badge badge-danger badge-pill">INACTIVO</span>`;
+                                }
+                                cuerpo = cuerpo + `<ul class="list-group list-group-horizontal-sm my-1 border border-dark">
+                                <li class="list-group-item text-uppercase col-7">`+
+                                empleados[e].nombre +` `+empleados[e].apellidoPaterno+ ` ` + empleados[e].apellidoMaterno +
+                                `</li>
+                                <li class="list-group-item text-uppercase col-2 mx-auto">`+
+                                status + `</li>
+                                <li class="list-group-item text-uppercase col-3 mx-auto">`+
+                                 `<button class="btn btn-secondary">DAR DE BAJA</button></li></ul>`;
+                                //<li class="list-group-item">`+
+                                //empleados[e].nombre+`</</li>`;
                             }
                         }
                         
                     }
-                    cuerpo = cuerpo + `</ul>`;
+                    //cuerpo = cuerpo + `</ul>`;
                     body.innerHTML = cuerpo;
                 }
                 else{
@@ -310,6 +329,7 @@ ADMINISTRACION
         let cuerpo = `<div class="row mx-auto my-auto p-1"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
         try {
             await cargarEmpleados();
+            let existeEmpleado = false;
             for(let i in empleados)
             {
                 let bandera = true;
@@ -320,12 +340,18 @@ ADMINISTRACION
                 }
                 if(bandera)
                 {
+                    existeEmpleado = true;
                     cuerpo = cuerpo + `<a class="btn btn-secondary btn-block text-uppercase border"
                         onclick="agregarEmpleado(`+empleados[i].id+`)">`+empleados[i].nombre +` `+ 
                         empleados[i].apellidoPaterno+` `+empleados[i].apellidoMaterno+`</a>`;
                 }
             }
             body.innerHTML = cuerpo;
+            if(!existeEmpleado)
+            {
+                body.innerHTML = `<div class="row mx-auto my-auto p-1"><strong class="text-uppercase">NO HAY EMPLEADOS NUEVOS QUE AGREGAR</strong></div>`;
+        
+            }
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
