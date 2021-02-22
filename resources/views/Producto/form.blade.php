@@ -103,8 +103,8 @@
 
     function mayus(e) {
         e.value = e.value.toUpperCase();
-        const ppb = document.querySelector('#codigoBarras');
-        console.log(ppb.value);
+      //  const ppb = document.querySelector('#codigoBarras');
+      // console.log(ppb.value);
     }
 
     //$('.minimoStock').on('input', function() {
