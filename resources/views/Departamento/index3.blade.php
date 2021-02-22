@@ -10,9 +10,9 @@
         @if(isset($d))
         <div class="col my-2 ml-5 pl-1">
             <form method="get" action="{{url('/puntoVenta/departamento/create')}}">
-                <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
+                <button class="btn btn-secondary" type="submit" >
+                    <img src="{{ asset('img\agregar2.png') }}" class="img-thumbnail" alt="Editar" width="30px"
+                        height="30px">
                     NUEVO DEPARTAMENTO
                 </button>
             </form>
@@ -52,11 +52,11 @@
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
                             <label for="ndepartamento">
-                                <h4 style="color:#4388CC">DEPARTAMENTO</h4>
+                                <h4 style="color:#4388CC">EDITAR DEPARTAMENTO</h4>
                             </label>
                             <br />
                             <label for="Nombre">
-                                <h3>{{$d->nombre}}</h3>
+                                <h4>{{$d->nombre}}</h4>
                             </label>
                             <div class="form-row w-100">
                                 <div class="col-7">
@@ -73,7 +73,7 @@
                             </div>
                             <button class="btn btn-outline-secondary" type="submit">
                                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                    width="25px" height="25px">
+                                    width="30px" height="30px">
                                 GUARDAR CAMBIOS
                             </button>
                         </div>
@@ -84,7 +84,7 @@
                             {{ method_field('DELETE')}}
                             <button class="btn btn-outline-secondary my-3" type="submit">
                                 <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
-                                    width="25px" height="25px">
+                                    width="30px" height="30px">
                                 DAR DE BAJA
                             </button>
                         </form>
@@ -126,8 +126,9 @@
                             <div class="form-group">
                                 <button class="btn btn-outline-secondary" type="submit">
                                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                        width="25px" height="25px">
-                                    GUARDAR DEPARTAMENTO
+                                        width="30px" height="30px">
+                                        GUARDAR DEPARTAMENTO
+                                    <!--GUARDAR DEPARTAMENTO-->
                                 </button>
                             </div>
                         </div>
