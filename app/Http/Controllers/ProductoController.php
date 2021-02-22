@@ -22,9 +22,10 @@ class ProductoController extends Controller
         $datosP= Producto::all();
         $depa= Departamento::all();
         $idSucursal = session('sucursal');
+        $producto = Producto::all();
         $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
      //   return $idSucursal;
-         return view('Producto.index',$depas, compact('depa', 'datosP','productosSucursal' ));
+         return view('Producto.index',$depas, compact('depa', 'datosP','productosSucursal', 'producto' ));
     }
 
     /**

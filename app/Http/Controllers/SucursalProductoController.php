@@ -72,6 +72,24 @@ class SucursalProductoController extends Controller
          return redirect('/puntoVenta/producto');
     }
 
+    //ENVIAR DATOS: PRODUCTOS DADOS DE BAJA ESTA SUCURSAL
+    public function productos_baja(){
+        $idSucursal = session('sucursal');
+        $productosBaja = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 0)->get();
+       // $producto= Producto::findOrFail($productosBaja->idProducto)->get();
+     //  $id= $productosBaja->idProducto->get();
+      //  $producto = Producto::all();
+        return  $productosBaja;
+    }
+    //ALTA PRODUCTO A SUCURSALES
+    public function altaProductoS($id){
+        $idSucursal = session('sucursal');
+        $producto = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('idProducto', '=', $id);
+        $dato['status']= 1;
+        $producto->update($dato);
+        return redirect()->back();
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

@@ -26,6 +26,15 @@ PRODUCTOS
         AGREGAR DE STOCK </a>
     </a>
 </div>
+
+
+<div class="col-1 my-2 ml-3 p-1 ">
+    <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
+        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        ALTA PRODUCTOS
+    </button>
+</div>
+
 <div class="col-0 my-2 ml-3 p-1 ">
     <a class="btn btn-secondary" href="{{ url('/producto/create')}}">
         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
@@ -147,7 +156,7 @@ PRODUCTOS
                     </div>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                   <!-- <span aria-hidden="true">&times;</span>-->
+                    <!-- <span aria-hidden="true">&times;</span>-->
                 </button>
             </div>
             <div class="modal-body  col-12" id="">
@@ -160,8 +169,54 @@ PRODUCTOS
         </div>
     </div>
 </div>
-
 <!-- END MODAL-->
+<!--MODAL PARA CARGAR PRODUCTOS DADOS DE BAJA EN SUCURSAL LOGEADO-->
+<div class="modal fade modal_altaProductos_SucursalLogeado" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content" style="width:900px;height:500px;">
+            <div class="modal-header w-100 ">
+                <!--ENCABEZADO -->
+                <div class="container-fluid">
+                    <div class="row" style="background:#3366FF">
+                        <br />
+                    </div>
+                    <div class="row" style="background:#ED4D46">
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 text-center" style="color:#FFFFFF">
+                            PRODUCTOS DADOS DE BAJA EN ESTA SUCURSAL
+                        </h6>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <!-- <span aria-hidden="true">&times;</span>-->
+                </button>
+            </div>
+            <div class="modal-body  col-12" id="">
+                <!-- TABLA -->
+                <div class="row w-100 " style="height:300px;overflow-y:auto;">
+                    <table class="table table-bordered border-primary ml-5  ">
+                        <thead class="table-secondary text-primary">
+                            <tr>
+                                <th>#</th>
+                                <th>CODIGO BARRA</th>
+                                <th>NOMBRE</th>
+                                <th>DESCRIPCION</th>
+                                <th>DEPARTAMENTO</th>
+                                <th>RECETA</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                        <tbody id="filaTablas">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--POP UP-->
 
@@ -169,6 +224,7 @@ PRODUCTOS
 <script>
     const productos = @json($datosP);
     const d = @json($depa);
+
     let opcFolioNombre = "";
     let opcBajosE = "";
     let productosSucursal = @json($productosSucursal);
@@ -177,6 +233,8 @@ PRODUCTOS
     let bajosExisBandera = false;
     let folioNombreBandera = false;
     //  let nombreBandera = true;
+
+    let prod_baja = "";
 
     nombreOpc();
 
@@ -492,11 +550,59 @@ PRODUCTOS
         document.getElementById("resultados").innerHTML = datosProduct;
     };
 
-    function refrescar(){
+    function refrescar() {
         console.log("refrescar");
         location.reload();
     }
-    
+
+    //
+    async function productosEnBajaSucursal() {
+        let cuerpo = "";
+        let cont = 0;
+        await productos0();
+        
+        console.log(prod_baja);
+        for (let t in prod_baja) {
+            for (let x in productos) {
+                if (productos[x].id === prod_baja[t].idProducto) {
+                    cont = cont + 1;
+                    cuerpo = cuerpo + `
+                    <tr>
+                    <th >` + cont + `</th>
+                    <td>` + productos[x].codigoBarras + `</td>
+                    <td>` + productos[x].nombre + `</td>
+                    <td>` + productos[x].descripcion + `</td>
+                    <td>` + productos[x].idDepartamento + `</td>
+                    <td>` + productos[x].receta + `</td>
+                    <td>` +
+                        ` 
+                    <a class="btn btn-primary" href="{{ url('/puntoVenta/altaProductoS/` + productos[x].id + `')}}"> ALTA </a>
+                    </td>        
+                    </tr>
+                     `;
+                }
+            }
+        }
+        document.getElementById("filaTablas").innerHTML = cuerpo;
+
+    }
+    //reucperar sucursales inactivas
+    async function productos0() {
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/puntoVenta/productos_baja`);
+            if (response.ok) {
+                prod_baja = await response.json();
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+
 
     /*
         
