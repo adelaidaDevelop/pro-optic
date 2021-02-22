@@ -21,37 +21,55 @@ class isEmpleado
      */
     public function handle(Request $request, Closure $next)
     {
-        if(session()->has('idEmpleado'))
+        //return 'Hay error';
+        if(session()->has('idUsuario'))
         {
+            
             if(Auth::check())
             {
                 if(Auth::user()->tipo == 0)
                 {
                     if(Auth::user()->id == 1)
+                    {
                         return $next($request);
+                    }
                     $id = Auth::user()->id;
+                $empleado = Empleado::where('idUsuario','=',$id)->get()->first();
+                $sucursalEmpleado = Sucursal_empleado::where('idSucursal','=',session('sucursal'))
+                ->where('idEmpleado','=',$empleado->id)->get()->first();
+                //return $sucursalEmpleado;
+                if(!empty($sucursalEmpleado) && $sucursalEmpleado->status == 'alta')
+                {
+                //                    return redirect('/puntoVenta/home');
+                //$request->session()->regenerate();
+                session(['idUsuario' => Auth::user()->id]);
+                session(['sucursal' => session('sucursal')]);
+                return $next($request);//->intended('/');
+                }
+                    /*$id = Auth::user()->id;
                     $empleado = Empleado::where('idUsuario','=',$id)->get()->first();
                     $sucursalEmpleado = Sucursal_empleado::where('idSucursal','=',session('sucursal'))
                     ->where('idEmpleado','=',$empleado->id)->get()->first();
                     if($sucursalEmpleado->count() && $sucursalEmpleado->status == 'alta')
-                        return $next($request);
+                        return $next($request);*/
                 }
                 Auth::logout();
             }
-            $idEmpleado = session('idEmpleado');
-            Auth::loginUsingId($idEmpleado);
+            $idUsuario = session('idUsuario');
+            Auth::loginUsingId($idUsuario);
             
         }
         else
         {
+            //return 'Hay error';
             Auth::logout();
             return redirect('/puntoVenta/login');
         }
             
         if(Auth::check())
             {
-                $idEmpleado = Auth::user()->id;
-                session(['idEmpleado' => $idEmpleado]); 
+                $idUsuario = Auth::user()->id;
+                session(['idUsuario' => $idUsuario]); 
             }
         
         return $next($request);

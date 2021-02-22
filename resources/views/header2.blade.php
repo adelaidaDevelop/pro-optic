@@ -43,7 +43,7 @@
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            @if(session('idEmpleado') == 1)
+                            @if(session('idUsuario') == 1)
                             <a class="nav-link" href="/puntoVenta/administracion">
                                 <button class="btn btn-light">
                                     ADMINISTRACION
