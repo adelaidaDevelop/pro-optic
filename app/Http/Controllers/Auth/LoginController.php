@@ -79,6 +79,14 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             if(Auth::user()->tipo == 0)
             {
+                if(Auth::user()->id == 1)
+                    return redirect('/puntoVenta/home');
+                $id = Auth::user()->id;
+                $empleado = Empleado::where('idUsuario','=',$id)->get()->first();
+                $sucursalEmpleado = Sucursal_empleado::where('idSucursal','=',session('sucursal'))
+                ->where('idEmpleado','=',$empleado->id)->get()->first();
+                if($sucursalEmpleado->count() && $sucursalEmpleado->status == 'alta')
+//                    return redirect('/puntoVenta/home');
                 $request->session()->regenerate();
                 session(['idEmpleado' => Auth::user()->id]);
                 session(['sucursal' => $request->input('opcionSucursal')]);
