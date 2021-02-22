@@ -401,11 +401,11 @@ ADMINISTRACION
     async function agregarEmpleado(idEmpleado)
     {
         let body = document.querySelector('#cuerpoEmpleadosModal');
-        body.innerHTML = `
+        /*body.innerHTML = `
         <div class="alert alert-primary" role="alert">
         OK YA LO AGREGO
         </div>
-        `;
+        `;*/
         try {
             let datos = new FormData();
             datos.append('_token', "{{ csrf_token() }}");
@@ -420,7 +420,7 @@ ADMINISTRACION
             };
             let response = await fetch(`/puntoVenta/sucursalEmpleado/`,init);
             if (response.ok) {
-                
+                await empleadosSucursal();
                 console.log(response.text());
             } else {
                 console.log("No responde :'v");
