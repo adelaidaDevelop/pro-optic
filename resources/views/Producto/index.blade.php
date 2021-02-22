@@ -8,7 +8,7 @@ PRODUCTOS
 <div class="col-0 my-2 p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
         <button class="btn btn-secondary ml-4 p-1" type="submit">
-            <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+            <img src="{{ asset('img\departamento.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
             DEPARTAMENTOS
         </button>
     </form>
@@ -22,32 +22,36 @@ PRODUCTOS
 </div>
 <div class="col-0 my-2 ml-3 p-1 ">
     <a class="btn btn-secondary p-1" href="{{ url('/puntoVenta/producto/stock')}}">
-        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        <img src="{{ asset('img\agregar_stock.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
         AGREGAR DE STOCK </a>
     </a>
 </div>
 
 
-<div class="col-1 my-2 ml-3 p-1 ">
+<div class="col-2 my-2 ml-3 p-1 ">
     <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
-        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        <img src="{{ asset('img\dar_alta.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
         ALTA PRODUCTOS
     </button>
 </div>
-
-<div class="col-0 my-2 ml-3 p-1 ">
-    <a class="btn btn-secondary" href="{{ url('/producto/create')}}">
+<!-- COMENTADO TEMPORAL
+<div class="col-1 my-2  p-1 ">
+    <button type="button" class="btn btn-secondary p-1" data-toggle="modal"  href="{{ url('/producto/create')}}" id="altaProd"  value="">
         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-        OFERTAS </a>
-    </a>
+        OFERTAS
+    </button>
 </div>
 
-<div class="col-0 my-2 ml-3 p-1 ">
+
+
+
+<div class="col- my-2 ml-3 p-1 ">
     <a class="btn btn-secondary" href="{{ url('/producto/create')}}">
         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
         PROXIMOS A CADUCAR </a>
     </a>
 </div>
+-->
 
 
 @endsection
@@ -242,8 +246,19 @@ PRODUCTOS
         folioNombreBandera = true;
         depaBandera = false;
         bajosExisBandera = false;
-        //  nombreBandera = false; //checar
-        filtroProducto();
+        //desseleccionar opc bajos de existencia
+        /*
+        let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
+        if (seleccion != null) {
+            let opcBajosE = seleccion.value;
+            if (opcBajosE === 'existencia') {
+                //desselecciona
+                console.log("si desseleccciona");
+                document.querySelector('input[name="bajosExistencia"]:checked').checked = false;
+
+            }
+        }
+        */
     }
 
     function deptoOpc() {
@@ -312,7 +327,7 @@ PRODUCTOS
                     if (productos[count5].id === productosSucursal[x].idProducto) {
 
                         let depa = document.querySelector('#idDepartamento');
-                       // if (depa.value != "0") {
+                        // if (depa.value != "0") {
                         if (depa.value != "") {
                             if (productos[count5].idDepartamento === parseInt(depa.value)) {
                                 let departamento = "";
@@ -561,7 +576,7 @@ PRODUCTOS
         let cuerpo = "";
         let cont = 0;
         await productos0();
-        
+
         console.log(prod_baja);
         for (let t in prod_baja) {
             for (let x in productos) {
