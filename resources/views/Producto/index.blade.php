@@ -16,7 +16,7 @@ PRODUCTOS
 <!--BOTON CREAR EMPLEADO-->
 <div class="col-0 my-2 ml-3 p-1 ">
     <a class="btn btn-secondary p-1" href="{{ url('/puntoVenta/producto/create')}}">
-        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        <img src="{{ asset('img\agregar2.png') }}" alt="Editar" width="25px" height="25px">
         NUEVO PRODUCTO </a>
     </a>
 </div>
@@ -196,23 +196,25 @@ PRODUCTOS
             </div>
             <div class="modal-body  col-12" id="">
                 <!-- TABLA -->
-                <div class="row w-100 " style="height:300px;overflow-y:auto;">
-                    <table class="table table-bordered border-primary ml-5  ">
-                        <thead class="table-secondary text-primary">
-                            <tr>
-                                <th>#</th>
-                                <th>CODIGO BARRA</th>
-                                <th>NOMBRE</th>
-                                <th>DESCRIPCION</th>
-                                <th>DEPARTAMENTO</th>
-                                <th>RECETA</th>
-                                <th> </th>
-                            </tr>
-                        </thead>
-                        <tbody id="filaTablas">
+                <div id="vacio" class="text-center my-auto">
+                    <div class="row w-100 " style="height:300px;overflow-y:auto;">
+                        <table class="table table-bordered border-primary ml-5  ">
+                            <thead class="table-secondary text-primary">
+                                <tr>
+                                    <th>#</th>
+                                    <th>CODIGO BARRA</th>
+                                    <th>NOMBRE</th>
+                                    <th>DESCRIPCION</th>
+                                    <th>DEPARTAMENTO</th>
+                                    <th>RECETA</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody id="filaTablas">
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -285,7 +287,7 @@ PRODUCTOS
         depaBandera = false;
         bajosExisBandera = false;
         // nombreBandera = true; //checar
-        
+
         buscarFiltroNombre();
     }
 
@@ -604,8 +606,12 @@ PRODUCTOS
                 }
             }
         }
-        document.getElementById("filaTablas").innerHTML = cuerpo;
-
+        if (cuerpo === "") {
+           let sin= ` <h3 class= "text-danger my-auto"> NO HAY PRODUCTOS DADOS DE BAJA EN ESTA SUCURSAL </h3>`;
+            document.getElementById("vacio").innerHTML = sin ;
+        } else {
+            document.getElementById("filaTablas").innerHTML = cuerpo;
+        }
     };
     //reucperar sucursales inactivas
     async function productos0() {

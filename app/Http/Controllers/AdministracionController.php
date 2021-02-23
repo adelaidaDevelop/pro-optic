@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Sucursal;
 
 class AdministracionController extends Controller
@@ -50,10 +49,27 @@ class AdministracionController extends Controller
 
     public function destroy($id)//Departamento $departamento)
     {
-        $sucursal['status'] =0;
-        $suc2 = Sucursal::findOrFail($id);
-        $suc2->update($sucursal);
-      //  Sucursal::destroy($id);
+        $sucursales = Sucursal::where('status','=', 1)->get();
+        
+        //return count($sucursales);
+        //return isset($sucursales);
+        if(count($sucursales)>1)
+        {
+            try{
+                Sucursal::destroy($id);
+            }
+            catch (\Illuminate\Database\QueryException $e){
+            $sucursal['status'] =0;
+            $suc2 = Sucursal::findOrFail($id);
+            $suc2->update($sucursal);
+            }
+            
+        }
+        else{
+            return 0;
+        }
+        
+       // Sucursal::destroy($id);
     //  Sucursal::where('id','=',$id)->update($datosCliente);
         return redirect('puntoVenta/administracion');
     }

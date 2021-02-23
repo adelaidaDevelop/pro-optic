@@ -16,7 +16,8 @@ PRODUCTOS
     <div class="row border border-primary m-2 ml-4 mr-4 col ">
         <div class="col mt-1 mb-4 ml-4 mr-4">
             <!-- TABLA -->
-            <div class="row border mt-4" style="height:350px;overflow-y:auto;">
+            <div id="vacio" class="text-center my-auto">
+            <div class="row border mt-4" style="height:300px;overflow-y:auto;">
                 <table class="table table-bordered border-primary">
                     <thead class="table-secondary text-primary">
                         <tr>
@@ -32,6 +33,8 @@ PRODUCTOS
                     </tbody>
                 </table>
             </div>
+            </div>
+            
         </div>
     </div>
 </div>
@@ -79,7 +82,12 @@ PRODUCTOS
                             `;
             }
         }
-        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        if (cuerpo === "") {
+           let sin= ` <h3 class= "text-danger my-auto"> STOCK DE PRODUCTOS VACIO </h3>`;
+            document.getElementById("vacio").innerHTML = sin ;
+        } else {
+            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        }
     }
     cargarProductos();
 </script>

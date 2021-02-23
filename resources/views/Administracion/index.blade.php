@@ -6,9 +6,9 @@ ADMINISTRACION
 @section('opciones')
 <div class=" my-2 ml-5 p-1">
     <form method="get" action="{{url('/puntoVenta/administracion/')}}">
-        <button class="btn btn-secondary p-1" type="submit" >
-            <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-            SUCURSALES
+        <button class="btn btn-secondary p-1" type="submit">
+            <img src="{{ asset('img\agregar2.png') }}" alt="Editar" width="25px" height="25px">
+            NUEVA SUCURSAL
         </button>
     </form>
 </div>
@@ -24,8 +24,8 @@ ADMINISTRACION
 
 <div class="ml-3 my-2 p-1">
     <form method="get" action="{{url('/puntoVenta/empleado/')}}">
-        <button class="btn btn-secondary p-1" type="submit" >
-            <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        <button class="btn btn-secondary p-1" type="submit">
+            <img src="{{ asset('img\usuarioEc.png') }}" class="img-thumbnail" alt="Editar" width="28px" height="28px">
             EMPLEADOS
         </button>
     </form>
@@ -79,7 +79,7 @@ ADMINISTRACION
                                         </label>
                                         <input type="text" class="form-control" onkeyup="mayus(this);" name="direccion" id="direccion" value="{{$d->direccion}}" required>
                                         <label for="">TELEFONO</label>
-                                        <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono" id="telefono" value="{{$d->telefono}}" required >
+                                        <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono" id="telefono" value="{{$d->telefono}}" required>
                                     </div>
                                 </div>
 
@@ -92,14 +92,14 @@ ADMINISTRACION
                     </form>
                     <div class="row px-3 my-0">
                         <button class="btn btn-outline-secondary my-3 mr-5" onclick="empleadosSucursal()" type="button" data-toggle="modal" data-target="#empleadosModal">
-                            <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                            <img src="{{ asset('img\verEmp.png') }}" alt="Editar" width="25px" height="25px">
                             EMPLEADOS
                         </button>
                         <form method="post" class="ml-auto" action="{{url('/puntoVenta/sucursal/'.$d->id)}}">
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
-                            <button class="btn btn-outline-secondary my-3 ml-auto" type="submit">
-                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                            <button class="btn btn-outline-secondary my-3 ml-auto " type="submit" onclick="return confirm('¿ELIMINAR SUCURSAL?')">
+                                <img src="{{ asset('img\eliminar.png') }}" alt="Editar" width="25px" height="25px" class="p-1">
                                 DAR DE BAJA
                             </button>
                         </form>
@@ -142,8 +142,8 @@ ADMINISTRACION
                         </div>
                         <div class="form-row w-100">
                             <div class="form-group">
-                                <button class="btn btn-outline-secondary" type="submit">
-                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                                <button class="btn btn-outline-secondary " type="submit">
+                                    <img src="{{ asset('img\guardar.png') }}" class="p-1" alt="Editar" width="30px" height="30px">
                                     GUARDAR SUCURSAL
                                 </button>
                             </div>
@@ -180,20 +180,22 @@ ADMINISTRACION
             </div>
             <div class="modal-body  col-12" id="">
                 <!-- TABLA -->
-                <div class="row w-100 " style="height:300px;overflow-y:auto;">
-                    <table class="table table-bordered border-primary ml-5  ">
-                        <thead class="table-secondary text-primary">
-                            <tr>
-                                <th>#</th>
-                                <th>DIRECCION</th>
-                                <th>TELEFONO</th>
-                                <th> </th>
-                            </tr>
-                        </thead>
-                        <tbody id="filaTablas">
+                <div id="vacio" class="text-center my-auto">
+                    <div class="row w-100 " style="height:300px;overflow-y:auto;">
+                        <table class="table table-bordered border-primary ml-5  ">
+                            <thead class="table-secondary text-primary">
+                                <tr>
+                                    <th>#</th>
+                                    <th>DIRECCION</th>
+                                    <th>TELEFONO</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody id="filaTablas">
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -222,16 +224,18 @@ ADMINISTRACION
 <script>
     let SucursalEmpleados = [];
     let empleados = [];
-    let sucursal = @if(isset($sucursal)) @json($sucursal) @else [] @endif;
-    let idSucursal = @if(isset($sucursal)) "{{$sucursal->id}}"@else 0 @endif;
+    let sucursal = @if(isset($sucursal)) @json($sucursal) @else[] @endif;
+    let idSucursal = @if(isset($sucursal))
+    "{{$sucursal->id}}"
+    @else 0 @endif;
     async function cargarEmpleados() {
         let body = document.querySelector('#cuerpoEmpleadosModal');
-        body.innerHTML = "";//NO HAY NINGUN EMPLEADO EN LA EMPRESA";
+        body.innerHTML = ""; //NO HAY NINGUN EMPLEADO EN LA EMPRESA";
         let cuerpo = `<div class="row mx-auto my-auto p-5"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
         try {
             let response = await fetch(`/puntoVenta/empleado/empleados`);
             if (response.ok) {
-                
+
                 console.log("Los empleados son:");
                 empleados = await response.json();
                 /*if(empleados.length>0)
@@ -260,12 +264,12 @@ ADMINISTRACION
     };
     async function empleadosSucursal() {
         let header = document.querySelector('#cabezaEmpleadosModal');
-        header.innerHTML = `<h5><strong class="text-uppercase">empleados de la sucursal `+sucursal.direccion+`</strong></h5>`;
+        header.innerHTML = `<h5><strong class="text-uppercase">empleados de la sucursal ` + sucursal.direccion + `</strong></h5>`;
         let body = document.querySelector('#cuerpoEmpleadosModal');
-        body.innerHTML = "";//NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
+        body.innerHTML = ""; //NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
         let cuerpo = "";
         try {
-            
+
             let response = await fetch(`/puntoVenta/sucursalEmpleado/${idSucursal}`);
             if (response.ok) {
                 console.log("Las sucursales son:");
@@ -274,45 +278,39 @@ ADMINISTRACION
                     await cargarEmpleados();
                     //cuerpo =;
                     for (let i in SucursalEmpleados) {
-                        for(let e in empleados)
-                        {
+                        for (let e in empleados) {
 
-                            if(SucursalEmpleados[i].idEmpleado == empleados[e].id)
-                            {
+                            if (SucursalEmpleados[i].idEmpleado == empleados[e].id) {
                                 let status = "";
                                 let botonAltaBaja = "";
-                                if(SucursalEmpleados[i].status == 'alta')
-                                {
+                                if (SucursalEmpleados[i].status == 'alta') {
                                     status = `<span class="badge badge-success badge-pill">ACTIVO</span>`;
-                                    botonAltaBaja = `<button class="btn btn-danger" onclick="cambiarStatusEmpleado('baja',`+
-                                    SucursalEmpleados[i].id
-                                    +`)">DAR DE BAJA</button>`;
-                                }
-                                else
-                                {
+                                    botonAltaBaja = `<button class="btn btn-danger" onclick="cambiarStatusEmpleado('baja',` +
+                                        SucursalEmpleados[i].id +
+                                        `)">DAR DE BAJA</button>`;
+                                } else {
                                     status = `<span class="badge badge-danger badge-pill">INACTIVO</span>`;
-                                    botonAltaBaja = `<button class="btn btn-success" onclick="cambiarStatusEmpleado('alta',`+
-                                    SucursalEmpleados[i].id
-                                    +`)">DAR DE ALTA</button>`;
+                                    botonAltaBaja = `<button class="btn btn-success" onclick="cambiarStatusEmpleado('alta',` +
+                                        SucursalEmpleados[i].id +
+                                        `)">DAR DE ALTA</button>`;
                                 }
                                 cuerpo = cuerpo + `<ul class="list-group list-group-horizontal-sm my-1 border border-dark">
-                                <li class="list-group-item text-uppercase col-7">`+
-                                empleados[e].nombre +` `+empleados[e].apellidoPaterno+ ` ` + empleados[e].apellidoMaterno +
-                                `</li>
-                                <li class="list-group-item text-uppercase col-2 mx-auto">`+
-                                status + `</li>
-                                <li class="list-group-item text-uppercase col-3 mx-auto">`+ botonAltaBaja +
-                                 `</li></ul>`;
+                                <li class="list-group-item text-uppercase col-7">` +
+                                    empleados[e].nombre + ` ` + empleados[e].apellidoPaterno + ` ` + empleados[e].apellidoMaterno +
+                                    `</li>
+                                <li class="list-group-item text-uppercase col-2 mx-auto">` +
+                                    status + `</li>
+                                <li class="list-group-item text-uppercase col-3 mx-auto">` + botonAltaBaja +
+                                    `</li></ul>`;
                                 //<li class="list-group-item">`+
                                 //empleados[e].nombre+`</</li>`;
                             }
                         }
-                        
+
                     }
                     //cuerpo = cuerpo + `</ul>`;
                     body.innerHTML = cuerpo;
-                }
-                else{
+                } else {
                     body.innerHTML = "NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
                 }
                 console.log(empleados);
@@ -328,9 +326,8 @@ ADMINISTRACION
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
-    
-    async function cambiarStatusEmpleado(status,idSucursalEmpleado)
-    {
+
+    async function cambiarStatusEmpleado(status, idSucursalEmpleado) {
         try {
             const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/" + idSucursalEmpleado;
             let respuesta = await $.ajax({
@@ -347,15 +344,12 @@ ADMINISTRACION
                 }
             });
             console.log(respuesta);
-            if(respuesta == true)
-            {
+            if (respuesta == true) {
                 await empleadosSucursal();
-                alert('El empleado se ha dado de '+status);
+                alert('El empleado se ha dado de ' + status);
 
-            }
-            else
-            {
-                alert('El empleado no se dio de '+status);
+            } else {
+                alert('El empleado no se dio de ' + status);
             }
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
@@ -363,43 +357,37 @@ ADMINISTRACION
     }
 
 
-    async function mostrarEmpleados()
-    {
+    async function mostrarEmpleados() {
         let body = document.querySelector('#cuerpoEmpleadosModal');
-        body.innerHTML = "";//NO HAY NINGUN EMPLEADO EN LA EMPRESA";
+        body.innerHTML = ""; //NO HAY NINGUN EMPLEADO EN LA EMPRESA";
         let cuerpo = `<div class="row mx-auto my-auto p-1"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
         try {
             await cargarEmpleados();
             let existeEmpleado = false;
-            for(let i in empleados)
-            {
+            for (let i in empleados) {
                 let bandera = true;
-                for(let s in SucursalEmpleados)
-                {
-                    if(SucursalEmpleados[s].idEmpleado == empleados[i].id)
+                for (let s in SucursalEmpleados) {
+                    if (SucursalEmpleados[s].idEmpleado == empleados[i].id)
                         bandera = false;
                 }
-                if(bandera)
-                {
+                if (bandera) {
                     existeEmpleado = true;
                     cuerpo = cuerpo + `<a class="btn btn-secondary btn-block text-uppercase border"
-                        onclick="agregarEmpleado(`+empleados[i].id+`)">`+empleados[i].nombre +` `+ 
-                        empleados[i].apellidoPaterno+` `+empleados[i].apellidoMaterno+`</a>`;
+                        onclick="agregarEmpleado(` + empleados[i].id + `)">` + empleados[i].nombre + ` ` +
+                        empleados[i].apellidoPaterno + ` ` + empleados[i].apellidoMaterno + `</a>`;
                 }
             }
             body.innerHTML = cuerpo;
-            if(!existeEmpleado)
-            {
+            if (!existeEmpleado) {
                 body.innerHTML = `<div class="row mx-auto my-auto p-1"><strong class="text-uppercase">NO HAY EMPLEADOS NUEVOS QUE AGREGAR</strong></div>`;
-        
+
             }
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
 
-    async function agregarEmpleado(idEmpleado)
-    {
+    async function agregarEmpleado(idEmpleado) {
         let body = document.querySelector('#cuerpoEmpleadosModal');
         /*body.innerHTML = `
         <div class="alert alert-primary" role="alert">
@@ -418,7 +406,7 @@ ADMINISTRACION
                 // con los datos en formato JSON
                 body: datos // convertimos el objeto a texto
             };
-            let response = await fetch(`/puntoVenta/sucursalEmpleado/`,init);
+            let response = await fetch(`/puntoVenta/sucursalEmpleado/`, init);
             if (response.ok) {
                 await empleadosSucursal();
                 console.log(response.text());
@@ -430,7 +418,7 @@ ADMINISTRACION
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-        
+
     }
 </script>
 <script>
@@ -462,26 +450,33 @@ ADMINISTRACION
         let cont = 0;
         await sucursales0();
         console.log(Suc_Inac);
-      
-            for (let t in Suc_Inac) {
-                cont = cont + 1;
-                cuerpo = cuerpo + `
+
+        for (let t in Suc_Inac) {
+            cont = cont + 1;
+            cuerpo = cuerpo + `
                     <tr>
                     <th >` + cont + `</th>
                     <td>` + Suc_Inac[t].direccion + `</td>
                     <td>` + Suc_Inac[t].telefono + `</td>
                     <td>` +
-                    ` 
+                ` 
                     <a class="btn btn-primary" href="{{ url('/puntoVenta/altaSucursal/` + Suc_Inac[t].id + `')}}"> ALTA </a>
                                            
 
                     </td>        
                     </tr>
                      `;
-            }
-         
-        
-        document.getElementById("filaTablas").innerHTML = cuerpo;
+        }
+
+        if (cuerpo === "") {
+            let sin = ` <h3 class= "text-danger my-auto"> NO HAY SUCURSALES DADAS DE BAJA </h3>`;
+            document.getElementById("vacio").innerHTML = sin;
+        } else {
+            document.getElementById("filaTablas").innerHTML = cuerpo;
+        }
+
+
+
     }
     //reucperar sucursales inactivas
     async function sucursales0() {
@@ -491,7 +486,7 @@ ADMINISTRACION
             if (response.ok) {
                 Suc_Inac = await response.json();
             } else {
-               // Suc_Inac = "";
+                // Suc_Inac = "";
                 console.log("No responde :'v");
                 console.log(response);
                 throw new Error(response.statusText);
@@ -514,7 +509,5 @@ ADMINISTRACION
                 document.getElementById("resultados").innerHTML = html
             })
     };
-
-    
 </script>
 @endsection
