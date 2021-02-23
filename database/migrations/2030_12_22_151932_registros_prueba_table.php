@@ -99,14 +99,16 @@ class RegistrosPruebaTable extends Migration
                 'rfc' => 'DF5DF5DFDS5F',
                 'nombre' => 'MARZAM',
                 'telefono' => '9516457898',
-                'direccion' => 'Sin especificar'
+                'direccion' => 'Sin especificar',
+                'status' => true
             ]);
 
         Proveedor::create([
                 'rfc' => 'D6S568D6FSD4',
                 'nombre' => 'NIVEA',
                 'telefono' => '9547894563',
-                'direccion' => 'Sin especificar'
+                'direccion' => 'Sin especificar',
+                'status' => true
             ]);
 
         //CREACION DE CLIENTE
