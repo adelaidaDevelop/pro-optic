@@ -54,17 +54,17 @@ class ProveedorController extends Controller
     public function show($proveedor)
     {
         if($proveedor == 'proveedor')
-            return Proveedor::all();
+            return Proveedor::where('status', '=',true)->get();
         //$pagos = NULL;
         if($proveedor == 'baja')
         {
             return Proveedor::where('status', '=', false)->get();
         }
-        $proveedores = Proveedor::where('id','=',$idCompra)->get();
+        return $proveedores = Proveedor::where('id','=',$idCompra)->get();
         //if(isset($pagos))
           //  return 'pagos no encontrados';
         //else
-            return $pagos;
+            //return $pagos;
     }
 
     /**
