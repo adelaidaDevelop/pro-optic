@@ -237,7 +237,7 @@
     }
     function mostrarSucursales()
     {
-        let cuerpo = "";
+        let cuerpo = "";//`<option value="0"> --SIN SUCURSAL-- </option>`;
         for(let i in sucursales)
         {
             cuerpo = cuerpo +
