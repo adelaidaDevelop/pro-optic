@@ -20,7 +20,7 @@
     @endforeach
     @else
     <div class="row">
-        <h5>NO HAY CLIENTES</h5>
+        <h5>NO HAY SUCURSALES</h5>
     </div>
     @endif
 </body>

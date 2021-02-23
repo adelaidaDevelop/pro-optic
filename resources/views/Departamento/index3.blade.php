@@ -82,10 +82,10 @@
                         <form method="post" action="{{url('/puntoVenta/departamento/'.$d->id)}}">
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
-                            <button class="btn btn-outline-secondary my-3" type="submit">
+                            <button class="btn btn-outline-secondary my-3" type="submit" onclick="return confirm('¿ELIMINAR DEPARTAMENTO?')">
                                 <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="30px" height="30px">
-                                DAR DE BAJA
+                                ELIMINAR DEPARTAMENTO
                             </button>
                         </form>
                     </div>

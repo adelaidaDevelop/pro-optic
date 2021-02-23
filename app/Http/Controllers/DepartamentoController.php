@@ -122,7 +122,7 @@ class DepartamentoController extends Controller
 
     protected function buscador(Request $request)
     {
-        $datosConsulta['departamentosB'] = Departamento::where("nombre",'like',$request->texto."%")->get();
+        $datosConsulta['departamentosB'] = Departamento::where("nombre",'like',$request->texto."%")->where('id', '!=', 1)->get();
         return view('Departamento.form',$datosConsulta);
         //return $datosConsulta;
     }
