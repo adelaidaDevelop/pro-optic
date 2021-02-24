@@ -14,8 +14,9 @@
 <body>
     @if (count($proveedorB)) 
     @foreach($proveedorB as $proveedor)
-    <a href="{{url('/proveedor/'.$proveedor->id.'/edit/')}}" class="btn btn-light btn-block my-2 mx-1">{{$proveedor->nombre}}</a-->
-
+    @if($proveedor->status == true)
+    <a href="{{url('/puntoVenta/proveedor/'.$proveedor->id.'/edit/')}}" class="btn btn-light btn-block my-2 mx-1 border border-dark">{{$proveedor->nombre}}</a-->
+    @endif
     @endforeach
     @else
     <div class="row">

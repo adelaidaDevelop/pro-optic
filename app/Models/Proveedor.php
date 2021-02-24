@@ -13,6 +13,7 @@ class Proveedor extends Model
         'rfc',
         'nombre',
         'telefono',
-        'direccion'
+        'direccion',
+        'status'
     ];
 }

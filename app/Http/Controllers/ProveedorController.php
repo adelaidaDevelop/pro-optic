@@ -42,7 +42,7 @@ class ProveedorController extends Controller
         $datosProveedor = request()->except('_token');
         Proveedor::insert($datosProveedor);
         
-        return redirect('proveedor');
+        return redirect('puntoVenta/proveedor');
     }
 
     /**
@@ -54,13 +54,17 @@ class ProveedorController extends Controller
     public function show($proveedor)
     {
         if($proveedor == 'proveedor')
-            return Proveedor::all();
+            return Proveedor::where('status', '=',true)->get();
         //$pagos = NULL;
-        $proveedores = Proveedor::where('id','=',$idCompra)->get();
+        if($proveedor == 'baja')
+        {
+            return Proveedor::where('status', '=', false)->get();
+        }
+        return $proveedores = Proveedor::where('id','=',$idCompra)->get();
         //if(isset($pagos))
           //  return 'pagos no encontrados';
         //else
-            return $pagos;
+            //return $pagos;
     }
 
     /**
@@ -72,10 +76,10 @@ class ProveedorController extends Controller
     public function edit($id)
     {
         //
-        $datos['departamentos'] = Proveedor::paginate();
         $datosD['d'] = Proveedor::findOrFail($id);
-        
-        return view('Proveedor.index',$datosD);
+        if($datosD['d']->status == true)
+            return view('Proveedor.index',$datosD);
+        return redirect('/puntoVenta/proveedor');
     }
 
     /**
@@ -87,9 +91,16 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->has('status'))
+        {
+            Proveedor::findOrFail($id)->update(['status' => true ]);
+            //where('id','=',$id)->update(['status' => $request->input('status')]);
+            //return redirect('puntoVenta/empleado/'.$id.'/edit');
+            return true;
+        }
         $datosProveedor = request()->except(['_token','_method']);
         Proveedor::where('id','=',$id)->update($datosProveedor);
-        return redirect('proveedor');
+        return redirect('puntoVenta/proveedor');
     }
 
     /**
@@ -100,8 +111,9 @@ class ProveedorController extends Controller
      */
     public function destroy($id)//Departamento $departamento)
     {
-        Proveedor::destroy($id);
-        return redirect('proveedor');
+        //Proveedor::destroy($id);
+        Proveedor::findOrFail($id)->update(['status' => false]);
+        return redirect('/puntoVenta/proveedor');
     }
     public function buscador(Request $request)
     {

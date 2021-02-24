@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\SubproductoController;
-use App\Http\Controllers\ProveedorController;
+//use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\CreditoController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\PagoCompraController;
@@ -65,7 +65,7 @@ Route::get('/idSucursal', [EcommerceController::class,'idSucursal']);
     Route::resource('subproducto', SubproductoController::class);
 
     Route::get('emple', [EmpleadoController::class,'index2']);
-    Route::resource('proveedor', ProveedorController::class);
+    
 
     Route::resource('credito', CreditoController::class);
     Route::get('/datosNuevos', [CreditoController::class,'datosNuevos']);
@@ -83,7 +83,6 @@ Route::get('/idSucursal', [EcommerceController::class,'idSucursal']);
     Route::get('/producto/buscador', [ProductoController::class,'buscador']);
 
     Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
-    Route::get('/proveedor/buscador', [ProveedorController::class,'buscador']);
     Route::get('/cliente/buscador', [ClienteController::class,'buscador']);
     Route::get('/administracion/buscador', [AdministracionController::class,'buscador']);
 

@@ -50,11 +50,11 @@
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                                 @else
-                            <a class="nav-link" href="/puntoVenta/empleado">
+                            <!--a class="nav-link" href="/puntoVenta/empleado">
                                 <button class="btn btn-light">
                                     EMPLEADOS
                                 </button>
-                                <span class="sr-only">(current)</span></a>
+                                <span class="sr-only">(current)</span></a-->
                                 @endif
                         </li>
                         <li class="nav-item active">

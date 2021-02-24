@@ -77,7 +77,7 @@
                             </label>
                             <br />
                             <label for="Nombre">
-                                <h5>{{$admin->username}}</h5>
+                                <h5 class="text-uppercase">{{$admin->username}}</h5>
                             </label>
                             <fieldset disabled id="formEditar">
 
@@ -88,7 +88,7 @@
                                                 USUARIO
                                             </label>
                                             <input type="text"
-                                                class="form-control @error('username') is-invalid @enderror "
+                                                class="form-control @error('username') is-invalid @enderror text-uppercase"
                                                 name="username" id="username"
                                                 value="@if(session()->has('cambios')){{old('username')}}@else{{$admin->username}}@endif"
                                                 placeholder="Ingresar usuario" required autocomplete="username"
@@ -104,7 +104,7 @@
                                                 EMAIL
                                             </label>
                                             <input type="text"
-                                                class="form-control @error('email') is-invalid @enderror"
+                                                class="form-control @error('email') is-invalid @enderror text-uppercase"
                                                 name="email" id="email"
                                                 value="@if(session()->has('cambios')){{old('email')}}@else{{$admin->email}}@endif"
                                                 placeholder="Ingresar correo electronico" required autocomplete="email"
@@ -125,7 +125,7 @@
                                                 class="form-control @error('domicilio') is-invalid @enderror"
                                                 placeholder="Ingresar domicilio completo" value="" required
                                                 autocomplete="domicilio"
-                                                autofocus>@if(session()->has('cambios')){{old('domicilio')}}@else{{$sucursal->direccion}}@endif</textarea>
+                                                autofocus disabled>@if(session()->has('cambios')){{old('domicilio')}}@else{{$sucursal->direccion}}@endif</textarea>
                                             @error('domicilio')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -141,7 +141,7 @@
                                                 name="telefono" id="telefono"
                                                 value="@if(session()->has('cambios')){{old('telefono')}}@else{{$sucursal->telefono}}@endif"
                                                 placeholder="Ingresar telefono" required autocomplete="telefono"
-                                                autofocus>
+                                                autofocus disabled>
                                             @error('telefono')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -176,9 +176,7 @@
                     </form>
                 </div>
                 <div class="row px-3 mb-4">
-                    @if(isset($datosEmpleado))
-                    @if($datosEmpleado->status == 'alta')
-                    <!--div class="col-auto ">
+                    <div class="col-auto ">
                         <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
                             data-target="#modalPassword" value="SI">
                             <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
@@ -186,37 +184,35 @@
                             CAMBIAR CONTRASEÑA
                         </button>
                     </div>
-                    <div class="col-auto ml-auto mr-0">
-                        <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
-                            {{csrf_field()}}
-                            {{ method_field('PUT')}}
+                    <!--div class="col-auto ml-auto mr-0">
+                        <form method="post" action="{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
+                            {csrf_field()}}
+                            { method_field('PUT')}}
                             <input type="" id="status" name="status" value="baja" style="display:none">
                             <button class="btn btn-outline-secondary" type="submit" value="SI">
-                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
+                                <img src="{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
                                 DAR DE BAJA
                             </button>
                         </form>
                     </div-->
 
-                    @else
+                    
                     <!--div class="col-4">
-                        <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
-                            {{csrf_field()}}
-                            {{ method_field('PUT')}}
+                        <form method="post" action="{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
+                            {csrf_field()}}
+                            { method_field('PUT')}}
                             <input type="" id="status" name="status" value="alta" style="display:none">
 
                             <button class="btn btn-outline-secondary" type="submit" value="SI">
-                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
+                                <img src="{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
                                 DAR DE ALTA?
                             </button>
                         </form>
                     </div-->
-                    @endif
-                    @endif
                     <!--button class="btn btn-outline-secondary my-3" type="button" onclick="habilitar()">
-                        <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                        <img src="{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                             height="25px">
                         Habilitar
                     </button-->
@@ -423,8 +419,7 @@
                     </form>
                 </div>
                 <div class="row px-3 mb-4">
-                    @if($datosEmpleado->status == 'alta')
-                    <!--div class="col-auto ">
+                    <div class="col-auto ">
                         <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
                             data-target="#modalPassword" value="SI">
                             <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
@@ -432,7 +427,7 @@
                             CAMBIAR CONTRASEÑA
                         </button>
                     </div>
-                    <div class="col-auto ml-auto mr-0">
+                    <!--div class="col-auto ml-auto mr-0">
                         <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {{csrf_field()}}
                             {{ method_field('PUT')}}
@@ -444,23 +439,21 @@
                             </button>
                         </form>
                     </div-->
-                    @else
                     <!--div class="col-auto ml-auto mr-0">
-                        <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
-                            {{csrf_field()}}
-                            {{ method_field('PUT')}}
+                        <form method="post" action="{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
+                            {csrf_field()}}
+                            { method_field('PUT')}}
                             <input type="" id="status" name="status" value="alta" style="display:none">
 
                             <button class="btn btn-outline-secondary" type="submit" value="SI">
-                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
+                                <img src="{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px">
                                 DAR DE ALTA
                             </button>
                         </form>
                     </div-->
-                    @endif
                     <!--div class="col-auto mr-0">
-                        <form method="post" id="formEliminar" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
+                        <form method="post" id="formEliminar" action="{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {csrf_field()}}
                             { method_field('DELETE')}}
                             <button class="btn btn-outline-danger" type="submit" value="SI">
@@ -770,7 +763,7 @@ async function actualizarPassword() {
         }
         if (cambio.value.length > 0) {
             if (cambio.value.length >= 8) {
-                let id = @if(isset($datosEmpleado)) {{$users-> id}}
+                let id = @if(isset($datosEmpleado)|| isset($admin)) {{$users->id}}
                 @else null @endif;
                 const url = "{{url('/')}}/puntoVenta/empleado/" + id;
                 console.log(url);

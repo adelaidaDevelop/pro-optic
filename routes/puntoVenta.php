@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/puntoVenta')->group(function()
 {
-    Route::resource('administracion', AdministracionController::class);
+    
     Route::resource('departamento', DepartamentoController::class);//->middleware('auth');
 
     Route::resource('sucursal', SucursalController::class);
@@ -83,11 +83,15 @@ Route::prefix('/puntoVenta')->group(function()
     //Route::get('eliminar/{id}', [ProductoController::class,'eliminar']);
 
     Route::middleware('isEmpleado')->group(function () {
+        Route::resource('administracion', AdministracionController::class);
         Route::resource('empleado', EmpleadoController::class);
         //Route::get('/login', [LoginController::class,'login'])->name('Login');
         //->middleware('isEmpleado');
         Route::resource('venta', VentaController::class);
         Route::resource('compra', CompraController::class);
+        Route::get('/proveedor/buscador', [ProveedorController::class,'buscador']);
+        Route::resource('proveedor', ProveedorController::class);
+        
     });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
