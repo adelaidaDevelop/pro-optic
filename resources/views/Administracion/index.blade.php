@@ -199,7 +199,7 @@ ADMINISTRACION
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">CERRAR</button>
             </div>
         </div>
     </div>
@@ -212,8 +212,8 @@ ADMINISTRACION
             <div class="modal-body" id="cuerpoEmpleadosModal">
                 Aqui van los empleados
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="cerrarModal()" data-dismiss="modal">Close</button>
+            <div class="modal-footer" id="pieEmpleadosModal">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
                 <button type="button" class="btn btn-primary" onclick="mostrarEmpleados()">AGREGAR EMPLEADO</button>
             </div>
         </div>
@@ -229,9 +229,10 @@ ADMINISTRACION
     "{{$sucursal->id}}"
     @else 0 @endif;
     async function cargarEmpleados() {
-        let body = document.querySelector('#cuerpoEmpleadosModal');
-        body.innerHTML = ""; //NO HAY NINGUN EMPLEADO EN LA EMPRESA";
-        let cuerpo = `<div class="row mx-auto my-auto p-5"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
+        //let body = document.querySelector('#cuerpoEmpleadosModal');
+        //let body = document.querySelector('#cuerpoEmpleadosModal');
+        //body.innerHTML = ""; //NO HAY NINGUN EMPLEADO EN LA EMPRESA";
+        //let cuerpo = `<div class="row mx-auto my-auto p-5"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
         try {
             let response = await fetch(`/puntoVenta/empleado/empleados`);
             if (response.ok) {
@@ -262,11 +263,14 @@ ADMINISTRACION
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     };
+
+    let footerOriginal = document.querySelector('#pieEmpleadosModal').innerHTML;
     async function empleadosSucursal() {
         let header = document.querySelector('#cabezaEmpleadosModal');
         header.innerHTML = `<h5><strong class="text-uppercase">empleados de la sucursal ` + sucursal.direccion + `</strong></h5>`;
         let body = document.querySelector('#cuerpoEmpleadosModal');
         body.innerHTML = ""; //NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
+        document.querySelector('#pieEmpleadosModal').innerHTML = footerOriginal;
         let cuerpo = "";
         try {
 
@@ -358,8 +362,13 @@ ADMINISTRACION
 
 
     async function mostrarEmpleados() {
+        let header = document.querySelector('#cabezaEmpleadosModal');
+        header.innerHTML = `<h5><strong class="text-uppercase">empleados de la empresa </strong></h5>`;
         let body = document.querySelector('#cuerpoEmpleadosModal');
         body.innerHTML = ""; //NO HAY NINGUN EMPLEADO EN LA EMPRESA";
+        let footer = document.querySelector('#pieEmpleadosModal');
+        footer.innerHTML = `<button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+        <button type="button" class="btn btn-primary" onclick="empleadosSucursal()">REGRESAR</button>`;
         let cuerpo = `<div class="row mx-auto my-auto p-1"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
         try {
             await cargarEmpleados();

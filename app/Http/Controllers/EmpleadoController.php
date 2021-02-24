@@ -121,8 +121,9 @@ class EmpleadoController extends Controller
         if($id == 0)
         {
             $admin = User::findOrFail(1);
+            $users = User::findOrFail(1);
             $sucursal = Sucursal::findOrFail(session('sucursal'));
-            return view('Empleado.index2',compact('admin','sucursal'));
+            return view('Empleado.index2',compact('admin','sucursal','users'));
         }
         else{
             $datosEmpleado = Empleado::findOrFail($id);
@@ -141,6 +142,35 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($id == 0)
+        {
+            $rules = [
+                'passwordChange' => ['required', 'string', 'min:8'],
+            ];
+            $mesages = [
+                'passwordChange.required' => 'Por favor escriba su contraseña',
+                'passwordChange.min' => 'La contraseña debe tener al menos 8 caracteres',
+                
+            ];
+            $admin = User::findOrFail(1);
+            $datosUser = [];
+            if($request->input('username') != $admin->username)
+                $datosUser = Arr::add($datosUser,'username',$request->input('username'));
+            if($request->input('email') != $admin->email)
+                $datosUser = Arr::add($datosUser,'email',$request->input('email'));
+            $validacion =  Validator::make($datosUser, [
+                'username' => ['string', 'max:255','unique:users','min:3'],
+                'email' => ['string', 'email', 'max:255', 'unique:users','min:5'],
+            ]);
+            if($validacion->fails()):
+                return back()->withErrors($validacion)->with( ['cambios' => true] )->withInput($request->all());
+            endif;
+            $validacion->validate();
+            $datosUsuario = request()->only(['email','username']);
+            $admin->update($datosUsuario);
+            return redirect('puntoVenta/empleado/'.$id.'/edit');
+            //return 'NO TE PREOCUPES, AQUI CACHO EL ERROR';
+        }
         if($request->has('status'))
         {
             Empleado::where('id','=',$id)->update(['status' => $request->input('status')]);
@@ -148,6 +178,7 @@ class EmpleadoController extends Controller
         }
         if($request->has('passwordChange'))
         {
+            
             
             $rules = [
                 'passwordChange' => ['required', 'string', 'min:8'],
@@ -173,6 +204,7 @@ class EmpleadoController extends Controller
         }
         else
         {
+            
             $datos = []; //$request->all();
             $empleado = Empleado::findOrFail($id);
             $user = User::where('id','=',$empleado->idUsuario)->first();
@@ -196,6 +228,7 @@ class EmpleadoController extends Controller
                 $datos = Arr::add($datos,'username',$request->input('username'));
             //return 'Si llega hasta aqui';
             //$this->validator($request->all())->validate();
+            
             $validacion =  Validator::make($datos, [
                 'nombre' => ['string', 'max:30','min:3'],
                 'apellidos' => ['string', 'max:30','min:3'],
