@@ -15,6 +15,7 @@ class SucursalController extends Controller
     public function index()
     {
         //
+
     }
 
     public function darAltaSucursal($id){
@@ -98,9 +99,29 @@ class SucursalController extends Controller
      */
     public function destroy($id)//Sucursal $sucursal)
     {
+        /*
         $sucursal['status'] =0;
         $suc2 = Sucursal::findOrFail($id);
         $suc2->update($sucursal);
         return redirect('puntoVenta/administracion');
+        */
+        $sucursales = Sucursal::where('status','=', 1)->get();
+        //return isset($sucursales);
+        if(count($sucursales)>1)
+        {
+            try{
+                Sucursal::destroy($id);
+            }
+            catch (\Illuminate\Database\QueryException $e){
+            $sucursal['status'] =0;
+            $suc2 = Sucursal::findOrFail($id);
+            $suc2->update($sucursal);
+            }
+            return redirect('puntoVenta/administracion');
+        } 
+        else  { 
+            return redirect()->back()->withErrors(['mensaje' => 'ESTA SUCURSAL ES LA UNICA ACTIVA Y NO SE PUEDE ELIMINAR']);
+        } 
+        
     }
 }

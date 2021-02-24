@@ -71,14 +71,14 @@ PRODUCTOS
                 <h6 class="text-primary mt-4">
                     FILTRAR POR:
                 </h6>
-                <select class="mt-1" name="idDepartamento" id="idDepartamento" onchange="deptoOpc()" required>
+                <select class="mt-1" name="idDepartamento" id="idDepartamento" onchange="buscarFiltroNombre2()" required>
                     <option value="">DEPARTAMENTO</option>
                     @foreach($d as $departamento)
                     <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
                     @endforeach
                 </select>
                 <div class=" input-group-text mt-4 px-0 py-auto ">
-                    <input class="" type="checkbox" value="existencia" name="bajosExistencia" id="bajosExistencia" onchange="bajosExisOpc()">
+                    <input class="" type="checkbox" value="existencia" name="bajosExistencia" id="bajosExistencia" onchange="buscarFiltroNombre2()">
                     <h6 class="text-primary ml-1 my-auto ">
                         BAJOS DE EXISTENCIA
                     </h6>
@@ -88,19 +88,19 @@ PRODUCTOS
             <div class="col-8   mb-4 ml-4 mr-2">
                 <div class="form-group w-100">
                     <div class="row my-0">
-                        <input class="form-control text-uppercase  col-4 mr-3 " type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="folioNombreOpc()">
+                        <input class="form-control text-uppercase  col-4 mr-3 " type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarFiltroNombre2()">
                         <a title="buscar" href="" class="text-dark ">
                             <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
                         <div class="mt-2 mx-2"> </div>
                         <h6 class="mx-3 mt-2"> BUSCAR POR:</h6>
                         <div class=" input-group-text my-auto">
-                            <input type="radio" value="folio" name="checkbox2" onchange="folioNombreOpc()" id="codigoBusq">
+                            <input type="radio" value="folio" name="checkbox2" onchange="buscarFiltroNombre2()" id="codigoBusq">
                             <label class="ml-1 my-0" for="codigoBusq">
                                 CODIGO
                             </label>
                         </div>
                         <div class=" input-group-text  ml-1 my-auto ">
-                            <input type="radio" value="nombre" name="checkbox2" onchange="folioNombreOpc()" id="nombreBusq" checked>
+                            <input type="radio" value="nombre" name="checkbox2" onchange="buscarFiltroNombre2()" id="nombreBusq" checked>
                             <label class="ml-1 my-0" for="nombreBusq">
                                 NOMBRE
                             </label>
@@ -235,93 +235,202 @@ PRODUCTOS
     let opcBajosE = "";
     let productosSucursal = @json($productosSucursal);
     let productosList = [];
-    // let depaBandera = false;
-    let bajosExisBandera = false;
-    let folioNombreBandera = false;
+    let depaBandera = true;
+    let bajosExisBandera = true;
+    let folioNombreBandera = true;
     //  let nombreBandera = true;
 
     let prod_baja = "";
 
-    nombreOpc();
+   // nombreOpc();
+   buscarFiltroNombre2();
 
+   /*
     function folioNombreOpc() {
-        folioNombreBandera = true;
-        depaBandera = false;
-        bajosExisBandera = false;
 
-        //desseleccionar opc bajos de existencia
-        /*
-        let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
-        if (seleccion != null) {
-            let opcBajosE = seleccion.value;
-            if (opcBajosE === 'existencia') {
-                //desselecciona
-                console.log("si desseleccciona");
-                document.querySelector('input[name="bajosExistencia"]:checked').checked = false;
-
-            }
-        }
-        */
         filtroProducto();
-
     }
 
     function deptoOpc() {
-        folioNombreBandera = false;
+        // folioNombreBandera = false;
         depaBandera = true;
-        bajosExisBandera = false;
+        // bajosExisBandera = false;
         // nombreBandera = false; //checar
         filtroProducto();
     }
 
     function bajosExisOpc() {
-        folioNombreBandera = false;
-        depaBandera = false;
+        //  folioNombreBandera = false;
+        //   depaBandera = false;
         bajosExisBandera = true;
         //   nombreBandera = false; //checar
         filtroProducto();
     }
 
     function nombreOpc() {
-        folioNombreBandera = false;
-        depaBandera = false;
-        bajosExisBandera = false;
+        //  folioNombreBandera = false;
+        //  depaBandera = false;
+        //  bajosExisBandera = false;
         // nombreBandera = true; //checar
 
         buscarFiltroNombre();
     }
 
-    function buscarFiltroNombre() {
+    */
+    function buscarFiltroNombre2() {
         productosList = [];
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         for (let x in productosSucursal) {
-
             for (count5 in productos) {
                 if (productos[count5].id === productosSucursal[x].idProducto) {
-                    //BUSCAR PRODUCTOS SUCURSAL TODOS SIN FILTRO
-                    if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                        let departamento = "";
-                        for (count8 in d) {
-                            if (productos[count5].idDepartamento === d[count8].id) {
-                                departamento = d[count8].nombre;
+                    //BUSCAR POR FOLIO NOMBRE 
+                    let seleccion = document.querySelector("input[name='checkbox2']:checked");
+                    let opcFolioNombre = seleccion.value;
+                    folioNombreBandera = true;
+                    if (opcFolioNombre === 'nombre') {
+                        $("#idDepartamento").prop('disabled', false);
+                        $("#bajosExistencia").prop('disabled', false);
+                        
+                        //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
+                        if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                            //BUSCAR POR DEPARTAMENTO
+                            //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
+                            let depa = document.querySelector('#idDepartamento');
+                            if (depa.value != "") {
+                                if (productos[count5].idDepartamento === parseInt(depa.value)) {
+                                    //Cargar datos encontrados filtrado depto, nombre
+                                    //BUSCAR PRODUCTOS BAJOS DE EXISTENCIA
+                                    let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
+                                    if (seleccion != null) {
+                                        opcBajosE = seleccion.value; //VARIABLE opcBajosE?
+                                        if (opcBajosE === 'existencia') {
+                                            console.log("si entra");
+                                            if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
+                                                //PRODUCTOS POR NOMBRE, DEPTO Y BAJOS EXISTENCIA
+                                                let departamento = "";
+                                                for (count21 in d) {
+                                                    if (productos[count5].idDepartamento === d[count21].id) {
+                                                        departamento = d[count21].nombre;
+                                                    }
+                                                }
+                                                let id = productos[count5].id;
+                                                let productosAdd = {
+                                                    id: id,
+                                                    codigoBarras: productos[count5].codigoBarras,
+                                                    nombre: productos[count5].nombre,
+                                                    existencia: productosSucursal[x].existencia,
+                                                    idDepartamento: productos[count5].idDepartamento
+                                                };
+                                                productosList.push(productosAdd);
+
+
+                                            }
+                                        }
+                                    } else {
+                                        //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE, DEPTO
+                                        // buscarFiltroNombre();
+                                        let departamento = "";
+                                        for (count21 in d) {
+                                            if (productos[count5].idDepartamento === d[count21].id) {
+                                                departamento = d[count21].nombre;
+                                            }
+                                        }
+                                        let id = productos[count5].id;
+                                        let productosAdd = {
+                                            id: id,
+                                            codigoBarras: productos[count5].codigoBarras,
+                                            nombre: productos[count5].nombre,
+                                            existencia: productosSucursal[x].existencia,
+                                            idDepartamento: productos[count5].idDepartamento
+                                        };
+                                        productosList.push(productosAdd);
+
+
+                                    }
+                                }
+                            } else {
+                                //VERIFICAR BAJOS EXISTENCIA 
+                                //BUSCAR PRODUCTOS POR NOMBRE, BAJOS DE EXISTENCIA
+                                let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
+                                if (seleccion != null) {
+                                    opcBajosE = seleccion.value; //VARIABLE opcBajosE?
+                                    if (opcBajosE === 'existencia') {
+                                        console.log("si entra");
+                                        if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
+                                            //PRODUCTOS POR NOMBRE Y BAJOS EXISTENCIA
+                                            let departamento = "";
+                                            for (count21 in d) {
+                                                if (productos[count5].idDepartamento === d[count21].id) {
+                                                    departamento = d[count21].nombre;
+                                                }
+                                            }
+                                            let id = productos[count5].id;
+                                            let productosAdd = {
+                                                id: id,
+                                                codigoBarras: productos[count5].codigoBarras,
+                                                nombre: productos[count5].nombre,
+                                                existencia: productosSucursal[x].existencia,
+                                                idDepartamento: productos[count5].idDepartamento
+                                            };
+                                            productosList.push(productosAdd);
+                                        }
+                                    }
+                                } else {
+                                    //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE
+                                    let departamento = "";
+                                    for (count21 in d) {
+                                        if (productos[count5].idDepartamento === d[count21].id) {
+                                            departamento = d[count21].nombre;
+                                        }
+                                    }
+                                    let id = productos[count5].id;
+                                    let productosAdd = {
+                                        id: id,
+                                        codigoBarras: productos[count5].codigoBarras,
+                                        nombre: productos[count5].nombre,
+                                        existencia: productosSucursal[x].existencia,
+                                        idDepartamento: productos[count5].idDepartamento
+                                    };
+                                    productosList.push(productosAdd);
+                                }
                             }
+                            //  }
+                        } else {
+                            // MENSAJE PRODUCTOS NO ENCONTRADOS
                         }
-                        let id = productos[count5].id;
-                        let productosAdd = {
-                            id: id,
-                            codigoBarras: productos[count5].codigoBarras,
-                            nombre: productos[count5].nombre,
-                            existencia: productosSucursal[x].existencia,
-                            idDepartamento: productos[count5].idDepartamento
-                        };
-                        productosList.push(productosAdd);
+
+
+                    } else if (opcFolioNombre === 'folio') {
+                        $("#idDepartamento").prop('disabled', true);
+                        $("#bajosExistencia").prop('disabled', true);
+                        
+                        
+                        if (productos[count5].codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                            let departamento = "";
+                            for (count21 in d) {
+                                if (productos[count5].idDepartamento === d[count21].id) {
+                                    departamento = d[count21].nombre;
+                                }
+                            }
+                            let id = productos[count5].id;
+                            let productosAdd = {
+                                id: id,
+                                codigoBarras: productos[count5].codigoBarras,
+                                nombre: productos[count5].nombre,
+                                existencia: productosSucursal[x].existencia,
+                                idDepartamento: productos[count5].idDepartamento
+                            };
+                            productosList.push(productosAdd);
+                        }
                     }
+
 
                 }
             }
         }
         rellenar();
-    }
+    };
+    /*
 
     function filtroProducto() {
         productosList = [];
@@ -337,6 +446,7 @@ PRODUCTOS
                         // if (depa.value != "0") {
                         if (depa.value != "") {
                             if (productos[count5].idDepartamento === parseInt(depa.value)) {
+
                                 let departamento = "";
                                 for (count21 in d) {
                                     if (productos[count5].idDepartamento === d[count21].id) {
@@ -351,6 +461,7 @@ PRODUCTOS
                                     existencia: productosSucursal[x].existencia,
                                     idDepartamento: productos[count5].idDepartamento
                                 };
+
                                 productosList.push(productosAdd);
 
                             }
@@ -442,6 +553,7 @@ PRODUCTOS
             buscarFiltroNombre();
         }
     };
+    */
 
     function rellenar() {
         let cuerpo = "";
@@ -607,8 +719,8 @@ PRODUCTOS
             }
         }
         if (cuerpo === "") {
-           let sin= ` <h3 class= "text-danger my-auto"> NO HAY PRODUCTOS DADOS DE BAJA EN ESTA SUCURSAL </h3>`;
-            document.getElementById("vacio").innerHTML = sin ;
+            let sin = ` <h3 class= "text-danger my-auto"> NO HAY PRODUCTOS DADOS DE BAJA EN ESTA SUCURSAL </h3>`;
+            document.getElementById("vacio").innerHTML = sin;
         } else {
             document.getElementById("filaTablas").innerHTML = cuerpo;
         }

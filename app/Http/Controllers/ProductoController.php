@@ -206,4 +206,26 @@ class ProductoController extends Controller
             return redirect()->back();
         
     }
+
+    //PRODUCTOS ADMINISTRADOR
+    public function productosAll(){
+        $producto = Producto::all();
+        return $producto;
+        //return compact('sucursalesInac');
+    }
+    //ELIMINAR PRODUCTO POR EL ADMINISTRADOR
+    
+    public function eliProd($id)//Sucursal $sucursal)
+    {
+       // $producto = Producto::all();
+            try{
+                Producto::destroy($id);
+                return 1;
+               // return redirect('puntoVenta/administracion');
+            } catch (\Illuminate\Database\QueryException $e) { 
+                return 0;
+           // return redirect()->back()->withErrors(['noEliminado' => 'EL PRODUCTO NO SE PUDO ELIMINAR PORQUE ESTA EN USO']);
+        } 
+        
+    }
 }

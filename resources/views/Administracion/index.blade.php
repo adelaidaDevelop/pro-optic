@@ -30,6 +30,14 @@ ADMINISTRACION
         </button>
     </form>
 </div>
+
+<div class=" my-2 ml-3 p-1 ">
+    <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modalAllProductos" id="ver" onclick=" return cargaProductos()" value="">
+        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        PRODUCTOS
+    </button>
+</div>
+
 @endsection
 <div class="container-fluid">
 
@@ -50,10 +58,27 @@ ADMINISTRACION
                     </div>
 
                 </div>
+
                 <div class="row m-0 px-0" style="height:200px;overflow-y:auto;">
                     <div id="resultados" class="col btn-block h-100">
                     </div>
                 </div>
+                <!--BOTONES DE SUCURSAL-->
+                <!--
+                 <div class="row mx-auto mb-3 ">
+                        <form method="get" action="{{url('/puntoVenta/administracion/')}}">
+                            <button class="btn btn-outline-secondary p-1" type="submit">
+                                <img src="{{ asset('img\agregar2.png') }}" alt="Editar" width="25px" height="25px">
+                                NUEVA SUCURSAL
+                            </button>
+                        </form>
+                       
+                        <button type="button" class="btn btn-outline-secondary p-1 ml-3" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver" onclick=" return datosTablaSuc()" value="">
+                            <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                            ALTA SUCURSALES
+                        </button>
+                    </div>
+                    -->
             </div>
             <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">
                 <!--#FFFBF2"-->
@@ -81,6 +106,13 @@ ADMINISTRACION
                                         <label for="">TELEFONO</label>
                                         <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono" id="telefono" value="{{$d->telefono}}" required>
                                     </div>
+                                </div>
+                                <div class="col-4">
+                                    @error('mensaje')
+                                    <div class="alert alert-danger my-auto" role="alert">
+                                        {{$message}}
+                                    </div>
+                                    @enderror
                                 </div>
 
                             </div>
@@ -149,9 +181,13 @@ ADMINISTRACION
                             </div>
                         </div>
                     </form>
+                    @error('noEliminado')
+                    {{$message}}
+                    @enderror
                 </div>
                 @endif
             </div>
+
         </div>
     </div>
 </div>
@@ -204,6 +240,58 @@ ADMINISTRACION
         </div>
     </div>
 </div>
+
+<!-- MODAL VER TODOS LOS PRODUCTOS-->
+<div class="modal fade modalAllProductos" id="modalAllProductos" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content" style="width:900px;height:500px;">
+            <div class="modal-header w-100 ">
+                <!--ENCABEZADO -->
+                <div class="container-fluid">
+                    <div class="row" style="background:#3366FF">
+                        <br />
+                    </div>
+                    <div class="row" style="background:#ED4D46">
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 text-center" style="color:#FFFFFF">
+                            STOCK DE PRODUCTOS 
+                        </h6>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <!-- <span aria-hidden="true">&times;</span>-->
+                </button>
+            </div>
+            <div class="modal-body  col-12" id="">
+                <!-- TABLA -->
+                <div id="vacio" class="text-center my-auto">
+                    <div class="row w-100 " style="height:300px;overflow-y:auto;">
+                        <table class="table table-bordered border-primary ml-5  ">
+                            <thead class="table-secondary text-primary">
+                                <tr>
+                                    <th>#</th>
+                                    <th>CODIGO BARRAS</th>
+                                    <th>NOMBRE</th>
+                                    <th>DESCRIPCION </th>
+                                    <th>RECETA</th>
+                                    <th> DEPARTAMENTO</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody id="producTabla">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--FIN MODAL-->
+
 <div class="modal fade" id="empleadosModal" tabindex="-1" aria-labelledby="empleadosModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -423,6 +511,8 @@ ADMINISTRACION
 </script>
 <script>
     let Suc_Inac = "";
+    let productosT = "";
+    let depa = @json($depa);
 
     const texto = document.querySelector('#texto');
     //MAYUSCULA
@@ -494,7 +584,67 @@ ADMINISTRACION
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-    }
+    };
+
+
+    async function cargaProductos() {
+        let cuerpo = "";
+        let cont = 0;
+        let departamento = "";
+        await productosAll();
+        console.log(productosT);
+        for (let t in productosT) {
+
+            cont = cont + 1;
+            for (let d in depa) {
+                if (depa[d].id == productosT[t].idDepartamento) {
+                    departamento = depa[d].nombre;
+                    console.log(departamento);
+                }
+            }
+            cuerpo = cuerpo + `
+                    <tr>
+                    <th >` + cont + `</th>
+                    <td>` + productosT[t].codigoBarras + `</td>
+                    <td>` + productosT[t].nombre + `</td>
+                    <td>` + productosT[t].descripcion + `</td>
+                    <td>` + productosT[t].receta + `</td>
+                    <td>` + departamento + `</td>
+                    <td>` +
+                ` 
+                    <a class="btn btn-primary" href="{{ url('/puntoVenta/eliProd/`+productosT[t].id+`')}}"> ELIMINAR </a>
+                                           
+                    </td>        
+                    </tr>
+                     `;
+        }
+        /*
+                if (cuerpo === "") {
+                    let sin = ` <h3 class= "text-danger my-auto"> NO HAY PRODUCTOS </h3>`;
+                    document.getElementById("modalAllProductos").innerHTML = sin;
+                } else {
+                    */
+        document.getElementById("producTabla").innerHTML = cuerpo;
+        // }
+    };
+
+    async function productosAll() {
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/puntoVenta/productosTodos`);
+            if (response.ok) {
+                productosT = await response.json();
+            } else {
+                // Suc_Inac = "";
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
+
 
     texto.addEventListener('keyup', filtrar);
     filtrar();
