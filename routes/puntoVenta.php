@@ -77,13 +77,14 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('productoEli3/{id}', [ProductoController::class,'eliminar3']);
     
     Route::resource('cliente', ClienteController::class);
-    Route::resource('producto', ProductoController::class);
+    
     Route::resource('corteCaja', ReporteController::class);
     Route::get('reporteInventario', [ReporteController::class,'index2']);
     //Route::get('eliminar/{id}', [ProductoController::class,'eliminar']);
 
     Route::middleware('isEmpleado')->group(function () {
         Route::resource('administracion', AdministracionController::class);
+        Route::resource('producto', ProductoController::class);
         Route::resource('empleado', EmpleadoController::class);
         //Route::get('/login', [LoginController::class,'login'])->name('Login');
         //->middleware('isEmpleado');
