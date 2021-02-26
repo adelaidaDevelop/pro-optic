@@ -40,7 +40,7 @@ class CompraController extends Controller
     {
         $productos = Producto::all();
         $departamentos = Departamento::all();
-        $proveedores = Proveedor::all();
+        $proveedores = Proveedor::where('status', '=', true)->get();
         return view('Compra.create', compact('productos','departamentos','proveedores'));
     }
 

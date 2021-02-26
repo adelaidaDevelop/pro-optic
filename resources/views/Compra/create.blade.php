@@ -90,7 +90,14 @@
                                 <input type="number" data-prefix="$" id="pagoCredito" name="pagoCredito"
                                     data-decimals="2" value=0 min=0 class="form-control" />
                             </div>
+
                         </div>
+                    </div>
+                    <div class="col ml-1  p-0">
+                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModal"
+                            onclick="buscarProducto()">
+                            AGREGAR PRODUCTO
+                        </button>
                     </div>
                     <!-- TABLA -->
                     <div class="row mt-1 mb-1 ml-1 mr-1 border border-dark" style="height:300px;overflow-y:auto;">
@@ -124,10 +131,7 @@
 
                     </div>
                     <div class="row mx-1 my-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                            onclick="buscarProducto()">
-                            AGREGAR PRODUCTO
-                        </button>
+
                         <button type="button" onclick="verificarCompra()" class="btn btn-secondary d-flex ml-auto p-2">
                             GUARDAR
                             COMPRA</button>
@@ -211,6 +215,7 @@
 <script>
 let productosCompra = [];
 let productos = [];
+let productosSucursal = [];
 
 function cargarProveedores() {
     const proveedor = document.querySelector('#proveedor');
@@ -237,12 +242,11 @@ function buscarProductoEnCompra(idProducto) {
 async function cargarProductos() {
     let response = "Sin respuesta";
     try {
-        response = await fetch(`/producto/productos`);
+        response = await fetch(`/puntoVenta/producto/productos`);
         if (response.ok) {
             productos = await response.json();
-            console.log(productos);
+            //console.log(productos);
             return productos;
-            //console.log(response);
 
         } else {
             console.log("No responde :'v");
@@ -252,39 +256,66 @@ async function cargarProductos() {
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
-    //return response;
+}
+
+async function cargarProductosSucursal() {
+    let response = "Sin respuesta";
+    try {
+        response = await fetch(`/puntoVenta/sucursalProducto/{{session('sucursal')}}`);
+        if (response.ok) {
+            productosSucursal = await response.json();
+            //console.log('los productosde la sucursal son: ',productosSucursal);
+            return productosSucursal;
+
+        } else {
+            console.log("No responde :'v");
+            console.log(response);
+            throw new Error(response.statusText);
+        }
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
 }
 cargarProductos();
-//console.log(cargarProductos());
-//console.log(productos);
+
 let ingresarProducto = document.querySelector('#cuerpoModal').innerHTML;
 let ingresarProductoTitulo = document.querySelector('#exampleModalLabel').innerHTML;
 //let botonCerrarModal = 0;
 async function buscarProducto() {
     try {
-        //let response = await fetch(`/producto/productos`); //cargarProductos();
-        //if (response.ok) {
         if (productos.length === 0)
-            productos = await cargarProductos(); // response.json();
+            productos = await cargarProductos();
+        if (productosSucursal.length === 0)
+            productosSucursal = await cargarProductosSucursal();
         const entrada = document.querySelector('#busquedaProducto');
         let productosEncontrados = document.querySelector('#consultaBusqueda');
-        //const productos = @json($productos);
         let contador = 1;
         let cuerpo = "";
         let departamentos = @json($departamentos);
         for (let i in productos) {
             if (productos[i].nombre.toUpperCase().includes(entrada.value.toUpperCase())) {
                 let departamento = "No lo busca";
+                let existencia = 0;
                 for (let o in departamentos) {
                     if (productos[i].idDepartamento === departamentos[o].id)
                         departamento = departamentos[o].nombre;
                 }
+                for (let s in productosSucursal) {
+                    if (productosSucursal[s].idProducto === productos[i].id)
+                    {
+                        productos[i].existencia = productosSucursal[s].existencia;
+                        productos[i].costo = productosSucursal[s].costo;
+                        productos[i].precio = productosSucursal[s].precio;
+                    }
+                        
+                }
+
                 cuerpo = cuerpo + `
             <tr onclick="agregarProducto(` + productos[i].id + `)" data-dismiss="modal">
                 <td>` + contador++ + `</td>
                 <td>` + productos[i].codigoBarras + `</td>
                 <td>` + productos[i].nombre + `</td>
-                <td>` + productos[i].existencia + `</td>
+                <td>` + existencia + `</td>
                 <td>` + departamento + `</td>
             </tr>
             `;
@@ -302,7 +333,7 @@ function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganan
         codigoBarras: codigoBarras,
         nombre: nombre,
         cantidad: cantidad,
-        costo: parseInt(costo),
+        costo: parseFloat(costo),
         ganancia: ganancia,
         precio: precio,
         caducidad: caducidad,
@@ -537,13 +568,12 @@ function fechaActual() {
 }
 
 function agregarProducto(id) {
-    //const productos = @json($productos);
-
     for (let i in productos) {
         if (productos[i].id === id) {
             if (!buscarProductoEnCompra(id)) {
-
                 let ganancia = ((productos[i].precio * 100) / (productos[i].costo)) - 100;
+                //console.log((productos[i].precio * 100));
+                //console.log((productos[i].costo));
                 //agregarProductoACompra(id,codigoBarras,nombre,cantidad,costo,ganancia,precio,caducidad)
                 agregarProductoACompra(productos[i].id, productos[i].codigoBarras, productos[i].nombre,
                     1, productos[i].costo, ganancia, productos[i].precio, fechaActual()
@@ -554,7 +584,7 @@ function agregarProducto(id) {
     const entrada = document.querySelector('#busquedaProducto').value = "";
     mostrarProductos();
     activarIva();
-    console.log(productosCompra);
+    //console.log(productosCompra);
 }
 
 function quitarProducto(id) {
@@ -861,7 +891,7 @@ async function guardarCompra() {
             //mostrarProductos();
             //$('#confirmarCompraModal').modal('hide');
             console.log(respuesta); //JSON.stringify(respuesta));
-            
+
         }).fail(function(jqXHR, textStatus, errorThrown) {
             //alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
