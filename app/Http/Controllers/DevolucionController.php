@@ -7,6 +7,8 @@ use App\Models\Venta;
 use App\Models\Detalle_venta;
 use App\Models\Producto;
 use App\Models\Empleado;
+use App\Models\Sucursal;
+use App\Models\Sucursal_producto;
 use Illuminate\Http\Request;
 
 class DevolucionController extends Controller
@@ -24,7 +26,9 @@ class DevolucionController extends Controller
         $productos= Producto::all();
         $empleados= Empleado::all();
         $devolucions = Devolucion::all();
-        return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions'));
+        $idSucursal = session('sucursal');
+        $productX_Sucursal = Sucursal_producto::where('id','=', $idSucursal);
+        return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions',  'productX_Sucursal'));
     }
 
     /**

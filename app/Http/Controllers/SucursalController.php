@@ -124,4 +124,29 @@ class SucursalController extends Controller
         } 
         
     }
+
+    
+    public function destroy2($id)//Sucursal $sucursal)
+    {
+       
+        $sucursales = Sucursal::where('status','=', 1)->get();
+        if(count($sucursales)>1)
+        {
+            try{
+                Sucursal::destroy($id);
+            }
+            catch (\Illuminate\Database\QueryException $e){
+                { 
+                    $varSucUsada = true;
+                    return redirect( $varSucUsada)->back()->withErrors(['sucursalUsada' => 'ESTA SUCURSAL YA ES USADA EN OTRA PARTE']);
+                } 
+            }
+            return redirect('puntoVenta/administracion');
+        } 
+        else  { 
+            return redirect()->back()->withErrors(['mensaje' => 'ESTA SUCURSAL ES LA UNICA ACTIVA Y NO SE PUEDE ELIMINAR']);
+        } 
+        
+    }
+
 }

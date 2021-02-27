@@ -20,8 +20,8 @@ DEVOLUCION
         <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
         <div class="col mt-1 mb-4 ml-4 mr-4">
             <div class="row  px-0 col-8 input-group my-4">
-                <h4 class="col-1 mx-0 px-0 my-auto"> FOLIO:</h4>
-                <input type="number" min=0 class="form-control col-4 my-auto ml-3" size="15" placeholder="Folio" id="busquedaFolio" onkeyup="buscarFolio()">
+                <h4 class=" mx-0 px-0 my-auto"> FOLIO VENTA:</h4>
+                <input type="number" min=0 class="form-control col-4 my-auto ml-3" size="15" placeholder="FOLIO DE LA VENTA A DEVOLVER" id="busquedaFolio" onkeyup="buscarFolio()">
                 <a title="buscar" href="" class="text-dark ml-2 mr-5 my-auto">
                     <img src="{{ asset('img\search.svg') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
                 <div class="col-2 ml-5"> </div>
@@ -48,6 +48,7 @@ DEVOLUCION
                         <tr>
                             <th>#</th>
                             <th>CANTIDAD</th>
+                            <th>CODIGO BARRAS</th>
                             <th>PRODUCTO</th>
                             <th>PRECIO IND.</th>
                             <th> SUBTOTAL</th>
@@ -177,15 +178,18 @@ DEVOLUCION
     let idProductoD = 0;
     let idVentaD = 0;
     let cantTotal = 0;
+    let productos_sucursal = @json($productX_Sucursal);
     //let cantPD = 0;
     // let cantProd = 0;
     let diferencia = 0;
 
+   
 
 
     function buscarFolio() {
         let cont = 0;
-        console.log("Entra a la funcion de buscar folio");
+
+       
         // let cantDevuelto =0;
         //   cargarDatos();
         let botonDev = "";
@@ -194,27 +198,35 @@ DEVOLUCION
         let palabraBusqueda = document.querySelector('#busquedaFolio');
         let cuerpo = "";
         let contador = 1;
-        console.log("PalBusq: ", palabraBusqueda.value);
-        console.log("lentht:", palabraBusqueda.value.length);
+        let subtotalV = 0;
+        let precioSP=0;
+      //  console.log("PalBusq: ", palabraBusqueda.value);
+      //  console.log("lentht:", palabraBusqueda.value.length);
         if (palabraBusqueda.value.length > 0) {
             let folio = parseInt(palabraBusqueda.value);
             //let idVenta = 0;
             for (count in ventas) {
-                console.log("folio: ", folio)
-                if (ventas[count].id == folio) {
-                    console.log("Ventas");
+              //  console.log("folio: ", folio)
+                if (ventas[count].id === folio) {
+                    console.log(detalleVenta);
+                    console.log(ventas);
+                 //   console.log("Ventas");
                     //  idVenta = ventas[count].id;
                     for (count2 in detalleVenta) {
-                        if (detalleVenta[count2].idVentas == ventas[count].id) {
-                            cont = cont + 1;
+                        if (detalleVenta[count2].idVenta == ventas[count].id) {
+                            
+            console.log("Entra a la funcion de buscar folio");
                             for (count3 in productos) {
-                                if (productos[count3].id == detalleVenta[count2].idProductos) {
+                                if (productos[count3].id == detalleVenta[count2].idProducto) {
+                                    cont = cont + 1;
                                     document.getElementById("sinResult").innerHTML = "";
                                     // idProductoD = productos[count3].id;
                                     //idVentaD = ventas[count].id;
                                     // cantTotal = detalleVenta[count2].cantidad;
                                     console.log("De esta venta por cada producto que se vendi en esta venta entra");
                                     let cantPD = 0; //CHECAR
+                                    if(devolucions.length > 0)
+                                    {
                                     for (count51 in devolucions) {
                                         console.log("devoluNo");
                                         //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
@@ -225,6 +237,7 @@ DEVOLUCION
                                             }
                                         }
                                     }
+                                }
                                     //  let cantDev = document.querySelector('#cantIPD');
                                     //  let cantDev2 = parseInt(cantDev.value);
                                     // cantProd = 0;
@@ -239,13 +252,22 @@ DEVOLUCION
                                         botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
                                             type="button" disabled >DEVOLVER</button>`;
                                     }
+                                    for(let x in productos_sucursal){
+                                        if(productos_sucursal[x].idProducto === productos[count3].id)
+                                        {
+                                            precioSP = productos_sucursal[x].precio;
+                                        }
+                                    }
+                                    subtotalV =detalleVenta[count2].cantidad * detalleVenta[count2].precioIndividual;
+                                    console.log("sisisi");
                                     cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
                                             <td>` + detalleVenta[count2].cantidad + `</td>
+                                            <td>` + productos[count3].codigoBarras + `</td>
                                             <td>` + productos[count3].nombre + `</td>
-                                            <td>` + productos[count3].precio + `</td>
-                                            <td>` + detalleVenta[count2].subtotal + `</td> 
+                                            <td>` + precioSP + `</td>
+                                            <td>` + subtotalV + `</td> 
                                             <td>` + cantPD + `</td> 
                                             <td>` + botonDev + `
                                             </td>        
@@ -481,7 +503,6 @@ DEVOLUCION
             }
             cuerpo = cuerpo + `
                     <tr onclick="" data-dismiss="modal">
-
                     <th scope="row">` + cont + `</th>
                     <td>` + ventas[count5].id + `</td>
                     <td>` + emple + `</td>
