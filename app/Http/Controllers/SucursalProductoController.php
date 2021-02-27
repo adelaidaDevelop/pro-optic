@@ -129,14 +129,16 @@ class SucursalProductoController extends Controller
      * @param  \App\Models\Sucursal_producto  $sucursal_producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)//, Sucursal_producto $sucursal_producto)
+    public function update(Request $request,$id)//, Sucursal_producto $sucursal_producto)
     {
-        $datos = $request->input('datos');
-        $datosCodificados = json_decode($datos,true);
-        foreach($datosCodificados as $datosProducto)
+        if($id == 'productos')
         {
-        //$actualizarProductoInd = Producto::find($datosProducto['id']);//->update(['existencia'=>]);
-        $actualizarProducto = Sucursal_producto::where('idSucursal','=',session('sucursal'))
+            $datos = $request->input('datos');
+            $datosCodificados = json_decode($datos,true);
+            foreach($datosCodificados as $datosProducto)
+            {
+            //$actualizarProductoInd = Producto::find($datosProducto['id']);//->update(['existencia'=>]);
+            $actualizarProducto = Sucursal_producto::where('idSucursal','=',session('sucursal'))
             ->where('idProducto', '=',$datosProducto['id'])->get()->first();
             $actualizarProducto->existencia = $actualizarProducto['existencia'] + $datosProducto['cantidad'];
             $actualizarProducto->costo = $datosProducto['costo'];
@@ -148,6 +150,7 @@ class SucursalProductoController extends Controller
             $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
             $productoCaducidad->cantidad = $datosProducto['cantidad'];
             $productoCaducidad->save();
+            }
         }
     }
 

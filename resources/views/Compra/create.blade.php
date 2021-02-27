@@ -246,18 +246,21 @@ async function cargarProductos() {
             productos = await response.json();
             if (productosSucursal.length === 0)
                 productosSucursal = await cargarProductosSucursal();
-            productos[i].existencia = 0;
-            productos[i].idSucursal = false;
-            for (let s in productosSucursal) {
-                if (productosSucursal[s].idProducto === productos[i].id) {
-                    productos[i].existencia = productosSucursal[s].existencia;
-                    productos[i].costo = productosSucursal[s].costo;
-                    productos[i].precio = productosSucursal[s].precio;
-                    productos[i].idSucursal = true;
+            for (let i in productos) {
+                productos[i].existencia = 0;
+                productos[i].costo = 0;//productosSucursal[s].costo;
+                productos[i].precio = 0;//productosSucursal[s].precio;
+                productos[i].idSucursal = false;
+                for (let s in productosSucursal) {
+                    if (productosSucursal[s].idProducto === productos[i].id) {
+                        productos[i].existencia = productosSucursal[s].existencia;
+                        productos[i].costo = productosSucursal[s].costo;
+                        productos[i].precio = productosSucursal[s].precio;
+                        productos[i].idSucursal = true;
+                    }
+
                 }
-
             }
-
             //console.log(productos);
             return productos;
 
@@ -575,7 +578,12 @@ function agregarProducto(id) {
     for (let i in productos) {
         if (productos[i].id === id) {
             if (!buscarProductoEnCompra(id)) {
-                let ganancia = ((productos[i].precio * 100) / (productos[i].costo)) - 100;
+
+                //console.log('El producto a agregar es:',productos[i]);
+                let ganancia = 0;
+                if(productos[i].costo > 0)
+                    ganancia = ((productos[i].precio * 100) / (productos[i].costo)) - 100;
+                //console.log('La ganancia es:',ganancia);
                 //console.log((productos[i].precio * 100));
                 //console.log((productos[i].costo));
                 //agregarProductoACompra(id,codigoBarras,nombre,cantidad,costo,ganancia,precio,caducidad)
@@ -847,7 +855,7 @@ async function guardarCompra() {
             else
                 productos0.push((productosCompra[i]));
         }
-        productosCompra.push(producto);
+        //productosCompra.push(producto);
         let estado = "pagado";
         let iva = null;
         let btnIva = document.querySelector('input[name="iva"]:checked');
@@ -871,11 +879,12 @@ async function guardarCompra() {
                 _token: "{{ csrf_token() }}",
             }
         });
+        
         await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "PUT",
             // la URL de donde voy a hacer la petición
-            url: '/puntoVenta/sucursalProducto',
+            url: '/puntoVenta/sucursalProducto/productos',
             // los datos que voy a enviar para la relación
             data: {
                 datos: JSON.stringify(productos1),
@@ -883,7 +892,7 @@ async function guardarCompra() {
                 _token: "{{ csrf_token() }}",
             }
         });
-        await $.ajax({
+        /*await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
@@ -911,7 +920,7 @@ async function guardarCompra() {
             alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
         });
-        await $.ajax({
+        /*await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
@@ -933,7 +942,7 @@ async function guardarCompra() {
         }).fail(function(jqXHR, textStatus, errorThrown) {
             //alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
-        });
+        });*/
         await cargarProductos();
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
