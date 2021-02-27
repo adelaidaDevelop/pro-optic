@@ -244,6 +244,20 @@ async function cargarProductos() {
         response = await fetch(`/puntoVenta/producto/productos`);
         if (response.ok) {
             productos = await response.json();
+            if (productosSucursal.length === 0)
+                productosSucursal = await cargarProductosSucursal();
+            productos[i].existencia = 0;
+            productos[i].idSucursal = false;
+            for (let s in productosSucursal) {
+                if (productosSucursal[s].idProducto === productos[i].id) {
+                    productos[i].existencia = productosSucursal[s].existencia;
+                    productos[i].costo = productosSucursal[s].costo;
+                    productos[i].precio = productosSucursal[s].precio;
+                    productos[i].idSucursal = true;
+                }
+
+            }
+
             //console.log(productos);
             return productos;
 
@@ -284,8 +298,7 @@ async function buscarProducto() {
     try {
         if (productos.length === 0)
             productos = await cargarProductos();
-        if (productosSucursal.length === 0)
-            productosSucursal = await cargarProductosSucursal();
+
         const entrada = document.querySelector('#busquedaProducto');
         let productosEncontrados = document.querySelector('#consultaBusqueda');
         let contador = 1;
@@ -294,21 +307,10 @@ async function buscarProducto() {
         for (let i in productos) {
             if (productos[i].nombre.toUpperCase().includes(entrada.value.toUpperCase())) {
                 let departamento = "No lo busca";
-                productos[i].existencia = 0;
-                productos[i].idSucursal = false;
+
                 for (let o in departamentos) {
                     if (productos[i].idDepartamento === departamentos[o].id)
                         departamento = departamentos[o].nombre;
-                }
-                for (let s in productosSucursal) {
-                    if (productosSucursal[s].idProducto === productos[i].id)
-                    {
-                        productos[i].existencia = productosSucursal[s].existencia;
-                        productos[i].costo = productosSucursal[s].costo;
-                        productos[i].precio = productosSucursal[s].precio;
-                        productos[i].idSucursal = true;
-                    }
-                        
                 }
                 console.log(productos);
                 cuerpo = cuerpo + `
@@ -328,7 +330,7 @@ async function buscarProducto() {
     }
 };
 
-function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganancia, precio, caducidad,idSucursal) {
+function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganancia, precio, caducidad, idSucursal) {
     let producto = {
         id: id,
         codigoBarras: codigoBarras,
@@ -338,7 +340,7 @@ function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganan
         ganancia: ganancia,
         precio: precio,
         caducidad: caducidad,
-        idSucursal:idSucursal
+        idSucursal: idSucursal
     };
     console.log(producto)
     productosCompra.push(producto);
@@ -578,7 +580,7 @@ function agregarProducto(id) {
                 //console.log((productos[i].costo));
                 //agregarProductoACompra(id,codigoBarras,nombre,cantidad,costo,ganancia,precio,caducidad)
                 agregarProductoACompra(productos[i].id, productos[i].codigoBarras, productos[i].nombre,
-                    1, productos[i].costo, ganancia, productos[i].precio, fechaActual(),productos[i].idSucursal
+                    1, productos[i].costo, ganancia, productos[i].precio, fechaActual(), productos[i].idSucursal
                 );
             } else alert("YA AGREGÓ ESTE PRODUCTO");
         }
@@ -839,9 +841,8 @@ async function guardarCompra() {
         let json = JSON.stringify(productosCompra);
         let productos0 = [];
         let productos1 = [];
-        for(let i in productosCompra)
-        {
-            if(productosCompra[i].idSucursal)
+        for (let i in productosCompra) {
+            if (productosCompra[i].idSucursal)
                 productos1.push((productosCompra[i]));
             else
                 productos0.push((productosCompra[i]));
