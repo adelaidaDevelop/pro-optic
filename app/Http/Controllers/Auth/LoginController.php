@@ -10,6 +10,7 @@ use Auth;
 
 use App\Models\Empleado;
 use App\Models\Sucursal_empleado;
+use App\Models\Sucursal;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -69,6 +70,9 @@ class LoginController extends Controller
                         //$request->session()->regenerate();
                         session(['idUsuario' => Auth::user()->id]);
                         session(['sucursal' => session('sucursal')]);
+                        $sucursal = Sucursal::findOrFail($request->input('opcionSucursal'))->direccion;
+                        session(['sucursalNombre' => $sucursal]);
+                
                         return redirect('/puntoVenta/venta');//->intended('/');
                         }
                     /*$id = Auth::user()->id;
@@ -102,6 +106,9 @@ class LoginController extends Controller
                     $request->session()->regenerate();
                     session(['idUsuario' => Auth::user()->id]);
                     session(['sucursal' => $request->input('opcionSucursal')]);
+                    $sucursal = Sucursal::findOrFail($request->input('opcionSucursal'))->direccion;
+                    session(['sucursalNombre' => $sucursal]);
+                
                     return redirect('/puntoVenta/venta');
                 }
                 $id = Auth::user()->id;
@@ -115,6 +122,8 @@ class LoginController extends Controller
                 $request->session()->regenerate();
                 session(['idUsuario' => Auth::user()->id]);
                 session(['sucursal' => $request->input('opcionSucursal')]);
+                $sucursal = Sucursal::findOrFail($request->input('opcionSucursal'))->direccion;
+                session(['sucursalNombre' => $sucursal]);
                 return redirect('/puntoVenta/home');//redirect('/puntoVenta/venta');//->intended('/');
                 }
             }

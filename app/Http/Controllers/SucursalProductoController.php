@@ -52,9 +52,9 @@ class SucursalProductoController extends Controller
      * @param  \App\Models\Sucursal_producto  $sucursal_producto
      * @return \Illuminate\Http\Response
      */
-    public function show(Sucursal_producto $sucursal_producto)
+    public function show($id)//Sucursal_producto $sucursal_producto)
     {
-        //
+        return Sucursal_producto::where('idSucursal', '=',$id)->get();
     }
 
     public function agregarProdStock_Suc($id){

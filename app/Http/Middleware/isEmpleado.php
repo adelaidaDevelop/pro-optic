@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 use App\Models\Empleado;
-
+use App\Models\Sucursal;
 use App\Models\Sucursal_empleado;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,6 +44,9 @@ class isEmpleado
                 //$request->session()->regenerate();
                 session(['idUsuario' => Auth::user()->id]);
                 session(['sucursal' => session('sucursal')]);
+                $sucursal = Sucursal::findOrFail($request->input('opcionSucursal'))->direccion;
+                session(['sucursalNombre' => $sucursal]);
+                
                 return $next($request);//->intended('/');
                 }
                     /*$id = Auth::user()->id;
