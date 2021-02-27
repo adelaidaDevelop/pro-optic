@@ -36,9 +36,30 @@ class SucursalProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        //
+        $datos = $request->input('datos');
+        $datosCodificados = json_decode($datos,true);
+        foreach($datosCodificados as $datosProducto)
+        {
+            //$actualizarProductoInd = Sucursal_producto::find($datosProducto['id']);//->update(['existencia'=>]);
+            $sucursalProducto = new Sucursal_producto;//::where('idSucursal','=',session('sucursal'))
+            //->where('idProducto', '=',$datosProducto['id'])->get()->first();
+            $sucursalProducto->idSucursal = session('sucursal');
+            $sucursalProducto->idProducto = $datosProducto['id'];
+            $sucursalProducto->existencia = $datosProducto['cantidad'];
+            $sucursalProducto->costo = $datosProducto['costo'];
+            $sucursalProducto->precio = $datosProducto['precio'];
+            $sucursalProducto->save();
+            //$actualizarProductoInd->save();
+
+            $productoCaducidad = new Productos_caducidad;
+            $productoCaducidad->iducursalProducto = $sucursalProducto->id;
+            $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
+            $productoCaducidad->cantidad = $datosProducto['cantidad'];
+            $productoCaducidad->save();
+        }
+
         
     }
     public function crear($id){
@@ -108,9 +129,26 @@ class SucursalProductoController extends Controller
      * @param  \App\Models\Sucursal_producto  $sucursal_producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sucursal_producto $sucursal_producto)
+    public function update(Request $request)//, Sucursal_producto $sucursal_producto)
     {
-        //
+        $datos = $request->input('datos');
+        $datosCodificados = json_decode($datos,true);
+        foreach($datosCodificados as $datosProducto)
+        {
+        //$actualizarProductoInd = Producto::find($datosProducto['id']);//->update(['existencia'=>]);
+        $actualizarProducto = Sucursal_producto::where('idSucursal','=',session('sucursal'))
+            ->where('idProducto', '=',$datosProducto['id'])->get()->first();
+            $actualizarProducto->existencia = $actualizarProducto['existencia'] + $datosProducto['cantidad'];
+            $actualizarProducto->costo = $datosProducto['costo'];
+            $actualizarProducto->precio = $datosProducto['precio'];
+            $actualizarProducto->save();
+
+            $productoCaducidad = new Productos_caducidad;
+            $productoCaducidad->idProducto = $datosProducto['id'];
+            $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
+            $productoCaducidad->cantidad = $datosProducto['cantidad'];
+            $productoCaducidad->save();
+        }
     }
 
     /**

@@ -92,20 +92,7 @@ class CompraController extends Controller
             //$producto->iva = 'Si';
             //$producto->fecha_caducidad = Carbon::createFromFormat( 'Y/m/d', $datosProducto['caducidad']);
             $producto->save();
-            $actualizarProductoInd = Producto::find($datosProducto['id']);//->update(['existencia'=>]);
-            $actualizarProducto = Sucursal_producto::where('idSucursal','=',session('sucursal'))
-            ->where('idProducto', '=',$datosProducto['id'])->get()->first();
-            $actualizarProducto->existencia = $actualizarProducto['existencia'] + $datosProducto['cantidad'];
-            $actualizarProductoInd->costo = $datosProducto['costo'];
-            $actualizarProductoInd->precio = $datosProducto['precio'];
-            $actualizarProducto->save();
-            $actualizarProductoInd->save();
-
-            $productoCaducidad = new Productos_caducidad;
-            $productoCaducidad->idProducto = $datosProducto['id'];
-            $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
-            $productoCaducidad->cantidad = $datosProducto['cantidad'];
-            $productoCaducidad->save();
+            
         }
 
         return true;//view('Venta.index',compact('datosP'));

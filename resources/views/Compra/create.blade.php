@@ -294,7 +294,8 @@ async function buscarProducto() {
         for (let i in productos) {
             if (productos[i].nombre.toUpperCase().includes(entrada.value.toUpperCase())) {
                 let departamento = "No lo busca";
-                //let existencia = 0;
+                productos[i].existencia = 0;
+                productos[i].idSucursal = false;
                 for (let o in departamentos) {
                     if (productos[i].idDepartamento === departamentos[o].id)
                         departamento = departamentos[o].nombre;
@@ -305,6 +306,7 @@ async function buscarProducto() {
                         productos[i].existencia = productosSucursal[s].existencia;
                         productos[i].costo = productosSucursal[s].costo;
                         productos[i].precio = productosSucursal[s].precio;
+                        productos[i].idSucursal = true;
                     }
                         
                 }
@@ -326,7 +328,7 @@ async function buscarProducto() {
     }
 };
 
-function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganancia, precio, caducidad) {
+function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganancia, precio, caducidad,idSucursal) {
     let producto = {
         id: id,
         codigoBarras: codigoBarras,
@@ -336,6 +338,7 @@ function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganan
         ganancia: ganancia,
         precio: precio,
         caducidad: caducidad,
+        idSucursal:idSucursal
     };
     console.log(producto)
     productosCompra.push(producto);
@@ -575,7 +578,7 @@ function agregarProducto(id) {
                 //console.log((productos[i].costo));
                 //agregarProductoACompra(id,codigoBarras,nombre,cantidad,costo,ganancia,precio,caducidad)
                 agregarProductoACompra(productos[i].id, productos[i].codigoBarras, productos[i].nombre,
-                    1, productos[i].costo, ganancia, productos[i].precio, fechaActual()
+                    1, productos[i].costo, ganancia, productos[i].precio, fechaActual(),productos[i].idSucursal
                 );
             } else alert("YA AGREGÓ ESTE PRODUCTO");
         }
@@ -661,11 +664,11 @@ function crearProducto() {
             </div>
         </div>
         <div class="form-group">
-            <label for="MinimoStock" class="col col-form-label">
+            <label for="minimoStock" class="col col-form-label">
                 <h6>MINIMO STOCK</h6>
             </label>
             <div class="col">
-                <input type="number" name="minimo_stock" id="formMinimoStock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="" autofocus required>
+                <input type="number" name="minimoStock" id="minimoStock" class="form-control" placeholder="Ingrese el minimo de productos permitidos" value="" autofocus required>
             </div>
         </div>
         <div class="form-group">
@@ -747,7 +750,7 @@ function nuevoProducto() {
         if (form.checkValidity() === false) {
             //event.preventDefault();
             //event.stopPropagation();
-            console.log('Entra aqui');
+            //console.log('Entra aqui');
             bol = 1;
             //return false;
         }
@@ -771,6 +774,7 @@ function nuevoProducto() {
 
     (async () => {
         try {
+            //console.log(datosProducto);
             var init = {
                 // el método de envío de la información será POST
                 method: "POST",
@@ -778,7 +782,8 @@ function nuevoProducto() {
                 // con los datos en formato JSON
                 body: datosProducto // convertimos el objeto a texto
             };
-            let respuesta = await fetch('/producto/', init);
+            //console.log('Aun llega aquí');
+            let respuesta = await fetch('/puntoVenta/producto/', init);
             if (respuesta.ok) {
                 console.log(respuesta);
                 const cuerpoModal = document.querySelector('#cuerpoModal');
@@ -832,6 +837,16 @@ async function guardarCompra() {
         const fechaCompra = document.querySelector('#fechaCompra');
         //if(fechaCompra.value.l)
         let json = JSON.stringify(productosCompra);
+        let productos0 = [];
+        let productos1 = [];
+        for(let i in productosCompra)
+        {
+            if(productosCompra[i].idSucursal)
+                productos1.push((productosCompra[i]));
+            else
+                productos0.push((productosCompra[i]));
+        }
+        productosCompra.push(producto);
         let estado = "pagado";
         let iva = null;
         let btnIva = document.querySelector('input[name="iva"]:checked');
@@ -843,12 +858,35 @@ async function guardarCompra() {
         }
         const pagoCredito = document.querySelector('#pagoCredito');
         //if (parseFloat(pagoCredito.value) > 0) {
-
         await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: '/compra',
+            url: '/puntoVenta/sucursalProducto',
+            // los datos que voy a enviar para la relación
+            data: {
+                datos: JSON.stringify(productos0),
+                //_token: $("meta[name='csrf-token']").attr("content")
+                _token: "{{ csrf_token() }}",
+            }
+        });
+        await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "PUT",
+            // la URL de donde voy a hacer la petición
+            url: '/puntoVenta/sucursalProducto',
+            // los datos que voy a enviar para la relación
+            data: {
+                datos: JSON.stringify(productos1),
+                //_token: $("meta[name='csrf-token']").attr("content")
+                _token: "{{ csrf_token() }}",
+            }
+        });
+        await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: '/puntoVenta/compra',
             // los datos que voy a enviar para la relación
             data: {
                 estado: estado,
