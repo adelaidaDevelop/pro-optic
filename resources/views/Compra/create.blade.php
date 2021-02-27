@@ -133,8 +133,7 @@
                     <div class="row mx-1 my-2">
 
                         <button type="button" onclick="verificarCompra()" class="btn btn-secondary d-flex ml-auto p-2">
-                            GUARDAR
-                            COMPRA</button>
+                            GUARDAR COMPRA</button>
                     </div>
                     <!--div class="d-flex flex-row-reverse bd-highlight m-1 ">
                         <button type="button" onclick="verificarCompra()" class="btn btn-secondary"> GUARDAR
@@ -295,7 +294,7 @@ async function buscarProducto() {
         for (let i in productos) {
             if (productos[i].nombre.toUpperCase().includes(entrada.value.toUpperCase())) {
                 let departamento = "No lo busca";
-                let existencia = 0;
+                //let existencia = 0;
                 for (let o in departamentos) {
                     if (productos[i].idDepartamento === departamentos[o].id)
                         departamento = departamentos[o].nombre;
@@ -309,13 +308,13 @@ async function buscarProducto() {
                     }
                         
                 }
-
+                console.log(productos);
                 cuerpo = cuerpo + `
             <tr onclick="agregarProducto(` + productos[i].id + `)" data-dismiss="modal">
                 <td>` + contador++ + `</td>
                 <td>` + productos[i].codigoBarras + `</td>
                 <td>` + productos[i].nombre + `</td>
-                <td>` + existencia + `</td>
+                <td>` + productos[i].existencia + `</td>
                 <td>` + departamento + `</td>
             </tr>
             `;

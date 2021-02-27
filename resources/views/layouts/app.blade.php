@@ -27,9 +27,9 @@
 
 <body>
 
-    <div id="app">
-    <nav class="navbar  navbar-expand-md  shadow-sm  " style="height: 40px;background-color: #3366FF;">
-          <!--  <div class="container">  --> 
+    <!--div id="app border" class="row w-100 border border-dark"-->
+        <nav class="navbar navbar-expand-md m-0 p-0" style="background-color: #3366FF;">
+            <!--  <div class="container">  -->
             <!--
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -38,54 +38,61 @@
                 <span class="navbar-toggler-icon"></span>
             </button-->
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse m-0 p-0" id="navbarSupportedContent">
 
-                    <ul class="navbar-nav mr-auto">
+                <!--ul class="navbar-nav mr-auto">
 
-                    </ul>
+                    </ul-->
+                <ul class="navbar-nav ml-auto my-0">
+                    <li class="nav-item">
+                        <h5 class="text-white text-uppercase">{{session('sucursalNombre')}}
+                        </h5>
+                    </li>
+                </ul>
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto my-0 py-0">
+                    <!-- Authentication Links -->
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        
-                        @guest
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ url('puntoVenta/login') }}">{{ __('Login') }}</a>
-                        </li>
-                        <!--if (Roudte:d:has('register'))
+                    @guest
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ url('puntoVenta/login') }}">{{ __('Login') }}</a>
+                    </li>
+                    <!--if (Roudte:d:has('register'))
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{ route('register') }}">{ __('Register') }}</a>
                         </li>
                         endif-->
-                        @else
-                        <li class="nav-item dropdown">
-                            <!--
+                    @else
+                    <li class="nav-item dropdown">
+                        <!--
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>-->
-
-                            <a id="navbarDropdown" class="text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->username }}
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" class="text-white" href="{{ url('puntoVenta/logout') }}" onclick="event.preventDefault();
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <strong>{{ Auth::user()->username }}</strong>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" class="text-white" href="{{ url('puntoVenta/logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
+                                <img src="{{ asset('img\salir.png') }}" alt="Editar" height="30px">
+                            
+                                {{ __('Logout') }}
+                            </a>
 
-                                <form id="logout-form" action="{{ url('puntoVenta/logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                        @endguest
-                    </ul>
-                </div>
-              <!--  </div>-->
+                            <form id="logout-form" action="{{ url('puntoVenta/logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                    @endguest
+                </ul>
+            </div>
+            <!--  </div>-->
 
-            </nav>
-        
-    </div>
+        </nav>
+
+    <!--/div-->
 
 
     @yield('content')
