@@ -28,6 +28,7 @@
                             </button>
                             <span class="sr-only">(current)</span></a>
                     </li>
+                    <!--
                     <li class="nav-item active">
                         <a class="nav-link" href="/puntoVenta/producto">
                             <button class="btn btn-light">
@@ -35,6 +36,7 @@
                             </button>
                             <span class="sr-only">(current)</span></a>
                     </li>
+                    -->
                     <li class="nav-item active">
                         <a class="nav-link" href="/puntoVenta/inventario">
                             <button class="btn btn-light">
