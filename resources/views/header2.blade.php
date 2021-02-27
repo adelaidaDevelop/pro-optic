@@ -16,31 +16,43 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="/puntoVenta/venta">
-                                <button class="btn btn-light" type="submit" >VENTAS
-                                    
+                                <button class="btn btn-light" type="submit">VENTAS
+
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="/puntoVenta/compra">
-                                <button class="btn btn-light" >
+                                <button class="btn btn-light">
                                     COMPRAS
                                 </button>
                                 <span class="sr-only">(current)</span></a>
                         </li>
+                        <!--+
                         <li class="nav-item active">
                             <a class="nav-link" href="/puntoVenta/producto">
                                 <button class="btn btn-light">
                                     PRODUCTOS
                                 </button>
-                                <span class="sr-only">(current)</span></a>
+                                <span class="sr-only">(current)</span>
+                            </a>
                         </li>
+                        -->
                         <li class="nav-item active">
+                            <form method="get" action="{{url('/puntoVenta/inventario/index')}}">
+                                <button class="btn btn-secondary p-1" type="submit">
+                                    <img src="{{ asset('img\usuarioEc.png') }}" class="img-thumbnail" alt="Editar" width="28px" height="28px">
+                                    EMPLEADOS
+                                </button>
+                            </form>
+                            <!--
                             <a class="nav-link" href="/puntoVenta/inventario">
                                 <button class="btn btn-light">
                                     INVENTARIO
                                 </button>
                                 <span class="sr-only">(current)</span></a>
+                                -->
+
                         </li>
                         <li class="nav-item active">
                             @if(session('idUsuario') == 1)
@@ -49,13 +61,13 @@
                                     ADMINISTRACION
                                 </button>
                                 <span class="sr-only">(current)</span></a>
-                                @else
+                            @else
                             <!--a class="nav-link" href="/puntoVenta/empleado">
                                 <button class="btn btn-light">
                                     EMPLEADOS
                                 </button>
                                 <span class="sr-only">(current)</span></a-->
-                                @endif
+                            @endif
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="/puntoVenta/cliente">
@@ -88,9 +100,9 @@
                         </li>
                     </ul>
                 </div>
-               
+
             </nav>
-            <br/>
+            <br />
         </div>
     </div>
     <div class="row p-1" style="background:#ED4D46">

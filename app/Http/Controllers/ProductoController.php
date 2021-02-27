@@ -220,11 +220,10 @@ class ProductoController extends Controller
        // $producto = Producto::all();
             try{
                 Producto::destroy($id);
-                return 1;
-               // return redirect('puntoVenta/administracion');
+                return redirect('puntoVenta/administracion');
             } catch (\Illuminate\Database\QueryException $e) { 
-                return 0;
-           // return redirect()->back()->withErrors(['noEliminado' => 'EL PRODUCTO NO SE PUDO ELIMINAR PORQUE ESTA EN USO']);
+               
+            return redirect()->back()->withErrors(['noEliminado' => 'EL PRODUCTO NO SE PUDO ELIMINAR PORQUE ESTA EN USO']);
         } 
         
     }

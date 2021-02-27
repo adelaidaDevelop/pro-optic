@@ -60,10 +60,14 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('/productos_baja', [SucursalProductoController::class,'productos_baja']);
     //DAR DE ALTA PRODUCTOS DADAS DE BAJA EN ESTA SUCURSAL
       Route::get('altaProductoS/{id}', [SucursalProductoController::class,'altaProductoS']);
+      //ELIMINAR SUCURSAL PT2
+      Route::get('destroy2/{id}', [SucursalController::class,'destroy2']);
+      
    Route::get('productoEli/{id}', function($id){
         $producto = Sucursal_producto::where('idProducto','=',$id)->delete();
         return redirect()->back();
     });
+
 /*
     Route::get('productoEli2/{id}', function($id){
         $producto = Sucursal_producto::where('idProducto','=',$id)->get();

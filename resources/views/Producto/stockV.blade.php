@@ -34,7 +34,6 @@ PRODUCTOS
                 </table>
             </div>
             </div>
-            
         </div>
     </div>
 </div>
@@ -83,7 +82,7 @@ PRODUCTOS
             }
         }
         if (cuerpo === "") {
-           let sin= ` <h3 class= "text-danger my-auto"> STOCK DE PRODUCTOS VACIO </h3>`;
+           let sin= ` <h3 class= "text-danger my-auto"> TODOS LOS PRODUTOS HAN SIDO AGREGADOS A ESTA SUCURSAL </h3>`;
             document.getElementById("vacio").innerHTML = sin ;
         } else {
             document.getElementById("consultaBusqueda").innerHTML = cuerpo;
