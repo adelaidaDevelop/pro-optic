@@ -79,12 +79,12 @@ class CompraController extends Controller
             }
             
         }
-    //    return 'Todo bien';
+        return 'Todo bien';
         foreach($datosCodificados as $datosProducto)
         {
             $producto = new Detalle_compra;
-            $producto->idCompras = $compra->id;
-            $producto->idProductos = $datosProducto['id'];
+            $producto->idCompra = $compra->id;
+            $producto->idProducto = $datosProducto['id'];
             $producto->cantidad = $datosProducto['cantidad'];
             $producto->porcentaje_ganancia = $datosProducto['ganancia'];
             //$producto->fecha_caducidad = $datosProducto['caducidad'];
