@@ -25,7 +25,7 @@ CLIENTES
                 <h4 style="color:#4388CC">CLIENTES</h4>
 
                 <div class="input-group">
-                    <input type="text" class="form-control text-uppercase  my-1" placeholder="BUSCAR CLIENTE" id="texto">
+                    <input type="text" class="form-control text-uppercase  my-1" placeholder="BUSCAR CLIENTE" id="texto" onkeyup="mayus(this)" required>
                     <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -59,11 +59,11 @@ CLIENTES
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" value="{{$d->nombre}}">
+                                    <input type="text" class="form-control" name="nombre" id="nombre" onkeyup="mayus(this)" value="{{$d->nombre}}" required>
                                     <label for="telefono" class="mt-2">
                                         TELEFONO
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" value="{{$d->telefono}}">
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" onkeyup="mayus(this)" value="{{$d->telefono}}" required>
                                 </div>
                             </div>
 
@@ -106,7 +106,7 @@ CLIENTES
                                 <label for="nombre">
                                     NOMBRE
                                 </label>
-                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre">
+                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" onkeyup="mayus(this)" id="nombre" required>
                                 @error('nombre')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -115,7 +115,7 @@ CLIENTES
                                 <label for="telefono">
                                     TELEFONO
                                 </label>
-                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono">
+                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" onkeyup="mayus(this)" required>
                             </div>
                         </div>
 
@@ -148,7 +148,11 @@ CLIENTES
             .then(html => {
                 document.getElementById("resultados").innerHTML = html
             })
+    };
+    function mayus(e) {
+        e.value = e.value.toUpperCase();
     }
+    
     texto.addEventListener('keyup', filtrar);
     filtrar();
 </script>

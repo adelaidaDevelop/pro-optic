@@ -49,11 +49,15 @@ class DepartamentoController extends Controller
      */
     public function store(Request $request)
     {
+        try{
         $datosDepartamento = request()->except('_token');
         $datosDepartamento['status'] = 1;
         Departamento::create($datosDepartamento);
-        
-        return redirect('puntoVenta/departamento');
+        return redirect('puntoVenta/departamento')->withErrors(['mensajeConf' => 'ESTE DEPARTAMENTO SE AGREGO CORRECTAMENTE']);
+
+        }catch(\Illuminate\Database\QueryException $e ){
+            return redirect()->back()->withErrors(['mensaje' => 'ESTE DEPARTAMENTO YA EXISTE. AGREGA UNO DIFERENTE']);
+        }
     }
 
     /**
@@ -94,9 +98,13 @@ class DepartamentoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        try{
         $datosDepartamento = request()->except(['_token','_method']);
         Departamento::where('id','=',$id)->update($datosDepartamento);
-        return redirect('puntoVenta/departamento');
+        return redirect('puntoVenta/departamento')->withErrors(['mensajeConf' => 'ESTE DEPARTAMENTO SE EDITO CORRECTAMENTE']);
+        }catch(\Illuminate\Database\QueryException $e){
+            return redirect()->back()->withErrors(['mensajeError' => 'ESTE DEPARTAMENTO YA EXISTE. INTENTE PONER UN NOMBRE DIFERENTE ']);
+        }
     }
 
     /**

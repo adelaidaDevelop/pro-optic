@@ -10,9 +10,8 @@
         @if(isset($d))
         <div class="col my-2 ml-5 pl-1">
             <form method="get" action="{{url('/puntoVenta/departamento/create')}}">
-                <button class="btn btn-secondary" type="submit" >
-                    <img src="{{ asset('img\agregar2.png') }}" class="img-thumbnail" alt="Editar" width="30px"
-                        height="30px">
+                <button class="btn btn-secondary" type="submit">
+                    <img src="{{ asset('img\agregar2.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                     NUEVO DEPARTAMENTO
                 </button>
             </form>
@@ -30,7 +29,7 @@
                     <h4 style="color:#4388CC">DEPARTAMENTOS</h4>
 
                     <div class="input-group">
-                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR DEPARTAMENTO" id="texto">
+                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR DEPARTAMENTO" onkeyup="mayus(this)" id="texto" required>
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -46,8 +45,7 @@
                 <!--#FFFBF2"-->
                 @if(isset($d))
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/puntoVenta/departamento/'.$d->id)}}"
-                        enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{url('/puntoVenta/departamento/'.$d->id)}}" enctype="multipart/form-data">
                         <div class="form-group">
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
@@ -64,16 +62,25 @@
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="text-uppercase  form-control" name="nombre" id="nombre"
-                                            value="{{$d->nombre}}">
+                                        <input type="text" class="text-uppercase  form-control" name="nombre" id="nombre" value="{{$d->nombre}}" onkeyup="mayus(this)" required>
 
                                     </div>
                                 </div>
-
+                                <div class="col-4">
+                                @error('mensajeError')
+                                <div class="alert alert-danger my-auto" role="alert">
+                                    {{$message}}
+                                </div>
+                                @enderror
+                                @error('mensajeConf')
+                                <div class="alert alert-success my-auto" role="alert">
+                                    {{$message}}
+                                </div>
+                                @enderror
+                            </div>
                             </div>
                             <button class="btn btn-outline-secondary" type="submit" onclick="return confirm('¿DESEA EDITAR ESTE DEPARTAMENTO?')">
-                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                    width="30px" height="30px">
+                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                                 GUARDAR CAMBIOS
                             </button>
                         </div>
@@ -83,8 +90,7 @@
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
                             <button class="btn btn-outline-secondary my-3" type="submit" onclick="return confirm('¿DESEA ELIMINAR ESTE DEPARTAMENTO?')">
-                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
-                                    width="30px" height="30px">
+                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                                 ELIMINAR DEPARTAMENTO
                             </button>
                         </form>
@@ -111,23 +117,29 @@
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror"
-                                        name="nombre" id="nombre">
-                                    @error('nombre')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" onkeyup="mayus(this)" required>
+
                                 </div>
+                            </div>
+                            <div class="col-4">
+                                @error('mensaje')
+                                <div class="alert alert-danger my-auto" role="alert">
+                                    {{$message}}
+                                </div>
+                                @enderror
+                                @error('mensajeConf')
+                                <div class="alert alert-success my-auto" role="alert">
+                                    {{$message}}
+                                </div>
+                                @enderror
                             </div>
 
                         </div>
                         <div class="form-row w-100">
                             <div class="form-group">
-                                <button class="btn btn-outline-secondary" type="submit" onclick="return confirm('¿DESEA CREAR ESTE NUEVO DEPARTAMENTO?')">
-                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                        width="30px" height="30px">
-                                        GUARDAR DEPARTAMENTO
+                                <button class="btn btn-outline-secondary" type="submit" onclick="">
+                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
+                                    GUARDAR DEPARTAMENTO
                                     <!--GUARDAR DEPARTAMENTO-->
                                 </button>
                             </div>
@@ -141,20 +153,24 @@
 </div>
 </div>
 <script>
-const texto = document.querySelector('#texto');
-console.log(texto.value);
+    const texto = document.querySelector('#texto');
+    console.log(texto.value);
 
-function filtrar() {
-    document.getElementById("resultados").innerHTML = "";
-    fetch(`/departamento/buscador?texto=${texto.value}`, {
-            method: 'get'
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById("resultados").innerHTML = html
-        })
-}
-texto.addEventListener('keyup', filtrar);
-filtrar();
+    function filtrar() {
+        document.getElementById("resultados").innerHTML = "";
+        fetch(`/departamento/buscador?texto=${texto.value}`, {
+                method: 'get'
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("resultados").innerHTML = html
+            })
+    }
+    texto.addEventListener('keyup', filtrar);
+    filtrar();
+
+    function mayus(e) {
+        e.value = e.value.toUpperCase();
+    }
 </script>
 @endsection
