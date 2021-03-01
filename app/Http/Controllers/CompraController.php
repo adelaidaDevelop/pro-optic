@@ -79,7 +79,7 @@ class CompraController extends Controller
             }
             
         }
-        return 'Todo bien';
+        
         foreach($datosCodificados as $datosProducto)
         {
             $producto = new Detalle_compra;

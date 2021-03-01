@@ -950,6 +950,7 @@ async function guardarCompra() {
             //alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
         });*/
+        await cargarProductosSucursal();
         await cargarProductos();
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
