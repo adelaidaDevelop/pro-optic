@@ -57,7 +57,6 @@ Route::get('/idSucursal', [EcommerceController::class,'idSucursal']);
     Route::get('/datosdetalleVenta', [DevolucionController::class,'datosDetalleVenta']);
     Route::get('/datosProducto', [DevolucionController::class,'datosProducto']);
     Route::get('/datosEmpleado', [DevolucionController::class,'datosEmpleado']);
-    Route::resource('productosCaducidad', ProductosCaducidadController::class);
     Route::get('/departamento2', [DepartamentoController::class,'index2']);
     Route::post('/venta/productos', [VentaController::class,'productos']);
 

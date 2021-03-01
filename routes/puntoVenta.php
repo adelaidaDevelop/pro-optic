@@ -100,6 +100,8 @@ Route::prefix('/puntoVenta')->group(function()
         Route::get('/proveedor/buscador', [ProveedorController::class,'buscador']);
         Route::resource('proveedor', ProveedorController::class);
         
+        Route::resource('productosCaducidad', ProductosCaducidadController::class);
+        
     });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });

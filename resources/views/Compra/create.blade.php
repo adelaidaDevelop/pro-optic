@@ -865,7 +865,8 @@ async function guardarCompra() {
         let iva = null;
         let btnIva = document.querySelector('input[name="iva"]:checked');
         if (btnIva != null)
-            iva = document.querySelector('#inputIva');
+            iva = document.querySelector('#inputIva').value;
+        //return alert(iva);
         let btn = document.querySelector('input[name="credito"]:checked');
         if (btn != null) {
             estado = "credito";
@@ -917,21 +918,24 @@ async function guardarCompra() {
             // si tuvo éxito la petición
         }).done(function(respuesta) {
             //console.log(respuesta);
-            alert('COMPRA GUARDADA EXITOSAMENTE');
-            productosCompra = [];
-            mostrarProductos();
-            $('#confirmarCompraModal').modal('hide');
+            
             console.log(respuesta); //JSON.stringify(respuesta));
 
         }).fail(function(jqXHR, textStatus, errorThrown) {
             alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
         });
-        /*await $.ajax({
+        alert('COMPRA GUARDADA EXITOSAMENTE');
+            productosCompra = [];
+            mostrarProductos();
+            await cargarProductosSucursal();
+            await cargarProductos();
+            $('#confirmarCompraModal').modal('hide');
+        await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: '/productosCaducidad/',
+            url: '/puntoVenta/productosCaducidad/',
             // los datos que voy a enviar para la relación
             data: {
                 datos: json,
@@ -949,9 +953,8 @@ async function guardarCompra() {
         }).fail(function(jqXHR, textStatus, errorThrown) {
             //alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
-        });*/
-        await cargarProductosSucursal();
-        await cargarProductos();
+        });
+        
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }

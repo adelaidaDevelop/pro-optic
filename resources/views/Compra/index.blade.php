@@ -321,7 +321,7 @@ async function cargarCompras() {
 
             let costoTotal = 0;
             for (let p in compra_producto) {
-                if (compra_producto[p].idCompras === compras[i].id) {
+                if (compra_producto[p].idCompra === compras[i].id) {
                     let subtotal = parseFloat(compra_producto[p].cantidad) *
                         parseFloat(compra_producto[p].costo_unitario);
                     costoTotal = parseFloat(costoTotal) + parseFloat(subtotal);
@@ -359,8 +359,8 @@ function mostrarCompras() {
                 for (let p in productos) {
                     if (productos[p].nombre.toUpperCase().includes(busquedaCompra.value.toUpperCase())) {
                         for (let cp in compra_producto) {
-                            if (compra_producto[cp].idProductos === productos[p].id) {
-                                if (compra_producto[cp].idCompras === comprasActuales[i].id)
+                            if (compra_producto[cp].idProducto === productos[p].id) {
+                                if (compra_producto[cp].idCompra === comprasActuales[i].id)
                                     if (!comprasAuxiliar.includes(comprasActuales[i]))
                                         comprasAuxiliar.push(comprasActuales[i]);
                             }
@@ -614,13 +614,13 @@ function verDetalleCompra(id, estado) {
     let contador = 1;
     let costoTotal = 0;
     for (let c in compra_producto) {
-        if (compra_producto[c].idCompras === id) {
+        if (compra_producto[c].idCompra === id) {
             let producto = 0;
             for (let p in productos) {
                 //console.log(productos[p].id);
-                //console.log(compra_producto[c].idProductos);
+                //console.log(compra_producto[c].idProducto);
                 //console.log('//');
-                if (productos[p].id === compra_producto[c].idProductos) {
+                if (productos[p].id === compra_producto[c].idProducto) {
                     //console.log(producto);
                     producto = {
                         id: productos[p].id,
