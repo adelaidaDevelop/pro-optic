@@ -11,6 +11,7 @@ use App\Models\Producto;
 use App\Models\Cliente;
 use App\Models\Sucursal;
 use App\Models\Sucursal_producto;
+use App\Models\Sucursal_empleado;
 
 class RegistrosPruebaTable extends Migration
 {
@@ -20,16 +21,37 @@ class RegistrosPruebaTable extends Migration
      * @return void
      */
     public function up()
-    {
-        //CREACION DE USUARIOS
-        User::create([
-            'username' => 'Administrador',
+    {   //CREACION DE SUCURSAL
+        $sucursal = new Sucursal;
+        $sucursal->direccion ='SAN FELIPE 23, SAN MARTIN MEXICAPAN';
+        $sucursal->telefono = '9512456511';
+        $sucursal->status = 1;
+        $sucursal->save();
+        //CREACION DE ADMINISTRADOR
+        $admin = User::create([
+            'username' => 'ADMINISTRADOR',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin12345'),
             'tipo' => 0,
-
         ]);
 
+        $empleadoAdmin = new Empleado;
+        $empleadoAdmin->nombre = 'XXXXX';
+        $empleadoAdmin->apellidoPaterno = 'XXXXX';
+        $empleadoAdmin->apellidoMaterno = 'XXXXX';
+        $empleadoAdmin->curp = 'XXXXXXXXXXXXXXXXXX';
+        $empleadoAdmin->telefono = '0000000000';
+        $empleadoAdmin->domicilio = 'XXXXXXXXXXXX';
+        $empleadoAdmin->claveE = '12345';
+        //$empleadoAdmin->status = 'alta';
+        $empleadoAdmin->idUsuario = $admin->id;
+        $empleadoAdmin->save();
+
+        $sucursalEmpleado = new Sucursal_empleado;
+        $sucursalEmpleado->idSucursal = $sucursal->id;
+        $sucursalEmpleado->idEmpleado = $empleadoAdmin->id;
+        $sucursalEmpleado->status = 'alta';
+        $sucursalEmpleado->save();
         //CREACION DE EMPLEADOS
         /*$usuario = User::create([
             'username' => 'Heber',
@@ -119,11 +141,7 @@ class RegistrosPruebaTable extends Migration
         $cliente->idUsuario = $usuario->id;
         $cliente->save();
 */
-        $sucursal = new Sucursal;
-        $sucursal->direccion ='SAN FELIPE 23, SAN MARTIN MEXICAPAN';
-        $sucursal->telefono = '9512456511';
-        $sucursal->status = 1;
-        $sucursal->save();
+        
 
         $productosSucursal = new Sucursal_producto;
         $productosSucursal->costo = 10;

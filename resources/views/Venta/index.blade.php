@@ -304,11 +304,32 @@
     async function cargarProductos() {
         let response = "Sin respuesta";
         try {
-            response = await fetch(`/producto/productos`);
+            response = await fetch(`/puntoVenta/producto/productos`);
             if (response.ok) {
                 productos = await response.json();
                 //console.log(productos);
                 return productos;
+                //console.log(response);
+
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición de productos AJAX: " + err.message);
+        }
+        //return response;
+    }
+    async function cargarProductosSucursal() {
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/puntoVenta/sucursalProducto/{{session('sucursal')}}`);
+            if (response.ok) {
+                productosSucursal = await response.json();
+
+                console.log('los productos para la sucursal son',productosSucursal);
+                return productosSucursal;
                 //console.log(response);
 
             } else {
@@ -446,10 +467,10 @@
                         /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
                         productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
                         if (!buscarProductoEnVenta(productos[count3].id)) {
-                            if (productos[count3].existencia > 0) {
-                                agregarProductoAVenta(productos[count3].id, productos[count3].codigoBarras, productos[count3]
-                                    .nombre,
-                                    productos[count3].existencia, productos[count3].precio, 1, productos[count3].precio);
+                            if (productosSucursal[x].existencia > 0) {
+                                agregarProducto(productos[count3].id);//, productos[count3].codigoBarras, productos[count3]
+                                //    .nombre,
+                                //    productos[count3].existencia, productos[count3].precio, 1, productos[count3].precio);
                                 mostrarProductos();
                             } else
                                 alert('PRODUCTO SIN EXISTENCIA');
@@ -478,7 +499,7 @@
                             if (productosSucursal[x].existencia > 0) {
                                 agregarProductoAVenta(productos[count4].id, productos[count4].codigoBarras,
                                     productos[count4].nombre,
-                                    productosSucursal[x].existencia, productos[count4].precio, 1, productos[count4].precio);
+                                    productosSucursal[x].existencia, productosSucursal[x].precio, 1, productosSucursal[x].precio);
                                 mostrarProductos();
                             } else
                                 alert('PRODUCTO SIN EXISTENCIA');
@@ -591,7 +612,9 @@
                 $("input[id='pagoEfectivo']").val(0);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
+            console.log(funcion);
             await cargarProductos();
+            await cargarProductosSucursal();
             //console.log(p);
             //console.log(funcion);
         } catch (err) {
@@ -635,6 +658,7 @@
             let impJ = await imp.text();
             document.querySelector('#impresion').innerHTML = impJ;
             await cargarProductos();
+            await cargarProductosSucursal();
             // console.log(impJ.html);
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);

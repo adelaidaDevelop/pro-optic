@@ -68,8 +68,9 @@ class LoginController extends Controller
                         {
         //                    return redirect('/puntoVenta/home');
                         //$request->session()->regenerate();
-                        session(['idUsuario' => Auth::user()->id]);
+                    //    session(['idUsuario' => Auth::user()->id]);
                         session(['sucursal' => session('sucursal')]);
+                        session(['idSucursalEmpleado' => $sucursalEmpleado->id]);
                         $sucursal = Sucursal::findOrFail($request->input('opcionSucursal'))->direccion;
                         session(['sucursalNombre' => $sucursal]);
                 
@@ -101,7 +102,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             if(Auth::user()->tipo == 0)
             {
-                if(Auth::user()->id == 1)
+                /*if(Auth::user()->id == 1)
                 {
                     $request->session()->regenerate();
                     session(['idUsuario' => Auth::user()->id]);
@@ -110,7 +111,7 @@ class LoginController extends Controller
                     session(['sucursalNombre' => $sucursal]);
                 
                     return redirect('/puntoVenta/venta');
-                }
+                }*/
                 $id = Auth::user()->id;
                 $empleado = Empleado::where('idUsuario','=',$id)->get()->first();
                 $sucursalEmpleado = Sucursal_empleado::where('idSucursal','=',$request->input('opcionSucursal'))
@@ -122,6 +123,7 @@ class LoginController extends Controller
                 $request->session()->regenerate();
                 session(['idUsuario' => Auth::user()->id]);
                 session(['sucursal' => $request->input('opcionSucursal')]);
+                session(['idSucursalEmpleado' => $sucursalEmpleado->id]);
                 $sucursal = Sucursal::findOrFail($request->input('opcionSucursal'))->direccion;
                 session(['sucursalNombre' => $sucursal]);
                 return redirect('/puntoVenta/home');//redirect('/puntoVenta/venta');//->intended('/');
@@ -152,6 +154,9 @@ class LoginController extends Controller
             session(['idCliente'])
         }*/
         session()->forget('idUsuario');
+        session()->forget('idSucursalEmpleado');
+        session()->forget('sucursal');
+        session()->forget('sucursalNombre');
         return redirect('puntoVenta/login');
         //return 'Tambien entra a esta funcion';
     }

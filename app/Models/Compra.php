@@ -12,6 +12,6 @@ class Compra extends Model
         'idProveedor',
         'estado',
         'fecha_compra',
-        'idEmpleado',
+        'idSucursalEmpleado',
     ];
 }
