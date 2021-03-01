@@ -62,6 +62,9 @@ Route::prefix('/puntoVenta')->group(function()
       Route::get('altaProductoS/{id}', [SucursalProductoController::class,'altaProductoS']);
       //ELIMINAR SUCURSAL PT2
       Route::get('destroy2/{id}', [SucursalController::class,'destroy2']);
+      //dar de baja sucursal
+      
+      Route::get('actualizar/{id}', [SucursalController::class,'bajaSucursal']);
       
    Route::get('productoEli/{id}', function($id){
         $producto = Sucursal_producto::where('idProducto','=',$id)->delete();

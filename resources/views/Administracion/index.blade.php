@@ -158,6 +158,8 @@ ADMINISTRACION
                             <img src="{{ asset('img\verEmp.png') }}" alt="Editar" width="25px" height="25px">
                             EMPLEADOS
                         </button>
+
+                        <!--
                         <form method="get" class="ml-auto" action="{{url('/puntoVenta/destroy2/'.$d->id)}}">
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
@@ -166,6 +168,13 @@ ADMINISTRACION
                                 DAR DE BAJA
                             </button>
                         </form>
+                        -->
+                        <button class=" btn btn-outline-secondary my-3 ml-auto " onclick="veriSucursal('{{$d->id}}')" type="button">
+                            eliminar
+                        </button>
+
+
+
                     </div>
                 </div>
                 <div class="row mx-1 my-1 ">
@@ -555,6 +564,8 @@ ADMINISTRACION
 <script>
     let Suc_Inac = "";
     let productosT = "";
+    let sucUsadaF = "";
+    let sucUsadaT = "";
     let depa = @json($depa);
 
     const texto = document.querySelector('#texto');
@@ -701,6 +712,57 @@ ADMINISTRACION
             .then(html => {
                 document.getElementById("resultados").innerHTML = html
             })
+    };
+
+
+    async function correrVeriSuc(id) {
+      //  await veriSucursal(id);
+    };
+
+    //VERIFICAR SI LA SUCURSAL YA ESTA USADA
+    async function veriSucursal(id) {
+        console.log(id);
+        let response = "Sin respuesta";
+        
+        try {
+            response = await fetch(`/puntoVenta/destroy2/${id}`);
+            if (response.ok) {
+
+                let respuesta = await response.text();
+                if(respuesta.length > 1)
+                { return alert (respuesta)}
+                if(respuesta.length == 1){
+                    //recargar la pag
+                 alert("La sucursal fue eliminada");
+                 //return redirect('puntoVenta/sucursal')->;
+                 location.href = "{{url('/puntoVenta/administracion')}}";
+                }else {
+                   let sucUsada= confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA DARLO DE BAJA?");
+                  // return alert(sucUsada);
+                  if(sucUsada){
+                  let respuesta2 = await fetch(`/puntoVenta/actualizar/${id}`);
+                  if(respuesta2.ok){
+                     alert("La sucursal se ha dado de baja");
+                     location.href = "{{url('/puntoVenta/administracion')}}";
+                   // location.href = '{{url("/")}}'+'puntoVenta/sucursal';
+                  // return redirect('puntoVenta/sucursal');
+                  }
+                  }
+                }
+               // return redirect('puntoVenta/administracion');
+               // sucUsadaF = await response.json();
+            } else {
+               return confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA ELIMINARLO?");
+              //  console.log(response);
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+           // return confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE");
+            //si imprime el mensaje de abajo ahora lo mandare a dar de baja aqui
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
     };
 </script>
 @endsection
