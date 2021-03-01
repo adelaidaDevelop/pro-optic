@@ -128,25 +128,33 @@ class SucursalController extends Controller
     
     public function destroy2($id)//Sucursal $sucursal)
     {
-       
         $sucursales = Sucursal::where('status','=', 1)->get();
         if(count($sucursales)>1)
         {
             try{
                 Sucursal::destroy($id);
+                return true;
+            //return redirect()->back()->withErrors(['sucursalUsada' => 'SUCURSAL ELIMINADA CORRECTAMENTE']);
             }
-            catch (\Illuminate\Database\QueryException $e){
+            catch (\Illuminate\Database\QueryException $e)
                 { 
-                    $varSucUsada = true;
-                    return redirect( $varSucUsada)->back()->withErrors(['sucursalUsada' => 'ESTA SUCURSAL YA ES USADA EN OTRA PARTE']);
-                } 
+                    return false;
+                  //  $sucUsadaT = true;
+                   // return $sucUsadaT;
+                    //return redirect()->back()->withErrors(['sucursalUsada' => 'ESTA SUCURSAL YA ES USADA EN OTRA PARTE']);
             }
-            return redirect('puntoVenta/administracion');
+           // return redirect('puntoVenta/administracion');
         } 
         else  { 
-            return redirect()->back()->withErrors(['mensaje' => 'ESTA SUCURSAL ES LA UNICA ACTIVA Y NO SE PUEDE ELIMINAR']);
+            return  'ESTA SUCURSAL ES LA UNICA ACTIVA Y NO SE PUEDE ELIMINAR';
         } 
-        
+    }
+    public function bajaSucursal($id){
+        $sucursal['status'] =0;
+        $suc2 = Sucursal::findOrFail($id);
+        $suc2->update($sucursal);
+        return true;
+
     }
 
 }

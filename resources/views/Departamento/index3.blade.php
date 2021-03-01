@@ -71,7 +71,7 @@
                                 </div>
 
                             </div>
-                            <button class="btn btn-outline-secondary" type="submit">
+                            <button class="btn btn-outline-secondary" type="submit" onclick="return confirm('¿DESEA EDITAR ESTE DEPARTAMENTO?')">
                                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="30px" height="30px">
                                 GUARDAR CAMBIOS
@@ -82,7 +82,7 @@
                         <form method="post" action="{{url('/puntoVenta/departamento/'.$d->id)}}">
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
-                            <button class="btn btn-outline-secondary my-3" type="submit" onclick="return confirm('¿ELIMINAR DEPARTAMENTO?')">
+                            <button class="btn btn-outline-secondary my-3" type="submit" onclick="return confirm('¿DESEA ELIMINAR ESTE DEPARTAMENTO?')">
                                 <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                     width="30px" height="30px">
                                 ELIMINAR DEPARTAMENTO
@@ -124,7 +124,7 @@
                         </div>
                         <div class="form-row w-100">
                             <div class="form-group">
-                                <button class="btn btn-outline-secondary" type="submit">
+                                <button class="btn btn-outline-secondary" type="submit" onclick="return confirm('¿DESEA CREAR ESTE NUEVO DEPARTAMENTO?')">
                                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
                                         width="30px" height="30px">
                                         GUARDAR DEPARTAMENTO
