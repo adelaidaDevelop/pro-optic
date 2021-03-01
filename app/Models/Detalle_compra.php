@@ -9,11 +9,11 @@ class Detalle_compra extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'idCompras',
-        'idProductos',
+        'idCompra',
+        'idProducto',
         'cantidad',
         'porcentaje_ganancia',
-        'fecha_caducidad',
+        //'fecha_caducidad',
         'costo_unitario',
     ];
     public $timestamps = false;
