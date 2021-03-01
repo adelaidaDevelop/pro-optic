@@ -63,7 +63,7 @@ class CompraController extends Controller
         $compra = Compra::create([
             'idProveedor' => $proveedor,
             'fecha_compra' => $fecha_compra,
-            'idEmpleado' => 1,
+            'idSucursalEmpleado' => session('idSucursalEmpleado'),
             'estado' =>$estado,
             'IVA' => $iva,
         ]);
@@ -79,7 +79,7 @@ class CompraController extends Controller
             }
             
         }
-        
+    //    return 'Todo bien';
         foreach($datosCodificados as $datosProducto)
         {
             $producto = new Detalle_compra;
@@ -87,7 +87,7 @@ class CompraController extends Controller
             $producto->idProductos = $datosProducto['id'];
             $producto->cantidad = $datosProducto['cantidad'];
             $producto->porcentaje_ganancia = $datosProducto['ganancia'];
-            $producto->fecha_caducidad = $datosProducto['caducidad'];
+            //$producto->fecha_caducidad = $datosProducto['caducidad'];
             $producto->costo_unitario = $datosProducto['costo'];
             //$producto->iva = 'Si';
             //$producto->fecha_caducidad = Carbon::createFromFormat( 'Y/m/d', $datosProducto['caducidad']);

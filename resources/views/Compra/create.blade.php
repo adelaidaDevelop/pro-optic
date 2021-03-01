@@ -845,7 +845,12 @@ async function guardarCompra() {
     try {
         const proveedor = document.querySelector('#proveedor');
         const fechaCompra = document.querySelector('#fechaCompra');
-        //if(fechaCompra.value.l)
+        //console.log(fechaCompra.value.length);
+        //return ;
+        if(fechaCompra.value.length == 0)
+        {
+            return alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
+        }
         let json = JSON.stringify(productosCompra);
         let productos0 = [];
         let productos1 = [];
@@ -880,7 +885,7 @@ async function guardarCompra() {
             }
         });
         
-        await $.ajax({
+        let resp = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "PUT",
             // la URL de donde voy a hacer la petición
@@ -892,7 +897,8 @@ async function guardarCompra() {
                 _token: "{{ csrf_token() }}",
             }
         });
-        /*await $.ajax({
+        console.log(resp);
+        await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
@@ -910,6 +916,7 @@ async function guardarCompra() {
             }
             // si tuvo éxito la petición
         }).done(function(respuesta) {
+            //console.log(respuesta);
             alert('COMPRA GUARDADA EXITOSAMENTE');
             productosCompra = [];
             mostrarProductos();

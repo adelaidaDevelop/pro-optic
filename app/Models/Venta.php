@@ -16,7 +16,7 @@ class Venta extends Model
      */
     protected $fillable = [
         'estado',
-        'idEmpleado',
+        'idSucursalEmpleado',
         'pago',
     ];
 

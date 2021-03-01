@@ -61,12 +61,12 @@ class VentaController extends Controller
         $estado = $request->input('estado');
         $pago = $request->input('pago');
         $datosCodificados = json_decode($datos, true);
-
+        
         if ($request->has('cliente')) {
             $cliente = $request->input('cliente');
             $venta = Venta::create([
                 'estado' => $estado,
-                'idEmpleado' => 1,
+                'idSucursalEmpleado' => 1,
             ]);
             $credito = new Credito;
             $credito->estado = $estado;
@@ -82,21 +82,25 @@ class VentaController extends Controller
             }
 
         } else {
+            // session('idSucursalEmpleado');
             $venta = Venta::create([
                 'estado' => $estado,
-                'idEmpleado' => 1,
+                'idSucursalEmpleado' => session('idSucursalEmpleado'),
                 'pago' => $pago,
             ]);
         }
         foreach ($datosCodificados as $datosProducto) {
+            
             $producto = new Detalle_venta;
+            
             $producto->cantidad = $datosProducto['cantidad'];
-            $producto->idProductos = $datosProducto['id'];
-            $producto->precio_ind= $datosProducto['precio'];
-            $producto->subtotal = $datosProducto['subtotal'];
-            $producto->idVentas = $venta->id;
+            $producto->idProducto = $datosProducto['id'];
+            $producto->precioIndividual= $datosProducto['precio'];
+            //$producto->subtotal = $datosProducto['subtotal'];
+            $producto->idVenta = $venta->id;
+            
             $producto->save();
-
+            //return 'Si llega hasta aqui';
             $productosSucursal = Sucursal_producto::where('idProducto','=',$datosProducto['id'])
             ->where('idSucursal','=',session('sucursal'));//->update(['existencia'=>'11']);
             $existencia = $productosSucursal->first()->existencia - $datosProducto['cantidad'];

@@ -11,11 +11,11 @@ class Detalle_venta extends Model
     protected $fillable = [
         'cantidad',
         'idProducto',
-        'precio_ind',
-        'subtotal',
-        'idVentas',
+        'precioIndividual',
+        //'subtotal',
+        'idVenta',
     ];
-
+    public $timestamps = false;
     public function venta()
     {
         return $this->belongsTo(Venta::class,'idVentas');
