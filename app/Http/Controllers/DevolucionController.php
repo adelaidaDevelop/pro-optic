@@ -8,6 +8,7 @@ use App\Models\Detalle_venta;
 use App\Models\Producto;
 use App\Models\Empleado;
 use App\Models\Sucursal;
+use App\Models\Sucursal_empleado;
 use App\Models\Sucursal_producto;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,10 @@ class DevolucionController extends Controller
         $productos= Producto::all();
         $empleados= Empleado::all();
         $devolucions = Devolucion::all();
+        $sucursalEmpleado = Sucursal_empleado::all();
         $idSucursal = session('sucursal');
-        $productX_Sucursal = Sucursal_producto::where('id','=', $idSucursal);
-        return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions',  'productX_Sucursal'));
+        $productX_Sucursal = Sucursal_producto::where('id','=', $idSucursal)->get();
+        return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions', 'sucursalEmpleado',  'productX_Sucursal'));
     }
 
     /**
@@ -52,15 +54,15 @@ class DevolucionController extends Controller
     {
         $cantProducto= $request->input('cantidad');
         $detalle= $request->input('detalle');
-        $totalDevolucion= $request->input('total');
+        $precio= $request->input('precio');
         $idProducto= $request->input('idProducto');
         $idVenta= $request->input('idVenta');
             $devolucion = new Devolucion;
             $devolucion->idProducto = $idProducto;
             $devolucion->idVenta = $idVenta;
-            $devolucion->cantProducto = $cantProducto;
-            $devolucion->detalle= $detalle;
-            $devolucion->totalDevolucion = $totalDevolucion;
+            $devolucion->cantidad = $cantProducto;
+            $devolucion->observacion= $detalle;
+            $devolucion->precio = $precio;
             $devolucion->save();
     
         return true;
