@@ -91,13 +91,13 @@ DEVOLUCION
                         <div class="input-group-prepend">
                             <label for="fechaInicio" class="input-group-text">DE: </label>
                         </div>
-                        <input type="date" min="" id="fechaInicio" onchange="filtrarCompras()" class="form-control" />
+                        <input type="date" min="" id="fechaInicio" onchange="filtrarCompras()" class="form-control" disabled />
                     </div>
                     <div class="input-group my-1 mx-0">
                         <div class="input-group-prepend">
                             <label for="fechaFinal" class="input-group-text">A: </label>
                         </div>
-                        <input type="date" min="" onchange="filtrarCompras()" id="fechaFinal" class="form-control" />
+                        <input type="date" min="" onchange="filtrarCompras()" id="fechaFinal" class="form-control" disabled />
                     </div>
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
@@ -129,8 +129,6 @@ DEVOLUCION
 </div>
 
 <!--MODAL DEVOLUCION-->
-
-
 <div class="modal fade" id="devolucion" tabindex="-1" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -179,43 +177,33 @@ DEVOLUCION
     let idVentaD = 0;
     let cantTotal = 0;
     let productos_sucursal = @json($productX_Sucursal);
+    let sucursalEmpleado = @json($sucursalEmpleado);
+    console.log("imp");
+    console.log(productos_sucursal);
     //let cantPD = 0;
     // let cantProd = 0;
     let diferencia = 0;
 
-   
+
 
 
     function buscarFolio() {
         let cont = 0;
-
-       
-        // let cantDevuelto =0;
-        //   cargarDatos();
         let botonDev = "";
-        //  let num = parseInt(folioB.value);
-        //   if (num >= 0) {
         let palabraBusqueda = document.querySelector('#busquedaFolio');
         let cuerpo = "";
         let contador = 1;
         let subtotalV = 0;
-        let precioSP=0;
-      //  console.log("PalBusq: ", palabraBusqueda.value);
-      //  console.log("lentht:", palabraBusqueda.value.length);
+        let precioSP = 0;
         if (palabraBusqueda.value.length > 0) {
             let folio = parseInt(palabraBusqueda.value);
-            //let idVenta = 0;
             for (count in ventas) {
-              //  console.log("folio: ", folio)
                 if (ventas[count].id === folio) {
                     console.log(detalleVenta);
                     console.log(ventas);
-                 //   console.log("Ventas");
-                    //  idVenta = ventas[count].id;
                     for (count2 in detalleVenta) {
                         if (detalleVenta[count2].idVenta == ventas[count].id) {
-                            
-            console.log("Entra a la funcion de buscar folio");
+                            console.log("Entra a la funcion de buscar folio");
                             for (count3 in productos) {
                                 if (productos[count3].id == detalleVenta[count2].idProducto) {
                                     cont = cont + 1;
@@ -225,26 +213,33 @@ DEVOLUCION
                                     // cantTotal = detalleVenta[count2].cantidad;
                                     console.log("De esta venta por cada producto que se vendi en esta venta entra");
                                     let cantPD = 0; //CHECAR
-                                    if(devolucions.length > 0)
-                                    {
-                                    for (count51 in devolucions) {
-                                        console.log("devoluNo");
-                                        //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
-                                        if (ventas[count].id == devolucions[count51].idVenta) {
-                                            if (devolucions[count51].idProducto == productos[count3].id) {
-                                                cantPD = cantPD + devolucions[count51].cantProducto;
-                                                console.log("Si entra en esta parte");
+                                    console.log("dev");
+                                    console.log(devolucions);
+                                    // if (devolucions.length > 0) {
+                                    if (devolucions !== null) {
+                                        for (count51 in devolucions) {
+                                            console.log("devoluNo");
+                                            //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
+                                            if (ventas[count].id == devolucions[count51].idVenta) {
+
+                                                if (devolucions[count51].idProducto == productos[count3].id) {
+                                                    cantPD = cantPD + devolucions[count51].cantidad;
+                                                    console.log("Si entra en esta parte");
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                    //  let cantDev = document.querySelector('#cantIPD');
-                                    //  let cantDev2 = parseInt(cantDev.value);
-                                    // cantProd = 0;
-                                    // cantProd = detalleVenta[count2].cantidad;
-                                    // diferencia = 0;
-                                    //  diferencia = detalleVenta[count2].cantidad - cantPD;
-                                    // console.log(cantPD, cantProd);
+
+                                    //RECUPERAR PRECIO IND
+                                    /*
+                                    for (let x in productos_sucursal) {
+                                        if (productos_sucursal[x].idProducto === productos[count3].id) {
+                                            precioSP = productos_sucursal[x].precio;
+                                            console.log("El precio es: ");
+                                        }
+                                    }
+                                    */
+
                                     if (cantPD < detalleVenta[count2].cantidad) {
                                         botonDev = `<button class="btn btn-light" onclick="idProdDV(` + productos[count3].id + `,` + ventas[count].id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)" data-toggle="modal" data-target="#devolucion"
                                             type="button">DEVOLVER</button>`;
@@ -252,13 +247,8 @@ DEVOLUCION
                                         botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
                                             type="button" disabled >DEVOLVER</button>`;
                                     }
-                                    for(let x in productos_sucursal){
-                                        if(productos_sucursal[x].idProducto === productos[count3].id)
-                                        {
-                                            precioSP = productos_sucursal[x].precio;
-                                        }
-                                    }
-                                    subtotalV =detalleVenta[count2].cantidad * detalleVenta[count2].precioIndividual;
+
+                                    subtotalV = detalleVenta[count2].cantidad * detalleVenta[count2].precioIndividual;
                                     console.log("sisisi");
                                     cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
@@ -266,7 +256,7 @@ DEVOLUCION
                                             <td>` + detalleVenta[count2].cantidad + `</td>
                                             <td>` + productos[count3].codigoBarras + `</td>
                                             <td>` + productos[count3].nombre + `</td>
-                                            <td>` + precioSP + `</td>
+                                            <td>` + detalleVenta[count2].precioIndividual + `</td>
                                             <td>` + subtotalV + `</td> 
                                             <td>` + cantPD + `</td> 
                                             <td>` + botonDev + `
@@ -303,13 +293,16 @@ DEVOLUCION
 
     function calcularTotalD(id) {
         totalDevolver = 0;
+        let bandera = true;
         let cantidad = document.querySelector('#cantidad');
         let cant = parseInt(cantidad.value); //AQUI//
         if (cant > 0) {
-            for (count9 in productos) {
-                if (productos[count9].id == id) {
-
-                    totalDevolver = cant * productos[count9].precio;
+            for (count9 in productos_sucursal) {
+                if (bandera) {
+                    if (productos_sucursal[count9].idProducto == id) {
+                        totalDevolver = cant * productos_sucursal[count9].precio;
+                        band = false;
+                    }
                 }
             }
         } else {
@@ -325,6 +318,8 @@ DEVOLUCION
         let total = document.querySelector('#totalD');
         let cant2 = parseInt(cantidad.value);
         let detalle2 = detalle.value;
+        let pInd = 0;
+        pInd = parseFloat(total.textContent) / cant2;
         if (cant2 > 0) {
             if (cant2 <= diferencia) {
                 if (detalle2.length == 0) {
@@ -341,7 +336,7 @@ DEVOLUCION
                             data: {
                                 cantidad: cant2,
                                 detalle: detalle2,
-                                total: parseFloat(total.textContent),
+                                precio: parseFloat(total.textContent) / cant2,
                                 idVenta: idVentaD,
                                 idProducto: idProductoD,
                                 _token: "{{ csrf_token() }}"
@@ -351,20 +346,20 @@ DEVOLUCION
                             $('#devolucion').modal('hide');
                             $("input[id='totalD']").val(0);
                             // location.reload();
-                            
+
                             console.log(respuesta); //JSON.stringify(respuesta));
                         });
-                        
+
                         console.log(funcion);
                     } catch (err) {
                         console.log("Error al realizar la petición AJAX: " + err.message);
                     }
 
-                   // await cargarVentas();
-                  //  await cargarDetalleVenta();
-                   // await cargarProductos();
-                  //  await cargarDevoluciones();
-                   // await cargarEmpleados();
+                    // await cargarVentas();
+                    //  await cargarDetalleVenta();
+                    // await cargarProductos();
+                    //  await cargarDevoluciones();
+                    // await cargarEmpleados();
                     await cargarDevolucion();
                     buscarFolio();
                 }
@@ -396,31 +391,32 @@ DEVOLUCION
         }
         //return response;
     }
-/*
-    async function cargarDevoluciones() {
-        console.log("cargo devoluciones");
-        let response = "Sin respuesta";
-        try {
-            response = await fetch(`/devolucion/datoDev`);
-            if (response.ok) {
-                devolucions = await response.json();
-                console.log(devolucions);
-            } else {
-                console.log("No responde :'v");
-                console.log(response);
-                throw new Error(response.statusText);
+    /*
+        async function cargarDevoluciones() {
+            console.log("cargo devoluciones");
+            let response = "Sin respuesta";
+            try {
+                response = await fetch(`/devolucion/datoDev`);
+                if (response.ok) {
+                    devolucions = await response.json();
+                    console.log(devolucions);
+                } else {
+                    console.log("No responde :'v");
+                    console.log(response);
+                    throw new Error(response.statusText);
+                }
+            } catch (err) {
+                console.log("Error al realizar la petición AJAX: " + err.message);
             }
-        } catch (err) {
-            console.log("Error al realizar la petición AJAX: " + err.message);
-        }
-    };
-*/
+        };
+    */
     async function cargarVentas() {
         console.log("carg  ventas");
         let response = "Sin respuesta";
         try {
             response = await fetch(`/datosVentas`);
-            if (response.ok) {8
+            if (response.ok) {
+                8
                 ventas = await response;
             } else {
                 console.log("No responde :'v");
@@ -491,16 +487,24 @@ DEVOLUCION
             let total = 0;
             fecha = new Date(ventas[count5].created_at);
             cont = cont + 1;
+
             for (count7 in detalleVenta) {
-                if (detalleVenta[count7].idVentas == ventas[count5].id) {
-                    total = total + detalleVenta[count7].subtotal
+                console.log("detalla V: ", detalleVenta);
+                if (detalleVenta[count7].idVenta == ventas[count5].id) {
+                    let subtotal = detalleVenta[count7].cantidad * detalleVenta[count7].precioIndividual;
+                    total = total + subtotal;
                 }
             }
-            for (count6 in empleados) {
-                if (empleados[count6].id == ventas[count5].idEmpleado) {
-                    emple = empleados[count6].nombre + " " + empleados[count6].apellidos
+            for (let s in sucursalEmpleado) {
+                if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
+                    for (count6 in empleados) {
+                        if (empleados[count6].id == sucursalEmpleado[s].idEmpleado) {
+                            emple = empleados[count6].nombre + " " + empleados[count6].apellidoPaterno
+                        }
+                    }
                 }
             }
+
             cuerpo = cuerpo + `
                     <tr onclick="" data-dismiss="modal">
                     <th scope="row">` + cont + `</th>
@@ -508,7 +512,7 @@ DEVOLUCION
                     <td>` + emple + `</td>
                     <td>` + ventas[count5].estado + `</td>
                     <td>` + ventas[count5].pago + `</td>
-                    <td>  </td>
+                    <td> ver </td>
                     <td>` + total + `</td> 
                     <td>` + fecha.toLocaleDateString() + `</td> 
                     <td>` + fecha.toLocaleTimeString() + `</td>   
@@ -550,17 +554,24 @@ DEVOLUCION
                     if (fecha.getTime() <= fechaF.getTime()) {
                         console.log("maximo");
 
-                        for (count21 in detalleVenta) {
-                            if (detalleVenta[count21].idVentas == ventas[j].id) {
-                                total = total + detalleVenta[count21].subtotal
+
+                        for (count7 in detalleVenta) {
+                            console.log("detalla V: ", detalleVenta);
+                            if (detalleVenta[count7].idVenta == ventas[count5].id) {
+                                let subtotal = detalleVenta[count7].cantidad * detalleVenta[count7].precioIndividual;
+                                total = total + subtotal;
+                            }
+                        }
+                        for (let s in sucursalEmpleado) {
+                            if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
+                                for (count6 in empleados) {
+                                    if (empleados[count6].id == sucursalEmpleado[s].idEmpleado) {
+                                        emple = empleados[count6].nombre + " " + empleados[count6].apellidoPaterno
+                                    }
+                                }
                             }
                         }
 
-                        for (count6 in empleados) {
-                            if (empleados[count6].id == ventas[j].idEmpleado) {
-                                emple = empleados[count6].nombre + " " + empleados[count6].apellidos
-                            }
-                        }
                         cuerpo = cuerpo + `
                         <tr onclick="" data-dismiss="modal">
 
@@ -569,12 +580,14 @@ DEVOLUCION
                         <td>` + emple + `</td>
                         <td>` + ventas[j].estado + `</td>
                         <td>` + ventas[j].pago + `</td>
-                        <td>  </td>
+                        <td> ver </td>
                         <td>` + total + `</td> 
                         <td>` + fecha.toLocaleDateString() + `</td> 
                         <td>` + fecha.toLocaleTimeString() + `</td>   
                     </tr>
                     `;
+
+
                     }
                 } else {
                     console.log("no entra");
