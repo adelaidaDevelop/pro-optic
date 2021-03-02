@@ -118,6 +118,8 @@ class EmpleadoController extends Controller
     public function edit($id)//Empleado $empleado)
     {
         //$datos['empleados'] = Departamento::paginate();
+        if($id == 1)
+            return redirect('puntoVenta/empleado');
         if($id == 0)
         {
             $admin = User::findOrFail(1);
