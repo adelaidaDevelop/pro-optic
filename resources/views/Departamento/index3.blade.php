@@ -79,7 +79,7 @@
                                 @enderror
                             </div>
                             </div>
-                            <button class="btn btn-outline-secondary" type="submit" onclick="return confirm('¿DESEA EDITAR ESTE DEPARTAMENTO?')">
+                            <button class="btn btn-outline-secondary" type="submit" onclick="">
                                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                                 GUARDAR CAMBIOS
                             </button>

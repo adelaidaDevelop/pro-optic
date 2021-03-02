@@ -23,14 +23,15 @@ class CreditoController extends Controller
      */
     public function index()
     {
-        $credito= Venta_cliente::all();
+        $venta_clientes= Venta_cliente::all();
         $cliente= Cliente::all();
         $ventas= Venta::all();
         $detalleVentas= Detalle_venta::all();
         $productos = Producto::all();
-        $pagos= Pago_venta::all();
+        $pagos_ventas= Pago_venta::all();
         
-          return view('ListaDeudor.index', compact( 'credito', 'cliente','ventas','detalleVentas', 'productos','pagos'));
+        
+          return view('ListaDeudor.index', compact( 'venta_clientes', 'cliente','ventas','detalleVentas', 'productos','pagos_ventas'));
     }
 
     /**

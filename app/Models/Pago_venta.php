@@ -9,7 +9,8 @@ class Pago_venta extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'idVentaCliente',
         'monto',
-        'idVenta',
+
     ];
 }
