@@ -37,6 +37,8 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $datosCliente = request()->except('_token');
+        $datosCliente['tipo']= 0; //0 para clientes deudores
+        $datosCliente['idUsuario'] = 2;
         Cliente::insert($datosCliente);
         
         return redirect('puntoVenta/cliente');

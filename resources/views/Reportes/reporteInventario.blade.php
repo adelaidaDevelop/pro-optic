@@ -448,9 +448,7 @@ REPORTES
         let cuerpo = "";
         if (validarCamposFechas()) {
             fechaXDia = new Date(fechaDia.value);
-            //imprimir fechaDia.value
             fechaXDia.setDate(fechaXDia.getDate() + 1);
-            //imprimir fechaDia.value
             if (banderaMovimiento == true) { // == o ===
                 console.log("entro a movimiento");
                 let movi = document.querySelector('#movimientoID');
@@ -509,6 +507,8 @@ REPORTES
                                                     <td>` + depto + `</td>        
                                             </tr>
                                             `;
+
+                                            encontradosBandera = true;
                                         }
                                     }
                                 }
@@ -516,7 +516,7 @@ REPORTES
                         }
                     }
                     //Entradas: nueevos productos
-                    //AQUI
+                  
                     for (let p in productos) {
                         let fechaNuevoProd = new Date(productos[p].created_at);
 
@@ -549,11 +549,20 @@ REPORTES
                                                     <td>` + depto + `</td>        
                                             </tr>
                                             `;
+
+                           // encontradosBandera = true;
                         }
 
                     }
                     cuerpo = fila_entradaCP + fila_entradaNewP;
-                    document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+                   
+                    if (cuerpo === "") {
+                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        document.getElementById("consultaBusqueda").innerHTML = sin;
+                    } else {
+                        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+                    }
+                    
                 } else if (moviName == "2") {
                     salidaVP = "";
                     cuerpo = "";
@@ -597,6 +606,8 @@ REPORTES
                                                     <td>` + depto + `</td>        
                                             </tr>
                                             `;
+
+                                            encontradosBandera = true;
 
 
                                         }
@@ -653,6 +664,8 @@ REPORTES
                                                     <td>` + depto + `</td>        
                                             </tr>
                                             `;
+
+                                    encontradosBandera = true;
                                 }
                                 //
                             }
@@ -715,6 +728,8 @@ REPORTES
                                                     <td>` + depto + `</td>        
                                             </tr>
                                             `;
+
+                                            encontradosBandera = true;
                                         }
                                     }
                                 }
@@ -755,6 +770,7 @@ REPORTES
                                                     <td>` + depto + `</td>        
                                             </tr>
                                             `;
+
                         }
 
                     }
@@ -872,11 +888,20 @@ REPORTES
 
                     //BUSCAR TODOS
                     cuerpo = devolucionFila + salidaVP + fila_entradaNewP + fila_entradaCP + filaprod_caducados;
-                    document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+
+                    if (cuerpo === "") {
+                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        document.getElementById("consultaBusqueda").innerHTML = sin;
+                    } else {
+                        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+                    }
+                    
+
 
 
                 }
             } else {
+                //REPORTES PRODUCTOS
                 let movi = document.querySelector('#productoID');
 
             }

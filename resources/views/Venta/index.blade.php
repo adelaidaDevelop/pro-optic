@@ -626,6 +626,8 @@
         let json = JSON.stringify(productosVenta);
         const pago = document.querySelector('#pagoCredito');
         const cliente = document.querySelector('#clientes');
+        console.log(parseFloat(pago.value));
+        
         if (pago.value.length === 0)
             return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
         if (parseFloat(pago.value) >= parseFloat(total))
@@ -641,25 +643,26 @@
                     datos: json,
                     estado: 'credito',
                     pago: parseFloat(pago.value),
-                    cliente: cliente.value,
+                    cliente: parseInt(cliente.value),
                     //_token: $("meta[name='csrf-token']").attr("content")
                     _token: "{{ csrf_token() }}"
                 }
                 // si tuvo éxito la petición
             }).done(function(respuesta) {
                 //alert(respuesta);
+              //  alert("perfectisimo");
                 productosVenta = [];
                 mostrarProductos();
                 $('#confirmarVentaModal').modal('hide');
                 $("input[id='pagoCredito']").val(0);
                 console.log(respuesta); //JSON.stringify(respuesta));
+
             });
-            let imp = await fetch(`/venta/ticket`);
-            let impJ = await imp.text();
-            document.querySelector('#impresion').innerHTML = impJ;
+           // let imp = await fetch(`/venta/ticket`);
+           // let impJ = await imp.text();
+          //  document.querySelector('#impresion').innerHTML = impJ;
             await cargarProductos();
             await cargarProductosSucursal();
-            // console.log(impJ.html);
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }

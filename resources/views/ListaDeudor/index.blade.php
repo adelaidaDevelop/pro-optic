@@ -164,12 +164,12 @@ CREDITOS
 
 <!-- SCRIPT-->
 <script>
-    const creditos = @json($credito);
+    const venta_clientes = @json($venta_clientes);
     const clientes = @json($cliente);
     const ventas = @json($ventas);
     const detalleVentas = @json($detalleVentas);
     const productos = @json($productos);
-    const pagos = @json($pagos);
+    const  pagos_ventas = @json($pagos_ventas); 
 
     let idVent = 0;
     let idVent2 = 0;
@@ -177,8 +177,8 @@ CREDITOS
     let totalCompra = 0;
     let totalResta = 0;
 
-    buscarCreditos();
-
+   // buscarCreditos();
+/*
     function buscarCreditos() {
 
         const palabraBusqueda = document.querySelector('#busquedaCliente');
@@ -268,6 +268,7 @@ CREDITOS
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
     };
 
+    */
 
 
 
@@ -279,12 +280,12 @@ CREDITOS
         let cuerpo2 = "";
         let cont2 = 0;
         for (count6 in detalleVentas) {
-            if (detalleVentas[count6].idVentas == id) {
+            if (detalleVentas[count6].idVenta == id) {
                 cant = detalleVentas[count6].cantidad;
-                subtotal = detalleVentas[count6].subtotal;
-                precioUni = detalleVentas[count6].precio_ind;
+                subtotal = detalleVentas[count6].cantidad * detalleVentas[count6].precioIndividual;
+                precioUni = detalleVentas[count6].precioIndividual;
                 for (count7 in productos) {
-                    if (productos[count7].id == detalleVentas[count6].idProductos) {
+                    if (productos[count7].id == detalleVentas[count6].idProducto) {
                         nombreP = productos[count7].nombre;
                     }
 
@@ -311,14 +312,15 @@ CREDITOS
         document.getElementById("restoDeuda").textContent = "$ " + 0.00;
         let pagado = 0;
         let total2 = 0;
-        for (count8 in pagos) {
-            if (pagos[count8].idVenta == id) {
-                pagado = pagado + pagos[count8].monto;
+        for (count8 in pagos_ventas) {
+            if (pagos_ventas[count8].idVentaCliente == id) {
+                pagado = pagado + pagos_ventas[count8].monto;
             }
         }
         for (count9 in detalleVentas) {
-            if (detalleVentas[count9].idVentas == id) {
-                total2 = total2 + detalleVentas[count9].subtotal;
+            if (detalleVentas[count9].idVenta == id) {
+                let subtotal= detalleVentas[count9].cantidad * detalleVentas[count9].precioIndividual;
+                total2 = total2 + subtotal;
             }
         }
         if (total2 > pagado) {
@@ -336,8 +338,9 @@ CREDITOS
         }
     };
 
-    function buscarCliente() {
+    buscarCliente()
 
+    function buscarCliente() {
         const palabraBusqueda = document.querySelector('#busquedaCliente');
         let cuerpo = "";
         let cont = 0;
@@ -348,59 +351,61 @@ CREDITOS
         let pago = 0;
         let fechaVenta = "";
         let debe = 0;
-        descripcion2 = 0
+       // descripcion2 = 0
         for (count11 in clientes) {
-            if (clientes[count11].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                cont = cont + 1;
-                console.log(cont);
-                nombre = clientes[count11].nombre;
-                idCliente = clientes[count11].id;
-                for (count12 in creditos) {
-                    if (creditos[count12].idCliente == clientes[count11].id) {
-                        folio = creditos[count12].idVenta;
-                        for (count13 in detalleVentas) {
-                            if (detalleVentas[count13].idVentas == folio) {
-                                total = total + detalleVentas[count13].subtotal;
+            for (count12 in venta_clientes) { //CREDITOS
+                if (venta_clientes[count12].tipo === "credito") {
+                    if (venta_clientes[count12].idCliente == clientes[count11].id) {
+                        if (clientes[count11].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                            nombre = clientes[count11].nombre;
+                            idCliente = clientes[count11].id;
+                            cont = cont + 1;
+                            folio = venta_clientes[count12].idVenta;
+                            for (count13 in detalleVentas) {
+                                if (detalleVentas[count13].idVenta == folio) {
+                                    let subtotal = detalleVentas[count13].cantidad * detalleVentas[count13].precioIndividual;
+                                    total = total + subtotal;
+                                }
                             }
-                        }
-                        for (count14 in ventas) {
-                            if (ventas[count14].id == folio) {
-                                fechaVenta = new Date(ventas[count14].created_at);
-                                fechaVenta.getTime();
+                            for (count14 in ventas) {
+                                if (ventas[count14].id == folio) {
+                                    fechaVenta = new Date(ventas[count14].created_at);
+                                    fechaVenta.getTime();
+                                }
                             }
-                        }
-                        for (count13 in pagos) {
-                            if (pagos[count13].idVenta == folio) {
-                                pago = pago + pagos[count13].monto;
+                            for (count13 in pagos_ventas) {
+                                if (pagos_ventas[count13].idVentaCliente == folio) {
+                                    pago = pago + pagos_ventas[count13].monto;
+                                }
                             }
+                         //   descripcion2 = ventas[count2].id;
+
+                            debe = total - pago;
+                            if (debe > 0) {
+
+                                cuerpo = cuerpo + `
+                                        <tr onclick="" data-dismiss="modal">
+                                        <th scope="row">` + cont + `</th>
+                                            <td>` + nombre + `</td>    
+                                            <td>` + fechaVenta.toLocaleDateString() + `</td>
+
+                                            <td id="d">` + debe + `</td>
+                                            <td>` + folio + `</td>
+                                            <td>` +
+                                    `<button class="btn btn-light" onclick="modalVerMas(` + folio + `)" data-toggle="modal" data-target="#detalleCompraModal"
+                                                type="button">VER MAS</button>
+                                            </td>
+                                            <td>` +
+                                    `<button class="btn btn-light" onclick="modalAbonar(` + folio + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
+                                                type="button">ABONAR</button>
+                                            </td>
+
+                                        </tr>
+                                        `;
+
+                            }
+
                         }
-                        descripcion2 = ventas[count2].id;
-
-                        debe = total - pago;
-                        if (debe > 0) {
-
-                            cuerpo = cuerpo + `
-                    <tr onclick="" data-dismiss="modal">
-                    <th scope="row">` + cont + `</th>
-                        <td>` + nombre + `</td>    
-                        <td>` + fechaVenta.toLocaleDateString() + `</td>
-
-                        <td id="d">` + debe + `</td>
-                        <td>` + folio + `</td>
-                        <td>` +
-                                `<button class="btn btn-light" onclick="modalVerMas(` + folio + `)" data-toggle="modal" data-target="#detalleCompraModal"
-                            type="button">VER MAS</button>
-                        </td>
-                        <td>` +
-                                `<button class="btn btn-light" onclick="modalAbonar(` + folio + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
-                            type="button">ABONAR</button>
-                        </td>
-
-                    </tr>
-                    `;
-
-                        }
-
                     }
 
                 }
@@ -459,7 +464,7 @@ CREDITOS
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     };
-
+    
 </script>
 
 

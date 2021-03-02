@@ -51,7 +51,7 @@ CLIENTES
                         </label>
                         <br />
                         <label for="Nombre">
-                            <h5>{{$d->nombre}}</h5>
+                            <h4>{{$d->nombre}}</h4>
                         </label>
                         <div class="form-row w-100">
                             <div class="col-7">
@@ -64,6 +64,11 @@ CLIENTES
                                         TELEFONO
                                     </label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" onkeyup="mayus(this)" value="{{$d->telefono}}" required>
+                                    <label for="telefono" class="mt-2">
+                                        DOMICILIO
+                                    </label>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="domicilio" id="domicilio" onkeyup="mayus(this)" value="{{$d->domicilio}}" required>
+                              
                                 </div>
                             </div>
 
@@ -78,7 +83,7 @@ CLIENTES
                     <form method="post" action="{{url('/puntoVenta/cliente/'.$d->id)}}">
                         {{csrf_field()}}
                         {{ method_field('DELETE')}}
-                        <button class="btn btn-outline-secondary my-3 ml-1" type="submit">
+                        <button class="btn btn-outline-secondary my-3 ml-1" type="submit" onclick="return confirm('DESEA ELIMINAR ESTE CLIENTE?');">
                             <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                             DAR DE BAJA
                         </button>
@@ -115,7 +120,14 @@ CLIENTES
                                 <label for="telefono">
                                     TELEFONO
                                 </label>
-                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" onkeyup="mayus(this)" required>
+                                <input type="number" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" onkeyup="mayus(this)" required>
+                                <label for="domicilio">
+                                    DOMICILIO
+                                </label>
+                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="domicilio" id="domicilio" onkeyup="mayus(this)" required>
+                               
+                
+                                </select>
                             </div>
                         </div>
 

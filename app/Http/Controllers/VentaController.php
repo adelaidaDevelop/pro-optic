@@ -10,8 +10,9 @@ use App\Models\Credito;
 use Illuminate\Http\Request;
 use App\Models\Detalle_venta;
 use App\Models\Pago;
+use App\Models\Pago_venta;
 use App\Models\Sucursal_producto;
-
+use App\Models\venta_cliente;
 
 class VentaController extends Controller
 {
@@ -68,16 +69,17 @@ class VentaController extends Controller
                 'estado' => $estado,
                 'idSucursalEmpleado' => 1,
             ]);
-            $credito = new Credito;
-            $credito->estado = $estado;
+
+            $credito = new Venta_cliente; //credito
+            $credito->tipo = $estado;
             $credito->idCliente = $cliente;
             $credito->idVenta = $venta->id;
             $credito->save();
-            if($pago > 0)
-            {
-            $pagoCredito = new Pago;
+
+            if($pago > 0){
+            $pagoCredito = new Pago_venta;
+            $pagoCredito->idVentaCliente = $credito->id;
             $pagoCredito->monto = $pago;
-            $pagoCredito->idVenta = $venta->id;
             $pagoCredito->save();
             }
 

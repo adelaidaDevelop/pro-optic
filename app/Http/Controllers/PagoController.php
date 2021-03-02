@@ -59,7 +59,7 @@ class PagoController extends Controller
             
             if($monto > 0)
             {
-            $pago = new Pago;
+            $pago = new Pago_venta;
             $pago->monto = $monto;
             $pago->idVenta = $idVenta;
             $pago->save();
@@ -76,7 +76,7 @@ class PagoController extends Controller
      * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function show(Pago $pago)
+    public function show(Pago_venta $pago)
     {
         //
     }
@@ -87,7 +87,7 @@ class PagoController extends Controller
      * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pago $pago)
+    public function edit(Pago_venta $pago)
     {
         //
     }
@@ -99,7 +99,7 @@ class PagoController extends Controller
      * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pago $pago)
+    public function update(Request $request, Pago_venta $pago)
     {
         //
     }
@@ -110,7 +110,7 @@ class PagoController extends Controller
      * @param  \App\Models\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pago $pago)
+    public function destroy(Pago_venta $pago)
     {
         //
     }
