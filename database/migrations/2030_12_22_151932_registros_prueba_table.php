@@ -43,9 +43,13 @@ class RegistrosPruebaTable extends Migration
         ]);
 
         $empleadoAdmin = new Empleado;
-        $empleadoAdmin->nombre = 'XXXXX';
+        $empleadoAdmin->primerNombre = 'XXXXX';
+        $empleadoAdmin->segundoNombre = 'XXXXX';
         $empleadoAdmin->apellidoPaterno = 'XXXXX';
         $empleadoAdmin->apellidoMaterno = 'XXXXX';
+        $empleadoAdmin->genero = 'X';
+        $empleadoAdmin->fechaNacimiento = '1990-01-01';
+        $empleadoAdmin->entidadFederativa = 'XX';
         $empleadoAdmin->curp = 'XXXXXXXXXXXXXXXXXX';
         $empleadoAdmin->telefono = '0000000000';
         $empleadoAdmin->domicilio = 'XXXXXXXXXXXX';
