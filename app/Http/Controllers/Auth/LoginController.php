@@ -114,6 +114,7 @@ class LoginController extends Controller
                 }*/
                 $id = Auth::user()->id;
                 $empleado = Empleado::where('idUsuario','=',$id)->get()->first();
+                //return $id;
                 $sucursalEmpleado = Sucursal_empleado::where('idSucursal','=',$request->input('opcionSucursal'))
                 ->where('idEmpleado','=',$empleado->id)->get()->first();
                 //return $sucursalEmpleado;

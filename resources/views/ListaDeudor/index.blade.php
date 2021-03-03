@@ -135,7 +135,7 @@ CREDITOS
                                         <p class="h5">ABONÓ:</p>
                                     </div>
                                     <div class="col-8">
-                                        <input type="number" oninput="calcularDeudaCredito()" id="abono" data-decimals="2" value=0 class="form-control" />
+                                        <input type="number" oninput="calcularResto()" id="abono" data-decimals="2" value=0 class="form-control" />
                                     </div>
                                 </div>
                                 <div class="row my-1">
@@ -176,6 +176,7 @@ CREDITOS
     let restoFinal = 0;
     let totalCompra = 0;
     let totalResta = 0;
+    let folio =0;
 
    // buscarCreditos();
 /*
@@ -305,6 +306,16 @@ CREDITOS
         `;
         document.getElementById("cuerpoModal").innerHTML = cuerpo2;
     };
+    function calcularResto(){
+        let abonoo = document.querySelector('#abono');
+        if(parseFloat(abono.value) > 0){
+       // let resto= document.getElementById("totalDebe");
+        let resto2= totalResta - parseFloat(abonoo.value);
+        console.log("abono", abonoo.value);
+        console.log(totalResta);
+        document.getElementById("restoDeuda").textContent = "$ " + resto2;
+        }
+    }
 
     function modalAbonar(id) {
         idVent2 = id;
@@ -332,6 +343,8 @@ CREDITOS
             // document.getElementById("total").innerHTML = "$ " + debe;
             console.log(debe);
             document.getElementById("totalDebe").textContent = "$ " + debe;
+            document.getElementById("restoDeuda").textContent = "$ " + debe;
+            
         } else {
             restoFinal = diferencia;
 
@@ -346,7 +359,8 @@ CREDITOS
         let cont = 0;
         let idCliente = 0;
         let nombre = "";
-        let folio = 0;
+     //   let folio = 0;
+        let idVentClient = 0;
         let total = 0;
         let pago = 0;
         let fechaVenta = "";
@@ -360,7 +374,9 @@ CREDITOS
                             nombre = clientes[count11].nombre;
                             idCliente = clientes[count11].id;
                             cont = cont + 1;
+                          //  folio = venta_clientes[count12].idVenta;
                             folio = venta_clientes[count12].idVenta;
+                            idVentClient = venta_clientes[count12].id;
                             for (count13 in detalleVentas) {
                                 if (detalleVentas[count13].idVenta == folio) {
                                     let subtotal = detalleVentas[count13].cantidad * detalleVentas[count13].precioIndividual;
@@ -396,7 +412,7 @@ CREDITOS
                                                 type="button">VER MAS</button>
                                             </td>
                                             <td>` +
-                                    `<button class="btn btn-light" onclick="modalAbonar(` + folio + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
+                                    `<button class="btn btn-light" onclick="modalAbonar(`+idVentClient+`)" data-toggle="modal" data-target="#confirmarVentaModal" 
                                                 type="button">ABONAR</button>
                                             </td>
 
@@ -446,6 +462,7 @@ CREDITOS
                     totalResta: parseFloat(totalResta),
                     // restoFinal: restoFinal,
                     idVenta: idVent2,
+                    folio: folio,
                     monto: parseFloat(pago.value),
                     _token: "{{ csrf_token() }}"
                 }

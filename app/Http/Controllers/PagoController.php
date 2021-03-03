@@ -37,7 +37,8 @@ class PagoController extends Controller
     public function store(Request $request)
     {
         $monto = $request->input('monto');
-        $idVenta= $request->input('idVenta');
+        $idVentaCliente= $request->input('idVenta');
+        $folio= $request->input('folio');
         $totalResta= $request->input('totalResta');
         $totalCompra = $request->input('totalCompra');
         
@@ -46,10 +47,10 @@ class PagoController extends Controller
             {
             $pago = new Pago_venta;
             $pago->monto = $monto;
-            $pago->idVenta = $idVenta;
+            $pago->idVentaCliente = $idVentaCliente;
             $pago->save();
            // $datosProducto=request()->except(['_token', '_method']);
-            $actEstadoVenta = Venta::find($idVenta);
+            $actEstadoVenta = Venta::find($folio);
             $actEstadoVenta->estado= "pagado";
             $actEstadoVenta->pago=$totalCompra;
             $actEstadoVenta->save();

@@ -35,7 +35,7 @@ class RegistrosPruebaTable extends Migration
             'tipo' => 0,
         ]);
         //CREACION USUARIO ADMIN P/DEUDORES
-        $admin = User::create([
+        $adminDeudor = User::create([
             'username' => 'DEUDOR',
             'email' => 'deudor@gmail.com',
             'password' => Hash::make('deudor12345'),

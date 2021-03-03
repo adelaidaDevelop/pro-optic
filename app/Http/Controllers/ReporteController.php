@@ -12,7 +12,8 @@ use App\Models\Empleado;
 use App\Models\Producto;
 use App\Models\Departamento;
 use App\Models\Detalle_venta;
-
+use App\Models\Sucursal_empleado;
+use App\Models\Sucursal_producto;
 use Illuminate\Http\Request;
 
 class ReporteController extends Controller
@@ -45,8 +46,10 @@ class ReporteController extends Controller
         $departamentos= Departamento::all();
         $ventas = Venta::all();
         $detalle_ventas = Detalle_venta::all();
+        $sucursal_productos = Sucursal_producto::all();
+        $sucursalEmpleados = Sucursal_empleado::all();
 
-        return view('Reportes.reporteInventario', compact('cajero','compras','compraProductos', 'productos','devoluciones', 'departamentos','ventas', 'detalle_ventas'));
+        return view('Reportes.reporteInventario', compact('cajero','compras','compraProductos', 'productos','devoluciones', 'departamentos','ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados'));
     }
     public function index3()
     {

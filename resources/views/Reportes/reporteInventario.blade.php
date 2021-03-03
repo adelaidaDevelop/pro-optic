@@ -107,25 +107,27 @@ REPORTES
         </div>
 
         <!-- TABLA -->
-        <div class="row col-12" style="height:300px;overflow-y:auto;">
-            <table class="table table-bordered border-primary ml-3  w-100">
-                <thead class="table-secondary text-primary">
-                    <tr>
-                        <th>#</th>
-                        <th>FECHA</th>
-                        <th>HORA</th>
-                        <th>PRODUCTO</th>
-                        <th>CANT. ANTERIOR</th>
-                        <th>CANT. ACTUAL</th>
-                        <th>MOVIMIENTO</th>
-                        <th>CAJERO</th>
-                        <th>DEPTO</th>
-                    </tr>
-                </thead>
-                <tbody id="consultaBusqueda">
+        <div id="tablaR" >
+            <div class="row col-12" style="height:300px;overflow-y:auto;">
+                <table class="table table-bordered border-primary ml-3  w-100">
+                    <thead class="table-secondary text-primary">
+                        <tr>
+                            <th>#</th>
+                            <th>FECHA</th>
+                            <th>HORA</th>
+                            <th>PRODUCTO</th>
+                            <th>CANT. ANTERIOR</th>
+                            <th>CANT. ACTUAL</th>
+                            <th>MOVIMIENTO</th>
+                            <th>CAJERO</th>
+                            <th>DEPTO</th>
+                        </tr>
+                    </thead>
+                    <tbody id="consultaBusqueda">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="col-12 form-group input-group ml-3 mt-2">
@@ -138,118 +140,7 @@ REPORTES
 
 </div>
 
-<!--MODAL-->
 
-<div class="modal fade" id="detalleCompraModal" tabindex="-1" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <h5 class="modal-title" id="modalVerMas"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                </div>
-                <div class="row" style="height:200px;overflow:auto;">
-                    <table class="table table-hover table-bordered" id="productos">
-                        <thead class="thead-light">
-                            <tr class="text-center">
-                                <th scope="col">#</th>
-                                <th scope="col">PRODUCTO</th>
-                                <th scope="col">CANTIDAD</th>
-                                <th scope="col">SUBTOTAL</th>
-                                <th scope="col">PRECIO IND.</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center text-uppercase" id="cuerpoModal">
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- MODAL PARA ABONAR-->
-<div class="modal fade" id="confirmarVentaModal" tabindex="-1" aria-labelledby="confirmarVentaModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <h5 class="modal-title" id="confirmarVentaModalLabel">ABONO</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="col-12">
-
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <h1>ABONAR</h1>
-                        </div>
-                        <div class="col-12">
-                            <p class="text-center">DEBE</p>
-                        </div>
-                        <div class="col-12">
-                            <h1 class="text-center" id="totalDebe">$ 0.00</h1>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <ul class="nav nav-pills mb-3  d-flex justify-content-center" id="pills-tab" role="tablist">
-
-                        <li class="nav-item mx-2" role="presentation">
-                            <button onclick="" class="btn nav-link mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/credito.png);width:80px;height:80px;
-                            background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true" disabled>
-                                <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
-                            </button>
-                            <h6 class="mx-auto">EFECTIVO</h6>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
-
-                        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                            <div class="col-8 mx-auto">
-
-                                <div class="row my-1">
-                                    <div class="col-4">
-                                        <p class="h5">ABONÓ:</p>
-                                    </div>
-                                    <div class="col-8">
-                                        <input type="number" oninput="calcularDeudaCredito()" id="abono" data-decimals="2" value=0 class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="row my-1">
-                                    <div class="col-4">
-                                        <p class="h5">AUN DEBE: </p>
-                                    </div>
-                                    <div class="col-8">
-                                        <p class="h5" id="restoDeuda">$ 0.00</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="pieModal" class="modal-footer">
-                    <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">COBRAR E IMPRIMIR
-                        TICKET</button>
-                    <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">SOLO COBRAR</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     let compras = @json($compras);
@@ -259,6 +150,8 @@ REPORTES
     let departamentos = @json($departamentos);
     let ventas = @json($ventas);
     let detalle_ventas = @json($detalle_ventas);
+    let sucursal_productos=@json($sucursal_productos);
+    let sucursalEmpleados = @json($sucursalEmpleados);
     let banderaMovimiento = true;
     let fechaDia = "";
 
@@ -468,20 +361,30 @@ REPORTES
                         //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
                         //  fechaCompra.setDate(fechaCompra.getDate() + 1);
                         if (comparacionFecha(fechaXDia, fechaCompra)) {
-
                             fechaCol = fechaCompra.toLocaleDateString();
                             horaCol = fechaCompra.toLocaleTimeString();
-                            idEmpCol = compras[c].idEmpleado; // para buscar por cajero
+                            for(let z in sucursalEmpleados){
+                                if(sucursalEmpleados[z].idEmpleado == compras[c].idEmpleado){
+                                    idEmpCol = compras[c].idEmpleado;
+                                }
+                            }
+                             // para buscar por cajero
                             //Buscar ventas que hubieron en esa fecha en compra-productos
                             for (let x in compra_productos) {
-                                if (compra_productos[x].idCompras == compras[c].id) {
+                                if (compra_productos[x].idCompra == compras[c].id) {
                                     for (let i in productos) {
                                         //Encontrar productos que aparecen en compra produtos
                                         console.log(compra_productos[x].idProductos);
                                         console.log(productos[i].id);
-                                        if (productos[i].id == compra_productos[x].idProductos) {
+                                        if (productos[i].id == compra_productos[x].idProducto) {
                                             productoCol = productos[i].nombre;
-                                            existencia = productos[i].existencia;
+                                            for(let t in sucursal_productos){
+                                                if(sucursal_productos[t].idProducto == productos.id){
+                                                    existencia = sucursal_productos[t].existencia;
+                                                }
+                                            }
+                                          
+                                            
                                             //Encontrar nombre departamento 
                                             for (let d in departamentos) {
                                                 if (productos[i].idDepartamento == departamentos[d].id) {
@@ -508,7 +411,7 @@ REPORTES
                                             </tr>
                                             `;
 
-                                            encontradosBandera = true;
+                                          //  encontradosBandera = true;
                                         }
                                     }
                                 }
@@ -516,7 +419,7 @@ REPORTES
                         }
                     }
                     //Entradas: nueevos productos
-                  
+
                     for (let p in productos) {
                         let fechaNuevoProd = new Date(productos[p].created_at);
 
@@ -550,19 +453,19 @@ REPORTES
                                             </tr>
                                             `;
 
-                           // encontradosBandera = true;
+                            // encontradosBandera = true;
                         }
 
                     }
                     cuerpo = fila_entradaCP + fila_entradaNewP;
-                   
+
                     if (cuerpo === "") {
                         let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
-                        document.getElementById("consultaBusqueda").innerHTML = sin;
+                        document.getElementById("tablaR").innerHTML = sin;
                     } else {
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
-                    
+
                 } else if (moviName == "2") {
                     salidaVP = "";
                     cuerpo = "";
@@ -577,12 +480,13 @@ REPORTES
                         if (comparacionFecha(fechaXDia, fechaVenta)) {
                             fechaCol = fechaVenta.toLocaleDateString();
                             horaCol = fechaVenta.toLocaleTimeString();
-                            idEmpCol = ventas[v].idEmpleado; // para buscar por cajero
+                            idEmpCol = ventas[v].idEmpleado; // CHECAR
                             for (let z in detalle_ventas) {
-                                if (detalle_ventas[z].idVentas == ventas[v].id) {
+                                if (detalle_ventas[z].idVenta == ventas[v].id) {
                                     for (let e in productos) {
-                                        if (productos[e].id == detalle_ventas[z].idProductos) {
-                                            existencia = productos[e].existencia;
+                                        if (productos[e].id == detalle_ventas[z].idProducto) {
+
+                                           // existencia = productos[e].existencia;
                                             productoCol = productos[e].nombre;
                                             for (let d in departamentos) {
                                                 if (departamentos[d].id == productos[e].idDepartamento) {
@@ -607,7 +511,7 @@ REPORTES
                                             </tr>
                                             `;
 
-                                            encontradosBandera = true;
+                                          //  encontradosBandera = true;
 
 
                                         }
@@ -692,17 +596,17 @@ REPORTES
 
                             fechaCol = fechaCompra.toLocaleDateString();
                             horaCol = fechaCompra.toLocaleTimeString();
-                            idEmpCol = compras[c].idEmpleado; // para buscar por cajero
+                          //  idEmpCol = compras[c].idEmpleado; // para buscar por cajero
                             //Buscar ventas que hubieron en esa fecha en compra-productos
                             for (let x in compra_productos) {
-                                if (compra_productos[x].idCompras == compras[c].id) {
+                                if (compra_productos[x].idCompra == compras[c].id) {
                                     for (let i in productos) {
                                         //Encontrar productos que aparecen en compra produtos
-                                        console.log(compra_productos[x].idProductos);
+                                      
                                         console.log(productos[i].id);
-                                        if (productos[i].id == compra_productos[x].idProductos) {
+                                        if (productos[i].id == compra_productos[x].idProducto) {
                                             productoCol = productos[i].nombre;
-                                            existencia = productos[i].existencia;
+                                           // existencia = productos[i].existencia;
                                             //Encontrar nombre departamento 
                                             for (let d in departamentos) {
                                                 if (productos[i].idDepartamento == departamentos[d].id) {
@@ -710,8 +614,8 @@ REPORTES
                                                 }
                                             }
                                             cantidad = compra_productos[x].cantidad;
-                                            cant_anterior = existencia;
-                                            cant_actual = existencia + cantidad;
+                                           // cant_anterior = existencia;
+                                          //  cant_actual = existencia + cantidad;
                                             movimientoTxt = "ENTRADAS: COMPRA PRODUTOS";
                                             console.log("RELLENANDO");
                                             //AQUI HACER LAS FILAS PARA LA TABLA PASANDOLE LOS DATOS
@@ -729,7 +633,7 @@ REPORTES
                                             </tr>
                                             `;
 
-                                            encontradosBandera = true;
+                                           // encontradosBandera = true;
                                         }
                                     }
                                 }
@@ -746,7 +650,7 @@ REPORTES
                         if (comparacionFecha(fechaXDia, fechaNuevoProd)) {
                             fechaCol = fechaNuevoProd.toLocaleDateString();
                             horaCol = fechaNuevoProd.toLocaleTimeString();
-                            idEmpCol = 1 // para buscar por cajero
+                           // idEmpCol = 1 // para buscar por cajero
                             productoCol = productos[p].nombre;
                             for (let d in departamentos) {
                                 if (departamentos[d].id == productos[p].idDepartamento) {
@@ -754,7 +658,7 @@ REPORTES
                                 }
                             }
                             cant_anterior = 0;
-                            cant_actual = productos[p].existencia;
+                           // cant_actual = productos[p].existencia;
                             movimientoTxt = "ENTRADA: NUEVOS PRODUCTOS";
                             //AGREGAR FILAS
                             fila_entradaNewP = fila_entradaNewP + `
@@ -790,12 +694,12 @@ REPORTES
                         if (comparacionFecha(fechaXDia, fechaVenta)) {
                             fechaCol = fechaVenta.toLocaleDateString();
                             horaCol = fechaVenta.toLocaleTimeString();
-                            idEmpCol = ventas[v].idEmpleado; // para buscar por cajero
+                           // idEmpCol = ventas[v].idEmpleado; // para buscar por cajero
                             for (let z in detalle_ventas) {
-                                if (detalle_ventas[z].idVentas == ventas[v].id) {
+                                if (detalle_ventas[z].idVenta == ventas[v].id) {
                                     for (let e in productos) {
-                                        if (productos[e].id == detalle_ventas[z].idProductos) {
-                                            existencia = productos[e].existencia;
+                                        if (productos[e].id == detalle_ventas[z].idProducto) {
+                                          //  existencia = productos[e].existencia;
                                             productoCol = productos[e].nombre;
                                             for (let d in departamentos) {
                                                 if (departamentos[d].id == productos[e].idDepartamento) {
@@ -891,11 +795,11 @@ REPORTES
 
                     if (cuerpo === "") {
                         let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
-                        document.getElementById("consultaBusqueda").innerHTML = sin;
+                        document.getElementById("tablaR").innerHTML = sin;
                     } else {
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
-                    
+
 
 
 
