@@ -50,8 +50,7 @@
                     <h4 style="color:#4388CC">EMPLEADOS</h4>
 
                     <div class="input-group">
-                        <input type="text" class="form-control my-1" placeholder="BUSCAR EMPLEADO"
-                            id="texto">
+                        <input type="text" class="form-control my-1" placeholder="BUSCAR EMPLEADO" id="texto">
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -124,8 +123,8 @@
                                             <textarea name="domicilio" id="domicilio"
                                                 class="form-control @error('domicilio') is-invalid @enderror"
                                                 placeholder="Ingresar domicilio completo" value="" required
-                                                autocomplete="domicilio"
-                                                autofocus disabled>@if(session()->has('cambios')){{old('domicilio')}}@else{{$sucursal->direccion}}@endif</textarea>
+                                                autocomplete="domicilio" autofocus
+                                                disabled>@if(session()->has('cambios')){{old('domicilio')}}@else{{$sucursal->direccion}}@endif</textarea>
                                             @error('domicilio')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -136,7 +135,7 @@
                                             <label for="telefono">
                                                 TELEFONO DE LA SUCURSAL
                                             </label>
-                                            <input  type="text"
+                                            <input type="text"
                                                 class="form-control @error('telefono') is-invalid @enderror"
                                                 name="telefono" id="telefono"
                                                 value="@if(session()->has('cambios')){{old('telefono')}}@else{{$sucursal->telefono}}@endif"
@@ -197,7 +196,7 @@
                         </form>
                     </div-->
 
-                    
+
                     <!--div class="col-4">
                         <form method="post" action="{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {csrf_field()}}
@@ -241,15 +240,31 @@
                                     <div class="form-row">
                                         <div class="form-group col">
                                             <label for="nombre">
-                                                NOMBRE
+                                                PRIMER NOMBRE
                                             </label>
-                                            <input type="text" id="nombre"
-                                                class="form-control @error('nombre') is-invalid @enderror "
-                                                name="nombre"
-                                                value="@if(session()->has('cambios')){{old('nombre')}}@else{{$datosEmpleado->nombre}}@endif"
-                                                placeholder="Ingresar nombre(s)" required autocomplete="nombre"
+                                            <input type="text" id="primerNombre"
+                                                class="form-control @error('primerNombre') is-invalid @enderror "
+                                                name="primerNombre"
+                                                value="@if(session()->has('cambios')){{old('primerNombre')}}@else{{$datosEmpleado->primerNombre}}@endif"
+                                                placeholder="Ingresar nombre(s)" required autocomplete="primerNombre"
                                                 autofocus>
-                                            @error('nombre')
+                                            @error('primerNombre')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="nombre">
+                                                SEGUNDO NOMBRE
+                                            </label>
+                                            <input type="text" id="segundoNombre"
+                                                class="form-control @error('segundoNombre') is-invalid @enderror "
+                                                name="segundoNombre"
+                                                value="@if(session()->has('cambios')){{old('segundoNombre')}}@else{{$datosEmpleado->segundoNombre}}@endif"
+                                                placeholder="@if(isset($datosEmpleado->segundoNombre))INGRESAR SEGUNDO NOMBRE @endif" required autocomplete="segundoNombre"
+                                                autofocus>
+                                            @error('segundoNombre')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -292,6 +307,112 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-6">
+                                            <label for="genero">
+                                                GENERO
+                                            </label>
+                                            <select name="genero"
+                                                class="form-control @error('genero') is-invalid @enderror" id="genero"
+                                                required autocomplete="genero" autofocus>
+                                                <option value="H">HOMBRE</option>
+                                                <option value="M">MUJER</option>
+                                            </select>
+                                            @error('genero')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group col-6">
+                                            <label for="entidadFederativa">
+                                                ENTIDAD FEDERATIVA
+                                            </label>
+                                            <select name="entidadFederativa"
+                                                class="form-control @error('entidadFederativa') is-invalid @enderror"
+                                                id="entidadFederativa" required autocomplete="entidadFederativa"
+                                                autofocus>
+                                                <option value="AS">AGUASCALIENTES</option>
+                                                <option value="BC">BAJA CALIFORNIA</option>
+                                                <option value="BS">BAJA CALIFORNIA SUR</option>
+                                                <option value="CC">CAMPECHE</option>
+                                                <option value="CL">COAHUILA</option>
+                                                <option value="CM">COLIMA</option>
+                                                <option value="CS">CHIAPAS</option>
+                                                <option value="CH">CHIHUAHUA</option>
+                                                <option value="DF">DISTRITO FEDERAL</option>
+                                                <option value="DG">DURANGO</option>
+                                                <option value="GT">GUANAJUATO</option>
+                                                <option value="GR">GUERRERO</option>
+                                                <option value="HG">HIDALGO</option>
+                                                <option value="JC">JALISCO</option>
+                                                <option value="MC">MÉXICO</option>
+                                                <option value="MN">MICHOACÁN</option>
+                                                <option value="MS">MORELOS</option>
+                                                <option value="NT">NAYARIT</option>
+                                                <option value="NL">NUEVO LEÓN</option>
+                                                <option value="OC">OAXACA</option>
+                                                <option value="PL">PUEBLA</option>
+                                                <option value="QT">QUERÉTARO</option>
+                                                <option value="CS">CHIAPAS</option>
+                                                <option value="QR">QUINTANA ROO</option>
+                                                <option value="SP">SAN LUIS POTOSÍ </option>
+                                                <option value="SL">SINALOA</option>
+                                                <option value="SR">SONORA</option>
+                                                <option value="TC">TABASCO</option>
+                                                <option value="TS">TAMAULIPAS</option>
+                                                <option value="TL">TLAXCALA</option>
+                                                <option value="VZ">VERACRUZ</option>
+                                                <option value="YN">YUCATÁN</option>
+                                                <option value="VZ">VERACRUZ</option>
+                                                <option value="ZS">ZACATECAS</option>
+                                                <option value="NE">NACIDO EN EL EXTRANJERO</option>
+
+                                            </select>
+                                            @error('entidadFederativa')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-6">
+                                            <label for="fechaNacimiento">
+                                                FECHA DE NACIMIENTO
+                                            </label>
+                                            <input type="date" min="" max="" name="fechaNacimiento" id="fechaNacimiento"
+                                                class="form-control mr-3" />
+
+                                            <!--textarea name="fechaNacimiento" id="fechaNacimiento"
+                                        class="form-control @error('fechaNacimiento') is-invalid @enderror"
+                                         value="{ old('fechaNacimiento') }}"
+                                        required autocomplete="fechaNacimiento" autofocus>{ old('fechaNacimiento') }}</textarea-->
+                                            @error('fechaNacimiento')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+
+
+                                        <div class="form-group col-6">
+                                            <label for="curp">
+                                                CURP
+                                            </label>
+                                            <input type="text" class="form-control @error('curp') is-invalid @enderror "
+                                                name="curp" id="curp"
+                                                value="@if(session()->has('cambios')){{ old('curp') }}@else{{$datosEmpleado->curp}}@endif"
+                                                placeholder="Ingresar curp" required autocomplete="curp" autofocus>
+                                            @error('curp')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-12">
                                             <label for="domicilio">
                                                 DOMICILIO
                                             </label>
@@ -301,6 +422,25 @@
                                                 value="{{$datosEmpleado->domicilio}}" required autocomplete="domicilio"
                                                 autofocus>@if(session()->has('cambios')){{ old('domicilio')}}@else{{$datosEmpleado->domicilio}}@endif</textarea>
                                             @error('domicilio')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    
+                                    <!--div class="form-row">
+                                        <div class="form-group col-6">
+                                            <label for="genero">
+                                                GENERO
+                                            </label>
+                                            <select name="genero"
+                                                class="form-control @error('genero') is-invalid @enderror"
+                                                id="opcionSucursal" required autocomplete="genero" autofocus>
+                                                <option value="H">HOMBRE</option>
+                                                <option value="M">MUJER</option>
+                                            </select>
+                                            @error('genero')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -322,15 +462,16 @@
                                             </span>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div-->
+
                                     <div class="form-row">
                                         <div class="form-group col-6">
                                             <label for="email">
                                                 EMAIL
                                             </label>
                                             <input type="text"
-                                                class="form-control @error('email') is-invalid @enderror "
-                                                name="email" id="email"
+                                                class="form-control @error('email') is-invalid @enderror " name="email"
+                                                id="email"
                                                 value="@if(session()->has('cambios')){{old('email')}}@else{{$users->email}}@endif"
                                                 placeholder="Ingresar correo electronico" required autocomplete="email"
                                                 autofocus>
@@ -479,14 +620,28 @@
                         <div class="form-col w-100">
                             <div class="form-row">
                                 <div class="form-group col">
-                                    <label for="nombre">
-                                        NOMBRE
+                                    <label for="primerNombre">
+                                        PRIMER NOMBRE
                                     </label>
-                                    <input type="text" id="nombre"
-                                        class="form-control @error('nombre') is-invalid @enderror"
-                                        name="nombre" id="nombre" value="{{ old('nombre') }}"
-                                        placeholder="Ingresar nombre(s)" required autocomplete="nombre" autofocus>
-                                    @error('nombre')
+                                    <input type="text" id="primerNombre"
+                                        class="form-control @error('primerNombre') is-invalid @enderror"
+                                        name="primerNombre" id="primerNombre" value="{{ old('primerNombre') }}"
+                                        placeholder="Ingresar nombre(s)" required autocomplete="primerNombre" autofocus>
+                                    @error('primerNombre')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col">
+                                    <label for="segundoNombre">
+                                        SEGUNDO NOMBRE
+                                    </label>
+                                    <input type="text" id="segundoNombre"
+                                        class="form-control @error('segundoNombre') is-invalid @enderror"
+                                        name="segundoNombre" id="segundoNombre" value="{{ old('segundoNombre') }}"
+                                        placeholder="Ingresar nombre(s)" autocomplete="segundoNombre" autofocus>
+                                    @error('segundoNombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -527,6 +682,108 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6">
+                                    <label for="genero">
+                                        GENERO
+                                    </label>
+                                    <select name="genero" class="form-control @error('genero') is-invalid @enderror"
+                                        id="genero" required autocomplete="genero" value="{{ old('genero') }}" autofocus>
+                                        <option value="H">HOMBRE</option>
+                                        <option value="M">MUJER</option>
+                                    </select>
+                                    @error('genero')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label for="entidadFederativa">
+                                        ENTIDAD FEDERATIVA
+                                    </label>
+                                    <select name="entidadFederativa"
+                                        class="form-control @error('entidadFederativa') is-invalid @enderror"
+                                        id="entidadFederativa" required autocomplete="entidadFederativa"
+                                        value="{{ old('entidadFederativa') }}" autofocus>
+                                        <option value="AS">AGUASCALIENTES</option>
+                                        <option value="BC">BAJA CALIFORNIA</option>
+                                        <option value="BS">BAJA CALIFORNIA SUR</option>
+                                        <option value="CC">CAMPECHE</option>
+                                        <option value="CL">COAHUILA</option>
+                                        <option value="CM">COLIMA</option>
+                                        <option value="CS">CHIAPAS</option>
+                                        <option value="CH">CHIHUAHUA</option>
+                                        <option value="DF">DISTRITO FEDERAL</option>
+                                        <option value="DG">DURANGO</option>
+                                        <option value="GT">GUANAJUATO</option>
+                                        <option value="GR">GUERRERO</option>
+                                        <option value="HG">HIDALGO</option>
+                                        <option value="JC">JALISCO</option>
+                                        <option value="MC">MÉXICO</option>
+                                        <option value="MN">MICHOACÁN</option>
+                                        <option value="MS">MORELOS</option>
+                                        <option value="NT">NAYARIT</option>
+                                        <option value="NL">NUEVO LEÓN</option>
+                                        <option value="OC">OAXACA</option>
+                                        <option value="PL">PUEBLA</option>
+                                        <option value="QT">QUERÉTARO</option>
+                                        <option value="CS">CHIAPAS</option>
+                                        <option value="QR">QUINTANA ROO</option>
+                                        <option value="SP">SAN LUIS POTOSÍ </option>
+                                        <option value="SL">SINALOA</option>
+                                        <option value="SR">SONORA</option>
+                                        <option value="TC">TABASCO</option>
+                                        <option value="TS">TAMAULIPAS</option>
+                                        <option value="TL">TLAXCALA</option>
+                                        <option value="VZ">VERACRUZ</option>
+                                        <option value="YN">YUCATÁN</option>
+                                        <option value="VZ">VERACRUZ</option>
+                                        <option value="ZS">ZACATECAS</option>
+                                        <option value="NE">NACIDO EN EL EXTRANJERO</option>
+
+                                    </select>
+                                    @error('entidadFederativa')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-6">
+                                    <label for="fechaNacimiento">
+                                        FECHA DE NACIMIENTO
+                                    </label>
+                                    <input type="date" min="" max="" name="fechaNacimiento" id="fechaNacimiento"
+                                        class="form-control mr-3" value="{{ old('fechaNacimiento') }}"/>
+
+                                    <!--textarea name="fechaNacimiento" id="fechaNacimiento"
+                                        class="form-control @error('fechaNacimiento') is-invalid @enderror"
+                                         value="{ old('fechaNacimiento') }}"
+                                        required autocomplete="fechaNacimiento" autofocus>{ old('fechaNacimiento') }}</textarea-->
+                                    @error('fechaNacimiento')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label for="curp">
+                                        CURP
+                                    </label>
+                                    <input type="text" class=" form-control @error('curp') is-invalid @enderror"
+                                        name="curp" id="curp" value="{{ old('curp') }}" placeholder="Ingresar curp"
+                                        required autocomplete="curp" autofocus>
+                                    @error('curp')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-12">
                                     <label for="domicilio">
                                         DOMICILIO
                                     </label>
@@ -540,29 +797,14 @@
                                     </span>
                                     @enderror
                                 </div>
-
-                                <div class="form-group col-6">
-                                    <label for="curp">
-                                        CURP
-                                    </label>
-                                    <input type="text"
-                                        class=" form-control @error('curp') is-invalid @enderror"
-                                        name="curp" id="curp" value="{{ old('curp') }}" placeholder="Ingresar curp"
-                                        required autocomplete="curp" autofocus>
-                                    @error('curp')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
                             </div>
+
                             <div class="form-row">
                                 <div class="form-group col-6">
                                     <label for="email">
                                         EMAIL
                                     </label>
-                                    <input type="text"
-                                        class=" form-control @error('email') is-invalid @enderror"
+                                    <input type="text" class=" form-control @error('email') is-invalid @enderror"
                                         name="email" id="email" value="{{ old('email') }}"
                                         placeholder="Ingresar correo electronico" required autocomplete="email"
                                         autofocus>
@@ -576,8 +818,7 @@
                                     <label for="telefono">
                                         TELEFONO
                                     </label>
-                                    <input type="text"
-                                        class=" form-control @error('telefono') is-invalid @enderror"
+                                    <input type="text" class=" form-control @error('telefono') is-invalid @enderror"
                                         name="telefono" id="telefono" value="{{ old('telefono') }}"
                                         placeholder="Ingresar telefono" required autocomplete="telefono" autofocus>
                                     @error('telefono')
@@ -592,8 +833,7 @@
                                     <label for="claveE">
                                         CLAVE
                                     </label>
-                                    <input type="text"
-                                        class=" form-control @error('claveE') is-invalid @enderror"
+                                    <input type="text" class=" form-control @error('claveE') is-invalid @enderror"
                                         name="claveE" id="claveE" value="{{ old('claveE') }}"
                                         placeholder="Ingresar clave para operaciones" required autocomplete="claveE"
                                         autofocus>
@@ -607,8 +847,7 @@
                                     <label for="username">
                                         USUARIO
                                     </label>
-                                    <input type="text"
-                                        class=" form-control @error('username') is-invalid @enderror"
+                                    <input type="text" class=" form-control @error('username') is-invalid @enderror"
                                         name="username" id="username" value="{{ old('username') }}"
                                         placeholder="Ingresar usuario" required autocomplete="username" autofocus>
                                     @error('username')
@@ -706,6 +945,7 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('js\curp.js') }}"></script>
 <script>
 /*function eliminarEmpleado() {
     var form = document.getElementById('formEliminar');
@@ -731,13 +971,20 @@ $('input').bind('keypress', function(tecla) {
 });
 $("input[type='text']").bind('keyup', function(tecla) {
     this.value = this.value.toUpperCase();
+    validarCURP();
     //if (this.value.length == 0 & tecla.charCode == 32)
-      //  return false;
+    //  return false;
+});
+$("input[type='date']").bind('keyup', function(tecla) {
+    //this.value = this.value.toUpperCase();
+    validarCURP();
+    //if (this.value.length == 0 & tecla.charCode == 32)
+    //  return false;
 });
 $("textarea").bind('keyup', function(tecla) {
     this.value = this.value.toUpperCase();
     //if (this.value.length == 0 & tecla.charCode == 32)
-      //  return false;
+    //  return false;
 });
 $("input[name='telefono']").bind('keypress', function(tecla) {
     if (this.value.length >= 10) return false;
@@ -750,6 +997,24 @@ $("input[name='telefono']").bind('keypress', function(tecla) {
         return false;
     }
 });
+
+
+@if(isset($datosEmpleado))
+    let datosEmpleado = @json($datosEmpleado);
+    document.getElementById("genero").value = datosEmpleado.genero;
+    document.getElementById("fechaNacimiento").value = datosEmpleado.fechaNacimiento;
+    document.getElementById("entidadFederativa").value = datosEmpleado.entidadFederativa;
+    //alert( datosEmpleado.entidadFederativa);
+@else
+    let generoOld = "{{ old('genero') }}";
+    let entidadFederativaOld = "{{ old('entidadFederativa') }}";
+    if(generoOld.length>0)
+    document.getElementById("genero").value = generoOld;
+    if(entidadFederativaOld.length>0)
+    document.getElementById("entidadFederativa").value = entidadFederativaOld;
+    //alert("{{ old('genero') }}");
+@endif
+
 async function actualizarPassword() {
     try {
         let cambio = document.getElementById("passwordChange");
@@ -763,8 +1028,9 @@ async function actualizarPassword() {
         }
         if (cambio.value.length > 0) {
             if (cambio.value.length >= 8) {
-                let id = @if(isset($datosEmpleado)|| isset($admin)) {{$users->id}}
+                let usuario = @if(isset($datosEmpleado) || isset($admin)) @json($users)
                 @else null @endif;
+                let id = usuario.id;
                 const url = "{{url('/')}}/puntoVenta/empleado/" + id;
                 console.log(url);
                 let datos = new FormData();
@@ -857,43 +1123,40 @@ function habilitar() {
     //document.getElementById("btnForm").show();
     //alert('Entra');
 }
-@if(session()->has('cambios'))
-habilitar();
-@endif
-
-async function validarCURP() {
-    /*var requestOptions = {
-  method: 'GET',
-  redirect: 'follow'
-};
-
-fetch("https://conectame.ddns.net/rest/api.php?m=curp&user=prueba&pass=sC%7D9pW1Q%5Dc&val=CAHF620818HMNLNL00", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));*/
-    fetch("https://curp-renapo.p.rapidapi.com/v1/curp", {
-            "method": "POST",
-            "headers": {
-                "content-type": "application/json",
-                "x-rapidapi-key": "b623edd2admsh440d6b4a0e1a901p1ffa3fjsnad6fb2b0d4b4",
-                "x-rapidapi-host": "curp-renapo.p.rapidapi.com"
-            },
-            "body": {
-                "birthdate": "18/08/1962",
-                "entity_birth": "MN",
-                "mothers_maiden_name": "HINOJOSA",
-                "names": "FELIPE DE JESUS",
-                "paternal_surname": "CALDERON",
-                "sex": "H"
-            }
-        })
-        .then(response => {
-            console.log(response);
-        })
-        .catch(err => {
-            console.error(err);
-        });
+let cambios = @json(session()->has('cambios'));
+if (cambios.length > 0)
+    habilitar();
+//if(session() - > has('cambios'))
+//habilitar();
+//endif
+function validarCURP(){//n,ap,am,fN,g,e) {
+    let n = document.getElementById("primerNombre").value;
+    let ap = document.getElementById("apellidoPaterno").value;
+    let am = document.getElementById("apellidoMaterno").value;
+    let fn = document.getElementById("fechaNacimiento").value;
+    let g = document.getElementById("genero").value;
+    let e = document.getElementById("entidadFederativa").value;
+    if(n.length>2 & ap.length>2 & am.length>2 & fn.length>0 & g.length>0 & e.length>0)
+    {
+        let fechaNac = ""; 
+        for(i=2;i<fn.length;i++)
+        {
+            if(fn.charAt(i) !='-')
+                fechaNac = fechaNac + fn.charAt(i);
+            console.log(fechaNac);
+        }
+        /*console.log(n);
+        console.log(ap);
+        console.log(am);
+        console.log(fechaNac);
+        console.log(g);
+        console.log(e);*/
+        document.getElementById("curp").value = calcula(n,ap,am,fechaNac,g,e);
+    }
+        
+    //
 }
+//validarCURP('jesus','hernandez','martinez','990115','H','OC');
 </script>
 
 @endsection
