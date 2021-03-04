@@ -15,8 +15,9 @@ class CreateVentasTable extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
-            $table->string('estado')->nullable();
+            $table->string('tipo')->nullable();
             $table->double('pago')->nullable();
+            $table->boolean('status');
             $table->foreignId('idSucursalEmpleado')->constrained('sucursal_empleados');
             $table->timestamps();
         });

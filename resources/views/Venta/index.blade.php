@@ -598,7 +598,7 @@
                 // los datos que voy a enviar para la relación
                 data: {
                     datos: json,
-                    estado: 'vendido',
+                    estado: 'efectivo',
                     pago: parseFloat(pago.value),
                     //_token: $("meta[name='csrf-token']").attr("content")
                     _token: "{{ csrf_token() }}"

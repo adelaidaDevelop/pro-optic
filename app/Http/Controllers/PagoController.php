@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pago_venta;
 use App\Models\Venta;
+use App\Models\venta_cliente;
 use Illuminate\Http\Request;
 
 class PagoController extends Controller
@@ -50,22 +51,26 @@ class PagoController extends Controller
             $pago->idVentaCliente = $idVentaCliente;
             $pago->save();
            // $datosProducto=request()->except(['_token', '_method']);
-            $actEstadoVenta = Venta::find($folio);
-            $actEstadoVenta->estado= "pagado";
-            $actEstadoVenta->pago=$totalCompra;
-            $actEstadoVenta->save();
+            
+
+            $credito['estado']= "pagado";
+            $idVC = Venta_cliente::find($idVentaCliente);
+            $idVC->update($credito);
+
+            $actEstadoVenta['pago']=$totalCompra;
+            $idVenta = Venta::find($folio);
+            $idVenta->update($actEstadoVenta);
+            
           //  Producto::where('id', '=',$idVenta)->update($datosProducto);
             }
-        } else {
-            
-            if($monto > 0)
+        } else if($monto > 0)
             {
             $pago = new Pago_venta;
             $pago->monto = $monto;
-            $pago->idVenta = $idVenta;
+            $pago->idVentaCliente = $idVentaCliente;
             $pago->save();
             }
-        }
+        
         return true;
     }
 

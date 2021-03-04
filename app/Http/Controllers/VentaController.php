@@ -66,12 +66,13 @@ class VentaController extends Controller
         if ($request->has('cliente')) {
             $cliente = $request->input('cliente');
             $venta = Venta::create([
-                'estado' => $estado,
+                'tipo' => $estado,
+                'status' => true,
                 'idSucursalEmpleado' => 1,
             ]);
 
             $credito = new Venta_cliente; //credito
-            $credito->tipo = $estado;
+            $credito->estado = 'incompleto';
             $credito->idCliente = $cliente;
             $credito->idVenta = $venta->id;
             $credito->save();
@@ -86,9 +87,11 @@ class VentaController extends Controller
         } else {
             // session('idSucursalEmpleado');
             $venta = Venta::create([
-                'estado' => $estado,
+               // 'estado' => $estado,
+                'tipo' => $estado,
                 'idSucursalEmpleado' => session('idSucursalEmpleado'),
                 'pago' => $pago,
+                'status' => true,
             ]);
         }
         foreach ($datosCodificados as $datosProducto) {
