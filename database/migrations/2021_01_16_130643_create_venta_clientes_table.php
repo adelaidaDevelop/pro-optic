@@ -15,7 +15,7 @@ class CreateVentaClientesTable extends Migration
     {
         Schema::create('venta_clientes', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo');
+            $table->string('estado');
          //   $table->string('descripcion')->nullable();
             $table->foreignId('idCliente')->constrained('clientes');
             $table->foreignId('idVenta')->constrained('ventas');

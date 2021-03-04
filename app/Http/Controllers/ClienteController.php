@@ -78,6 +78,7 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $datosCliente = request()->except(['_token','_method']);
         Cliente::where('id','=',$id)->update($datosCliente);
         return redirect('puntoVenta/cliente');

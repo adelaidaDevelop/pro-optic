@@ -2,7 +2,6 @@
 @section('contenido')
 <div class="container-fluid">
     <div class="row" style="background:#ED4D46">
-
         @section('subtitulo')
         DEPARTAMENTOS
         @endsection

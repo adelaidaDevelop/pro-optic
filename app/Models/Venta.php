@@ -15,9 +15,10 @@ class Venta extends Model
      * @var array
      */
     protected $fillable = [
-        'estado',
+        'tipo',
         'idSucursalEmpleado',
         'pago',
+        'status',
     ];
 
     public function detalle_venta()

@@ -24,25 +24,26 @@ CREDITOS
                 <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
         </div>
 
+        <div id="tablaR" class=" w-100">
+            <!-- TABLA -->
+            <div class="row w-100 " style="height:300px;overflow-y:auto;">
+                <table class="table table-bordered border-primary ml-5  ">
+                    <thead class="table-secondary text-primary">
+                        <tr>
+                            <th>#</th>
+                            <th>NOMBRE</th>
+                            <th>FECHA VENTA</th>
+                            <th>DEBE</th>
+                            <th> FOLIO</th>
+                            <th>DESCRIPCION</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody id="consultaBusqueda">
 
-        <!-- TABLA -->
-        <div class="row w-100 " style="height:300px;overflow-y:auto;">
-            <table class="table table-bordered border-primary ml-5  ">
-                <thead class="table-secondary text-primary">
-                    <tr>
-                        <th>#</th>
-                        <th>NOMBRE</th>
-                        <th>FECHA VENTA</th>
-                        <th>DEBE</th>
-                        <th> FOLIO</th>
-                        <th>DESCRIPCION</th>
-                        <th> </th>
-                    </tr>
-                </thead>
-                <tbody id="consultaBusqueda">
-
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
@@ -169,107 +170,107 @@ CREDITOS
     const ventas = @json($ventas);
     const detalleVentas = @json($detalleVentas);
     const productos = @json($productos);
-    const  pagos_ventas = @json($pagos_ventas); 
+    const pagos_ventas = @json($pagos_ventas);
 
     let idVent = 0;
     let idVent2 = 0;
     let restoFinal = 0;
     let totalCompra = 0;
     let totalResta = 0;
-    let folio =0;
+    let folio = 0;
 
-   // buscarCreditos();
-/*
-    function buscarCreditos() {
+    // buscarCreditos();
+    /*
+        function buscarCreditos() {
 
-        const palabraBusqueda = document.querySelector('#busquedaCliente');
-        let cuerpo = "";
-        let contCred = 0;
+            const palabraBusqueda = document.querySelector('#busquedaCliente');
+            let cuerpo = "";
+            let contCred = 0;
 
-        for (count in creditos) {
+            for (count in creditos) {
 
-            let name = "";
-            let name2 = "";
-            let fechaVenta = "";
-            let fechaVenta2 = "";
-            // const fechaCreacion = new Date(compras[i].created_at);
-            let folio = 0;
-            let folio2 = 0;
-            let debe = 0.0;
-            let debe2 = 0.0;
-            let descripcion = "";
-            let descripcion2 = "";
-            let total = 0;
-            let pago = 0;
-            let id = 0;
+                let name = "";
+                let name2 = "";
+                let fechaVenta = "";
+                let fechaVenta2 = "";
+                // const fechaCreacion = new Date(compras[i].created_at);
+                let folio = 0;
+                let folio2 = 0;
+                let debe = 0.0;
+                let debe2 = 0.0;
+                let descripcion = "";
+                let descripcion2 = "";
+                let total = 0;
+                let pago = 0;
+                let id = 0;
 
-            //NOMBRE CLIENTE    
-            for (count1 in clientes) {
-                if (creditos[count].idCliente === clientes[count1].id) {
-                    name2 = clientes[count1].nombre;
+                //NOMBRE CLIENTE    
+                for (count1 in clientes) {
+                    if (creditos[count].idCliente === clientes[count1].id) {
+                        name2 = clientes[count1].nombre;
 
-                }
-            }
-            //Buscar los credios en ventas
-            for (count2 in ventas) {
-                if (creditos[count].idVenta === ventas[count2].id) {
-                    //fechaVenta = ventas[count2].created_at;
-                    fechaVenta2 = new Date(ventas[count2].created_at);
-                    fechaVenta2.getTime();
-                    folio2 = ventas[count2].id;
-                    //CALCULAR TOTAL DE LA VENTA
-                    for (count3 in detalleVentas) {
-                        if (ventas[count2].id == detalleVentas[count3].idVentas) {
-                            id = ventas[count2].id;
-                            total = total + detalleVentas[count3].subtotal;
-                        }
                     }
-                    //CALCULAR PAGOS HECHOS
-                    for (count4 in pagos) {
-                        if (ventas[count2].id == pagos[count4].idVenta) {
-                            pago = pago + pagos[count4].monto;
-                        }
-                    }
-                    descripcion2 = ventas[count2].id;
                 }
+                //Buscar los credios en ventas
+                for (count2 in ventas) {
+                    if (creditos[count].idVenta === ventas[count2].id) {
+                        //fechaVenta = ventas[count2].created_at;
+                        fechaVenta2 = new Date(ventas[count2].created_at);
+                        fechaVenta2.getTime();
+                        folio2 = ventas[count2].id;
+                        //CALCULAR TOTAL DE LA VENTA
+                        for (count3 in detalleVentas) {
+                            if (ventas[count2].id == detalleVentas[count3].idVentas) {
+                                id = ventas[count2].id;
+                                total = total + detalleVentas[count3].subtotal;
+                            }
+                        }
+                        //CALCULAR PAGOS HECHOS
+                        for (count4 in pagos) {
+                            if (ventas[count2].id == pagos[count4].idVenta) {
+                                pago = pago + pagos[count4].monto;
+                            }
+                        }
+                        descripcion2 = ventas[count2].id;
+                    }
+                }
+                debe2 = total - pago;
+                if (debe2 > 0) {
+                    contCred = contCred + 1;
+                    console.log("credits");
+                    console.log(contCred);
+                    idVent = id;
+                    //  cont = cont + 1;
+                    name = name2;
+                    fechaVenta = fechaVenta2;
+                    debe = debe2;
+                    folio = folio2;
+                    cuerpo = cuerpo + `
+                        <tr onclick="" data-dismiss="modal">
+                            <td>` + contCred + `</td>    
+                            <th scope="row">` + name + `</th>
+                            <td>` + fechaVenta.toLocaleDateString() + `</td>
+
+                            <td id="d">` + debe + `</td>
+                            <td>` + folio + `</td>
+                            <td>` +
+                        `<button class="btn btn-light" onclick="modalVerMas(` + idVent + `)" data-toggle="modal" data-target="#detalleCompraModal"
+                                type="button">VER MAS</button>
+                            </td>
+                            <td>` +
+                        `<button class="btn btn-light" onclick="modalAbonar(` + idVent + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
+                                type="button">ABONAR</button>
+                            </td>
+
+                        </tr>
+                        `;
+                }
+
             }
-            debe2 = total - pago;
-            if (debe2 > 0) {
-                contCred = contCred + 1;
-                console.log("credits");
-                console.log(contCred);
-                idVent = id;
-                //  cont = cont + 1;
-                name = name2;
-                fechaVenta = fechaVenta2;
-                debe = debe2;
-                folio = folio2;
-                cuerpo = cuerpo + `
-                    <tr onclick="" data-dismiss="modal">
-                        <td>` + contCred + `</td>    
-                        <th scope="row">` + name + `</th>
-                        <td>` + fechaVenta.toLocaleDateString() + `</td>
+            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        };
 
-                        <td id="d">` + debe + `</td>
-                        <td>` + folio + `</td>
-                        <td>` +
-                    `<button class="btn btn-light" onclick="modalVerMas(` + idVent + `)" data-toggle="modal" data-target="#detalleCompraModal"
-                            type="button">VER MAS</button>
-                        </td>
-                        <td>` +
-                    `<button class="btn btn-light" onclick="modalAbonar(` + idVent + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
-                            type="button">ABONAR</button>
-                        </td>
-
-                    </tr>
-                    `;
-            }
-
-        }
-        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-    };
-
-    */
+        */
 
 
 
@@ -306,14 +307,15 @@ CREDITOS
         `;
         document.getElementById("cuerpoModal").innerHTML = cuerpo2;
     };
-    function calcularResto(){
+
+    function calcularResto() {
         let abonoo = document.querySelector('#abono');
-        if(parseFloat(abono.value) > 0){
-       // let resto= document.getElementById("totalDebe");
-        let resto2= totalResta - parseFloat(abonoo.value);
-        console.log("abono", abonoo.value);
-        console.log(totalResta);
-        document.getElementById("restoDeuda").textContent = "$ " + resto2;
+        if (parseFloat(abono.value) > 0) {
+            // let resto= document.getElementById("totalDebe");
+            let resto2 = totalResta - parseFloat(abonoo.value);
+            console.log("abono", abonoo.value);
+            console.log(totalResta);
+            document.getElementById("restoDeuda").textContent = "$ " + resto2;
         }
     }
 
@@ -330,7 +332,7 @@ CREDITOS
         }
         for (count9 in detalleVentas) {
             if (detalleVentas[count9].idVenta == id) {
-                let subtotal= detalleVentas[count9].cantidad * detalleVentas[count9].precioIndividual;
+                let subtotal = detalleVentas[count9].cantidad * detalleVentas[count9].precioIndividual;
                 total2 = total2 + subtotal;
             }
         }
@@ -344,7 +346,7 @@ CREDITOS
             console.log(debe);
             document.getElementById("totalDebe").textContent = "$ " + debe;
             document.getElementById("restoDeuda").textContent = "$ " + debe;
-            
+
         } else {
             restoFinal = diferencia;
 
@@ -359,22 +361,22 @@ CREDITOS
         let cont = 0;
         let idCliente = 0;
         let nombre = "";
-     //   let folio = 0;
+        //   let folio = 0;
         let idVentClient = 0;
         let total = 0;
         let pago = 0;
         let fechaVenta = "";
         let debe = 0;
-       // descripcion2 = 0
-        for (count11 in clientes) {
-            for (count12 in venta_clientes) { //CREDITOS
-                if (venta_clientes[count12].tipo === "credito") {
+        // descripcion2 = 0
+        for (count12 in venta_clientes) { //CREDITOS
+            if (venta_clientes[count12].estado === "incompleto") {
+                for (count11 in clientes) {
                     if (venta_clientes[count12].idCliente == clientes[count11].id) {
                         if (clientes[count11].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                             nombre = clientes[count11].nombre;
                             idCliente = clientes[count11].id;
                             cont = cont + 1;
-                          //  folio = venta_clientes[count12].idVenta;
+                            //  folio = venta_clientes[count12].idVenta;
                             folio = venta_clientes[count12].idVenta;
                             idVentClient = venta_clientes[count12].id;
                             for (count13 in detalleVentas) {
@@ -390,11 +392,11 @@ CREDITOS
                                 }
                             }
                             for (count13 in pagos_ventas) {
-                                if (pagos_ventas[count13].idVentaCliente == folio) {
+                                if (pagos_ventas[count13].idVentaCliente == idVentClient) {
                                     pago = pago + pagos_ventas[count13].monto;
                                 }
                             }
-                         //   descripcion2 = ventas[count2].id;
+                            //   descripcion2 = ventas[count2].id;
 
                             debe = total - pago;
                             if (debe > 0) {
@@ -412,7 +414,7 @@ CREDITOS
                                                 type="button">VER MAS</button>
                                             </td>
                                             <td>` +
-                                    `<button class="btn btn-light" onclick="modalAbonar(`+idVentClient+`)" data-toggle="modal" data-target="#confirmarVentaModal" 
+                                    `<button class="btn btn-light" onclick="modalAbonar(` + idVentClient + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
                                                 type="button">ABONAR</button>
                                             </td>
 
@@ -422,13 +424,21 @@ CREDITOS
                             }
 
                         }
+
                     }
 
                 }
 
             }
         }
-        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        if (cuerpo === "") {
+            // tabla2 = document.querySelector('#tablaR');
+            let sin = ` <h4 class= "text-danger my-auto text-center mt-4 "> NO SE ENCONTRARON CLIENTES DEUDORES </h4>`;
+            document.getElementById("tablaR").innerHTML = sin;
+        } else {
+            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        }
+
     };
 
 
@@ -473,7 +483,7 @@ CREDITOS
                 $('#confirmarVentaModal').modal('hide');
                 $("input[id='abono']").val(0);
                 location.reload();
-                console.log(respuesta); //JSON.stringify(respuesta));
+                //  console.log(respuesta); //JSON.stringify(respuesta));
             });
             console.log(funcion);
             //  await cargarCredito();
@@ -481,7 +491,6 @@ CREDITOS
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     };
-    
 </script>
 
 

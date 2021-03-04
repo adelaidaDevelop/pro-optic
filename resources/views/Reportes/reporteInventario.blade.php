@@ -107,8 +107,8 @@ REPORTES
         </div>
 
         <!-- TABLA -->
-        <div id="tablaR" >
-            <div class="row col-12" style="height:300px;overflow-y:auto;">
+        <div id="tablaR" class="row w-100 ">
+            <div id="tabla2" class="row col-12 " style="height:300px;overflow-y:auto;">
                 <table class="table table-bordered border-primary ml-3  w-100">
                     <thead class="table-secondary text-primary">
                         <tr>
@@ -131,7 +131,7 @@ REPORTES
         </div>
 
         <div class="col-12 form-group input-group ml-3 mt-2">
-            <button class="btn btn-primary mx-auto "> IMPRIMIR REPORTE</button>
+            <button id="imp" name="imp" class="btn btn-primary mx-auto "> IMPRIMIR REPORTE</button>
         </div>
 
 
@@ -150,10 +150,12 @@ REPORTES
     let departamentos = @json($departamentos);
     let ventas = @json($ventas);
     let detalle_ventas = @json($detalle_ventas);
-    let sucursal_productos=@json($sucursal_productos);
+    let sucursal_productos = @json($sucursal_productos);
     let sucursalEmpleados = @json($sucursalEmpleados);
     let banderaMovimiento = true;
     let fechaDia = "";
+    let tabla2 = document.querySelector('#tablaR').outerHTML;
+
 
 
     let registrosCompEnt = "";
@@ -334,7 +336,11 @@ REPORTES
         let salidaVP = "";
         let fila_entradaNewP = "";
         let fila_entradaCP = "";
+        let idEmpCol = 0;
         let filaprod_caducados = "";
+        let cant_actual = 0;
+
+
         //lamar metodo 
         //habilitarFecha();
         let fechaXDia = "";
@@ -363,12 +369,12 @@ REPORTES
                         if (comparacionFecha(fechaXDia, fechaCompra)) {
                             fechaCol = fechaCompra.toLocaleDateString();
                             horaCol = fechaCompra.toLocaleTimeString();
-                            for(let z in sucursalEmpleados){
-                                if(sucursalEmpleados[z].idEmpleado == compras[c].idEmpleado){
+                            for (let z in sucursalEmpleados) {
+                                if (sucursalEmpleados[z].idEmpleado == compras[c].idEmpleado) {
                                     idEmpCol = compras[c].idEmpleado;
                                 }
                             }
-                             // para buscar por cajero
+                            // para buscar por cajero
                             //Buscar ventas que hubieron en esa fecha en compra-productos
                             for (let x in compra_productos) {
                                 if (compra_productos[x].idCompra == compras[c].id) {
@@ -378,13 +384,13 @@ REPORTES
                                         console.log(productos[i].id);
                                         if (productos[i].id == compra_productos[x].idProducto) {
                                             productoCol = productos[i].nombre;
-                                            for(let t in sucursal_productos){
-                                                if(sucursal_productos[t].idProducto == productos.id){
+                                            for (let t in sucursal_productos) {
+                                                if (sucursal_productos[t].idProducto == productos.id) {
                                                     existencia = sucursal_productos[t].existencia;
                                                 }
                                             }
-                                          
-                                            
+
+
                                             //Encontrar nombre departamento 
                                             for (let d in departamentos) {
                                                 if (productos[i].idDepartamento == departamentos[d].id) {
@@ -411,7 +417,7 @@ REPORTES
                                             </tr>
                                             `;
 
-                                          //  encontradosBandera = true;
+                                            //  encontradosBandera = true;
                                         }
                                     }
                                 }
@@ -458,11 +464,16 @@ REPORTES
 
                     }
                     cuerpo = fila_entradaCP + fila_entradaNewP;
-
                     if (cuerpo === "") {
-                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        // tabla2 = document.querySelector('#tablaR');
+                        
+                        let sin = `<h3 class= "text-danger text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h3>`;
                         document.getElementById("tablaR").innerHTML = sin;
+                       // document.getElementById("imp").innerHTML
+                      //  $(document.getElementById("imp").outerHTML).attr("disabled");
+                        document.getElementById("imp").disabled = true;
                     } else {
+                        document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
 
@@ -486,7 +497,7 @@ REPORTES
                                     for (let e in productos) {
                                         if (productos[e].id == detalle_ventas[z].idProducto) {
 
-                                           // existencia = productos[e].existencia;
+                                            // existencia = productos[e].existencia;
                                             productoCol = productos[e].nombre;
                                             for (let d in departamentos) {
                                                 if (departamentos[d].id == productos[e].idDepartamento) {
@@ -511,7 +522,7 @@ REPORTES
                                             </tr>
                                             `;
 
-                                          //  encontradosBandera = true;
+                                            //  encontradosBandera = true;
 
 
                                         }
@@ -526,7 +537,15 @@ REPORTES
                     //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
 
                     cuerpo = salidaVP;
-                    document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+                    if (cuerpo === "") {
+                        // tabla2 = document.querySelector('#tablaR');
+                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        document.getElementById("tablaR").innerHTML = sin;
+                    } else {
+                        document.getElementById("tablaR").innerHTML = tabla2;
+                        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+                    }
+
                 } else if (moviName == "3") {
                     cant_anterior = 0;
                     cant_actual = 0;
@@ -577,7 +596,16 @@ REPORTES
                         }
                     }
                     cuerpo = devolucionFila;
-                    document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+                    if (cuerpo === "") {
+                       // tabla2 = document.querySelector('#tablaR');
+                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        document.getElementById("tablaR").innerHTML = sin;
+                        document.getElementById("imp").disabled = true;
+                    } else {
+                        document.getElementById("tablaR").innerHTML = tabla2;
+                        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+                    }
+                    
                 } else if (moviName == "4") {
                     //uno
                     cuerpo = "";
@@ -596,17 +624,17 @@ REPORTES
 
                             fechaCol = fechaCompra.toLocaleDateString();
                             horaCol = fechaCompra.toLocaleTimeString();
-                          //  idEmpCol = compras[c].idEmpleado; // para buscar por cajero
+                            //  idEmpCol = compras[c].idEmpleado; // para buscar por cajero
                             //Buscar ventas que hubieron en esa fecha en compra-productos
                             for (let x in compra_productos) {
                                 if (compra_productos[x].idCompra == compras[c].id) {
                                     for (let i in productos) {
                                         //Encontrar productos que aparecen en compra produtos
-                                      
+
                                         console.log(productos[i].id);
                                         if (productos[i].id == compra_productos[x].idProducto) {
                                             productoCol = productos[i].nombre;
-                                           // existencia = productos[i].existencia;
+                                            // existencia = productos[i].existencia;
                                             //Encontrar nombre departamento 
                                             for (let d in departamentos) {
                                                 if (productos[i].idDepartamento == departamentos[d].id) {
@@ -614,8 +642,8 @@ REPORTES
                                                 }
                                             }
                                             cantidad = compra_productos[x].cantidad;
-                                           // cant_anterior = existencia;
-                                          //  cant_actual = existencia + cantidad;
+                                            // cant_anterior = existencia;
+                                            //  cant_actual = existencia + cantidad;
                                             movimientoTxt = "ENTRADAS: COMPRA PRODUTOS";
                                             console.log("RELLENANDO");
                                             //AQUI HACER LAS FILAS PARA LA TABLA PASANDOLE LOS DATOS
@@ -633,7 +661,7 @@ REPORTES
                                             </tr>
                                             `;
 
-                                           // encontradosBandera = true;
+                                            // encontradosBandera = true;
                                         }
                                     }
                                 }
@@ -650,7 +678,7 @@ REPORTES
                         if (comparacionFecha(fechaXDia, fechaNuevoProd)) {
                             fechaCol = fechaNuevoProd.toLocaleDateString();
                             horaCol = fechaNuevoProd.toLocaleTimeString();
-                           // idEmpCol = 1 // para buscar por cajero
+                            // idEmpCol = 1 // para buscar por cajero
                             productoCol = productos[p].nombre;
                             for (let d in departamentos) {
                                 if (departamentos[d].id == productos[p].idDepartamento) {
@@ -658,7 +686,7 @@ REPORTES
                                 }
                             }
                             cant_anterior = 0;
-                           // cant_actual = productos[p].existencia;
+                            // cant_actual = productos[p].existencia;
                             movimientoTxt = "ENTRADA: NUEVOS PRODUCTOS";
                             //AGREGAR FILAS
                             fila_entradaNewP = fila_entradaNewP + `
@@ -694,12 +722,12 @@ REPORTES
                         if (comparacionFecha(fechaXDia, fechaVenta)) {
                             fechaCol = fechaVenta.toLocaleDateString();
                             horaCol = fechaVenta.toLocaleTimeString();
-                           // idEmpCol = ventas[v].idEmpleado; // para buscar por cajero
+                            // idEmpCol = ventas[v].idEmpleado; // para buscar por cajero
                             for (let z in detalle_ventas) {
                                 if (detalle_ventas[z].idVenta == ventas[v].id) {
                                     for (let e in productos) {
                                         if (productos[e].id == detalle_ventas[z].idProducto) {
-                                          //  existencia = productos[e].existencia;
+                                            //  existencia = productos[e].existencia;
                                             productoCol = productos[e].nombre;
                                             for (let d in departamentos) {
                                                 if (departamentos[d].id == productos[e].idDepartamento) {
@@ -792,22 +820,23 @@ REPORTES
 
                     //BUSCAR TODOS
                     cuerpo = devolucionFila + salidaVP + fila_entradaNewP + fila_entradaCP + filaprod_caducados;
-
                     if (cuerpo === "") {
+                        // tabla2 = document.querySelector('#tablaR');
                         let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
                         document.getElementById("tablaR").innerHTML = sin;
+                        document.getElementById("imp").disabled = true;
                     } else {
+
+                        console.log(tabla2);
+                        document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
-
-
 
 
                 }
             } else {
                 //REPORTES PRODUCTOS
                 let movi = document.querySelector('#productoID');
-
             }
         } else {
             return alert("ELEGIR UNA FECHA");

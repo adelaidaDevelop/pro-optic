@@ -100,7 +100,15 @@ class DepartamentoController extends Controller
     {
         try{
         $datosDepartamento = request()->except(['_token','_method']);
-        Departamento::where('id','=',$id)->update($datosDepartamento);
+        $nombreN = $request['nombre'];
+        $depto = Departamento::where('id','=',$id)->get()->first();
+        $nombreAnt = $depto->nombre;
+        //$nombreAnt;
+        if( $nombreN == $nombreAnt)
+        {
+            return redirect()->back()->withErrors(['mensajeError' => 'PARA EDITAR DEBE MODIFICAR EL NOMBRE ']);
+        }
+        $depto->update($datosDepartamento);
         return redirect('puntoVenta/departamento')->withErrors(['mensajeConf' => 'ESTE DEPARTAMENTO SE EDITO CORRECTAMENTE']);
         }catch(\Illuminate\Database\QueryException $e){
             return redirect()->back()->withErrors(['mensajeError' => 'ESTE DEPARTAMENTO YA EXISTE. INTENTE PONER UN NOMBRE DIFERENTE ']);
