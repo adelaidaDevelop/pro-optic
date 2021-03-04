@@ -14,7 +14,7 @@
             // var sexo = document.getElementById("sexo").value;
             
             // var estado = document.getElementById("estado").value;
-            var dteNacimiento = rfc;
+            var dteNacimiento = fechaN;
             //FILTRA ACENTOS
             var ap_pat_f = RFCFiltraAcentos(ap_paterno.toLowerCase());
             var ap_mat_f = RFCFiltraAcentos(ap_materno.toLowerCase());
@@ -230,7 +230,7 @@
 
         function RFCUnApellido(nombre, apellido) {
             var rfc = apellido.substr(0, 2) + nombre.substr(0, 2);
-            return rfc
+            return rfc;
         }
 
         function RFCArmalo(ap_paterno, ap_materno, nombre) {
@@ -1070,7 +1070,7 @@
 
 
 
-            pstCURP = pstCURP + dfecha + pstSexo + pnuCveEntidad;
+            pstCURP = pstCURP + dfecha.substr(2,dfecha.length-1) + pstSexo + pnuCveEntidad;
 
 
             // Se obtiene la primera consonante interna del apellido paterno
@@ -1275,8 +1275,8 @@
 
             numVer = sumatoria % 10;
             numVer = Math.abs(10 - numVer);
-            anio = dfecha.substr(2, 2);
-
+            anio = dfecha.substr(0, 4);
+            //console.log('anio es: ',dfecha.substr(0, 3));
 
             if (numVer == 10) {
                 numVer = 0;

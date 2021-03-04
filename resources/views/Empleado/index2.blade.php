@@ -403,7 +403,7 @@
                                             <input type="text" class="form-control @error('curp') is-invalid @enderror "
                                                 name="curp" id="curp"
                                                 value="@if(session()->has('cambios')){{ old('curp') }}@else{{$datosEmpleado->curp}}@endif"
-                                                placeholder="Ingresar curp" required autocomplete="curp" autofocus>
+                                                placeholder="Ingresar curp" required autocomplete="curp" autofocus disabled>
                                             @error('curp')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -1130,16 +1130,17 @@ if (cambios.length > 0)
 //habilitar();
 //endif
 function validarCURP(){//n,ap,am,fN,g,e) {
-    let n = document.getElementById("primerNombre").value;
+    let pn = document.getElementById("primerNombre").value;
+    let sn = document.getElementById("segundoNombre").value;
     let ap = document.getElementById("apellidoPaterno").value;
     let am = document.getElementById("apellidoMaterno").value;
     let fn = document.getElementById("fechaNacimiento").value;
     let g = document.getElementById("genero").value;
     let e = document.getElementById("entidadFederativa").value;
-    if(n.length>2 & ap.length>2 & am.length>2 & fn.length>0 & g.length>0 & e.length>0)
+    if(pn.length>2 & ap.length>2 & am.length>2 & fn.length>0 & g.length>0 & e.length>0)
     {
         let fechaNac = ""; 
-        for(i=2;i<fn.length;i++)
+        for(i=0;i<fn.length;i++)
         {
             if(fn.charAt(i) !='-')
                 fechaNac = fechaNac + fn.charAt(i);
@@ -1151,7 +1152,8 @@ function validarCURP(){//n,ap,am,fN,g,e) {
         console.log(fechaNac);
         console.log(g);
         console.log(e);*/
-        document.getElementById("curp").value = calcula(n,ap,am,fechaNac,g,e);
+        let ns = pn + sn;
+        document.getElementById("curp").value = calcula(ns,ap,am,fechaNac,g,e);
     }
         
     //
