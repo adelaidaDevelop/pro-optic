@@ -80,9 +80,13 @@ class EmpleadoController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-                'nombre' => ['required', 'string', 'max:30'],
+            'primerNombre' => ['required', 'string', 'max:30'],
+            'segundoNombre' => ['max:30'],
                 'apellidoPaterno' => ['required', 'string', 'max:30'],
                 'apellidoMaterno' => ['required', 'string', 'max:30'],
+            'genero' => ['required', 'string',],
+            'fechaNacimiento' => ['required','date'],
+            'entidadFederativa' => ['required','string'],
                 'domicilio' => ['required', 'string', 'max:50'],
                 'curp' => ['required', 'string', 'max:18','unique:empleados'],
                 'telefono' => ['required', 'string', 'max:10'],
@@ -275,7 +279,7 @@ class EmpleadoController extends Controller
 
     public function buscadorEmpleado(Request $request)
     {
-        $datosConsulta['empleados'] = Empleado::where("nombre",'like',$request->texto."%")->orderBy('nombre')->get();
+        $datosConsulta['empleados'] = Empleado::where("primerNombre",'like',$request->texto."%")->orderBy('primerNombre')->get();
         $admin = User::findOrFail(1);
         //where("status",'=','alta')->orderBy('nombre')->get();
         return view('Empleado.empleados',$datosConsulta,compact('admin'));
