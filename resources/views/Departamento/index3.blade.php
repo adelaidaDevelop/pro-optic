@@ -62,7 +62,7 @@
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="text-uppercase  form-control" name="nombre" id="nombre" value="{{$d->nombre}}" onkeyup="mayus(this)" required>
+                                        <input type="text" class="  form-control" name="nombre" id="nombre" value="{{$d->nombre}}" onkeyup="mayus(this)" required>
 
                                     </div>
                                 </div>

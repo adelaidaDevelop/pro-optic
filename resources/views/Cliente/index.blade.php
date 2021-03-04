@@ -68,7 +68,7 @@ CLIENTES
                                         DOMICILIO
                                     </label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="domicilio" id="domicilio" onkeyup="mayus(this)" value="{{$d->domicilio}}" required>
-                              
+
                                 </div>
                             </div>
 
@@ -125,8 +125,8 @@ CLIENTES
                                     DOMICILIO
                                 </label>
                                 <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="domicilio" id="domicilio" onkeyup="mayus(this)" required>
-                               
-                
+
+
                                 </select>
                             </div>
                         </div>
@@ -151,6 +151,7 @@ CLIENTES
 
 <script>
     const texto = document.querySelector('#texto');
+
     function filtrar() {
         document.getElementById("resultados").innerHTML = "";
         fetch(`/cliente/buscador?texto=${texto.value}`, {
@@ -161,10 +162,22 @@ CLIENTES
                 document.getElementById("resultados").innerHTML = html
             })
     };
+    $("input[name='telefono']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
+
     function mayus(e) {
         e.value = e.value.toUpperCase();
     }
-    
+
     texto.addEventListener('keyup', filtrar);
     filtrar();
 </script>

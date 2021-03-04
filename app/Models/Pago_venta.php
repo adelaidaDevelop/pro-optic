@@ -11,6 +11,5 @@ class Pago_venta extends Model
     protected $fillable = [
         'idVentaCliente',
         'monto',
-
     ];
 }
