@@ -111,7 +111,7 @@ ADMINISTRACION
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
                             <label for="ndepartamento">
-                                <h4 style="color:#4388CC">SUCURSAL</h4>
+                                <h4 style="color:#4388CC">EDITAR SUCURSAL</h4>
                             </label>
                             <br />
                             <label for="Nombre">
@@ -135,14 +135,16 @@ ADMINISTRACION
                                     </div>
                                     @enderror
 
-                                    @error('sucursalUsada')
-                                    <div class="alert alert-danger my-auto" role="alert">
-                                        {{$message}}
-                                    </div>
-                                    @enderror
                                 </div>
+
+                                @error('mensajeError')
+                                <div class="alert alert-danger my-auto" role="alert">
+                                    {{$message}}
+                                </div>
+                                @enderror
+
                             </div>
-                            <button class="btn btn-outline-secondary" type="submit">
+                            <button class="btn btn-outline-secondary mt-2" type="submit">
                                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                                 GUARDAR CAMBIOS
                             </button>
@@ -206,11 +208,16 @@ ADMINISTRACION
 
                                 </div>
                             </div>
-
                         </div>
+                        @error('mensajeConf')
+                            <div class="col-6 alert alert-success my-auto" role="alert">
+                                {{$message}}
+                            </div>
+                            @enderror
+
                         <div class="form-row w-100">
                             <div class="form-group">
-                                <button class="btn btn-outline-secondary " type="submit">
+                                <button class="btn btn-outline-secondary mt-2" type="submit">
                                     <img src="{{ asset('img\guardar.png') }}" class="p-1" alt="Editar" width="30px" height="30px">
                                     GUARDAR SUCURSAL
                                 </button>
@@ -712,7 +719,7 @@ ADMINISTRACION
 
 
     async function correrVeriSuc(id) {
-      //  await veriSucursal(id);
+        //  await veriSucursal(id);
     };
 
     //VERIFICAR SI LA SUCURSAL YA ESTA USADA
@@ -723,25 +730,26 @@ ADMINISTRACION
             response = await fetch(`/puntoVenta/destroy2/${id}`);
             if (response.ok) {
                 let respuesta = await response.text();
-                if(respuesta.length > 1)
-                { return alert (respuesta)}
-                if(respuesta.length == 1){
-                    //recargar la pag
-                 alert("La sucursal fue eliminada");
-                 location.href = "{{url('/puntoVenta/administracion')}}";
-                }else {
-                   let sucUsada= confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA DARLO DE BAJA?");
-                    if(sucUsada){
-                  let respuesta2 = await fetch(`/puntoVenta/actualizar/${id}`);
-                  if(respuesta2.ok){
-                     alert("La sucursal se ha dado de baja");
-                     location.href = "{{url('/puntoVenta/administracion')}}";
-                    }
-                  }
+                if (respuesta.length > 1) {
+                    return alert(respuesta)
                 }
-                  } else {
-               return confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA ELIMINARLO?");
-                 console.log("No responde :'v");
+                if (respuesta.length == 1) {
+                    //recargar la pag
+                    alert("La sucursal fue eliminada");
+                    location.href = "{{url('/puntoVenta/administracion')}}";
+                } else {
+                    let sucUsada = confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA DARLO DE BAJA?");
+                    if (sucUsada) {
+                        let respuesta2 = await fetch(`/puntoVenta/actualizar/${id}`);
+                        if (respuesta2.ok) {
+                            alert("La sucursal se ha dado de baja");
+                            location.href = "{{url('/puntoVenta/administracion')}}";
+                        }
+                    }
+                }
+            } else {
+                return confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA ELIMINARLO?");
+                console.log("No responde :'v");
                 console.log(response);
                 throw new Error(response.statusText);
             }

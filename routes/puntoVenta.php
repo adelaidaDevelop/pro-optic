@@ -32,7 +32,7 @@ Route::prefix('/puntoVenta')->group(function()
     
     Route::resource('departamento', DepartamentoController::class);//->middleware('auth');
 
-    Route::resource('sucursal', SucursalController::class);
+   // Route::resource('sucursal', SucursalController::class);
     Route::resource('sucursalEmpleado', SucursalEmpleadoController::class);
 
     Route::get('/login', [LoginController::class,'login'])->name('Login');//->middleware('isEmpleado');
@@ -88,9 +88,10 @@ Route::prefix('/puntoVenta')->group(function()
     Route::resource('corteCaja', ReporteController::class);
     Route::get('reporteInventario', [ReporteController::class,'index2']);
     //Route::get('eliminar/{id}', [ProductoController::class,'eliminar']);
-
+    Route::resource('sucursal', SucursalController::class);
     Route::middleware('isEmpleado')->group(function () {
         Route::resource('administracion', AdministracionController::class);
+        
         Route::resource('producto', ProductoController::class);
         Route::resource('empleado', EmpleadoController::class);
         //Route::get('/login', [LoginController::class,'login'])->name('Login');

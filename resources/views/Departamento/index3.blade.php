@@ -66,17 +66,13 @@
                                     </div>
                                 </div>
                                 <div class="col-4">
-                                @error('mensajeError')
-                                <div class="alert alert-danger my-auto" role="alert">
-                                    {{$message}}
+                                    @error('mensajeError')
+                                    <div class="alert alert-danger my-auto" role="alert">
+                                        {{$message}}
+                                    </div>
+                                    @enderror
+                                 
                                 </div>
-                                @enderror
-                                @error('mensajeConf')
-                                <div class="alert alert-success my-auto" role="alert">
-                                    {{$message}}
-                                </div>
-                                @enderror
-                            </div>
                             </div>
                             <button class="btn btn-outline-secondary" type="submit" onclick="">
                                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
