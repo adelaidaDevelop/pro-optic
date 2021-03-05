@@ -156,5 +156,4 @@ class SucursalController extends Controller
         return true;
 
     }
-
 }

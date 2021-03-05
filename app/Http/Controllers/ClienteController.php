@@ -78,10 +78,22 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $datosCliente = request()->except(['_token','_method']);
-        Cliente::where('id','=',$id)->update($datosCliente);
-        return redirect('puntoVenta/cliente');
+            $datosCliente = request()->except(['_token','_method']);
+            $nombre = $request['nombre'];
+            $telefono = $request['telefono'];
+            $domicilio = $request['domicilio'];
+            $cliente = Cliente::findOrFail($id);
+            $nombreAnt= $cliente->nombre;
+            $telefonoAnt= $cliente->telefono;
+            $domicilioAnt= $cliente->domicilio;
+            if( $nombre == $nombreAnt && $telefono == $telefonoAnt && $domicilio == $domicilioAnt)
+            {
+                return redirect()->back()->withErrors(['mensajeError' => 'PARA EDITAR DEBE MODIFICAR AL MENOS UN ELEMENTO']);  
+            }
+            else{
+            $cliente->update($datosCliente);
+            return redirect('puntoVenta/cliente')->withErrors(['mensajeConf' => 'ESTE CLIENTE SE EDITO CORRECTAMENTE']);
+            }
     }
 
     /**

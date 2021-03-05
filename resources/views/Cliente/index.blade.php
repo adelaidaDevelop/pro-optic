@@ -71,6 +71,14 @@ CLIENTES
 
                                 </div>
                             </div>
+                            <div class="col-4">
+                                @error('mensajeError')
+                                <div class="alert alert-danger my-auto" role="alert">
+                                    {{$message}}
+                                </div>
+                                @enderror
+
+                            </div>
 
                         </div>
                         <button class="btn btn-outline-secondary mt-4 ml-1" type="submit">
@@ -125,14 +133,17 @@ CLIENTES
                                     DOMICILIO
                                 </label>
                                 <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="domicilio" id="domicilio" onkeyup="mayus(this)" required>
-
-
                                 </select>
                             </div>
                         </div>
+                        @error('mensajeConf')
+                        <div class="alert alert-success my-auto" role="alert">
+                            {{$message}}
+                        </div>
+                        @enderror
 
                     </div>
-                    <div class="form-row w-100">
+                    <div class="form-row w-100 mt-2">
                         <div class="form-group">
                             <button class="btn btn-outline-secondary" type="submit">
                                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">

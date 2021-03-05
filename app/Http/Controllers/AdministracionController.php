@@ -13,7 +13,6 @@ class AdministracionController extends Controller
     {
 
     }
-
     public function index()
     {
         $sucursalesInac = Sucursal::where('status', '=', 0)->get();
@@ -46,9 +45,26 @@ class AdministracionController extends Controller
 
     public function update(Request $request, $id)
     {
+            $datosCliente = request()->except(['_token','_method']);
+            $dir = $request['direccion'];
+            $telefono = $request['telefono'];
+
+            $sucursal = Sucursal::findOrFail($id);
+            $dirAnt= $sucursal->direccion;
+            $telefonoAnt= $sucursal->telefono;
+            if( $dir == $dirAnt && $telefono == $telefonoAnt )
+            {
+                return redirect()->back()->withErrors(['mensajeError' => 'PARA EDITAR DEBE MODIFICAR AL MENOS UN ELEMENTO']);  
+            }
+            else{
+            $sucursal->update($datosCliente);
+            return redirect('puntoVenta/administracion')->withErrors(['mensajeConf' => 'ESTA SUCURSAL SE EDITO CORRECTAMENTE']);
+        }
+        /*
         $datosCliente = request()->except(['_token','_method']);
         Sucursal::where('id','=',$id)->update($datosCliente);
         return redirect('puntoVenta/administracion');
+        */
     }
 
     public function destroy($id)//Departamento $departamento)
