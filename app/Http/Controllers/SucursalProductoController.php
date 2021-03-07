@@ -174,8 +174,5 @@ class SucursalProductoController extends Controller
         //
     }
 
-    public function caducidad()
-    {
-        return session()->all();//view('Producto.caducidad');
-    }
+    
 }
