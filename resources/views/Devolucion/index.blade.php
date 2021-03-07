@@ -30,13 +30,13 @@ DEVOLUCION
                     <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="35px" height="35px" />
                 </button>
             </div>
-            <div class="row ">
-                <h5 id="sinResult" class="border mx-0 px-0"></h5>
+            <div  id="sinResult" class="row mx-0 px-0">
+                
             </div>
 
             <!-- TABLA -->
             <div class="row ">
-                <h4 class="text-primary  mx-0 px-0 "> PRODUCTOS </h4>
+                <h4 class="text-primary  mx-0 px-0  mt-4"> PRODUCTOS DE LA VENTA </h4>
             </div>
 
 
@@ -47,9 +47,9 @@ DEVOLUCION
                     <thead class="table-secondary text-primary">
                         <tr>
                             <th>#</th>
-                            <th>CANTIDAD</th>
                             <th>CODIGO BARRAS</th>
                             <th>PRODUCTO</th>
+                            <th>CANTIDAD</th>
                             <th>PRECIO IND.</th>
                             <th> SUBTOTAL</th>
                             <th>CANT. DEVUELTOS</th>
@@ -188,6 +188,7 @@ DEVOLUCION
 
 
     function buscarFolio() {
+        document.getElementById("sinResult").innerHTML = "";
         let cont = 0;
         let botonDev = "";
         let palabraBusqueda = document.querySelector('#busquedaFolio');
@@ -253,9 +254,10 @@ DEVOLUCION
                                     cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
-                                            <td>` + detalleVenta[count2].cantidad + `</td>
+                                            
                                             <td>` + productos[count3].codigoBarras + `</td>
                                             <td>` + productos[count3].nombre + `</td>
+                                            <td>` + detalleVenta[count2].cantidad + `</td>
                                             <td>` + detalleVenta[count2].precioIndividual + `</td>
                                             <td>` + subtotalV + `</td> 
                                             <td>` + cantPD + `</td> 
@@ -274,12 +276,14 @@ DEVOLUCION
 
 
             }
+            if (cuerpo === "") {
+                let sin = ` <h3 class= "text-danger my-auto"> VENTA NO ENCONTRADA</h3>`;
+                document.getElementById("sinResult").innerHTML = sin;
+            }
         }
-        //  console.log("folio vacio");
+        //document.getElementById("filaTablas").innerHTML = cuerpo;
         document.getElementById("tablaProductos").innerHTML = cuerpo;
-        //  } else {
-        //   $("input[id='busquedaFolio']").val("");
-        //  }
+
     };
 
     function idProdDV(idP, idV, cantDV, cPD) {
