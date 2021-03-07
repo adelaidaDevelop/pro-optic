@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Productos_caducidad;
+use App\Models\Sucursal_producto;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -57,9 +58,43 @@ class ProductosCaducidadController extends Controller
      * @param  \App\Models\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function show(cr $cr)
+    public function show( $id)
     {
-        //
+        if($id == 'todos')
+        {
+            //$sucursales = ProductosCaducidad::where('idSucursal', '=',);
+            return Productos_caducidad::all();
+        }
+        $productos = Producto::all();
+        $sucursalProducto = Sucursal_producto::where('idSucursal', '=',$id)->get();
+        $productoCaducidad = Productos_caducidad::all();//where('idSucursalProducto','=',$sP->id)->get();
+        
+        $productosC = [];
+        foreach($productoCaducidad as $pC)
+        {
+            foreach($sucursalProducto as $sP)
+            {
+                if($sP->id == $pC->idSucursalProducto)
+                {
+                    $i = 0;
+                    while($i<count($productos))
+                    {
+                        if($productos[$i]->id == $sP->idProducto)
+                        {
+                            $pC->nombre = $productos[$i]->nombre;
+                            $pC->codigoBarras = $productos[$i]->codigoBarras;
+                            $i = count($productos);
+                        }
+                        else
+                            $i++;
+                    }
+                    array_push($productosC, $pC);
+                    //$productos = Arr::add($productos, 'numero', 6);
+                }
+            }
+        }
+        return $productosC;//ProductosCaducidad::where('idSucursalProducto', '=',$id)->get();
+        //ProductosCaducidad::all(); $sucursales;
     }
 
     /**
@@ -91,8 +126,14 @@ class ProductosCaducidadController extends Controller
      * @param  \App\Models\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function destroy(cr $cr)
+    public function destroy($id)
     {
-        //
+        Productos_caducidad::destroy($id);
+        return 'true';
+    }
+
+    public function caducidad()
+    {
+        return view('Producto.caducidad');
     }
 }

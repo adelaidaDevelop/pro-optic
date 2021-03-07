@@ -173,4 +173,6 @@ class SucursalProductoController extends Controller
     {
         //
     }
+
+    
 }
