@@ -48,6 +48,8 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+        try{
+
         $datosProducto = request()->except('_token', 'minimoStock');
       //  $datosProducto['existencia']=0;
      //   $datosProducto['costo']=0;
@@ -65,11 +67,15 @@ class ProductoController extends Controller
        $datosSP['idSucursal'] = $idSucursal;
        $datosSP['idProducto'] = $producto->id;
        Sucursal_producto::create($datosSP);
+
        // return response()->json($datosProducto);
       // TempData["success"] = "registro grabado";
      //::success('this is a test message');
     
         return redirect('/puntoVenta/producto');
+    }catch (\Illuminate\Database\QueryException $e){
+        return redirect()->back()->withInput()->withErrors(['mensajeError' => 'CODIGO DE BARRAS Y/O NOMBRE YA EXISTE.']);
+    }
     }
 
     /**

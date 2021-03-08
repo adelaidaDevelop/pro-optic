@@ -40,9 +40,6 @@ ADMINISTRACION
 </div>
 -->
 
-
-
-
 <div class=" my-2 ml-3 p-1 ">
     <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modalAllProductos" id="ver" onclick=" return cargaProductos()" value="">
         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">

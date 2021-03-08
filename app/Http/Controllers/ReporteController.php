@@ -11,6 +11,7 @@ use App\Models\Compra;
 use App\Models\Empleado;
 use App\Models\Producto;
 use App\Models\Departamento;
+use App\Models\Detalle_compra;
 use App\Models\Detalle_venta;
 use App\Models\Sucursal_empleado;
 use App\Models\Sucursal_producto;
@@ -25,11 +26,13 @@ class ReporteController extends Controller
      */
     public function index()
     {
+        //CORTE DE CAJA INDEX
         $ventas = Venta::all();
         $pagos = Pago_venta::all();
         $devoluciones = Devolucion::all();
         $pagoCompras= Pago_compra::all();
         $compras = Compra::all();
+        $empleados = Empleado::all();
         //Seleccionar empleados que son cajeros
         //$cajero = Empleado::where
         $cajero = Empleado::all();
@@ -38,18 +41,21 @@ class ReporteController extends Controller
 
     public function index2()
     {
-        $cajero = Empleado::all();
+        //REPORTE INVENTARIO INDEX
+        $empleados = Empleado::all();
+        $idSucursal = session('sucursal');
+        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
         $compras= Compra::all();
-        $compraProductos= Compra::all();
+        $detalleCompra= Detalle_compra::all();
         $productos= Producto::all();
         $devoluciones= Devolucion::all();
         $departamentos= Departamento::all();
         $ventas = Venta::all();
         $detalle_ventas = Detalle_venta::all();
-        $sucursal_productos = Sucursal_producto::all();
-        $sucursalEmpleados = Sucursal_empleado::all();
+        $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
+        
 
-        return view('Reportes.reporteInventario', compact('cajero','compras','compraProductos', 'productos','devoluciones', 'departamentos','ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados'));
+        return view('Reportes.reporteInventario', compact('empleados','compras','detalleCompra', 'productos','devoluciones', 'departamentos','ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados'));
     }
     public function index3()
     {

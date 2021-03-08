@@ -44,7 +44,7 @@ REPORTES
             <h6>CAJERO:</h6>
             <select class="form-control col-2 ml-3 mr-3 my-0" name="idCajero" id="idCajero" onchange="" required>
                 <option value="0">TODOS</option>
-                @foreach($cajero as $cajero)
+                @foreach($empleados as $cajero)
                 <option value="{{$cajero['id']}}"> {{$cajero['nombre'] }}</option>
                 @endforeach
             </select>
@@ -104,23 +104,25 @@ REPORTES
             <input type="date" min="" onchange="" id="fechaPInicio" class="form-control my-0 col-2 mr-2" disabled />
             <input type="date" min="" onchange="" id="fechaPFinal" class="form-control my-0 col-2 mr-2" disabled />
             <button class="btn btn-secondary" onclick="generaReportes()">GENERAR REPORTE</button>
+            <button id="imp" name="imp" class="btn btn-primary ml-1 "> IMPRIMIR REPORTE</button>
+
         </div>
 
         <!-- TABLA -->
-        <div id="tablaR" class="row w-100 ">
-            <div id="tabla2" class="row col-12 " style="height:300px;overflow-y:auto;">
+        <div id="tablaR" class="row w-100 mb-3">
+            <div id="tabla2" class="row col-12 " style="height:200px;overflow-y:auto;">
                 <table class="table table-bordered border-primary ml-3  w-100">
                     <thead class="table-secondary text-primary">
                         <tr>
                             <th>#</th>
+                            <th>MOVIMIENTO</th>
                             <th>FECHA</th>
                             <th>HORA</th>
-                            <th>PRODUCTO</th>
-                            <th>CANT. ANTERIOR</th>
-                            <th>CANT. ACTUAL</th>
-                            <th>MOVIMIENTO</th>
                             <th>CAJERO</th>
+                            <th>PRODUCTO</th>
                             <th>DEPTO</th>
+                            <th>CANT. ANTES</th>
+                            <th>CANT. ACTUAL</th>
                         </tr>
                     </thead>
                     <tbody id="consultaBusqueda">
@@ -130,21 +132,13 @@ REPORTES
             </div>
         </div>
 
-        <div class="col-12 form-group input-group ml-3 mt-2">
-            <button id="imp" name="imp" class="btn btn-primary mx-auto "> IMPRIMIR REPORTE</button>
-        </div>
-
 
     </div>
-
-
 </div>
-
-
 
 <script>
     let compras = @json($compras);
-    let compra_productos = @json($compraProductos);
+    let detalle_compras = @json($detalleCompra);
     let productos = @json($productos);
     let devoluciones = @json($devoluciones);
     let departamentos = @json($departamentos);
@@ -152,88 +146,12 @@ REPORTES
     let detalle_ventas = @json($detalle_ventas);
     let sucursal_productos = @json($sucursal_productos);
     let sucursalEmpleados = @json($sucursalEmpleados);
+    let empleados = @json($empleados);
     let banderaMovimiento = true;
     let fechaDia = "";
     let tabla2 = document.querySelector('#tablaR').outerHTML;
 
-
-
-    let registrosCompEnt = "";
-    /*
-        function filtrarCompras() {
-            let cuerpo = "";
-            let contador = 1;
-            let cont = 0;
-            let emple = "";
-            let fecha = "";
-            let banderaMovimiento = true;
-
-
-            if (verificarFechas()) {
-                console.log("Verifico ok");
-                let fechaInicio = document.querySelector('#fechaCorte');
-                let fechaFin = document.querySelector('#fechaFinal');
-                let fechaI = new Date(fechaInicio.value);
-                let fechaF = new Date(fechaFin.value);
-                fechaI.setDate(fechaI.getDate() + 1);
-                fechaF.setDate(fechaF.getDate() + 1);
-
-                for (let j in ventas) {
-
-                    let total = 0;
-                    fecha = new Date(ventas[j].created_at);
-                    fecha.setDate(fecha.getDate() + 1);
-                    cont = cont + 1;
-                    console.log(fecha.toLocaleDateString());
-                    console.log(fechaI.toLocaleDateString());
-
-                    if (fecha.getTime() >= fechaI.getTime()) {
-                        console.log("minimo");
-                        if (fecha.getTime() <= fechaF.getTime()) {
-                            console.log("maximo");
-
-                            for (count21 in detalleVenta) {
-                                if (detalleVenta[count21].idVentas == ventas[j].id) {
-                                    total = total + detalleVenta[count21].subtotal
-                                }
-                            }
-
-                            for (count6 in empleados) {
-                                if (empleados[count6].id == ventas[j].idEmpleado) {
-                                    emple = empleados[count6].nombre + " " + empleados[count6].apellidos
-                                }
-                            }
-                            cuerpo = cuerpo + `
-                            <tr onclick="" data-dismiss="modal">
-
-                            <th scope="row">` + cont + `</th>
-                            <td>` + ventas[j].id + `</td>
-                            <td>` + emple + `</td>
-                            <td>` + ventas[j].estado + `</td>
-                            <td>` + ventas[j].pago + `</td>
-                            <td>  </td>
-                            <td>` + total + `</td> 
-                            <td>` + fecha.toLocaleDateString() + `</td> 
-                            <td>` + fecha.toLocaleTimeString() + `</td>   
-                        </tr>
-                        `;
-                        }
-                    } else {
-                        console.log("no entra");
-                    }
-                }
-            } else {
-                console.log("No verifico bien");
-            }
-            document.getElementById("tablaVenta").innerHTML = cuerpo;
-        };
-    */
     function validarCamposFechas() {
-        //   let dia = document.getElementById('fechaXDia');
-        //   let mes = document.getElementById('fechaXmeses');
-        //  let anio = document.getElementById('fechaXanio');
-        //   let periodoIni = document.getElementById('fechaPInicio');
-        //   let periodoFin = document.getElementById('fechaPFinal');
         let selectFecha = document.querySelector('input[name="fecha"]:checked');
         let opcFecha = selectFecha.value;
         if (opcFecha === 'dia') {
@@ -274,7 +192,6 @@ REPORTES
 
     function habilitarFecha() {
         //Desabilitar los inputs y no los radios butons
-
         let dia = document.getElementById('fechaXDia');
         let mes = document.getElementById('fechaXmeses');
         let anio = document.getElementById('fechaXanio');
@@ -289,28 +206,24 @@ REPORTES
             anio.disabled = true;
             periodoIni.disabled = true;
             periodoFin.disabled = true;
-            //  fechaDia = document.querySelector('#fechaXDia');
         } else if (opcFecha === 'mes') {
             dia.disabled = true;
             mes.disabled = false;
             anio.disabled = true;
             periodoIni.disabled = true;
             periodoFin.disabled = true;
-            //   fechaDia = document.querySelector('#fechaXmeses');
         } else if (opcFecha === 'anio') {
             dia.disabled = true;
             mes.disabled = true;
             anio.disabled = false;
             periodoIni.disabled = true;
             periodoFin.disabled = true;
-            //   fechaDia = document.querySelector('#fechaXanio');
         } else if (opcFecha === 'periodo') {
             dia.disabled = true;
             mes.disabled = true;
             anio.disabled = true;
             periodoIni.disabled = false;
             periodoFin.disabled = false;
-            //fechaDia = document.getElementById('fechaPFinal');
         }
     };
 
@@ -327,22 +240,229 @@ REPORTES
             movimiento.disabled = false;
             producto.disabled = true;
             banderaMovimiento = true;
-
         }
     };
 
+    function compraProductos(fechaXDia2) {
+        entradaCompraProduct = "";
+        //COMPRA DE PRODUCTOS AGREGADAS EN ESA FECHA
+        for (let c in compras) {
+            let fechaCompra = new Date(compras[c].created_at);
+            console.log(fechaCompra);
+            // console.log(fechaXDia);
+            //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
+            //  fechaCompra.setDate(fechaCompra.getDate() + 1);
+            if (comparacionFecha(fechaXDia2, fechaCompra)) {
+                fechaCol = fechaCompra.toLocaleDateString();
+                horaCol = fechaCompra.toLocaleTimeString();
+                for (let z in sucursalEmpleados) {
+                    if (sucursalEmpleados[z].id == compras[c].idSucursalEmpleado) {
+                        for (let h in empleados) {
+                            if (empleados[h].id == sucursalEmpleados[z].idEmpleado)
+                                empleadoNombre = empleados[h].primerNombre + " " + empleados[h].segundoNombre + " " + empleados[h].apellidoPaterno + " " + empleados[h].apellidoMaterno;
+                        }
+                    }
+                }
+                // para buscar por cajero
+                //Buscar compras que hubieron en esa fecha en detalle_compras
+                for (let x in detalle_compras) {
+                    if (detalle_compras[x].idCompra == compras[c].id) {
+                        for (let i in productos) {
+                            //Encontrar productos que aparecen en compra produtos
+                            // console.log(productos[i].id);
+                            if (productos[i].id == detalle_compras[x].idProducto) {
+                                productoCol = productos[i].nombre;
+                                for (let t in sucursal_productos) {
+                                    if (sucursal_productos[t].idProducto == productos[i].id) {
+                                        existencia = sucursal_productos[t].existencia;
+                                    }
+                                }
+                                //Encontrar nombre departamento 
+                                for (let d in departamentos) {
+                                    if (productos[i].idDepartamento == departamentos[d].id) {
+                                        depto = departamentos[d].nombre;
+                                    }
+                                }
+                                cantidad = detalle_compras[x].cantidad;
+                                cant_anterior = existencia;
+                                cant_actual = existencia + cantidad;
+                                movimientoTxt = "ENTRADAS: COMPRA PRODUCTOS";
+                                // console.log("RELLENANDO");
+                                //AQUI HACER LAS FILAS PARA LA TABLA PASANDOLE LOS DATOS
+                                entradaCompraProduct = entradaCompraProduct + `
+                                            <tr>
+                                                    <th scope="row">` + "No" + `</th>
+                                                    <td>` + movimientoTxt + `</td>
+                                                    <td>` + fechaCol + `</td>
+                                                    <td>` + horaCol + `</td>
+                                                    <td>` + empleadoNombre + `</td>
+                                                    <td>` + productoCol + `</td>
+                                                    <td>` + depto + `</td> 
+                                                    <td>` + cant_anterior + `</td>
+                                                    <td>` + cant_actual + `</td>
+                                            </tr>
+                                            `;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    };
+
+    function nuevosProductos(fechaXDia2) {
+        //Entradas: NUEVOS PRODUCTOS
+        entradaNuevosProductos = "";
+        console.log("nuevos pprod")
+        for (let p in productos) {
+            let fechaNuevoProd = new Date(productos[p].created_at);
+            if (comparacionFecha(fechaXDia2, fechaNuevoProd)) {
+                fechaCol = fechaNuevoProd.toLocaleDateString();
+                horaCol = fechaNuevoProd.toLocaleTimeString();
+                empleadoNombre = "NO ESPECIFICADO"; // NO SE SABE QUE EMPLEADO AGREGA NUEVOS PRODUCTOS
+                productoCol = productos[p].nombre;
+                for (let d in departamentos) {
+                    if (departamentos[d].id == productos[p].idDepartamento) {
+                        depto = departamentos[d].nombre;
+                    }
+                }
+                cant_anterior = 0;
+                cant_actual = 0; // checar existencia si es x sucursal
+                movimientoTxt = "ENTRADA: NUEVOS PRODUCTOS";
+                //AGREGAR FILAS
+                entradaNuevosProductos = entradaNuevosProductos + `
+                                            <tr>
+                                                    <th scope="row">` + "No" + `</th>
+                                                    <td>` + movimientoTxt + `</td>
+                                                    <td>` + fechaCol + `</td>
+                                                    <td>` + horaCol + `</td>
+                                                    <td>` + empleadoNombre + `</td>
+                                                    <td>` + productoCol + `</td>
+                                                    <td>` + depto + `</td> 
+                                                    <td>` + cant_anterior + `</td>
+                                                    <td>` + cant_actual + `</td>
+                                            </tr>
+                                            `;
+
+            }
+        }
+    };
+
+    function ventasRealizadas(fechaXDia) {
+        salidaVP = "";
+        cant_anterior = 0;
+        cant_actual = 0;
+        empleadoNombre = "";
+        //BUSCAR SALIDAS
+        //VENTA DE PRODUCTOS
+        for (let v in ventas) {
+            let fechaVenta = new Date(ventas[v].created_at);
+            //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
+            if (comparacionFecha(fechaXDia, fechaVenta)) {
+                fechaCol = fechaVenta.toLocaleDateString();
+                horaCol = fechaVenta.toLocaleTimeString();
+                for (let v in sucursalEmpleados) {
+                    if (sucursalEmpleados[v].id == ventas[v].idSucursalEmpleado) {
+                        for (let h in empleados) {
+                            if (empleados[h].id == sucursalEmpleados[v].idEmpleado) {
+                                empleadoNombre = empleados[h].primerNombre + " " + empleados[h].segundoNombre + " " + empleados[h].apellidoPaterno + " " + empleados[h].apellidoMaterno;
+                            }
+                        }
+                    }
+                }
+                for (let z in detalle_ventas) {
+                    if (detalle_ventas[z].idVenta == ventas[v].id) {
+                        for (let e in productos) {
+                            if (productos[e].id == detalle_ventas[z].idProducto) {
+                                // existencia = productos[e].existencia;
+                                productoCol = productos[e].nombre;
+                                for (let d in departamentos) {
+                                    if (departamentos[d].id == productos[e].idDepartamento) {
+                                        depto = departamentos[d].nombre;
+                                    }
+                                }
+                                movimientoTxt = "SALIDA: VENTA DE PRODUCTOS";
+                                cantidad = detalle_ventas[z].cantidad;
+                                cant_anterior = 0;
+                                cant_actual =0;
+                                    salidaVP = salidaVP + `
+                                            <tr>
+                                                    <th scope="row">` + "No" + `</th>
+                                                    <td>` + movimientoTxt + `</td>
+                                                    <td>` + fechaCol + `</td>
+                                                    <td>` + horaCol + `</td>
+                                                    <td>` + empleadoNombre + `</td>
+                                                    <td>` + productoCol + `</td>
+                                                    <td>` + depto + `</td>  
+                                                    <td>` + cant_anterior + `</td>
+                                                    <td>` + cant_actual + `</td>
+                                            </tr>
+                                            `;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        console.log(salidaVP);
+    };
+
+    function devolucionesRealizadas() {
+        cant_anterior = 0;
+        cant_actual = 0;
+        empleadoNombre = 0;
+        cuerpo = "";
+        devolucionFila = "";
+        //BUSCAR DEVOLUCIONES
+        for (let f in devoluciones) {
+            console.log("entra al for de devoluciones")
+            let fechaDevolucion = new Date(devoluciones[f].created_at);
+            //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
+            if (comparacionFecha(fechaXDia, fechaDevolucion)) {
+                fechaCol = fechaDevolucion.toLocaleDateString();
+                horaCol = fechaDevolucion.toLocaleTimeString();
+                //  idEmpleado = ventas[v].idEmpleado; // para buscar por cajero
+                for (let p in productos) {
+                    //console.log("entra a for de productos");
+                    if (productos[p].id == devoluciones[f].idProducto) {
+                        console.log("encuentra un producto en devolucion");
+                        productoCol = productos[p].nombre;
+                        for (let d in departamentos) {
+                            if (departamentos[d].id == productos[p].idDepartamento) {
+                                depto = departamentos[d].nombre;
+                            }
+                        }
+                        movimientoTxt = "DEVOLUCIONES";
+                        devolucionFila = devolucionFila + `
+                                            <tr>
+                                                    <th scope="row">` + "No" + `</th>
+                                                    <td>` + fechaCol + `</td>
+                                                    <td>` + horaCol + `</td>
+                                                    <td>` + productoCol + `</td>
+                                                    <td>` + cant_anterior + `</td>
+                                                    <td>` + cant_actual + `</td>
+                                                    <td>` + movimientoTxt + `</td>
+                                                    <td>` + empleadoNombre + `</td>
+                                                    <td>` + depto + `</td>        
+                                            </tr>
+                                            `;
+                    }
+                }
+
+            }
+        }
+    }
+
     function generaReportes() {
         let devolucionFila = "";
-        let salidaVP = "";
-        let fila_entradaNewP = "";
-        let fila_entradaCP = "";
-        let idEmpCol = 0;
+        //  let salidaVP = "";
+        //let entradaNuevosProductos = "";
+        // let entradaCompraProduct = "";
+        let empleadoNombre = "";
         let filaprod_caducados = "";
         let cant_actual = 0;
-
-
-        //lamar metodo 
-        //habilitarFecha();
         let fechaXDia = "";
         let cuerpo = "";
         if (validarCamposFechas()) {
@@ -352,190 +472,23 @@ REPORTES
                 console.log("entro a movimiento");
                 let movi = document.querySelector('#movimientoID');
                 let moviName = movi.value;
-
                 if (moviName == "1") {
-                    cuerpo = "";
-                    fila_entradaNewP = "";
-                    fila_entradaCP = "";
-
-                    //BUSCAR ENTRADAS
-                    //COMPRA DE PRODUCTOS
-                    for (let c in compras) {
-                        let fechaCompra = new Date(compras[c].created_at);
-                        console.log(fechaCompra);
-                        console.log(fechaXDia);
-                        //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
-                        //  fechaCompra.setDate(fechaCompra.getDate() + 1);
-                        if (comparacionFecha(fechaXDia, fechaCompra)) {
-                            fechaCol = fechaCompra.toLocaleDateString();
-                            horaCol = fechaCompra.toLocaleTimeString();
-                            for (let z in sucursalEmpleados) {
-                                if (sucursalEmpleados[z].idEmpleado == compras[c].idEmpleado) {
-                                    idEmpCol = compras[c].idEmpleado;
-                                }
-                            }
-                            // para buscar por cajero
-                            //Buscar ventas que hubieron en esa fecha en compra-productos
-                            for (let x in compra_productos) {
-                                if (compra_productos[x].idCompra == compras[c].id) {
-                                    for (let i in productos) {
-                                        //Encontrar productos que aparecen en compra produtos
-                                        console.log(compra_productos[x].idProductos);
-                                        console.log(productos[i].id);
-                                        if (productos[i].id == compra_productos[x].idProducto) {
-                                            productoCol = productos[i].nombre;
-                                            for (let t in sucursal_productos) {
-                                                if (sucursal_productos[t].idProducto == productos.id) {
-                                                    existencia = sucursal_productos[t].existencia;
-                                                }
-                                            }
-
-
-                                            //Encontrar nombre departamento 
-                                            for (let d in departamentos) {
-                                                if (productos[i].idDepartamento == departamentos[d].id) {
-                                                    depto = departamentos[d].nombre;
-                                                }
-                                            }
-                                            cantidad = compra_productos[x].cantidad;
-                                            cant_anterior = existencia;
-                                            cant_actual = existencia + cantidad;
-                                            movimientoTxt = "ENTRADAS: COMPRA PRODUTOS";
-                                            console.log("RELLENANDO");
-                                            //AQUI HACER LAS FILAS PARA LA TABLA PASANDOLE LOS DATOS
-                                            fila_entradaCP = fila_entradaCP + `
-                                            <tr>
-                                                    <th scope="row">` + "No" + `</th>
-                                                    <td>` + fechaCol + `</td>
-                                                    <td>` + horaCol + `</td>
-                                                    <td>` + productoCol + `</td>
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
-                                                    <td>` + movimientoTxt + `</td>
-                                                    <td>` + idEmpCol + `</td>
-                                                    <td>` + depto + `</td>        
-                                            </tr>
-                                            `;
-
-                                            //  encontradosBandera = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //Entradas: nueevos productos
-
-                    for (let p in productos) {
-                        let fechaNuevoProd = new Date(productos[p].created_at);
-
-                        //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
-
-                        if (comparacionFecha(fechaXDia, fechaNuevoProd)) {
-                            fechaCol = fechaNuevoProd.toLocaleDateString();
-                            horaCol = fechaNuevoProd.toLocaleTimeString();
-                            idEmpCol = 1 // para buscar por cajero
-                            productoCol = productos[p].nombre;
-                            for (let d in departamentos) {
-                                if (departamentos[d].id == productos[p].idDepartamento) {
-                                    depto = departamentos[d].nombre;
-                                }
-                            }
-                            cant_anterior = 0;
-                            cant_actual = productos[p].existencia;
-                            movimientoTxt = "ENTRADA: NUEVOS PRODUCTOS";
-                            //AGREGAR FILAS
-                            fila_entradaNewP = fila_entradaNewP + `
-                                            <tr>
-                                                    <th scope="row">` + "No" + `</th>
-                                                    <td>` + fechaCol + `</td>
-                                                    <td>` + horaCol + `</td>
-                                                    <td>` + productoCol + `</td>
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
-                                                    <td>` + movimientoTxt + `</td>
-                                                    <td>` + idEmpCol + `</td>
-                                                    <td>` + depto + `</td>        
-                                            </tr>
-                                            `;
-
-                            // encontradosBandera = true;
-                        }
-
-                    }
-                    cuerpo = fila_entradaCP + fila_entradaNewP;
+                    // OPCION UNO: ENTRADAS
+                    nuevosProductos(fechaXDia);
+                    compraProductos(fechaXDia);
+                    cuerpo = entradaCompraProduct + entradaNuevosProductos;
                     if (cuerpo === "") {
-                        // tabla2 = document.querySelector('#tablaR');
-                        
                         let sin = `<h3 class= "text-danger text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h3>`;
                         document.getElementById("tablaR").innerHTML = sin;
-                       // document.getElementById("imp").innerHTML
-                      //  $(document.getElementById("imp").outerHTML).attr("disabled");
                         document.getElementById("imp").disabled = true;
                     } else {
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
-
                 } else if (moviName == "2") {
-                    salidaVP = "";
-                    cuerpo = "";
-                    cant_anterior = 0;
-                    cant_actual = 0;
-                    idEmpCol = 0;
-                    //BUSCAR SALIDAS
-                    //VENTA DE PRODUCTOS
-                    for (let v in ventas) {
-                        let fechaVenta = new Date(ventas[v].created_at);
-                        //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
-                        if (comparacionFecha(fechaXDia, fechaVenta)) {
-                            fechaCol = fechaVenta.toLocaleDateString();
-                            horaCol = fechaVenta.toLocaleTimeString();
-                            idEmpCol = ventas[v].idEmpleado; // CHECAR
-                            for (let z in detalle_ventas) {
-                                if (detalle_ventas[z].idVenta == ventas[v].id) {
-                                    for (let e in productos) {
-                                        if (productos[e].id == detalle_ventas[z].idProducto) {
-
-                                            // existencia = productos[e].existencia;
-                                            productoCol = productos[e].nombre;
-                                            for (let d in departamentos) {
-                                                if (departamentos[d].id == productos[e].idDepartamento) {
-                                                    depto = departamentos[d].nombre;
-                                                }
-                                            }
-                                            movimientoTxt = "SALIDA: VENTA DE PRODUCTOS";
-                                            cantidad = detalle_ventas[z].cantidad;
-                                            //cant_anterior
-                                            // cant_actual
-                                            salidaVP = salidaVP + `
-                                            <tr>
-                                                    <th scope="row">` + "No" + `</th>
-                                                    <td>` + fechaCol + `</td>
-                                                    <td>` + horaCol + `</td>
-                                                    <td>` + productoCol + `</td>
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
-                                                    <td>` + movimientoTxt + `</td>
-                                                    <td>` + idEmpCol + `</td>
-                                                    <td>` + depto + `</td>        
-                                            </tr>
-                                            `;
-
-                                            //  encontradosBandera = true;
-
-
-                                        }
-
-
-                                    }
-                                }
-
-                            }
-                        }
-                    }
+                    //OPCION 2: SALIDAS
+                    ventasRealizadas(fechaXDia);
                     //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
-
                     cuerpo = salidaVP;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
@@ -545,294 +498,44 @@ REPORTES
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
-
                 } else if (moviName == "3") {
-                    cant_anterior = 0;
-                    cant_actual = 0;
-                    idEmpCol = 0;
-                    cuerpo = "";
-                    devolucionFila = "";
-                    //BUSCAR DEVOLUCIONES
-                    for (let f in devoluciones) {
-                        console.log("entra al for de devoluciones")
-                        let fechaDevolucion = new Date(devoluciones[f].created_at);
-                        //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
-                        if (comparacionFecha(fechaXDia, fechaDevolucion)) {
-                            fechaCol = fechaDevolucion.toLocaleDateString();
-                            horaCol = fechaDevolucion.toLocaleTimeString();
-                            //  idEmpleado = ventas[v].idEmpleado; // para buscar por cajero
-                            for (let p in productos) {
-                                //console.log("entra a for de productos");
-
-                                if (productos[p].id == devoluciones[f].idProducto) {
-                                    console.log("encuentra un producto en devolucion");
-
-                                    productoCol = productos[p].nombre;
-                                    for (let d in departamentos) {
-                                        if (departamentos[d].id == productos[p].idDepartamento) {
-                                            depto = departamentos[d].nombre;
-                                        }
-                                    }
-                                    movimientoTxt = "DEVOLUCIONES";
-                                    devolucionFila = devolucionFila + `
-                                            <tr>
-                                                    <th scope="row">` + "No" + `</th>
-                                                    <td>` + fechaCol + `</td>
-                                                    <td>` + horaCol + `</td>
-                                                    <td>` + productoCol + `</td>
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
-                                                    <td>` + movimientoTxt + `</td>
-                                                    <td>` + idEmpCol + `</td>
-                                                    <td>` + depto + `</td>        
-                                            </tr>
-                                            `;
-
-                                    encontradosBandera = true;
-                                }
-                                //
-                            }
-
-                        }
-                    }
+                    devolucionesRealizadas(fechaXDia);
                     cuerpo = devolucionFila;
-                    if (cuerpo === "") {
-                       // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
-                        document.getElementById("tablaR").innerHTML = sin;
-                        document.getElementById("imp").disabled = true;
-                    } else {
-                        document.getElementById("tablaR").innerHTML = tabla2;
-                        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-                    }
-                    
-                } else if (moviName == "4") {
-                    //uno
-                    cuerpo = "";
-                    fila_entradaNewP = "";
-                    fila_entradaCP = "";
-
-                    //BUSCAR ENTRADAS
-                    //COMPRA DE PRODUCTOS
-                    for (let c in compras) {
-                        let fechaCompra = new Date(compras[c].created_at);
-                        console.log(fechaCompra);
-                        console.log(fechaXDia);
-                        //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
-                        //  fechaCompra.setDate(fechaCompra.getDate() + 1);
-                        if (comparacionFecha(fechaXDia, fechaCompra)) {
-
-                            fechaCol = fechaCompra.toLocaleDateString();
-                            horaCol = fechaCompra.toLocaleTimeString();
-                            //  idEmpCol = compras[c].idEmpleado; // para buscar por cajero
-                            //Buscar ventas que hubieron en esa fecha en compra-productos
-                            for (let x in compra_productos) {
-                                if (compra_productos[x].idCompra == compras[c].id) {
-                                    for (let i in productos) {
-                                        //Encontrar productos que aparecen en compra produtos
-
-                                        console.log(productos[i].id);
-                                        if (productos[i].id == compra_productos[x].idProducto) {
-                                            productoCol = productos[i].nombre;
-                                            // existencia = productos[i].existencia;
-                                            //Encontrar nombre departamento 
-                                            for (let d in departamentos) {
-                                                if (productos[i].idDepartamento == departamentos[d].id) {
-                                                    depto = departamentos[d].nombre;
-                                                }
-                                            }
-                                            cantidad = compra_productos[x].cantidad;
-                                            // cant_anterior = existencia;
-                                            //  cant_actual = existencia + cantidad;
-                                            movimientoTxt = "ENTRADAS: COMPRA PRODUTOS";
-                                            console.log("RELLENANDO");
-                                            //AQUI HACER LAS FILAS PARA LA TABLA PASANDOLE LOS DATOS
-                                            fila_entradaCP = fila_entradaCP + `
-                                            <tr>
-                                                    <th scope="row">` + "No" + `</th>
-                                                    <td>` + fechaCol + `</td>
-                                                    <td>` + horaCol + `</td>
-                                                    <td>` + productoCol + `</td>
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
-                                                    <td>` + movimientoTxt + `</td>
-                                                    <td>` + idEmpCol + `</td>
-                                                    <td>` + depto + `</td>        
-                                            </tr>
-                                            `;
-
-                                            // encontradosBandera = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //Entradas: nueevos productos
-                    //AQUI
-                    for (let p in productos) {
-                        let fechaNuevoProd = new Date(productos[p].created_at);
-
-                        //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
-
-                        if (comparacionFecha(fechaXDia, fechaNuevoProd)) {
-                            fechaCol = fechaNuevoProd.toLocaleDateString();
-                            horaCol = fechaNuevoProd.toLocaleTimeString();
-                            // idEmpCol = 1 // para buscar por cajero
-                            productoCol = productos[p].nombre;
-                            for (let d in departamentos) {
-                                if (departamentos[d].id == productos[p].idDepartamento) {
-                                    depto = departamentos[d].nombre;
-                                }
-                            }
-                            cant_anterior = 0;
-                            // cant_actual = productos[p].existencia;
-                            movimientoTxt = "ENTRADA: NUEVOS PRODUCTOS";
-                            //AGREGAR FILAS
-                            fila_entradaNewP = fila_entradaNewP + `
-                                            <tr>
-                                                    <th scope="row">` + "No" + `</th>
-                                                    <td>` + fechaCol + `</td>
-                                                    <td>` + horaCol + `</td>
-                                                    <td>` + productoCol + `</td>
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
-                                                    <td>` + movimientoTxt + `</td>
-                                                    <td>` + idEmpCol + `</td>
-                                                    <td>` + depto + `</td>        
-                                            </tr>
-                                            `;
-
-                        }
-
-                    }
-                    //  cuerpo = fila_entradaCP + fila_entradaNewP;
-                    //  document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-
-                    //DOS
-                    salidaVP = "";
-                    cant_anterior = 0;
-                    cant_actual = 0;
-                    idEmpCol = 0;
-                    //BUSCAR SALIDAS
-                    //VENTA DE PRODUCTOS
-                    for (let v in ventas) {
-                        let fechaVenta = new Date(ventas[v].created_at);
-                        //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
-                        if (comparacionFecha(fechaXDia, fechaVenta)) {
-                            fechaCol = fechaVenta.toLocaleDateString();
-                            horaCol = fechaVenta.toLocaleTimeString();
-                            // idEmpCol = ventas[v].idEmpleado; // para buscar por cajero
-                            for (let z in detalle_ventas) {
-                                if (detalle_ventas[z].idVenta == ventas[v].id) {
-                                    for (let e in productos) {
-                                        if (productos[e].id == detalle_ventas[z].idProducto) {
-                                            //  existencia = productos[e].existencia;
-                                            productoCol = productos[e].nombre;
-                                            for (let d in departamentos) {
-                                                if (departamentos[d].id == productos[e].idDepartamento) {
-                                                    depto = departamentos[d].nombre;
-                                                }
-                                            }
-                                            movimientoTxt = "SALIDA: VENTA DE PRODUCTOS";
-                                            cantidad = detalle_ventas[z].cantidad;
-                                            //cant_anterior
-                                            // cant_actual
-                                            salidaVP = salidaVP + `
-                                            <tr>
-                                                    <th scope="row">` + "No" + `</th>
-                                                    <td>` + fechaCol + `</td>
-                                                    <td>` + horaCol + `</td>
-                                                    <td>` + productoCol + `</td>
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
-                                                    <td>` + movimientoTxt + `</td>
-                                                    <td>` + idEmpCol + `</td>
-                                                    <td>` + depto + `</td>        
-                                            </tr>
-                                            `;
-
-
-                                        }
-
-
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                    //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
-
-                    //  cuerpo = salidaVP;
-                    //  document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-
-                    //tres
-                    cant_anterior = 0;
-                    cant_actual = 0;
-                    idEmpCol = 0;
-                    cuerpo = "";
-                    devolucionFila = "";
-                    //BUSCAR DEVOLUCIONES
-                    for (let f in devoluciones) {
-                        console.log("entra al for de devoluciones")
-                        let fechaDevolucion = new Date(devoluciones[f].created_at);
-                        //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
-                        if (comparacionFecha(fechaXDia, fechaDevolucion)) {
-                            fechaCol = fechaDevolucion.toLocaleDateString();
-                            horaCol = fechaDevolucion.toLocaleTimeString();
-                            //  idEmpleado = ventas[v].idEmpleado; // para buscar por cajero
-                            for (let p in productos) {
-                                //console.log("entra a for de productos");
-
-                                if (productos[p].id == devoluciones[f].idProducto) {
-                                    console.log("encuentra un producto en devolucion");
-
-                                    productoCol = productos[p].nombre;
-                                    for (let d in departamentos) {
-                                        if (departamentos[d].id == productos[p].idDepartamento) {
-                                            depto = departamentos[d].nombre;
-                                        }
-                                    }
-                                    movimientoTxt = "DEVOLUCIONES";
-                                    devolucionFila = devolucionFila + `
-                                            <tr>
-                                                    <th scope="row">` + "No" + `</th>
-                                                    <td>` + fechaCol + `</td>
-                                                    <td>` + horaCol + `</td>
-                                                    <td>` + productoCol + `</td>
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
-                                                    <td>` + movimientoTxt + `</td>
-                                                    <td>` + idEmpCol + `</td>
-                                                    <td>` + depto + `</td>        
-                                            </tr>
-                                            `;
-                                }
-                                //
-                            }
-
-                        }
-                    }
-                    //cuerpo = devolucionFila;
-                    // document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-
-
-                    //BUSCAR TODOS
-                    cuerpo = devolucionFila + salidaVP + fila_entradaNewP + fila_entradaCP + filaprod_caducados;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
                         let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
-
+                        document.getElementById("tablaR").innerHTML = tabla2;
+                        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+                    }
+                } else if (moviName == "4") {
+                    //uno
+                    //BUSCAR ENTRADAS
+                    //COMPRA DE PRODUCTOS
+                    compraProductos(fechaXDia);
+                    //Entradas: nueevos productos: 
+                    nuevosProductos(fechaXDia);
+                    //DOS
+                    //BUSCAR SALIDAS
+                    //VENTA DE PRODUCTOS
+                    ventasRealizadas(fechaXDia);
+                    //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
+                    //tres
+                    devolucionesRealizadas(fechaXDia);
+                    //BUSCAR TODOS
+                    cuerpo = devolucionFila + salidaVP + entradaNuevosProductos + entradaCompraProduct;
+                    if (cuerpo === "") {
+                        // tabla2 = document.querySelector('#tablaR');
+                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        document.getElementById("tablaR").innerHTML = sin;
+                        document.getElementById("imp").disabled = true;
+                    } else {
                         console.log(tabla2);
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
-
-
                 }
             } else {
                 //REPORTES PRODUCTOS
@@ -892,7 +595,6 @@ REPORTES
 
     function fechaInicioMenorQueMayor() {
         let btn = document.querySelector('input[name="fechaCompra"]:checked');
-
         if (btn != null) {
             let fechaInicio = document.querySelector('#fechaInicioC');
             let fechaFin = document.querySelector('#fechaFinalC');
@@ -917,10 +619,7 @@ REPORTES
         return false;
     }
 
-
-
     function comparacionFecha(fecha1, fecha2) {
-
         let selectFecha = document.querySelector('input[name="fecha"]:checked');
         let opcFecha = selectFecha.value;
         if (opcFecha === 'dia') {
@@ -931,7 +630,6 @@ REPORTES
             if (compararMes(fecha1, fecha2)) {
                 return true;
             }
-
         } else if (opcFecha === 'anio') {
             if (compararAnio(fecha1, fecha2)) {
                 return true;
@@ -951,7 +649,6 @@ REPORTES
             } else {
                 //  console.log(" fecha no elegida");
             }
-
         }
         return false;
     };
