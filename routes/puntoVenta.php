@@ -10,6 +10,7 @@ use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\SucursalEmpleadoController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\OfertaController;
 use App\Http\Controllers\AdministracionController;
 
 //ade
@@ -100,7 +101,8 @@ Route::prefix('/puntoVenta')->group(function()
         Route::resource('compra', CompraController::class);
         Route::get('/proveedor/buscador', [ProveedorController::class,'buscador']);
         Route::resource('proveedor', ProveedorController::class);
-    /* */    Route::get('proximosACaducar', [ProductosCaducidadController::class,'caducidad']);
+    /* */   Route::get('proximosACaducar', [ProductosCaducidadController::class,'caducidad']);
+            Route::resource('oferta', OfertaController::class);  
         Route::resource('productosCaducidad', ProductosCaducidadController::class);
         
     });

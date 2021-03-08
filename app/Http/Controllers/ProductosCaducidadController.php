@@ -115,9 +115,13 @@ class ProductosCaducidadController extends Controller
      * @param  \App\Models\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, cr $cr)
+    public function update(Request $request,$id)
     {
-        //
+        if($request['oferta'] == true)
+        {
+            return Productos_caducidad::findOrFail($id)->update(['oferta' => true,'cantidad' =>$request['cantidad']]);
+        }
+        return;
     }
 
     /**

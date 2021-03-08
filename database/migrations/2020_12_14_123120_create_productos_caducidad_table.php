@@ -20,6 +20,7 @@ class CreateProductosCaducidadTable extends Migration
             $table->foreignId('idSucursalProducto')->constrained('sucursal_productos');
             $table->unsignedInteger('cantidad');
             $table->date('fecha_caducidad');
+            $table->boolean('oferta');
             $table->timestamps();
         });
     }

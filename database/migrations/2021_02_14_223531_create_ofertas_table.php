@@ -16,9 +16,9 @@ class CreateOfertasTable extends Migration
         Schema::create('ofertas', function (Blueprint $table) {
             //$table->id();
             $table->foreignId('idSucursalProducto')->constrained('sucursal_productos');
-            $table->unsignedInteger('cantidad');
+            //$table->unsignedInteger('cantidad');
             $table->unsignedInteger('existencia');
-            $table->date('fecha_caducidad');
+            //$table->date('fecha_caducidad');
             $table->timestamps();
         });
     }

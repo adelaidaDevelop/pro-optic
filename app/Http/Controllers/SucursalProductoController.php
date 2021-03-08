@@ -58,6 +58,7 @@ class SucursalProductoController extends Controller
             $productoCaducidad->idSucursalProducto = $sucursalProducto->id;
             $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
             $productoCaducidad->cantidad = $datosProducto['cantidad'];
+            $productoCaducidad->oferta = false;
             $productoCaducidad->save();
         }
 
@@ -156,6 +157,7 @@ class SucursalProductoController extends Controller
                 $productoCaducidad->idSucursalProducto = $actualizarProducto->id;//$datosProducto['id'];
                 $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
                 $productoCaducidad->cantidad = $datosProducto['cantidad'];
+                $productoCaducidad->oferta = false;
                 $productoCaducidad->save();
                 
             }
