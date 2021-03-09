@@ -163,6 +163,14 @@ class SucursalProductoController extends Controller
             }
             return 'Proceso terminado';
         }
+        if(isset($request['restar']))
+        {
+            $producto = Sucursal_producto::findOrFail($id);//->update(['existencia' =>])
+            $resta = $producto->existencia - $request['restar'];
+            $producto->update(['existencia' => $resta]);
+            return $resta;
+        }
+        return 'No hizo nada';
     }
 
     /**

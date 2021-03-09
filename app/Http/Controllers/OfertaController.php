@@ -38,15 +38,19 @@ class OfertaController extends Controller
         $idSP = $request['producto']['idSucursalProducto'];
         $cantidad = $request['producto']['cantidad'];
         $oferta = Oferta::where('idSucursalProducto','=',$idSP);
+        $of = $oferta->get()->first();
+        
         //return $oferta;
-        if(isset($oferta))
+        if(isset($of))
         {
+            //return 'pasa algo 0';
             $suma = $oferta->get()->first()->existencia + $cantidad;
             $oferta->update(['existencia' => $suma]);
             //$oferta->save();
             return $suma;
         }
         else{
+            //return 'pasa algo 1';
             Oferta::create([
                 'idSucursalProducto' => $idSP,
                 'existencia' => $cantidad
@@ -87,12 +91,14 @@ class OfertaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /*if($request['oferta'] == true)
+        if(isset($request['restar']))
         {
-            reut
+            $oferta = Oferta::where('idSucursalProducto','=',$id);//->update(['existencia'])
+            $resta = $oferta->get()->first()->existencia - $request['restar'];
+            $oferta->update(['existencia' => $resta]);
+            return true;
         }
-            return 'Si lo asimilo';
-        return 'No ntiendo. :`v';*/
+        return ':p';
     }
 
     /**

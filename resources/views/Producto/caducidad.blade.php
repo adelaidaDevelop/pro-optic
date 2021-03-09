@@ -34,13 +34,33 @@ PRODUCTOS
                 <strong>CONFIRMAR PROCESO</strong>
             </div>
             <div class="modal-body" id="cuerpoModal">
-                <label for="exampleInputEmail1">POR FAVOR INGRESE LA CANTIDAD EXACTA DE LOS PRODUCTOS 
-                QUE SE PONDRAN EN OFERTA</label>
+                <label for="exampleInputEmail1">POR FAVOR INGRESE LA CANTIDAD EXACTA DE LOS PRODUCTOS
+                    QUE SE PONDRAN EN OFERTA</label>
                 <input class="form-control" id="cantidad" type="text">
             </div>
             <div class="modal-footer" id="pieModal">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
                 <button id="ofertar" type="button" class="btn btn-primary" onclick="darEnOferta()">CONTINUAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirEliminarModal" tabindex="-1" aria-labelledby="confirEliminarModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" id="cabezaEliminarModal">
+                <strong>CONFIRMAR PROCESO</strong>
+            </div>
+            <div class="modal-body" id="cuerpoEliminarModal">
+                <label for="exampleInputEmail1">POR FAVOR INGRESE LA CANTIDAD EXACTA DE LOS PRODUCTOS
+                    QUE SE QUITARAN DEL INVENTARIO</label>
+                <input class="form-control" id="cantidadEliminar" type="text">
+            </div>
+            <div class="modal-footer" id="pieEliminarModal">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                <button id="eliminar" type="button" class="btn btn-primary"
+                    onclick="eliminarRegistro()">CONTINUAR</button>
             </div>
         </div>
     </div>
@@ -73,19 +93,20 @@ async function mostrarProductosCaducidad() {
         for (let i in productosCaducidad) {
             const fecha = new Date(productosCaducidad[i].fecha_caducidad);
             let dia = fecha.getDate();
-            if(fecha.getDate()<10)
+            if (fecha.getDate() < 10)
                 dia = "0" + dia;
-            let mes = (fecha.getMonth()+1);
-            if((fecha.getMonth()+1)<10)
+            let mes = (fecha.getMonth() + 1);
+            if ((fecha.getMonth() + 1) < 10)
                 mes = "0" + mes;
             const fechaCaducidad = dia + "-" + mes + "-" + fecha.getFullYear();
-            let oferta = `<span class="badge badge-danger badge-pill">NO</span>`;//data-toggle="modal" data-target="#confirmacionModal">
-            let botonOferta = `<td> <button class="btn btn-primary" onclick="abrirModalOferta(`+ productosCaducidad[i].id +
-            `)"> 
+            let oferta =
+            `<span class="badge badge-danger badge-pill">NO</span>`; //data-toggle="modal" data-target="#confirmacionModal">
+            let botonOferta = `<td> <button class="btn btn-primary" onclick="abrirModalOferta(` +
+                productosCaducidad[i].id +
+                `)"> 
             DAR EN OFERTA</button> </td>`;
-            if(productosCaducidad[i].oferta == 1)
-            {
-                oferta =  `<span class="badge badge-success badge-pill">SI</span>`;
+            if (productosCaducidad[i].oferta == 1) {
+                oferta = `<span class="badge badge-success badge-pill">SI</span>`;
                 botonOferta = "";
             }
             cuerpo = cuerpo + `
@@ -97,7 +118,8 @@ async function mostrarProductosCaducidad() {
             <td>` + productosCaducidad[i].cantidad + `</td>
             <td>` + fechaCaducidad + `</td>
             ` + botonOferta + `
-            <td> <button class="btn btn-primary" onclick="eliminar(` + productosCaducidad[i].id + `)">BORRAR</button> </td>
+            <td> <button class="btn btn-primary" onclick="eliminar(` + productosCaducidad[i].id +`,`+
+            productosCaducidad[i].idSucursalProducto +`)">BORRAR</button> </td>
             </tr>`;
 
         }
@@ -108,40 +130,38 @@ async function mostrarProductosCaducidad() {
 
     }
 }
-function abrirModalOferta(id)
-{
+
+function abrirModalOferta(id) {
     document.getElementById("ofertar").outerHTML = `<button id="ofertar" type="button" 
-    class="btn btn-primary" onclick="darEnOferta(`+id+`)">CONTINUAR</button>`;
+    class="btn btn-primary" onclick="darEnOferta(` + id + `)">CONTINUAR</button>`;
     //alert('like');
     $('#confirmacionModal').modal('show');
 }
 mostrarProductosCaducidad();
 
-async function darEnOferta(id){
-    try{
-        let productoActualizar = productosCaducidad.find(p => p.id ==id);
-        
+async function darEnOferta(id) {
+    try {
+        let productoActualizar = productosCaducidad.find(p => p.id == id);
+
         let cantidad = document.getElementById("cantidad").value;
-        if(cantidad.length<1)
-        {
+        if (cantidad.length < 1) {
             alert('POR FAVOR INGRESE UNA CANTIDAD');
             return;
         }
-        if(cantidad>productoActualizar.cantidad)
-        {
+        if (cantidad > productoActualizar.cantidad) {
             alert('LA CANTIDAD NO PUEDE SER MAYOR A LA ANTERIOR');
             return;
         }
         let confirmacion = confirm('CONFIRME LA ACCION');
         if (confirmacion) {
-            
+
             const url = `{{url('/')}}/puntoVenta/productosCaducidad/${id}`;
             let respuesta = await $.ajax({
                 url: url,
                 type: 'PUT',
                 data: {
                     'oferta': true,
-                    'cantidad':cantidad,
+                    'cantidad': cantidad,
                     '_token': "{{ csrf_token() }}"
                 },
                 //processData: false, // tell jQuery not to process the data
@@ -153,10 +173,10 @@ async function darEnOferta(id){
                     console.log("Ocurrio un error al hacer la peticion");
                 }
             });
-            
-            console.log('respondió con:',respuesta);
+
+            console.log('respondió con:', respuesta);
             const url2 = `{{url('/')}}/puntoVenta/oferta`;
-            
+
             productoActualizar.cantidad = cantidad;
             let respuesta2 = await $.ajax({
                 url: url2,
@@ -174,41 +194,108 @@ async function darEnOferta(id){
                     console.log("Ocurrio un error al hacer la peticion");
                 }
             });
-            console.log('2respondió con:',respuesta2);
-            return;
+            console.log('2respondió con:', respuesta2);
+            //return;
             await productosPorCaducar();
             await mostrarProductosCaducidad();
+            $('#confirmacionModal').modal('hide');
         }
-    }catch (err) {
+    } catch (err) {
         console.log("Error al realizar la petición AJAX delos productosCaducidad: " + err.message);
     }
-    
+
 }
 
-async function eliminar(id) {
+async function eliminar(id,idSP) {
     try {
         let confirmacion = confirm('¿REALMENTE DESEA ELIMINAR ESTE DATO DE LA LISTA?');
         if (confirmacion) {
-            const url = `{{url('/')}}/puntoVenta/productosCaducidad/${id}`;
-            let respuesta = await $.ajax({
-                url: url,
-                type: 'DELETE',
-                data: {
-                    '_token': "{{ csrf_token() }}"
-                },
-                //processData: false, // tell jQuery not to process the data
-                //contentType: false,
-                success: function(data) {
-                    //alert(data); }
-                }
-            });
-            console.log(respuesta);
-            await productosPorCaducar();
-            await mostrarProductosCaducidad();
+            let confirmacionEliminar = confirm('¿DESEA ELIMINAR PRODUCTOS DEL INVENTARIO?');
+            if (confirmacionEliminar) {
+                document.getElementById("eliminar").outerHTML = `<button id="eliminar" type="button" 
+                class="btn btn-primary" onclick="quitarProductos(` + id +`,` + idSP+ `)">CONTINUAR</button>`;
+                $('#confirEliminarModal').modal('show');
+            } else {
+                if (!confirmacionEliminar)
+                    eliminarRegistro(id);
+            }
         }
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
+}
+
+async function quitarProductos(id,idSP)
+{
+    let cantidad = document.getElementById("cantidadEliminar").value;
+    if (cantidad.length < 1) {
+            alert('POR FAVOR INGRESE UNA CANTIDAD');
+            return;
+        }
+        if (cantidad > productoActualizar.cantidad) {
+            alert('LA CANTIDAD NO PUEDE SER MAYOR A LA ANTERIOR');
+            return;
+        }
+    const url = `{{url('/')}}/puntoVenta/sucursalProducto/${idSP}`;
+    let respuesta = await $.ajax({
+        url: url,
+        type: 'PUT',
+        data: {
+            'restar':cantidad,
+            '_token': "{{ csrf_token() }}"
+        },
+        //processData: false, // tell jQuery not to process the data
+        //contentType: false,
+        success: function(data) {
+            //alert(data); }
+        }
+    });
+    console.log(respuesta);
+    //return console.log('Esta bien hasta aqui');
+    let productoActualizar = productosCaducidad.find(p => p.id == id);
+    //console.log(productoActualizar.oferta);
+    if(productoActualizar.oferta)
+    {
+        const url2 = `{{url('/')}}/puntoVenta/oferta/${idSP}`;
+        let respuesta2 = await $.ajax({
+        url: url2,
+        type: 'PUT',
+        data: {
+            'restar':cantidad,
+            '_token': "{{ csrf_token() }}"
+        },
+        //processData: false, // tell jQuery not to process the data
+        //contentType: false,
+        success: function(data) {
+            //alert(data); }
+        }
+        });
+        console.log(respuesta2);
+    }
+    eliminarRegistro(id);
+    $('#confirEliminarModal').modal('hide');
+}
+
+async function eliminarRegistro(id) {
+    //return alert('Si llega hasta aqui');
+    
+    const url = `{{url('/')}}/puntoVenta/productosCaducidad/${id}`;
+    let respuesta = await $.ajax({
+        url: url,
+        type: 'DELETE',
+        data: {
+            '_token': "{{ csrf_token() }}"
+        },
+        //processData: false, // tell jQuery not to process the data
+        //contentType: false,
+        success: function(data) {
+            //alert(data); }
+        }
+    });
+    console.log(respuesta);
+    await productosPorCaducar();
+    await mostrarProductosCaducidad();
+
 }
 </script>
 @endsection
