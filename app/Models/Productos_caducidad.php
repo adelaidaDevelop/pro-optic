@@ -13,5 +13,6 @@ class Productos_caducidad extends Model
         'idProducto',
         'fecha_caducidad',
         'cantidad',
+        'oferta',
     ];
 }

@@ -14,7 +14,7 @@ class OfertaController extends Controller
      */
     public function index()
     {
-        //
+        return view('Producto.oferta');
     }
 
     /**
@@ -35,7 +35,29 @@ class OfertaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $idSP = $request['producto']['idSucursalProducto'];
+        $cantidad = $request['producto']['cantidad'];
+        $oferta = Oferta::where('idSucursalProducto','=',$idSP);
+        $of = $oferta->get()->first();
+        
+        //return $oferta;
+        if(isset($of))
+        {
+            //return 'pasa algo 0';
+            $suma = $oferta->get()->first()->existencia + $cantidad;
+            $oferta->update(['existencia' => $suma]);
+            //$oferta->save();
+            return $suma;
+        }
+        else{
+            //return 'pasa algo 1';
+            Oferta::create([
+                'idSucursalProducto' => $idSP,
+                'existencia' => $cantidad
+            ]);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -67,9 +89,16 @@ class OfertaController extends Controller
      * @param  \App\Models\Oferta  $oferta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Oferta $oferta)
+    public function update(Request $request, $id)
     {
-        //
+        if(isset($request['restar']))
+        {
+            $oferta = Oferta::where('idSucursalProducto','=',$id);//->update(['existencia'])
+            $resta = $oferta->get()->first()->existencia - $request['restar'];
+            $oferta->update(['existencia' => $resta]);
+            return true;
+        }
+        return ':p';
     }
 
     /**
