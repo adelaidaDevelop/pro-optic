@@ -503,7 +503,7 @@ DEVOLUCION
                 if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
                     for (count6 in empleados) {
                         if (empleados[count6].id == sucursalEmpleado[s].idEmpleado) {
-                            emple = empleados[count6].nombre + " " + empleados[count6].apellidoPaterno
+                            emple= empleados[count6].primerNombre + " "+ empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
                         }
                     }
                 }
@@ -514,7 +514,7 @@ DEVOLUCION
                     <th scope="row">` + cont + `</th>
                     <td>` + ventas[count5].id + `</td>
                     <td>` + emple + `</td>
-                    <td>` + ventas[count5].estado + `</td>
+                    <td>` + ventas[count5].tipo + `</td>
                     <td>` + ventas[count5].pago + `</td>
                     <td> ver </td>
                     <td>` + total + `</td> 
@@ -548,7 +548,7 @@ DEVOLUCION
                 let total = 0;
                 fecha = new Date(ventas[j].created_at);
                 fecha.setDate(fecha.getDate() + 1);
-                cont = cont + 1;
+                
                 console.log(fecha.toLocaleDateString());
                 console.log(fechaI.toLocaleDateString());
                 console.log("fecha: ");
@@ -557,8 +557,6 @@ DEVOLUCION
                     console.log("minimo");
                     if (fecha.getTime() <= fechaF.getTime()) {
                         console.log("maximo");
-
-
                         for (count7 in detalleVenta) {
                             console.log("detalla V: ", detalleVenta);
                             if (detalleVenta[count7].idVenta == ventas[count5].id) {
@@ -567,22 +565,24 @@ DEVOLUCION
                             }
                         }
                         for (let s in sucursalEmpleado) {
+
                             if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
                                 for (count6 in empleados) {
                                     if (empleados[count6].id == sucursalEmpleado[s].idEmpleado) {
-                                        emple = empleados[count6].nombre + " " + empleados[count6].apellidoPaterno
+                                        emple= empleados[count6].primerNombre + " "+ empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
                                     }
                                 }
                             }
                         }
-
+                        console.log(ventas[j].tipo);
+                        console.log(emple);
+                        cont = cont + 1;
                         cuerpo = cuerpo + `
                         <tr onclick="" data-dismiss="modal">
-
                         <th scope="row">` + cont + `</th>
                         <td>` + ventas[j].id + `</td>
                         <td>` + emple + `</td>
-                        <td>` + ventas[j].estado + `</td>
+                        <td>` + ventas[j].tipo + `</td>
                         <td>` + ventas[j].pago + `</td>
                         <td> ver </td>
                         <td>` + total + `</td> 

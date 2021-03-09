@@ -74,7 +74,7 @@ class ProductoController extends Controller
     
         return redirect('/puntoVenta/producto');
     }catch (\Illuminate\Database\QueryException $e){
-        return redirect()->back()->withInput()->withErrors(['mensajeError' => 'CODIGO DE BARRAS Y/O NOMBRE YA EXISTE.']);
+        return redirect()->back()->withInput()->withErrors(['mensajeError' => 'El CODIGO DE BARRAS Y/O NOMBRE YA EXISTE, AGREGUE UNO DIFERENTE']);
     }
     }
 

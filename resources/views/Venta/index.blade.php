@@ -43,16 +43,27 @@
                             <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                             AGREGAR
                         </button>
+
                     </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF" onclick=" buscarSubproductos()" data-toggle="modal" data-target="#exampleModal2" value="informacion" id="boton">
+                        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+                        BUSCAR SUBPRODUCTOS
+                    </button>
                 </div>
                 <!--/div-->
                 <!--div class="col-3 m-0 px-0"-->
-                <div class="form-group row my-1 ml-auto mr-0 px-0 ">
+                <div class="form-group row  ">
                     <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF" onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion" id="boton">
                         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                         BUSCAR PRODUCTO
                     </button>
                 </div>
+                <div>
+
+                </div>
+
                 <!--/div-->
             </div>
             <div class="row m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
@@ -133,6 +144,52 @@
                             </tr>
                         </thead>
                         <tbody id="consultaBusqueda">
+                            <tr class="text-center">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Agregar Producto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="exampleModalLabel">Ingresar Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto2" onkeyup="Subproductos()">
+                </div>
+                <div class="row" style="height:200px;overflow:auto;">
+                    <table class="table table-hover table-bordered" id="productos">
+                        <thead class="thead-light">
+                            <tr class="text-center">
+                                <th scope="col">#</th>
+                                <th scope="col">CODIGO_BARRAS</th>
+                                <th scope="col">PRODUCTO</th>
+                                <th scope="col">EXISTENCIA</th>
+                                <th scope="col">DEPARTAMENTO</th>
+                            </tr>
+                        </thead>
+                        <tbody id="consultaBusquedaSubp">
                             <tr class="text-center">
                                 <td></td>
                                 <td></td>
@@ -299,7 +356,13 @@
     let productosVenta = [];
     let productos = @json($datosP);
     let productosSucursal = @json($productosSucursal);
+    let departamentos = @json($departamentos);
     console.log(productosSucursal);
+
+
+    //subproducto
+    let subproducto = @json($subproductos);
+    let sucursal_prod = @json($sucursalProd);
 
     async function cargarProductos() {
         let response = "Sin respuesta";
@@ -328,7 +391,7 @@
             if (response.ok) {
                 productosSucursal = await response.json();
 
-                console.log('los productos para la sucursal son',productosSucursal);
+                console.log('los productos para la sucursal son', productosSucursal);
                 return productosSucursal;
                 //console.log(response);
 
@@ -468,7 +531,7 @@
                         productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
                         if (!buscarProductoEnVenta(productos[count3].id)) {
                             if (productosSucursal[x].existencia > 0) {
-                                agregarProducto(productos[count3].id);//, productos[count3].codigoBarras, productos[count3]
+                                agregarProducto(productos[count3].id); //, productos[count3].codigoBarras, productos[count3]
                                 //    .nombre,
                                 //    productos[count3].existencia, productos[count3].precio, 1, productos[count3].precio);
                                 mostrarProductos();
@@ -491,11 +554,7 @@
             for (let count4 in productos) {
                 if (productos[count4].id === productosSucursal[x].idProducto) {
                     if (productos[count4].id === id) {
-                        /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
-                            productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
-                        console.log(id);
-                        console.log(productos[count4].id);
-                        if (!buscarProductoEnVenta(productos[count4].id)) {
+                            if (!buscarProductoEnVenta(productos[count4].id)) {
                             if (productosSucursal[x].existencia > 0) {
                                 agregarProductoAVenta(productos[count4].id, productos[count4].codigoBarras,
                                     productos[count4].nombre,
@@ -504,15 +563,6 @@
                             } else
                                 alert('PRODUCTO SIN EXISTENCIA');
                         }
-                        /*if(!buscarProductoEnVenta(id))
-                        {
-                            console.log(productos[count4].id);
-                            agregarProductoAVenta(productos[count4].id,productos[count4].codigoBarras,productos[count4].nombre,
-                            productos[count4].existencia,productos[count4].precio,1,productos[count4].precio);
-                        }
-                        console.log(productos[count4].id);  
-                        mostrarProductos();*/
-                        //productosVenta.push(productos[count]);
                     }
                 }
             }
@@ -528,7 +578,7 @@
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         let cuerpo = "";
         let contador = 1;
-        let departamentos = @json($departamentos);
+        
         for (let x in productosSucursal) {
             for (let count5 in productos) {
                 if (productos[count5].id === productosSucursal[x].idProducto) {
@@ -554,6 +604,46 @@
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
 
     };
+
+    function buscarSubproductos() {
+        let cont = 0;
+        let cuerpo = "";
+        for (count in subproducto) {
+            for (count2 in sucursal_prod) {
+                console.log("hols");
+                if (subproducto[count].idSucursalProducto == sucursal_prod[count2].id) {
+                    let idProd = sucursal_prod[count2].idProducto;
+                    let nombre = "";
+                    let cBarras= "";
+                    let depto="";
+                    for (let x in productos) {
+                        if (productos[x].id == idProd) {
+                            nombre = productos[x].nombre;
+                            cBarras = productos[x].codigoBarras;
+                            // idProd =productos[x].id;
+                            for (let d in departamentos) {
+                            if (productos[x].idDepartamento === departamentos[d].id)
+                                depto = departamentos[d].nombre;
+                        }
+                        }
+                    }
+                    
+                    cont = cont + 1;
+                    cuerpo = cuerpo + `
+                        <tr onclick="agregarProducto(` + idProd + `)" data-dismiss="modal">
+                        <th >` + idProd + `</th>
+                        <th >` + cBarras + `</th>
+                        <td>` + nombre + `</td>
+                        <td>` + subproducto[count].existencia + `</td>
+                        <td>` + depto + `</td>  
+                    </tr>
+                    `;
+                }
+            }
+        }
+        document.getElementById("consultaBusquedaSubp").innerHTML = cuerpo;
+    };
+
 
     function cantidad(id) {
         //alert('Si entro en la funcion'+id);
@@ -627,7 +717,7 @@
         const pago = document.querySelector('#pagoCredito');
         const cliente = document.querySelector('#clientes');
         console.log(parseFloat(pago.value));
-        
+
         if (pago.value.length === 0)
             return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
         if (parseFloat(pago.value) >= parseFloat(total))
@@ -650,7 +740,7 @@
                 // si tuvo éxito la petición
             }).done(function(respuesta) {
                 //alert(respuesta);
-              //  alert("perfectisimo");
+                //  alert("perfectisimo");
                 productosVenta = [];
                 mostrarProductos();
                 $('#confirmarVentaModal').modal('hide');
@@ -658,9 +748,9 @@
                 console.log(respuesta); //JSON.stringify(respuesta));
 
             });
-           // let imp = await fetch(`/venta/ticket`);
-           // let impJ = await imp.text();
-          //  document.querySelector('#impresion').innerHTML = impJ;
+            // let imp = await fetch(`/venta/ticket`);
+            // let impJ = await imp.text();
+            //  document.querySelector('#impresion').innerHTML = impJ;
             await cargarProductos();
             await cargarProductosSucursal();
         } catch (err) {

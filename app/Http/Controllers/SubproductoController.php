@@ -18,8 +18,10 @@ class SubproductoController extends Controller
     public function index()
     {
         $subproductos = Subproducto::all();
+        $idSucursal = session('sucursal');
+        $sucursalProd = Sucursal_producto::where('idSucursal', $idSucursal)->get();
         $productos = Producto::all();
-          return view('Subproducto.index',compact('subproductos', 'productos'));
+          return view('Subproducto.index',compact('subproductos', 'productos','sucursalProd'));
 
 /*
           $datosProd['producto'] = Producto::paginate();
@@ -42,8 +44,8 @@ class SubproductoController extends Controller
         $subproducto2['subproducto']= SubProducto::paginate();
          $producto=Producto::all();
          $depas = Departamento::all();
-        //$idSucursal = session('sucursal');
-        //$productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
+        $idSucursal = session('sucursal');
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
          return view('Subproducto.agregar', compact('producto', 'datosP', 'productosSucursal','depas'));
     }
 
@@ -58,12 +60,18 @@ class SubproductoController extends Controller
         //
        // $datosSubproducto = request()->except('_token');
         $datosSubproducto = $request->except('_token');
-       // $datosSubproducto['existencia']=0;
-      //  $datosSubproducto['ganancia']=0; //calcular
+        $idSP = $datosSubproducto['idSucursalProducto'];
+        $sucProd = Sucursal_producto::findOrFail($idSP);
+        $idProducto = $sucProd['idProducto'];
+       // $existenciaNue['existencia'] = 
+       // return $idProducto;
        Subproducto::insert($datosSubproducto);
-//return $datosSubproducto;
-       // return response()->json($datosSubproducto);
-        return redirect('subproducto');
+       $actualizarProducto = Sucursal_producto::where('idSucursal','=',session('sucursal'))
+        ->where('idProducto', '=', $idProducto)->get()->first();
+        $existenciaNuevo['existencia'] = $actualizarProducto->existencia - 1;
+        //return $existenciaNuevo;
+       $actualizarProducto->update($existenciaNuevo);
+       return redirect('subproducto');
     }
 
     /**

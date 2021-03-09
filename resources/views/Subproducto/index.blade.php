@@ -85,13 +85,13 @@ SUBPRODUCTOS
                             <tr>
                                 <th>#</th>
                                 <th>PRODUCTO</th>
-                                <th>TOTAL PIEZAS</th>
+                                <th>PIEZAS</th>
                                 <th>PRECIO INDIVIDUAL</th>
                                 <th> EXISTENCIA</th>
                                 <th>OBSERVACION</th>
                             </tr>
                         </thead>
-                        <tbody id="cuerpo">
+                        <tbody id="cuerpo2">
 
                         </tbody>
                     </table>
@@ -105,6 +105,7 @@ SUBPRODUCTOS
 <script>
     let subproducto = @json($subproductos);
     let productos = @json($productos);
+    let sucursal_prod = @json($sucursalProd);
 
     buscarSubproductos();
 
@@ -112,23 +113,34 @@ SUBPRODUCTOS
         let cont=0;
         let cuerpo="";
         for (count in subproducto) {
-            for (count2 in productos) {
-                if (subproducto[count].idProductos == productos[count2].id) {
+            for (count2 in sucursal_prod) {
+                console.log("hols");
+                if(subproducto[count].idSucursalProducto == sucursal_prod[count2].id)
+                    let idProd= sucursal_prod[count2].idProducto; 
+                    let nombre="";
+                    for(let x in productos)
+                    {
+                        if(productos[x].id == idProd)
+                        {
+                            nombre = productos[x].nombre;
+                           // idProd =productos[x].id;
+                        }
+                    }
                     cont = cont+1;
                     cuerpo = cuerpo + `
-                        <tr onclick="" data-dismiss="modal">
+                        <tr onclick="agregarProducto(` + idProd + `)" data-dismiss="modal">
                         <th >` + cont + `</th>
-                        <td>` + productos[count2].nombre + `</td>
+                        <td>` + nombre + `</td>
                         <td>` + subproducto[count].piezas + `</td>
-                        <td>` + subproducto[count].precio_ind + `</td>
+                        <td>` + subproducto[count].precio + `</td>
                         <td>` + subproducto[count].existencia + `</td>
                         <td>` + subproducto[count].observacion + `</td>  
                     </tr>
                     `;
                 }
             }
-        }
-        document.getElementById("cuerpo").innerHTML = cuerpo;
+        
+        document.getElementById("cuerpo2").innerHTML = cuerpo;
     };
 </script>
 

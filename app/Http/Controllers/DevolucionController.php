@@ -25,10 +25,11 @@ class DevolucionController extends Controller
         $ventas= Venta::all();
         $detalleVenta= Detalle_venta::all();
         $productos= Producto::all();
+        $idSucursal = session('sucursal');
         $empleados= Empleado::all();
         $devolucions = Devolucion::all();
-        $sucursalEmpleado = Sucursal_empleado::all();
         $idSucursal = session('sucursal');
+        $sucursalEmpleado = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
         $productX_Sucursal = Sucursal_producto::where('id','=', $idSucursal)->get();
         return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions', 'sucursalEmpleado',  'productX_Sucursal'));
     }

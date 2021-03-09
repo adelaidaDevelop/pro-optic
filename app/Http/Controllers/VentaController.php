@@ -13,6 +13,7 @@ use App\Models\Pago;
 use App\Models\Pago_venta;
 use App\Models\Sucursal_producto;
 use App\Models\venta_cliente;
+use App\Models\Subproducto;
 
 class VentaController extends Controller
 {
@@ -35,8 +36,13 @@ class VentaController extends Controller
         $clientes = Cliente::all();
         //$datos['departamentos'] = Producto::paginate();
         $idSucursal = session('sucursal');
-        $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
-        return view('Venta.index', compact('datosP', 'departamentos', 'clientes','productosSucursal'));
+        $subproductos = Subproducto::all();
+
+
+        $subproductos = Subproducto::all();
+        $sucursalProd = Sucursal_producto::where('idSucursal', $idSucursal)->get();
+         $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
+        return view('Venta.index', compact('datosP', 'departamentos', 'clientes','productosSucursal', 'subproductos','sucursalProd'));
     //    return session('idEmpleado');
     }
 
