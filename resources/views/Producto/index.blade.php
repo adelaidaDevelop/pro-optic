@@ -242,41 +242,41 @@ PRODUCTOS
 
     let prod_baja = "";
 
-   // nombreOpc();
-   buscarFiltroNombre2();
+    // nombreOpc();
+    buscarFiltroNombre2();
 
-   /*
-    function folioNombreOpc() {
+    /*
+     function folioNombreOpc() {
 
-        filtroProducto();
-    }
+         filtroProducto();
+     }
 
-    function deptoOpc() {
-        // folioNombreBandera = false;
-        depaBandera = true;
-        // bajosExisBandera = false;
-        // nombreBandera = false; //checar
-        filtroProducto();
-    }
+     function deptoOpc() {
+         // folioNombreBandera = false;
+         depaBandera = true;
+         // bajosExisBandera = false;
+         // nombreBandera = false; //checar
+         filtroProducto();
+     }
 
-    function bajosExisOpc() {
-        //  folioNombreBandera = false;
-        //   depaBandera = false;
-        bajosExisBandera = true;
-        //   nombreBandera = false; //checar
-        filtroProducto();
-    }
+     function bajosExisOpc() {
+         //  folioNombreBandera = false;
+         //   depaBandera = false;
+         bajosExisBandera = true;
+         //   nombreBandera = false; //checar
+         filtroProducto();
+     }
 
-    function nombreOpc() {
-        //  folioNombreBandera = false;
-        //  depaBandera = false;
-        //  bajosExisBandera = false;
-        // nombreBandera = true; //checar
+     function nombreOpc() {
+         //  folioNombreBandera = false;
+         //  depaBandera = false;
+         //  bajosExisBandera = false;
+         // nombreBandera = true; //checar
 
-        buscarFiltroNombre();
-    }
+         buscarFiltroNombre();
+     }
 
-    */
+     */
     function buscarFiltroNombre2() {
         productosList = [];
         const palabraBusqueda = document.querySelector('#busquedaProducto');
@@ -290,7 +290,7 @@ PRODUCTOS
                     if (opcFolioNombre === 'nombre') {
                         $("#idDepartamento").prop('disabled', false);
                         $("#bajosExistencia").prop('disabled', false);
-                        
+
                         //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
                         if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                             //BUSCAR POR DEPARTAMENTO
@@ -403,8 +403,8 @@ PRODUCTOS
                     } else if (opcFolioNombre === 'folio') {
                         $("#idDepartamento").prop('disabled', true);
                         $("#bajosExistencia").prop('disabled', true);
-                        
-                        
+
+
                         if (productos[count5].codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                             let departamento = "";
                             for (count21 in d) {
@@ -667,13 +667,16 @@ PRODUCTOS
                                             </label required>
                                             <br />
                                             <img src="{{ asset('storage')}}/` + productos[count10].imagen + ` " alt="" width="200">
+                                            
                                             <br /><br />
                                             <a class="btn btn-primary" href="{{ url('/puntoVenta/producto/` + x + `/edit')}}"> EDITAR PRODUCTO </a>
                                             <br/><br/>
                                             
-                                            <a class="btn btn-danger" data-method="delete" onclick="return confirm('¿Estas seguro de que deseas eliminar?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                                            <a class="btn btn-danger mb-4" data-method="delete" onclick="return confirm('¿Estas seguro de que deseas eliminar?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
                                              DAR DE BAJA </a> 
-                                            
+                                             <a class="btn btn-primary mt-4"   href="{{ url('/puntoVenta/subproducto/create/?id=` + x + `')}}">
+                                             CREAR SUBPRODTUCTO </a> 
+                                              
                                         </div>
 
                                         <br/>
@@ -711,7 +714,7 @@ PRODUCTOS
                     <td>` + productos[x].receta + `</td>
                     <td>` +
                         ` 
-                    <a class="btn btn-primary" href="{{ url('/puntoVenta/altaProductoS/` + productos[x].id + `')}}"> ALTA </a>
+                    <a class="btn btn-primary" href="{{ url('/puntoVenta/altaProducto/` + productos[x].id + `')}}"> ALTA </a>
                     </td>        
                     </tr>
                      `;
@@ -733,7 +736,7 @@ PRODUCTOS
             if (response.ok) {
                 prod_baja = await response.json();
             } else {
-                console.log("No responde :'v");
+                console.log("No responde :v");
                 console.log(response);
                 throw new Error(response.statusText);
             }
@@ -741,207 +744,6 @@ PRODUCTOS
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     };
-
-
-    /*
-        
-        function buscarProducto() {
-            const palabraBusqueda = document.querySelector('#busquedaProducto');
-            let cuerpo = "";
-            let contador = 1;
-
-            for (let x in productosSucursal) {
-                for (count5 in productos) {
-                    if (productos[count5].id === productosSucursal[x].idProducto) {
-                        if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                            let departamento = "";
-                            for (count8 in d) {
-                                if (productos[count5].idDepartamento === d[count8].id) {
-                                    departamento = d[count8].nombre;
-                                }
-                            }
-
-                            let id = productos[count5].id;
-
-                            cuerpo = cuerpo + `
-                            <tr onclick="" data-dismiss="modal">
-                                <th scope="row">` + productos[count5].id + `</th>
-                                <td>` + productos[count5].codigoBarras + `</td>
-                                <td>` + productos[count5].nombre + `</td>
-                                <td>` + productosSucursal[x].existencia + `</td>
-                            <td>` + departamento + `</td>
-
-                            <td>` + productosSucursal[x].costo + `</td>
-                                <td>` + productosSucursal[x].precio + `</td>
-                                <td>` +
-                                ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
-                                VER MAS
-                                </button>
-                                </td>            
-                            </tr>
-                            `;
-                        }
-                    }
-                }
-            }
-            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-        };
-
-
-        
-
-        function buscarFolioNombre() {
-            let seleccion = document.querySelector("input[name='checkbox2']:checked");
-            opcFolioNombre = seleccion.value;
-            if (opcFolioNombre === 'nombre') {
-                buscarProducto();
-            }
-            if (opcFolioNombre === 'folio') {
-                buscarPorFolio();
-            }
-        };
-
-        function buscarPorFolio() {
-            const palabraBusqueda = document.querySelector('#busquedaProducto');
-            let cuerpo = "";
-            let contador = 1;
-            for (let x in productosSucursal) {
-                for (count20 in productos) {
-                    if (productos[count20].id === productosSucursal[x].idProducto) {
-                        if (productos[count20].codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                            let departamento = "";
-                            for (count21 in d) {
-                                if (productos[count20].idDepartamento === d[count21].id) {
-                                    departamento = d[count21].nombre;
-                                }
-                            }
-                            let id = productos[count20].id;
-                            cuerpo = cuerpo + `
-                                <tr onclick="" data-dismiss="modal">
-                                    <th scope="row">` + productos[count20].id + `</th>
-                                    <td>` + productos[count20].codigoBarras + `</td>
-                                    <td>` + productos[count20].nombre + `</td>
-                                    <td>` + productosSucursal[x].existencia + `</td>
-                                <td>` + departamento + `</td>
-                                <td>` + `0` + `</td>
-                                    <td>` + `0` + `</td>
-                                    <td>` +
-                                ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
-                                    VER MAS
-                                    </button>
-                                    </td>            
-                                </tr>
-                                `;
-                        }
-                    }
-                }
-            }
-            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-        };
-
-
-
-        function buscarPorDepas() {
-            depaBandera = true;
-            let depa = document.querySelector('#idDepartamento');
-            //  const palabraBusqueda = document.querySelector('#busquedaProducto');
-            let cuerpo = "";
-            let contador = 1;
-            if (depa.value != "0") {
-                ///////////////
-                for (let x in productosSucursal) {
-                    for (count20 in productos) {
-                        if (productos[count5].id === productosSucursal[x].idProducto) {
-                            // if (productos[count20].idDepartamento.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                            if (productos[count20].idDepartamento === parseInt(depa.value)) {
-                                let departamento = "";
-                                for (count21 in d) {
-                                    if (productos[count20].idDepartamento === d[count21].id) {
-                                        departamento = d[count21].nombre;
-                                    }
-                                }
-                                let id = productos[count20].id;
-                                cuerpo = cuerpo + `
-                                    <tr onclick="" data-dismiss="modal">
-                                        <th scope="row">` + productos[count20].id + `</th>
-                                        <td>` + productos[count20].codigoBarras + `</td>
-                                        <td>` + productos[count20].nombre + `</td>
-                                        <td>` + productosSucursal[x].existencia + `</td>
-                                    <td>` + departamento + `</td>
-                                    <td>` + productosSucursal[x].costo + `</td>
-                                        <td>` + productosSucursal.precio + `</td>
-                                        <td>` +
-                                    ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
-                                        VER MAS
-                                        </button>
-                                        </td>            
-                                    </tr>
-                                    `;
-                            }
-                        }
-                    }
-                }
-                document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-            } else {
-                buscarProducto();
-            }
-        };
-
-        function buscarBajosExistencia() {
-            let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
-            if (seleccion != null) {
-                opcBajosE = seleccion.value;
-                if (opcBajosE === 'existencia') {
-                    bajosExistencias();
-                } else {
-                    buscarProducto();
-                    bajosExisBandera = false;
-                }
-            } else {
-                //  buscarProducto();
-                buscarProducto();
-                // buscarFolioNombre();
-            }
-        };
-
-        function bajosExistencias() {
-            let cuerpo = "";
-            for (let x in productosSucursal) {
-                for (count30 in productos) {
-                    if (productos[count5].id === productosSucursal[x].idProducto) {
-                        if (productos[count30].existencia <= productos[count30].minimo_stock) {
-                            // if (productos[count20].idDepartamento.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                            let departamento = "";
-                            for (count21 in d) {
-                                if (productos[count30].idDepartamento === d[count21].id) {
-                                    departamento = d[count21].nombre;
-                                }
-                            }
-                            let id = productos[count30].id;
-                            cuerpo = cuerpo + `
-                                            <tr onclick="" data-dismiss="modal">
-                                                <th scope="row">` + productos[count30].id + `</th>
-                                                <td>` + productos[count30].codigoBarras + `</td>
-                                                <td>` + productos[count30].nombre + `</td>
-                                                <td>` + productosSucursal[x].existencia + `</td>
-                                            <td>` + departamento + `</td>
-                                            <td>` + `0` + `</td>
-                                                <td>` + `0` + `</td>
-                                                <td>` +
-                                ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + id + `)" value="` + id + `">
-                                                VER MAS
-                                                </button>
-                                                </td>            
-                                            </tr>
-                                            `;
-                        }
-                    }
-                }
-            }
-            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-        };
-        buscarProducto();
-        */
 </script>
 
 @endsection

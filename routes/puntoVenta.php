@@ -80,6 +80,8 @@ Route::prefix('/puntoVenta')->group(function()
         return redirect()->back();
     });
     */
+    //SUBPRODUCTO
+    Route::resource('subproducto', SubproductoController::class);
 
     //ELIMINAR PRODUCTOS DE SUCURSAL
     Route::get('productoEli3/{id}', [ProductoController::class,'eliminar3']);
