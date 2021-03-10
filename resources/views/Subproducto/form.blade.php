@@ -4,11 +4,11 @@
         <div class="col-8">
             <br />
             <label for="subtitulo">
-                <h5 class="text-primary">
+                <h4 class="text-primary">
                     <strong>
                         {{ $Modo== 'crear' ?'CREAR SUBPRODUCTO' : 'EDITAR PRODUCTO' }}
                     </strong>
-                </h5>
+                </h4>
             </label>
             <div class=" row">
                 <div class="col-3">
@@ -37,7 +37,7 @@
                 <div class="col-3">
                     <!--El name debe ser igual al de la base de datos-->
 
-                    <input class="mb-2 text-uppercase" type="text" name="idSucursalProducto" id="idSucursalProducto" placeholder="Nombre producto" value="{{ isset($subproducto->idSucursalProducto)?$subproducto->idSucursalProducto:''}}" required>
+                    <input class="mb-2 mt-2 text-uppercase" type="text" name="idSucursalProducto" id="idSucursalProducto" placeholder="Nombre producto" value="{{ isset($subproducto->idSucursalProducto)?$subproducto->idSucursalProducto:''}}" required disabled>
 
                     <input class=" mt-4 mb-2" type="number" id="costo_indC" placeholder="" disabled>
 
@@ -46,12 +46,12 @@
                     <input class="mt-3 mb-1" type="number" id="costo_ind" placeholder="" value="{{ isset($subproducto->costo_ind)?$subproducto->costo_ind:''}}" required DISABLED>
 
                     <input class="mt-3" type="number" name="precio" id="precio" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio)?$subproducto->precio_ind:''}}" required>
-
                 </div>
                 <div class="col-3 ">
                     <label for="Existencia" class="mt-1 ">
                         <h6>{{'EXISTENCIA'}}</h6>
                     </label>
+                    <br />
                     <label for="observacion" class="mt-3">
                         <h6>{{'OBSERVACION'}}</h6>
                     </label>
@@ -60,7 +60,6 @@
                 <div class="col-3 ">
                     <!--  <input type="number" name="ganancia" id="ganancia" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>-->
                     <input class="" type="number" name="existencia" id="existencia" placeholder="existencia del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
-
                     <textarea class="mt-4" name="observacion" id="observacion" class="form-control" placeholder="Descripcion del producto" rows="3" onkeyup="mayus(this);" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
                     <br />
                 </div>
@@ -127,6 +126,7 @@
     const productos = @json($datosP);
     let productosSuc = @json($productosSucursal);
     let departamentos = @json($depas);
+    let idSucProd = 0;
 
     function buscarProducto() {
         const palabraBusqueda = document.querySelector('#busquedaProducto');
@@ -162,76 +162,52 @@
         //  document.getElementById("costo").innerHTML = costo;
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
     };
-    
 
-            function agregarProducto(id) {
-                let costoG = 0;
-                let costoAgregado = "";
-                let name = "";
-                for (count4 in productosSuc) {
-                    if (productosSuc[count4].idProducto === id) {
-                        idProducto =
-                        costoG = productosSuc[count4].costo;
-                        idSucProd = productosSuc[count4].id;
 
-                        //  name = productos[count4].nombre;
-                        /*
-                        costoAgregado =
-                            `
-                        <input class="mb-2" type="number" name="idProductos" id="idProductos" placeholder="` + name + `" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:'` + name + `'}}" required disabled>
-                        <input class="mb-2 mt-4" type="number" name="costoG2" id="costoG2" placeholder="` + costoG + `" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:'` + costoG + `'}}" required disabled>
-                        `;
-                        */
-                        $("input[id='idSucursalProducto']").val(idSucProd);
-                        //  <input class="mb-2" type="number" name="idProductos" id="idProductos" placeholder="`+name+`" value="{{ isset($subproducto->idProductos)?$subproducto->idProductos:'`+name+`'}}" required disabled>
-
-                        // document.getElementById("idProductos").innerHTML = id;
-                        // $("input[id='idProductos']").innerHTML= id; 
-                        $("input[id='costo_indC']").val(costoG);
-                        // document.getElementById("idProductos".innerHTML = id)
-                        console.log(costoG);
-                        // document.getElementById("costo_indC".innerHTML = costoG)
-                        console.log(id);
+    function agregarProducto(id) {
+        let costoG = 0;
+        let costoAgregado = "";
+        let name = "";
+        for (count4 in productosSuc) {
+            if (productosSuc[count4].idProducto === id) {
+                idProducto =
+                    costoG = productosSuc[count4].costo;
+                idSucProd = productosSuc[count4].id;
+                for (let x in productos) {
+                    if (productos[x].id == id) {
+                        name = productos[x].nombre;
                     }
                 }
+               // $("input[id='idSucursalProducto']").val(idSucProd);
+                $("input[id='idSucursalProducto']").val(name);
+                $("input[id='costo_indC']").val(costoG);
+                console.log(costoG);
+                console.log(id);
+            }
+        }
 
-                // document.getElementById("costo_inicio").innerHTML = costoAgregado;
+        // document.getElementById("costo_inicio").innerHTML = costoAgregado;
 
-                const palabraBusqueda = document.querySelector('#busquedaProducto');
-                palabraBusqueda.value = "";
-            };
+        const palabraBusqueda = document.querySelector('#busquedaProducto');
+        palabraBusqueda.value = "";
+    };
 
-            function calcularCostoInd() {
-                let costoInd = 0;
-                let valor = 0;
-                let texto = "";
-                const piezas2 = document.querySelector('#piezas');
-                const costoG = document.querySelector('#costo_indC');
-                console.log("operacion:");
-                console.log(parseFloat(costoG.value));
-                console.log(parseInt(piezas2.value));
-                costoInd = parseFloat(costoG.value) / parseInt(piezas2.value);
-                console.log(costoInd);
-                //let var1=parseFloat(costoG.value);
-                //let var2= parseInt(piezas2.value);
-                // console.log(var1);
-                //console.log(var2);
-                /*
-                texto =
-                    `
-                <input class="mt-4 mb-1" type="number" name="costo_ind" id="costo" placeholder="` + costoInd + `" value="{{ isset($subproducto->costo_ind)?$subproducto->costo_ind:'` + costoInd + `'}}" required disabled>
-                
-                `;
-                */
-                $("input[id='costo_ind']").val(costoInd);
-                // $("input[id='costo_ind']").innerHTML = costoInd;
+    function calcularCostoInd() {
+        let costoInd = 0;
+        let valor = 0;
+        let texto = "";
+        const piezas2 = document.querySelector('#piezas');
+        const costoG = document.querySelector('#costo_indC');
+        console.log("operacion:");
+        console.log(parseFloat(costoG.value));
+        console.log(parseInt(piezas2.value));
+        costoInd = parseFloat(costoG.value) / parseInt(piezas2.value);
+        console.log(costoInd);
+        
+        $("input[id='costo_ind']").val(costoInd);
+    };
 
-
-                //document.getElementById("cost").innerHTML = texto;
-
-            };
-
-            function mayus(e) {
-                e.value = e.value.toUpperCase();
-            };
+    function mayus(e) {
+        e.value = e.value.toUpperCase();
+    };
 </script>

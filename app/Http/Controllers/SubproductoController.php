@@ -36,19 +36,31 @@ class SubproductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        //$idSucProd = 1;
        // $datosProd['producto'] = Producto::paginate(); necesito este: producto
+       $idProd = $request->input('id');
        $datosP= Producto::all();
         $subproducto2['subproducto']= SubProducto::paginate();
          $producto=Producto::all();
          $depas = Departamento::all();
         $idSucursal = session('sucursal');
         $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
-         return view('Subproducto.agregar', compact('producto', 'datosP', 'productosSucursal','depas'));
+         return view('Subproducto.agregar', compact('producto', 'datosP', 'productosSucursal','depas','idProd'));
     }
 
+    public function existeEnSubproducto(Request $request){
+        $idProd = $request->input('id'); 
+        $producto=Producto::all();
+        $subproducto= Subproducto::all();
+        $idSucursal = session('sucursal');
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
+        return compact('producto',  'productosSucursal','idProd','subproducto');
+
+        
+
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -65,13 +77,13 @@ class SubproductoController extends Controller
         $idProducto = $sucProd['idProducto'];
        // $existenciaNue['existencia'] = 
        // return $idProducto;
-       Subproducto::insert($datosSubproducto);
+       Subproducto::create($datosSubproducto);
        $actualizarProducto = Sucursal_producto::where('idSucursal','=',session('sucursal'))
         ->where('idProducto', '=', $idProducto)->get()->first();
         $existenciaNuevo['existencia'] = $actualizarProducto->existencia - 1;
         //return $existenciaNuevo;
        $actualizarProducto->update($existenciaNuevo);
-       return redirect('subproducto');
+       return redirect('puntoVenta/subproducto');
     }
 
     /**
