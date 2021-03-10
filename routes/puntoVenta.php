@@ -88,6 +88,7 @@ Route::prefix('/puntoVenta')->group(function()
     
     Route::resource('corteCaja', ReporteController::class);
     Route::get('reporteInventario', [ReporteController::class,'index2']);
+    Route::get('reporteVentas', [ReporteController::class,'index3']);
     //Route::get('eliminar/{id}', [ProductoController::class,'eliminar']);
     Route::resource('sucursal', SucursalController::class);
     Route::middleware('isEmpleado')->group(function () {
