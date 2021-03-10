@@ -38,11 +38,10 @@ class VentaController extends Controller
         $idSucursal = session('sucursal');
         $subproductos = Subproducto::all();
 
-
         $subproductos = Subproducto::all();
-        $sucursalProd = Sucursal_producto::where('idSucursal', $idSucursal)->get();
+        //$sucursalProd = Sucursal_producto::where('idSucursal', $idSucursal)->get();
          $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
-        return view('Venta.index', compact('datosP', 'departamentos', 'clientes','productosSucursal', 'subproductos','sucursalProd'));
+        return view('Venta.index', compact('datosP', 'departamentos', 'clientes','productosSucursal', 'subproductos'));
     //    return session('idEmpleado');
     }
 

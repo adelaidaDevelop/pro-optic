@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Oferta;
 use App\Models\Sucursal;
 use App\Models\Sucursal_producto;
 use App\Models\Producto;
@@ -78,6 +78,7 @@ class SucursalProductoController extends Controller
     public function show($id)//Sucursal_producto $sucursal_producto)
     {
         //if($id=='todos')
+        
             return Sucursal_producto::where('idSucursal', '=',$id)->get();
     }
 

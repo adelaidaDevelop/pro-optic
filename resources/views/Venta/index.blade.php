@@ -460,19 +460,24 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
 let productosVenta = [];
+let subproductosVenta = [];
 let productos = @json($datosP);
 let productosSucursal = @json($productosSucursal);
 let departamentos = @json($departamentos);
-console.log(productosSucursal);
-
 
 //subproducto
-let subproductos = @json($subproductos);
-let sucursal_prod = @json($sucursalProd);
+let subproductosSucursal = @json($subproductos);
 //ofertas
-let productosOferta = [];
+let ofertasSucursal = [];
+
+/*for(let i in ofertasSucursal)
+{
+                productosSucursal.find(p => p.id == ofertasSucursal[i].idSucursalProducto).existencia = 
+                productosSucursal.find(p => p.id == ofertasSucursal[i].idSucursalProducto).existencia - ofertasSucursal[i].existencia;
+            }*/
 
 async function cargarProductos() {
     let response = "Sin respuesta";
@@ -500,8 +505,15 @@ async function cargarProductosSucursal() {
         response = await fetch(`/puntoVenta/sucursalProducto/{{session('sucursal')}}`);
         if (response.ok) {
             productosSucursal = await response.json();
-
+            /*if(ofertasSucursal.length==0)
+                await cargarOfertasSucursal();
+            for(let i in ofertasSucursal)
+            {
+                productosSucursal.find(p => p.id == ofertasSucursal[i].idSucursalProducto).existencia = 
+                productosSucursal.find(p => p.id == ofertasSucursal[i].idSucursalProducto).existencia - ofertasSucursal[i].existencia;
+            }*/
             console.log('los productos para la sucursal son', productosSucursal);
+            
             return productosSucursal;
             //console.log(response);
 
@@ -515,17 +527,37 @@ async function cargarProductosSucursal() {
     }
     //return response;
 }
+//cargarProductosSucursal();
+async function cargarSubproductosSucursal() {
+    let response = "Sin respuesta";
+    try {
+        response = await fetch(`/puntoVenta/subproducto/{{session('sucursal')}}`);
+        if (response.ok) {
+            subproductosSucursal = await response.json();
+            console.log('los productos para la sucursal son',subproductosSucursal);
+            return subproductosSucursal;
+            //console.log(response);
 
-async function cargarProductosOferta()
+        } else {
+            console.log("No responde :'v");
+            console.log(response);
+            throw new Error(response.statusText);
+        }
+    } catch (err) {
+        console.log("Error al realizar la petición de productos AJAX: " + err.message);
+    }
+    //return response;
+}
+async function cargarOfertasSucursal()
 {
     let response = "Sin respuesta";
     try {
         response = await fetch(`/puntoVenta/oferta/{{session('sucursal')}}`);
         if (response.ok) {
-            productosOferta = await response.json();
+            ofertasSucursal = await response.json();
 
-            console.log('los productos para las ofertas de la sucursal son', productosOferta);
-            return productosOferta;
+            console.log('los productos para las ofertas de la sucursal son', ofertasSucursal);
+            return ofertasSucursal;
             //console.log(response);
 
         } else {
@@ -538,10 +570,31 @@ async function cargarProductosOferta()
     }
     
 }
-cargarProductosOferta();
-function agregarProductoAVenta(id, codigoBarras, nombre, existencia, precio, cantidad, subtotal) {
+cargarOfertasSucursal();
+function agregarProductoAVenta(id, codigoBarras, nombre, existencia, precio, cantidad,tipo) {
     //console.log(id);
-    let productos = {
+    let producto = {
+        id: productosVenta.length+1,
+        idProducto:id,
+        codigoBarras: codigoBarras,
+        nombre: nombre,
+        existencia: existencia,
+        precio: precio,
+        cantidad: cantidad,
+        subtotal: precio,
+        tipo: tipo
+    };
+    //if(tipo==0)
+    productosVenta.push(producto);
+    /*if(tipo==1)
+    subproductosVenta.push(producto);
+    if(tipo==2)
+    ofertasVenta.push(producto);*/
+    //console.log(productosVenta);
+};
+/*function agregarSubproductoAVenta(id, codigoBarras, nombre, existencia, precio, cantidad, subtotal) {
+    //console.log(id);
+    let subproducto = {
         id: id,
         codigoBarras: codigoBarras,
         nombre: nombre,
@@ -550,9 +603,23 @@ function agregarProductoAVenta(id, codigoBarras, nombre, existencia, precio, can
         cantidad: cantidad,
         subtotal: subtotal
     };
-    productosVenta.push(productos);
-    console.log(productosVenta);
+    subproductosVenta.push(subproducto);
+    console.log(subproductosVenta);
 };
+function agregarSubproductoAVenta(id, codigoBarras, nombre, existencia, precio, cantidad, subtotal) {
+    //console.log(id);
+    let subproducto = {
+        id: id,
+        codigoBarras: codigoBarras,
+        nombre: nombre,
+        existencia: existencia,
+        precio: precio,
+        cantidad: cantidad,
+        subtotal: subtotal
+    };
+    subproductosVenta.push(subproducto);
+    console.log(subproductosVenta);
+};*/
 let total = 0;
 
 function calcularTotal() {
@@ -571,11 +638,16 @@ function mostrarProductos() {
     let contador = 1;
 
     for (let count1 in productosVenta) {
+        let tipo = "";
+        if(productosVenta[count1].tipo == 1)
+            tipo =  `<strong>SUBPRODUCTO</strong>`;
+        if(productosVenta[count1].tipo == 2)
+            tipo =  `<strong>OFERTA</strong>`;
         cuerpo = cuerpo + `
         <tr class="text-center">
             <th scope="row">` + contador++ + `</th>
             <td>` + productosVenta[count1].codigoBarras + `</td>
-            <td>` + productosVenta[count1].nombre + `</td>
+            <td>` + tipo +` `+ productosVenta[count1].nombre + `</td>
             <td>` + productosVenta[count1].existencia + `</td>
             <td>` + productosVenta[count1].precio + `</td>
             <td><input  value=` + productosVenta[count1].cantidad + ` 
@@ -614,6 +686,7 @@ function mostrarProductos() {
     for (let i in productosVenta) {
         $("input[id='valor" + productosVenta[i].id + "']").inputSpinner(props);
     }
+    console.log(productosVenta);
     calcularTotal();
     //min="1" max="` + productosVenta[count].existencia+`"
 };
@@ -633,9 +706,9 @@ function quitarProducto(id) {
 }
 
 
-function buscarProductoEnVenta(idProducto) {
+function buscarProductoEnVenta(idProducto,tipo) {
     for (count2 in productosVenta) {
-        if (productosVenta[count2].id === idProducto) {
+        if (productosVenta[count2].idProducto === idProducto && productosVenta[count2].tipo == tipo) {
             if (productosVenta[count2].existencia > productosVenta[count2].cantidad) {
                 productosVenta[count2].cantidad++;
                 productosVenta[count2].subtotal = productosVenta[count2].cantidad * productosVenta[count2].precio;
@@ -661,15 +734,16 @@ function agregarPorCodigo() {
                     //agregarProductoAVenta(id,codigoBarras,nombre,existencia,precio,cantidad,subtotal)
                     /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
                     productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
-                    if (!buscarProductoEnVenta(productos[count3].id)) {
-                        if (productosSucursal[x].existencia > 0) {
-                            agregarProducto(productos[count3].id); //, productos[count3].codigoBarras, productos[count3]
+                //    if (!buscarProductoEnVenta(productos[count3].id)) {
+                //        if (productosSucursal[x].existencia > 0) {
+                            agregarProducto(productos[count3].id,0,productosSucursal[x].existencia,productosSucursal[x].precio); //, productos[count3].codigoBarras, productos[count3]
+                            return;
                             //    .nombre,
                             //    productos[count3].existencia, productos[count3].precio, 1, productos[count3].precio);
-                            mostrarProductos();
-                        } else
-                            alert('PRODUCTO SIN EXISTENCIA');
-                    }
+                //            mostrarProductos();
+                //        } else
+                //            alert('PRODUCTO SIN EXISTENCIA');
+                //    }
                 }
             }
 
@@ -681,17 +755,16 @@ function agregarPorCodigo() {
 
 };
 
-function agregarProducto(id) {
+function agregarProducto(id,tipo,existencia,precio) {
     for (let x in productosSucursal) {
         for (let count4 in productos) {
             if (productos[count4].id === productosSucursal[x].idProducto) {
                 if (productos[count4].id === id) {
-                    if (!buscarProductoEnVenta(productos[count4].id)) {
-                        if (productosSucursal[x].existencia > 0) {
+                    if (!buscarProductoEnVenta(productos[count4].id,tipo)) {
+                        if (existencia > 0) {
                             agregarProductoAVenta(productos[count4].id, productos[count4].codigoBarras,
                                 productos[count4].nombre,
-                                productosSucursal[x].existencia, productosSucursal[x].precio, 1, productosSucursal[
-                                    x].precio);
+                                existencia, precio, 1,tipo);
                             mostrarProductos();
                         } else
                             alert('PRODUCTO SIN EXISTENCIA');
@@ -704,6 +777,29 @@ function agregarProducto(id) {
     palabraBusqueda.value = "";
     //venta();
 };
+/*function agregarSubproducto(id) {
+    for (let x in subproductosSucursal) {
+        for (let count4 in productos) {
+            if (productos[count4].id === productosSucursal[x].idProducto) {
+                if (productos[count4].id === id) {
+                    if (!buscarProductoEnVenta(productos[count4].id)) {
+                        if (productosSucursal[x].existencia > 0) {
+                            agregarProductoAVenta(productos[count4].id, productos[count4].codigoBarras,
+                                productos[count4].nombre,
+                                productosSucursal[x].existencia, productosSucursal[x].precio, 1, productosSucursal[
+                                    x].precio,0);
+                            mostrarProductos();
+                        } else
+                            alert('PRODUCTO SIN EXISTENCIA');
+                    }
+                }
+            }
+        }
+    }
+    const palabraBusqueda = document.querySelector('#busquedaProducto');
+    palabraBusqueda.value = "";
+    //venta();
+};*/
 
 
 function buscarProducto() {
@@ -721,7 +817,8 @@ function buscarProducto() {
                             departamento = departamentos[d].nombre;
                     }
                     cuerpo = cuerpo + `
-                            <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">
+                            <tr onclick="agregarProducto(` + productos[count5].id +`,`+0+`,`+productosSucursal[x].existencia+
+                            `,`+productosSucursal[x].precio+`)" data-dismiss="modal">
                                 <th scope="row">` + productos[count5].id + `</th>
                                 <td>` + productos[count5].codigoBarras + `</td>
                                 <td>` + productos[count5].nombre + `</td>
@@ -741,15 +838,16 @@ function buscarProducto() {
 function buscarSubproducto() {
     let cont = 0;
     let cuerpo = "";
-    for (let count in subproductos) {
-        let sucursalP = sucursal_prod.find(p => p.id == subproductos[count].idSucursalProducto);
+    for (let count in subproductosSucursal) {
+        let sucursalP = productosSucursal.find(p => p.id == subproductosSucursal[count].idSucursalProducto);
         let producto = productos.find(p => p.id == sucursalP.idProducto);
         let departamento = departamentos.find(p => p.id == producto.idDepartamento);
         cuerpo = cuerpo + `
-            <tr onclick="agregarSubproducto(` + subproductos[count].idSucursalProducto + `)" data-dismiss="modal">
+            <tr onclick="agregarProducto(` + producto.id + `,`+1+`,`+subproductosSucursal[count].existencia+
+            `,`+subproductosSucursal[count].precio+`)" data-dismiss="modal">
                 <td>` + producto.codigoBarras + `</td>
                 <td>` + producto.nombre + `</td>
-                <td>` + subproductos[count].existencia + `</td>
+                <td>` + subproductosSucursal[count].existencia + `</td>
                 <td>` + departamento.nombre + `</td>  
             </tr>
             `;
@@ -1002,7 +1100,7 @@ function buscarOferta()
     let cuerpo = "";
     let contador = 1;
     let departamento = "";
-    for (let x in productosOferta) {
+    for (let x in ofertasSucursal) {
         /*for (let count5 in productos) {
             if (productos[count5].id === productosSucursal[x].idProducto) {
                 if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
@@ -1022,16 +1120,20 @@ function buscarOferta()
                 }
             }
         }*/
-        for (let d in departamentos) {
+        /*for (let d in departamentos) {
             if (productosOferta[x].idDepartamento === departamentos[d].id)
                 departamento = departamentos[d].nombre;
-        }
+        }*/
+        let sucursalP = productosSucursal.find(p => p.id == ofertasSucursal[x].idSucursalProducto);
+        let producto = productos.find(p => p.id == sucursalP.idProducto);
+        let departamento = departamentos.find(p => p.id == producto.idDepartamento);
         cuerpo = cuerpo + `
-            <tr onclick="agregarPrductoOferta(` + productosOferta[x].id + `)" data-dismiss="modal">
-                <td>` + productosOferta[x].codigoBarras + `</td>
-                <td>` + productosOferta[x].nombre + `</td>
-                <td>` + productosOferta[x].existencia + `</td>
-                <td>` + departamento + `</td>
+            <tr onclick="agregarProducto(` + producto.id +`,`+2+`,`+
+            ofertasSucursal[x].existencia+`,`+sucursalP.costo+`)" data-dismiss="modal">
+                <td>` + ofertasSucursal[x].codigoBarras + `</td>
+                <td>` + ofertasSucursal[x].nombre + `</td>
+                <td>` + ofertasSucursal[x].existencia + `</td>
+                <td>` + departamento.nombre + `</td>
             </tr>
             `;
 
@@ -1039,9 +1141,9 @@ function buscarOferta()
     document.getElementById("consultaBusquedaOferta").innerHTML = cuerpo;
 }
 </script>
-<script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
+
 <script>
-let valor = $("input[type='number']").inputSpinner();
-console.log(valor);
+//let valor = $("input[type='number']").inputSpinner();
+//console.log(valor);
 </script>
 @endsection

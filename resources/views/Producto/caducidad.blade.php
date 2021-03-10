@@ -100,7 +100,7 @@ async function mostrarProductosCaducidad() {
                 mes = "0" + mes;
             const fechaCaducidad = dia + "-" + mes + "-" + fecha.getFullYear();
             let oferta =
-            `<span class="badge badge-danger badge-pill">NO</span>`; //data-toggle="modal" data-target="#confirmacionModal">
+                `<span class="badge badge-danger badge-pill">NO</span>`; //data-toggle="modal" data-target="#confirmacionModal">
             let botonOferta = `<td> <button class="btn btn-primary" onclick="abrirModalOferta(` +
                 productosCaducidad[i].id +
                 `)"> 
@@ -118,8 +118,8 @@ async function mostrarProductosCaducidad() {
             <td>` + productosCaducidad[i].cantidad + `</td>
             <td>` + fechaCaducidad + `</td>
             ` + botonOferta + `
-            <td> <button class="btn btn-primary" onclick="eliminar(` + productosCaducidad[i].id +`,`+
-            productosCaducidad[i].idSucursalProducto +`)">BORRAR</button> </td>
+            <td> <button class="btn btn-primary" onclick="eliminar(` + productosCaducidad[i].id + `,` +
+                productosCaducidad[i].idSucursalProducto + `)">BORRAR</button> </td>
             </tr>`;
 
         }
@@ -206,14 +206,14 @@ async function darEnOferta(id) {
 
 }
 
-async function eliminar(id,idSP) {
+async function eliminar(id, idSP) {
     try {
         let confirmacion = confirm('¿REALMENTE DESEA ELIMINAR ESTE DATO DE LA LISTA?');
         if (confirmacion) {
             let confirmacionEliminar = confirm('¿DESEA ELIMINAR PRODUCTOS DEL INVENTARIO?');
             if (confirmacionEliminar) {
                 document.getElementById("eliminar").outerHTML = `<button id="eliminar" type="button" 
-                class="btn btn-primary" onclick="quitarProductos(` + id +`,` + idSP+ `)">CONTINUAR</button>`;
+                class="btn btn-primary" onclick="quitarProductos(` + id + `,` + idSP + `)">CONTINUAR</button>`;
                 $('#confirEliminarModal').modal('show');
             } else {
                 if (!confirmacionEliminar)
@@ -225,18 +225,17 @@ async function eliminar(id,idSP) {
     }
 }
 
-async function quitarProductos(id,idSP)
-{
+async function quitarProductos(id, idSP) {
     let cantidad = document.getElementById("cantidadEliminar").value;
     if (cantidad.length < 1) {
-            alert('POR FAVOR INGRESE UNA CANTIDAD');
-            return;
-        }
-        if (cantidad > productoActualizar.cantidad) {
-            alert('LA CANTIDAD NO PUEDE SER MAYOR A LA ANTERIOR');
-            return;
-        }
-    const url = `{{url('/')}}/puntoVenta/sucursalProducto/${idSP}`;
+        alert('POR FAVOR INGRESE UNA CANTIDAD');
+        return;
+    }
+    if (cantidad > productoActualizar.cantidad) {
+        alert('LA CANTIDAD NO PUEDE SER MAYOR A LA ANTERIOR');
+        return;
+    }
+    /*const url = `{{url('/')}}/puntoVenta/sucursalProducto/${idSP}`;
     let respuesta = await $.ajax({
         url: url,
         type: 'PUT',
@@ -250,27 +249,41 @@ async function quitarProductos(id,idSP)
             //alert(data); }
         }
     });
-    console.log(respuesta);
+    console.log(respuesta);*/
     //return console.log('Esta bien hasta aqui');
     let productoActualizar = productosCaducidad.find(p => p.id == id);
     //console.log(productoActualizar.oferta);
-    if(productoActualizar.oferta)
-    {
+    if (productoActualizar.oferta) {
         const url2 = `{{url('/')}}/puntoVenta/oferta/${idSP}`;
         let respuesta2 = await $.ajax({
-        url: url2,
-        type: 'PUT',
-        data: {
-            'restar':cantidad,
-            '_token': "{{ csrf_token() }}"
-        },
-        //processData: false, // tell jQuery not to process the data
-        //contentType: false,
-        success: function(data) {
-            //alert(data); }
-        }
+            url: url2,
+            type: 'PUT',
+            data: {
+                'restar': cantidad,
+                '_token': "{{ csrf_token() }}"
+            },
+            //processData: false, // tell jQuery not to process the data
+            //contentType: false,
+            success: function(data) {
+                //alert(data); }
+            }
         });
         console.log(respuesta2);
+    } else {
+        const url = `{{url('/')}}/puntoVenta/sucursalProducto/${idSP}`;
+        let respuesta = await $.ajax({
+            url: url,
+            type: 'PUT',
+            data: {
+                'restar': cantidad,
+                '_token': "{{ csrf_token() }}"
+            },
+            //processData: false, // tell jQuery not to process the data
+            //contentType: false,
+            success: function(data) {
+                //alert(data); }
+            }
+        });
     }
     eliminarRegistro(id);
     $('#confirEliminarModal').modal('hide');
@@ -278,7 +291,7 @@ async function quitarProductos(id,idSP)
 
 async function eliminarRegistro(id) {
     //return alert('Si llega hasta aqui');
-    
+
     const url = `{{url('/')}}/puntoVenta/productosCaducidad/${id}`;
     let respuesta = await $.ajax({
         url: url,

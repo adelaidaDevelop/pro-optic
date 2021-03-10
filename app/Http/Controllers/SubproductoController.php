@@ -80,9 +80,9 @@ class SubproductoController extends Controller
      * @param  \App\Models\Subproducto  $subproducto
      * @return \Illuminate\Http\Response
      */
-    public function show(Subproducto $subproducto)
+    public function show($idSP)//Subproducto $subproducto)
     {
-        //
+        return Subproducto::where('idSucursal', '=' ,$idSP)->get();
     }
 
     /**

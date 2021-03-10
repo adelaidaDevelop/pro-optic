@@ -49,7 +49,7 @@ class OfertaController extends Controller
             $suma = $oferta->get()->first()->existencia + $cantidad;
             $oferta->update(['existencia' => $suma]);
             //$oferta->save();
-            return $suma;
+            //return $suma;
         }
         else{
             //return 'pasa algo 1';
@@ -57,9 +57,12 @@ class OfertaController extends Controller
                 'idSucursalProducto' => $idSP,
                 'existencia' => $cantidad
             ]);
-            return true;
+            //return true;
         }
-        return false;
+        $sucursalProducto = Sucursal_producto::findOrFail($idSP);//->update(['existencia' =>])
+        $resta = $sucursalProducto->existencia - $cantidad;
+        $sucursalProducto->update(['existencia' => $resta]);
+        return true;
     }
 
     /**
