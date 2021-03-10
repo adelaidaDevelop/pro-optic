@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Oferta;
+use App\Models\Sucursal_producto;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class OfertaController extends Controller
@@ -66,9 +68,34 @@ class OfertaController extends Controller
      * @param  \App\Models\Oferta  $oferta
      * @return \Illuminate\Http\Response
      */
-    public function show(Oferta $oferta)
+    public function show($idS)
     {
-        //
+        //$productos = Producto::all();
+        //$sucursalProducto = Sucursal_producto::where('idSucursal', '=',$idS)->get();
+        
+        $productosOferta = Oferta::all();//where('idSucursalProducto','=',$sP->id)->get();
+        
+        $productosO = [];
+        
+        foreach($productosOferta as $pO)
+        {
+            $idSP = $pO->idSucursalProducto;
+            
+            $sucursalProducto = Sucursal_producto::findOrFail($idSP);// where('idSucursal', '=',$idS)->get();
+            
+            if($sucursalProducto->idSucursal == $idS)
+            {
+                
+                $producto = Producto::findOrFail($sucursalProducto->idProducto);
+                
+                $pO->nombre = $producto->nombre;
+                $pO->codigoBarras = $producto->codigoBarras;
+                $pO->idDepartamento = $producto->idDepartamento;
+                array_push($productosO, $pO);
+            }
+        }
+        return $productosO;//ProductosCaducidad::where('idSucursalProducto', '=',$id)->get();
+        
     }
 
     /**
