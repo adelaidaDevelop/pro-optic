@@ -30,18 +30,14 @@ DEVOLUCION
                     <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="35px" height="35px" />
                 </button>
             </div>
-            <div  id="sinResult" class="row mx-0 px-0">
-                
+            <div id="sinResult" class="row mx-0 px-0">
             </div>
 
             <!-- TABLA -->
             <div class="row ">
                 <h4 class="text-primary  mx-0 px-0  mt-4"> PRODUCTOS DE LA VENTA </h4>
             </div>
-
-
             <div class="row border" style="height:350px;overflow-y:auto;">
-
                 <table class="table table-bordered border-primary  ">
 
                     <thead class="table-secondary text-primary">
@@ -67,42 +63,40 @@ DEVOLUCION
     </div>
 </div>
 <!--MODAL TABLA DE VENTAS-->
-
 <div class="modal fade" id="buscarVenta" tabindex="-1" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-
                 <h5 class="modal-title" id="modalVerMas"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group  my-auto p-1 col-4 mb-3 ml-4">
-                    <div class=" input-group-text">
-                        <input type="checkbox" name="fechaVenta" id="fechaVenta" onchange="filtrarCompras()">
-                        <label class="ml-1 my-0" for="fechaVenta">
+                <div class=" row  my-auto mx-1  mb-4 ml-4">
+                    <div class=" input-group-text col-3">
+                        <input type="checkbox" name="fechaVenta" value="buscarVentas" id="fechaVenta" onchange="filtrarCompras()">
+                        <label class="ml-1 my-0 " for="fechaVenta">
                             BUSCAR VENTAS POR FECHA
                         </label>
 
                     </div>
-                    <div class="input-group my-1 mx-0">
-                        <div class="input-group-prepend">
+                    <div class="input-group my-1 mx-0 col-4">
+                        <div class="input-group-prepend ">
                             <label for="fechaInicio" class="input-group-text">DE: </label>
                         </div>
                         <input type="date" min="" id="fechaInicio" onchange="filtrarCompras()" class="form-control" disabled />
                     </div>
-                    <div class="input-group my-1 mx-0">
+                    <div class="input-group my-1 mx-0 col-4">
                         <div class="input-group-prepend">
                             <label for="fechaFinal" class="input-group-text">A: </label>
                         </div>
                         <input type="date" min="" onchange="filtrarCompras()" id="fechaFinal" class="form-control" disabled />
                     </div>
                 </div>
-                <div class="row" style="height:200px;overflow:auto;">
+                <div class="row mx-1 mt-4" style="height:200px;overflow:auto;">
                     <table class="table table-hover table-bordered" id="productos">
-                        <thead class="thead-light">
+                        <thead class="table-secondary text-primary">
                             <tr class="text-center">
                                 <th scope="col">#</th>
                                 <th scope="col">FOLIO</th>
@@ -503,7 +497,7 @@ DEVOLUCION
                 if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
                     for (count6 in empleados) {
                         if (empleados[count6].id == sucursalEmpleado[s].idEmpleado) {
-                            emple= empleados[count6].primerNombre + " "+ empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
+                            emple = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
                         }
                     }
                 }
@@ -528,6 +522,7 @@ DEVOLUCION
 
 
     function filtrarCompras() {
+
         let cuerpo = "";
         let contador = 1;
         let cont = 0;
@@ -540,44 +535,48 @@ DEVOLUCION
             let fechaFin = document.querySelector('#fechaFinal');
             let fechaI = new Date(fechaInicio.value);
             let fechaF = new Date(fechaFin.value);
-            fechaI.setDate(fechaI.getDate() + 1);
-            fechaF.setDate(fechaF.getDate() + 1);
+           // fechaI.setDate(fechaI.getDate() + 1);
+           // fechaF.setDate(fechaF.getDate() + 1);
 
             for (let j in ventas) {
 
                 let total = 0;
-                fecha = new Date(ventas[j].created_at);
-                fecha.setDate(fecha.getDate() + 1);
+                let fechaAux = new Date(ventas[j].created_at);
+                let mesAux = fechaAux.getMonth()+1;
+                let diaAux = fechaAux.getDate();
+                if(mesAux<10)
+                    mesAux = "0"+mesAux;
+                if(diaAux<10)
+                    diaAux = "0"+diaAux;
+                fecha = new Date(fechaAux.getFullYear()+"-"+mesAux
+                +"-"+diaAux);
                 
-                console.log(fecha.toLocaleDateString());
-                console.log(fechaI.toLocaleDateString());
-                console.log("fecha: ");
-                console.log(fecha.getTime());
-                if (fecha.getTime() >= fechaI.getTime()) {
+                if (fecha.getTime() >= fechaI.getTime() && fecha.getTime() <= fechaF.getTime()) {
                     console.log("minimo");
-                    if (fecha.getTime() <= fechaF.getTime()) {
-                        console.log("maximo");
-                        for (count7 in detalleVenta) {
-                            console.log("detalla V: ", detalleVenta);
-                            if (detalleVenta[count7].idVenta == ventas[count5].id) {
-                                let subtotal = detalleVenta[count7].cantidad * detalleVenta[count7].precioIndividual;
-                                total = total + subtotal;
-                            }
+                    // if (fecha.getTime() <= fechaF.getTime()) {
+                    console.log("maximo");
+                    for (count7 in detalleVenta) {
+                        console.log("detalla V: ", detalleVenta);
+                        if (detalleVenta[count7].idVenta == ventas[count5].id) {
+                            let subtotal = detalleVenta[count7].cantidad * detalleVenta[count7].precioIndividual;
+                            total = total + subtotal;
                         }
-                        for (let s in sucursalEmpleado) {
+                    }
+                    for (let s in sucursalEmpleado) {
 
-                            if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
-                                for (count6 in empleados) {
-                                    if (empleados[count6].id == sucursalEmpleado[s].idEmpleado) {
-                                        emple= empleados[count6].primerNombre + " "+ empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
-                                    }
+                        if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
+                            for (count6 in empleados) {
+                                if (empleados[count6].id == sucursalEmpleado[s].idEmpleado) {
+                                    emple = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
                                 }
                             }
                         }
-                        console.log(ventas[j].tipo);
-                        console.log(emple);
-                        cont = cont + 1;
-                        cuerpo = cuerpo + `
+                    }
+                    console.log(ventas[j].tipo);
+                    console.log(emple);
+                    cont = cont + 1;
+                    fecha.setDate(fecha.getDate() + 1);
+                    cuerpo = cuerpo + `
                         <tr onclick="" data-dismiss="modal">
                         <th scope="row">` + cont + `</th>
                         <td>` + ventas[j].id + `</td>
@@ -590,17 +589,19 @@ DEVOLUCION
                         <td>` + fecha.toLocaleTimeString() + `</td>   
                     </tr>
                     `;
-
-
-                    }
+                    // }
                 } else {
                     console.log("no entra");
                 }
             }
+            document.getElementById("tablaVenta").innerHTML = cuerpo;
+
         } else {
             console.log("No verifico bien");
+            modalVenta();
         }
-        document.getElementById("tablaVenta").innerHTML = cuerpo;
+        
+
     };
 
     function verificarFechas() {
@@ -615,7 +616,9 @@ DEVOLUCION
                 if (fechaFin.value.length > 0) {
                     let fechaI = new Date(fechaInicio.value);
                     let fechaF = new Date(fechaFin.value);
-                    console.log(fechaI);
+                    console.log("Heber");
+                    console.log(fechaI.getTime());
+                    console.log(fechaF.getTime());
                     if (fechaI.getTime() > fechaF.getTime()) {
                         $("input[id='fechaFinal']").val(fechaInicio.value);
                     }
@@ -623,8 +626,11 @@ DEVOLUCION
                 }
             }
         } else {
+            $("input[id='fechaInicio']").val('');
+            $("input[id='fechaFinal']").val('');
             $('input[id="fechaInicio"]').prop('disabled', true);
             $('input[id="fechaFinal"]').prop('disabled', true);
+            //modalVenta();
         }
         return false;
     };

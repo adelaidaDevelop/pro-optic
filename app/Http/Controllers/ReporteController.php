@@ -53,13 +53,19 @@ class ReporteController extends Controller
         $ventas = Venta::all();
         $detalle_ventas = Detalle_venta::all();
         $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
-        
-
         return view('Reportes.reporteInventario', compact('empleados','compras','detalleCompra', 'productos','devoluciones', 'departamentos','ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados'));
     }
     public function index3()
     {
-        return view('Reportes.reporteVentas');
+        $empleados = Empleado::all();
+        $idSucursal = session('sucursal');
+        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
+        $productos= Producto::all();
+        $departamentos= Departamento::all();
+        $ventas = Venta::all();
+        $detalle_ventas = Detalle_venta::all();
+        $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
+        return view('Reportes.reporteVentas', compact('empleados','sucursalEmpleados','productos','departamentos','ventas','detalle_ventas', 'sucursal_productos'));
     }
       
 
