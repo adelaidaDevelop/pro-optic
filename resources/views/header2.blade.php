@@ -38,7 +38,7 @@
                     </li>
                     -->
                     <li class="nav-item active">
-                        <a class="nav-link" href="/puntoVenta/inventario">
+                        <a class="nav-link" href="/puntoVenta/producto">
                             <button class="btn btn-light">
                                 INVENTARIO
                             </button>

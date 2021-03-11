@@ -83,6 +83,8 @@ Route::prefix('/puntoVenta')->group(function()
     */
     //SUBPRODUCTO
     Route::resource('subproducto', SubproductoController::class);
+    Route::get('veriUniqueSubproducto', [SubproductoController::class,'existeEnSubproducto']);
+    
 
     //ELIMINAR PRODUCTOS DE SUCURSAL
     Route::get('productoEli3/{id}', [ProductoController::class,'eliminar3']);

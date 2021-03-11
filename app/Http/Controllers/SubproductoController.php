@@ -41,6 +41,7 @@ class SubproductoController extends Controller
         //$idSucProd = 1;
        // $datosProd['producto'] = Producto::paginate(); necesito este: producto
        $idProd = $request->input('id');
+
        $datosP= Producto::all();
         $subproducto2['subproducto']= SubProducto::paginate();
          $producto=Producto::all();
@@ -55,11 +56,9 @@ class SubproductoController extends Controller
         $producto=Producto::all();
         $subproducto= Subproducto::all();
         $idSucursal = session('sucursal');
-        $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->where('idProducto', $idProd)->get();
+       // $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
         return compact('producto',  'productosSucursal','idProd','subproducto');
-
-        
-
     }
     /**
      * Store a newly created resource in storage.
@@ -83,7 +82,7 @@ class SubproductoController extends Controller
         $existenciaNuevo['existencia'] = $actualizarProducto->existencia - 1;
         //return $existenciaNuevo;
        $actualizarProducto->update($existenciaNuevo);
-       return redirect('puntoVenta/subproducto');
+       return redirect('puntoVenta/producto');
     }
 
     /**

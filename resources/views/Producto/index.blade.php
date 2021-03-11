@@ -674,8 +674,9 @@ PRODUCTOS
                                             
                                             <a class="btn btn-danger mb-4" data-method="delete" onclick="return confirm('¿Estas seguro de que deseas eliminar?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
                                              DAR DE BAJA </a> 
-                                             <a class="btn btn-primary mt-4"   href="{{ url('/puntoVenta/subproducto/create/?id=` + x + `')}}">
+                                             <a class="btn btn-primary mt-4"   href="#" onclick="subproductoExiste(` + x + `);return false;">
                                              CREAR SUBPRODTUCTO </a> 
+                                             
                                               
                                         </div>
 
@@ -692,6 +693,53 @@ PRODUCTOS
         console.log("refrescar");
         location.reload();
     };
+
+    async function subproductoExiste(id) {
+        let response = "Sin respuesta";
+        let response2 = "Sin respuesta";
+        try {
+            response = await fetch(`/puntoVenta/veriUniqueSubproducto/?id=${id}`);
+
+            if (response.ok) {
+                Suc_Inac = await response.json();
+                // let idProd =Suc_Inac['idProd'];
+                let productosNue = Suc_Inac['producto'];
+                let producto_sucursal = Suc_Inac['productosSucursal']; //retornar 1 dato
+                let subproductos = Suc_Inac['subproducto'];
+                let bandera = true;
+                for (let y in producto_sucursal) {
+
+                    for (let x in subproductos) {
+                        if (subproductos[x].idSucursalProducto == producto_sucursal[y].id) {
+                            bandera = false;
+                            return alert("Este producto ya está activo en subproducto y no se puede volver a agregar");
+                        }
+
+                    }
+
+
+
+                }
+
+                if (bandera) {
+                    redirect(id);
+                   // response2 = await fetch(`/puntoVenta/subproducto/create/?id=${id}`);
+                }
+                console.log(Suc_Inac);
+            } else {
+                // Suc_Inac = "";
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
+
+    function redirect(id) {
+        window.location = `/puntoVenta/subproducto/create/?id=${id}`;
+    }
 
     //
     async function productosEnBajaSucursal() {
