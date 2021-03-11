@@ -197,7 +197,6 @@ COMPRAS
                                 <th scope="col">COSTO</th>
                                 <th scope="col">GANANCIA</th>
                                 <th scope="col">PRECIO</th>
-                                <th scope="col">CADUCIDAD</th>
                             </tr>
                         </thead>
                         <tbody class="text-center" id="detalle_compra">
@@ -241,7 +240,6 @@ COMPRAS
                                 <th scope="col">COSTO</th>
                                 <th scope="col">GANANCIA</th>
                                 <th scope="col">PRECIO</th>
-                                <th scope="col">CADUCIDAD</th>
                             </tr>
                         </thead>
                         <tbody class="text-center" id="detalle_compra">
@@ -277,7 +275,7 @@ function info($id) {
 
 <script>
 let productosVenta = [];
-let compras = @json($compras);
+let compras = @json($comprasSucursal);
 const proveedores = @json($proveedores);
 const compra_producto = @json($compra_producto);
 const productos = @json($productos);
@@ -293,7 +291,7 @@ async function cargarCompras() {
         comprasActuales = [];
         //let response = "";
         if (compras.length == 0) {
-            let response = await fetch(`/puntoVenta/compra/compras`);
+            let response = await fetch(`/puntoVenta/compra/{{session('sucursal')}}`);
             if (response.ok) {
                 console.log(compras);
                 console.log("Si me responde");
@@ -643,7 +641,6 @@ function verDetalleCompra(id, estado) {
                 <td>` + compra_producto[c].costo_unitario + `</td>
                 <td>` + compra_producto[c].porcentaje_ganancia + `</td>
                 <td>` + precio + `</td>
-                <td>` + compra_producto[c].fecha_caducidad + `</td>
             </tr>
             `;
             costoTotal = costoTotal + (compra_producto[c].costo_unitario * compra_producto[c].cantidad);

@@ -9,6 +9,7 @@ use App\Models\Productos_caducidad;
 use App\Models\Departamento;
 use App\Models\Proveedor;
 use App\Models\Pago_compra;
+use App\Models\Sucursal_empleado;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -22,11 +23,18 @@ class CompraController extends Controller
     public function index()
     {
         $compras = Compra::all();
+        $comprasSucursal = [];
+        foreach($compras as $c)
+        {
+            $sE = Sucursal_empleado::findOrFail($c->idSucursalEmpleado);
+            if($sE->idSucursal == session('sucursal'))
+                array_push($comprasSucursal,$c);
+        }
         $depas['d']= Departamento::paginate();
         $proveedores= Proveedor::all();
         $productos= Producto::all();
         $compra_producto = Detalle_compra::all();
-        return view('Compra.index',$depas, compact('productos','proveedores','compra_producto','compras'));
+        return view('Compra.index',$depas, compact('productos','proveedores','compra_producto','comprasSucursal'));
         //return view('Compra.index');
 
     }
@@ -107,16 +115,22 @@ class CompraController extends Controller
      */
     public function show($compra)
     {
+        $compras = Compra::all();
         if($compra=="compras")
         {
-            $compras = Compra::all();
             //$productosCodificados = json_encode($productos);
             return $compras;//compact('productos');
         }
-        /*else{
-            $id = Compra::where("nombre",'like',$request->nombre)->get();
-            return $id;
-        }*/
+        else{
+            $comprasSucursal = [];
+            foreach($compras as $c)
+            {
+                $sE = Sucursal_empleado::findOrFail($c->idSucursalEmpleado);
+                if($sE->idSucursal == $compra)
+                    array_push($comprasSucursal,$c);
+            }
+            return $comprasSucursal;
+        }
         return 'No hay nada';
     }
 

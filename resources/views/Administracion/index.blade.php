@@ -409,13 +409,13 @@ ADMINISTRACION
             if (response.ok) {
                 console.log("Las sucursales son:");
                 SucursalEmpleados = await response.json();
-                if (SucursalEmpleados.length > 0) {
+                if (SucursalEmpleados.length > 1) {
                     await cargarEmpleados();
                     //cuerpo =;
                     for (let i in SucursalEmpleados) {
                         for (let e in empleados) {
 
-                            if (SucursalEmpleados[i].idEmpleado == empleados[e].id) {
+                            if (SucursalEmpleados[i].idEmpleado == empleados[e].id && i!=0) {
                                 let status = "";
                                 let botonAltaBaja = "";
                                 if (SucursalEmpleados[i].status == 'alta') {
