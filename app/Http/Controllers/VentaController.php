@@ -14,6 +14,8 @@ use App\Models\Pago_venta;
 use App\Models\Sucursal_producto;
 use App\Models\venta_cliente;
 use App\Models\Subproducto;
+use App\Models\Oferta;
+
 
 class VentaController extends Controller
 {
@@ -67,13 +69,12 @@ class VentaController extends Controller
         $estado = $request->input('estado');
         $pago = $request->input('pago');
         $datosCodificados = json_decode($datos, true);
-        
         if ($request->has('cliente')) {
             $cliente = $request->input('cliente');
             $venta = Venta::create([
                 'tipo' => $estado,
                 'status' => true,
-                'idSucursalEmpleado' => 1,
+                'idSucursalEmpleado' => session('idSucursalEmpleado'),
             ]);
 
             $credito = new Venta_cliente; //credito
@@ -102,24 +103,39 @@ class VentaController extends Controller
         foreach ($datosCodificados as $datosProducto) {
             
             $producto = new Detalle_venta;
-            
             $producto->cantidad = $datosProducto['cantidad'];
-            $producto->idProducto = $datosProducto['id'];
+            $producto->idProducto = $datosProducto['idProducto'];
             $producto->precioIndividual= $datosProducto['precio'];
             //$producto->subtotal = $datosProducto['subtotal'];
             $producto->idVenta = $venta->id;
             
             $producto->save();
             //return 'Si llega hasta aqui';
-            $productosSucursal = Sucursal_producto::where('idProducto','=',$datosProducto['id'])
-            ->where('idSucursal','=',session('sucursal'));//->update(['existencia'=>'11']);
-            $existencia = $productosSucursal->first()->existencia - $datosProducto['cantidad'];
-            $productosSucursal->update(['existencia'=> $existencia]);
-            //$actualizarProducto = new Sucursal_producto;//return $datosProducto['cantidad'];
-            //$actualizarProducto->idSucursal = session('sucursal');
-            //$actualizarProducto->
-            //$actualizarProducto->existencia = $productosSucursal['existencia'] - $datosProducto['cantidad'];
-            //return $actualizarProducto;//->save();
+            $tipo =  $datosProducto['tipo'];
+            if($tipo == 0)
+            {
+                $productosSucursal = Sucursal_producto::where('idProducto','=',$datosProducto['idProducto'])
+                ->where('idSucursal','=',session('sucursal'));//->update(['existencia'=>'11']);
+                $existencia = $productosSucursal->first()->existencia - $datosProducto['cantidad'];
+                $productosSucursal->update(['existencia'=> $existencia]);
+            }
+            if($tipo == 1)
+            {
+                $productosSucursal = Sucursal_producto::where('idProducto','=',$datosProducto['idProducto'])
+                ->where('idSucursal','=',session('sucursal'))->get()->first();//->update(['existencia'=>'11']);
+                $subproducto = Subproducto::where('idSucursalProducto','=',$productosSucursal->id);
+                $existencia = $subproducto->first()->existencia - $datosProducto['cantidad'];
+                $subproducto->update(['existencia'=> $existencia]);
+            }
+            if($tipo == 2)
+            {
+                $productosSucursal = Sucursal_producto::where('idProducto','=',$datosProducto['idProducto'])
+                ->where('idSucursal','=',session('sucursal'))->get()->first();//->update(['existencia'=>'11']);
+                $oferta = Oferta::where('idSucursalProducto','=',$productosSucursal->id);
+                $existencia = $oferta->first()->existencia - $datosProducto['cantidad'];
+                $oferta->update(['existencia'=> $existencia]);
+            }
+            
         }
 
         return true;

@@ -217,7 +217,7 @@ async function eliminar(id, idSP) {
                 $('#confirEliminarModal').modal('show');
             } else {
                 if (!confirmacionEliminar)
-                    eliminarRegistro(id);
+                    eliminarRegistro(id,0);
             }
         }
     } catch (err) {
@@ -227,6 +227,7 @@ async function eliminar(id, idSP) {
 
 async function quitarProductos(id, idSP) {
     let cantidad = document.getElementById("cantidadEliminar").value;
+    let productoActualizar = productosCaducidad.find(p => p.id == id);
     if (cantidad.length < 1) {
         alert('POR FAVOR INGRESE UNA CANTIDAD');
         return;
@@ -251,7 +252,7 @@ async function quitarProductos(id, idSP) {
     });
     console.log(respuesta);*/
     //return console.log('Esta bien hasta aqui');
-    let productoActualizar = productosCaducidad.find(p => p.id == id);
+    
     //console.log(productoActualizar.oferta);
     if (productoActualizar.oferta) {
         const url2 = `{{url('/')}}/puntoVenta/oferta/${idSP}`;
@@ -285,11 +286,11 @@ async function quitarProductos(id, idSP) {
             }
         });
     }
-    eliminarRegistro(id);
+    eliminarRegistro(id,cantidad);
     $('#confirEliminarModal').modal('hide');
 }
 
-async function eliminarRegistro(id) {
+async function eliminarRegistro(id,cantidad) {
     //return alert('Si llega hasta aqui');
 
     const url = `{{url('/')}}/puntoVenta/productosCaducidad/${id}`;
@@ -297,6 +298,7 @@ async function eliminarRegistro(id) {
         url: url,
         type: 'DELETE',
         data: {
+            'cantidad': cantidad,
             '_token': "{{ csrf_token() }}"
         },
         //processData: false, // tell jQuery not to process the data

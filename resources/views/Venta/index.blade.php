@@ -548,6 +548,7 @@ async function cargarSubproductosSucursal() {
     }
     //return response;
 }
+cargarSubproductosSucursal();
 async function cargarOfertasSucursal()
 {
     let response = "Sin respuesta";
@@ -947,6 +948,8 @@ async function realizarVentaEfectivo() {
         console.log(funcion);
         await cargarProductos();
         await cargarProductosSucursal();
+        await cargarSubproductosSucursal();
+        await cargarOfertasSucursal();
         //console.log(p);
         //console.log(funcion);
     } catch (err) {
@@ -995,6 +998,8 @@ async function realizarVentaCredito() {
         //  document.querySelector('#impresion').innerHTML = impJ;
         await cargarProductos();
         await cargarProductosSucursal();
+        await cargarSubproductosSucursal();
+        await cargarOfertasSucursal();
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
@@ -1081,13 +1086,16 @@ function modoPago(tipoPago) {
         let clientes = document.querySelector('#clientes');;
         let opcionesCliente = "";
         let cliente = @json($clientes);
-        for (let i in cliente) {
-            opcionesCliente = opcionesCliente +
-                `
-        <option value=` + cliente[i].id + `>` + cliente[i].nombre + `</option>
-        `
+        if(cliente.length>0)
+        {
+            for (let i in cliente) {
+                opcionesCliente = opcionesCliente +
+                    `
+                <option value=` + cliente[i].id + `>` + cliente[i].nombre + `</option>
+            `
+            }
+            clientes.innerHTML = opcionesCliente;
         }
-        clientes.innerHTML = opcionesCliente;
         calcularDeudaCredito();
     }
     pieModal.innerHTML = cuerpo;

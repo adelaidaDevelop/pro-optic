@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Perdida extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'idSucursalProducto',
+        'cantidad',
+        'fecha',
+    ];
 }

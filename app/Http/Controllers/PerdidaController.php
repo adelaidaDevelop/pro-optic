@@ -14,7 +14,7 @@ class PerdidaController extends Controller
      */
     public function index()
     {
-        //
+        return view('Producto.perdidasSucursal');
     }
 
     /**

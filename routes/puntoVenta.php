@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\OfertaController;
 use App\Http\Controllers\AdministracionController;
+use App\Http\Controllers\PerdidaController;
 
 //ade
 use App\Http\Controllers\CompraController;
@@ -95,7 +96,7 @@ Route::prefix('/puntoVenta')->group(function()
     Route::resource('sucursal', SucursalController::class);
     Route::middleware('isEmpleado')->group(function () {
         Route::resource('administracion', AdministracionController::class);
-        
+        Route::resource('perdida', PerdidaController::class);
         Route::resource('producto', ProductoController::class);
         Route::resource('empleado', EmpleadoController::class);
         //Route::get('/login', [LoginController::class,'login'])->name('Login');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Perdida;
 use App\Models\Productos_caducidad;
 use App\Models\Sucursal_producto;
 use App\Models\Producto;
@@ -130,8 +131,17 @@ class ProductosCaducidadController extends Controller
      * @param  \App\Models\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
+        if($request['cantidad']>0)
+        {
+            $pC = Productos_caducidad::findOrFail($id);
+            $perdida = new Perdida;
+            $perdida->idSucursalProducto = $pC->idSucursalProducto;
+            $perdida->cantidad = $request['cantidad'];
+            $perdida->fecha = $pC->fecha_caducidad;
+            $perdida->save();
+        }
         Productos_caducidad::destroy($id);
         return 'true';
     }

@@ -92,9 +92,30 @@ class SubproductoController extends Controller
      * @param  \App\Models\Subproducto  $subproducto
      * @return \Illuminate\Http\Response
      */
-    public function show($idSP)//Subproducto $subproducto)
+    public function show($idS)//Subproducto $subproducto)
     {
-        return Subproducto::where('idSucursal', '=' ,$idSP)->get();
+        $subproductos = Subproducto::all();
+        $productosS = [];
+        
+        foreach($subproductos as $pO)
+        {
+            $idSP = $pO->idSucursalProducto;
+            
+            $sucursalProducto = Sucursal_producto::findOrFail($idSP);// where('idSucursal', '=',$idS)->get();
+            
+            if($sucursalProducto->idSucursal == $idS)
+            {
+                
+                $producto = Producto::findOrFail($sucursalProducto->idProducto);
+                
+                $pO->nombre = $producto->nombre;
+                $pO->codigoBarras = $producto->codigoBarras;
+                $pO->idDepartamento = $producto->idDepartamento;
+                array_push($productosS, $pO);
+            }
+        }
+        return $productosS;//ProductosCaducidad::where('idSucursalProducto', '=',$id)->get();
+        
     }
 
     /**
