@@ -115,16 +115,22 @@ class CompraController extends Controller
      */
     public function show($compra)
     {
+        $compras = Compra::all();
         if($compra=="compras")
         {
-            $compras = Compra::all();
             //$productosCodificados = json_encode($productos);
             return $compras;//compact('productos');
         }
-        /*else{
-            $id = Compra::where("nombre",'like',$request->nombre)->get();
-            return $id;
-        }*/
+        else{
+            $comprasSucursal = [];
+            foreach($compras as $c)
+            {
+                $sE = Sucursal_empleado::findOrFail($c->idSucursalEmpleado);
+                if($sE->idSucursal == $compra)
+                    array_push($comprasSucursal,$c);
+            }
+            return $comprasSucursal;
+        }
         return 'No hay nada';
     }
 

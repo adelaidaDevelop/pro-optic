@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sucursal;
+use App\Models\Sucursal_empleado;
 use App\Models\Departamento;
 
 
@@ -38,8 +39,12 @@ class AdministracionController extends Controller
         $datosCliente = request()->except('_token');
         $datosCliente['status'] = 1;
         //Sucursal::insert($datosCliente);
-        Sucursal::create($datosCliente);
-        
+        $sucursal = Sucursal::create($datosCliente);
+        Sucursal_empleado::create([
+            'idSucursal' => $sucursal->id,
+            'idEmpleado' => 1,
+            'status' => 'alta'
+        ]);
         return redirect('puntoVenta/administracion');
     }
 

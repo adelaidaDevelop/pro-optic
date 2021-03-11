@@ -291,7 +291,7 @@ async function cargarCompras() {
         comprasActuales = [];
         //let response = "";
         if (compras.length == 0) {
-            let response = await fetch(`/puntoVenta/compra/compras`);
+            let response = await fetch(`/puntoVenta/compra/{{session('sucursal')}}`);
             if (response.ok) {
                 console.log(compras);
                 console.log("Si me responde");
