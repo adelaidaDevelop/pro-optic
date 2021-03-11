@@ -25,11 +25,14 @@ CORTE DE CAJA
             </div>
             <div class="col-6 ml-4 form-group input-group ">
                 <h5 class="mr-3 ml-3 my-0">CAJERO</h5>
-
-                <select class="mt-1" name="idCajero" id="idCajero" onchange="" required>
+                <select class="col-4 mt-1" name="idCajero" id="idCajero" onchange="" required>
                     <option value="0">TODOS</option>
-                    @foreach($cajero as $cajero)
-                    <option value="{{$cajero['id']}}"> {{$cajero['nombre'] }}</option>
+                    @foreach($sucursalEmpleados as $cajero)
+                    @foreach($empleados as $emp)
+                    @if($cajero->idEmpleado == $emp->id)
+                    <option value="{{$cajero['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                    @endif
+                    @endforeach
                     @endforeach
                 </select>
             </div>
@@ -203,7 +206,7 @@ CORTE DE CAJA
     const pagoCompras = @json($pagoCompras);
     const compras = @json($compras);
 
-  
+
 
     function calcularCorte() {
         console.log("si");
@@ -235,10 +238,11 @@ CORTE DE CAJA
                 idCajeroOK = parseInt(idCajer.value);
                 // let idCajer2= parseInt(idCajer.value);
                 for (let j in ventas) {
-                    if (ventas[j].estado.toUpperCase().includes('VENDIDO')) {
+                    //TOTAL VENDIDO
+                    if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
 
                         let fechaVC = new Date(ventas[j].created_at);
-                        if (comparacionFecha(fechaCorte, fechaVC) && ventas[j].idEmpleado == idCajeroOK ) {
+                        if (comparacionFecha(fechaCorte, fechaVC) && ventas[j].idEmpleado == idCajeroOK) {
                             totalVentas = totalVentas + ventas[j].pago;
                         }
                     }
@@ -280,13 +284,12 @@ CORTE DE CAJA
                     */
 
 
-            }else {
-               
-                for (let j in ventas) {
-                    if (ventas[j].estado.toUpperCase().includes('VENDIDO')) {
+            } else {
 
+                for (let j in ventas) {
+                    if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
                         let fechaVC = new Date(ventas[j].created_at);
-                        if (comparacionFecha(fechaCorte, fechaVC) ) {
+                        if (comparacionFecha(fechaCorte, fechaVC)) {
                             totalVentas = totalVentas + ventas[j].pago;
                         }
                     }
