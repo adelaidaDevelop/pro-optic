@@ -7,8 +7,7 @@
         PROVEEDORES
         @endsection
         @section('opciones')
-        @if(isset($d))
-        <div class="col my-2 ml-5 pl-1">
+        <div class=" my-2 ml-5 pl-1">
             <form method="get" action="{{url('/puntoVenta/proveedor')}}">
                 <button class="btn btn-secondary" type="submit">
                     <img src="{{ asset('img\agregar2.png') }}" class="img-thumbnail" alt="Editar" width="30px"
@@ -17,8 +16,8 @@
                 </button>
             </form>
         </div>
-        @endif
-        <div class=" my-2 ml-3 p-1 ">
+      
+        <div class="my-2 ml-3 p-1 ">
             <button type="button" class="btn btn-secondary p-1" data-toggle="modal"
                 onclick="mostrarProveedoresInactivos()" data-target="#proveedoresInactivosModal">
                 <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
@@ -78,13 +77,13 @@
                                         </label>
                                         <input type="text"
                                             class="text-uppercase form-control  @error('nombre') is-invalid @enderror"
-                                            name="rfc" id="rfc" value="{{$d->rfc}}">
+                                            name="rfc" id="rfc" onkeyup="mayus(this);" value="{{$d->rfc}}">
                                         <label for="telefono">
                                             TELEFONO
                                         </label>
-                                        <input type="text"
+                                        <input type="number"
                                             class="text-uppercase form-control @error('nombre') is-invalid @enderror"
-                                            name="telefono" id="telefono" value="{{$d->telefono}}">
+                                            name="telefono" id="telefono"  value="{{$d->telefono}}">
                                         <label for="direccion">
                                             DIRECCION
                                         </label>
@@ -138,7 +137,7 @@
                                         NOMBRE
                                     </label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="nombre" id="nombre">
+                                        name="nombre" onkeyup="mayus(this);" id="nombre">
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -148,17 +147,17 @@
                                         RFC
                                     </label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="rfc" id="rfc">
+                                        name="rfc" onkeyup="mayus(this);" id="rfc">
                                     <label for="telefono">
                                         TELEFONO
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror"
+                                    <input type="text" class="upper-case form-control @error('nombre') is-invalid @enderror"
                                         name="telefono" id="telefono">
                                     <label for="direccion">
                                         DIRECCION
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="direccion" id="direccion">
+                                    <input type="text" class="upper-case form-control @error('nombre') is-invalid @enderror"
+                                        name="direccion" onkeyup="mayus(this);" id="direccion">
                                 </div>
                             </div>
 
@@ -271,6 +270,39 @@ async function filtrar() {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
 }
+//VALIDAR TELEFONO
+$("input[name='telefono']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
+    $("input[name='telefono']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
+
+    $("input[name='rfc']").bind('keypress', function(tecla) {
+        if (this.value.length >= 13) return false;
+       
+    });
+
+    function mayus(e) {
+        e.value = e.value.toUpperCase();
+    }
+
 texto.addEventListener('keyup', filtrar);
 filtrar();
 </script>

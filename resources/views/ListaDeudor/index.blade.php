@@ -26,7 +26,7 @@ CREDITOS
 
         <div id="tablaR" class=" w-100">
             <!-- TABLA -->
-            <div class="row w-100 " style="height:300px;overflow-y:auto;">
+            <div  class="row w-100 " style="height:300px;overflow-y:auto;">
                 <table class="table table-bordered border-primary ml-5  ">
                     <thead class="table-secondary text-primary">
                         <tr>
@@ -178,6 +178,8 @@ CREDITOS
     let totalCompra = 0;
     let totalResta = 0;
     let folio = 0;
+
+    let tabla2 = document.querySelector('#tablaR').outerHTML;
 
     // buscarCreditos();
     /*
@@ -431,11 +433,16 @@ CREDITOS
 
             }
         }
-        if (cuerpo === "") {
-            // tabla2 = document.querySelector('#tablaR');
-            let sin = ` <h4 class= "text-danger my-auto text-center mt-4 "> NO SE ENCONTRARON CLIENTES DEUDORES </h4>`;
-            document.getElementById("tablaR").innerHTML = sin;
-        } else {
+        if (palabraBusqueda.value.length > 0) {
+            if (cuerpo == "") {
+                // tabla2 = document.querySelector('#tablaR');
+                let sin = ` <h4 class= "text-danger my-auto text-center mt-4 "> NO SE ENCONTRARON CLIENTES DEUDORES </h4>`;
+                document.getElementById("tablaR").innerHTML = sin;
+            } else {
+                document.getElementById("tablaR").innerHTML = tabla2;
+                document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+            }
+        }else {
             document.getElementById("consultaBusqueda").innerHTML = cuerpo;
         }
 
@@ -452,7 +459,11 @@ CREDITOS
         //if (pago.value.length == 0)
         //  return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
         if (parseFloat(pago.value) === 0)
+        {
             return alert('EL ABONO DEBE SER MAYOR A CERO');
+        }else if ( parseFloat(pago.value) > parseFloat(totalResta)){
+            return alert('LA CANTIDAD MAXIMA A ABONAR ES: ' + totalResta);
+        }
         /*
             if (pago.value.length === 0)
                 return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');

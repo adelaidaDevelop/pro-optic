@@ -40,6 +40,7 @@ class ProveedorController extends Controller
     {
         //
         $datosProveedor = request()->except('_token');
+        $datosProveedor['status'] = 1; 
         Proveedor::insert($datosProveedor);
         
         return redirect('puntoVenta/proveedor');

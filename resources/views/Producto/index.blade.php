@@ -675,7 +675,7 @@ PRODUCTOS
                                             <a class="btn btn-danger mb-4" data-method="delete" onclick="return confirm('¿Estas seguro de que deseas eliminar?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
                                              DAR DE BAJA </a> 
                                              <a class="btn btn-primary mt-4"   href="#" onclick="subproductoExiste(` + x + `);return false;">
-                                             CREAR SUBPRODTUCTO </a> 
+                                             CREAR SUBPRODUCTO </a> 
                                              
                                               
                                         </div>
