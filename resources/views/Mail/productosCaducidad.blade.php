@@ -14,7 +14,7 @@
 <body>
     <p><strong>Asunto:</strong>Existencia de los productos en las sucursales</p>
     <p style="color:#ed4d46" class="text-primary text-uppercase">A continuacion se muestra
-     un informe de los productos que estan bajos de stock</p>
+     un informe de los productos que estan a punto de caducar</p>
     @foreach($sucursales as $sucursal)
         @if($sucursal->total > 0)
         <h3 class="text-primary text-uppercase"><strong>SUCURSAL {{$sucursal->direccion}}</strong></h3>
@@ -24,18 +24,18 @@
             <tr class="text-center">
                 <th style="font-size:13px">CODIGO DE BARRAS</th>
                 <th style="font-size:13px">PRODUCTO</th>
-                <th style="font-size:13px">STOCK</th>
+                <th style="font-size:13px">CANTIDAD APROXIMADA</th>
+                <th style="font-size:13px">FECHA DE CADUCIDAD</th>
             </tr>
         </thead>
         <tbody class="text-center" id="productos">
-        @foreach($sucursalProductos as $sp)
-            @if($sp->idSucursal == $sucursal->id)
+        @foreach($productosCaducidad as $pC)
             <tr>
-                <td style="text-align:center;font-size:12px">{{$sp->codigoBarras}}</td>
-                <td style="text-align:center;font-size:12px">{{$sp->nombre}}</td>
-                <td style="text-align:center;font-size:12px">{{$sp->existencia}}</td>
+                <td style="text-align:center;font-size:12px">{{$pC->codigoBarras}}</td>
+                <td style="text-align:center;font-size:12px">{{$pC->nombre}}</td>
+                <td style="text-align:center;font-size:12px">{{$pC->cantidad}}</td>
+                <td style="text-align:center;font-size:12px">{{$pC->fecha_caducidad}}</td>
             <tr>
-            @endif
         @endforeach
         </tbody>
         </table>

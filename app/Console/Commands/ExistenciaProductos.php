@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Mail\EnviarMail;
+use App\Mail\EnviarMailExistencia;
 use Illuminate\Support\Facades\Mail;
-use App\Models\Producto;
+use App\Models\Sucursal_producto;
 
 class ExistenciaProductos extends Command
 {
@@ -40,11 +40,13 @@ class ExistenciaProductos extends Command
      */
     public function handle()
     {
-        $productos = Producto::whereColumn('minimo_stock','>=','existencia')->get();
-        if(!empty($productos))
+        $productos = Sucursal_producto::whereColumn('minimoStock','>=','existencia')
+        ->where('status', '=',1)->get();
+        if(count($productos)>0)
         {
-            $titulo = "Este sera el titulo para existencia";
-            Mail::to('hzhm1997@gmail.com')->send(new EnviarMail($titulo,'existencia','PRODUCTOS BAJOS DE STOCK',$productos));//return 0;
+            //$titulo = "Este sera el titulo para existencia";
+            //Mail::to('hzhm1997@gmail.com')->send(new EnviarMail($titulo,'existencia','PRODUCTOS BAJOS DE STOCK',$productos));//return 0;
+            Mail::to('hzhm1997@gmail.com')->send(new EnviarMailExistencia($productos));
         }
     }
 }
