@@ -165,7 +165,7 @@ ADMINISTRACION
                         </form>
                         -->
                         <button class=" btn btn-outline-secondary my-3 ml-auto " onclick="veriSucursal('{{$d->id}}')" type="button">
-                            eliminar
+                            ELIMINAR
                         </button>
 
 

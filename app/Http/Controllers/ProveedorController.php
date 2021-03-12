@@ -39,11 +39,15 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
         //
+        try{
         $datosProveedor = request()->except('_token');
         $datosProveedor['status'] = 1; 
         Proveedor::insert($datosProveedor);
+        }catch (\Illuminate\Database\QueryException $e){
+            return redirect()->back()->withInput()->withErrors(['mensajeError' => 'YA EXISTE UN PROVEEDOR CON EL MISMO NOMBRE Y NO ES POSIBLE REPETIRLO']);  
+        }
         
-        return redirect('puntoVenta/proveedor');
+        return redirect('puntoVenta/proveedor')->withErrors(['mensajeConf' => 'ESTE CLIENTE SE AGREGO CORRECTAMENTE']);
     }
 
     /**
@@ -61,7 +65,7 @@ class ProveedorController extends Controller
         {
             return Proveedor::where('status', '=', false)->get();
         }
-        return $proveedores = Proveedor::where('id','=',$idCompra)->get();
+       // return $proveedores = Proveedor::where('id','=',$idCompra)->get();
         //if(isset($pagos))
           //  return 'pagos no encontrados';
         //else
@@ -92,6 +96,7 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         if($request->has('status'))
         {
             Proveedor::findOrFail($id)->update(['status' => true ]);
@@ -99,9 +104,24 @@ class ProveedorController extends Controller
             //return redirect('puntoVenta/empleado/'.$id.'/edit');
             return true;
         }
+        
         $datosProveedor = request()->except(['_token','_method']);
-        Proveedor::where('id','=',$id)->update($datosProveedor);
-        return redirect('puntoVenta/proveedor');
+        $nombre = $request['nombre'];
+        $rfc= $request['rfc'];
+        $telefono = $request['telefono'];
+        $direccion= $request['direccion'];
+        $proveedor = Proveedor::findOrFail($id);
+        $nombreAnt= $proveedor->nombre;
+        $rfcAnt= $proveedor->rfc;
+        $telefonoAnt= $proveedor->telefono;
+        $direccionAnt= $proveedor->direccion;
+        if( $nombre == $nombreAnt && $rfc == $rfcAnt && $telefono == $telefonoAnt && $direccion == $direccionAnt)
+        {
+            return redirect()->back()->withErrors(['mensajeError' => 'PARA EDITAR DEBE MODIFICAR AL MENOS UN ELEMENTO']);  
+        }else {
+        $proveedor->update($datosProveedor);
+        return redirect('puntoVenta/proveedor')->withErrors(['mensajeConf' => 'PROVEEDOR AGREGADO CORRECTAMENTE']);  
+        }
     }
 
     /**
@@ -114,7 +134,7 @@ class ProveedorController extends Controller
     {
         //Proveedor::destroy($id);
         Proveedor::findOrFail($id)->update(['status' => false]);
-        return redirect('/puntoVenta/proveedor');
+        return redirect('/puntoVenta/proveedor')->withErrors(['mensajEli' => 'PROVEEDOR DADO DE BAJA EXITOSAMENTE']);  
     }
     public function buscador(Request $request)
     {

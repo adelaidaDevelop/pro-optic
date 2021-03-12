@@ -8,7 +8,7 @@ PRODUCTOS
 <div class="col-0 my-2 p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
         <button class="btn btn-secondary ml-4 p-1" type="submit">
-            <img src="{{ asset('img\departamento.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+            <img src="{{ asset('img\departamento.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
             DEPARTAMENTOS
         </button>
     </form>
@@ -16,13 +16,13 @@ PRODUCTOS
 <!--BOTON CREAR EMPLEADO-->
 <div class="col-0 my-2 ml-3 p-1 ">
     <a class="btn btn-secondary p-1" href="{{ url('/puntoVenta/producto/create')}}">
-        <img src="{{ asset('img\agregar2.png') }}" alt="Editar" width="25px" height="25px">
-        NUEVO PRODUCTO </a>
+        <img src="{{ asset('img\agregar2.png') }}" alt="Editar" width="30px" height="30px">
+        NUEVO  </a>
     </a>
 </div>
 <div class="col-0 my-2 ml-3 p-1 ">
     <a class="btn btn-secondary p-1" href="{{ url('/puntoVenta/producto/stock')}}">
-        <img src="{{ asset('img\agregar_stock.png') }}" class="img-thumbnail" alt="Editar" width="28px" height="28px">
+        <img src="{{ asset('img\nuevoReg.png') }}"  alt="Editar" width="28px" height="28px">
         AGREGAR DE STOCK </a>
     </a>
 </div>
@@ -30,8 +30,8 @@ PRODUCTOS
 
 <div class="col-2 my-2 ml-3 p-1 ">
     <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
-        <img src="{{ asset('img\dar_alta.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-        ALTA PRODUCTOS
+        <img src="{{ asset('img\alta.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        DAR ALTA
     </button>
 </div>
 <!-- COMENTADO TEMPORAL
@@ -110,10 +110,9 @@ PRODUCTOS
                 </div>
 
                 <!-- TABLA -->
-                <div class="row" style="height:350px;overflow-y:auto;">
-                    <table class="table table-bordered border-primary col-12 " id="productos">
+                <div class="row border" style="height:500px;overflow-y:auto;">
+                    <table class="table table-bordered border-primary  " id="productos">
                         <thead class="table-secondary text-primary">
-
                             <tr>
                                 <th>#</th>
                                 <th>CODIGO BARRAS</th>
@@ -569,6 +568,7 @@ PRODUCTOS
                                 departamento = d[count8].nombre;
                             }
                         }
+                        contador = contador +1;
                         cuerpo = cuerpo + `
                             <tr onclick="" data-dismiss="modal">
                                 <th scope="row">` + contador + `</th>
@@ -579,8 +579,8 @@ PRODUCTOS
                                 <td>` + productosSucursal[z].costo + `</td>
                                 <td>` + productosSucursal[z].precio + `</td>
                                 <td>` +
-                            ` <button type="button" class="btn btn-outline-info" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
-                                VER MAS
+                            ` <button type="button" class="btn btn-outline-secondary" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
+                                <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
                                 </button>
                                 </td>            
                             </tr>
@@ -661,7 +661,7 @@ PRODUCTOS
                                             </select>
                                         </div>
                                         <div class="col-4 text-center">
-                                            <br /><br />
+                                            <br/>
                                             <label for="Imagen">
                                                 <h5> <strong>{{'FOTO'}}</strong></h5>
                                             </label required>
@@ -669,13 +669,19 @@ PRODUCTOS
                                             <img src="{{ asset('storage')}}/` + productos[count10].imagen + ` " alt="" width="200">
                                             
                                             <br /><br />
-                                            <a class="btn btn-primary" href="{{ url('/puntoVenta/producto/` + x + `/edit')}}"> EDITAR PRODUCTO </a>
+                                            <a class="btn btn-outline-primary" href="{{ url('/puntoVenta/producto/` + x + `/edit')}}" onclick="return confirm('¿EDITAR ESTE PRODUCTO?')"> 
+                                            <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
+                                            EDITAR  </a>
                                             <br/><br/>
                                             
-                                            <a class="btn btn-danger mb-4" data-method="delete" onclick="return confirm('¿Estas seguro de que deseas eliminar?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                                            <a class="btn btn-outline-danger mb-4" data-method="delete" onclick="return confirm('¿Estas seguro de que deseas eliminar?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                                            <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              DAR DE BAJA </a> 
-                                             <a class="btn btn-primary mt-4"   href="#" onclick="subproductoExiste(` + x + `);return false;">
-                                             CREAR SUBPRODUCTO </a> 
+                                             <div class="mt-4 mb-4"> </div>
+
+                                             <a class="btn btn-outline-primary mt-4"   href="#" onclick="subproductoExiste(` + x + `);return false;">
+                                             <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                                             AGREGAR A SUBPRODUCTO </a> 
                                              
                                               
                                         </div>
