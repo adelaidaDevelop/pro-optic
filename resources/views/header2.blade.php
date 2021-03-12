@@ -60,11 +60,20 @@
                         @endif
                     </li>
                     <li class="nav-item active">
+                    <!--
                         <a class="nav-link" href="/puntoVenta/cliente">
                             <button class="btn btn-light">
                                 CLIENTES
                             </button>
                             <span class="sr-only">(current)</span></a>
+                            -->
+                            <a class="nav-link" href="/credito">
+                            <button class="btn btn-light">
+                                LISTA DEUDORES
+                            </button>
+                            <span class="sr-only">(current)</span></a>
+                            
+                            
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="/puntoVenta/corteCaja">

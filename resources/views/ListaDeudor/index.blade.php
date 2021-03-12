@@ -17,7 +17,7 @@ CREDITOS
 </div>
 <div class="row col border border-dark ml-0 mr-0 mb-4 ">
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-    <div class="row  mb-4  mr-2 ">
+    <div class="row  mb-4 mx-auto">
         <div class="row col-6  form-group input-group my-4 ml-3">
             <input type="text" class="form-control text-uppercase border-primary " size="15" placeholder="BUSCAR CLIENTE" id="busquedaCliente" onkeyup="buscarCliente()">
             <a title="buscar" href="" class="text-dark  ml-2 ">
@@ -26,7 +26,7 @@ CREDITOS
 
         <div id="tablaR" class=" w-100">
             <!-- TABLA -->
-            <div  class="row w-100 " style="height:300px;overflow-y:auto;">
+            <div class="row w-100 " style="height:300px;overflow-y:auto;">
                 <table class="table table-bordered border-primary ml-5  ">
                     <thead class="table-secondary text-primary">
                         <tr>
@@ -40,7 +40,7 @@ CREDITOS
                         </tr>
                     </thead>
                     <tbody id="consultaBusqueda">
-
+                    
                     </tbody>
                 </table>
             </div>
@@ -321,7 +321,7 @@ CREDITOS
         }
     }
 
-    function modalAbonar(id) {
+    function modalAbonar(id,idVenta) {
         idVent2 = id;
         $("input[id='abono']").val(0);
         document.getElementById("restoDeuda").textContent = "$ " + 0.00;
@@ -332,8 +332,9 @@ CREDITOS
                 pagado = pagado + pagos_ventas[count8].monto;
             }
         }
+
         for (count9 in detalleVentas) {
-            if (detalleVentas[count9].idVenta == id) {
+            if (detalleVentas[count9].idVenta == idVenta) {
                 let subtotal = detalleVentas[count9].cantidad * detalleVentas[count9].precioIndividual;
                 total2 = total2 + subtotal;
             }
@@ -361,22 +362,23 @@ CREDITOS
         const palabraBusqueda = document.querySelector('#busquedaCliente');
         let cuerpo = "";
         let cont = 0;
-        let idCliente = 0;
-        let nombre = "";
-        //   let folio = 0;
-        let idVentClient = 0;
-        let total = 0;
-        let pago = 0;
-        let fechaVenta = "";
-        let debe = 0;
+        //  let idCliente = 0;
+
         // descripcion2 = 0
         for (count12 in venta_clientes) { //CREDITOS
             if (venta_clientes[count12].estado === "incompleto") {
+                let nombre = "";
+                //   let folio = 0;
+                let idVentClient = 0;
+                let total = 0;
+                let pago = 0;
+                let fechaVenta = "";
+                let debe = 0;
                 for (count11 in clientes) {
                     if (venta_clientes[count12].idCliente == clientes[count11].id) {
                         if (clientes[count11].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                             nombre = clientes[count11].nombre;
-                            idCliente = clientes[count11].id;
+                            // idCliente = clientes[count11].id;
                             cont = cont + 1;
                             //  folio = venta_clientes[count12].idVenta;
                             folio = venta_clientes[count12].idVenta;
@@ -399,8 +401,11 @@ CREDITOS
                                 }
                             }
                             //   descripcion2 = ventas[count2].id;
-
+                            console.log("veri");
                             debe = total - pago;
+                            console.log(total);
+                            console.log(pago);
+                            console.log(debe);
                             if (debe > 0) {
 
                                 cuerpo = cuerpo + `
@@ -416,7 +421,7 @@ CREDITOS
                                                 type="button">VER MAS</button>
                                             </td>
                                             <td>` +
-                                    `<button class="btn btn-light" onclick="modalAbonar(` + idVentClient + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
+                                    `<button class="btn btn-light" onclick="modalAbonar(` + idVentClient+`,`+folio + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
                                                 type="button">ABONAR</button>
                                             </td>
 
@@ -433,7 +438,6 @@ CREDITOS
 
             }
         }
-        if (palabraBusqueda.value.length > 0) {
             if (cuerpo == "") {
                 // tabla2 = document.querySelector('#tablaR');
                 let sin = ` <h4 class= "text-danger my-auto text-center mt-4 "> NO SE ENCONTRARON CLIENTES DEUDORES </h4>`;
@@ -442,9 +446,8 @@ CREDITOS
                 document.getElementById("tablaR").innerHTML = tabla2;
                 document.getElementById("consultaBusqueda").innerHTML = cuerpo;
             }
-        }else {
-            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-        }
+        
+            
 
     };
 
@@ -458,10 +461,9 @@ CREDITOS
         // const cliente = document.querySelector('#clientes');
         //if (pago.value.length == 0)
         //  return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
-        if (parseFloat(pago.value) === 0)
-        {
+        if (parseFloat(pago.value) === 0) {
             return alert('EL ABONO DEBE SER MAYOR A CERO');
-        }else if ( parseFloat(pago.value) > parseFloat(totalResta)){
+        } else if (parseFloat(pago.value) > parseFloat(totalResta)) {
             return alert('LA CANTIDAD MAXIMA A ABONAR ES: ' + totalResta);
         }
         /*

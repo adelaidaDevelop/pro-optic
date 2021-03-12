@@ -10,8 +10,8 @@
         <div class="col my-2 ml-5 pl-1">
             <form method="get" action="{{url('/puntoVenta/departamento/create')}}">
                 <button class="btn btn-secondary" type="submit">
-                    <img src="{{ asset('img\agregar2.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
-                    NUEVO DEPARTAMENTO
+                    <img src="{{ asset('img\agregar2.png') }}"  alt="Editar" width="30px" height="30px">
+                    AGREGAR
                 </button>
             </form>
         </div>
@@ -25,7 +25,7 @@
                     <!--input type="text" id="buscador" class="form-control my-2">
                         <button class="btn btn-info mb-2" id="boton">Buscar</button-->
 
-                    <h4 style="color:#4388CC">DEPARTAMENTOS</h4>
+                    <h5 style="color:#4388CC">DEPARTAMENTOS ACTIVOS</h5>
 
                     <div class="input-group">
                         <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR DEPARTAMENTO" onkeyup="mayus(this)" id="texto" required>
@@ -49,7 +49,7 @@
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
                             <label for="ndepartamento">
-                                <h4 style="color:#4388CC">EDITAR DEPARTAMENTO</h4>
+                                <h4 style="color:#4388CC">EDITAR </h4>
                             </label>
                             <br />
                             <label for="Nombre">
@@ -86,7 +86,7 @@
                             {{ method_field('DELETE')}}
                             <button class="btn btn-outline-secondary my-3" type="submit" onclick="return confirm('¿DESEA ELIMINAR ESTE DEPARTAMENTO?')">
                                 <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
-                                ELIMINAR DEPARTAMENTO
+                                ELIMINAR 
                             </button>
                         </form>
                     </div>
@@ -104,7 +104,7 @@
                         </label>
                         <br />
                         <label for="Nombre">
-                            <h5>NUEVO DEPARTAMENTO</h5>
+                            <h5>NUEVO </h5>
                         </label>
                         <div class="form-row w-100">
                             <div class="col-7">
@@ -134,7 +134,7 @@
                             <div class="form-group">
                                 <button class="btn btn-outline-secondary" type="submit" onclick="">
                                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
-                                    GUARDAR DEPARTAMENTO
+                                    AGREGAR DEPARTAMENTO
                                     <!--GUARDAR DEPARTAMENTO-->
                                 </button>
                             </div>

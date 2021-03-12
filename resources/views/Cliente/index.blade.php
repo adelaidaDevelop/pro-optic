@@ -6,8 +6,14 @@ CLIENTES
 @section('opciones')
 <!-- BOTON DEVOLUCION-->
 
-<div class="col-8 my-auto ">
-    <a class="btn btn-secondary ml-2 my-auto " href="{{ url('/credito')}}">
+<div class="ml-3 my-auto ">
+    <a class="btn btn-secondary ml-2 my-auto " href="{{ url('/puntoVenta/cliente')}}">
+        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
+        NUEVO CLIENTE </a>
+    </a>
+</div>
+<div class="ml-3 my-auto ">
+    <a class="btn btn-secondary ml-3 my-auto " href="{{ url('/credito')}}">
         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
         LISTA DEUDORES </a>
     </a>
@@ -82,7 +88,7 @@ CLIENTES
 
                         </div>
                         <button class="btn btn-outline-secondary mt-4 ml-1" type="submit">
-                            <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
+                            <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" onclick="return confirm('DESEA EDITAR ESTE CLIENTE?');" alt="Editar" width="30px" height="30px">
                             GUARDAR CAMBIOS
                         </button>
                     </div>
@@ -97,10 +103,6 @@ CLIENTES
                         </button>
                     </form>
                 </div>
-            </div>
-            <div class="row mx-1 my-1 ">
-
-
             </div>
             @else
             <div class="row px-3 py-3 m-0">
