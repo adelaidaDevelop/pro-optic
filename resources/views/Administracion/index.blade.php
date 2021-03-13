@@ -25,7 +25,7 @@ ADMINISTRACION
 <div class="ml-3 my-2 p-1">
     <form method="get" action="{{url('/puntoVenta/empleado/')}}">
         <button class="btn btn-secondary p-1" type="submit">
-            <img src="{{ asset('img\usuarioEc.png') }}" class="img-thumbnail" alt="Editar" width="28px" height="28px">
+            <img src="{{ asset('img\empleado.png') }}"  alt="Editar" width="32px" height="32px">
             EMPLEADOS
         </button>
     </form>
