@@ -262,8 +262,8 @@
                                                 class="form-control @error('segundoNombre') is-invalid @enderror "
                                                 name="segundoNombre"
                                                 value="@if(session()->has('cambios')){{old('segundoNombre')}}@else{{$datosEmpleado->segundoNombre}}@endif"
-                                                placeholder="@if(isset($datosEmpleado->segundoNombre))INGRESAR SEGUNDO NOMBRE @endif" required autocomplete="segundoNombre"
-                                                autofocus>
+                                                placeholder="@if(isset($datosEmpleado->segundoNombre))INGRESAR SEGUNDO NOMBRE @endif"
+                                                autocomplete="segundoNombre" autofocus>
                                             @error('segundoNombre')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -403,7 +403,8 @@
                                             <input type="text" class="form-control @error('curp') is-invalid @enderror "
                                                 name="curp" id="curp"
                                                 value="@if(session()->has('cambios')){{ old('curp') }}@else{{$datosEmpleado->curp}}@endif"
-                                                placeholder="Ingresar curp" required autocomplete="curp" autofocus disabled>
+                                                placeholder="Ingresar curp" required autocomplete="curp" autofocus
+                                                readonly>
                                             @error('curp')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -428,7 +429,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                     <!--div class="form-row">
                                         <div class="form-group col-6">
                                             <label for="genero">
@@ -504,12 +505,38 @@
                                             <label for="claveE">
                                                 CLAVE
                                             </label>
-                                            <input type="text"
-                                                class="form-control @error('claveE') is-invalid @enderror" name="claveE"
-                                                id="claveE"
-                                                value="@if(session()->has('cambios')){{old('claveE')}}@else{{$datosEmpleado->claveE}}@endif"
-                                                placeholder="Ingresar clave para operaciones" required
-                                                autocomplete="claveE" autofocus>
+
+                                            <div class="input-group">
+                                                <input type="text"
+                                                    class="form-control @error('claveE') is-invalid @enderror"
+                                                    name="claveE" id="claveE"
+                                                    value="@if(session()->has('cambios')){{old('claveE')}}@else{{$datosEmpleado->claveE}}@endif"
+                                                    placeholder="Ingresar clave para operaciones" required
+                                                    autocomplete="claveE" autofocus readonly>
+                                                <div class="input-group-append">
+                                                <button class="btn btn-dark" onclick="mostrarPasswordClave()" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="m-0" viewBox="0 0 16 16" id="iconPasswordClave">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                    <path
+                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                </svg>
+                            </button>
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        id="button-addon2" onclick="generarClave()">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-arrow-clockwise"
+                                                            viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                                                            <path
+                                                                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                                                        </svg>
+                                                        <!--img class="btn btn-outline-secondary" type="button" src="{ asset('img\recargar.svg') }}" class="img-thumbnail" alt="Editar"
+                                                        fill="currentColor"-->
+                                                    </button>
+                                                </div>
+                                            </div>
                                             @error('claveE')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -686,7 +713,8 @@
                                         GENERO
                                     </label>
                                     <select name="genero" class="form-control @error('genero') is-invalid @enderror"
-                                        id="genero" required autocomplete="genero" value="{{ old('genero') }}" autofocus>
+                                        id="genero" required autocomplete="genero" value="{{ old('genero') }}"
+                                        autofocus>
                                         <option value="H">HOMBRE</option>
                                         <option value="M">MUJER</option>
                                     </select>
@@ -755,7 +783,7 @@
                                         FECHA DE NACIMIENTO
                                     </label>
                                     <input type="date" min="" max="" name="fechaNacimiento" id="fechaNacimiento"
-                                        class="form-control mr-3" value="{{ old('fechaNacimiento') }}"/>
+                                        class="form-control mr-3" value="{{ old('fechaNacimiento') }}" />
 
                                     <!--textarea name="fechaNacimiento" id="fechaNacimiento"
                                         class="form-control @error('fechaNacimiento') is-invalid @enderror"
@@ -833,10 +861,18 @@
                                     <label for="claveE">
                                         CLAVE
                                     </label>
-                                    <input type="text" class=" form-control @error('claveE') is-invalid @enderror"
-                                        name="claveE" id="claveE" value="{{ old('claveE') }}"
-                                        placeholder="Ingresar clave para operaciones" required autocomplete="claveE"
-                                        autofocus>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class=" form-control @error('claveE') is-invalid @enderror"
+                                            name="claveE" id="claveE" value="{{ old('claveE') }}"
+                                            placeholder="Ingresar clave para operaciones" required autocomplete="claveE"
+                                            autofocus readonly>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                                                <img src="{{ asset('img\recargar.svg') }}" class="img-thumbnail"
+                                                    alt="Editar" width="25px" height="25px">
+                                            </button>
+                                        </div>
+                                    </div>
                                     @error('claveE')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -1000,19 +1036,19 @@ $("input[name='telefono']").bind('keypress', function(tecla) {
 
 
 @if(isset($datosEmpleado))
-    let datosEmpleado = @json($datosEmpleado);
-    document.getElementById("genero").value = datosEmpleado.genero;
-    document.getElementById("fechaNacimiento").value = datosEmpleado.fechaNacimiento;
-    document.getElementById("entidadFederativa").value = datosEmpleado.entidadFederativa;
-    //alert( datosEmpleado.entidadFederativa);
+let datosEmpleado = @json($datosEmpleado);
+document.getElementById("genero").value = datosEmpleado.genero;
+document.getElementById("fechaNacimiento").value = datosEmpleado.fechaNacimiento;
+document.getElementById("entidadFederativa").value = datosEmpleado.entidadFederativa;
+//alert( datosEmpleado.entidadFederativa);
 @else
-    let generoOld = "{{ old('genero') }}";
-    let entidadFederativaOld = "{{ old('entidadFederativa') }}";
-    if(generoOld.length>0)
+let generoOld = "{{ old('genero') }}";
+let entidadFederativaOld = "{{ old('entidadFederativa') }}";
+if (generoOld.length > 0)
     document.getElementById("genero").value = generoOld;
-    if(entidadFederativaOld.length>0)
+if (entidadFederativaOld.length > 0)
     document.getElementById("entidadFederativa").value = entidadFederativaOld;
-    //alert("{{ old('genero') }}");
+//alert("{{ old('genero') }}");
 @endif
 
 async function actualizarPassword() {
@@ -1123,13 +1159,13 @@ function habilitar() {
     //document.getElementById("btnForm").show();
     //alert('Entra');
 }
-let cambios = @json(session()->has('cambios'));
+let cambios = @json(session()-> has('cambios'));
 if (cambios.length > 0)
     habilitar();
 //if(session() - > has('cambios'))
 //habilitar();
 //endif
-function validarCURP(){//n,ap,am,fN,g,e) {
+function validarCURP() { //n,ap,am,fN,g,e) {
     let pn = document.getElementById("primerNombre").value;
     let sn = document.getElementById("segundoNombre").value;
     let ap = document.getElementById("apellidoPaterno").value;
@@ -1137,12 +1173,10 @@ function validarCURP(){//n,ap,am,fN,g,e) {
     let fn = document.getElementById("fechaNacimiento").value;
     let g = document.getElementById("genero").value;
     let e = document.getElementById("entidadFederativa").value;
-    if(pn.length>2 & ap.length>2 & am.length>2 & fn.length>0 & g.length>0 & e.length>0)
-    {
-        let fechaNac = ""; 
-        for(i=0;i<fn.length;i++)
-        {
-            if(fn.charAt(i) !='-')
+    if (pn.length > 2 & ap.length > 2 & am.length > 2 & fn.length > 0 & g.length > 0 & e.length > 0) {
+        let fechaNac = "";
+        for (i = 0; i < fn.length; i++) {
+            if (fn.charAt(i) != '-')
                 fechaNac = fechaNac + fn.charAt(i);
             console.log(fechaNac);
         }
@@ -1153,12 +1187,65 @@ function validarCURP(){//n,ap,am,fN,g,e) {
         console.log(g);
         console.log(e);*/
         let ns = pn + sn;
-        document.getElementById("curp").value = calcula(ns,ap,am,fechaNac,g,e);
+        document.getElementById("curp").value = calcula(ns, ap, am, fechaNac, g, e);
     }
-        
+
     //
 }
-//validarCURP('jesus','hernandez','martinez','990115','H','OC');
+async function generarClave()
+{
+    try{
+        let clave = getRandomInt(10000, 99999);
+        //
+        //clave = 12345;
+        let respuesta = await fetch(`/puntoVenta/empleado/validarClave/${clave}`);
+        let valido = await respuesta.text();
+        if(respuesta.ok)
+        {
+            if(valido.length>0)
+            {
+                document.getElementById("claveE").value = clave;
+                return;
+            }
+            //console.log(clave);
+            return generarClave();
+        }
+        //alert('No fu validado :`p');
+        
+    }catch(err)
+    {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+    
+    
+    //alert(clave);
+}
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+function mostrarPasswordClave() {
+
+    var cambio = document.getElementById("claveE");
+    if (cambio.type == "password") {
+        cambio.type = "text";
+        var cambioicono = document.getElementById("iconPasswordClave").innerHTML =
+            `<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                    <path
+                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                `;
+        //$('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+    } else {
+        cambio.type = "password";
+        var cambioicono = document.getElementById("iconPasswordClave").innerHTML =
+            `<path
+                                        d="M10.79 12.912l-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.027 7.027 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.088z" />
+                                    <path
+                                        d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708l-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6l-12-12 .708-.708 12 12-.708.707z" />
+            `;
+        //$('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+    }
+}
+//console.log();
 </script>
 
 @endsection

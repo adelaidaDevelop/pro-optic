@@ -14,8 +14,7 @@ class SucursalController extends Controller
      */
     public function index()
     {
-        //
-
+        return view('auth.newLogin');
     }
 
     public function darAltaSucursal($id){
