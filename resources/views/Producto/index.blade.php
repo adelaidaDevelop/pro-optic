@@ -7,8 +7,8 @@ PRODUCTOS
 @section('opciones')
 <div class="col-0  p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
-        <button class="btn btn-outline-secondary text-light ml-4 p-1" type="submit">
-            <img src="{{ asset('img\departamento.png') }}"  alt="Editar" width="30px" height="30px">
+        <button class="btn btn-outline-secondary text-light ml-4 p-1 border-0" type="submit">
+            <img src="{{ asset('img\departamento.png') }}"  alt="Editar" width="33px" height="33px">
             <br/>
             <p class="h6 my-auto"><small>DEPARTAMENTOS</small></p>
         </button>
@@ -16,22 +16,22 @@ PRODUCTOS
 </div>
 <!--BOTON CREAR EMPLEADO-->
 <div class="col-0  ml-3 p-1 ">
-    <a class="btn btn-outline-secondary text-light p-1" href="{{ url('/puntoVenta/producto/create')}}">
-        <img src="{{ asset('img\agregar2.png') }}" alt="Editar" width="30px" height="30px">
+    <a class="btn btn-outline-secondary text-light p-1 border-0" href="{{ url('/puntoVenta/producto/create')}}">
+        <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="33px" height="33px">
         <p class="h6 my-auto"><small>NUEVO PRODUCTO </small></p> </a>
     </a>
 </div>
 <div class="col-0  ml-3 p-1 ">
-    <a class="btn btn-outline-secondary text-light p-1" href="{{ url('/puntoVenta/producto/stock')}}">
-        <img src="{{ asset('img\nuevoReg.png') }}"  alt="Editar" width="28px" height="28px">
+    <a class="btn btn-outline-secondary text-light p-1 border-0" href="{{ url('/puntoVenta/producto/stock')}}">
+        <img src="{{ asset('img\nuevoReg.png') }}"  alt="Editar" width="32px" height="32px">
         <p class="h6 my-auto"><small>AGREGAR DE STOCK</small></p>
          </a>
     </a>
 </div>
 
 <div class="col-2  ml-3 p-1 ">
-    <button type="button" class="btn btn-outline-secondary text-light p-1" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
-        <img src="{{ asset('img\alta.png') }}"  alt="Editar" width="25px" height="25px">
+    <button type="button" class="btn btn-outline-secondary text-light p-1 border-0" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
+        <img src="{{ asset('img\alta2.png') }}"  alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto"><small>DAR ALTA</small></p>
         
     </button>
@@ -113,7 +113,7 @@ PRODUCTOS
 
                 <!-- TABLA -->
                 <div class="row border mx-0 px-0 border-dark mx-4" style="height:500px;overflow-y:auto;">
-                    <table class="table table-bordered border-primary  " id="productos">
+                    <table class="table table-bordered border-primary  text-center" id="productos">
                         <thead class="table-secondary text-primary">
                             <tr>
                                 <th>#</th>
@@ -581,7 +581,7 @@ PRODUCTOS
                                 <td>` + productosSucursal[z].costo + `</td>
                                 <td>` + productosSucursal[z].precio + `</td>
                                 <td>` +
-                            ` <button type="button" class="btn btn-outline-secondary" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
+                            ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
                                 <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
                                 </button>
                                 </td>            

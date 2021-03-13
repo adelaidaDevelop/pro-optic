@@ -112,11 +112,10 @@
 
         </nav>
     </div>
-    <div class="row p-0" style="background:#ED4D46">
+    <div class="row p-0" style="background:#3366FF">
         <h4 class="font-weight-bold my-auto ml-4 px-1 col-2 " style="color:#FFFFFF">
             @yield('subtitulo')
         </h4>
-        
         @yield('opciones')
     </div>
     <!--BODY-->
