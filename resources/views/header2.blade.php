@@ -7,8 +7,7 @@
             <a class="navbar-brand" href="#">
                 <img src="{{ asset('img\farmaciagilogo.png') }}" alt="Editar" height="50px">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!--cambios de ruta-->
@@ -16,15 +15,18 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="/puntoVenta/venta">
-                            <button class="btn btn-light" type="submit">VENTAS
-
+                            <button class="btn btn-light input-group" type="submit">
+                                <img src="{{ asset('img\venta2.png') }}" alt="Editar" width="30px" height="30px">
+                                <p class="h6 my-auto"><small>VENTAS</small></p>
                             </button>
-                            <span class="sr-only">(current)</span></a>
+                            <span class="sr-only">(current)</span>
+                        </a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="/puntoVenta/compra">
-                            <button class="btn btn-light">
-                                COMPRAS
+                            <button class="btn btn-light input-group">
+                                <img src="{{ asset('img\compra.png') }}" alt="Editar" width="30px" height="30px">
+                                <p class="h6 my-auto"><small>COMPRAS</small></p>
                             </button>
                             <span class="sr-only">(current)</span></a>
                     </li>
@@ -39,16 +41,19 @@
                     -->
                     <li class="nav-item active">
                         <a class="nav-link" href="/puntoVenta/producto">
-                            <button class="btn btn-light">
-                                INVENTARIO
+                            <button class="btn btn-light input-group">
+                            <img src="{{ asset('img\inventario.png') }}" alt="Editar" width="30px" height="30px">
+                            <p class="h6 my-auto ml-1"><small>INVENTARIO</small></p>
                             </button>
                             <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
                         @if(session('idUsuario') == 1)
                         <a class="nav-link" href="/puntoVenta/administracion">
-                            <button class="btn btn-light">
-                                ADMINISTRACION
+                            <button class="btn btn-light input-group">
+                            <img src="{{ asset('img\administracion.png') }}" alt="Editar" width="30px" height="30px">
+                            
+                            <p class="h5 my-auto ml-1"><small>ADMINISTRACION</small></p>
                             </button>
                             <span class="sr-only">(current)</span></a>
                         @else
@@ -60,33 +65,38 @@
                         @endif
                     </li>
                     <li class="nav-item active">
-                    <!--
+                        <!--
                         <a class="nav-link" href="/puntoVenta/cliente">
                             <button class="btn btn-light">
+                            <img src="{{ asset('img\client.png') }}" alt="Editar" width="30px" height="30px">
+                            
                                 CLIENTES
                             </button>
                             <span class="sr-only">(current)</span></a>
                             -->
-                            <a class="nav-link" href="/credito">
-                            <button class="btn btn-light">
-                                LISTA DEUDORES
+                        <a class="nav-link" href="/credito">
+                            <button class="btn btn-light input-group">
+                            <img src="{{ asset('img\deudores.png') }}" alt="Editar" width="30px" height="30px">
+                            <p class="h6 my-auto ml-1"><small>LISTA DEUDORES</small></p>
                             </button>
                             <span class="sr-only">(current)</span></a>
-                            
-                            
+
+
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="/puntoVenta/corteCaja">
-                            <button class="btn btn-light">
-                                CORTE
-                            </button>
+                            <button class="btn btn-light input-group">
+                                <img src="{{ asset('img\corteC.png') }}" alt="Editar" width="30px" height="30px">
+                                <p class="h6 my-auto"><small>CORTE</small></p>
+                                </button>
                             <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="/puntoVenta/reporteInventario">
-                            <button class="btn btn-light">
-                                REPORTES
-                            </button>
+                            <button class="btn btn-light input-group">
+                            <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
+                            <p class="h6 my-auto"><small>REPORTES</small></p>
+                                </button>
                             <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
@@ -103,9 +113,10 @@
         </nav>
     </div>
     <div class="row p-0" style="background:#ED4D46">
-        <h3 class="font-weight-bold my-2 ml-4 px-1 col-2" style="color:#FFFFFF">
+        <h4 class="font-weight-bold my-auto ml-4 px-1 col-2 " style="color:#FFFFFF">
             @yield('subtitulo')
-        </h3>
+        </h4>
+        
         @yield('opciones')
     </div>
     <!--BODY-->

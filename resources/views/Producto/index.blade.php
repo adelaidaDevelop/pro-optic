@@ -5,33 +5,35 @@ PRODUCTOS
 @endsection
 
 @section('opciones')
-<div class="col-0 my-2 p-1">
+<div class="col-0  p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
-        <button class="btn btn-secondary ml-4 p-1" type="submit">
-            <img src="{{ asset('img\departamento.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
-            DEPARTAMENTOS
+        <button class="btn btn-outline-secondary text-light ml-4 p-1" type="submit">
+            <img src="{{ asset('img\departamento.png') }}"  alt="Editar" width="30px" height="30px">
+            <br/>
+            <p class="h6 my-auto"><small>DEPARTAMENTOS</small></p>
         </button>
     </form>
 </div>
 <!--BOTON CREAR EMPLEADO-->
-<div class="col-0 my-2 ml-3 p-1 ">
-    <a class="btn btn-secondary p-1" href="{{ url('/puntoVenta/producto/create')}}">
+<div class="col-0  ml-3 p-1 ">
+    <a class="btn btn-outline-secondary text-light p-1" href="{{ url('/puntoVenta/producto/create')}}">
         <img src="{{ asset('img\agregar2.png') }}" alt="Editar" width="30px" height="30px">
-        NUEVO  </a>
+        <p class="h6 my-auto"><small>NUEVO PRODUCTO </small></p> </a>
     </a>
 </div>
-<div class="col-0 my-2 ml-3 p-1 ">
-    <a class="btn btn-secondary p-1" href="{{ url('/puntoVenta/producto/stock')}}">
+<div class="col-0  ml-3 p-1 ">
+    <a class="btn btn-outline-secondary text-light p-1" href="{{ url('/puntoVenta/producto/stock')}}">
         <img src="{{ asset('img\nuevoReg.png') }}"  alt="Editar" width="28px" height="28px">
-        AGREGAR DE STOCK </a>
+        <p class="h6 my-auto"><small>AGREGAR DE STOCK</small></p>
+         </a>
     </a>
 </div>
 
-
-<div class="col-2 my-2 ml-3 p-1 ">
-    <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
-        <img src="{{ asset('img\alta.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-        DAR ALTA
+<div class="col-2  ml-3 p-1 ">
+    <button type="button" class="btn btn-outline-secondary text-light p-1" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
+        <img src="{{ asset('img\alta.png') }}"  alt="Editar" width="25px" height="25px">
+        <p class="h6 my-auto"><small>DAR ALTA</small></p>
+        
     </button>
 </div>
 <!-- COMENTADO TEMPORAL
@@ -66,8 +68,8 @@ PRODUCTOS
                 </strong>
             </h5>
         </div>
-        <div class="row col-12">
-            <div class="col-2 border border-primary  mb-4 ml-4 mr-5">
+        <div class="row col-12 border px-0 mx-0">
+            <div class="col-2 border border-primary  mb-4">
                 <h6 class="text-primary mt-4">
                     FILTRAR POR:
                 </h6>
@@ -85,10 +87,10 @@ PRODUCTOS
                 </div>
             </div>
             <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-            <div class="col-8   mb-4 ml-4 mr-2">
-                <div class="form-group w-100">
-                    <div class="row my-0">
-                        <input class="form-control text-uppercase  col-4 mr-3 " type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarFiltroNombre2()">
+            <div class="col-10 mx-0 mb-4 px-0">
+                <div class="form-group border mx-4">
+                    <div class="row my-0 mx-0">
+                        <input class="form-control text-uppercase  col-4" type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarFiltroNombre2()">
                         <a title="buscar" href="" class="text-dark ">
                             <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
                         <div class="mt-2 mx-2"> </div>
@@ -110,7 +112,7 @@ PRODUCTOS
                 </div>
 
                 <!-- TABLA -->
-                <div class="row border" style="height:500px;overflow-y:auto;">
+                <div class="row border mx-0 px-0 border-dark mx-4" style="height:500px;overflow-y:auto;">
                     <table class="table table-bordered border-primary  " id="productos">
                         <thead class="table-secondary text-primary">
                             <tr>

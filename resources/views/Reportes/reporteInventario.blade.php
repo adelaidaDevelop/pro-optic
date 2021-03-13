@@ -8,7 +8,7 @@ REPORTES
     <form method="get" action="{{url('/puntoVenta/reporteVentas/')}}">
         <button class="btn btn-secondary ml-4 p-1" type="submit">
             <img src="{{ asset('img\departamento.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-            REPORTE VENTAS
+            VENTAS
         </button>
     </form>
 </div>
