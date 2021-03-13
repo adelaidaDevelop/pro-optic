@@ -48,7 +48,7 @@ class CaducidadProductos extends Command
         $productos = Producto::all();
         $vista = 'titulo';//view('ProductosCaducidad.index',compact('productosCaducidad','productos'));
         */
-        $fecha = now()->add(new DateInterval('P2M'))->toDateString();
+        $fecha = now()->add(new DateInterval('P4M'))->toDateString();
         $productosCaducidad = Productos_caducidad::where('fecha_caducidad', '<=',$fecha)->get();
         //$titulo = "PRODUCTOS PROXIMOS A CADUCAR";
         
