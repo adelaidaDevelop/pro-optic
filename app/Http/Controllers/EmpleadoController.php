@@ -293,5 +293,21 @@ class EmpleadoController extends Controller
             return false;
         return true;
     }
+    public function validarEmpleado($clave)
+    {
+        $empleado = Empleado::where('claveE','=',$clave)->get();
+        
+        if(count($empleado)>0)
+        {
+            $sE = Sucursal_empleado::where('idEmpleado','=',$empleado->first()->id)
+            ->where('idSucursal','=',session('sucursal'))->get();
+            if(count($sE))
+            {
+                return $sE->first()->id;
+            }
+            return false;
+        }
+        return false;
+    }
     
 }

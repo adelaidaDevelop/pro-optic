@@ -68,13 +68,14 @@ class VentaController extends Controller
         $datos = $request->input('datos');
         $estado = $request->input('estado');
         $pago = $request->input('pago');
+        $idSucursalEmpleado = $request->input('idSucursalEmpleado');
         $datosCodificados = json_decode($datos, true);
         if ($request->has('cliente')) {
             $cliente = $request->input('cliente');
             $venta = Venta::create([
                 'tipo' => $estado,
                 'status' => true,
-                'idSucursalEmpleado' => session('idSucursalEmpleado'),
+                'idSucursalEmpleado' => $idSucursalEmpleado,//session('idSucursalEmpleado'),
             ]);
 
             $credito = new Venta_cliente; //credito
@@ -95,7 +96,7 @@ class VentaController extends Controller
             $venta = Venta::create([
                // 'estado' => $estado,
                 'tipo' => $estado,
-                'idSucursalEmpleado' => session('idSucursalEmpleado'),
+                'idSucursalEmpleado' => $idSucursalEmpleado,//session('idSucursalEmpleado'),
                 'pago' => $pago,
                 'status' => true,
             ]);

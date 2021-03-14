@@ -71,7 +71,7 @@
 
                             </div>
                             <!--div class="input-group my-0 mx-0 px-0 border"-->
-                            <input type="number" id="inputIva" data-prefix="%" name="inputIva" value=15 min=0
+                            <input type="number" id="inputIva" data-prefix="%" name="inputIva" value=16 min=0
                                 class="form-control" />
                             <!--/div-->
                         </div>
@@ -954,6 +954,12 @@ async function guardarCompra() {
             //alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
         });
+        $('#pagoCredito').val(0.00);
+        fechaCompra.value = "yyyy-MM-dd";
+        $("#iva").prop('checked', false);
+        $("#credito").prop('checked', false);
+        activarIva();
+        activarCredito();
         
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);

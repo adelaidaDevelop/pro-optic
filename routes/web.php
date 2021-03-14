@@ -38,7 +38,7 @@ use App\Http\Controllers\ProductoController;
 /*Route::get('/', function () {
     return view('welcome');
 });*/
-
+Auth::routes(['verify' => true]);
 Route::get('/loginCliente', [LoginClienteController::class,'login'])->name('Login')->middleware('isCliente');
 Route::post('/loginCliente', [LoginClienteController::class,'loginPost'])->name('Login');
 Route::post('/logoutCliente', [LoginClienteController::class,'logout'])->name('Login');
