@@ -7,11 +7,11 @@
         @endsection
         @section('opciones')
         @if(isset($d))
-        <div class="col my-2 ml-5 pl-1">
+        <div class=" ml-4">
             <form method="get" action="{{url('/puntoVenta/departamento/create')}}">
-                <button class="btn btn-secondary" type="submit">
-                    <img src="{{ asset('img\agregar2.png') }}"  alt="Editar" width="30px" height="30px">
-                    AGREGAR
+                <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
+                    <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="30px" height="30px">
+                    <p class="h6 my-auto mx-2 text-dark"><small>NUEVO</small></p>
                 </button>
             </form>
         </div>
@@ -21,14 +21,15 @@
     <div class="row p-1">
         <div class="row border border-dark m-2 w-100">
             <div class="col-4 border border-dark mt-4 mb-4 ml-4 mr-2">
-                <div class="row px-3 py-3 m-0">
+                <div class="px-3 py-3 m-0">
                     <!--input type="text" id="buscador" class="form-control my-2">
                         <button class="btn btn-info mb-2" id="boton">Buscar</button-->
 
-                    <h5 style="color:#4388CC">DEPARTAMENTOS ACTIVOS</h5>
+                    <h4 style="color:#4388CC">ACTIVOS</h4>
 
-                    <div class="input-group">
-                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR DEPARTAMENTO" onkeyup="mayus(this)" id="texto" required>
+                    <div>
+                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR " onkeyup="mayus(this)" id="texto">
+                        <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL </small> </h6>
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -49,7 +50,9 @@
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
                             <label for="ndepartamento">
-                                <h4 style="color:#4388CC">EDITAR </h4>
+                                <h4 style="color:#4388CC">EDITAR
+                                    <img class="ml-1 my-auto" src="{{ asset('img\edit.png') }}" alt="Editar" width="23px" height="23px">
+                                </h4>
                             </label>
                             <br />
                             <label for="Nombre">
@@ -71,10 +74,10 @@
                                         {{$message}}
                                     </div>
                                     @enderror
-                                 
+
                                 </div>
                             </div>
-                            <button class="btn btn-outline-secondary" type="submit" onclick="">
+                            <button class="btn btn-outline-secondary" type="submit" onclick="return confirm('¿DESEA EDITAR ESTE DEPARTAMENTO?')">
                                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                                 GUARDAR CAMBIOS
                             </button>
@@ -84,9 +87,9 @@
                         <form method="post" action="{{url('/puntoVenta/departamento/'.$d->id)}}">
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
-                            <button class="btn btn-outline-secondary my-3" type="submit" onclick="return confirm('¿DESEA ELIMINAR ESTE DEPARTAMENTO?')">
-                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
-                                ELIMINAR 
+                            <button class="btn btn-outline-danger my-3" type="submit" onclick="return confirm('¿DESEA ELIMINAR ESTE DEPARTAMENTO?')">
+                                <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="26px" height="26px">
+                                ELIMINAR
                             </button>
                         </form>
                     </div>
@@ -100,11 +103,13 @@
                     <form class="w-100" method="post" action="{{url('/puntoVenta/departamento')}}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <label for="nempleado">
-                            <h4 style="color:#4388CC">CREAR DEPARTAMENTO</h4>
+                            <h4 style="color:#4388CC">CREAR DEPARTAMENTO
+                                <img src="{{ asset('img\agregar.png') }}" class="mx-1" alt="Editar" width="20px" height="20px">
+                            </h4>
                         </label>
                         <br />
                         <label for="Nombre">
-                            <h5>NUEVO </h5>
+                            <h5 class="my-auto">NUEVO</h5>
                         </label>
                         <div class="form-row w-100">
                             <div class="col-7">
@@ -128,18 +133,13 @@
                                 </div>
                                 @enderror
                             </div>
-
                         </div>
-                        <div class="form-row w-100">
-                            <div class="form-group">
-                                <button class="btn btn-outline-secondary" type="submit" onclick="">
-                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
-                                    AGREGAR DEPARTAMENTO
-                                    <!--GUARDAR DEPARTAMENTO-->
-                                </button>
-                            </div>
-                        </div>
+                            <button class="btn btn-outline-secondary " type="submit" onclick="return confirm('¿AGREGAR NUEVO DEPARTAMENTO?')">
+                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
+                                AGREGAR
+                            </button>
                     </form>
+
                 </div>
                 @endif
             </div>

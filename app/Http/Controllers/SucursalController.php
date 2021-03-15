@@ -99,14 +99,7 @@ class SucursalController extends Controller
      */
     public function destroy($id)//Sucursal $sucursal)
     {
-        /*
-        $sucursal['status'] =0;
-        $suc2 = Sucursal::findOrFail($id);
-        $suc2->update($sucursal);
-        return redirect('puntoVenta/administracion');
-        */
         $sucursales = Sucursal::where('status','=', 1)->get();
-        //return isset($sucursales);
         if(count($sucursales)>1)
         {
             try{
@@ -134,17 +127,12 @@ class SucursalController extends Controller
             try{
                 Sucursal::destroy($id);
                 return true;
-            //return redirect()->back()->withErrors(['sucursalUsada' => 'SUCURSAL ELIMINADA CORRECTAMENTE']);
-            }
+             }
             catch (\Illuminate\Database\QueryException $e)
                 { 
                     return false;
-                  //  $sucUsadaT = true;
-                   // return $sucUsadaT;
-                    //return redirect()->back()->withErrors(['sucursalUsada' => 'ESTA SUCURSAL YA ES USADA EN OTRA PARTE']);
-            }
-           // return redirect('puntoVenta/administracion');
-        } 
+                 }
+           } 
         else  { 
             return  'ESTA SUCURSAL ES LA UNICA ACTIVA Y NO SE PUEDE ELIMINAR';
         } 

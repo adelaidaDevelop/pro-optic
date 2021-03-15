@@ -53,7 +53,7 @@
                             <button class="btn btn-light input-group">
                             <img src="{{ asset('img\administracion.png') }}" alt="Editar" width="30px" height="30px">
                             
-                            <p class="h5 my-auto ml-1"><small>ADMINISTRACION</small></p>
+                            <p class="h6 my-auto ml-1"><small>ADMINISTRACION</small></p>
                             </button>
                             <span class="sr-only">(current)</span></a>
                         @else
@@ -112,8 +112,8 @@
 
         </nav>
     </div>
-    <div class="row p-0" style="background:#3366FF">
-        <h4 class="font-weight-bold my-auto ml-4 px-1 col-2 " style="color:#FFFFFF">
+    <div class="row p-0"  style="background:#BDC2C5">
+        <h4 class="font-weight-bold  ml-4 px-1 col-2 my-3"  >
             @yield('subtitulo')
         </h4>
         @yield('opciones')

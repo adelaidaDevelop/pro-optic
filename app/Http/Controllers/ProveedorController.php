@@ -131,11 +131,11 @@ class ProveedorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)//Departamento $departamento)
-    {
-        //Proveedor::destroy($id);
+    { 
         Proveedor::findOrFail($id)->update(['status' => false]);
         return redirect('/puntoVenta/proveedor')->withErrors(['mensajEli' => 'PROVEEDOR DADO DE BAJA EXITOSAMENTE']);  
     }
+
     public function buscador(Request $request)
     {
         $datosConsulta['proveedorB'] = Proveedor::where("nombre",'like',$request->texto."%")->get();

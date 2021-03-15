@@ -7,32 +7,32 @@ PRODUCTOS
 @section('opciones')
 <div class="col-0  p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
-        <button class="btn btn-outline-secondary text-light ml-4 p-1 border-0" type="submit">
-            <img src="{{ asset('img\departamento.png') }}"  alt="Editar" width="33px" height="33px">
+        <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit">
+            <img src="{{ asset('img\depto.svg') }}"  alt="Editar" width="33px" height="33px">
             <br/>
-            <p class="h6 my-auto"><small>DEPARTAMENTOS</small></p>
+            <p class="h6 my-auto text-dark"><small>DEPARTAMENTOS</small></p>
         </button>
     </form>
 </div>
 <!--BOTON CREAR EMPLEADO-->
 <div class="col-0  ml-3 p-1 ">
-    <a class="btn btn-outline-secondary text-light p-1 border-0" href="{{ url('/puntoVenta/producto/create')}}">
+    <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/producto/create')}}">
         <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="33px" height="33px">
-        <p class="h6 my-auto"><small>NUEVO PRODUCTO </small></p> </a>
+        <p class="h6 my-auto text-dark"><small>NUEVO PRODUCTO </small></p> </a>
     </a>
 </div>
 <div class="col-0  ml-3 p-1 ">
-    <a class="btn btn-outline-secondary text-light p-1 border-0" href="{{ url('/puntoVenta/producto/stock')}}">
-        <img src="{{ asset('img\nuevoReg.png') }}"  alt="Editar" width="32px" height="32px">
-        <p class="h6 my-auto"><small>AGREGAR DE STOCK</small></p>
+    <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/producto/stock')}}">
+        <img src="{{ asset('img/stock.svg') }}"  alt="Editar" width="32px" height="32px">
+        <p class="h6 my-auto text-dark"><small>AGREGAR DE STOCK</small></p>
          </a>
     </a>
 </div>
 
 <div class="col-2  ml-3 p-1 ">
-    <button type="button" class="btn btn-outline-secondary text-light p-1 border-0" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
+    <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
         <img src="{{ asset('img\alta2.png') }}"  alt="Editar" width="30px" height="30px">
-        <p class="h6 my-auto"><small>DAR ALTA</small></p>
+        <p class="h6 my-auto text-dark"><small>DAR ALTA</small></p>
         
     </button>
 </div>
@@ -676,7 +676,7 @@ PRODUCTOS
                                             EDITAR  </a>
                                             <br/><br/>
                                             
-                                            <a class="btn btn-outline-danger mb-4" data-method="delete" onclick="return confirm('¿Estas seguro de que deseas eliminar?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                                            <a class="btn btn-outline-danger mb-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              DAR DE BAJA </a> 
                                              <div class="mt-4 mb-4"> </div>

@@ -7,15 +7,18 @@ CLIENTES
 <!-- BOTON DEVOLUCION-->
 
 <div class="ml-3 my-auto ">
-    <a class="btn btn-secondary ml-2 my-auto " href="{{ url('/puntoVenta/cliente')}}">
-        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-        NUEVO CLIENTE </a>
+    <a class="btn btn-outline-secondary ml-2 my-auto border-0 " href="{{ url('/puntoVenta/cliente')}}">
+        <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="30px" height="30px">
+        <p class="h6 my-auto text-dark"><small>NUEVO CLIENTE</small></p>
+    </a>
     </a>
 </div>
+
 <div class="ml-3 my-auto ">
-    <a class="btn btn-secondary ml-3 my-auto " href="{{ url('/credito')}}">
-        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-        LISTA DEUDORES </a>
+    <a class="btn btn-outline-secondary ml-3 my-auto border-0 " href="{{ url('/credito')}}">
+        <img src="{{ asset('img\deudor.png') }}" alt="Editar" width="30px" height="30px">
+        <p class="h6 my-auto text-dark"><small>DEUDORES</small></p>
+    </a>
     </a>
 </div>
 @endsection
@@ -24,14 +27,15 @@ CLIENTES
 <div class="row p-1">
     <div class="row border border-dark m-2 my-4 w-100">
         <div class="col-4 border border-dark mt-4 mb-4 ml-4 mr-2">
-            <div class="row px-3 py-3 m-0">
+            <div class="px-3 py-3 m-0">
                 <!--input type="text" id="buscador" class="form-control my-2">
                         <button class="btn btn-info mb-2" id="boton">Buscar</button-->
 
-                <h4 style="color:#4388CC">CLIENTES</h4>
+                <h4 class="row" style="color:#4388CC">ACTIVOS</h4>
 
-                <div class="input-group">
-                    <input type="text" class="form-control text-uppercase  my-1" placeholder="BUSCAR CLIENTE" id="texto" onkeyup="mayus(this)" required>
+                <div>
+                    <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto" onkeyup="mayus(this)">
+                    <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL </small> </h6>
                     <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -53,7 +57,7 @@ CLIENTES
                         {{ csrf_field() }}
                         {{ method_field('PATCH')}}
                         <label for="ndepartamento">
-                            <h4 style="color:#4388CC"> EDITAR CLIENTE</h4>
+                            <h4 style="color:#4388CC"> EDITAR</h4>
                         </label>
                         <br />
                         <label for="Nombre">
@@ -85,35 +89,40 @@ CLIENTES
                                 @enderror
 
                             </div>
-
+                            <button class="btn btn-outline-secondary  ml-1" type="submit" onclick="return confirm('DESEA EDITAR ESTE CLIENTE?');">
+                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
+                                GUARDAR CAMBIOS
+                            </button>
                         </div>
-                        <button class="btn btn-outline-secondary mt-4 ml-1" type="submit">
-                            <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" onclick="return confirm('DESEA EDITAR ESTE CLIENTE?');" alt="Editar" width="30px" height="30px">
-                            GUARDAR CAMBIOS
-                        </button>
                     </div>
                 </form>
-                <div class="row px-3 my-0">
+                <!--
                     <form method="post" action="{{url('/puntoVenta/cliente/'.$d->id)}}">
                         {{csrf_field()}}
                         {{ method_field('DELETE')}}
-                        <button class="btn btn-outline-secondary my-3 ml-1" type="submit" onclick="return confirm('DESEA ELIMINAR ESTE CLIENTE?');">
-                            <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
+                        <button class="btn btn-outline-danger my-3 ml-1" type="submit" onclick="return confirm('DESEA ELIMINAR ESTE CLIENTE?');">
+                            <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
                             DAR DE BAJA
                         </button>
                     </form>
-                </div>
+                    -->
+                <button class="btn btn-outline-danger my-2" onclick="veriEliminar('{{$d->id}}')" type="button">
+                    <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                    ELIMINAR
+                </button>
             </div>
             @else
             <div class="row px-3 py-3 m-0">
                 <form class="w-100" method="post" action="{{url('/puntoVenta/cliente')}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <label for="nempleado">
-                        <h4 style="color:#4388CC">CREAR CLIENTE</h4>
+                        <h5 style="color:#4388CC">CREAR CLIENTE
+                            <img src="{{ asset('img\agregar.png') }}" alt="Editar" width="25px" height="25px">
+                        </h5>
                     </label>
                     <br />
                     <label for="Nombre">
-                        <h5>NUEVO CLIENTE</h5>
+                        <h5>NUEVO</h5>
                     </label>
                     <div class="form-row w-100">
                         <div class="col-7">
@@ -138,21 +147,20 @@ CLIENTES
                                 </select>
                             </div>
                         </div>
-                        @error('mensajeConf')
-                        <div class="alert alert-success my-auto" role="alert">
-                            {{$message}}
+                        <div class="col-4">
+                            @error('mensajeConf')
+                            <div class="alert alert-success my-auto" role="alert">
+                                {{$message}}
+                            </div>
+                            @enderror
                         </div>
-                        @enderror
+
 
                     </div>
-                    <div class="form-row w-100 mt-2">
-                        <div class="form-group">
-                            <button class="btn btn-outline-secondary" type="submit">
-                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-                                GUARDAR CLIENTE
-                            </button>
-                        </div>
-                    </div>
+                    <button class="btn btn-outline-secondary" type="submit" onclick="return confirm('¿AGREGAR NUEVO CLIENTE?');">
+                        <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
+                        AGREGAR
+                    </button>
                 </form>
             </div>
             @endif
@@ -186,6 +194,33 @@ CLIENTES
             return false;
         }
     });
+
+    async function veriEliminar(id) {
+        let conf_Eli = confirm('DESEA ELIMINAR ESTE CLIENTE?');
+        if (conf_Eli) {
+            let response = "Sin respuesta";
+            try {
+                response = await fetch(`/puntoVenta/cliente/destroy2/${id}`);
+
+                if (response.ok) {
+                    let respuesta = await response.text();
+                    if (respuesta.length == 1) {
+                        //recargar la pag
+                        alert("El cliente se elimino correctamente");
+                        location.href = "{{url('/puntoVenta/cliente')}}";
+                    } else {
+                        clienOcup = alert("ESTE CLIENTE ESTÁ ACTIVO EN EL SISTEMA Y NO SE PUEDE ELIMINAR");
+                        // if (clienOcup) {
+                        // location.href = `{{url('/puntoVenta/cliente/baja/${id}')}}`;
+
+                        // }
+                    }
+                }
+            } catch (err) {
+                console.log("Error al realizar la petición AJAX: " + err.message);
+            }
+        }
+    };
 
     function mayus(e) {
         e.value = e.value.toUpperCase();
