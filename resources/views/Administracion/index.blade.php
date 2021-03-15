@@ -4,29 +4,32 @@
 ADMINISTRACION
 @endsection
 @section('opciones')
-<div class=" my-2 ml-5 p-1">
+<div class="ml-4">
     <form method="get" action="{{url('/puntoVenta/administracion/')}}">
-        <button class="btn btn-secondary p-1" type="submit">
-            <img src="{{ asset('img\agregar2.png') }}" alt="Editar" width="25px" height="25px">
-            NUEVA SUCURSAL
+        <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
+            <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="30px" height="30px">
+            <p class="h6 my-auto mx-2 text-dark"><small>NUEVA SUCURSAL</small></p>
+
         </button>
     </form>
 </div>
 
-<div class=" my-2 ml-3 p-1 ">
-    <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver" onclick=" return datosTablaSuc()" value="">
-        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-        ALTA SUCURSALES
+<div class=" ">
+    <button type="button" class="btn btn-outline-secondary  p-1 border-0" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver" onclick=" return datosTablaSuc()" value="">
+        <img src="{{ asset('img\alta2.png') }}" alt="Editar" width="30px" height="30px">
+        <p class="h6 my-auto mx-2 text-dark"><small>ALTA SUCURSALES</small></p>
+
     </button>
 </div>
 
 
 
-<div class="ml-3 my-2 p-1">
+<div class="">
     <form method="get" action="{{url('/puntoVenta/empleado/')}}">
-        <button class="btn btn-secondary p-1" type="submit">
-            <img src="{{ asset('img\empleado.png') }}"  alt="Editar" width="32px" height="32px">
-            EMPLEADOS
+        <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
+            <img src="{{ asset('img\empleado.png') }}" alt="Editar" width="30px" height="30px">
+            <p class="h6 my-auto mx-2 text-dark"><small>EMPLEADOS GRAL</small></p>
+
         </button>
     </form>
 </div>
@@ -68,8 +71,9 @@ ADMINISTRACION
 
                     <h4 style="color:#4388CC">SUCURSALES</h4>
 
-                    <div class="input-group">
+                    <div>
                         <input type="text" class=" form-control my-1" onkeyup="mayus(this);" placeholder="BUSCAR SUCURSALES" id="texto">
+                        <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL, EDITAR O ELIMINAR SUCURSAL </small> </h6>
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -108,11 +112,13 @@ ADMINISTRACION
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
                             <label for="ndepartamento">
-                                <h4 style="color:#4388CC">EDITAR SUCURSAL</h4>
+                                <h4 style="color:#4388CC">EDITAR
+                                    <img class="ml-1 my-auto" src="{{ asset('img\edit.png') }}" alt="Editar" width="23px" height="23px">
+                                </h4>
                             </label>
                             <br />
                             <label for="Nombre">
-                                <h5>{{$d->direccion}}</h5>
+                                <h4>{{$d->direccion}}</h4>
                             </label>
                             <div class="form-row w-100">
                                 <div class="col-7">
@@ -131,29 +137,39 @@ ADMINISTRACION
                                         {{$message}}
                                     </div>
                                     @enderror
-
+                                    @error('mensajeError')
+                                    <div class="alert alert-danger my-auto" role="alert">
+                                        {{$message}}
+                                    </div>
+                                    @enderror
                                 </div>
-
-                                @error('mensajeError')
-                                <div class="alert alert-danger my-auto" role="alert">
-                                    {{$message}}
-                                </div>
-                                @enderror
-
                             </div>
-                            <button class="btn btn-outline-secondary mt-2" type="submit">
-                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-                                GUARDAR CAMBIOS
-                            </button>
+                            <div class="form-row w-100">
+                                <div class="col-4">
+                                    <button class="btn btn-outline-secondary mt-2" type="submit" onclick="return confirm('¿DESEA EDITAR ESTA SUCURSAL?');">
+                                        <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
+                                        GUARDAR CAMBIOS
+                                    </button>
+                                </div>
+                                <div class="col-8">
+                                    <button class="btn btn-outline-primary mt-2 mr-5" onclick="empleadosSucursal()" type="button" data-toggle="modal" data-target="#empleadosModal">
+                                        <img src="{{ asset('img\empleado.png') }}" alt="Editar" width="30px" height="30px">
+                                        EMPLEADOS SUCURSAL
+                                    </button>
+                                </div>
+
+                                <div class="col-4">
+                                    <button class=" btn btn-outline-danger ml-auto mt-4" onclick="veriSucursal('{{$d->id}}')" type="button">
+                                        <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                                        ELIMINAR
+                                    </button>
+                                </div>
+                            </div>
+
 
                         </div>
                     </form>
-                    <div class="row px-3 my-0">
-                        <button class="btn btn-outline-secondary my-3 mr-5" onclick="empleadosSucursal()" type="button" data-toggle="modal" data-target="#empleadosModal">
-                            <img src="{{ asset('img\verEmp.png') }}" alt="Editar" width="25px" height="25px">
-                            EMPLEADOS
-                        </button>
-
+                    <div class="row col px-3 my-0">
                         <!--
                         <form method="get" class="ml-auto" action="{{url('/puntoVenta/destroy2/'.$d->id)}}">
                             {{csrf_field()}}
@@ -164,15 +180,8 @@ ADMINISTRACION
                             </button>
                         </form>
                         -->
-                        <button class=" btn btn-outline-secondary my-3 ml-auto " onclick="veriSucursal('{{$d->id}}')" type="button">
-                            ELIMINAR
-                        </button>
-
-
-
                     </div>
-                </div>
-                <div class="row mx-1 my-1 ">
+
                 </div>
                 @else
                 <div class="row px-3 py-3 m-0">
@@ -180,11 +189,14 @@ ADMINISTRACION
                         <!--NUEVA SUCURSAL-->
                         {{ csrf_field() }}
                         <label for="nempleado">
-                            <h4 style="color:#4388CC">CREAR SUCURSAL</h4>
+                            <h4 style="color:#4388CC">CREAR SUCURSAL
+                                <img src="{{ asset('img\agregar.png') }}" class="mx-1" alt="Editar" width="23px" height="23px">
+                            </h4>
+
                         </label>
                         <br />
                         <label for="Nombre">
-                            <h5>NUEVA SUCURSAL</h5>
+                            <h5>NUEVA</h5>
                         </label>
                         <div class="form-row w-100">
                             <div class="col-7">
@@ -205,21 +217,18 @@ ADMINISTRACION
 
                                 </div>
                             </div>
-                        </div>
-                        @error('mensajeConf')
-                            <div class="col-6 alert alert-success my-auto" role="alert">
-                                {{$message}}
-                            </div>
-                            @enderror
-
-                        <div class="form-row w-100">
-                            <div class="form-group">
-                                <button class="btn btn-outline-secondary mt-2" type="submit">
-                                    <img src="{{ asset('img\guardar.png') }}" class="p-1" alt="Editar" width="30px" height="30px">
-                                    GUARDAR SUCURSAL
-                                </button>
+                            <div class="col-4">
+                                @error('mensajeConf')
+                                <div class=" alert alert-success my-auto" role="alert">
+                                    {{$message}}
+                                </div>
+                                @enderror
                             </div>
                         </div>
+                        <button class="btn btn-outline-secondary mt-2" type="submit" onclick="return confirm('¿AGREGAR NUEVA SUCURSAL?');">
+                            <img src="{{ asset('img\guardar.png') }}" class="p-1" alt="Editar" width="30px" height="30px">
+                            AGREGAR
+                        </button>
                     </form>
                     <div class="text-danger">
                         @error('noEliminado')
@@ -228,9 +237,11 @@ ADMINISTRACION
                     </div>
                 </div>
                 @endif
-            </div>
 
+
+            </div>
         </div>
+
     </div>
 </div>
 
@@ -415,7 +426,7 @@ ADMINISTRACION
                     for (let i in SucursalEmpleados) {
                         for (let e in empleados) {
 
-                            if (SucursalEmpleados[i].idEmpleado == empleados[e].id && i!=0) {
+                            if (SucursalEmpleados[i].idEmpleado == empleados[e].id && i != 0) {
                                 let status = "";
                                 let botonAltaBaja = "";
                                 if (SucursalEmpleados[i].status == 'alta') {
@@ -721,37 +732,39 @@ ADMINISTRACION
 
     //VERIFICAR SI LA SUCURSAL YA ESTA USADA
     async function veriSucursal(id) {
-        console.log(id);
-        let response = "Sin respuesta";
-        try {
-            response = await fetch(`/puntoVenta/destroy2/${id}`);
-            if (response.ok) {
-                let respuesta = await response.text();
-                if (respuesta.length > 1) {
-                    return alert(respuesta)
-                }
-                if (respuesta.length == 1) {
-                    //recargar la pag
-                    alert("La sucursal fue eliminada");
-                    location.href = "{{url('/puntoVenta/administracion')}}";
-                } else {
-                    let sucUsada = confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA DARLO DE BAJA?");
-                    if (sucUsada) {
-                        let respuesta2 = await fetch(`/puntoVenta/actualizar/${id}`);
-                        if (respuesta2.ok) {
-                            alert("La sucursal se ha dado de baja");
-                            location.href = "{{url('/puntoVenta/administracion')}}";
+        let revi = confirm("¿DESEA ELIMINAR ESTA SUCURSAL?");
+        if (revi) {
+            let response = "Sin respuesta";
+            try {
+                response = await fetch(`/puntoVenta/destroy2/${id}`);
+                if (response.ok) {
+                    let respuesta = await response.text();
+                    if (respuesta.length > 1) {
+                        return alert(respuesta)
+                    }
+                    if (respuesta.length == 1) {
+                        //recargar la pag
+                        alert("La sucursal fue eliminada");
+                        location.href = "{{url('/puntoVenta/administracion')}}";
+                    } else {
+                        let sucUsada = confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA DARLO DE BAJA?");
+                        if (sucUsada) {
+                            let respuesta2 = await fetch(`/puntoVenta/actualizar/${id}`);
+                            if (respuesta2.ok) {
+                                alert("La sucursal se ha dado de baja");
+                                location.href = "{{url('/puntoVenta/administracion')}}";
+                            }
                         }
                     }
+                } else {
+                    return confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA ELIMINARLO?");
+                    console.log("No responde :'v");
+                    console.log(response);
+                    throw new Error(response.statusText);
                 }
-            } else {
-                return confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA ELIMINARLO?");
-                console.log("No responde :'v");
-                console.log(response);
-                throw new Error(response.statusText);
+            } catch (err) {
+                console.log("Error al realizar la petición AJAX: " + err.message);
             }
-        } catch (err) {
-            console.log("Error al realizar la petición AJAX: " + err.message);
         }
     };
 </script>

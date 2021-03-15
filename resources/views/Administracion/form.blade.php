@@ -16,7 +16,7 @@
     @if (count($sucursalB)) 
     @foreach($sucursalB as $sucursal)
     @if($sucursal->status === 1)
-    <a href="{{url('/puntoVenta/administracion/'.$sucursal->id.'/edit/')}}" class="btn btn-light btn-block my-2 mx-1">{{$sucursal->direccion}}</a-->
+    <a href="{{url('/puntoVenta/administracion/'.$sucursal->id.'/edit/')}}" class="btn btn-light btn-block border border-dark  my-2 mx-1">{{$sucursal->direccion}}</a-->
     @endif
     @endforeach
     @else

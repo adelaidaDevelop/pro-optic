@@ -7,19 +7,19 @@
         PROVEEDORES
         @endsection
         @section('opciones')
-        <div class=" my-2 ml-5 pl-1">
+        <div class="ml-4">
             <form method="get" action="{{url('/puntoVenta/proveedor')}}">
-                <button class="btn btn-secondary" type="submit">
-                    <img src="{{ asset('img\agregar2.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
-                    NUEVO PROVEEDOR
+                <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
+                    <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="30px" height="30px">
+                    <p class="h6 my-auto mx-2 text-dark"><small>NUEVO PROVEEDOR</small></p>
                 </button>
             </form>
         </div>
 
-        <div class="my-2 ml-3 p-1 ">
-            <button type="button" class="btn btn-secondary p-1" data-toggle="modal" onclick="mostrarProveedoresInactivos()" data-target="#proveedoresInactivosModal">
-                <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-                ALTA PROVEEDORES
+        <div class="mx-1">
+            <button type="button" class="btn btn-outline-secondary  p-1 border-0" data-toggle="modal" onclick="mostrarProveedoresInactivos()" data-target="#proveedoresInactivosModal">
+                <img src="{{ asset('img\alta2.png') }}" alt="Editar" width="30px" height="30px">
+                <p class="h6 my-auto mx-2 text-dark"><small>ALTA PROVEEDORES</small></p>
             </button>
         </div>
         @endsection
@@ -31,10 +31,11 @@
                     <!--input type="text" id="buscador" class="form-control my-2">
                         <button class="btn btn-info mb-2" id="boton">Buscar</button-->
 
-                    <h4 style="color:#4388CC">PROVEEDORES</h4>
+                    <h4 style="color:#4388CC">ACTIVOS</h4>
 
-                    <div class="input-group">
-                        <input type="text" class="form-control text-uppercase my-1" placeholder="BUSCAR PROVEEDORES" id="texto">
+                    <div>
+                        <input type="text" class="form-control text-uppercase my-1" placeholder="BUSCAR" id="texto">
+                        <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL </small> </h6>
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -55,7 +56,9 @@
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
                             <label for="ndepartamento">
-                                <h4 style="color:#4388CC">EDITAR PROVEEDOR</h4>
+                                <h4 style="color:#4388CC">EDITAR
+                                    <img class="ml-1 my-auto" src="{{ asset('img\edit.png') }}" alt="Editar" width="23px" height="23px">
+                                </h4>
                             </label>
                             <br />
                             <label for="Nombre">
@@ -82,11 +85,14 @@
 
                                     </div>
                                 </div>
-                                @error('mensajeError')
-                                <div class="alert alert-danger my-auto" role="alert">
-                                    {{$message}}
+                                <div class="col-4">
+                                    @error('mensajeError')
+                                    <div class="alert alert-danger my-auto" role="alert">
+                                        {{$message}}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
+
                             </div>
                             <button class="btn btn-outline-secondary" type="submit" onclick="return confirm('¿DESEA EDITAR ESTE PROVEEDOR?');">
                                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
@@ -110,7 +116,9 @@
                     <form class="w-100" method="post" action="{{url('/puntoVenta/proveedor')}}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <label for="nempleado">
-                            <h4 style="color:#4388CC">CREAR PROVEEDOR</h4>
+                            <h4 style="color:#4388CC">CREAR PROVEEDOR
+                                <img src="{{ asset('img\agregar.png') }}" class="mx-1" alt="Editar" width="23px" height="23px">
+                            </h4>
                         </label>
                         <br />
                         <label for="Nombre">
@@ -142,7 +150,7 @@
                                     <input type="text" class="upper-case form-control @error('nombre') is-invalid @enderror" name="direccion" onkeyup="mayus(this);" id="direccion" value="{{ old('direccion') }}" required>
                                 </div>
                             </div>
-                            <div class=" col-3">
+                            <div class=" col-4">
                                 @error('mensajeConf')
                                 <div class="alert alert-success my-auto" role="alert">
                                     {{$message}}
@@ -160,15 +168,10 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="form-row w-100">
-                            <div class="form-group">
-                                <button class="btn btn-outline-secondary" type="submit">
-                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
-                                    GUARDAR PROVEEDOR
-                                </button>
-                            </div>
-                        </div>
+                        <button class="btn btn-outline-secondary" type="submit" onclick="return confirm('¿AGREGAR NUEVO PROVEEDOR?');">
+                            <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
+                            AGREGAR
+                        </button>
                     </form>
                 </div>
                 @endif

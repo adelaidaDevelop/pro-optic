@@ -65,6 +65,10 @@ Route::prefix('/puntoVenta')->group(function()
       //ELIMINAR SUCURSAL PT2
       Route::get('destroy2/{id}', [SucursalController::class,'destroy2']);
       //dar de baja sucursal
+      //clients
+      Route::get('/cliente/destroy2/{id}', [ClienteController::class,'destroy2']);
+      Route::get('/cliente/baja/{id}', [ClienteController::class,'baja']);
+      
       
       Route::get('actualizar/{id}', [SucursalController::class,'bajaSucursal']);
       

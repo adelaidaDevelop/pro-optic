@@ -41,11 +41,11 @@
 
                     <input class=" mt-4 mb-2" type="number" id="costo_indC" placeholder="" disabled>
 
-                    <input class="mt-4 mb-2" type="number" onchange="calcularCostoInd()" name="piezas" id="piezas" placeholder="" value="{{ isset($subproducto->piezas)?$subproducto->piezas:''}}" required>
+                    <input class="mt-4 mb-2" type="number" onchange="calcularCostoInd()" name="piezas" id="piezas" placeholder="INGRESE TOTAL PIEZAS" value="{{ isset($subproducto->piezas)?$subproducto->piezas:''}}" required>
 
                     <input class="mt-3 mb-1" type="number" id="costo_ind" placeholder="" value="{{ isset($subproducto->costo_ind)?$subproducto->costo_ind:''}}" required DISABLED>
 
-                    <input class="mt-3" type="number" name="precio" id="precio" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio)?$subproducto->precio_ind:''}}" required>
+                    <input class="mt-3" type="number" name="precio" id="precio" placeholder="INGRESE PRECIO INDIVIDUAL" value="{{ isset($subproducto->precio)?$subproducto->precio_ind:''}}" required>
                 </div>
                 <div class="col-3 ">
                     <label for="Existencia" class="mt-1 ">
@@ -59,8 +59,8 @@
                 </div>
                 <div class="col-3 ">
                     <!--  <input type="number" name="ganancia" id="ganancia" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>-->
-                    <input class="" type="number" name="existencia" id="existencia" placeholder="existencia del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
-                    <textarea class="mt-4" name="observacion" id="observacion" class="form-control" placeholder="Descripcion del producto" rows="3" onkeyup="mayus(this);" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
+                    <input class="" type="number" name="existencia" id="existencia" placeholder="EXISTENCIA ACTUAL" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
+                    <textarea class="mt-4" name="observacion" id="observacion" class="form-control" placeholder="DESCRIPCION" rows="3" onkeyup="mayus(this);" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
                     <br />
                 </div>
             </div>

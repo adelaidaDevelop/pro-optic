@@ -46,15 +46,15 @@ SUBPRODUCTOS
                     <div class="col-3">
                         <!--El name debe ser igual al de la base de datos-->
 
-                        <input class="mb-2 mt-2 text-uppercase" type="text" id="idNombre" placeholder="Nombre producto" value="{{ isset($subproducto->idSucursalProducto)?$subproducto->idSucursalProducto:''}}" required disabled>
+                        <input class="mb-2 mt-2 text-uppercase" type="text" id="idNombre" placeholder="NOMBRE PRODUCTO" value="{{ isset($subproducto->idSucursalProducto)?$subproducto->idSucursalProducto:''}}" required disabled>
 
                         <input class=" mt-4 mb-2" type="number" id="costo_indC" placeholder="" disabled>
 
-                        <input class="mt-4 mb-2" type="number" onchange="calcularCostoInd()" name="piezas" id="piezas" placeholder="" value="{{ isset($subproducto->piezas)?$subproducto->piezas:''}}" required>
+                        <input class="mt-4 mb-2" type="number" onchange="calcularCostoInd()" name="piezas" id="piezas" placeholder="INGRESE PIEZAS" value="{{ isset($subproducto->piezas)?$subproducto->piezas:''}}" required>
 
                         <input class="mt-3 mb-1" type="number" id="costo_ind" placeholder="" value="{{ isset($subproducto->costo_ind)?$subproducto->costo_ind:''}}" required DISABLED>
 
-                        <input class="mt-3" type="number" name="precio" id="precio" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio)?$subproducto->precio_ind:''}}" required>
+                        <input class="mt-3" type="number" name="precio" id="precio" placeholder="PRECIO INDIVIDUAL" value="{{ isset($subproducto->precio)?$subproducto->precio_ind:''}}" required>
                     </div>
                     <div class="col-3 ">
                         <label for="Existencia" class="mt-1 ">
@@ -69,8 +69,8 @@ SUBPRODUCTOS
                     </div>
                     <div class="col-3 ">
                         <!--  <input type="number" name="ganancia" id="ganancia" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>-->
-                        <input class="" type="number" name="existencia" id="existencia" placeholder="existencia del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
-                        <textarea class="mt-4" name="observacion" id="observacion" class="form-control" placeholder="Descripcion del producto" rows="3" onkeyup="mayus(this);" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
+                        <input class="" type="number" name="existencia" id="existencia" placeholder="EXISTENCIA DEL PRODUCTO" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
+                        <textarea class="mt-4" name="observacion" id="observacion" class="form-control" placeholder="DESCRIPCION" rows="3" onkeyup="mayus(this);" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
                         <br />
 
                     </div>
@@ -93,7 +93,7 @@ SUBPRODUCTOS
         <div class="col-6">
 
 
-            <button class="btn btn-outline-secondary" type="submit" value="Agregar">
+            <button class="btn btn-outline-secondary" type="submit" value="Agregar" onclick="return confirm('¿AGREGAR SUBPRODUCTO?')">
                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">GUARDAR PRODUCTO
             </button>
             <a title="Regresar" href="{{url('puntoVenta/producto')}}" class="text-dark">

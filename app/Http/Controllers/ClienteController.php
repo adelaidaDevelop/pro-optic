@@ -89,10 +89,13 @@ class ClienteController extends Controller
             if( $nombre == $nombreAnt && $telefono == $telefonoAnt && $domicilio == $domicilioAnt)
             {
                 return redirect()->back()->withErrors(['mensajeError' => 'PARA EDITAR DEBE MODIFICAR AL MENOS UN ELEMENTO']);  
-            }else {
-            $cliente->update($datosCliente);
-            return redirect('puntoVenta/cliente')->withErrors(['mensajeConf' => 'ESTE CLIENTE SE EDITO CORRECTAMENTE']);
             }
+            $cliente['nombre'] = $request['nombre'];
+            $cliente['telefono'] = $request['telefono'];
+            $cliente['domicilio'] = $request['domicilio'];
+            $cliente->update();
+            return redirect('puntoVenta/cliente')->withErrors(['mensajeConf' => 'ESTE CLIENTE SE EDITO CORRECTAMENTE']);
+            
     }
 
     /**
@@ -103,8 +106,28 @@ class ClienteController extends Controller
      */
     public function destroy($id)//Departamento $departamento)
     {
+        try{
+            Cliente::destroy($id);
+            return true;
+            }catch(\Illuminate\Database\QueryException $e){
+                return false;
+            }
+        
+    }
+    public function baja($id){
+        $sucursal['status'] =0;
+        $suc2 = Cliente::findOrFail($id);
+        $suc2->update($sucursal);
+        return redirect('puntoVenta/cliente')->withErrors(['mensajeConf' => 'EL CLIENTE SE DIO DE BAJA CORRECTAMENTE']);
+    }
+    public function destroy2($id)//Departamento $departamento)
+    {
+        try{
         Cliente::destroy($id);
-        return redirect('puntoVenta/cliente');
+        return true;
+        }catch(\Illuminate\Database\QueryException $e){
+            return false;
+        }
     }
     public function buscador(Request $request)
     {
