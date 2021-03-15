@@ -90,31 +90,31 @@
             </div-->
             <ul class="list-group list-group-horizontal pl-0 border-0">
                 <li class="list-group-item ml-0 pl-0 border-0">
-                <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
-                    onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion"
-                    id="boton">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    BUSCAR PRODUCTO
-                </button>
+                    <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
+                        onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion"
+                        id="boton">
+                        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                            height="25px">
+                        BUSCAR PRODUCTO
+                    </button>
                 </li>
                 <li class="list-group-item border-0">
-                <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
-                    onclick=" buscarSubproducto()" data-toggle="modal" data-target="#exampleModal2" value="informacion"
-                    id="boton">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    BUSCAR SUBPRODUCTOS
-                </button>
+                    <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
+                        onclick=" buscarSubproducto()" data-toggle="modal" data-target="#exampleModal2"
+                        value="informacion" id="boton">
+                        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                            height="25px">
+                        BUSCAR SUBPRODUCTOS
+                    </button>
                 </li>
                 <li class="list-group-item border-0">
-                <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
-                    onclick="buscarOferta()" data-toggle="modal" data-target="#ofertasModal" value="informacion"
-                    id="boton">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    OFERTAS
-                </button>
+                    <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
+                        onclick="buscarOferta()" data-toggle="modal" data-target="#ofertasModal" value="informacion"
+                        id="boton">
+                        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
+                            height="25px">
+                        OFERTAS
+                    </button>
                 </li>
             </ul>
             <div class="row m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
@@ -124,6 +124,7 @@
                             <th scope="col">#</th>
                             <th scope="col">CODIGO_BARRAS</th>
                             <th scope="col">PRODUCTO</th>
+                            <th scope="col">OBSERVACION</th>
                             <th scope="col">EXISTENCIA</th>
                             <th scope="col">PRECIO</th>
                             <th scope="col">CANTIDAD</th>
@@ -156,7 +157,7 @@
                 <div class="col my-2 ml-5 mr-0 pr-0 ">
                     <div class="d-flex flex-row-reverse">
                         <h4 class="border border-dark ml-2 p-1" id="total">$ 0.00</h4>
-                        <!--form method="get" action="{{url('/empleado')}}"-->
+                        <!--form method="get" action="{url('/empleado')}}"-->
                         <!--{url('/departamento/'.$departamento->id.'/edit/')}}-->
                         <button class="btn btn-primary" type="button" style="background-color:#3366FF"
                             onclick="verificarVenta()" value="informacion" id="boton">
@@ -278,8 +279,8 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto"
-                        id="busquedaOferta" onkeyup="buscarOferta()">
+                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaOferta"
+                        onkeyup="buscarOferta()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
                     <table class="table table-hover table-bordered" id="productos">
@@ -450,15 +451,24 @@
                             aria-labelledby="pills-contact-tab">...</div-->
                     </div>
                 </div>
-                <div id="pieModal" class="modal-footer">
-                    <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">COBRAR E IMPRIMIR
-                        TICKET</button>
-                    <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">SOLO COBRAR</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="row col-6 mx-auto px-1 py-2 border border-primary">
+                    <div class="col-4 my-auto">
+                        <p class="h5">CLAVE</p>
+                    </div>
+                    <div class="col-8">
+                        <input type="number" id="claveEmpleado" data-decimals="2" class="form-control" />
+                    </div>
                 </div>
+            </div>
+            <div id="pieModal" class="modal-footer">
+                <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">COBRAR E IMPRIMIR
+                    TICKET</button>
+                <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">SOLO COBRAR</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 </div>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
@@ -513,7 +523,7 @@ async function cargarProductosSucursal() {
                 productosSucursal.find(p => p.id == ofertasSucursal[i].idSucursalProducto).existencia - ofertasSucursal[i].existencia;
             }*/
             console.log('los productos para la sucursal son', productosSucursal);
-            
+
             return productosSucursal;
             //console.log(response);
 
@@ -534,7 +544,7 @@ async function cargarSubproductosSucursal() {
         response = await fetch(`/puntoVenta/subproducto/{{session('sucursal')}}`);
         if (response.ok) {
             subproductosSucursal = await response.json();
-            console.log('los productos para la sucursal son',subproductosSucursal);
+            console.log('los productos para la sucursal son', subproductosSucursal);
             return subproductosSucursal;
             //console.log(response);
 
@@ -549,8 +559,7 @@ async function cargarSubproductosSucursal() {
     //return response;
 }
 cargarSubproductosSucursal();
-async function cargarOfertasSucursal()
-{
+async function cargarOfertasSucursal() {
     let response = "Sin respuesta";
     try {
         response = await fetch(`/puntoVenta/oferta/{{session('sucursal')}}`);
@@ -569,14 +578,15 @@ async function cargarOfertasSucursal()
     } catch (err) {
         console.log("Error al realizar la petición de productos AJAX: " + err.message);
     }
-    
+
 }
 cargarOfertasSucursal();
-function agregarProductoAVenta(id, codigoBarras, nombre, existencia, precio, cantidad,tipo) {
+
+function agregarProductoAVenta(id, codigoBarras, nombre, existencia, precio, cantidad, tipo) {
     //console.log(id);
     let producto = {
-        id: productosVenta.length+1,
-        idProducto:id,
+        id: productosVenta.length + 1,
+        idProducto: id,
         codigoBarras: codigoBarras,
         nombre: nombre,
         existencia: existencia,
@@ -639,16 +649,17 @@ function mostrarProductos() {
     let contador = 1;
 
     for (let count1 in productosVenta) {
-        let tipo = "";
-        if(productosVenta[count1].tipo == 1)
-            tipo =  `<strong>SUBPRODUCTO</strong>`;
-        if(productosVenta[count1].tipo == 2)
-            tipo =  `<strong>OFERTA</strong>`;
+        let tipo = `<strong>SIN OBSERVACION</strong>`;
+        if (productosVenta[count1].tipo == 1)
+            tipo = `<strong>SUBPRODUCTO</strong>`;
+        if (productosVenta[count1].tipo == 2)
+            tipo = `<strong>OFERTA</strong>`;
         cuerpo = cuerpo + `
         <tr class="text-center">
             <th scope="row">` + contador++ + `</th>
             <td>` + productosVenta[count1].codigoBarras + `</td>
-            <td>` + tipo +` `+ productosVenta[count1].nombre + `</td>
+            <td>` + productosVenta[count1].nombre + `</td>
+            <td>` + tipo + `</td>
             <td>` + productosVenta[count1].existencia + `</td>
             <td>` + productosVenta[count1].precio + `</td>
             <td><input  value=` + productosVenta[count1].cantidad + ` 
@@ -707,7 +718,7 @@ function quitarProducto(id) {
 }
 
 
-function buscarProductoEnVenta(idProducto,tipo) {
+function buscarProductoEnVenta(idProducto, tipo) {
     for (count2 in productosVenta) {
         if (productosVenta[count2].idProducto === idProducto && productosVenta[count2].tipo == tipo) {
             if (productosVenta[count2].existencia > productosVenta[count2].cantidad) {
@@ -735,16 +746,17 @@ function agregarPorCodigo() {
                     //agregarProductoAVenta(id,codigoBarras,nombre,existencia,precio,cantidad,subtotal)
                     /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
                     productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
-                //    if (!buscarProductoEnVenta(productos[count3].id)) {
-                //        if (productosSucursal[x].existencia > 0) {
-                            agregarProducto(productos[count3].id,0,productosSucursal[x].existencia,productosSucursal[x].precio); //, productos[count3].codigoBarras, productos[count3]
-                            return;
-                            //    .nombre,
-                            //    productos[count3].existencia, productos[count3].precio, 1, productos[count3].precio);
-                //            mostrarProductos();
-                //        } else
-                //            alert('PRODUCTO SIN EXISTENCIA');
-                //    }
+                    //    if (!buscarProductoEnVenta(productos[count3].id)) {
+                    //        if (productosSucursal[x].existencia > 0) {
+                    agregarProducto(productos[count3].id, 0, productosSucursal[x].existencia, productosSucursal[x]
+                        .precio); //, productos[count3].codigoBarras, productos[count3]
+                    return;
+                    //    .nombre,
+                    //    productos[count3].existencia, productos[count3].precio, 1, productos[count3].precio);
+                    //            mostrarProductos();
+                    //        } else
+                    //            alert('PRODUCTO SIN EXISTENCIA');
+                    //    }
                 }
             }
 
@@ -756,16 +768,16 @@ function agregarPorCodigo() {
 
 };
 
-function agregarProducto(id,tipo,existencia,precio) {
+function agregarProducto(id, tipo, existencia, precio) {
     for (let x in productosSucursal) {
         for (let count4 in productos) {
             if (productos[count4].id === productosSucursal[x].idProducto) {
                 if (productos[count4].id === id) {
-                    if (!buscarProductoEnVenta(productos[count4].id,tipo)) {
+                    if (!buscarProductoEnVenta(productos[count4].id, tipo)) {
                         if (existencia > 0) {
                             agregarProductoAVenta(productos[count4].id, productos[count4].codigoBarras,
                                 productos[count4].nombre,
-                                existencia, precio, 1,tipo);
+                                existencia, precio, 1, tipo);
                             mostrarProductos();
                         } else
                             alert('PRODUCTO SIN EXISTENCIA');
@@ -818,8 +830,9 @@ function buscarProducto() {
                             departamento = departamentos[d].nombre;
                     }
                     cuerpo = cuerpo + `
-                            <tr onclick="agregarProducto(` + productos[count5].id +`,`+0+`,`+productosSucursal[x].existencia+
-                            `,`+productosSucursal[x].precio+`)" data-dismiss="modal">
+                            <tr onclick="agregarProducto(` + productos[count5].id + `,` + 0 + `,` + productosSucursal[
+                            x].existencia +
+                        `,` + productosSucursal[x].precio + `)" data-dismiss="modal">
                                 <th scope="row">` + productos[count5].id + `</th>
                                 <td>` + productos[count5].codigoBarras + `</td>
                                 <td>` + productos[count5].nombre + `</td>
@@ -844,8 +857,8 @@ function buscarSubproducto() {
         let producto = productos.find(p => p.id == sucursalP.idProducto);
         let departamento = departamentos.find(p => p.id == producto.idDepartamento);
         cuerpo = cuerpo + `
-            <tr onclick="agregarProducto(` + producto.id + `,`+1+`,`+subproductosSucursal[count].existencia+
-            `,`+subproductosSucursal[count].precio+`)" data-dismiss="modal">
+            <tr onclick="agregarProducto(` + producto.id + `,` + 1 + `,` + subproductosSucursal[count].existencia +
+            `,` + subproductosSucursal[count].precio + `)" data-dismiss="modal">
                 <td>` + producto.codigoBarras + `</td>
                 <td>` + producto.nombre + `</td>
                 <td>` + subproductosSucursal[count].existencia + `</td>
@@ -884,7 +897,7 @@ function buscarSubproducto() {
         }*/
     }
     document.getElementById("consultaBusquedaSubp").innerHTML = cuerpo;
-    
+
 };
 
 
@@ -915,8 +928,29 @@ function cantidad(id) {
     //const importeProducto = document.querySelector('#importe'+id);
 }
 
+/*async function confirmarClave()
+{
+
+}*/
+
 async function realizarVentaEfectivo() {
     try {
+
+        let clave = document.querySelector('#claveEmpleado').value;
+        let idSucursalEmpleado = "";
+        if (!clave.length > 0) {
+            return alert('POR FAVOR INGRESE UNA CLAVE PARA CONFIRMAR LA VENTA');
+        }
+        let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
+        let valido = await respuesta.text();
+        if (respuesta.ok) {
+            if (valido.length > 0) {
+                idSucursalEmpleado = valido;
+                //return alert('LA CLAVE INGRESADA ES VALIDA?'+valido);
+            } else {
+                return alert('LA CLAVE INGRESADA ES INVALIDA' + valido);
+            }
+        }
         let json = JSON.stringify(productosVenta);
         const pago = document.querySelector('#pagoEfectivo');
         if (pago.value.length === 0)
@@ -932,6 +966,7 @@ async function realizarVentaEfectivo() {
             data: {
                 datos: json,
                 estado: 'efectivo',
+                idSucursalEmpleado: idSucursalEmpleado,
                 pago: parseFloat(pago.value),
                 //_token: $("meta[name='csrf-token']").attr("content")
                 _token: "{{ csrf_token() }}"
@@ -939,17 +974,19 @@ async function realizarVentaEfectivo() {
             // si tuvo éxito la petición
         }).done(function(respuesta) {
             //alert(respuesta);
-            productosVenta = [];
-            mostrarProductos();
-            $('#confirmarVentaModal').modal('hide');
-            $("input[id='pagoEfectivo']").val(0);
+
             console.log(respuesta); //JSON.stringify(respuesta));
         });
         console.log(funcion);
+        productosVenta = [];
+        mostrarProductos();
+        $('#confirmarVentaModal').modal('hide');
+        $("input[id='pagoEfectivo']").val(0);
         await cargarProductos();
         await cargarProductosSucursal();
         await cargarSubproductosSucursal();
         await cargarOfertasSucursal();
+        document.querySelector('#claveEmpleado').value = "";
         //console.log(p);
         //console.log(funcion);
     } catch (err) {
@@ -958,6 +995,21 @@ async function realizarVentaEfectivo() {
 }
 
 async function realizarVentaCredito() {
+    let clave = document.querySelector('#claveEmpleado').value;
+    let idSucursalEmpleado = "";
+    if (!clave.length > 0) {
+        return alert('POR FAVOR INGRESE UNA CLAVE PARA CONFIRMAR LA VENTA');
+    }
+    let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
+    let valido = await respuesta.text();
+    if (respuesta.ok) {
+        if (valido.length > 0) {
+            idSucursalEmpleado = valido;
+            return alert('LA CLAVE INGRESADA ES VALIDA?');
+        } else {
+            return alert('LA CLAVE INGRESADA ES INVALIDA');
+        }
+    }
     let json = JSON.stringify(productosVenta);
     const pago = document.querySelector('#pagoCredito');
     const cliente = document.querySelector('#clientes');
@@ -977,6 +1029,7 @@ async function realizarVentaCredito() {
             data: {
                 datos: json,
                 estado: 'credito',
+                idSucursalEmpleado: idSucursalEmpleado,
                 pago: parseFloat(pago.value),
                 cliente: parseInt(cliente.value),
                 //_token: $("meta[name='csrf-token']").attr("content")
@@ -986,20 +1039,22 @@ async function realizarVentaCredito() {
         }).done(function(respuesta) {
             //alert(respuesta);
             //  alert("perfectisimo");
-            productosVenta = [];
-            mostrarProductos();
-            $('#confirmarVentaModal').modal('hide');
-            $("input[id='pagoCredito']").val(0);
+
             console.log(respuesta); //JSON.stringify(respuesta));
 
         });
         // let imp = await fetch(`/venta/ticket`);
         // let impJ = await imp.text();
         //  document.querySelector('#impresion').innerHTML = impJ;
+        productosVenta = [];
+        mostrarProductos();
+        $('#confirmarVentaModal').modal('hide');
+        $("input[id='pagoCredito']").val(0);
         await cargarProductos();
         await cargarProductosSucursal();
         await cargarSubproductosSucursal();
         await cargarOfertasSucursal();
+        document.querySelector('#claveEmpleado').value = "";
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
@@ -1010,7 +1065,7 @@ function calcularCambioEfectivo() {
     const pago = document.querySelector('#pagoEfectivo');
 
     const cambio = document.querySelector('#cambioEfectivo');
-    if (parseFloat(pago.value) > total) {
+    if (parseFloat(pago.value) >= total) {
         //alert('si entra');
         let diferencia = parseFloat(pago.value) - parseFloat(total);
         console.log(parseFloat(pago.value));
@@ -1019,7 +1074,7 @@ function calcularCambioEfectivo() {
         //cambio.textContent ="$" + '<strong>'+diferencia+'</strong>';
         //cambio.value = parseFloat(pago.value)-total;
     } else {
-        cambio.textContent = "$ 0.00"
+        cambio.textContent = "$ -.--";
     }
 
 }
@@ -1029,7 +1084,7 @@ function calcularDeudaCredito() {
     const pago = document.querySelector('#pagoCredito');
 
     const deuda = document.querySelector('#deudaCredito');
-    if (parseFloat(pago.value) > 0) {
+    if (parseFloat(pago.value) >= 0) {
         //alert('si entra');
         let diferencia = parseFloat(total) - parseFloat(pago.value);
         console.log(parseFloat(pago.value));
@@ -1038,7 +1093,7 @@ function calcularDeudaCredito() {
         //cambio.textContent ="$" + '<strong>'+diferencia+'</strong>';
         //cambio.value = parseFloat(pago.value)-total;
     } else {
-        deuda.textContent = "$ 0.00"
+        deuda.textContent = "$ -.--";
     }
 
 }
@@ -1086,8 +1141,7 @@ function modoPago(tipoPago) {
         let clientes = document.querySelector('#clientes');;
         let opcionesCliente = "";
         let cliente = @json($clientes);
-        if(cliente.length>0)
-        {
+        if (cliente.length > 0) {
             for (let i in cliente) {
                 opcionesCliente = opcionesCliente +
                     `
@@ -1102,8 +1156,7 @@ function modoPago(tipoPago) {
 
 }
 
-function buscarOferta()
-{
+function buscarOferta() {
     const palabraBusqueda = document.querySelector('#busquedaOferta');
     let cuerpo = "";
     let contador = 1;
@@ -1136,8 +1189,8 @@ function buscarOferta()
         let producto = productos.find(p => p.id == sucursalP.idProducto);
         let departamento = departamentos.find(p => p.id == producto.idDepartamento);
         cuerpo = cuerpo + `
-            <tr onclick="agregarProducto(` + producto.id +`,`+2+`,`+
-            ofertasSucursal[x].existencia+`,`+sucursalP.costo+`)" data-dismiss="modal">
+            <tr onclick="agregarProducto(` + producto.id + `,` + 2 + `,` +
+            ofertasSucursal[x].existencia + `,` + sucursalP.costo + `)" data-dismiss="modal">
                 <td>` + ofertasSucursal[x].codigoBarras + `</td>
                 <td>` + ofertasSucursal[x].nombre + `</td>
                 <td>` + ofertasSucursal[x].existencia + `</td>

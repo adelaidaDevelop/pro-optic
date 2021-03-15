@@ -51,6 +51,8 @@ class SucursalProductoController extends Controller
             $sucursalProducto->existencia = $datosProducto['cantidad'];
             $sucursalProducto->costo = $datosProducto['costo'];
             $sucursalProducto->precio = $datosProducto['precio'];
+            $sucursalProducto->minimoStock = 10;
+            $sucursalProducto->status = 1;
             $sucursalProducto->save();
             //$actualizarProductoInd->save();
 

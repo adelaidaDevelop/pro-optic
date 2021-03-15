@@ -3,13 +3,13 @@
 namespace App\Console\Commands;
 
 use App\Mail\EnviarMail;
+use App\Mail\EnviarMailCaducidad;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Console\Command;
 
-
 use App\Models\Productos_caducidad;
 use App\Models\Producto;
-
+use DateInterval;
 class CaducidadProductos extends Command
 {
     /**
@@ -48,7 +48,15 @@ class CaducidadProductos extends Command
         $productos = Producto::all();
         $vista = 'titulo';//view('ProductosCaducidad.index',compact('productosCaducidad','productos'));
         */
-        $titulo = "PRODUCTOS PROXIMOS A CADUCAR";
-        Mail::to('hzhm1997@gmail.com')->send(new EnviarMail($titulo,'caducidad',$titulo,NULL));//return 0;
+        $fecha = now()->add(new DateInterval('P4M'))->toDateString();
+        $productosCaducidad = Productos_caducidad::where('fecha_caducidad', '<=',$fecha)->get();
+        //$titulo = "PRODUCTOS PROXIMOS A CADUCAR";
+        
+        //Mail::to('hzhm1997@gmail.com')->send(new EnviarMail($titulo,'caducidad',$titulo,NULL));//return 0;
+        if(count($productosCaducidad)>0)
+        {
+            Mail::to('adhel1997@gmail.com')->send(new EnviarMailCaducidad($productosCaducidad));
+        }
+        
     }
 }

@@ -110,6 +110,7 @@ class EmpleadoController extends Controller
         {
             return Empleado::all();
         }
+        if($id)
         return NULL;
     }
 
@@ -285,6 +286,28 @@ class EmpleadoController extends Controller
         return view('Empleado.empleados',$datosConsulta,compact('admin'));
         //return $datosConsulta;
     }
-
+    public function validarClave($clave)
+    {
+        $empleado = Empleado::where('claveE','=',$clave)->get();
+        if(count($empleado)>0)
+            return false;
+        return true;
+    }
+    public function validarEmpleado($clave)
+    {
+        $empleado = Empleado::where('claveE','=',$clave)->get();
+        
+        if(count($empleado)>0)
+        {
+            $sE = Sucursal_empleado::where('idEmpleado','=',$empleado->first()->id)
+            ->where('idSucursal','=',session('sucursal'))->get();
+            if(count($sE))
+            {
+                return $sE->first()->id;
+            }
+            return false;
+        }
+        return false;
+    }
     
 }
