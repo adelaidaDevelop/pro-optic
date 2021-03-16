@@ -7,13 +7,14 @@
         @endsection
         @section('opciones')
         <!-- BOTON DEVOLUCION-->
-        <div class="col-2 my-2 ml-0 px-1">
+        <div class="ml-4">
 
-            <a class="btn btn-primary" href="{{ url('/devolucion')}}">
-                <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-                DEVOLUCION </a>
-            </a>
+            <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/devolucion')}}">
+            <img src="{{ asset('img\devolucion.png') }}" alt="Editar" width="32px" height="32px">
+                    <p class="h6 my-auto mx-2 text-dark"><small>DEVOLUCION</small></p>
+                 </a>
         </div>
+
         @endsection
     </div>
     <!--div class="row p-1 "-->

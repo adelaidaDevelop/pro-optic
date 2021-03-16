@@ -6,10 +6,9 @@ ADMINISTRACION
 @section('opciones')
 <div class="ml-4">
     <form method="get" action="{{url('/puntoVenta/administracion/')}}">
-        <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
+        <button class="btn btn-outline-secondary   border-0" type="submit">
             <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="30px" height="30px">
-            <p class="h6 my-auto mx-2 text-dark"><small>NUEVA SUCURSAL</small></p>
-
+            <p class="h6 my-auto  text-dark"><small>NUEVA SUCURSAL</small></p>
         </button>
     </form>
 </div>

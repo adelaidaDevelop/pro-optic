@@ -51,7 +51,7 @@ class DepartamentoController extends Controller
     {
         try{
         $datosDepartamento = request()->except('_token');
-        $datosDepartamento['status'] = 1;
+       // $datosDepartamento['status'] = 1;
         Departamento::create($datosDepartamento);
         return redirect('puntoVenta/departamento')->withErrors(['mensajeConf' => 'ESTE DEPARTAMENTO SE AGREGO CORRECTAMENTE']);
 
