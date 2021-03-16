@@ -231,7 +231,7 @@
                             </label>
                             <br />
                             <label for="Nombre">
-                                <h5 class="text-uppercase">{{$datosEmpleado->nombre}}
+                                <h5 class="text-uppercase">{{$datosEmpleado->primerNombre}} {{$datosEmpleado->segundoNombre}}
                                     {{$datosEmpleado->apellidoPaterno}} {{$datosEmpleado->apellidoMaterno}}</h5>
                             </label>
                             <fieldset disabled id="formEditar">

@@ -441,7 +441,7 @@ ADMINISTRACION
                                 }
                                 cuerpo = cuerpo + `<ul class="list-group list-group-horizontal-sm my-1 border border-dark">
     <li class="list-group-item text-uppercase col-7">` +
-                                    empleados[e].nombre + ` ` + empleados[e].apellidoPaterno + ` ` + empleados[e].apellidoMaterno +
+                                    empleados[e].primerNombre + ` ` + empleados[e].segundoNombre + ` ` + empleados[e].apellidoPaterno + ` ` + empleados[e].apellidoMaterno +
                                     `</li>
     <li class="list-group-item text-uppercase col-2 mx-auto">` +
                                     status + `</li>

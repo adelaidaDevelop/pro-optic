@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Empleado;
 use App\Models\Departamento;
 use App\Models\Proveedor;
@@ -27,6 +28,15 @@ class RegistrosPruebaTable extends Migration
         $sucursal->telefono = '9512456511';
         $sucursal->status = 1;
         $sucursal->save();
+
+        $role = new Role();
+        $role->name = 'admin';
+        $role->description = 'Administrator';
+        $role->save();        
+        $role = new Role();
+        $role->name = 'user';
+        $role->description = 'User';
+        $role->save();
         //CREACION DE ADMINISTRADOR
         $admin = User::create([
             'username' => 'ADMINISTRADOR',
@@ -34,6 +44,8 @@ class RegistrosPruebaTable extends Migration
             'password' => Hash::make('admin12345'),
             'tipo' => 0,
         ]);
+           
+        //$admin->roles()->attach($role_admin);
         //CREACION USUARIO ADMIN P/DEUDORES
         $adminDeudor = User::create([
             'username' => 'DEUDOR',
@@ -63,6 +75,10 @@ class RegistrosPruebaTable extends Migration
         $sucursalEmpleado->idEmpleado = $empleadoAdmin->id;
         $sucursalEmpleado->status = 'alta';
         $sucursalEmpleado->save();
+
+        //ROLE
+        $role_admin = Role::where('name', 'admin')->first();
+      //  $sucursalEmpleado->roles()->attach($role_admin);
         //CREACION DE EMPLEADOS
         /*$usuario = User::create([
             'username' => 'Heber',
