@@ -63,7 +63,7 @@ class EmpleadoController extends Controller
             'password' => Hash::make($request['password']),
             'tipo' => 0,
         ]);
-
+        //$usuario->roles()->attach(Role::where('name', 'username')->first());
         //$user = User::latest('id')->first();
         $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$usuario->id);
         //$empleado = new Empleado;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,9 @@ class HomeController extends Controller
     {
     //    return session('idEmpleado');
         //return view('home');
+        //$request->user()->authorizeRoles(['user', 'admin']);
+        //$usuarios = ['admin'];//,'admin'];
+        //Auth::user()->authorizeRoles($usuarios);     
         return redirect('puntoVenta/venta');//view('Venta.index');
        // return view('header2');
     //  return view('layouts.app');
