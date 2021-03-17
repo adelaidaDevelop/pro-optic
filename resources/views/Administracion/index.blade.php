@@ -524,7 +524,8 @@ ADMINISTRACION
                 }
                 if (bandera) {
                     existeEmpleado = true;
-                    cuerpo = cuerpo + `<a class="btn btn-secondary btn-block text-uppercase border" onclick="agregarEmpleado(` + empleados[i].id + `)">` + empleados[i].nombre + ` ` +
+                    cuerpo = cuerpo + `<a class="btn btn-secondary btn-block text-uppercase border" onclick="agregarEmpleado(` + empleados[i].id + `)">` +
+                     empleados[i].primerNombre + ` ` + empleados[i].segundoNombre + ` ` + 
                         empleados[i].apellidoPaterno + ` ` + empleados[i].apellidoMaterno + `</a>`;
                 }
             }

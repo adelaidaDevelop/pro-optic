@@ -78,7 +78,7 @@ class RegistrosPruebaTable extends Migration
 
         //ROLE
         $role_admin = Role::where('name', 'admin')->first();
-      //  $sucursalEmpleado->roles()->attach($role_admin);
+        //$sucursalEmpleado->roles()->attach($role_admin);
         //CREACION DE EMPLEADOS
         /*$usuario = User::create([
             'username' => 'Heber',
