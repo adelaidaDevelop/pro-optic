@@ -4,11 +4,19 @@
 REPORTES
 @endsection
 @section('opciones')
-<div class="col-0 my-2 p-1">
+<div class="col-0  p-1 ml-4">
     <form method="get" action="{{url('/puntoVenta/reporteVentas/')}}">
-        <button class="btn btn-secondary ml-4 p-1" type="submit">
-            <img src="{{ asset('img\departamento.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-            VENTAS
+        <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
+            <img src="{{ asset('img\departamento.png') }}" alt="Editar" width="30px" height="30px">
+            <p class="h6 my-auto mx-2 text-dark"><small>INVENTARIO</small></p>
+        </button>
+    </form>
+</div>
+<div class="col-0  p-1 ml-4">
+    <form method="get" action="{{url('/puntoVenta/reporteVentas/')}}">
+        <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
+            <img src="{{ asset('img\departamento.png') }}" alt="Editar" width="30px" height="30px">
+            <p class="h6 my-auto mx-2 text-dark"><small>VENTAS</small></p>
         </button>
     </form>
 </div>
@@ -20,7 +28,7 @@ REPORTES
 <div class="row  border border-dark ml-0 mr-0  mt-2 ">
     <h5 class=" row col-5 ml-1 mt-2 mb-2 mx-auto text-primary ">
         <strong>
-            REPORTE DE INVENTARIO
+            INVENTARIO
         </strong>
     </h5>
     <br />

@@ -6,21 +6,19 @@
         COMPRAS
         @endsection
         @section('opciones')
-        <div class="col my-2 ml-5 pl-1">
+        <div class="ml-4 my-auto">
             <form method="get" action="{{url('/puntoVenta/compra/')}}">
-                <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    CONSULTAR COMPRAS
+                <button class="btn btn-outline-secondary p-1 border-0" type="submit" >
+                    <img src="{{ asset('img\compra2.png') }}" alt="Editar" width="32px" height="32px">
+                        <p class="h6 my-auto mx-2 text-dark"><small>CONSULTAR COMPRAS</small></p>
                 </button>
             </form>
         </div>
-        <div class="col my-2 ml-5 pl-1">
+        <div class="my-auto">
             <form method="get" action="{{url('/puntoVenta/proveedor/')}}">
-                <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    PROVEEDORES
+                <button class="btn btn-outline-secondary p-1 border-0" type="submit" >
+                <img src="{{ asset('img\proveedor.png') }}" alt="Editar" width="30px" height="30px">
+                <p class="h6 my-auto mx-2 text-dark"><small>PROVEEDORES</small></p>
                 </button>
             </form>
         </div>

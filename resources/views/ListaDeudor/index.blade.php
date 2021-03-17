@@ -40,7 +40,7 @@ CREDITOS
                         </tr>
                     </thead>
                     <tbody id="consultaBusqueda">
-                    
+
                     </tbody>
                 </table>
             </div>
@@ -321,7 +321,7 @@ CREDITOS
         }
     }
 
-    function modalAbonar(id,idVenta) {
+    function modalAbonar(id, idVenta) {
         idVent2 = id;
         $("input[id='abono']").val(0);
         document.getElementById("restoDeuda").textContent = "$ " + 0.00;
@@ -332,7 +332,6 @@ CREDITOS
                 pagado = pagado + pagos_ventas[count8].monto;
             }
         }
-
         for (count9 in detalleVentas) {
             if (detalleVentas[count9].idVenta == idVenta) {
                 let subtotal = detalleVentas[count9].cantidad * detalleVentas[count9].precioIndividual;
@@ -352,19 +351,15 @@ CREDITOS
 
         } else {
             restoFinal = diferencia;
-
         }
     };
 
-    buscarCliente()
+    buscarCliente();
 
     function buscarCliente() {
         const palabraBusqueda = document.querySelector('#busquedaCliente');
         let cuerpo = "";
         let cont = 0;
-        //  let idCliente = 0;
-
-        // descripcion2 = 0
         for (count12 in venta_clientes) { //CREDITOS
             if (venta_clientes[count12].estado === "incompleto") {
                 let nombre = "";
@@ -421,7 +416,7 @@ CREDITOS
                                                 type="button">VER MAS</button>
                                             </td>
                                             <td>` +
-                                    `<button class="btn btn-light" onclick="modalAbonar(` + idVentClient+`,`+folio + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
+                                    `<button class="btn btn-light" onclick="modalAbonar(` + idVentClient + `,` + folio + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
                                                 type="button">ABONAR</button>
                                             </td>
 
@@ -438,16 +433,16 @@ CREDITOS
 
             }
         }
-            if (cuerpo == "") {
-                // tabla2 = document.querySelector('#tablaR');
-                let sin = ` <h4 class= "text-danger my-auto text-center mt-4 "> NO SE ENCONTRARON CLIENTES DEUDORES </h4>`;
-                document.getElementById("tablaR").innerHTML = sin;
-            } else {
-                document.getElementById("tablaR").innerHTML = tabla2;
-                document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-            }
-        
-            
+        if (cuerpo == "") {
+            // tabla2 = document.querySelector('#tablaR');
+            let sin = ` <h4 class= "text-danger my-auto  mt-4 "> NO SE ENCONTRARON CLIENTES DEUDORES </h4>`;
+            document.getElementById("tablaR").innerHTML = sin;
+        } else {
+            document.getElementById("tablaR").innerHTML = tabla2;
+            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        }
+
+
 
     };
 

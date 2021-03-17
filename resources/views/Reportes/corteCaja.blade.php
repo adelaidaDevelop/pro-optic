@@ -38,8 +38,10 @@ CORTE DE CAJA
             </div>
         </div>
         <!-- BOTON CORTE-->
-        <div class="row col-10  ml-4">
-            <button class="btn btn-secondary ml-4 mx-auto" onclick="calcularCorte()">HACER CORTE
+        <div class="row col-5 ml-1 mt-2 mb-4 mx-auto">
+            <button class="btn btn-outline-primary text-dark" onclick="calcularCorte()">
+             HACER CORTE
+            <img src="{{ asset('img\corte.png') }}" alt="Editar" width="35px" height="35px">
             </button>
         </div>
 
