@@ -948,6 +948,9 @@
                     return alert('LA CLAVE INGRESADA ES INVALIDA' + valido);
                 }
             }
+            else{
+                return alert('HUBO UN ERROR');
+            }
             let json = JSON.stringify(productosVenta);
             const pago = document.querySelector('#pagoEfectivo');
             if (pago.value.length === 0)
@@ -1002,11 +1005,14 @@
         if (respuesta.ok) {
             if (valido.length > 0) {
                 idSucursalEmpleado = valido;
-                return alert('LA CLAVE INGRESADA ES VALIDA?');
+                //return alert('LA CLAVE INGRESADA ES VALIDA?');
             } else {
                 return alert('LA CLAVE INGRESADA ES INVALIDA');
             }
         }
+        else{
+                return alert('HUBO UN ERROR');
+            }
         let json = JSON.stringify(productosVenta);
         const pago = document.querySelector('#pagoCredito');
         const cliente = document.querySelector('#clientes');

@@ -130,6 +130,7 @@ class EmpleadoController extends Controller
             $admin = User::findOrFail(1);
             $users = User::findOrFail(1);
             $sucursal = Sucursal::findOrFail(session('sucursal'));
+            $admin->claveE = Empleado::findOrFail(1)->claveE;
             return view('Empleado.index2',compact('admin','sucursal','users'));
         }
         else{
@@ -151,30 +152,36 @@ class EmpleadoController extends Controller
     {
         if($id == 0)
         {
-            $rules = [
+            /*$rules = [
                 'passwordChange' => ['required', 'string', 'min:8'],
             ];
             $mesages = [
                 'passwordChange.required' => 'Por favor escriba su contraseña',
                 'passwordChange.min' => 'La contraseña debe tener al menos 8 caracteres',
                 
-            ];
+            ];*/
             $admin = User::findOrFail(1);
+            $adminEmpleado = Empleado::findOrFail(1);
             $datosUser = [];
             if($request->input('username') != $admin->username)
                 $datosUser = Arr::add($datosUser,'username',$request->input('username'));
             if($request->input('email') != $admin->email)
                 $datosUser = Arr::add($datosUser,'email',$request->input('email'));
+            if($request->input('claveE') != $adminEmpleado->claveE)
+                $datosUser = Arr::add($datosUser,'claveE',$request->input('claveE'));
             $validacion =  Validator::make($datosUser, [
                 'username' => ['string', 'max:255','unique:users','min:3'],
                 'email' => ['string', 'email', 'max:255', 'unique:users','min:5'],
+                'claveE' => ['string', 'max:5','unique:empleados','min:5'],
             ]);
             if($validacion->fails()):
                 return back()->withErrors($validacion)->with( ['cambios' => true] )->withInput($request->all());
             endif;
             $validacion->validate();
             $datosUsuario = request()->only(['email','username']);
+            $datosEmpleado = request()->only(['claveE']);
             $admin->update($datosUsuario);
+            $adminEmpleado->update($datosEmpleado);
             return redirect('puntoVenta/empleado/'.$id.'/edit');
             //return 'NO TE PREOCUPES, AQUI CACHO EL ERROR';
         }
@@ -185,8 +192,6 @@ class EmpleadoController extends Controller
         }
         if($request->has('passwordChange'))
         {
-            
-            
             $rules = [
                 'passwordChange' => ['required', 'string', 'min:8'],
             ];

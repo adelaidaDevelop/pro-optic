@@ -97,6 +97,49 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
+                                            <label for="claveE">
+                                                CLAVE
+                                            </label>
+
+                                            <div class="input-group">
+                                                <input type="password"
+                                                    class="form-control @error('claveE') is-invalid @enderror"
+                                                    name="claveE" id="claveE"
+                                                    value="@if(session()->has('cambios')){{old('claveE')}}@else{{$admin->claveE}}@endif"
+                                                    placeholder="Ingresar clave para operaciones" required
+                                                    autocomplete="claveE" autofocus readonly>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-dark" onclick="mostrarPasswordClave()"
+                                                        type="button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="m-0" viewBox="0 0 16 16"
+                                                            id="iconPasswordClave">
+                                                            <path
+                                                                d="M10.79 12.912l-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.027 7.027 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.088z" />
+                                                            <path
+                                                                d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708l-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6l-12-12 .708-.708 12 12-.708.707z" />
+                                                        </svg>
+                                                    </button>
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        id="button-addon2" onclick="generarClave()">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-arrow-clockwise"
+                                                            viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                                                            <path
+                                                                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                                                        </svg>
+                                                        <!--img class="btn btn-outline-secondary" type="button" src="{ asset('img\recargar.svg') }}" class="img-thumbnail" alt="Editar"
+                                                        fill="currentColor"-->
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            @error('claveE')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
                                         <div class="form-group col-6">
                                             <label for="nombre">

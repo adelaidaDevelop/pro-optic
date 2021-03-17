@@ -439,9 +439,12 @@ ADMINISTRACION
                                         SucursalEmpleados[i].id +
                                         `)">DAR DE ALTA</button>`;
                                 }
+                                let segundoNombre = "";
+                                if(empleados[e].segundoNombre != null)
+                                    segundoNombre = empleados[e].segundoNombre;
                                 cuerpo = cuerpo + `<ul class="list-group list-group-horizontal-sm my-1 border border-dark">
     <li class="list-group-item text-uppercase col-7">` +
-                                    empleados[e].primerNombre + ` ` + empleados[e].segundoNombre + ` ` + empleados[e].apellidoPaterno + ` ` + empleados[e].apellidoMaterno +
+                                    empleados[e].primerNombre + ` ` + segundoNombre + ` ` + empleados[e].apellidoPaterno + ` ` + empleados[e].apellidoMaterno +
                                     `</li>
     <li class="list-group-item text-uppercase col-2 mx-auto">` +
                                     status + `</li>
@@ -523,8 +526,11 @@ ADMINISTRACION
                 }
                 if (bandera) {
                     existeEmpleado = true;
+                    let segundoNombre = "";
+                    if(empleados[i].segundoNombre != null)
+                        segundoNombre = empleados[i].segundoNombre;
                     cuerpo = cuerpo + `<a class="btn btn-secondary btn-block text-uppercase border" onclick="agregarEmpleado(` + empleados[i].id + `)">` +
-                     empleados[i].primerNombre + ` ` + empleados[i].segundoNombre + ` ` + 
+                     empleados[i].primerNombre + ` ` + segundoNombre + ` ` + 
                         empleados[i].apellidoPaterno + ` ` + empleados[i].apellidoMaterno + `</a>`;
                 }
             }
