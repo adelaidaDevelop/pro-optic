@@ -91,10 +91,10 @@
 
                         </div>
                     </div>
-                    <div class="col ml-1  p-0">
-                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModal"
-                            onclick="buscarProducto()">
-                            AGREGAR PRODUCTO
+                    <div class="col-3  p-0 input-group">
+                        <button type="button" class="input-group btn btn-primary my-auto " data-toggle="modal" data-target="#exampleModal" onclick="buscarProducto()">
+                            <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
+                            <p class="h6 my-auto text-dark mx-2">AGREGAR PRODUCTO</p>
                         </button>
                     </div>
                     <!-- TABLA -->

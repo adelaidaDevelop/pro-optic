@@ -21,7 +21,7 @@ CORTE DE CAJA
         <div class="row   form-group input-group  ml-4">
             <div class="row col-4 form-group input-group ml-4 mr-4">
                 <h5 class=" my-0 mr-3">FECHA CORTE:</h5>
-                <input type="date" min="" id="fechaCorte" class="form-control my-0" />
+                <input type="date" min="" id="fechaCorte" name="fechaCorte" class="form-control my-0" />
             </div>
             <div class="col-6 ml-4 form-group input-group ">
                 <h5 class="mr-3 ml-3 my-0">CAJERO</h5>
@@ -40,8 +40,8 @@ CORTE DE CAJA
         <!-- BOTON CORTE-->
         <div class="row col-5 ml-1 mt-2 mb-4 mx-auto">
             <button class="btn btn-outline-primary text-dark" onclick="calcularCorte()">
-             HACER CORTE
-            <img src="{{ asset('img\corte.png') }}" alt="Editar" width="35px" height="35px">
+                HACER CORTE
+                <img src="{{ asset('img\corte.png') }}" alt="Editar" width="35px" height="35px">
             </button>
         </div>
 
@@ -207,138 +207,150 @@ CORTE DE CAJA
     const devoluciones = @json($devoluciones);
     const pagoCompras = @json($pagoCompras);
     const compras = @json($compras);
+    let sucursalEmpleado = @json($sucursalEmpleados);
 
+    function validarCamposFechas() {
+        // let selectFecha = document.querySelector('input[name="fechaCorte"]:checked');
+        //  let opcFecha = selectFecha.value;
+        let fechaDia = document.querySelector('#fechaCorte');
+        if (fechaDia.value.length > 0) {
+            return true;
+        }
+        return false;
+    };
 
 
     function calcularCorte() {
-        console.log("si");
-        let cuerpo = "";
-        let contador = 1;
-        let cont = 0;
-        let emple = "";
-        let fecha = "";
-        let totalVentas = 0;
-        let abonos = 0;
-        let entradas = 0;
-        let totalDev = 0;
-        let abonoProveedores = 0;
-        let comprasContado = 0;
-        let salidas = 0;
-        let total = 0;
-        let idCajeroOK = 0;
-        let fechaCo = document.querySelector('#fechaCorte');
-        if (fechaCo.value.length > 0) {
-            console.log("okVErifi");
-            //VERIFIAR CAJERO
-            let fechaC = document.querySelector('#fechaCorte');
-            let fechaCorte = new Date(fechaC.value);
-            //let fechaF = new Date(fechaFin.value);
-            fechaCorte.setDate(fechaCorte.getDate() + 1);
-            // fechaF.setDate(fechaF.getDate() + 1);
-            let idCajer = document.querySelector('#idCajero');
-            if (idCajer.value != "0") {
-                idCajeroOK = parseInt(idCajer.value);
-                // let idCajer2= parseInt(idCajer.value);
-                for (let j in ventas) {
-                    //TOTAL VENDIDO
-                    if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
+        if (validarCamposFechas()) {
+            console.log("si");
+            let cuerpo = "";
+            let contador = 1;
+            let cont = 0;
+            let emple = "";
+            let fecha = "";
+            let totalVentas = 0;
+            let abonos = 0;
+            let entradas = 0;
+            let totalDev = 0;
+            let abonoProveedores = 0;
+            let comprasContado = 0;
+            let salidas = 0;
+            let total = 0;
+            let idCajeroOK = 0;
+            let fechaCo = document.querySelector('#fechaCorte');
+            if (fechaCo.value.length > 0) {
+                console.log("okVErifi");
+                //VERIFIAR CAJERO
+                let fechaC = document.querySelector('#fechaCorte');
+                let fechaCorte = new Date(fechaC.value);
+                fechaCorte.setDate(fechaCorte.getDate() + 1);
+                let idCajer = document.querySelector('#idCajero');
+                if (idCajer.value != "0") {
+                    idCajeroOK = parseInt(idCajer.value);
+                    for (let j in ventas) {
+                        //TOTAL VENDIDO
+                        if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
+                            let fechaVC = new Date(ventas[j].created_at);
+                            if (comparacionFecha(fechaCorte, fechaVC)) {
+                                let idSucEmp = ventas[j].idSucursalEmpleado;
+                                for (let h in sucursalEmpleado) {
+                                    if (sucursalEmpleado[h].id == idSucEmp) {
+                                        if (sucursalEmpleado[h].idEmpleado == idCajeroOK) {
+                                            {
+                                                totalVentas = totalVentas + ventas[j].pago;
+                                            }
 
-                        let fechaVC = new Date(ventas[j].created_at);
-                        if (comparacionFecha(fechaCorte, fechaVC) && ventas[j].idEmpleado == idCajeroOK) {
-                            totalVentas = totalVentas + ventas[j].pago;
-                        }
-                    }
-                    //ABONO COMPLETADOS
-                    for (let z in pagos) {
-                        let fechaP = new Date(pagos[z].created_at);
-                        if (ventas[j].id == pagos[z].idVenta) {
-                            if (comparacionFecha(fechaCorte, fechaP) && ventas[j].idEmpleado == idCajeroOK) {
-                                abonos = abonos + pagos[z].monto;
+                                        }
+                                    }
+                                }
+
                             }
-
                         }
-                    }
-                    for (let x in devoluciones) {
-                        let fechaD = new Date(devoluciones[x].created_at);
-                        if (devoluciones[x].idVenta === ventas[j].id) {
-                            if (comparacionFecha(fechaCorte, fechaD) && ventas[j].idEmpleado == idCajeroOK) {
-                                totalDev = totalDev + devoluciones[x].totalDevolucion;
+                        //ABONO COMPLETADOS
+                        for (let z in pagos) {
+                            let fechaP = new Date(pagos[z].created_at);
+                            if (ventas[j].id == pagos[z].idVenta) {
+                                if (comparacionFecha(fechaCorte, fechaP)) {
+                                    let idSucEmp = ventas[j].idSucursalEmpleado;
+                                    for (let h in sucursalEmpleado) {
+                                        if (sucursalEmpleado[h].id == idSucEmp) {
+                                            if (sucursalEmpleado[h].idEmpleado == idCajeroOK) {
+                                                {
+                                                    abonos = abonos + pagos[z].monto;
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
                             }
-
-                        }
-                    }
-
-
-
-                }
-                /*
-                        for (let y in compras) {
-                            for (count41 in pagoCompras) {
-                                if (compras[y].id == pagoCompras[count41].idCompra) {
-                                    let fechaPC = new Date(pagoCompras[count41].created_at);
-                                    fechaPC.setDate(fechaPC.getDate() + 1);
-                                    if (fechaCorte.getTime() === fechaPC.getTime()) {
-                                        abonoProveedores = abonoProveedores + pagoCompras[count41].monto;
+                            for (let x in devoluciones) {
+                                let fechaD = new Date(devoluciones[x].created_at);
+                                if (devoluciones[x].idVenta === ventas[j].id) {
+                                    if (comparacionFecha(fechaCorte, fechaD)) {
+                                        let idSucEmp = ventas[j].idSucursalEmpleado;
+                                        for (let h in sucursalEmpleado) {
+                                            if (sucursalEmpleado[h].id == idSucEmp) {
+                                                if (sucursalEmpleado[h].idEmpleado == idCajeroOK) {
+                                                    {
+                                                        totalDev = totalDev + devoluciones[x].totalDevolucion;
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
-                    */
-
-
-            } else {
-
-                for (let j in ventas) {
-                    if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
-                        let fechaVC = new Date(ventas[j].created_at);
-                        if (comparacionFecha(fechaCorte, fechaVC)) {
-                            totalVentas = totalVentas + ventas[j].pago;
-                        }
                     }
-                    //ABONO COMPLETADOS
-                    for (let z in pagos) {
-                        let fechaP = new Date(pagos[z].created_at);
-                        if (ventas[j].id == pagos[z].idVenta) {
-                            if (comparacionFecha(fechaCorte, fechaP)) {
-                                abonos = abonos + pagos[z].monto;
+
+
+
+
+                } else {
+                    for (let j in ventas) {
+                        if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
+                            let fechaVC = new Date(ventas[j].created_at);
+                            if (comparacionFecha(fechaCorte, fechaVC)) {
+                                totalVentas = totalVentas + ventas[j].pago;
                             }
-
                         }
-                    }
-                    for (let x in devoluciones) {
-                        let fechaD = new Date(devoluciones[x].created_at);
-                        if (devoluciones[x].idVenta === ventas[j].id) {
-                            if (comparacionFecha(fechaCorte, fechaD)) {
-                                totalDev = totalDev + devoluciones[x].totalDevolucion;
+                        //ABONO COMPLETADOS
+                        for (let z in pagos) {
+                            let fechaP = new Date(pagos[z].created_at);
+                            if (ventas[j].id == pagos[z].idVenta) {
+                                if (comparacionFecha(fechaCorte, fechaP)) {
+                                    abonos = abonos + pagos[z].monto;
+                                }
+
                             }
-
+                        }
+                        for (let x in devoluciones) {
+                            let fechaD = new Date(devoluciones[x].created_at);
+                            if (devoluciones[x].idVenta === ventas[j].id) {
+                                if (comparacionFecha(fechaCorte, fechaD)) {
+                                    totalDev = totalDev + devoluciones[x].totalDevolucion;
+                                }
+                            }
                         }
                     }
-
-
-
                 }
+                entradas = totalVentas + abonos;
+                // salidas = totalDev + abonoProveedores + comprasContado;
+                salidas = totalDev;
+                total = entradas - salidas;
             }
-            entradas = totalVentas + abonos;
-            // salidas = totalDev + abonoProveedores + comprasContado;
-            salidas = totalDev;
-            total = entradas - salidas;
+            // let tv= Number(totalVentas.toFixed(2));
+            $("input[id='totalVentas']").val(Number(totalVentas.toFixed(2)));
+            $("input[id='abonoD']").val(Number(abonos.toFixed(2)));
+            $("input[id='subtotalE']").val(Number(entradas.toFixed(2)));
+            $("input[id='devolucionT']").val(Number(totalDev.toFixed(2)));
+            $("input[id='subtotalS']").val(Number(salidas.toFixed(2)));
+            $("input[id='total']").val(Number(total.toFixed(2)));
+            //document.getElementById("totalVentas").innerHTML = cuerpo;
+        } else {
+            return alert("ELEGIR UNA FECHA");
         }
-        // let tv= Number(totalVentas.toFixed(2));
-        $("input[id='totalVentas']").val(Number(totalVentas.toFixed(2)));
-        $("input[id='abonoD']").val(Number(abonos.toFixed(2)));
-        $("input[id='subtotalE']").val(Number(entradas.toFixed(2)));
-        $("input[id='devolucionT']").val(Number(totalDev.toFixed(2)));
-        $("input[id='subtotalS']").val(Number(salidas.toFixed(2)));
-        $("input[id='total']").val(Number(total.toFixed(2)));
-
-
-
-
-
-
-        //document.getElementById("totalVentas").innerHTML = cuerpo;
-
     };
 
     function comparacionFecha(fechaI, fechaF) {

@@ -8,10 +8,15 @@
         @section('opciones')
         <!-- BOTON DEVOLUCION-->
         <div class="ml-4">
-
             <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/devolucion')}}">
                 <img src="{{ asset('img\devolucion.png') }}" alt="Editar" width="32px" height="32px">
                 <p class="h6 my-auto mx-2 text-dark"><small>DEVOLUCION</small></p>
+            </a>
+        </div>
+        <div class=" ml-4">
+            <a  class="btn btn-outline-secondary  p-1 border-0" href="/puntoVenta/cliente">
+                <img src="{{ asset('img\consumidor.png') }}" alt="Editar" width="30px" height="30px">
+                <p class="h6 my-auto mx-2 text-dark"><small>CLIENTES</small></p>
             </a>
         </div>
 
@@ -148,14 +153,14 @@
                 <div class="col my-2 ml-5 px-1">
                     <div class="row">
                         <form method="get" action="{{url('/empleado')}}">
-                            <button class="btn btn-outline-primary  p-1" type="submit" >
-                            <img src="{{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                            <button class="btn btn-outline-primary  p-1" type="submit">
+                                <img src="{{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                                 AGREGAR TICKET
                             </button>
                         </form>
                         <form method="get" action="{{url('/empleado')}}">
-                            <button class="btn btn-outline-primary  p-1 ml-5" type="submit" >
-                            <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                            <button class="btn btn-outline-primary  p-1 ml-5" type="submit">
+                                <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                 ELIMINAR TICKET
                             </button>
                         </form>
@@ -166,8 +171,8 @@
                         <h4 class="border border-dark ml-2 p-1" id="total">$ 0.00</h4>
                         <!--form method="get" action="{url('/empleado')}}"-->
                         <!--{url('/departamento/'.$departamento->id.'/edit/')}}-->
-                        <button class="btn btn-primary  p-1" type="button"  onclick="verificarVenta()" value="informacion" id="boton">
-                        <img src="{{ asset('img\dinero.png') }}" alt="Editar" width="30px" height="30px">
+                        <button class="btn btn-primary  p-1" type="button" onclick="verificarVenta()" value="informacion" id="boton">
+                            <img src="{{ asset('img\dinero.png') }}" alt="Editar" width="30px" height="30px">
                             COBRAR
                         </button>
                         <!--/form-->

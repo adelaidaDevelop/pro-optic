@@ -69,7 +69,6 @@
                         <a class="nav-link" href="/puntoVenta/cliente">
                             <button class="btn btn-light">
                             <img src="{{ asset('img\client.png') }}" alt="Editar" width="30px" height="30px">
-                            
                                 CLIENTES
                             </button>
                             <span class="sr-only">(current)</span></a>

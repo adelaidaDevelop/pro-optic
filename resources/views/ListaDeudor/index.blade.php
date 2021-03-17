@@ -435,7 +435,7 @@ CREDITOS
         }
         if (cuerpo == "") {
             // tabla2 = document.querySelector('#tablaR');
-            let sin = ` <h4 class= "text-danger my-auto  mt-4 "> NO SE ENCONTRARON CLIENTES DEUDORES </h4>`;
+            let sin = ` <h4 class= "text-dark my-auto  mt-4 "> NO SE ENCONTRARON CLIENTES DEUDORES </h4>`;
             document.getElementById("tablaR").innerHTML = sin;
         } else {
             document.getElementById("tablaR").innerHTML = tabla2;

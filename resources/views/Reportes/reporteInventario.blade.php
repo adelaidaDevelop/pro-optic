@@ -5,9 +5,9 @@ REPORTES
 @endsection
 @section('opciones')
 <div class="col-0  p-1 ml-4">
-    <form method="get" action="{{url('/puntoVenta/reporteVentas/')}}">
+    <form method="get" action="{{url('/puntoVenta/reporteInventario/')}}">
         <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
-            <img src="{{ asset('img\departamento.png') }}" alt="Editar" width="30px" height="30px">
+            <img src="{{ asset('img\inventario.png') }}" alt="Editar" width="30px" height="30px">
             <p class="h6 my-auto mx-2 text-dark"><small>INVENTARIO</small></p>
         </button>
     </form>
@@ -15,7 +15,7 @@ REPORTES
 <div class="col-0  p-1 ml-4">
     <form method="get" action="{{url('/puntoVenta/reporteVentas/')}}">
         <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
-            <img src="{{ asset('img\departamento.png') }}" alt="Editar" width="30px" height="30px">
+            <img src="{{ asset('img\ventas.png') }}" alt="Editar" width="30px" height="30px">
             <p class="h6 my-auto mx-2 text-dark"><small>VENTAS</small></p>
         </button>
     </form>
@@ -311,7 +311,7 @@ REPORTES
                                                     <td>` + movimientoTxt + `</td>
                                                     <td>` + fechaCol + `</td>
                                                     <td>` + horaCol + `</td>
-                                                    <td>` + empleadoNombre + `</td>
+                                                    <td>` + emple + `</td>
                                                     <td>` + productoCol + `</td>
                                                     <td>` + depto + `</td> 
                                                     <td>` + cant_anterior + `</td>
@@ -366,7 +366,7 @@ REPORTES
                                                     <td>` + movimientoTxt + `</td>
                                                     <td>` + fechaCol + `</td>
                                                     <td>` + horaCol + `</td>
-                                                    <td>` + empleadoNombre + `</td>
+                                                    <td>` + emple+ `</td>
                                                     <td>` + productoCol + `</td>
                                                     <td>` + depto + `</td> 
                                                     <td>` + cant_anterior + `</td>
