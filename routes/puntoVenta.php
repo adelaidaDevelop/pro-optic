@@ -117,7 +117,6 @@ Route::prefix('/puntoVenta')->group(function()
     /* */   Route::get('proximosACaducar', [ProductosCaducidadController::class,'caducidad']);
             Route::resource('oferta', OfertaController::class);  
         Route::resource('productosCaducidad', ProductosCaducidadController::class);
-        
-    });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
+    });
 });
