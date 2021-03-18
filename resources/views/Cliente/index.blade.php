@@ -116,9 +116,9 @@ CLIENTES
                 <form class="w-100" method="post" action="{{url('/puntoVenta/cliente')}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <label for="nempleado">
-                        <h5 style="color:#4388CC">CREAR CLIENTE
+                        <h4 style="color:#4388CC">CREAR CLIENTE
                             <img src="{{ asset('img\agregar.png') }}" alt="Editar" width="25px" height="25px">
-                        </h5>
+                        </h4>
                     </label>
                     <br />
                     <label for="Nombre">
@@ -130,7 +130,7 @@ CLIENTES
                                 <label for="nombre">
                                     NOMBRE
                                 </label>
-                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" onkeyup="mayus(this)" id="nombre" required>
+                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" onkeyup="mayus(this)"  id="nombre" required>
                                 @error('nombre')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

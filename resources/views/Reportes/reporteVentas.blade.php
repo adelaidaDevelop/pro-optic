@@ -4,21 +4,25 @@
 REPORTES
 @endsection
 @section('opciones')
-
+<div class="col-0  p-1 ml-4">
+    <form method="get" action="{{url('/puntoVenta/reporteInventario/')}}">
+        <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
+            <img src="{{ asset('img\inventario.png') }}" alt="Editar" width="30px" height="30px">
+            <p class="h6 my-auto mx-2 text-dark"><small>INVENTARIO</small></p>
+        </button>
+    </form>
+</div>
 @endsection
-
-
 <!--CONSULTAR PRODUCTO -->
-
-<div class="row  border border-dark ml-0 mr-0  mt-2 ">
-    <h5 class=" row col-5 ml-1 mt-2 mb-2 mx-auto text-primary ">
+<div class="row  border border-dark ml-0  mt-2 ">
+    <h4 class=" row  ml-1 mt-2 mb-2 mx-auto text-dark ">
         <strong>
             REPORTE DE VENTAS
         </strong>
-    </h5>
+    </h4>
     <br />
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-    <div class="row w-100   mr-2 ml-5">
+    <div class="row w-100   ml-5">
         <h5 class="text-primary ml-3 ">BUSCAR POR:</h5>
         <div class="row form-group input-group  ml-3 ">
             <h6 class=" my-auto mr-1">
@@ -36,29 +40,25 @@ REPORTES
                 TURNOS
             </h6>
             <input class="my-auto" type="radio" value="productos" name="opcBuscar" id="opcProductos" onchange="opcBuscarHabilitar()">
-
             <select class="col-2 form-control  my-0 ml-3 mr-3" name="productoID" id="productoID" required>
                 <option value="1" selected>COMPLETO</option>
                 <option value="2">POR TURNO</option>
             </select>
-
             <h6 class=" my-auto mr-1">
                 CAJERO:
             </h6>
-
             <select class="form-control col-2 ml-3 mr-3 my-0" name="idCajero" id="idCajero" onchange="" required>
                 <option value="0">TODOS</option>
                 @foreach($sucursalEmpleados as $cajero)
                 @foreach($empleados as $emp)
                 @if($cajero->idEmpleado == $emp->id)
-                <option value="{{$cajero['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                <option value="{{$emp['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
                 @endif
                 @endforeach
                 @endforeach
             </select>
         </div>
-        <h6 class="text-primary ml-3">FECHA:</h6>
-
+        <h5 class="text-primary ml-3">FECHA:</h5>
         <div class="form-group input-group  ">
             <div class="col-1 form-group input-group">
                 <h6 class="text-primary  my-auto mr-1">
@@ -85,7 +85,6 @@ REPORTES
                 <input class="my-auto" type="radio" value="periodo" name="fecha" id="fechaPeriodo" onchange="habilitarFecha()">
             </div>
         </div>
-
         <div class="  form-group input-group ml-3 ">
             <input type="date" min="" onchange="" id="fechaXDia" class="form-control my-0 col-2" />
             <select class="form-control col-1 my-0 ml-2 mr-2" name="meses" id="fechaXmeses" required disabled>
@@ -104,42 +103,43 @@ REPORTES
                 <option value="12">DICIEMBRE</option>
             </select>
             <select class="form-control col-1 my-0 mr-2" name="anio" id="fechaXanio" disabled>
-                <option value="2021" selected>2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
+                <option value="1" selected>2021</option>
+                <option value="2">2022</option>
+                <option value="3">2023</option>
                 <!--Escribir manualmente el anio-->
             </select>
             <input type="date" min="" onchange="minFin()" id="fechaPInicio" class="form-control my-0 col-2 mr-2" disabled />
             <input type="date" min="" onchange="" id="fechaPFinal" class="form-control my-0 col-2 mr-2" disabled />
-            <button class="btn btn-secondary" onclick="generaReportes()">GENERAR REPORTE</button>
-            <button id="imp" name="imp" class="btn btn-primary ml-1 "> IMPRIMIR REPORTE</button>
-
+            <button class="btn btn-outline-primary  p-1 mx-3 text-dark" onclick="generaReportes()">
+                <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
+                GENERAR </button>
+            <button id="imp" name="imp" class="btn btn-outline-primary  p-1 text-dark">
+                <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px"> IMPRIMIR REPORTE</button>
         </div>
-
         <!-- TABLA -->
         <div id="tablaR" class="row col-12 mb-3">
-            <div id="tabla2" class="row col-12 " style="height:200px;overflow-y:auto;">
+            <div id="tabla2" class="row col-12 " style="height:300px;overflow-y:auto;">
                 <table class="table table-bordered border-primary ml-3  w-100">
-                    <thead class="table-secondary text-primary">
+                    <thead class="table-secondary text-dark">
                         <tr>
                             <th>#</th>
                             <th>MOVIMIENTO</th>
+                            <th>TIPO VENTA</th>
                             <th>FECHA</th>
                             <th>HORA</th>
                             <th>CAJERO</th>
                             <th>PRODUCTO</th>
                             <th>DEPTO</th>
+                            <th>Pagos</th>
                         </tr>
                     </thead>
                     <tbody id="consultaBusqueda">
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-
 <script>
     let productos = @json($productos);
     let departamentos = @json($departamentos);
@@ -205,34 +205,43 @@ REPORTES
         let anio = document.getElementById('fechaXanio');
         let periodoIni = document.getElementById('fechaPInicio');
         let periodoFin = document.getElementById('fechaPFinal');
-
         let selectFecha = document.querySelector('input[name="fecha"]:checked');
         let opcFecha = selectFecha.value;
         if (opcFecha === 'dia') {
             dia.disabled = false;
             mes.disabled = true;
+           // $("#fechaXmeses").selectmenu('1', true);
+            $("#fechaXmeses").val('0')
+            $("#fechaXanio").val('1')
             anio.disabled = true;
             periodoIni.disabled = true;
             periodoFin.disabled = true;
+           // generaReportes();
         } else if (opcFecha === 'mes') {
             dia.disabled = true;
             mes.disabled = false;
+            $("#fechaXDia").val('')
+            $("#fechaXanio").val('1')
             anio.disabled = true;
             periodoIni.disabled = true;
             periodoFin.disabled = true;
+           // generaReportes();
         } else if (opcFecha === 'anio') {
             dia.disabled = true;
             mes.disabled = true;
             anio.disabled = false;
+            $("#fechaXDia").val('')
+            $("#fechaXmeses").val('0')
             periodoIni.disabled = true;
             periodoFin.disabled = true;
+           // generaReportes();
+
         } else if (opcFecha === 'periodo') {
             dia.disabled = true;
             mes.disabled = true;
             anio.disabled = true;
             periodoIni.disabled = false;
             periodoFin.disabled = false;
-
         }
     };
 
@@ -252,9 +261,6 @@ REPORTES
         }
     };
 
-
-
-
     function ventasRealizadas(fechaXDia) {
         salidaVP = "";
         cant_anterior = 0;
@@ -268,10 +274,10 @@ REPORTES
             if (comparacionFecha(fechaXDia, fechaVenta)) {
                 fechaCol = fechaVenta.toLocaleDateString();
                 horaCol = fechaVenta.toLocaleTimeString();
-                for (let v in sucursalEmpleados) {
-                    if (sucursalEmpleados[v].id == ventas[v].idSucursalEmpleado) {
+                for (let v in sucursalEmpleado) {
+                    if (sucursalEmpleado[v].id == ventas[v].idSucursalEmpleado) {
                         for (let h in empleados) {
-                            if (empleados[h].id == sucursalEmpleados[v].idEmpleado) {
+                            if (empleados[h].id == sucursalEmpleado[v].idEmpleado) {
                                 empleadoNombre = empleados[h].primerNombre + " " + empleados[h].segundoNombre + " " + empleados[h].apellidoPaterno + " " + empleados[h].apellidoMaterno;
                             }
                         }
@@ -308,19 +314,15 @@ REPORTES
                             }
                         }
                     }
-
                 }
             }
         }
         console.log(salidaVP);
     };
 
-
-
     function modalVenta(tipoV, fechaXDia2) {
-        // let cuerpo = "";
         let cont = 0;
-        let emple = "";
+        let empleadoNombre = "";
         let fecha = "";
         for (count5 in ventas) {
             let fechaVenta = new Date(ventas[count5].created_at);
@@ -336,7 +338,16 @@ REPORTES
                         let total = 0;
                         //  fecha = new Date(ventas[count5].created_at);
                         cont = cont + 1;
-                        let nombre
+                        //nombr empleado
+                        for (let v in sucursalEmpleado) {
+                            if (sucursalEmpleado[v].id == ventas[v].idSucursalEmpleado) {
+                                for (let h in empleados) {
+                                    if (empleados[h].id == sucursalEmpleado[v].idEmpleado) {
+                                        empleadoNombre = empleados[h].primerNombre + " " + empleados[h].segundoNombre + " " + empleados[h].apellidoPaterno + " " + empleados[h].apellidoMaterno;
+                                    }
+                                }
+                            }
+                        }
                         for (count7 in detalleVenta) {
                             console.log("detalla V: ", detalleVenta);
                             if (detalleVenta[count7].idVenta == ventas[count5].id) {
@@ -345,15 +356,13 @@ REPORTES
                                         nombre = productos[j].nombre;
                                     }
                                 }
-
-
                                 cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
                                             <td>` + movimiento + `</td>
                                             <td>` + fechaCol + `</td> 
                                             <td>` + horaCol + `</td>
-                                            <td>` + "TODOS" + `</td>
+                                            <td>` + empleadoNombre + `</td>
                                             <td>` + nombre + `</td>
                                             <td>` + ventas[count5].tipo + `</td>
                                             <td>` + ventas[count5].pago + `</td>
@@ -361,10 +370,7 @@ REPORTES
                                         `;
                             }
                         }
-
-
                     }
-
                 } else {
                     if (ventas[count5].tipo.toUpperCase() == tipoV) {
                         for (let y in sucursalEmpleado) {
@@ -393,8 +399,6 @@ REPORTES
                                             //     total = total + subtotal;
                                             //   }
                                             // }
-
-
                                             cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
@@ -415,8 +419,6 @@ REPORTES
                 }
             }
         }
-    }
-    console.log(cuerpo);
     };
 
     function generaReportes() {
@@ -436,7 +438,7 @@ REPORTES
                 if (tipo_venta == "1") {
                     modalVenta("EFECTIVO", fechaXDia);
                     if (cuerpo === "") {
-                        let sin = `<h3 class= "text-danger text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        let sin = `<h5 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h5>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
@@ -444,7 +446,7 @@ REPORTES
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (tipo_venta == "2") {
-                    modalVenta("CREDITO");
+                    modalVenta("CREDITO", fechaXDia);
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
                         let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
@@ -454,10 +456,10 @@ REPORTES
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (tipo_venta == "3") {
-                    modalVenta("ECOMMERCE");
+                    modalVenta("ECOMMERCE", fechaXDia);
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        let sin = ` <h5 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h5>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
@@ -465,10 +467,13 @@ REPORTES
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (tipo_venta == "4") {
+                    modalVenta("EFECTIVO", fechaXDia);
+                    modalVenta("CREDITO", fechaXDia);
+                    modalVenta("ECOMMERCE", fechaXDia);
                     // cuerpo = devolucionFila + salidaVP + entradaNuevosProductos + entradaCompraProduct;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        let sin = ` <h5 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h5>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
@@ -479,7 +484,6 @@ REPORTES
                 }
             } else {
                 //REPORTES PRODUCTOS
-                let movi = document.querySelector('#productoID');
             }
         } else {
             return alert("ELEGIR UNA FECHA");
@@ -499,7 +503,6 @@ REPORTES
         }
         return false;
     };
-
 
     function compararFechaDia(fecha1, fecha2) {
         console.log("si compara");
@@ -542,7 +545,6 @@ REPORTES
             if (fechaInicio.value.length > 0) {
                 fechaFin.min = fechaInicio.value;
                 $('input[id="fechaFinalC"]').prop('disabled', false);
-
                 if (fechaFin.value.length > 0) {
                     let fechaI = new Date(fechaInicio.value);
                     let fechaF = new Date(fechaFin.value);
@@ -593,5 +595,4 @@ REPORTES
         return false;
     };
 </script>
-
 @endsection
