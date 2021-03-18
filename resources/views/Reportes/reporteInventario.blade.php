@@ -26,11 +26,11 @@ REPORTES
 <!--CONSULTAR PRODUCTO -->
 
 <div class="row  border border-dark ml-0 mr-0  mt-2 ">
-    <h5 class=" row col-5 ml-1 mt-2 mb-2 mx-auto text-primary ">
+    <h4 class=" row ml-1 mt-2 mb-2 mx-auto text-dark ">
         <strong>
             INVENTARIO
         </strong>
-    </h5>
+    </h4>
     <br />
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
     <div class="row w-100   mr-2 ml-5">
@@ -39,7 +39,7 @@ REPORTES
             <h6 class=" my-auto mr-1">
                 MOVIMIENTOS
             </h6>
-            <input class="my-auto" type="radio" value="movimiento" name="opcBuscar" id="opcMovimiento" onchange="opcBuscarHabilitar()" checked>
+            <!--<input class="my-auto" type="radio" value="movimiento" name="opcBuscar" id="opcMovimiento" onchange="opcBuscarHabilitar()" checked>-->
 
             <select class="form-control col-2 my-0 ml-3 mr-3" name="movimientoID" id="movimientoID" onchange="" required>
                 <option value="1" selected>ENTRADAS</option>
@@ -64,13 +64,13 @@ REPORTES
                 @foreach($sucursalEmpleados as $cajero)
                 @foreach($empleados as $emp)
                 @if($cajero->idEmpleado == $emp->id)
-                <option value="{{$cajero['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                <option value="{{$emp['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
                 @endif
                 @endforeach
                 @endforeach
             </select>
         </div>
-        <h6 class="text-primary ml-3">FECHA:</h6>
+        <h5 class="text-primary ml-3">FECHA:</h5>
 
         <div class="form-group input-group  ">
             <div class="col-1 form-group input-group">
@@ -124,16 +124,20 @@ REPORTES
             </select>
             <input type="date" min="" onchange="" id="fechaPInicio" class="form-control my-0 col-2 mr-2" disabled />
             <input type="date" min="" onchange="" id="fechaPFinal" class="form-control my-0 col-2 mr-2" disabled />
-            <button class="btn btn-secondary" onclick="generaReportes()">GENERAR REPORTE</button>
-            <button id="imp" name="imp" class="btn btn-primary ml-1 "> IMPRIMIR REPORTE</button>
+            <button class="btn btn-outline-secondary  p-1 mx-3 text-dark" onclick="generaReportes()">
+                <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
+                GENERAR</button>
+            <button id="imp" name="imp" class="btn btn-outline-secondary  p-1 text-dark">
+                <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px">
+                IMPRIMIR </button>
 
         </div>
 
         <!-- TABLA -->
         <div id="tablaR" class="row col-12 mb-3">
-            <div id="tabla2" class="row col-12 " style="height:200px;overflow-y:auto;">
-                <table class="table table-bordered border-primary ml-3  w-100">
-                    <thead class="table-secondary text-primary">
+            <div id="tabla2" class="row col-12 " style="height:400px;overflow-y:auto;">
+                <table class="table table-bordered border-primary  ml-3  w-100">
+                    <thead class="table-secondary text-dark">
                         <tr>
                             <th>#</th>
                             <th>MOVIMIENTO</th>
@@ -169,6 +173,7 @@ REPORTES
     let banderaMovimiento = true;
     let fechaDia = "";
     let tabla2 = document.querySelector('#tablaR').outerHTML;
+    let contador = 0;
 
     function validarCamposFechas() {
         let selectFecha = document.querySelector('input[name="fecha"]:checked');
@@ -220,6 +225,8 @@ REPORTES
         let opcFecha = selectFecha.value;
         if (opcFecha === 'dia') {
             dia.disabled = false;
+            $("#fechaXmeses").val('0')
+            $("#fechaXanio").val('1')
             mes.disabled = true;
             anio.disabled = true;
             periodoIni.disabled = true;
@@ -227,6 +234,9 @@ REPORTES
         } else if (opcFecha === 'mes') {
             dia.disabled = true;
             mes.disabled = false;
+            
+            $("#fechaXDia").val('')
+            $("#fechaXanio").val('1')
             anio.disabled = true;
             periodoIni.disabled = true;
             periodoFin.disabled = true;
@@ -234,6 +244,8 @@ REPORTES
             dia.disabled = true;
             mes.disabled = true;
             anio.disabled = false;
+            $("#fechaXDia").val('')
+            $("#fechaXmeses").val('0')
             periodoIni.disabled = true;
             periodoFin.disabled = true;
         } else if (opcFecha === 'periodo') {
@@ -263,9 +275,10 @@ REPORTES
 
     function compraProductos(fechaXDia2) {
         entradaCompraProduct = "";
+        let emple ="";
+        let existencia =0;
         //COMPRA DE PRODUCTOS AGREGADAS EN ESA FECHA
         for (let c in compras) {
-
             let fechaCompra = new Date(compras[c].created_at);
             console.log(fechaCompra);
             // console.log(fechaXDia);
@@ -278,11 +291,13 @@ REPORTES
                 let moviName = parseInt(movi.value);
                 if (moviName == 0) {
                     //TODOS LOS CAJEROS
-                    emple = "TODOS";
+                    //  emple = "TODOS";
+
                     // para buscar por cajero
                     //Buscar compras que hubieron en esa fecha en detalle_compras
                     for (let x in detalle_compras) {
                         if (detalle_compras[x].idCompra == compras[c].id) {
+
                             for (let i in productos) {
                                 //Encontrar productos que aparecen en compra produtos
                                 // console.log(productos[i].id);
@@ -293,12 +308,25 @@ REPORTES
                                             existencia = sucursal_productos[t].existencia;
                                         }
                                     }
+
                                     //Encontrar nombre departamento 
                                     for (let d in departamentos) {
                                         if (productos[i].idDepartamento == departamentos[d].id) {
                                             depto = departamentos[d].nombre;
                                         }
                                     }
+                                    for (let s in sucursalEmpleados) {
+                                        if (sucursalEmpleados[s].id == compras[c].idSucursalEmpleado) {
+                                            {
+                                                for (let e in empleados) {
+                                                    if (empleados[e].id == sucursalEmpleados[s].idEmpleado) {
+                                                        emple = empleados[e].primerNombre + " " + empleados[e].segundoNombre + " " + empleados[e].apellidoPaterno + " " + empleados[e].apellidoMaterno;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    contador = contador + 1;
                                     cantidad = detalle_compras[x].cantidad;
                                     cant_anterior = existencia;
                                     cant_actual = existencia + cantidad;
@@ -307,7 +335,7 @@ REPORTES
                                     //AQUI HACER LAS FILAS PARA LA TABLA PASANDOLE LOS DATOS
                                     entradaCompraProduct = entradaCompraProduct + `
                                             <tr>
-                                                    <th scope="row">` + "No" + `</th>
+                                                    <th scope="row">` + contador + `</th>
                                                     <td>` + movimientoTxt + `</td>
                                                     <td>` + fechaCol + `</td>
                                                     <td>` + horaCol + `</td>
@@ -354,6 +382,7 @@ REPORTES
                                                         depto = departamentos[d].nombre;
                                                     }
                                                 }
+                                                contador = contador + 1;
                                                 cantidad = detalle_compras[x].cantidad;
                                                 cant_anterior = existencia;
                                                 cant_actual = existencia + cantidad;
@@ -362,11 +391,11 @@ REPORTES
                                                 //AQUI HACER LAS FILAS PARA LA TABLA PASANDOLE LOS DATOS
                                                 entradaCompraProduct = entradaCompraProduct + `
                                             <tr>
-                                                    <th scope="row">` + "No" + `</th>
+                                                    <th scope="row">` + contador + `</th>
                                                     <td>` + movimientoTxt + `</td>
                                                     <td>` + fechaCol + `</td>
                                                     <td>` + horaCol + `</td>
-                                                    <td>` + emple+ `</td>
+                                                    <td>` + emple + `</td>
                                                     <td>` + productoCol + `</td>
                                                     <td>` + depto + `</td> 
                                                     <td>` + cant_anterior + `</td>
@@ -402,13 +431,14 @@ REPORTES
                         depto = departamentos[d].nombre;
                     }
                 }
+                contador = contador + 1;
                 cant_anterior = 0;
                 cant_actual = 0; // checar existencia si es x sucursal
                 movimientoTxt = "ENTRADA: NUEVOS PRODUCTOS";
                 //AGREGAR FILAS
                 entradaNuevosProductos = entradaNuevosProductos + `
                                             <tr>
-                                                    <th scope="row">` + "No" + `</th>
+                                                    <th scope="row">` + contador + `</th>
                                                     <td>` + movimientoTxt + `</td>
                                                     <td>` + fechaCol + `</td>
                                                     <td>` + horaCol + `</td>
@@ -428,7 +458,7 @@ REPORTES
         salidaVP = "";
         cant_anterior = 0;
         cant_actual = 0;
-        empleadoNombre = "";
+        empleado = "";
         //BUSCAR SALIDAS
         //VENTA DE PRODUCTOS
         for (let v in ventas) {
@@ -437,9 +467,12 @@ REPORTES
             if (comparacionFecha(fechaXDia, fechaVenta)) {
                 fechaCol = fechaVenta.toLocaleDateString();
                 horaCol = fechaVenta.toLocaleTimeString();
+
                 let movi = document.querySelector('#idCajero');
                 let moviName = parseInt(movi.value);
                 if (moviName == 0) {
+                    //empleado
+
                     for (let z in detalle_ventas) {
                         if (detalle_ventas[z].idVenta == ventas[v].id) {
                             for (let e in productos) {
@@ -451,17 +484,29 @@ REPORTES
                                             depto = departamentos[d].nombre;
                                         }
                                     }
+                                    for (let y in sucursalEmpleados) {
+                                        if (sucursalEmpleados[y].id == ventas[v].idSucursalEmpleado) {
+                                            //BUSCAR EMPLEADOS
+                                            for (count6 in empleados) {
+                                                if (empleados[count6].id == sucursalEmpleados[y].idEmpleado) {
+                                                    empleado = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                    contador = contador + 1;
                                     movimientoTxt = "SALIDA: VENTA DE PRODUCTOS";
                                     cantidad = detalle_ventas[z].cantidad;
                                     cant_anterior = 0;
                                     cant_actual = 0;
                                     salidaVP = salidaVP + `
                                             <tr>
-                                                    <th scope="row">` + "No" + `</th>
+                                                    <th scope="row">` + contador + `</th>
                                                     <td>` + movimientoTxt + `</td>
                                                     <td>` + fechaCol + `</td>
                                                     <td>` + horaCol + `</td>
-                                                    <td>` + "TODOS" + `</td>
+                                                    <td>` + empleado + `</td>
                                                     <td>` + productoCol + `</td>
                                                     <td>` + depto + `</td>  
                                                     <td>` + cant_anterior + `</td>
@@ -482,7 +527,7 @@ REPORTES
                         if (sucursalEmpleados[y].id == ventas[v].idSucursalEmpleado) {
                             //BUSCAR EMPLEADOS
                             if (sucursalEmpleados[y].id == moviName) {
-                                let empleado ="";
+                                let empleado = "";
                                 for (count6 in empleados) {
                                     if (empleados[count6].id == sucursalEmpleados[y].idEmpleado) {
                                         empleado = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
@@ -499,13 +544,14 @@ REPORTES
                                                         depto = departamentos[d].nombre;
                                                     }
                                                 }
+                                                contador = contador + 1;
                                                 movimientoTxt = "SALIDA: VENTA DE PRODUCTOS";
                                                 cantidad = detalle_ventas[z].cantidad;
                                                 cant_anterior = 0;
                                                 cant_actual = 0;
                                                 salidaVP = salidaVP + `
                                                         <tr>
-                                                                <th scope="row">` + "No" + `</th>
+                                                                <th scope="row">` + contador + `</th>
                                                                 <td>` + movimientoTxt + `</td>
                                                                 <td>` + fechaCol + `</td>
                                                                 <td>` + horaCol + `</td>
@@ -551,15 +597,17 @@ REPORTES
                     if (productos[p].id == devoluciones[f].idProducto) {
                         console.log("encuentra un producto en devolucion");
                         productoCol = productos[p].nombre;
+
                         for (let d in departamentos) {
                             if (departamentos[d].id == productos[p].idDepartamento) {
                                 depto = departamentos[d].nombre;
                             }
                         }
+                        contador = contador + 1;
                         movimientoTxt = "DEVOLUCIONES";
                         devolucionFila = devolucionFila + `
                                             <tr>
-                                                    <th scope="row">` + "No" + `</th>
+                                                    <th scope="row">` + contador + `</th>
                                                     <td>` + fechaCol + `</td>
                                                     <td>` + horaCol + `</td>
                                                     <td>` + productoCol + `</td>
@@ -578,6 +626,7 @@ REPORTES
     };
 
     function generaReportes() {
+
         let devolucionFila = "";
         //  let salidaVP = "";
         //let entradaNuevosProductos = "";
@@ -600,7 +649,7 @@ REPORTES
                     compraProductos(fechaXDia);
                     cuerpo = entradaCompraProduct + entradaNuevosProductos;
                     if (cuerpo === "") {
-                        let sin = `<h3 class= "text-danger text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        let sin = `<h4 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
@@ -608,24 +657,26 @@ REPORTES
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (moviName == "2") {
+                    contador = 0;
                     //OPCION 2: SALIDAS
                     ventasRealizadas(fechaXDia);
                     //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
                     cuerpo = salidaVP;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
                     } else {
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (moviName == "3") {
+                    contador = 0;
                     devolucionesRealizadas(fechaXDia);
                     cuerpo = devolucionFila;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
@@ -633,6 +684,7 @@ REPORTES
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (moviName == "4") {
+                    contador = 0;
                     //uno
                     //BUSCAR ENTRADAS
                     //COMPRA DE PRODUCTOS
@@ -647,10 +699,10 @@ REPORTES
                     //tres
                     devolucionesRealizadas(fechaXDia);
                     //BUSCAR TODOS
-                    cuerpo = devolucionFila + salidaVP + entradaNuevosProductos + entradaCompraProduct;
+                    cuerpo = entradaCompraProduct + entradaNuevosProductos + salidaVP + devolucionFila;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {

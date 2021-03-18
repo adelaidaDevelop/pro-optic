@@ -18,7 +18,7 @@ CREDITOS
 <div class="row col border border-dark ml-0 mr-0 mb-4 ">
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
     <div class="row  mb-4 mx-auto">
-        <div class="row col-6  form-group input-group my-4 ml-3">
+        <div class="row col-6  form-group input-group my-4 ">
             <input type="text" class="form-control text-uppercase border-primary " size="15" placeholder="BUSCAR CLIENTE" id="busquedaCliente" onkeyup="buscarCliente()">
             <a title="buscar" href="" class="text-dark  ml-2 ">
                 <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
