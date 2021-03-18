@@ -26,6 +26,7 @@ class CreateRoleSucursalEmpleadoTable extends Migration
                 ->references('id')
                 ->on('sucursal_empleados')
                 ->onDelete('cascade');
+            
             /*$table->foreign('user_id')
                 ->references('id')
                 ->on('users')

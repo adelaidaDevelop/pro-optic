@@ -10,6 +10,7 @@ use App\Models\Departamento;
 use App\Models\Proveedor;
 use App\Models\Producto;
 use App\Models\Cliente;
+use App\Models\Modulo;
 use App\Models\Sucursal;
 use App\Models\Sucursal_producto;
 use App\Models\Sucursal_empleado;
@@ -29,13 +30,36 @@ class RegistrosPruebaTable extends Migration
         $sucursal->status = 1;
         $sucursal->save();
 
+        //MODULOS
+        $modulos = ['ADMINISTRADOR','COMPRAS','VENTAS','INVENTARIO','ADMINISTRACION','DEUDORES','CORTES','REPORTES'];
+        for($i=0;$i<count($modulos);$i++)
+        {
+            $modulo = new Modulo;
+            $modulo->nombre = $modulos[$i];
+            $modulo->save();
+        }
+        $nombres = ['admin','verCompra','crearCompra','verPago','crearVenta','verDevolucion',
+        'crearDevolucion','verProducto','crearProducto','eliminarProducto','modificarProducto',
+        'verAdministracion','verSucursal','crearSucursal','eliminarSucursal','modificarSucursal',
+        'verEmpleado','crearEmpleado','eliminarEmpleado','modificarEmpleado','statusEmpleado',
+        'verDeudor','verCorte','verReporte'];
+
+        $descripcion = ['ADMINISTRADOR','VER COMPRAS', 'CREAR COMPRAS', 'VER PAGOS','CREAR VENTAS',
+        'VER DEVOLUCIONES','VER PRODUCTOS','CREAR PRODUCTOS','ELIMINAR PRODUCTOS','MODIFICAR PRODUCTOS',
+        'ADMINISTRACION','VER SUCURSALES','CREAR SUCURSALES','ELIMINAR SUCURSALES','MODIFICAR SUCURSALES',
+        'VER EMPLEADOS','CREAR EMPLEADOS','ELIMINAR EMPLEADOS','MODIFICAR EMPLEADOS','ASIGNAR STATUS A EMPLEADO',
+        'VER DEUDORES','VER CORTES','VER REPORTES'];
+        //['ADMINISTRADOR','COMPRAS','VENTAS','INVENTARIO','ADMINISTRACION','DEUDORES','CORTES','REPORTES'];
+        $modulo = [0,1,1,]
+        //ROLE
         $role = new Role();
         $role->name = 'admin';
-        $role->description = 'Administrator';
+        $role->description = 'ADMINISTRADOR';
+        $role->idModulo = 1;
         $role->save();        
         $role = new Role();
-        $role->name = 'user';
-        $role->description = 'User';
+        $role->name = 'compraRead';
+        $role->description = 'CONSULTAR COM';
         $role->save();
         //CREACION DE ADMINISTRADOR
         $admin = User::create([
@@ -77,8 +101,8 @@ class RegistrosPruebaTable extends Migration
         $sucursalEmpleado->save();
 
         //ROLE
-        $role_admin = Role::where('name', 'admin')->first();
-        $sucursalEmpleado->roles()->attach($role_admin);
+    //    $role_admin = Role::where('name', 'admin')->first();
+    //    $sucursalEmpleado->roles()->attach($role_admin);
         //CREACION DE EMPLEADOS
         /*$usuario = User::create([
             'username' => 'Heber',

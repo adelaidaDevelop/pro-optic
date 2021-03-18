@@ -24,10 +24,11 @@ class ProductosCaducidadController extends Controller
         //$productosCaducidad = Productos_caducidad::all();
         ///$productosCaducidad = Productos_caducidad::whereDate('fecha_caducidad','<',$fechaActual)->get();
         //->whereDate('fecha_caducidad','<','2021-')->get();
-        $productosCaducidad = Productos_caducidad::all();
+        /*$productosCaducidad = Productos_caducidad::all();
         $productos = Producto::all();
         $vista = view('ProductosCaducidad.index',compact('productosCaducidad','productos'));
-        return $vista;//view('ProductosCaducidad.index',compact('productosCaducidad'));
+        return $vista;//view('ProductosCaducidad.index',compact('productosCaducidad'));*/
+        return view('Producto.caducidad');
     }
 
     /**
@@ -37,7 +38,7 @@ class ProductosCaducidadController extends Controller
      */
     public function create()
     {
-        //
+        return view('Producto.caducidad');
     }
 
     /**
