@@ -391,21 +391,29 @@ ADMINISTRACION
             </div>
             <div class="modal-body" id="cuerpoPermisosModal">
                 <div class="row col-12">
-                    <div class="col text-center border">
-                        <div class="form-check border">
+                @if(isset($sucursal))
+                @foreach($modulos as $modulo)
+                    <div class="col">
+                        <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                             <label class="form-check-label" for="defaultCheck1">
-                                COMPRAS
+                                <strong>{{$modulo->nombre}}</strong>
                             </label>
                         </div>
-                        <div class="form-check border mx-auto">
+                        @foreach($roles as $rol)
+                        @if($rol->idModulo == $modulo->id)
+                        <div class="form-check mx-auto">
                             <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                             <label class="form-check-label" for="defaultCheck1">
-                                CREAR COMPRA
+                                {{$rol->description}}
                             </label>
                         </div>
+                        @endif
+                        @endforeach
                     </div>
-                    <div class="col text-center">
+                @endforeach
+                @endif
+                    <!--div class="col text-center">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                             <label class="form-check-label" for="defaultCheck1">
@@ -452,7 +460,7 @@ ADMINISTRACION
                             REPORTES
                         </label>
                     </div>
-                    </div>
+                    </div-->
                 </div>
             </div>
             <div class="modal-footer" id="piePermisosModal">

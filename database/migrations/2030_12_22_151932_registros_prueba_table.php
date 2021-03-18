@@ -31,7 +31,7 @@ class RegistrosPruebaTable extends Migration
         $sucursal->save();
 
         //MODULOS
-        $modulos = ['ADMINISTRADOR','COMPRAS','VENTAS','INVENTARIO','ADMINISTRACION','DEUDORES','CORTES','REPORTES'];
+        $modulos = ['ADMINISTRADOR','COMPRAS','VENTAS','INVENTARIO','SUCURSALES','EMPLEADOS','DEUDORES','CORTES','REPORTES'];
         for($i=0;$i<count($modulos);$i++)
         {
             $modulo = new Modulo;
@@ -46,21 +46,30 @@ class RegistrosPruebaTable extends Migration
 
         $descripcion = ['ADMINISTRADOR','VER COMPRAS', 'CREAR COMPRAS', 'VER PAGOS','CREAR VENTAS',
         'VER DEVOLUCIONES','VER PRODUCTOS','CREAR PRODUCTOS','ELIMINAR PRODUCTOS','MODIFICAR PRODUCTOS',
-        'ADMINISTRACION','VER SUCURSALES','CREAR SUCURSALES','ELIMINAR SUCURSALES','MODIFICAR SUCURSALES',
-        'VER EMPLEADOS','CREAR EMPLEADOS','ELIMINAR EMPLEADOS','MODIFICAR EMPLEADOS','ASIGNAR STATUS A EMPLEADO',
+        'VER SUCURSALES','CREAR SUCURSALES','ELIMINAR SUCURSALES','MODIFICAR SUCURSALES','ASIGNAR STATUS A EMPLEADO',
+        'VER EMPLEADOS','CREAR EMPLEADOS','ELIMINAR EMPLEADOS','MODIFICAR EMPLEADOS',
         'VER DEUDORES','VER CORTES','VER REPORTES'];
-        //['ADMINISTRADOR','COMPRAS','VENTAS','INVENTARIO','ADMINISTRACION','DEUDORES','CORTES','REPORTES'];
-        $modulo = [0,1,1,]
+        //['ADMINISTRADOR','COMPRAS','VENTAS','INVENTARIO','SUCURSALES','EMPLEADOS','DEUDORES','CORTES','REPORTES'];
+        $modulo = [0,1,1,1,2,
+                   2,3,3,3,3,
+                   4,4,4,4,4,
+                   5,5,5,5,
+                   6,7,8];
+        for($i=0;$i<count($modulo); $i++)
+        {
+            $role = new Role();
+            $role->name = $nombres[$i];//'admin';
+            $role->description = $descripcion[$i];//'ADMINISTRADOR';
+            $role->idModulo = $modulo[$i]+1;//1;
+            $role->save(); 
+        }
+        
         //ROLE
-        $role = new Role();
-        $role->name = 'admin';
-        $role->description = 'ADMINISTRADOR';
-        $role->idModulo = 1;
-        $role->save();        
+        /*       
         $role = new Role();
         $role->name = 'compraRead';
         $role->description = 'CONSULTAR COM';
-        $role->save();
+        $role->save();*/
         //CREACION DE ADMINISTRADOR
         $admin = User::create([
             'username' => 'ADMINISTRADOR',
@@ -68,7 +77,7 @@ class RegistrosPruebaTable extends Migration
             'password' => Hash::make('admin12345'),
             'tipo' => 0,
         ]);
-           
+        
         //$admin->roles()->attach($role_admin);
         //CREACION USUARIO ADMIN P/DEUDORES
         $adminDeudor = User::create([
@@ -79,7 +88,7 @@ class RegistrosPruebaTable extends Migration
         ]);
 
         $empleadoAdmin = new Empleado;
-        $empleadoAdmin->primerNombre = 'XXXXX';
+        $empleadoAdmin->primerNombre = 'ADMINISTRADOR';
         $empleadoAdmin->segundoNombre = 'XXXXX';
         $empleadoAdmin->apellidoPaterno = 'XXXXX';
         $empleadoAdmin->apellidoMaterno = 'XXXXX';
@@ -101,8 +110,8 @@ class RegistrosPruebaTable extends Migration
         $sucursalEmpleado->save();
 
         //ROLE
-    //    $role_admin = Role::where('name', 'admin')->first();
-    //    $sucursalEmpleado->roles()->attach($role_admin);
+        $role_admin = Role::where('name', 'admin')->first();
+        $sucursalEmpleado->roles()->attach($role_admin);
         //CREACION DE EMPLEADOS
         /*$usuario = User::create([
             'username' => 'Heber',
