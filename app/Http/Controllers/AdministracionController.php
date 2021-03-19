@@ -67,6 +67,8 @@ class AdministracionController extends Controller
             }
             else{
             $sucursal->update($datosCliente);
+            if($id == session('sucursal'))
+                session(['sucursalNombre' => $sucursal->direccion]);
             return redirect('puntoVenta/administracion')->withErrors(['mensajeConf' => 'ESTA SUCURSAL SE EDITO CORRECTAMENTE']);
         }
         /*

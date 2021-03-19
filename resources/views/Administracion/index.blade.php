@@ -395,7 +395,8 @@ ADMINISTRACION
                 @foreach($modulos as $modulo)
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <input class="form-check-input" type="checkbox" value="" 
+                            onclick="seleccionModulo('{{$modulo->id}}')" id="modulo{{$modulo->id}}">
                             <label class="form-check-label" for="defaultCheck1">
                                 <strong>{{$modulo->nombre}}</strong>
                             </label>
@@ -894,5 +895,10 @@ async function veriSucursal(id) {
         }
     }
 };
+/*const modulos = json($modulos);
+function seleccionModulo(idModulo){
+    let modulo = modulos.find(p => p.id == idModulo);
+    alert(modulo.nombre);
+}*/
 </script>
 @endsection
