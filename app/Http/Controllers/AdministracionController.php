@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Sucursal;
 use App\Models\Sucursal_empleado;
 use App\Models\Departamento;
+use App\Models\Role;
+use App\Models\Modulo;
 
 
 class AdministracionController extends Controller
@@ -32,7 +34,9 @@ class AdministracionController extends Controller
         $depa = Departamento::all();
         $datosD['d'] = Sucursal::findOrFail($id);
         $sucursal = Sucursal::findOrFail($id);
-        return view('Administracion.index',$datosD,compact('sucursal', 'depa'));
+        $roles = Role::all();
+        $modulos = Modulo::all();
+        return view('Administracion.index',$datosD,compact('sucursal', 'depa','roles','modulos'));
     }
     public function store(Request $request)
     {
@@ -63,6 +67,8 @@ class AdministracionController extends Controller
             }
             else{
             $sucursal->update($datosCliente);
+            if($id == session('sucursal'))
+                session(['sucursalNombre' => $sucursal->direccion]);
             return redirect('puntoVenta/administracion')->withErrors(['mensajeConf' => 'ESTA SUCURSAL SE EDITO CORRECTAMENTE']);
         }
         /*

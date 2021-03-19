@@ -114,9 +114,15 @@ Route::prefix('/puntoVenta')->group(function()
         Route::resource('compra', CompraController::class);
         Route::get('/proveedor/buscador', [ProveedorController::class,'buscador']);
         Route::resource('proveedor', ProveedorController::class);
-    /* */   Route::get('proximosACaducar', [ProductosCaducidadController::class,'caducidad']);
+    //   Route::get('proximosACaducar', [ProductosCaducidadController::class,'caducidad']);
             Route::resource('oferta', OfertaController::class);  
         Route::resource('productosCaducidad', ProductosCaducidadController::class);
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
+    
     });
+<<<<<<< HEAD
 });
+=======
+    
+});
+>>>>>>> 03ab1cd3560fea228f8c0af8a66bf54b15aff8cb

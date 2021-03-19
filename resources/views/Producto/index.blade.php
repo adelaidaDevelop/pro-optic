@@ -25,16 +25,29 @@ PRODUCTOS
     <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/producto/stock')}}">
         <img src="{{ asset('img/stock.svg') }}"  alt="Editar" width="32px" height="32px">
         <p class="h6 my-auto text-dark"><small>AGREGAR DE STOCK</small></p>
-         </a>
     </a>
 </div>
 
-<div class="col-2  ml-3 p-1 ">
+<div class="col-0  ml-3 p-1 ">
     <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
         <img src="{{ asset('img\alta2.png') }}"  alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>DAR ALTA</small></p>
         
     </button>
+</div>
+
+<div class="col-0  ml-3 p-1 ">
+    <a class="btn btn-outline-secondary p-1 border-0" href="{{ url('/puntoVenta/productosCaducidad')}}" >
+        <img src="{{ asset('img\calendario.png') }}"  alt="Editar" width="30px" height="30px">
+        <p class="h6 my-auto text-dark"><small>PROXIMOS A CADUCAR</small></p>
+    </a>
+</div>
+
+<div class="col-2  ml-3 p-1 ">
+    <a class="btn btn-outline-secondary p-1 border-0" href="{{ url('/puntoVenta/oferta')}}" >
+        <img src="{{ asset('img\ofertas.png') }}"  alt="Editar" width="30px" height="30px">
+        <p class="h6 my-auto text-dark"><small>OFERTAS</small></p>
+    </a>
 </div>
 <!-- COMENTADO TEMPORAL
 <div class="col-1 my-2  p-1 ">
@@ -47,12 +60,7 @@ PRODUCTOS
 
 
 
-<div class="col- my-2 ml-3 p-1 ">
-    <a class="btn btn-secondary" href="{{ url('/producto/create')}}">
-        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-        PROXIMOS A CADUCAR </a>
-    </a>
-</div>
+
 -->
 
 
