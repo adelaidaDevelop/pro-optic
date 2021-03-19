@@ -120,9 +120,4 @@ Route::prefix('/puntoVenta')->group(function()
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
     
     });
-<<<<<<< HEAD
 });
-=======
-    
-});
->>>>>>> 03ab1cd3560fea228f8c0af8a66bf54b15aff8cb
