@@ -117,9 +117,10 @@ REPORTES
                 <option value="12">DICIEMBRE</option>
             </select>
             <select class="form-control col-1 my-0 mr-2" name="anio" id="fechaXanio" disabled>
-                <option value="2021" selected>2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
+                <option value="0" selected>ANIO</option>            
+                <option value="1">2021</option>
+                <option value="2">2022</option>
+                <option value="3">2023</option>
                 <!--Escribir manualmente el anio-->
             </select>
             <input type="date" min="" onchange="" id="fechaPInicio" class="form-control my-0 col-2 mr-2" disabled />
@@ -176,23 +177,25 @@ REPORTES
     let contador = 0;
 
     function validarCamposFechas() {
+
         let selectFecha = document.querySelector('input[name="fecha"]:checked');
         let opcFecha = selectFecha.value;
         if (opcFecha === 'dia') {
             fechaDia = document.querySelector('#fechaXDia');
+
             if (fechaDia.value.length > 0) {
                 return true;
             }
             return false;
         } else if (opcFecha === 'mes') {
             fechaDia = document.querySelector('#fechaXmeses');
-            if (fechaDia.value.length > 0) {
+            if (fechaDia.value > 0) {
                 return true;
             }
             return false;
         } else if (opcFecha === 'anio') {
             fechaDia = document.querySelector('#fechaXanio');
-            if (fechaDia.value.length > 0) {
+            if (fechaDia.value > 0) {
                 return true;
             }
             return false;
@@ -220,13 +223,14 @@ REPORTES
         let anio = document.getElementById('fechaXanio');
         let periodoIni = document.getElementById('fechaPInicio');
         let periodoFin = document.getElementById('fechaPFinal');
-
         let selectFecha = document.querySelector('input[name="fecha"]:checked');
         let opcFecha = selectFecha.value;
         if (opcFecha === 'dia') {
             dia.disabled = false;
             $("#fechaXmeses").val('0')
-            $("#fechaXanio").val('1')
+            $("#fechaXanio").val('0')
+            document.getElementById("tablaR").innerHTML = tabla2;
+            document.getElementById("consultaBusqueda").innerHTML = "";
             mes.disabled = true;
             anio.disabled = true;
             periodoIni.disabled = true;
@@ -234,9 +238,10 @@ REPORTES
         } else if (opcFecha === 'mes') {
             dia.disabled = true;
             mes.disabled = false;
-            
             $("#fechaXDia").val('')
-            $("#fechaXanio").val('1')
+            $("#fechaXanio").val('0')
+            document.getElementById("tablaR").innerHTML = tabla2;
+            document.getElementById("consultaBusqueda").innerHTML = "";
             anio.disabled = true;
             periodoIni.disabled = true;
             periodoFin.disabled = true;
@@ -246,6 +251,8 @@ REPORTES
             anio.disabled = false;
             $("#fechaXDia").val('')
             $("#fechaXmeses").val('0')
+            document.getElementById("tablaR").innerHTML = tabla2;
+            document.getElementById("consultaBusqueda").innerHTML = "";
             periodoIni.disabled = true;
             periodoFin.disabled = true;
         } else if (opcFecha === 'periodo') {
@@ -467,12 +474,10 @@ REPORTES
             if (comparacionFecha(fechaXDia, fechaVenta)) {
                 fechaCol = fechaVenta.toLocaleDateString();
                 horaCol = fechaVenta.toLocaleTimeString();
-
                 let movi = document.querySelector('#idCajero');
                 let moviName = parseInt(movi.value);
                 if (moviName == 0) {
                     //empleado
-
                     for (let z in detalle_ventas) {
                         if (detalle_ventas[z].idVenta == ventas[v].id) {
                             for (let e in productos) {
@@ -516,12 +521,7 @@ REPORTES
                                 }
                             }
                         }
-
-
-
-
                     }
-
                 } else {
                     for (let y in sucursalEmpleados) {
                         if (sucursalEmpleados[y].id == ventas[v].idSucursalEmpleado) {
@@ -562,11 +562,9 @@ REPORTES
                                                                 <td>` + cant_actual + `</td>
                                                         </tr>
                                                         `;
-
                                             }
                                         }
                                     }
-
                                 }
                             }
                         }
@@ -597,7 +595,6 @@ REPORTES
                     if (productos[p].id == devoluciones[f].idProducto) {
                         console.log("encuentra un producto en devolucion");
                         productoCol = productos[p].nombre;
-
                         for (let d in departamentos) {
                             if (departamentos[d].id == productos[p].idDepartamento) {
                                 depto = departamentos[d].nombre;
@@ -620,7 +617,6 @@ REPORTES
                                             `;
                     }
                 }
-
             }
         }
     };
@@ -719,8 +715,10 @@ REPORTES
             return alert("ELEGIR UNA FECHA");
         }
     };
-
     function compararMes(fecha1, fecha2) {
+        console.log(fecha1);
+        console.log(fecha1.getMonth());
+        console.log(fecha2.getMonth());
         if (fecha1.getMonth() == fecha2.getMonth()) {
             return true;
         }
@@ -728,6 +726,8 @@ REPORTES
     };
 
     function compararAnio(fecha1, fecha2) {
+        console.log(fecha1.getFullYear());
+        console.log(fecha2.getFullYear());
         if (fecha1.getFullYear() == fecha2.getFullYear()) {
             return true;
         }

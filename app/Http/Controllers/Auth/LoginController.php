@@ -71,7 +71,7 @@ class LoginController extends Controller
                     //    session(['idUsuario' => Auth::user()->id]);
                         session(['sucursal' => session('sucursal')]);
                         session(['idSucursalEmpleado' => $sucursalEmpleado->id]);
-                        $sucursal = Sucursal::findOrFail($request->input('opcionSucursal'))->direccion;
+                        $sucursal = Sucursal::findOrFail(session('sucursal'))->direccion;
                         session(['sucursalNombre' => $sucursal]);
                 
                         return redirect('/puntoVenta/venta');//->intended('/');
