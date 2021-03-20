@@ -30,8 +30,8 @@ class HomeController extends Controller
         //return view('home');
         //$request->user()->authorizeRoles(['user', 'admin']);
     //    return session()->all();
-        //$usuarios = ['admin'];//,'admin'];
-        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        $usuarios = ['admin'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         return redirect('puntoVenta/venta');//view('Venta.index');
        // return view('header2');
     //  return view('layouts.app');

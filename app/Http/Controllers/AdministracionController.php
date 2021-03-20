@@ -44,11 +44,13 @@ class AdministracionController extends Controller
         $datosCliente['status'] = 1;
         //Sucursal::insert($datosCliente);
         $sucursal = Sucursal::create($datosCliente);
-        Sucursal_empleado::create([
+        $sucursalEmpleado = Sucursal_empleado::create([
             'idSucursal' => $sucursal->id,
             'idEmpleado' => 1,
             'status' => 'alta'
         ]);
+        $role_admin = Role::where('name', 'admin')->first();
+        $sucursalEmpleado->roles()->attach($role_admin);
         return redirect('puntoVenta/administracion');
     }
 

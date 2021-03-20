@@ -390,23 +390,27 @@ ADMINISTRACION
                 <h5><strong class="text-uppercase">PERMISOS DEL EMPLEADO</strong></h5>
             </div>
             <div class="modal-body" id="cuerpoPermisosModal">
-                <div class="row col-12">
+                <div class="row col-12 mx-auto">
                 @if(isset($sucursal))
                 @foreach($modulos as $modulo)
-                    <div class="col">
+                    <div class="col border border-primary m-1">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" 
+                            <input class="form-check-input" type="checkbox" value="{{$modulo->id}}" 
                             onclick="seleccionModulo('{{$modulo->id}}')" id="modulo{{$modulo->id}}">
-                            <label class="form-check-label" for="defaultCheck1">
+                            <label class="form-check-label" for="modulo{{$modulo->id}}">
                                 <strong>{{$modulo->nombre}}</strong>
                             </label>
                         </div>
                         @foreach($roles as $rol)
                         @if($rol->idModulo == $modulo->id)
                         <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
+                            <input class="form-check-input" type="checkbox" value="{{$modulo->id}}" 
+                            onclick="seleccionPermiso('{{$modulo->id}}{{$rol->id}}')" id="rol{{$modulo->id}}{{$rol->id}}">
+                            <label class="form-check-label" for="rol{{$modulo->id}}{{$rol->id}}">
                                 {{$rol->description}}
+                                @if($modulo->nombre == 'ADMINISTRADOR')
+                                    <p class="text-danger">(ESTE PERMISO LE DA ACCESO TOTAL AL SISTEMA)</p>
+                                @endif
                             </label>
                         </div>
                         @endif
@@ -414,59 +418,12 @@ ADMINISTRACION
                     </div>
                 @endforeach
                 @endif
-                    <!--div class="col text-center">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                PRODUCTOS
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                VENTAS
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                ADMINISTRACION
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col text-center">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            DEUDORES
-                        </label>
-                    </div>
-                    </div>
-                    <div class="col text-center">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            CORTE
-                        </label>
-                    </div>
-                    </div>
-                    <div class="col text-center">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            REPORTES
-                        </label>
-                    </div>
-                    </div-->
                 </div>
             </div>
             <div class="modal-footer" id="piePermisosModal">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                <button type="button" class="btn btn-primary" onclick="mostrarEmpleados()">AGREGAR EMPLEADO</button>
+                <button type="button" class="btn btn-primary" 
+                id="btnGuardarPermisos"onclick="guardarPermisos()">GUARDAR PERMISOS</button>
             </div>
         </div>
     </div>
@@ -515,6 +472,57 @@ async function cargarEmpleados() {
     }
 };
 
+async function cargarPermisosEmpleado(id)
+{
+    try{
+        let permisosEmpleado = null;
+        let response = await fetch(`/puntoVenta/permisosEmpleado/${id}`);
+        if (response.ok) {
+
+            console.log("Los empleados son:");
+            permisosEmpleado = await response.json();
+            document.querySelector('#btnGuardarPermisos').value = id;
+            //$('#btnGuardarPermisos').prop('click',);
+            for(let i in modulos)
+            {
+                let countR = 0;
+                let countPE = 0;
+                for(let o in roles)
+                {
+                    if(roles[o].idModulo == modulos[i].id)
+                        countR++;
+                }
+                for(let o in permisosEmpleado)
+                {
+                    if(permisosEmpleado[o].idModulo == modulos[i].id)
+                        countPE++;
+                }
+                if(countPE == countR)
+                {
+                    console.log(modulos[i].nombre);
+                    $(`#modulo${modulos[i].id}`).prop('checked',true);
+                }
+                    
+            }
+            for(let i in permisosEmpleado)
+            {
+                
+                let pE = permisosEmpleado[i];
+                $(`#rol${pE.idModulo}${pE.id}`).prop('checked',true);
+                
+            }
+            
+        }
+        else {
+            console.log("No responde :'v");
+            console.log(response);
+            throw new Error(response.statusText);
+        }
+    }catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+}
+
 let footerOriginal = document.querySelector('#pieEmpleadosModal').innerHTML;
 async function empleadosSucursal() {
     let header = document.querySelector('#cabezaEmpleadosModal');
@@ -539,7 +547,7 @@ async function empleadosSucursal() {
                         if (SucursalEmpleados[i].idEmpleado == empleados[e].id && i != 0) {
                             let status = "";
                             let botonAltaBaja = "";
-                            let permisos = `<button class="btn btn-primary" onclick="cambiarStatusEmpleado('baja')"
+                            let permisos = `<button class="btn btn-primary" onclick="cargarPermisosEmpleado(${SucursalEmpleados[i].id})"
                                 type="button" data-toggle="modal" data-target="#permisosModal">PERMISOS</button>`;
                             if (SucursalEmpleados[i].status == 'alta') {
                                 status = `<span class="badge badge-success badge-pill my-auto">ACTIVO</span>`;
@@ -895,10 +903,67 @@ async function veriSucursal(id) {
         }
     }
 };
-/*const modulos = json($modulos);
+const modulos = @if(isset($modulos))@json($modulos) @else null @endif;
+const roles = @if(isset($modulos))@json($roles) @else null @endif;
 function seleccionModulo(idModulo){
     let modulo = modulos.find(p => p.id == idModulo);
-    alert(modulo.nombre);
-}*/
+    let check = false;
+    let activo = document.querySelector(`input[id="modulo${modulo.id}"]:checked`);
+    if (activo != null)
+        check = true;
+    for(let i in roles)
+    {
+        $(`#rol${modulo.id}${roles[i].id}`).prop('checked',check);
+    }
+    //alert(modulo.nombre);
+}
+function seleccionPermiso(idModuloRol){
+    let inactivo = document.querySelector(`input[id="rol${idModuloRol}"]:checked`);
+    let modulo = document.querySelector(`input[id="rol${idModuloRol}"]`);
+    if (inactivo == null)
+        $(`#modulo${modulo.value}`).prop('checked',false);
+    //console.log(inactivo.value);
+    //alert(modulo.nombre);
+}
+
+async function guardarPermisos()
+{
+    try{
+        let id = document.querySelector('#btnGuardarPermisos').value;
+        let permisos = [];
+        for(let i in modulos)
+        {
+            for(let o in roles)
+            {
+                let permiso = document.querySelector(`input[id="rol${modulos[i].id}${roles[o].id}"]:checked`);
+                if(permiso != null)
+                {
+                    permisos.push(permiso.value);
+                }
+            }
+        }
+        console.log(permisos);
+        const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/permisos";
+        let respuesta = await $.ajax({
+            url: url,
+            type: 'PUT',
+            data: {
+                'idSE': id,
+                'permisos':JSON.stringify(permisos),
+                '_token': "{{ csrf_token() }}",
+            },
+            //processData: false, // tell jQuery not to process the data
+            //contentType: false,
+            success: function(data) {
+                //alert(data); }
+            }
+        });
+        console.log(respuesta);
+    }catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+    //alert('Ya guardo lo cambios '+ id);
+}
+
 </script>
 @endsection
