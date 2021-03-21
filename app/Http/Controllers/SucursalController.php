@@ -141,6 +141,5 @@ class SucursalController extends Controller
         $suc2 = Sucursal::findOrFail($id);
         $suc2->update($sucursal);
         return true;
-
     }
 }

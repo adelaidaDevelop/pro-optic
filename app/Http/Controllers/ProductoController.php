@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Producto;
 use App\Models\Departamento;
+use App\Models\Subproducto;
 use App\Models\Sucursal_producto;
 
 use Illuminate\Http\Request;
@@ -24,8 +25,9 @@ class ProductoController extends Controller
         $idSucursal = session('sucursal');
         $producto = Producto::all();
         $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
+        $subproducto = Subproducto::all();
      //   return $idSucursal;
-         return view('Producto.index',$depas, compact('depa', 'datosP','productosSucursal', 'producto' ));
+         return view('Producto.index',$depas, compact('depa', 'datosP','productosSucursal', 'producto','subproducto' ));
     }
 
     /**

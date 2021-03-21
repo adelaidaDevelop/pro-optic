@@ -29,7 +29,7 @@ class HomeController extends Controller
     //    return session('idEmpleado');
         //return view('home');
         //$request->user()->authorizeRoles(['user', 'admin']);
-    //    return session()->all();
+      //  return session()->all();
         //$usuarios = ['admin'];//,'admin'];
         //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         return redirect('puntoVenta/venta');//view('Venta.index');
