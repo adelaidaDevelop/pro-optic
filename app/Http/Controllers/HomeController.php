@@ -29,15 +29,9 @@ class HomeController extends Controller
     //    return session('idEmpleado');
         //return view('home');
         //$request->user()->authorizeRoles(['user', 'admin']);
-<<<<<<< HEAD
-      //  return session()->all();
-        //$usuarios = ['admin'];//,'admin'];
-        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-=======
     //    return session()->all();
         $usuarios = ['admin'];//,'admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
->>>>>>> bdf319b490a50ddc7bcb52dfe31ee882f4653ea4
         return redirect('puntoVenta/venta');//view('Venta.index');
        // return view('header2');
     //  return view('layouts.app');
