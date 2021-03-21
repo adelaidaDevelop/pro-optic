@@ -14,23 +14,25 @@ class AdministracionController extends Controller
 {
     public function __construct()
     {
-
+        //$usuarios = ['admin',];//,'admin'];
+        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
     }
     public function index()
     {
+         $usuarios = ['admin','verSucursal'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         $sucursalesInac = Sucursal::where('status', '=', 0)->get();
         $depa =Departamento::all();
       //  $sucursalesInac = Sucursal::where('status', '=', 0)->get();
         return view('Administracion.index', $sucursalesInac, compact('depa'));
     }
 
-    public function empleados()
-    {
-        return redirect('puntoVenta/empleado');
-    }
-
     public function edit($id)
     {
+        $usuarios = ['admin','modificarSucursal'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $depa = Departamento::all();
         $datosD['d'] = Sucursal::findOrFail($id);
         $sucursal = Sucursal::findOrFail($id);
@@ -40,6 +42,9 @@ class AdministracionController extends Controller
     }
     public function store(Request $request)
     {
+        $usuarios = ['admin','crearSucursal'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $datosCliente = request()->except('_token');
         $datosCliente['status'] = 1;
         //Sucursal::insert($datosCliente);
@@ -56,6 +61,9 @@ class AdministracionController extends Controller
 
     public function update(Request $request, $id)
     {
+        $usuarios = ['admin','modificarSucursal'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
             $datosCliente = request()->except(['_token','_method']);
             $dir = $request['direccion'];
             $telefono = $request['telefono'];
@@ -92,10 +100,5 @@ class AdministracionController extends Controller
         $datosConsulta['sucursalB'] = Sucursal::where("direccion",'like',$request->texto."%")->get();
         return view('Administracion.form',$datosConsulta);
         //return $datosConsulta;
-    }
-
-    public function sucursales()
-    {
-        return redirect('puntoVenta/sucursal');
     }
 }
