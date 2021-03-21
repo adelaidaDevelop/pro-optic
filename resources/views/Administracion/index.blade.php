@@ -852,7 +852,7 @@ filtrar();
 
 function filtrar() {
     document.getElementById("resultados").innerHTML = "";
-    fetch(`/administracion/buscador?texto=${texto.value}`, {
+    fetch(`/puntoVenta/administracion/buscador?texto=${texto.value}`, {
             method: 'get'
         })
         .then(response => response.text())

@@ -1205,7 +1205,7 @@ function mostrarPassword() {
 
 function filtrar() {
     document.getElementById("resultados").innerHTML = "";
-    fetch(`/empleado/buscadorEmpleado?texto=${texto.value}`, {
+    fetch(`/puntoVenta/empleado/buscadorEmpleado?texto=${texto.value}`, {
             method: 'get'
         })
         .then(response => response.text())

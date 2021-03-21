@@ -43,6 +43,7 @@ class SucursalProductoController extends Controller
         $datosCodificados = json_decode($datos,true);
         foreach($datosCodificados as $datosProducto)
         {
+            return $datosProducto['fechaCaducidad'];
             //$actualizarProductoInd = Sucursal_producto::find($datosProducto['id']);//->update(['existencia'=>]);
             $sucursalProducto = new Sucursal_producto;//::where('idSucursal','=',session('sucursal'))
             //->where('idProducto', '=',$datosProducto['id'])->get()->first();
@@ -55,13 +56,15 @@ class SucursalProductoController extends Controller
             $sucursalProducto->status = 1;
             $sucursalProducto->save();
             //$actualizarProductoInd->save();
-
-            $productoCaducidad = new Productos_caducidad;
-            $productoCaducidad->idSucursalProducto = $sucursalProducto->id;
-            $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
-            $productoCaducidad->cantidad = $datosProducto['cantidad'];
-            $productoCaducidad->oferta = false;
-            $productoCaducidad->save();
+            if($datosProducto['fechaCaducidad'] == 1)
+            {
+                $productoCaducidad = new Productos_caducidad;
+                $productoCaducidad->idSucursalProducto = $sucursalProducto->id;
+                $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
+                $productoCaducidad->cantidad = $datosProducto['cantidad'];
+                $productoCaducidad->oferta = false;
+                $productoCaducidad->save();
+            }
         }
 
         
@@ -155,13 +158,16 @@ class SucursalProductoController extends Controller
                 $actualizarProducto->precio = $datosProducto['precio'];
                 $actualizarProducto->save();
                 
-                $productoCaducidad = new Productos_caducidad;
+                if($datosProducto['fechaCaducidad'] == 1)
+                {
+                    $productoCaducidad = new Productos_caducidad;
             
-                $productoCaducidad->idSucursalProducto = $actualizarProducto->id;//$datosProducto['id'];
-                $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
-                $productoCaducidad->cantidad = $datosProducto['cantidad'];
-                $productoCaducidad->oferta = false;
-                $productoCaducidad->save();
+                    $productoCaducidad->idSucursalProducto = $actualizarProducto->id;//$datosProducto['id'];
+                    $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
+                    $productoCaducidad->cantidad = $datosProducto['cantidad'];
+                    $productoCaducidad->oferta = false;
+                    $productoCaducidad->save();
+                }
                 
             }
             return 'Proceso terminado';

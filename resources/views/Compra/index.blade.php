@@ -825,24 +825,6 @@ COMPRAS
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
-    /*
-            for (count4 in productos) {
-                if (productos[count4].id === id) {
-                      console.log(id);
-                    console.log(productos[count4].id);
-                    if (!buscarProductoEnVenta(id)) {
-                        console.log(productos[count4].id);
-                        agregarProductoAVenta(productos[count4].id, productos[count4].codigoBarras, productos[count4].nombre,
-                            6, 22, 1, 22);
-                    }
-                    console.log(productos[count4].id);
-                    mostrarProductos();
-                }
-            }
-            const palabraBusqueda = document.querySelector('#busquedaProducto');
-            palabraBusqueda.value = "";
-        };
-        */
 </script>
 
 @endsection

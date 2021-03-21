@@ -38,20 +38,20 @@ class RegistrosPruebaTable extends Migration
             $modulo->nombre = $modulos[$i];
             $modulo->save();
         }
-        $nombres = ['admin','verCompra','crearCompra','verPago','crearVenta','verDevolucion',
-        'crearDevolucion','verProducto','crearProducto','eliminarProducto','modificarProducto',
+        $nombres = ['admin','verCompra','crearCompra','modificarCompra','verPago',
+        'crearVenta','verDevolucion','crearDevolucion','verProducto','crearProducto','eliminarProducto','modificarProducto',
         'verAdministracion','verSucursal','crearSucursal','eliminarSucursal','modificarSucursal',
         'verEmpleado','crearEmpleado','eliminarEmpleado','modificarEmpleado','statusEmpleado',
         'verDeudor','verCorte','verReporte'];
 
-        $descripcion = ['ADMINISTRADOR','VER COMPRAS', 'CREAR COMPRAS', 'VER PAGOS','CREAR VENTAS',
-        'VER DEVOLUCIONES','VER PRODUCTOS','CREAR PRODUCTOS','ELIMINAR PRODUCTOS','MODIFICAR PRODUCTOS',
+        $descripcion = ['ADMINISTRADOR','VER COMPRAS', 'CREAR COMPRAS','MODIFICAR COMPRAS', 'VER PAGOS',
+        'CREAR VENTAS','VER DEVOLUCIONES','CREAR DEVOLUCIONES','VER PRODUCTOS','CREAR PRODUCTOS','ELIMINAR PRODUCTOS','MODIFICAR PRODUCTOS',
         'VER SUCURSALES','CREAR SUCURSALES','ELIMINAR SUCURSALES','MODIFICAR SUCURSALES','ASIGNAR STATUS A EMPLEADO',
         'VER EMPLEADOS','CREAR EMPLEADOS','ELIMINAR EMPLEADOS','MODIFICAR EMPLEADOS',
         'VER DEUDORES','VER CORTES','VER REPORTES'];
         //['ADMINISTRADOR','COMPRAS','VENTAS','INVENTARIO','SUCURSALES','EMPLEADOS','DEUDORES','CORTES','REPORTES'];
-        $modulo = [0,1,1,1,2,
-                   2,3,3,3,3,
+        $modulo = [0,1,1,1,1,
+                   2,2,2,3,3,3,3,
                    4,4,4,4,4,
                    5,5,5,5,
                    6,7,8];

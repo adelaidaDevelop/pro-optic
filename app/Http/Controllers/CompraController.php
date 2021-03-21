@@ -22,6 +22,9 @@ class CompraController extends Controller
      */
     public function index()
     {
+        $usuarios = ['verCompra','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $compras = Compra::all();
         $comprasSucursal = [];
         foreach($compras as $c)
@@ -46,6 +49,9 @@ class CompraController extends Controller
      */
     public function create()
     {
+        $usuarios = ['crearCompra','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $productos = Producto::all();
         $departamentos = Departamento::all();
         $proveedores = Proveedor::where('status', '=', true)->get();
@@ -62,6 +68,9 @@ class CompraController extends Controller
     {
         //$datosP= Producto::all();
         //$datos['departamentos'] = Producto::paginate();
+        $usuarios = ['crearVenta','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $datos = $request->input('datos');
         $proveedor = $request->input('proveedor');
         $estado = $request->input('estado');
@@ -115,6 +124,9 @@ class CompraController extends Controller
      */
     public function show($compra)
     {
+        $usuarios = ['verCompra','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $compras = Compra::all();
         if($compra=="compras")
         {
@@ -154,6 +166,9 @@ class CompraController extends Controller
      */
     public function update($id)//Request $request,$id)//, Compra $compra)
     {
+        $usuarios = ['modificarCompra','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         Compra::where('id','=',$id)->update(['estado' => 'pagado']);
         //$estado = $request->input('estado');
         return $id;//'Obvio que retorno algo :v';
@@ -169,13 +184,13 @@ class CompraController extends Controller
     {
         //
     }
-
+/*
     public function buscadorProducto(Request $request)
     {
         //$datosConsulta['departamentosB'] = Departamento::where("nombre",'like',$request->texto."%")->get();
         $productos = Producto::where("nombre",'like',$request->texto."%")->get();
         return view('Compra.form',compact('productos'));
         //return compact('productos');
-    }
+    }*/
 }
 ?>

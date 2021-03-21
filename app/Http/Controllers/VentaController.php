@@ -12,6 +12,7 @@ use App\Models\Detalle_venta;
 use App\Models\Pago;
 use App\Models\Pago_venta;
 use App\Models\Sucursal_producto;
+use App\Models\Sucursal_empleado;
 use App\Models\venta_cliente;
 use App\Models\Subproducto;
 use App\Models\Oferta;
@@ -33,6 +34,9 @@ class VentaController extends Controller
      */
     public function index()
     {
+        $usuarios = ['crearVenta','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $datosP = Producto::all();
         $departamentos = Departamento::all();
         $clientes = Cliente::all();
@@ -187,11 +191,11 @@ class VentaController extends Controller
         //
     }
 
-    public function productos(Request $request)
+    /*public function productos(Request $request)
     {
         //return view('Venta.formulario');
         $datos = $request->input('datos');
         $no = $request->input('no');
         return $datos; //compact($datos);//compact('no');
-    }
+    }*/
 }

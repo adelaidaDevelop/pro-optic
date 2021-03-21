@@ -51,7 +51,7 @@ class ProductosCaducidadController extends Controller
     {
         $productoCaducidad = new Productos_caducidad;
         //$productoCaducidad->
-        return request();
+        return 'No sirve para nada >:v';//request();
     }
 
     /**

@@ -25,7 +25,7 @@
         @endsection
     </div>
     <div class="row">
-        <div class="col-12 w-100">
+        <div class="col-12 w-100 p-0">
             <!--CONSULTAR PRODUCTO -->
             <div class="row border mt-2 mb-2 mx-0 border-dark">
                 <div class="col-12">
@@ -102,7 +102,6 @@
                         <table class="table table-bordered border-primary col-12">
                             <thead class="table-secondary text-primary">
                                 <tr class="text-center">
-                                    <th>#</th>
                                     <th>CODIGO BARRAS</th>
                                     <th>PRODUCTO</th>
                                     <th>CANTIDAD</th>
@@ -110,11 +109,11 @@
                                     <th>GANANCIA</th>
                                     <th>PRECIO</th>
                                     <th>CADUCIDAD</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody class="text-center" id="productos">
                                 <tr>
-                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -341,7 +340,8 @@ function agregarProductoACompra(id, codigoBarras, nombre, cantidad, costo, ganan
         ganancia: ganancia,
         precio: precio,
         caducidad: caducidad,
-        idSucursal: idSucursal
+        idSucursal: idSucursal,
+        fechaCaducidad:false
     };
     console.log(producto)
     productosCompra.push(producto);
@@ -396,10 +396,19 @@ function mostrarProductos() {
     let cuerpo = "";
     let contador = 1;
     for (let count1 in productosCompra) {
+        
+        //<th scope="row">` + contador++ + `</th>
+        let checked = "";
+        let disabled = "disabled";
+        if(productosCompra[count1].fechaCaducidad)
+        {
+            checked = "checked";
+            disabled = "";
+        }
+            
         cuerpo = cuerpo + `
         <tr>
-            <th scope="row">` + contador++ + `</th>
-            <td>` + productosCompra[count1].codigoBarras + `</td>
+            <td><p>` + productosCompra[count1].codigoBarras + `</p></td>
             <td>` + productosCompra[count1].nombre + `</td>
             <td><input name="cantidad" value="` + productosCompra[count1].cantidad + `" 
                 onchange="cantidad(` + productosCompra[count1].id + `)"  
@@ -417,9 +426,18 @@ function mostrarProductos() {
                 onchange="precio(` + productosCompra[count1].id + `)"  
                 id="precio` + productosCompra[count1].id + `" min="0" ` +
             ` type="number" data-decimals="2" />` + `</td>
-            <td><input onchange="caducidad(` + productosCompra[count1].id + `)" type="date" value="` + productosCompra[
-                count1].caducidad + `" min="` + productosCompra[count1].caducidad +
-            `" class="form-control p-1 m-0" id="caducidad` + productosCompra[count1].id + `" style="width:145px" />
+            <td>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text mx-0 px-1">
+                        <input type="checkbox" class="mx-0" id="checked${productosCompra[count1].id}"
+                        onclick="setFechaCaducidad(${productosCompra[count1].id})" ${checked}/>
+                    </div>
+                </div>
+                <input onchange="caducidad(` + productosCompra[count1].id + `)" type="date" value="` 
+                + productosCompra[count1].caducidad + `" min="` + productosCompra[count1].caducidad 
+                +`" class="form-control px-0 mx-0" id="caducidad` + productosCompra[count1].id + `" ${disabled}/>
+            </div>
             </td>
             <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(` + productosCompra[count1]
             .id + `)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -871,7 +889,7 @@ async function guardarCompra() {
         }
         const pagoCredito = document.querySelector('#pagoCredito');
         //if (parseFloat(pagoCredito.value) > 0) {
-        await $.ajax({
+        let spp = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
@@ -883,7 +901,7 @@ async function guardarCompra() {
                 _token: "{{ csrf_token() }}",
             }
         });
-        
+        console.log(spp);
         let resp = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "PUT",
@@ -929,7 +947,8 @@ async function guardarCompra() {
             await cargarProductosSucursal();
             await cargarProductos();
             $('#confirmarCompraModal').modal('hide');
-        await $.ajax({
+            
+        /*let respuestaCaducidad =  await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
@@ -952,6 +971,7 @@ async function guardarCompra() {
             //alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
         });
+        console.log(respuestaCaducidad);*/
         $('#pagoCredito').val(0.00);
         fechaCompra.value = "yyyy-MM-dd";
         $("#iva").prop('checked', false);
@@ -962,6 +982,13 @@ async function guardarCompra() {
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
+}
+function setFechaCaducidad(id)
+{
+    let seleccion = $(`#checked${id}`).is(":checked");
+    productosCompra.find(p => p.id == id).fechaCaducidad = seleccion;
+    //productosCompra[i].
+    $(`#caducidad${id}`).prop('disabled', !seleccion);
 }
 </script>
 @endsection
