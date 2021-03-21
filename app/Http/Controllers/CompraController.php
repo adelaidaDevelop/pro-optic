@@ -68,7 +68,7 @@ class CompraController extends Controller
     {
         //$datosP= Producto::all();
         //$datos['departamentos'] = Producto::paginate();
-        $usuarios = ['crearVenta','admin'];
+        $usuarios = ['crearCompra','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $datos = $request->input('datos');

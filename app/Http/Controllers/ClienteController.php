@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Sucursal_empleado;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -14,6 +15,9 @@ class ClienteController extends Controller
      */
     public function index()
     {
+        $usuarios = ['admin','verCliente'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $datos['proveedores'] = Cliente::paginate();
         return view('Cliente.index',$datos);
     }
@@ -36,6 +40,9 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        $usuarios = ['admin','crearCliente'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $datosCliente = request()->except('_token');
         $datosCliente['tipo']= 0; //0 para clientes deudores
         $datosCliente['idUsuario'] = 2;
@@ -65,6 +72,9 @@ class ClienteController extends Controller
     {
         //
       //  $datos['departamentos'] = Cliente::paginate();
+        $usuarios = ['admin','modificarCliente'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $datosD['d'] = Cliente::findOrFail($id);
         return view('Cliente.index',$datosD);
     }
@@ -78,6 +88,9 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $usuarios = ['admin','modificarCliente'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
             $datosCliente = request()->except(['_token','_method']);
             $nombre = $request['nombre'];
             $telefono = $request['telefono'];
@@ -106,6 +119,9 @@ class ClienteController extends Controller
      */
     public function destroy($id)//Departamento $departamento)
     {
+        $usuarios = ['admin','eliminarCliente'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         try{
             Cliente::destroy($id);
             return true;
@@ -115,6 +131,9 @@ class ClienteController extends Controller
         
     }
     public function baja($id){
+        $usuarios = ['admin','eliminarCliente'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $sucursal['status'] =0;
         $suc2 = Cliente::findOrFail($id);
         $suc2->update($sucursal);
@@ -122,6 +141,9 @@ class ClienteController extends Controller
     }
     public function destroy2($id)//Departamento $departamento)
     {
+        $usuarios = ['admin','eliminarCliente'];//,'admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         try{
         Cliente::destroy($id);
         return true;

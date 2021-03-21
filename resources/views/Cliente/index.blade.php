@@ -15,7 +15,7 @@ CLIENTES
 </div>
 
 <div class="ml-3 my-auto ">
-    <a class="btn btn-outline-secondary ml-3 my-auto border-0 " href="{{ url('/credito')}}">
+    <a class="btn btn-outline-secondary ml-3 my-auto border-0 " href="{{ url('/puntoVenta/credito')}}">
         <img src="{{ asset('img\deudor.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>DEUDORES</small></p>
     </a>
@@ -175,7 +175,7 @@ CLIENTES
 
     function filtrar() {
         document.getElementById("resultados").innerHTML = "";
-        fetch(`/cliente/buscador?texto=${texto.value}`, {
+        fetch(`/puntoVenta/cliente/buscador?texto=${texto.value}`, {
                 method: 'get'
             })
             .then(response => response.text())
