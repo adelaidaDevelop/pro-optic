@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sucursal_empleado;
+use App\Models\Role_sucursal_empleado;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class SucursalEmpleadoController extends Controller
@@ -40,6 +42,12 @@ class SucursalEmpleadoController extends Controller
         $sucursal_empleado->idEmpleado = $request->input('idEmpleado');
         $sucursal_empleado->status = 'alta';
         $sucursal_empleado->save();
+        $roles = Role::where('idModulo', 3)->get();//->first();
+        foreach($roles as $rol)
+        {
+            $sucursal_empleado->roles()->attach($rol);
+        }
+        
         return true;
     }
 
@@ -84,6 +92,22 @@ class SucursalEmpleadoController extends Controller
             //return redirect('puntoVenta/empleado/'.$id.'/edit');
             return true;
         }
+        if($id == 'permisos')
+        {
+            $datos = $request->input('permisos');
+            $id = $request->input('idSE');
+            $permisos = json_decode($datos, true);
+            //$rsE = Role_sucursal_empleado::where('sucursal_empleado_id','=',$id);//->get();
+            //$rsE->delete();
+            $sE = Sucursal_empleado::findOrFail($id)->roles();
+            $sE->detach();
+            foreach($permisos as $idP)
+            {
+                $rol = Role::findOrFail($idP);
+                $sE->attach($rol);
+            }
+            return 'Listo';//'Ya recibi el mensaje';
+        }
         return $request;
     }
 
@@ -96,5 +120,10 @@ class SucursalEmpleadoController extends Controller
     public function destroy(Sucursal_empleado $sucursal_empleado)
     {
         //
+    }
+
+    public function permisosEmpleado($id)
+    {
+        return Sucursal_empleado::findOrFail($id)->roles()->get();//->where('sucursal_empleado_id',$id)->get();
     }
 }

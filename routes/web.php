@@ -44,60 +44,6 @@ Route::post('/loginCliente', [LoginClienteController::class,'loginPost'])->name(
 Route::post('/logoutCliente', [LoginClienteController::class,'logout'])->name('Login');
 
 Route::resource('/', EcommerceController::class)->middleware('isCliente');
-Route::get('/idCliente', [EcommerceController::class,'idCliente']);
-Route::get('/idEmpleado', [EcommerceController::class,'idEmpleado']);
-Route::get('/idSucursal', [EcommerceController::class,'idSucursal']);
-
-
-    //Rutas ade
-    
-    
-    Route::get('/datosDevoluciones', [DevolucionController::class,'datoDev']);
-    Route::get('/datosVentas', [DevolucionController::class,'datosVenta']);
-    Route::get('/datosdetalleVenta', [DevolucionController::class,'datosDetalleVenta']);
-    Route::get('/datosProducto', [DevolucionController::class,'datosProducto']);
-    Route::get('/datosEmpleado', [DevolucionController::class,'datosEmpleado']);
-    Route::get('/departamento2', [DepartamentoController::class,'index2']);
-    Route::post('/venta/productos', [VentaController::class,'productos']);
-
-
-    
-
-    Route::get('emple', [EmpleadoController::class,'index2']);
-    
-
-    Route::resource('credito', CreditoController::class);
-    Route::get('/datosNuevos', [CreditoController::class,'datosNuevos']);
-    Route::resource('pago', PagoController::class);
-    Route::resource('pagoCompra', PagoCompraController::class);
-    Route::resource('devolucion', DevolucionController::class);
-    
-    
-    Route::get('reporteVentas', [ReporteController::class,'index3']);
-
-    Route::get('/empleado/buscadorEmpleado', [EmpleadoController::class,'buscadorEmpleado']);
-
-    Route::get('/producto/buscarProducto', [ProductoController::class,'buscarProducto']);
-
-    Route::get('/producto/buscador', [ProductoController::class,'buscador']);
-
-    Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
-    Route::get('/cliente/buscador', [ClienteController::class,'buscador']);
-    Route::get('/administracion/buscador', [AdministracionController::class,'buscador']);
-
-
-
-
-//Route::get('/departamento/buscadorProducto', [CompraController::class,'buscadorProducto']);
-
-//Route::get('/departamento/buscador2', [DepartamentoController::class,'buscador2']);
-
-
-
-
-
-// RUTA PARA EL BUSCADOR EN TIEMPO REAL DEPARTAMENTO
-
 
 //Auth::routes();
 

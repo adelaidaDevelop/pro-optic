@@ -8,7 +8,7 @@
         @section('opciones')
         <!-- BOTON DEVOLUCION-->
         <div class="ml-4">
-            <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/devolucion')}}">
+            <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/devolucion')}}">
                 <img src="{{ asset('img\devolucion.png') }}" alt="Editar" width="32px" height="32px">
                 <p class="h6 my-auto mx-2 text-dark"><small>DEVOLUCION</small></p>
             </a>
