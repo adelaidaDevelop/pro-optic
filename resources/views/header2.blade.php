@@ -73,7 +73,7 @@
                             </button>
                             <span class="sr-only">(current)</span></a>
                             -->
-                        <a class="nav-link" href="/credito">
+                        <a class="nav-link" href="/puntoVenta/credito">
                             <button class="btn btn-light input-group">
                             <img src="{{ asset('img\deudores.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto ml-1"><small>LISTA DEUDORES</small></p>

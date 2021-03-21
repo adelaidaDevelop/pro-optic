@@ -106,8 +106,10 @@ Route::prefix('/puntoVenta')->group(function()
       
       Route::get('actualizar/{id}', [SucursalController::class,'bajaSucursal']);
       //MODIFICAR COSTO Y PRECIO EN SUCURSAL PRODUCTO
-      Route::get('producto/modiPrecio/{id}', [SucursalProductoController::class,'modiPrecio']);
-      Route::get('producto/modiCosto/{id}', [SucursalProductoController::class,'modiCosto']);
+      Route::post('productoSuc/actPrecio/{id}', [SucursalProductoController::class,'actPrecio']);
+      Route::post('productoSuc/actCosto/{id}', [SucursalProductoController::class,'actCosto']);
+      Route::post('productoSuc/actExistencia/{id}', [SucursalProductoController::class,'actExistencia']);
+      
 
    Route::get('productoEli/{id}', function($id){
         $producto = Sucursal_producto::where('idProducto','=',$id)->delete();
@@ -125,6 +127,9 @@ Route::prefix('/puntoVenta')->group(function()
     //SUBPRODUCTO
     Route::resource('subproducto', SubproductoController::class);
     Route::get('veriUniqueSubproducto', [SubproductoController::class,'existeEnSubproducto']);
+
+    Route::get('subproducto/actExistencia', [SubproductoController::class,'actExistencia']);
+    
     
 
     //ELIMINAR PRODUCTOS DE SUCURSAL

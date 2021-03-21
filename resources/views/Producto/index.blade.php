@@ -160,7 +160,7 @@ PRODUCTOS
 <!-- MODAL-->
 
 <!-- MODAL-->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="detalleProducto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="width:900px;">
             <div class="modal-header w-100 ">
@@ -184,16 +184,20 @@ PRODUCTOS
             <div class="modal-body  col-12" id="">
                 <div class="row  " id="resultados">
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+                <div id="subAgregar" class="col mx-auto mt-4 text-center"></div>
+                <div>
+                </div>
 
+                <div class="col modal-footer input-group">
+
+                    <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal" onclick="">Close</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<!-- MODAL-->
-<div class="modal fade modal_precio_venta" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<!-- MODAL CAMBIAR PRECIO COSTO-->
+<div class="modal fade modal_precio_venta" id="modal_precio_venta" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-small " role="document">
         <div class="modal-content" style="width:500px;">
             <div class="modal-header  ">
@@ -213,8 +217,9 @@ PRODUCTOS
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="actPrecioCosto">GUARDAR</button>
                 <button type="button" class="btn btn-secondary" id="volverInfo4" data-dismiss="modal">CANCELAR</button>
-                <button type="button" class="btn btn-primary" id="actPrecioCosto" onclick="actPrecioCosto()">GUARDAR</button>
+
             </div>
         </div>
     </div>
@@ -698,6 +703,7 @@ PRODUCTOS
     function info4(id) {
         //Modal
         //let x1= 0;
+        let btnAgregarSubprod = "";
         let datosProduct = "";
         let cambiarCostoPrecio = "";
         let imagen = "";
@@ -725,7 +731,7 @@ PRODUCTOS
                         datosProduct =
                             `
                                     <div class="col-3">
-                                            <br/>
+                                            
                                             <label for="codigoBarras">
                                                 <h6 class="ml-4"> {{'CODIGO DE BARRAS'}}</h6>
                                             </label>
@@ -752,7 +758,6 @@ PRODUCTOS
                                             <br />
                                         </div>
                                         <div class="col-5">
-                                            <br />
                                             <!--El name debe ser igual al de la base de datos-->
                                             <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase " placeholder="Ingresar codigo de barras" value="` + productos[count10].codigoBarras + `" required autocomplete="codigoBarras" autofocus disabled>
                                             <br />
@@ -771,42 +776,45 @@ PRODUCTOS
                                             </select>
                                         </div>
                                         <div class="col-4 text-center">
-                                            <br/>
                                             <label for="Imagen">
-                                                <h5> <strong>{{'FOTO aqui es'}}</strong></h5>
+                                                <h5 class="mb-1"> <strong>{{'FOTO '}}</strong></h5>
                                             </label>
-                                            <br />
-
-                                            <img src="${urlImagen}" alt="" width="200">
-                                            <br /><br />
-                                            <a class="btn btn-outline-primary" href="{{ url('/puntoVenta/producto/` + x + `/edit')}}" onclick="return confirm('¿EDITAR ESTE PRODUCTO?')"> 
+                                            <br/>
+                                            <img class="mb-2" src="${urlImagen}" alt="" width="200">
+                                            
+                                            <a class="btn btn-outline-primary mb-2 " href="{{ url('/puntoVenta/producto/` + x + `/edit')}}" onclick="return confirm('¿EDITAR ESTE PRODUCTO?')"> 
                                             <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
                                             EDITAR  </a>
-                                            <br/> <br/>
-                                            
-                                            <button type="button" class="btn btn-outline-primary mb-2" data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarPrecio( ` + idProdSuc + `)" value="` + idProdSuc + `">
-                                           MODIFICAR PRECIO
+                                            <br/> 
+                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarPrecio( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                           EDITAR PRECIO
                                             </button>
-                                            <br/><br/>
-                                            <button type="button" class="btn btn-outline-primary mb-2" data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarCosto( ` + idProdSuc + `)" value="` + idProdSuc + `">
-                                           MODIFICAR COSTO
+                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarCosto( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                           EDITAR COSTO
                                             </button>
                                             <br/>
-                                            <a class="btn btn-outline-danger mb-2" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                                            <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return agregarProducto( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                            AGREGAR PRODUCTO
+                                            </button>
+                                            <br/>
+                                            <a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              DAR DE BAJA </a> 
-
-                                             <a class="btn btn-outline-primary mt-4"   href="#" onclick="subproductoExiste(` + x + `);return false;">
-                                             <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
-                                             AGREGAR A SUBPRODUCTO </a> 
                                         </div>
 
                                         <br/>
                                     `;
+
+                        btnAgregarSubprod =
+                            ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
+                                             <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                                             AGREGAR A SUBPRODUCTO </a> 
+                                             `
                     }
                 }
             }
         }
+        document.getElementById("subAgregar").innerHTML = btnAgregarSubprod;
         document.getElementById("resultados").innerHTML = datosProduct;
     };
 
@@ -821,9 +829,9 @@ PRODUCTOS
                 console.log("entra");
                 cambiarPrecio = `
                                 <h6>PRECIO ACTUAL DEL PRODUCTO</h6>
-                                <input type="number" name="" id="" class="form-control " placeholder="" value="` + productosSucursal[j].precio + `" autofocus required disabled>
+                                <input type="number" name="" id="" class="form-control text-center" placeholder="" value="` + productosSucursal[j].precio + `" autofocus required disabled>
                                 <h6>INGRESAR NUEVO PRECIO DEL PRODUCTO</h6>        
-                                <input type="number" name="precio" id="precio_nuevo" class="form-control  " placeholder="PRECIO NUEVO" value="" autofocus required>
+                                <input type="number" name="precio" id="precio_nuevo" class="form-control text-center" placeholder="PRECIO NUEVO" value="" autofocus required>
                                     `;
             }
         }
@@ -848,9 +856,9 @@ PRODUCTOS
                 console.log("entra");
                 cambiarCosto = `
                                 <h6>COSTO ACTUAL DEL PRODUCTO</h6>
-                                <input type="number" name="" id="" class="form-control " placeholder="" value="` + productosSucursal[j].costo + `" autofocus required disabled>
+                                <input type="number" name="" id="" class="form-control text-center " placeholder="" value="` + productosSucursal[j].costo + `" autofocus required disabled>
                                 <h6>INGRESAR NUEVO COSTO DEL PRODUCTO</h6>        
-                                <input type="number" name="costo" id="costo_nuevo" class="form-control  " placeholder="PRECIO NUEVO" value="" autofocus required>
+                                <input type="number" name="costo" id="costo_nuevo" class="form-control text-center" placeholder="PRECIO NUEVO" value="" autofocus required>
                                     `;
             }
         }
@@ -864,7 +872,36 @@ PRODUCTOS
         document.getElementById("modiPrecioCosto").innerHTML = cambiarCosto;
     }
 
+    function agregarProducto(idSP) {
+        let cambiarCantidad = "";
+        let idProd = 0;
+        let idSucPro = 0;
+        for (let j in productosSucursal) {
+            if (productosSucursal[j].id === idSP) {
+                idProd = productosSucursal[j].idProducto;
+                idSucPro = productosSucursal[j].id;
+                console.log("entra");
+                cambiarCantidad = `
+                                <h6>EXISTENCIA ACTUAL DEL PRODUCTO</h6>
+                                <input type="number" name="" id="" class="form-control text-center " placeholder="" value="` + productosSucursal[j].existencia + `" autofocus required disabled>
+                                <h6>CANTIDAD DE PRODUCTO A AGREGAR</h6>        
+                                <input type="number" name="cantidad" id="cantidad" class="form-control text-center" placeholder="CANTIDAD DE PRODUCTO" value="" autofocus required>
+                                    `;
+            }
+        }
+        $("#volverInfo4").click(function() {
+            info4(idProd);
+        });
+        $("#actPrecioCosto").click(function() {
+            actExistencia(idSucPro);
+        });
+        // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
+        document.getElementById("modiPrecioCosto").innerHTML = cambiarCantidad;
+    }
+
+
     async function actPrecio(idSucProd) {
+        console.log("entroade");
         try {
             //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
             const precio = document.querySelector('#precio_nuevo');
@@ -878,7 +915,7 @@ PRODUCTOS
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
-                url: `'/puntoVenta/productoSuc/actPrecio/${idSucProd}'`,
+                url: `/puntoVenta/productoSuc/actPrecio/${idSucProd}`,
                 // los datos que voy a enviar para la relación
                 data: {
                     precio: parseFloat(precio.value),
@@ -890,7 +927,10 @@ PRODUCTOS
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-            // $('#confirmarVentaModal').modal('hide');
+            $('#modal_precio_venta').modal('hide');
+            $('#detalleProducto').modal('hide');
+            confirm("COSTO ACTUALIZADO CORRECTAMENTE");
+            refrescar();
             // await cargarProductosSucursal();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
@@ -910,7 +950,7 @@ PRODUCTOS
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
-                url: `'/puntoVenta/productoSuc/actCosto/${idSucProd}'`,
+                url: `/puntoVenta/productoSuc/actCosto/${idSucProd}`,
                 // los datos que voy a enviar para la relación
                 data: {
                     costo: parseFloat(costo.value),
@@ -922,12 +962,50 @@ PRODUCTOS
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-            // $('#confirmarVentaModal').modal('hide');
-            // await cargarProductosSucursal();
+            $('#modal_precio_venta').modal('hide');
+            $('#detalleProducto').modal('hide');
+            confirm("COSTO ACTUALIZADO CORRECTAMENTE");
+            refrescar();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
+
+    async function actExistencia(idSucProd) {
+        try {
+            //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
+            const costo = document.querySelector('#cantidad');
+            /*
+            if (pago.value.length === 0)
+                return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
+            if (parseFloat(pago.value) < parseFloat(total))
+                return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
+           */
+            let funcion = $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
+                // los datos que voy a enviar para la relación
+                data: {
+                    cantidad: parseInt(cantidad.value),
+                    _token: "{{ csrf_token() }}"
+                    //  id: idSucProd
+                }
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                //alert(respuesta);
+                console.log(respuesta); //JSON.stringify(respuesta));
+            });
+            $('#modal_precio_venta').modal('hide');
+            $('#detalleProducto').modal('hide');
+            confirm("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
+            refrescar();
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+
 
     function infoSubproducto(id) {
         //Modal
@@ -1036,39 +1114,43 @@ PRODUCTOS
     };
 
     async function subproductoExiste(id) {
-        let response = "Sin respuesta";
-        let response2 = "Sin respuesta";
-        try {
-            response = await fetch(`/puntoVenta/veriUniqueSubproducto/?id=${id}`);
-            if (response.ok) {
-                Suc_Inac = await response.json();
-                // let idProd =Suc_Inac['idProd'];
-                let productosNue = Suc_Inac['producto'];
-                let producto_sucursal = Suc_Inac['productosSucursal']; //retornar 1 dato
-                let subproductos = Suc_Inac['subproducto'];
-                let bandera = true;
-                for (let y in producto_sucursal) {
-                    for (let x in subproductos) {
-                        if (subproductos[x].idSucursalProducto == producto_sucursal[y].id) {
-                            bandera = false;
-                            return alert("Este producto ya está activo en subproducto y no se puede volver a agregar");
+        let preguntar = confirm("¿AGREGAR SUBPRODUCTO?");
+        if (preguntar) {
+            let response = "Sin respuesta";
+            let response2 = "Sin respuesta";
+            try {
+                response = await fetch(`/puntoVenta/veriUniqueSubproducto/?id=${id}`);
+                if (response.ok) {
+                    Suc_Inac = await response.json();
+                    // let idProd =Suc_Inac['idProd'];
+                    let productosNue = Suc_Inac['producto'];
+                    let producto_sucursal = Suc_Inac['productosSucursal']; //retornar 1 dato
+                    let subproductos = Suc_Inac['subproducto'];
+                    let bandera = true;
+                    for (let y in producto_sucursal) {
+                        for (let x in subproductos) {
+                            if (subproductos[x].idSucursalProducto == producto_sucursal[y].id) {
+                                bandera = false;
+                                return redirect(`/puntoVenta/subproducto/actExistencia/?idSucProd=${producto_sucursal[y].id}`);
+                                //return alert("Este producto ya está activo en subproducto y no se puede volver a agregar");
+                            }
                         }
                     }
-                }
 
-                if (bandera) {
-                    redirect(id);
-                    // response2 = await fetch(`/puntoVenta/subproducto/create/?id=${id}`);
+                    if (bandera) {
+                        redirect(id);
+                        // response2 = await fetch(`/puntoVenta/subproducto/create/?id=${id}`);
+                    }
+                    console.log(Suc_Inac);
+                } else {
+                    // Suc_Inac = "";
+                    console.log("No responde :'v");
+                    console.log(response);
+                    throw new Error(response.statusText);
                 }
-                console.log(Suc_Inac);
-            } else {
-                // Suc_Inac = "";
-                console.log("No responde :'v");
-                console.log(response);
-                throw new Error(response.statusText);
+            } catch (err) {
+                console.log("Error al realizar la petición AJAX: " + err.message);
             }
-        } catch (err) {
-            console.log("Error al realizar la petición AJAX: " + err.message);
         }
     };
 

@@ -8,6 +8,7 @@ DEVOLUCION
 
 <div class="row p-1 ">
     <!--CONSULTAR PRODUCTO -->
+    <!--
     <div class="row col-12 ml-2 w-100">
 
         <h4 class="text-primary ml-2 my-2">
@@ -16,12 +17,13 @@ DEVOLUCION
             </strong>
         </h4>
     </div>
+    -->
     <div class="row border border-dark m-2 ml-4 mr-4 col ">
         <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
         <div class="col mt-1 mb-4 ml-4 mr-4">
             <div class="row  px-0 col-8 input-group my-4">
                 <h4 class=" mx-0 px-0 my-auto"> FOLIO VENTA:</h4>
-                <input type="number" min=0 class="form-control col-4 my-auto ml-3" size="15" placeholder="FOLIO DE LA VENTA A DEVOLVER" id="busquedaFolio" onkeyup="buscarFolio()">
+                <input type="number" min=0 class="form-control col-4 my-auto ml-3" size="15" placeholder="INGRESAR FOLIO VENTA" id="busquedaFolio" onkeyup="buscarFolio()">
                 <a title="buscar" href="" class="text-dark ml-2 mr-5 my-auto">
                     <img src="{{ asset('img\search.svg') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
                 <div class="col-2 ml-5"> </div>

@@ -15,7 +15,11 @@ CLIENTES
 </div>
 
 <div class="ml-3 my-auto ">
+<<<<<<< HEAD
     <a class="btn btn-outline-secondary ml-3 my-auto border-0 " href="{{ url('/puntoVenta/credito')}}">
+=======
+    <a class="btn btn-outline-secondary ml-3 my-auto border-0 " href="{{ url('puntoVenta/credito')}}">
+>>>>>>> 36da46f80afd75f6769f8980b6fd4be34685285d
         <img src="{{ asset('img\deudor.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>DEUDORES</small></p>
     </a>

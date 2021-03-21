@@ -14,7 +14,7 @@ COMPRAS
 </div>
 
 <div class="ml-4">
-    <form method="get" action="{{url('/pagoCompra/')}}">
+    <form method="get" action="{{url('/puntoVenta/pagoCompra/')}}">
         <button class="btn btn-outline-secondary p-1 border-0" type="submit" >
             <img src="{{ asset('img\pago.png') }}" alt="Editar" width="30px" height="30px">
             <p class="h6 my-auto mx-2 text-dark"><small>PAGOS</small></p>

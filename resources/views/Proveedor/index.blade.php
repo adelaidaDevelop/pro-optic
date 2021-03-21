@@ -30,9 +30,7 @@
                 <div class="row px-3 py-3 m-0">
                     <!--input type="text" id="buscador" class="form-control my-2">
                         <button class="btn btn-info mb-2" id="boton">Buscar</button-->
-
                     <h4 style="color:#4388CC">ACTIVOS</h4>
-
                     <div>
                         <input type="text" class="form-control text-uppercase my-1" placeholder="BUSCAR" id="texto">
                         <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL </small> </h6>
@@ -220,7 +218,11 @@
 
                 }
             }
-            body.innerHTML = cuerpo;
+            if (cuerpo === "") {
+                body.innerHTML = "NO HAY PROVEEDORES DADOS DE BAJA"
+            } else {
+                body.innerHTML = cuerpo;
+            }
             //console.log(await respuesta.json());
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);

@@ -133,7 +133,7 @@ class DepartamentoController extends Controller
        // $depa = Departamento::findOrFail($id);
        // $depa->update($baja);
         Departamento::destroy($id);
-        return redirect('puntoVenta/departamento');
+        return redirect('puntoVenta/departamento')->withErrors(['mensajeELIOk' => 'EL DEPARTAMENTO SE ELIMINO CORRECTAMENTE']);
     }
 
     protected function buscador(Request $request)

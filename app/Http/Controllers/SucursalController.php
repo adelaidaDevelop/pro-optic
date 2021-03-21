@@ -121,9 +121,10 @@ class SucursalController extends Controller
     public function destroy2($id)//Sucursal $sucursal)
     {
         $sucursales = Sucursal::where('status','=', 1)->get();
-        if(count($sucursales)>1)
-        {
+    
+        if(count($sucursales)>1) {
             try{
+                
                 Sucursal::destroy($id);
                 return true;
              }
