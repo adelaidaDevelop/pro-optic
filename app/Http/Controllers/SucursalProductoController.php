@@ -73,6 +73,32 @@ class SucursalProductoController extends Controller
         return "creado";
     }
 
+    public function modiPrecio(Request $request, $id){
+        $suc_prod = Sucursal_producto::findOrFail($id);
+        $precio['precio'] =  $request->input('precioNuevo');
+        $suc_prod->update($precio);
+        return  redirect('/puntoVenta/producto');
+    }
+
+    public function modiCosto(Request $request,$id){
+        $suc_prod = Sucursal_producto::findOrFail($id);
+        $costo['costo'] =  $request->input('costo');
+        $suc_prod->update($costo);
+        return  true;
+    }
+    public function actPrecio(Request $request,$id){
+        $suc_prod = Sucursal_producto::findOrFail($id);
+        $precio['precio'] =  $request->input('precio');
+        $suc_prod->update($precio);
+        return true;
+        //return  redirect('/puntoVenta/producto');
+
+    }
+    public function actCosto(Request $request,$id){
+
+    }
+    
+
 
     /**
      * Display the specified resource.

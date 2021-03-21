@@ -52,7 +52,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-check-label" for="flexCheckChecked">
-                                    FECHA
+                                    FECHA COMPRA
                                 </label>
                                 <input type="date" min="" id="fechaCompra" class="form-control mr-3" />
                                 <!--select class="form-control" name="idDepartamento" id="idDepartamento" required>

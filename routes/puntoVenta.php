@@ -105,7 +105,10 @@ Route::prefix('/puntoVenta')->group(function()
       
       
       Route::get('actualizar/{id}', [SucursalController::class,'bajaSucursal']);
-      
+      //MODIFICAR COSTO Y PRECIO EN SUCURSAL PRODUCTO
+      Route::get('producto/modiPrecio/{id}', [SucursalProductoController::class,'modiPrecio']);
+      Route::get('producto/modiCosto/{id}', [SucursalProductoController::class,'modiCosto']);
+
    Route::get('productoEli/{id}', function($id){
         $producto = Sucursal_producto::where('idProducto','=',$id)->delete();
         return redirect()->back();
@@ -149,9 +152,11 @@ Route::prefix('/puntoVenta')->group(function()
         Route::get('/proveedor/buscador', [ProveedorController::class,'buscador']);
         Route::resource('proveedor', ProveedorController::class);
     //   Route::get('proximosACaducar', [ProductosCaducidadController::class,'caducidad']);
-            Route::resource('oferta', OfertaController::class);  
+        Route::resource('oferta', OfertaController::class);  
         Route::resource('productosCaducidad', ProductosCaducidadController::class);
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
     
     });
+    
 });
+

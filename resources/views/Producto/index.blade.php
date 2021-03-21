@@ -8,8 +8,8 @@ PRODUCTOS
 <div class="col-0  p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
         <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit">
-            <img src="{{ asset('img\depto.svg') }}"  alt="Editar" width="33px" height="33px">
-            <br/>
+            <img src="{{ asset('img\depto.svg') }}" alt="Editar" width="33px" height="33px">
+            <br />
             <p class="h6 my-auto text-dark"><small>DEPARTAMENTOS</small></p>
         </button>
     </form>
@@ -18,34 +18,35 @@ PRODUCTOS
 <div class="col-0  ml-3 p-1 ">
     <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/producto/create')}}">
         <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="33px" height="33px">
-        <p class="h6 my-auto text-dark"><small>NUEVO PRODUCTO </small></p> </a>
+        <p class="h6 my-auto text-dark"><small>NUEVO PRODUCTO </small></p>
+    </a>
     </a>
 </div>
 <div class="col-0  ml-3 p-1 ">
     <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/producto/stock')}}">
-        <img src="{{ asset('img/stock.svg') }}"  alt="Editar" width="32px" height="32px">
+        <img src="{{ asset('img/stock.svg') }}" alt="Editar" width="32px" height="32px">
         <p class="h6 my-auto text-dark"><small>AGREGAR DE STOCK</small></p>
     </a>
 </div>
 
 <div class="col-0  ml-3 p-1 ">
     <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
-        <img src="{{ asset('img\alta2.png') }}"  alt="Editar" width="30px" height="30px">
+        <img src="{{ asset('img\alta2.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>DAR ALTA</small></p>
-        
+
     </button>
 </div>
 
 <div class="col-0  ml-3 p-1 ">
-    <a class="btn btn-outline-secondary p-1 border-0" href="{{ url('/puntoVenta/productosCaducidad')}}" >
-        <img src="{{ asset('img\calendario.png') }}"  alt="Editar" width="30px" height="30px">
+    <a class="btn btn-outline-secondary p-1 border-0" href="{{ url('/puntoVenta/productosCaducidad')}}">
+        <img src="{{ asset('img\calendario.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>PROXIMOS A CADUCAR</small></p>
     </a>
 </div>
 
 <div class="col-2  ml-3 p-1 ">
-    <a class="btn btn-outline-secondary p-1 border-0" href="{{ url('/puntoVenta/oferta')}}" >
-        <img src="{{ asset('img\ofertas.png') }}"  alt="Editar" width="30px" height="30px">
+    <a class="btn btn-outline-secondary p-1 border-0" href="{{ url('/puntoVenta/oferta')}}">
+        <img src="{{ asset('img\ofertas.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>OFERTAS</small></p>
     </a>
 </div>
@@ -56,27 +57,22 @@ PRODUCTOS
         OFERTAS
     </button>
 </div>
-
-
-
-
-
 -->
-
-
 @endsection
 
 <div class="row p-1 ">
     <!--CONSULTAR PRODUCTO -->
     <div class="row border border-dark m-2 w-100">
+
         <div class="row col-12 mx-2 mt-2 mb-2 ">
             <h5 class="text-primary">
                 <strong>
-                    CONSULTAR PRODUCTO
+                    CONSULTAR PRODUCTOS
                 </strong>
             </h5>
         </div>
-        <div class="row col-12 border px-0 mx-0">
+
+        <div class="row col-12 px-0 mx-0">
             <div class="col-2 border border-primary  mb-4">
                 <h6 class="text-primary mt-4">
                     FILTRAR POR:
@@ -96,8 +92,22 @@ PRODUCTOS
             </div>
             <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
             <div class="col-10 mx-0 mb-4 px-0">
-                <div class="form-group border mx-4">
-                    <div class="row my-0 mx-0">
+                <div class="form-group mx-4">
+                    <div class="row mx-auto my-auto ">
+                        <div class="col-4  text-center ">
+                            <h6 class=" text-primary"> COSTO DEL INVENTARIO: </h6>
+                            <p class="h3 mb-2" id="costoInv">$ 0.00</p>
+                        </div class="text-center">
+                        <div id="" class="col-4 mx-auto text-center">
+                            <h6 class=" text-primary"> PRECIO DEL INVENTARIO </h6>
+                            <p class="h3 mb-2" id="precioInv">$ 0.00</p>
+                        </div>
+                        <div class="col-4 text-center">
+                            <h6 class=" text-primary"> CANTIDAD DE PRODUCTOS EN INVENTARIO: </h6>
+                            <div id="cantProdInv" class="h3"> 0.0</div>
+                        </div>
+                    </div>
+                    <div class="row my-0 mx-0 mt-3">
                         <input class="form-control text-uppercase  col-4" type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarFiltroNombre2()">
                         <a title="buscar" href="" class="text-dark ">
                             <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
@@ -121,16 +131,17 @@ PRODUCTOS
 
                 <!-- TABLA -->
                 <div class="row border mx-0 px-0 border-dark mx-4" style="height:500px;overflow-y:auto;">
-                    <table class="table table-bordered border-primary  text-center" id="productos">
-                        <thead class="table-secondary text-primary">
+                    <table class="table table-bordered table-responsive-lg  border-primary  text-center table-hover" id="productos">
+                        <thead class="table-secondary text-dark">
                             <tr>
                                 <th>#</th>
+                                <th>TIPO</th>
                                 <th>CODIGO BARRAS</th>
                                 <th>NOMBRE</th>
-                                <th>EXISTENCIA</th>
                                 <th>DEPARTAMENTO</th>
                                 <th>COSTO</th>
-                                <th>PRECIO</th>
+                                <th>PRECIO VENTA</th>
+                                <th>EXISTENCIA</th>
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
@@ -149,8 +160,6 @@ PRODUCTOS
 <!-- MODAL-->
 
 <!-- MODAL-->
-
-
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="width:900px;">
@@ -178,10 +187,39 @@ PRODUCTOS
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+
             </div>
         </div>
     </div>
 </div>
+<!-- MODAL-->
+<div class="modal fade modal_precio_venta" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-small " role="document">
+        <div class="modal-content" style="width:500px;">
+            <div class="modal-header  ">
+                <!--ENCABEZADO -->
+                <div class="container-fluid">
+                    <div class="row" style="background:#3366FF">
+                        <h6 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">
+                            <br />
+                        </h6>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body col-8 mx-4" id="">
+                <div class="row  " id="modiPrecioCosto">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="volverInfo4" data-dismiss="modal">CANCELAR</button>
+                <button type="button" class="btn btn-primary" id="actPrecioCosto" onclick="actPrecioCosto()">GUARDAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- END MODAL-->
 <!--MODAL PARA CARGAR PRODUCTOS DADOS DE BAJA EN SUCURSAL LOGEADO-->
 <div class="modal fade modal_altaProductos_SucursalLogeado" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -247,6 +285,7 @@ PRODUCTOS
     let depaBandera = true;
     let bajosExisBandera = true;
     let folioNombreBandera = true;
+    let subproductos = @json($subproducto);
     //  let nombreBandera = true;
 
     let prod_baja = "";
@@ -353,8 +392,6 @@ PRODUCTOS
                                             idDepartamento: productos[count5].idDepartamento
                                         };
                                         productosList.push(productosAdd);
-
-
                                     }
                                 }
                             } else {
@@ -567,6 +604,10 @@ PRODUCTOS
     function rellenar() {
         let cuerpo = "";
         let contador = 0;
+        let costo_inventario = 0;
+        let precio_inventario = 0;
+        let cantProdInventario = 0;
+
         let departamento = "";
         for (let t in productosList) {
             console.log("prod list");
@@ -578,16 +619,22 @@ PRODUCTOS
                                 departamento = d[count8].nombre;
                             }
                         }
-                        contador = contador +1;
+                        let costoTemporal = productosSucursal[z].costo * productosList[t].existencia;
+                        let precioTemporal = productosSucursal[z].precio * productosList[t].existencia;
+                        costo_inventario = costo_inventario + costoTemporal;
+                        precio_inventario = precio_inventario + precioTemporal;
+                        cantProdInventario = cantProdInventario + productosList[t].existencia;
+                        contador = contador + 1;
                         cuerpo = cuerpo + `
                             <tr onclick="" data-dismiss="modal">
                                 <th scope="row">` + contador + `</th>
+                                <td >` + "NORMAL" + `</td>
                                 <td>` + productosList[t].codigoBarras + `</td>
                                 <td>` + productosList[t].nombre + `</td>
-                                <td>` + productosList[t].existencia + `</td>
                                 <td>` + departamento + `</td>
                                 <td>` + productosSucursal[z].costo + `</td>
-                                <td>` + productosSucursal[z].precio + `</td>
+                                <td class="text-success">` + productosSucursal[z].precio + `</td>
+                                <td>` + productosList[t].existencia + `</td>
                                 <td>` +
                             ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
                                 <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
@@ -596,13 +643,293 @@ PRODUCTOS
                             </tr>
                             `;
                     }
+
                 }
             }
         }
+        //MOSTRAR SUBPRODUCTOS
+        for (let y in subproductos) {
+            for (let z in productosSucursal) {
+                if (subproductos[y].idSucursalProducto == productosSucursal[z].id) {
+
+                    for (let p in productos) {
+                        if (productos[p].id == productosSucursal[z].idProducto) {
+                            for (count8 in d) {
+                                if (productos[p].idDepartamento === d[count8].id) {
+                                    departamento = d[count8].nombre;
+                                }
+                            }
+                            let costoSubp = productosSucursal[z].costo / subproductos[y].piezas;
+                            contador = contador + 1;
+                            cuerpo = cuerpo + `
+                            <tr class="table-warning" onclick="" data-dismiss="modal">
+                                <th scope="row">` + contador + `</th>
+                                <td >` + "SUBPRODUCTO" + `</td>
+                                <td>` + productos[p].codigoBarras + `</td>
+                                <td>` + productos[p].nombre + `</td>
+                                <td>` + departamento + `</td>
+                                <td>` + Number(costoSubp.toFixed(2)) + `</td>
+                                <td class="text-success">` + subproductos[y].precio + `</td>
+                                <td>` + subproductos[y].existencia + `</td>
+                                <td>` +
+                                ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return infoSubproducto( ` + productos[p].id + `)" value="` + productos[p].id + `">
+                                <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
+                                </button>
+                                </td>            
+                            </tr>
+                            `;
+                        }
+
+                    }
+
+
+                }
+
+            }
+
+        }
+
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        document.getElementById("costoInv").innerHTML = costo_inventario;
+        document.getElementById("precioInv").innerHTML = precio_inventario;
+        document.getElementById("cantProdInv").innerHTML = cantProdInventario;
     };
 
     function info4(id) {
+        //Modal
+        //let x1= 0;
+        let datosProduct = "";
+        let cambiarCostoPrecio = "";
+        let imagen = "";
+        let departamento = "";
+        let idProdSuc = 0;
+        let ms = 0;
+        for (let j in productosSucursal) {
+            for (count10 in productos) {
+                if (productos[count10].id === productosSucursal[j].idProducto) {
+                    if (productos[count10].id === id) {
+                        for (count11 in d) {
+                            if (productos[count10].idDepartamento === d[count11].id) {
+                                departamento = d[count11].nombre;
+                            }
+                        }
+                        x1 = productos[count10].id;
+                        x = productos[count10].id;
+                        idProdSuc = productosSucursal[j].id;
+                        console.log(x);
+                        ms = productosSucursal[j].minimoStock;
+                        let urlImagen = "";
+                        if (productos[count10].imagen != null)
+                            urlImagen = "{{asset('storage')}}" + "/" + productos[count10].imagen;
+                        console.log(urlImagen);
+                        datosProduct =
+                            `
+                                    <div class="col-3">
+                                            <br/>
+                                            <label for="codigoBarras">
+                                                <h6 class="ml-4"> {{'CODIGO DE BARRAS'}}</h6>
+                                            </label>
+                                        <br/>
+                                            <label for="Nombre">
+                                                <h6  class="ml-4 mt-4">{{'NOMBRE'}}</h6>
+                                            </label>
+                                            <br /><br/>
+                                            <label for="Descripcion">
+                                                <h6  class="ml-4"> {{'DESCRIPCION'}} </h6>
+                                            </label>
+                                            <br /><br /> <br/> <br/>
+                                            <label for="MinimoStock">
+                                                <h6  class="ml-4"> {{'MINIMO STOCK'}}</h6>
+                                            </label>
+                                            <br /> <br/>
+                                            <label for="Receta">
+                                                <h6  class="ml-4"> {{'RECETA MEDICA'}} </h6>
+                                            </label>
+                                            <br /><br />
+                                            <label for="idDepartamento">
+                                                <h6  class="ml-4"> {{'DEPARTAMENTO'}}</h6>
+                                            </label>
+                                            <br />
+                                        </div>
+                                        <div class="col-5">
+                                            <br />
+                                            <!--El name debe ser igual al de la base de datos-->
+                                            <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase " placeholder="Ingresar codigo de barras" value="` + productos[count10].codigoBarras + `" required autocomplete="codigoBarras" autofocus disabled>
+                                            <br />
+                                            <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required disabled>
+                                            <br />
+                                            <textarea name="descripcion" id="descripcion" class="form-control text-uppercase" placeholder="Descripcion del producto" rows="3" cols="23" required disabled>` + productos[count10].descripcion + `</textarea>
+                                            <br />
+                                            <input type="number" name="minimoStock" id="minimoStock" class="form-control text-uppercase" placeholder="Ingrese el minimo de productos permitidos" value="` + ms + `" autofocus required disabled>
+                                            <br />
+                                            <select class="form-control text-uppercase" name="Receta" id="Receta"  disabled>
+                                                <option value="" selected>` + productos[count10].receta + ` </option>
+                                            </select>
+                                            <br />
+                                            <select class="form-control text-uppercase" name="Depa" id="Depa"  disabled>
+                                                <option value="" selected>` + departamento + ` </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <br/>
+                                            <label for="Imagen">
+                                                <h5> <strong>{{'FOTO aqui es'}}</strong></h5>
+                                            </label>
+                                            <br />
+
+                                            <img src="${urlImagen}" alt="" width="200">
+                                            <br /><br />
+                                            <a class="btn btn-outline-primary" href="{{ url('/puntoVenta/producto/` + x + `/edit')}}" onclick="return confirm('¿EDITAR ESTE PRODUCTO?')"> 
+                                            <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
+                                            EDITAR  </a>
+                                            <br/> <br/>
+                                            
+                                            <button type="button" class="btn btn-outline-primary mb-2" data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarPrecio( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                           MODIFICAR PRECIO
+                                            </button>
+                                            <br/><br/>
+                                            <button type="button" class="btn btn-outline-primary mb-2" data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarCosto( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                           MODIFICAR COSTO
+                                            </button>
+                                            <br/>
+                                            <a class="btn btn-outline-danger mb-2" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                                            <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                                             DAR DE BAJA </a> 
+
+                                             <a class="btn btn-outline-primary mt-4"   href="#" onclick="subproductoExiste(` + x + `);return false;">
+                                             <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                                             AGREGAR A SUBPRODUCTO </a> 
+                                        </div>
+
+                                        <br/>
+                                    `;
+                    }
+                }
+            }
+        }
+        document.getElementById("resultados").innerHTML = datosProduct;
+    };
+
+    function modificarPrecio(idSP) {
+        let cambiarPrecio = "";
+        let idProd = 0;
+        let idSucPro = 0;
+        for (let j in productosSucursal) {
+            if (productosSucursal[j].id === idSP) {
+                idProd = productosSucursal[j].idProducto;
+                idSucPro = productosSucursal[j].id;
+                console.log("entra");
+                cambiarPrecio = `
+                                <h6>PRECIO ACTUAL DEL PRODUCTO</h6>
+                                <input type="number" name="" id="" class="form-control " placeholder="" value="` + productosSucursal[j].precio + `" autofocus required disabled>
+                                <h6>INGRESAR NUEVO PRECIO DEL PRODUCTO</h6>        
+                                <input type="number" name="precio" id="precio_nuevo" class="form-control  " placeholder="PRECIO NUEVO" value="" autofocus required>
+                                    `;
+            }
+        }
+        $("#volverInfo4").click(function() {
+            info4(idProd);
+        });
+        $("#actPrecioCosto").click(function() {
+            actPrecio(idSucPro);
+        });
+        // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
+        document.getElementById("modiPrecioCosto").innerHTML = cambiarPrecio;
+    }
+
+    function modificarCosto(idSP) {
+        let cambiarCosto = "";
+        let idProd = 0;
+        let idSucPro = 0;
+        for (let j in productosSucursal) {
+            if (productosSucursal[j].id === idSP) {
+                idProd = productosSucursal[j].idProducto;
+                idSucPro = productosSucursal[j].id;
+                console.log("entra");
+                cambiarCosto = `
+                                <h6>COSTO ACTUAL DEL PRODUCTO</h6>
+                                <input type="number" name="" id="" class="form-control " placeholder="" value="` + productosSucursal[j].costo + `" autofocus required disabled>
+                                <h6>INGRESAR NUEVO COSTO DEL PRODUCTO</h6>        
+                                <input type="number" name="costo" id="costo_nuevo" class="form-control  " placeholder="PRECIO NUEVO" value="" autofocus required>
+                                    `;
+            }
+        }
+        $("#volverInfo4").click(function() {
+            info4(idProd);
+        });
+        $("#actPrecioCosto").click(function() {
+            actCosto(idSucPro);
+        });
+        // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
+        document.getElementById("modiPrecioCosto").innerHTML = cambiarCosto;
+    }
+
+    async function actPrecio(idSucProd) {
+        try {
+            //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
+            const precio = document.querySelector('#precio_nuevo');
+            /*
+            if (pago.value.length === 0)
+                return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
+            if (parseFloat(pago.value) < parseFloat(total))
+                return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
+           */
+            let funcion = $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `'/puntoVenta/productoSuc/actPrecio/${idSucProd}'`,
+                // los datos que voy a enviar para la relación
+                data: {
+                    precio: parseFloat(precio.value),
+                    _token: "{{ csrf_token() }}"
+                    //  id: idSucProd
+                }
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                //alert(respuesta);
+                console.log(respuesta); //JSON.stringify(respuesta));
+            });
+            // $('#confirmarVentaModal').modal('hide');
+            // await cargarProductosSucursal();
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+    async function actCosto(idSucProd) {
+        try {
+            //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
+            const costo = document.querySelector('#costo_nuevo');
+            /*
+            if (pago.value.length === 0)
+                return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
+            if (parseFloat(pago.value) < parseFloat(total))
+                return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
+           */
+            let funcion = $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `'/puntoVenta/productoSuc/actCosto/${idSucProd}'`,
+                // los datos que voy a enviar para la relación
+                data: {
+                    costo: parseFloat(costo.value),
+                    _token: "{{ csrf_token() }}"
+                    //  id: idSucProd
+                }
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                //alert(respuesta);
+                console.log(respuesta); //JSON.stringify(respuesta));
+            });
+            // $('#confirmarVentaModal').modal('hide');
+            // await cargarProductosSucursal();
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+
+    function infoSubproducto(id) {
         //Modal
         //let x1= 0;
         let datosProduct = "";
@@ -673,10 +1000,10 @@ PRODUCTOS
                                         <div class="col-4 text-center">
                                             <br/>
                                             <label for="Imagen">
-                                                <h5> <strong>{{'FOTO'}}</strong></h5>
+                                                <h5> <strong>{{'FOTO aqui'}}</strong></h5>
                                             </label required>
                                             <br />
-                                            <img src="{{ asset('storage')}}/` + productos[count10].imagen + ` " alt="" width="200">
+                                            
                                             
                                             <br /><br />
                                             <a class="btn btn-outline-primary" href="{{ url('/puntoVenta/producto/` + x + `/edit')}}" onclick="return confirm('¿EDITAR ESTE PRODUCTO?')"> 
@@ -691,9 +1018,7 @@ PRODUCTOS
 
                                              <a class="btn btn-outline-primary mt-4"   href="#" onclick="subproductoExiste(` + x + `);return false;">
                                              <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
-                                             AGREGAR A SUBPRODUCTO </a> 
-                                             
-                                              
+                                             AGREGAR A SUBPRODUCTO </a>
                                         </div>
 
                                         <br/>
@@ -715,7 +1040,6 @@ PRODUCTOS
         let response2 = "Sin respuesta";
         try {
             response = await fetch(`/puntoVenta/veriUniqueSubproducto/?id=${id}`);
-
             if (response.ok) {
                 Suc_Inac = await response.json();
                 // let idProd =Suc_Inac['idProd'];
@@ -724,22 +1048,17 @@ PRODUCTOS
                 let subproductos = Suc_Inac['subproducto'];
                 let bandera = true;
                 for (let y in producto_sucursal) {
-
                     for (let x in subproductos) {
                         if (subproductos[x].idSucursalProducto == producto_sucursal[y].id) {
                             bandera = false;
                             return alert("Este producto ya está activo en subproducto y no se puede volver a agregar");
                         }
-
                     }
-
-
-
                 }
 
                 if (bandera) {
                     redirect(id);
-                   // response2 = await fetch(`/puntoVenta/subproducto/create/?id=${id}`);
+                    // response2 = await fetch(`/puntoVenta/subproducto/create/?id=${id}`);
                 }
                 console.log(Suc_Inac);
             } else {
