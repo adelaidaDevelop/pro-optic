@@ -51,7 +51,7 @@ class AdministracionController extends Controller
         ]);
         $role_admin = Role::where('name', 'admin')->first();
         $sucursalEmpleado->roles()->attach($role_admin);
-        return redirect('puntoVenta/administracion');
+        return redirect('puntoVenta/administracion')->withErrors(['mensajeConf' => 'ESTA SUCURSAL SE AGREGO CORRECTAMENTE']);
     }
 
     public function update(Request $request, $id)

@@ -60,6 +60,16 @@ class SubproductoController extends Controller
        // $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
         return compact('producto',  'productosSucursal','idProd','subproducto');
     }
+    public function actExistencia(Request $request){
+        $id = $request->input('idSucProd');
+        $subproducto = Subproducto::where('idSucursal', '=', $id);
+        $suc_prod = Sucursal_producto::findOrFail($id);
+        $existencia1['existencia'] = $suc_prod->existencia - 1;
+        $suc_prod->update($existencia1);
+        $existencia['existencia'] =$subproducto['piezas'] + $subproducto['existencia'];
+        $subproducto->update($existencia);
+        return redirect('puntoVenta/producto');
+    }
     /**
      * Store a newly created resource in storage.
      *

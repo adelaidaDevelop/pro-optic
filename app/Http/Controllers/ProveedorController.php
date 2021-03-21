@@ -47,7 +47,7 @@ class ProveedorController extends Controller
             return redirect()->back()->withInput()->withErrors(['mensajeError' => 'YA EXISTE UN PROVEEDOR CON EL MISMO NOMBRE Y NO ES POSIBLE REPETIRLO']);  
         }
         
-        return redirect('puntoVenta/proveedor')->withErrors(['mensajeConf' => 'ESTE CLIENTE SE AGREGO CORRECTAMENTE']);
+        return redirect('puntoVenta/proveedor')->withErrors(['mensajeConf' => 'EL PROVEEDOR SE AGREGO CORRECTAMENTE']);
     }
 
     /**
@@ -80,7 +80,6 @@ class ProveedorController extends Controller
      */
     public function edit($id)
     {
-        //
         $datosD['d'] = Proveedor::findOrFail($id);
         if($datosD['d']->status == true)
             return view('Proveedor.index',$datosD);
@@ -96,7 +95,6 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         if($request->has('status'))
         {
             Proveedor::findOrFail($id)->update(['status' => true ]);
@@ -104,7 +102,6 @@ class ProveedorController extends Controller
             //return redirect('puntoVenta/empleado/'.$id.'/edit');
             return true;
         }
-        
         $datosProveedor = request()->except(['_token','_method']);
         $nombre = $request['nombre'];
         $rfc= $request['rfc'];
@@ -120,7 +117,7 @@ class ProveedorController extends Controller
             return redirect()->back()->withErrors(['mensajeError' => 'PARA EDITAR DEBE MODIFICAR AL MENOS UN ELEMENTO']);  
         }else {
         $proveedor->update($datosProveedor);
-        return redirect('puntoVenta/proveedor')->withErrors(['mensajeConf' => 'PROVEEDOR AGREGADO CORRECTAMENTE']);  
+        return redirect('puntoVenta/proveedor')->withErrors(['mensajeConf' => 'PROVEEDOR EDITADO CORRECTAMENTE']);  
         }
     }
 

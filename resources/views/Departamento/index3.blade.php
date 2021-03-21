@@ -117,7 +117,7 @@
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" onkeyup="mayus(this)" required>
+                                    <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" placeholder="AGREGAR NOMBRE" onkeyup="mayus(this)" required>
 
                                 </div>
                             </div>
@@ -132,6 +132,12 @@
                                     {{$message}}
                                 </div>
                                 @enderror
+                                @error('mensajeELIOk')
+                                <div class="alert alert-success my-auto" role="alert">
+                                    {{$message}}
+                                </div>
+                                @enderror
+                                
                             </div>
                         </div>
                             <button class="btn btn-outline-secondary " type="submit" onclick="return confirm('¿AGREGAR NUEVO DEPARTAMENTO?')">
@@ -153,7 +159,7 @@
 
     function filtrar() {
         document.getElementById("resultados").innerHTML = "";
-        fetch(`/departamento/buscador?texto=${texto.value}`, {
+        fetch(`/puntoVenta/departamento/buscador?texto=${texto.value}`, {
                 method: 'get'
             })
             .then(response => response.text())

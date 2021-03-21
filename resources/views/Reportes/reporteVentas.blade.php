@@ -15,14 +15,29 @@ REPORTES
 @endsection
 <!--CONSULTAR PRODUCTO -->
 <div class="row  border border-dark ml-0  mt-2 ">
-    <h4 class=" row  ml-1 mt-2 mb-2 mx-auto text-dark ">
+    <h4 class=" row text-center  my-2 mb-4 mx-auto text-dark ">
         <strong>
-            REPORTE DE VENTAS
+            VENTAS
         </strong>
     </h4>
-    <br />
+    <br/>
+    <div class="row w-100 mx-auto my-auto ">
+        <div class="col-4  text-center ">
+            <h6 class=" text-primary"> COSTO DEL INVENTARIO: </h6>
+            <p class="h3 mb-2" id="costoInv">$ 0.00</p>
+        </div class="text-center">
+        <div id="" class="col-4 mx-auto text-center">
+            <h6 class=" text-primary"> PRECIO DEL INVENTARIO </h6>
+            <p class="h3 mb-2" id="precioInv">$ 0.00</p>
+        </div>
+        <div class="col-4 text-center">
+            <h6 class=" text-primary"> CANTIDAD DE PRODUCTOS EN INVENTARIO: </h6>
+            <div id="cantProdInv" class="h3"> 0.0</div>
+        </div>
+    </div>
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
     <div class="row w-100   ml-5">
+
         <h5 class="text-primary ml-3 ">BUSCAR POR:</h5>
         <div class="row form-group input-group  ml-3 ">
             <h6 class=" my-auto mr-1">
@@ -36,6 +51,7 @@ REPORTES
                 <option value="3">ECOMMERCE</option>
                 <option value="4">TODOS</option>
             </select>
+           <!-- 
             <h6 class="my-auto mr-1">
                 TURNOS
             </h6>
@@ -44,6 +60,7 @@ REPORTES
                 <option value="1" selected>COMPLETO</option>
                 <option value="2">POR TURNO</option>
             </select>
+            -->
             <h6 class=" my-auto mr-1">
                 CAJERO:
             </h6>
@@ -59,7 +76,7 @@ REPORTES
             </select>
         </div>
         <h5 class="text-primary ml-3">FECHA:</h5>
-        <div class="form-group input-group  ">
+        <div class="form-group input-group border  ">
             <div class="col-1 form-group input-group">
                 <h6 class="text-primary  my-auto mr-1">
                     DIA
@@ -67,13 +84,13 @@ REPORTES
                 <input class="my-auto" type="radio" value="dia" name="fecha" id="fechaDia" onchange="habilitarFecha()" checked>
             </div>
             <div class="col-1 form-group input-group">
-                <h6 class="text-primary ml-1 my-auto mr-1">
+                <h6 class="text-primary  my-auto mx-1">
                     MES
                 </h6>
                 <input class="my-auto" type="radio" value="mes" name="fecha" id="fechaMes" onchange="habilitarFecha()">
             </div>
             <div class="col-1 form-group input-group">
-                <h6 class="text-primary ml-1 my-auto mr-1">
+                <h6 class="text-primary mx-1 my-auto ">
                     AÑO
                 </h6>
                 <input class="my-auto" type="radio" value="anio" name="fecha" id="fechaAnio" onchange="habilitarFecha()">
@@ -85,9 +102,9 @@ REPORTES
                 <input class="my-auto" type="radio" value="periodo" name="fecha" id="fechaPeriodo" onchange="habilitarFecha()">
             </div>
         </div>
-        <div class="  form-group input-group ml-3 ">
+        <div class="  form-group input-group ml-3 border ">
             <input type="date" min="" onchange="" id="fechaXDia" class="form-control my-0 col-2" />
-            <select class="form-control col-1 my-0 ml-2 mr-2" name="meses" id="fechaXmeses" required disabled>
+            <select class="form-control col-1 my-0 mx-2" name="meses" id="fechaXmeses" required disabled>
                 <option value="0" selected>MES</option>
                 <option value="1">ENERO</option>
                 <option value="2">FEBRERO</option>
@@ -210,13 +227,13 @@ REPORTES
         if (opcFecha === 'dia') {
             dia.disabled = false;
             mes.disabled = true;
-           // $("#fechaXmeses").selectmenu('1', true);
+            // $("#fechaXmeses").selectmenu('1', true);
             $("#fechaXmeses").val('0')
             $("#fechaXanio").val('1')
             anio.disabled = true;
             periodoIni.disabled = true;
             periodoFin.disabled = true;
-           // generaReportes();
+            // generaReportes();
         } else if (opcFecha === 'mes') {
             dia.disabled = true;
             mes.disabled = false;
@@ -225,7 +242,7 @@ REPORTES
             anio.disabled = true;
             periodoIni.disabled = true;
             periodoFin.disabled = true;
-           // generaReportes();
+            // generaReportes();
         } else if (opcFecha === 'anio') {
             dia.disabled = true;
             mes.disabled = true;
@@ -234,7 +251,7 @@ REPORTES
             $("#fechaXmeses").val('0')
             periodoIni.disabled = true;
             periodoFin.disabled = true;
-           // generaReportes();
+            // generaReportes();
 
         } else if (opcFecha === 'periodo') {
             dia.disabled = true;

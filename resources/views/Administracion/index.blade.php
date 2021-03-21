@@ -877,8 +877,7 @@ async function veriSucursal(id) {
                 let respuesta = await response.text();
                 if (respuesta.length > 1) {
                     return alert(respuesta)
-                }
-                if (respuesta.length == 1) {
+                } else if (respuesta.length == 1) {
                     //recargar la pag
                     alert("La sucursal fue eliminada");
                     location.href = "{{url('/puntoVenta/administracion')}}";

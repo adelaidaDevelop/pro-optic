@@ -17,21 +17,20 @@
             </form>
         </div>
         @endif
-        <div class="col my-2 ml-5 pl-1">
+        <div class="ml-4 ">
             <form method="get" action="{{url('/puntoVenta/administracion/')}}">
-                <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    SUCURSALES
+                <button class="btn btn-outline-secondary  p-1 border-0" type="submit" >
+                <img src="{{ asset('img\sucursal2.png') }}" alt="Editar" width="30px" height="30px">
+                    <p class="h6 my-auto mx-2 text-dark"><small>SUCURSALES</small></p>
+                    
                 </button>
             </form>
         </div>
-        <div class="col my-2 pl-1">
+        <div class="">
             <form method="get" action="{{url('/puntoVenta/empleado/')}}">
-                <button class="btn btn-primary" type="submit" style="background-color:#3366FF">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    EMPLEADOS
+                <button class="btn btn-outline-secondary  p-1 border-0" type="submit" >
+                <img src="{{ asset('img\empleado.png') }}" alt="Editar" width="30px" height="30px">
+                    <p class="h6 my-auto mx-2 text-dark"><small>EMPLEADOS</small></p>
                 </button>
             </form>
         </div>
