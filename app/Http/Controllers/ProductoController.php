@@ -98,16 +98,20 @@ class ProductoController extends Controller
      */
     public function show($producto)//Producto $producto)
     {
-        $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         if($producto=="productos")
         {
+            $usuarios = ['crearVenta','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
             $productos = Producto::all();
             $productosCodificados = json_encode($productos);
             return $productos;//compact('productos');
         }
         else{
+            $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
             //$existencia = Producto::where("")
             //$id = Producto::whereColumn('minimo_stock','>=','existencia')->get();
             //return $id;

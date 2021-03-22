@@ -51,6 +51,9 @@ class ReporteController extends Controller
     public function index2()
     {
         //REPORTE INVENTARIO INDEX
+        $usuarios = ['verReporte','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $empleados = Empleado::all();
         $idSucursal = session('sucursal');
         $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();

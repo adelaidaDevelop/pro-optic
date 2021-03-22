@@ -327,7 +327,7 @@ class EmpleadoController extends Controller
     }
     public function validarEmpleado($clave)
     {
-        $usuarios = ['crearEmpleado','modificarEmpleado','admin'];
+        $usuarios = ['crearEmpleado','modificarEmpleado','crearVenta','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $empleado = Empleado::where('claveE','=',$clave)->get();

@@ -78,11 +78,11 @@ class OfertaController extends Controller
      * @param  \App\Models\Oferta  $oferta
      * @return \Illuminate\Http\Response
      */
-    public function show($idS)
+    protected function show($idS)
     {
         //$productos = Producto::all();
         //$sucursalProducto = Sucursal_producto::where('idSucursal', '=',$idS)->get();
-        $usuarios = ['verProducto','crearProducto','modificarProducto','admin'];
+        $usuarios = ['verProducto','crearProducto','modificarProducto','crearVenta','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $productosOferta = Oferta::all();//where('idSucursalProducto','=',$sP->id)->get();

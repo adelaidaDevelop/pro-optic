@@ -14,8 +14,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/puntoVenta/venta">
-                            <button class="btn btn-light input-group" type="submit">
+                        <a class="nav-link px-0 mx-2" href="/puntoVenta/venta">
+                            <button class="btn btn-light input-group border" type="submit">
                                 <img src="{{ asset('img\venta2.png') }}" alt="Editar" width="30px" height="30px">
                                 <p class="h6 my-auto"><small>VENTAS</small></p>
                             </button>
@@ -23,7 +23,7 @@
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/puntoVenta/compra">
+                        <a class="nav-link px-0 mx-2" href="/puntoVenta/compra">
                             <button class="btn btn-light input-group">
                                 <img src="{{ asset('img\compra.png') }}" alt="Editar" width="30px" height="30px">
                                 <p class="h6 my-auto"><small>COMPRAS</small></p>
@@ -40,7 +40,7 @@
                     </li>
                     -->
                     <li class="nav-item active">
-                        <a class="nav-link" href="/puntoVenta/producto">
+                        <a class="nav-link px-0 mx-2" href="/puntoVenta/producto">
                             <button class="btn btn-light input-group">
                             <img src="{{ asset('img\inventario.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto ml-1"><small>INVENTARIO</small></p>
@@ -49,7 +49,7 @@
                     </li>
                     <li class="nav-item active">
                         @if(session('idUsuario') == 1)
-                        <a class="nav-link" href="/puntoVenta/administracion">
+                        <a class="nav-link px-0 mx-2" href="/puntoVenta/administracion">
                             <button class="btn btn-light input-group">
                             <img src="{{ asset('img\administracion.png') }}" alt="Editar" width="30px" height="30px">
                             
@@ -73,7 +73,7 @@
                             </button>
                             <span class="sr-only">(current)</span></a>
                             -->
-                        <a class="nav-link" href="/puntoVenta/credito">
+                        <a class="nav-link px-0 mx-2" href="/puntoVenta/credito">
                             <button class="btn btn-light input-group">
                             <img src="{{ asset('img\deudores.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto ml-1"><small>LISTA DEUDORES</small></p>
@@ -83,7 +83,7 @@
 
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/puntoVenta/corteCaja">
+                        <a class="nav-link px-0 mx-2" href="/puntoVenta/corteCaja">
                             <button class="btn btn-light input-group">
                                 <img src="{{ asset('img\corteC.png') }}" alt="Editar" width="30px" height="30px">
                                 <p class="h6 my-auto"><small>CORTE</small></p>
@@ -91,7 +91,7 @@
                             <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/puntoVenta/reporteInventario">
+                        <a class="nav-link px-0 mx-2" href="/puntoVenta/reporteInventario">
                             <button class="btn btn-light input-group">
                             <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto"><small>REPORTES</small></p>
