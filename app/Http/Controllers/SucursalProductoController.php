@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Oferta;
 use App\Models\Sucursal;
 use App\Models\Sucursal_producto;
+use App\Models\Sucursal_empleado;
 use App\Models\Producto;
 use App\Models\Productos_caducidad;
 use Illuminate\Http\Request;
@@ -39,9 +40,10 @@ class SucursalProductoController extends Controller
      */
     public function store(Request $request)
     {
+        
         $usuarios = ['crearProducto','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        //return 'Todo bien';
         $datos = $request->input('datos');
         $datosCodificados = json_decode($datos,true);
         foreach($datosCodificados as $datosProducto)

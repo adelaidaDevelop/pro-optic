@@ -28,7 +28,7 @@
         $var = 1;
         @endphp
         <div class="col-12">
-            <div class=" col row mx-0 mt-2 mb-1 px-0">
+            <div class=" col-12 row mx-0 my-3 px-0">
                 <!--div class="col-9 m-0 px-0"-->
                 <div class="form-group row col my-1 mx-0 px-0">
                     <!--div class="col"-->
@@ -242,7 +242,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto2" onkeyup="buscarSubproducto()">
+                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaSubproducto" onkeyup="buscarSubproducto()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
                     <table class="table table-hover table-bordered" id="productos">
@@ -478,7 +478,7 @@
     //subproducto
     let subproductosSucursal = @json($subproductos);
     //ofertas
-    let ofertasSucursal = [];
+    let ofertasSucursal = @json($ofertas);
 
     /*for(let i in ofertasSucursal)
     {
@@ -594,40 +594,8 @@
         };
         //if(tipo==0)
         productosVenta.push(producto);
-        /*if(tipo==1)
-        subproductosVenta.push(producto);
-        if(tipo==2)
-        ofertasVenta.push(producto);*/
-        //console.log(productosVenta);
     };
-    /*function agregarSubproductoAVenta(id, codigoBarras, nombre, existencia, precio, cantidad, subtotal) {
-        //console.log(id);
-        let subproducto = {
-            id: id,
-            codigoBarras: codigoBarras,
-            nombre: nombre,
-            existencia: existencia,
-            precio: precio,
-            cantidad: cantidad,
-            subtotal: subtotal
-        };
-        subproductosVenta.push(subproducto);
-        console.log(subproductosVenta);
-    };
-    function agregarSubproductoAVenta(id, codigoBarras, nombre, existencia, precio, cantidad, subtotal) {
-        //console.log(id);
-        let subproducto = {
-            id: id,
-            codigoBarras: codigoBarras,
-            nombre: nombre,
-            existencia: existencia,
-            precio: precio,
-            cantidad: cantidad,
-            subtotal: subtotal
-        };
-        subproductosVenta.push(subproducto);
-        console.log(subproductosVenta);
-    };*/
+    
     let total = 0;
 
     function calcularTotal() {
@@ -646,11 +614,11 @@
         let contador = 1;
 
         for (let count1 in productosVenta) {
-            let tipo = `<strong>SIN OBSERVACION</strong>`;
+            let tipo = `SIN OBSERVACION`;
             if (productosVenta[count1].tipo == 1)
-                tipo = `<strong>SUBPRODUCTO</strong>`;
+                tipo = `SUBPRODUCTO`;
             if (productosVenta[count1].tipo == 2)
-                tipo = `<strong>OFERTA</strong>`;
+                tipo = `OFERTA`;
             cuerpo = cuerpo + `
         <tr class="text-center">
             <th scope="row">` + contador++ + `</th>
@@ -849,10 +817,13 @@
     function buscarSubproducto() {
         let cont = 0;
         let cuerpo = "";
+        const palabraBusqueda = document.querySelector('#busquedaSubproducto');
         for (let count in subproductosSucursal) {
             let sucursalP = productosSucursal.find(p => p.id == subproductosSucursal[count].idSucursalProducto);
             let producto = productos.find(p => p.id == sucursalP.idProducto);
             let departamento = departamentos.find(p => p.id == producto.idDepartamento);
+            if(producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase()))
+            {
             cuerpo = cuerpo + `
             <tr onclick="agregarProducto(` + producto.id + `,` + 1 + `,` + subproductosSucursal[count].existencia +
                 `,` + subproductosSucursal[count].precio + `)" data-dismiss="modal">
@@ -862,6 +833,7 @@
                 <td>` + departamento.nombre + `</td>  
             </tr>
             `;
+            }
             /*for (count2 in sucursal_prod) {
                 if (subproductos[count].idSucursalProducto == sucursal_prod[count2].id) {
                     let idProd = sucursal_prod[count2].idProducto;
@@ -1191,15 +1163,18 @@
             let sucursalP = productosSucursal.find(p => p.id == ofertasSucursal[x].idSucursalProducto);
             let producto = productos.find(p => p.id == sucursalP.idProducto);
             let departamento = departamentos.find(p => p.id == producto.idDepartamento);
-            cuerpo = cuerpo + `
+            if(producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase()))
+            {
+                cuerpo = cuerpo + `
             <tr onclick="agregarProducto(` + producto.id + `,` + 2 + `,` +
                 ofertasSucursal[x].existencia + `,` + sucursalP.costo + `)" data-dismiss="modal">
-                <td>` + ofertasSucursal[x].codigoBarras + `</td>
-                <td>` + ofertasSucursal[x].nombre + `</td>
+                <td>` + producto.codigoBarras + `</td>
+                <td>` + producto.nombre + `</td>
                 <td>` + ofertasSucursal[x].existencia + `</td>
                 <td>` + departamento.nombre + `</td>
             </tr>
             `;
+            }
 
         }
         document.getElementById("consultaBusquedaOferta").innerHTML = cuerpo;

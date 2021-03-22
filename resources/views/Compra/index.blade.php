@@ -661,7 +661,7 @@ COMPRAS
     }
     async function verCreditoCompra(id, costoTotal) {
         try {
-            response = await fetch(`/pagoCompra/${id}`);
+            response = await fetch(`/puntoVenta/pagoCompra/${id}`);
             let cuerpo = "";
             if (response.ok) {
                 pagosCompra = await response.json();
@@ -783,7 +783,7 @@ COMPRAS
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         Loading...
         </button>`;
-            let respuesta = await fetch('/pagoCompra/', init);
+            let respuesta = await fetch('/puntoVenta/pagoCompra/', init);
             let cuerpo = "";
             if (respuesta.ok) {
                 console.log('Si me respondió :3');

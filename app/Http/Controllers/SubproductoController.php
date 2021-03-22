@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Subproducto;
 use App\Models\Producto;
+use App\Models\Sucursal_empleado;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
 use App\Models\Sucursal_producto;

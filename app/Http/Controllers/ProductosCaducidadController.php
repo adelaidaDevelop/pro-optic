@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Perdida;
 use App\Models\Productos_caducidad;
 use App\Models\Sucursal_producto;
+use App\Models\Sucursal_empleado;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
