@@ -93,9 +93,9 @@ Route::prefix('/puntoVenta')->group(function()
     //AGREGAR PRODUCTOS DEL STOCK A LA SUCURSAL ACTUAL
     Route::get('/agregarProdStock/{id}', [SucursalProductoController::class,'agregarProdStock_Suc']);
     //DEVOLVER PRODUCTOS EN BAJA DE ESTA SUCURSAL
-    Route::get('/productos_baja', [SucursalProductoController::class,'productos_baja']);
+    Route::get('productos_baja', [SucursalProductoController::class,'productos_baja']);
     //DAR DE ALTA PRODUCTOS DADAS DE BAJA EN ESTA SUCURSAL
-      Route::get('altaProductoS/{id}', [SucursalProductoController::class,'altaProductoS']);
+      Route::get('altaProducto/{id}', [SucursalProductoController::class,'altaProductoS']);
       //ELIMINAR SUCURSAL PT2
       Route::get('destroy2/{id}', [SucursalController::class,'destroy2']);
       //dar de baja sucursal
