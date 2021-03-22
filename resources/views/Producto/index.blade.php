@@ -33,7 +33,6 @@ PRODUCTOS
     <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" href=".modal_altaProductos_SucursalLogeado" id="altaProd" onclick=" return productosEnBajaSucursal()" value="">
         <img src="{{ asset('img\alta2.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>DAR ALTA</small></p>
-
     </button>
 </div>
 
@@ -1215,7 +1214,6 @@ PRODUCTOS
         let cuerpo = "";
         let cont = 0;
         await productos0();
-
         console.log(prod_baja);
         for (let t in prod_baja) {
             for (let x in productos) {

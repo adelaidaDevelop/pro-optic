@@ -32,6 +32,20 @@ REPORTES
         </strong>
     </h4>
     <br />
+    <div class="row w-100 mx-auto my-auto ">
+        <div class="col-4  text-center ">
+            <h6 class=" text-primary"> PRECIO DEL INVENTARIO: </h6>
+            <p class="h3 mb-2" id="costoInv">$ 0.00</p>
+        </div class="text-center">
+        <div id="" class="col-4 mx-auto text-center">
+            <h6 class=" text-primary"> TOTAL DE ENTRADAS </h6>
+            <p class="h3 mb-2" id="total_entradas">$ 0.00</p>
+        </div>
+        <div class="col-4 text-center">
+            <h6 class=" text-primary"> TOTAL DE SALIDAS: </h6>
+            <div id="total_salidas" class="h3"> 0.0</div>
+        </div>
+    </div>
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
     <div class="row w-100   mr-2 ml-5">
         <h5 class="text-primary ml-3 ">BUSCAR POR:</h5>
@@ -117,7 +131,7 @@ REPORTES
                 <option value="12">DICIEMBRE</option>
             </select>
             <select class="form-control col-1 my-0 mr-2" name="anio" id="fechaXanio" disabled>
-                <option value="0" selected>ANIO</option>            
+                <option value="0" selected>ANIO</option>
                 <option value="1">2021</option>
                 <option value="2">2022</option>
                 <option value="3">2023</option>
@@ -282,8 +296,9 @@ REPORTES
 
     function compraProductos(fechaXDia2) {
         entradaCompraProduct = "";
-        let emple ="";
-        let existencia =0;
+        totalEntradas = 0;
+        let emple = "";
+        let existencia = 0;
         //COMPRA DE PRODUCTOS AGREGADAS EN ESA FECHA
         for (let c in compras) {
             let fechaCompra = new Date(compras[c].created_at);
@@ -304,11 +319,13 @@ REPORTES
                     //Buscar compras que hubieron en esa fecha en detalle_compras
                     for (let x in detalle_compras) {
                         if (detalle_compras[x].idCompra == compras[c].id) {
-
                             for (let i in productos) {
                                 //Encontrar productos que aparecen en compra produtos
                                 // console.log(productos[i].id);
                                 if (productos[i].id == detalle_compras[x].idProducto) {
+                                    let totalCompra = detalle_compras[x].costo_unitario * detalle_compras[x].cantidad;
+                                    totalEntradas = totalEntradas + totalCompra;
+
                                     productoCol = productos[i].nombre;
                                     for (let t in sucursal_productos) {
                                         if (sucursal_productos[t].idProducto == productos[i].id) {
@@ -377,6 +394,10 @@ REPORTES
                                             //Encontrar productos que aparecen en compra produtos
                                             // console.log(productos[i].id);
                                             if (productos[i].id == detalle_compras[x].idProducto) {
+                                                //total entradas
+                                                let totalCompra = detalle_compras[x].costo_unitario * detalle_compras[x].cantidad;
+                                                totalEntradas = totalEntradas + totalCompra;
+
                                                 productoCol = productos[i].nombre;
                                                 for (let t in sucursal_productos) {
                                                     if (sucursal_productos[t].idProducto == productos[i].id) {
@@ -465,6 +486,7 @@ REPORTES
         salidaVP = "";
         cant_anterior = 0;
         cant_actual = 0;
+        totalVenta = 0;
         empleado = "";
         //BUSCAR SALIDAS
         //VENTA DE PRODUCTOS
@@ -482,6 +504,10 @@ REPORTES
                         if (detalle_ventas[z].idVenta == ventas[v].id) {
                             for (let e in productos) {
                                 if (productos[e].id == detalle_ventas[z].idProducto) {
+                                    //totalventas
+                                    let total_venta = detalle_ventas[z].precioIndividual * detalle_ventas[z].cantidad;
+                                    totalVenta = totalVenta + total_venta;
+
                                     // existencia = productos[e].existencia;
                                     productoCol = productos[e].nombre;
                                     for (let d in departamentos) {
@@ -537,6 +563,10 @@ REPORTES
                                     if (detalle_ventas[z].idVenta == ventas[v].id) {
                                         for (let e in productos) {
                                             if (productos[e].id == detalle_ventas[z].idProducto) {
+                                                //totalventas
+                                                let total_venta = detalle_ventas[z].precioIndividual * detalle_ventas[z].cantidad;
+                                                totalVenta = totalVenta + total_venta;
+
                                                 // existencia = productos[e].existencia;
                                                 productoCol = productos[e].nombre;
                                                 for (let d in departamentos) {
@@ -575,12 +605,13 @@ REPORTES
         console.log(salidaVP);
     };
 
-    function devolucionesRealizadas() {
+    function devolucionesRealizadas(fechaXDia) {
         cant_anterior = 0;
         cant_actual = 0;
         empleadoNombre = 0;
         cuerpo = "";
         devolucionFila = "";
+        totalDevolucion =0;
         //BUSCAR DEVOLUCIONES
         for (let f in devoluciones) {
             console.log("entra al for de devoluciones")
@@ -600,19 +631,25 @@ REPORTES
                                 depto = departamentos[d].nombre;
                             }
                         }
+                        //total devoluciones
+                        let total_devolucion = detalle_ventas[z].precioIndividual * detalle_ventas[z].cantidad;
+                        totalDevolucion = totalDevolucion + total_devolucion;
+
                         contador = contador + 1;
                         movimientoTxt = "DEVOLUCIONES";
                         devolucionFila = devolucionFila + `
                                             <tr>
                                                     <th scope="row">` + contador + `</th>
+                                                    <td>` + movimientoTxt + `</td>
                                                     <td>` + fechaCol + `</td>
                                                     <td>` + horaCol + `</td>
+                                                    <td>` + "NO ESPECIFICADO" + `</td>
                                                     <td>` + productoCol + `</td>
+                                                    <td>` + depto + `</td>
                                                     <td>` + cant_anterior + `</td>
                                                     <td>` + cant_actual + `</td>
-                                                    <td>` + movimientoTxt + `</td>
-                                                    <td>` + "NO ESPECIFICADO" + `</td>
-                                                    <td>` + depto + `</td>        
+                                                    
+                                                            
                                             </tr>
                                             `;
                     }
@@ -623,7 +660,7 @@ REPORTES
 
     function generaReportes() {
 
-        let devolucionFila = "";
+        //let devolucionFila = "";
         //  let salidaVP = "";
         //let entradaNuevosProductos = "";
         // let entradaCompraProduct = "";
@@ -643,6 +680,7 @@ REPORTES
                     // OPCION UNO: ENTRADAS
                     nuevosProductos(fechaXDia);
                     compraProductos(fechaXDia);
+                    document.getElementById("total_entradas").innerHTML = totalEntradas;
                     cuerpo = entradaCompraProduct + entradaNuevosProductos;
                     if (cuerpo === "") {
                         let sin = `<h4 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h4>`;
@@ -656,6 +694,7 @@ REPORTES
                     contador = 0;
                     //OPCION 2: SALIDAS
                     ventasRealizadas(fechaXDia);
+                    document.getElementById("total_salidas").innerHTML = totalVenta;
                     //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
                     cuerpo = salidaVP;
                     if (cuerpo === "") {
@@ -715,6 +754,7 @@ REPORTES
             return alert("ELEGIR UNA FECHA");
         }
     };
+
     function compararMes(fecha1, fecha2) {
         console.log(fecha1);
         console.log(fecha1.getMonth());
