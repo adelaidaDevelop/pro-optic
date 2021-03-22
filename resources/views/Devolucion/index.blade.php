@@ -331,7 +331,7 @@ DEVOLUCION
                             // metodo: puede ser POST, GET, etc
                             method: "POST",
                             // la URL de donde voy a hacer la petición
-                            url: '/devolucion',
+                            url: '/puntoVenta/devolucion',
                             // los datos que voy a enviar para la relación
                             data: {
                                 cantidad: cant2,
@@ -375,7 +375,7 @@ DEVOLUCION
     async function cargarDevolucion() {
         let response = "Sin respuesta";
         try {
-            response = await fetch(`/datosDevoluciones`);
+            response = await fetch(`/puntoVenta/datosDevoluciones`);
             if (response.ok) {
                 devolucions = await response.json();
                 console.log(devolucions);
@@ -506,7 +506,7 @@ DEVOLUCION
             }
 
             cuerpo = cuerpo + `
-                    <tr onclick="" data-dismiss="modal">
+                    <tr >
                     <th scope="row">` + cont + `</th>
                     <td>` + ventas[count5].id + `</td>
                     <td>` + emple + `</td>
@@ -537,22 +537,22 @@ DEVOLUCION
             let fechaFin = document.querySelector('#fechaFinal');
             let fechaI = new Date(fechaInicio.value);
             let fechaF = new Date(fechaFin.value);
-           // fechaI.setDate(fechaI.getDate() + 1);
-           // fechaF.setDate(fechaF.getDate() + 1);
+            // fechaI.setDate(fechaI.getDate() + 1);
+            // fechaF.setDate(fechaF.getDate() + 1);
 
             for (let j in ventas) {
 
                 let total = 0;
                 let fechaAux = new Date(ventas[j].created_at);
-                let mesAux = fechaAux.getMonth()+1;
+                let mesAux = fechaAux.getMonth() + 1;
                 let diaAux = fechaAux.getDate();
-                if(mesAux<10)
-                    mesAux = "0"+mesAux;
-                if(diaAux<10)
-                    diaAux = "0"+diaAux;
-                fecha = new Date(fechaAux.getFullYear()+"-"+mesAux
-                +"-"+diaAux);
-                
+                if (mesAux < 10)
+                    mesAux = "0" + mesAux;
+                if (diaAux < 10)
+                    diaAux = "0" + diaAux;
+                fecha = new Date(fechaAux.getFullYear() + "-" + mesAux +
+                    "-" + diaAux);
+
                 if (fecha.getTime() >= fechaI.getTime() && fecha.getTime() <= fechaF.getTime()) {
                     console.log("minimo");
                     // if (fecha.getTime() <= fechaF.getTime()) {
@@ -602,7 +602,7 @@ DEVOLUCION
             console.log("No verifico bien");
             modalVenta();
         }
-        
+
 
     };
 
@@ -636,5 +636,18 @@ DEVOLUCION
         }
         return false;
     };
+
+    $("input[name='cantidad']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
+
 </script>
 @endsection

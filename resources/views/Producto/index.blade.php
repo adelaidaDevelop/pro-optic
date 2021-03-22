@@ -167,12 +167,12 @@ PRODUCTOS
                 <!--ENCABEZADO -->
                 <div class="container-fluid">
                     <div class="row" style="background:#3366FF">
-                        <h6 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 text-center mx-auto "  style="color:#FFFFFF" >
                             INFORMACION DEL PRODUCTO
                         </h6>
                     </div>
                     <div class="row" style="background:#ED4D46">
-                        <h6 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 mx-auto text-center"  style="color:#FFFFFF">
                             PRODUCTO
                         </h6>
                     </div>
@@ -204,15 +204,15 @@ PRODUCTOS
                 <!--ENCABEZADO -->
                 <div class="container-fluid">
                     <div class="row" style="background:#3366FF">
-                        <h6 class="font-weight-bold my-2 ml-4 px-1" style="color:#FFFFFF">
-                            <br />
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 mx-auto text-center" id="titulo"  style="color:#FFFFFF">
+                            
                         </h6>
                     </div>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 </button>
             </div>
-            <div class="modal-body col-8 mx-4" id="">
+            <div class="modal-body col-8 mx-4 text-center mx-auto" id="">
                 <div class="row  " id="modiPrecioCosto">
                 </div>
             </div>
@@ -822,16 +822,21 @@ PRODUCTOS
         let cambiarPrecio = "";
         let idProd = 0;
         let idSucPro = 0;
+        let nombreProd = "";
         for (let j in productosSucursal) {
             if (productosSucursal[j].id === idSP) {
                 idProd = productosSucursal[j].idProducto;
                 idSucPro = productosSucursal[j].id;
+                for(let x in productos){
+                    if(productos[x].id == idProd)
+                    nombreProd = productos[x].nombre;
+                }
                 console.log("entra");
                 cambiarPrecio = `
                                 <h6>PRECIO ACTUAL DEL PRODUCTO</h6>
-                                <input type="number" name="" id="" class="form-control text-center" placeholder="" value="` + productosSucursal[j].precio + `" autofocus required disabled>
-                                <h6>INGRESAR NUEVO PRECIO DEL PRODUCTO</h6>        
-                                <input type="number" name="precio" id="precio_nuevo" class="form-control text-center" placeholder="PRECIO NUEVO" value="" autofocus required>
+                                <input type="number" name="" id="" class="form-control mb-2 text-center" placeholder="" value="` + productosSucursal[j].precio + `" autofocus required disabled>
+                                <h6 >INGRESAR NUEVO PRECIO DEL PRODUCTO</h6>        
+                                <input type="number" name="precio_nuevo" id="precio_nuevo" class="form-control text-center" placeholder="PRECIO NUEVO" value="" autofocus required>
                                     `;
             }
         }
@@ -841,22 +846,37 @@ PRODUCTOS
         $("#actPrecioCosto").click(function() {
             actPrecio(idSucPro);
         });
-        // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
+        document.getElementById("titulo").innerHTML = nombreProd;
         document.getElementById("modiPrecioCosto").innerHTML = cambiarPrecio;
+        $("input[name='precio_nuevo']").bind('keypress', function(tecla) {
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
     }
 
     function modificarCosto(idSP) {
         let cambiarCosto = "";
         let idProd = 0;
         let idSucPro = 0;
+        let nombreProd = "";
         for (let j in productosSucursal) {
             if (productosSucursal[j].id === idSP) {
                 idProd = productosSucursal[j].idProducto;
                 idSucPro = productosSucursal[j].id;
+                for(let x in productos){
+                    if(productos[x].id == idProd)
+                    nombreProd = productos[x].nombre;
+                }
                 console.log("entra");
                 cambiarCosto = `
                                 <h6>COSTO ACTUAL DEL PRODUCTO</h6>
-                                <input type="number" name="" id="" class="form-control text-center " placeholder="" value="` + productosSucursal[j].costo + `" autofocus required disabled>
+                                <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` + productosSucursal[j].costo + `" autofocus required disabled>
                                 <h6>INGRESAR NUEVO COSTO DEL PRODUCTO</h6>        
                                 <input type="number" name="costo" id="costo_nuevo" class="form-control text-center" placeholder="PRECIO NUEVO" value="" autofocus required>
                                     `;
@@ -868,24 +888,42 @@ PRODUCTOS
         $("#actPrecioCosto").click(function() {
             actCosto(idSucPro);
         });
+        
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
+        document.getElementById("titulo").innerHTML = nombreProd;
         document.getElementById("modiPrecioCosto").innerHTML = cambiarCosto;
+        $("input[name='costo']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
     }
 
     function agregarProducto(idSP) {
         let cambiarCantidad = "";
         let idProd = 0;
         let idSucPro = 0;
+        let nombreProd = "";
         for (let j in productosSucursal) {
             if (productosSucursal[j].id === idSP) {
                 idProd = productosSucursal[j].idProducto;
                 idSucPro = productosSucursal[j].id;
+                for(let x in productos){
+                    if(productos[x].id == idProd)
+                    nombreProd = productos[x].nombre;
+                }
                 console.log("entra");
                 cambiarCantidad = `
                                 <h6>EXISTENCIA ACTUAL DEL PRODUCTO</h6>
-                                <input type="number" name="" id="" class="form-control text-center " placeholder="" value="` + productosSucursal[j].existencia + `" autofocus required disabled>
+                                <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` + productosSucursal[j].existencia + `" autofocus required disabled>
                                 <h6>CANTIDAD DE PRODUCTO A AGREGAR</h6>        
-                                <input type="number" name="cantidad" id="cantidad" class="form-control text-center" placeholder="CANTIDAD DE PRODUCTO" value="" autofocus required>
+                                <input type="number" name="cantidad" id="cantidad" class="form-control text-center" placeholder="CANTIDAD DE PRODUCTO" value="" min="0" autofocus required>
                                     `;
             }
         }
@@ -895,8 +933,22 @@ PRODUCTOS
         $("#actPrecioCosto").click(function() {
             actExistencia(idSucPro);
         });
+        
+
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
+        document.getElementById("titulo").innerHTML = nombreProd;
         document.getElementById("modiPrecioCosto").innerHTML = cambiarCantidad;
+        $("input[name='cantidad']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
     }
 
 
@@ -929,7 +981,7 @@ PRODUCTOS
             });
             $('#modal_precio_venta').modal('hide');
             $('#detalleProducto').modal('hide');
-            confirm("COSTO ACTUALIZADO CORRECTAMENTE");
+            alert("COSTO ACTUALIZADO CORRECTAMENTE");
             refrescar();
             // await cargarProductosSucursal();
         } catch (err) {
@@ -964,7 +1016,7 @@ PRODUCTOS
             });
             $('#modal_precio_venta').modal('hide');
             $('#detalleProducto').modal('hide');
-            confirm("COSTO ACTUALIZADO CORRECTAMENTE");
+            alert("COSTO ACTUALIZADO CORRECTAMENTE");
             refrescar();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
@@ -999,7 +1051,7 @@ PRODUCTOS
             });
             $('#modal_precio_venta').modal('hide');
             $('#detalleProducto').modal('hide');
-            confirm("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
+            alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
             refrescar();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);

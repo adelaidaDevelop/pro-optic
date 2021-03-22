@@ -33,16 +33,8 @@ ADMINISTRACION
         </button>
     </form>
 </div>
-<!--
-<div class=" my-2 ml-3 ">
-    <a class=" " href="/puntoVenta/producto">
-        <button class="btn btn-secondary p-1">
-            PRODUCTOS SUCURSAL
-        </button>
-    </a>
-</div>
--->
 
+<!--
 <div class=" my-2 ml-3 p-1 ">
     <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modalAllProductos" id="ver"
         onclick=" return cargaProductos()" value="">
@@ -50,14 +42,8 @@ ADMINISTRACION
         PRODUCTOS
     </button>
 </div>
-<div class="col-0 my-2 p-1">
-    <form method="get" action="{{url('/puntoVenta/producto')}}">
-        <button class="btn btn-secondary ml-4 p-1" type="submit">
-            <img src="{{ asset('img\departamento.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                height="25px">
-            PRODUCTOS SUCURSAL </button>
-    </form>
-</div>
+-->
+
 
 
 

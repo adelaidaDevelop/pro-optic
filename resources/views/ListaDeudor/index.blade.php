@@ -119,7 +119,7 @@ CREDITOS
                     <ul class="nav nav-pills mb-3  d-flex justify-content-center" id="pills-tab" role="tablist">
 
                         <li class="nav-item mx-2" role="presentation">
-                            <button onclick="" class="btn nav-link mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/credito.png);width:80px;height:80px;
+                            <button onclick="" class="btn nav-link mx-auto" type="button" value="informacion" id="boton" style="background-image: url(/img/credito.png);width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true" disabled>
                                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
                             </button>
@@ -472,7 +472,7 @@ CREDITOS
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
-                url: '/pago',
+                url: '/puntoVenta/pago',
                 // los datos que voy a enviar para la relación
                 data: {
                     // datos: json,
