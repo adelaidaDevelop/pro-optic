@@ -30,6 +30,9 @@ class EmpleadoController extends Controller
 
     public function index()
     {
+        $usuarios = ['verEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         return view('Empleado.index2');
        
     }
@@ -41,6 +44,9 @@ class EmpleadoController extends Controller
 
     public function create(array $data)
     {
+        $usuarios = ['crearEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         return view('Empleado.index2');
     }
 
@@ -52,6 +58,9 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
+        $usuarios = ['crearEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $this->validator($request->all())->validate();
         //return 'si lo valida';
         $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
@@ -106,6 +115,9 @@ class EmpleadoController extends Controller
      */
     public function show($id)//Empleado $empleado)
     {
+        $usuarios = ['verEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         if($id == 'empleados')
         {
             return Empleado::all();
@@ -123,6 +135,9 @@ class EmpleadoController extends Controller
     public function edit($id)//Empleado $empleado)
     {
         //$datos['empleados'] = Departamento::paginate();
+        $usuarios = ['modificarEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         if($id == 1)
             return redirect('puntoVenta/empleado');
         if($id == 0)
@@ -150,6 +165,9 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $usuarios = ['modificarEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         if($id == 0)
         {
             /*$rules = [
@@ -275,6 +293,9 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
+        $usuarios = ['eliminarEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $empleado = Empleado::findOrFail($id);
         User::destroy($empleado->idUsuario);
         Empleado::destroy($id);
@@ -285,6 +306,9 @@ class EmpleadoController extends Controller
 
     public function buscadorEmpleado(Request $request)
     {
+        $usuarios = ['verEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $datosConsulta['empleados'] = Empleado::where("primerNombre",'like',$request->texto."%")->orderBy('primerNombre')->get();
         $admin = User::findOrFail(1);
         //where("status",'=','alta')->orderBy('nombre')->get();
@@ -293,6 +317,9 @@ class EmpleadoController extends Controller
     }
     public function validarClave($clave)
     {
+        $usuarios = ['crearEmpleado','modificarEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $empleado = Empleado::where('claveE','=',$clave)->get();
         if(count($empleado)>0)
             return false;
@@ -300,6 +327,9 @@ class EmpleadoController extends Controller
     }
     public function validarEmpleado($clave)
     {
+        $usuarios = ['crearEmpleado','modificarEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $empleado = Empleado::where('claveE','=',$clave)->get();
         
         if(count($empleado)>0)

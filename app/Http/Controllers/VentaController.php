@@ -34,6 +34,7 @@ class VentaController extends Controller
      */
     public function index()
     {
+        
         $usuarios = ['crearVenta','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
@@ -69,6 +70,9 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
+        $usuarios = ['crearVenta','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $datos = $request->input('datos');
         $estado = $request->input('estado');
         $pago = $request->input('pago');

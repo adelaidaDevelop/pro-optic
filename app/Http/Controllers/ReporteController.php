@@ -19,6 +19,12 @@ use Illuminate\Http\Request;
 
 class ReporteController extends Controller
 {
+    public function __construct()
+    {
+        //$usuarios = ['admin',];//,'admin'];
+        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,6 +32,9 @@ class ReporteController extends Controller
      */
     public function index()
     {
+        $usuarios = ['verCorte','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         //CORTE DE CAJA INDEX
         $ventas = Venta::all();
         $pagos = Pago_venta::all();

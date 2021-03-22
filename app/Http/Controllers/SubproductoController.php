@@ -17,6 +17,9 @@ class SubproductoController extends Controller
      */
     public function index()
     {
+        $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $subproductos = Subproducto::all();
         $idSucursal = session('sucursal');
         $sucursalProd = Sucursal_producto::where('idSucursal', $idSucursal)->get();
@@ -38,6 +41,9 @@ class SubproductoController extends Controller
      */
     public function create(Request $request)
     {
+        $usuarios = ['crearProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         //$idSucProd = 1;
        // $datosProd['producto'] = Producto::paginate(); necesito este: producto
        $idProd = $request->input('id');
@@ -78,7 +84,10 @@ class SubproductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $usuarios = ['crearProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
        // $datosSubproducto = request()->except('_token');
         $datosSubproducto = $request->except('_token');
         $idSP = $datosSubproducto['idSucursalProducto'];

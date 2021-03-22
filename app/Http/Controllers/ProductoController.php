@@ -5,6 +5,7 @@ use App\Models\Producto;
 use App\Models\Departamento;
 use App\Models\Subproducto;
 use App\Models\Sucursal_producto;
+use App\Models\Sucursal_empleado;
 
 use Illuminate\Http\Request;
 //para poder borrar informacion de los registros de la carpeta uploads de storage
@@ -19,6 +20,9 @@ class ProductoController extends Controller
      */
     public function index()
     {
+        $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $depas['d']= Departamento::paginate();
         $datosP= Producto::all();
         $depa= Departamento::all();
@@ -37,6 +41,9 @@ class ProductoController extends Controller
      */
     public function create()
     {
+        $usuarios = ['crearProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $producto['producto']= Producto::paginate();
         $departamento= Departamento::all();
         return view('Producto.create', compact('departamento'));
@@ -50,6 +57,9 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+        $usuarios = ['crearProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         try{
 
         $datosProducto = request()->except('_token', 'minimoStock');
@@ -88,6 +98,9 @@ class ProductoController extends Controller
      */
     public function show($producto)//Producto $producto)
     {
+        $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         if($producto=="productos")
         {
             $productos = Producto::all();
@@ -102,7 +115,9 @@ class ProductoController extends Controller
     }
     public function show2($id)
     {
-        //
+        $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $producto= Producto::findOrFail($id);
         return view('Producto.edit', compact('producto'));
     }
@@ -115,7 +130,9 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuarios = ['eliminarProducto','modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $departamento= Departamento::all();
         $producto= Producto::findOrFail($id);
        // $sucursalProd = Sucursal_producto::where('idProducto', '=', $id)->get();
@@ -142,6 +159,9 @@ class ProductoController extends Controller
     }
     public function update(Request $request, $id)
     {
+        $usuarios = ['modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $datosProducto = request()->except('_token', 'minimoStock');
        if($request->hasFile('imagen')){
         $producto=Producto::findOrFail($id);
@@ -173,6 +193,9 @@ class ProductoController extends Controller
      */
     //public function destroy(Producto $producto)
     public function eliminar($id){
+        $usuarios = ['eliminarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $producto= Producto::findOrFail($id);
         return view('Producto/delete', compact('producto'));
     }
@@ -226,6 +249,9 @@ class ProductoController extends Controller
     public function eliProd($id)//Sucursal $sucursal)
     {
        // $producto = Producto::all();
+       $usuarios = ['eliminarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
             try{
                 Producto::destroy($id);
                 return redirect('puntoVenta/administracion');
