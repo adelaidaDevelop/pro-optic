@@ -114,7 +114,7 @@ class SucursalProductoController extends Controller
     {
         //if($id=='todos')
         
-            return Sucursal_producto::where('idSucursal', '=',$id)->get();
+        return Sucursal_producto::where('idSucursal', '=',$id)->where('status','=',1)->get();
     }
 
     public function agregarProdStock_Suc($id){

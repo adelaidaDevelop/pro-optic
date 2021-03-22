@@ -122,7 +122,7 @@ class SubproductoController extends Controller
             
             $sucursalProducto = Sucursal_producto::findOrFail($idSP);// where('idSucursal', '=',$idS)->get();
             
-            if($sucursalProducto->idSucursal == $idS)
+            if($sucursalProducto->idSucursal == $idS )
             {
                 
                 $producto = Producto::findOrFail($sucursalProducto->idProducto);

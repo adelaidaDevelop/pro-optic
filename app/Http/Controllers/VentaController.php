@@ -48,7 +48,7 @@ class VentaController extends Controller
         $ofertas = Oferta::all();
 
         //$sucursalProd = Sucursal_producto::where('idSucursal', $idSucursal)->get();
-         $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->get();
+         $productosSucursal = Sucursal_producto::where('idSucursal', '=',$idSucursal)->where('status', '=',1)->get();
         return view('Venta.index', compact('datosP', 'departamentos', 'clientes','productosSucursal', 'subproductos','ofertas'));
     //    return session('idEmpleado');
     }
