@@ -21,7 +21,9 @@ class DevolucionController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = ['verDevolucion','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $ventas= Venta::all();
         $detalleVenta= Detalle_venta::all();
         $productos= Producto::all();
@@ -53,6 +55,9 @@ class DevolucionController extends Controller
   
     public function store(Request $request)
     {
+        $usuarios = ['crearDevolucion','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $cantProducto= $request->input('cantidad');
         $detalle= $request->input('detalle');
         $precio= $request->input('precio');

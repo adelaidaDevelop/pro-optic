@@ -39,23 +39,25 @@ class RegistrosPruebaTable extends Migration
             $modulo->save();
         }
         $nombres = ['admin','verCompra','crearCompra','modificarCompra','verPago',
-        'crearVenta','verDevolucion','crearDevolucion','verProducto','crearProducto','eliminarProducto','modificarProducto',
-        'verAdministracion','verSucursal','crearSucursal','eliminarSucursal','modificarSucursal',
+        'crearVenta','verDevolucion','crearDevolucion',
+        'verProducto','crearProducto','eliminarProducto','modificarProducto',
+        'verSucursal','crearSucursal','eliminarSucursal','modificarSucursal',
         'verEmpleado','crearEmpleado','eliminarEmpleado','modificarEmpleado','statusEmpleado',
         'verDeudor','verCorte','verReporte','verCliente','crearCliente','eliminarCliente','modificarCliente'];
 
         $descripcion = ['ADMINISTRADOR','VER COMPRAS', 'CREAR COMPRAS','MODIFICAR COMPRAS', 'VER PAGOS',
-        'CREAR VENTAS','VER DEVOLUCIONES','CREAR DEVOLUCIONES','VER PRODUCTOS','CREAR PRODUCTOS','ELIMINAR PRODUCTOS','MODIFICAR PRODUCTOS',
-        'VER SUCURSALES','CREAR SUCURSALES','ELIMINAR SUCURSALES','MODIFICAR SUCURSALES','ASIGNAR STATUS A EMPLEADO',
-        'VER EMPLEADOS','CREAR EMPLEADOS','ELIMINAR EMPLEADOS','MODIFICAR EMPLEADOS',
+        'CREAR VENTAS','VER DEVOLUCIONES','CREAR DEVOLUCIONES',
+        'VER PRODUCTOS','CREAR PRODUCTOS','ELIMINAR PRODUCTOS','MODIFICAR PRODUCTOS',
+        'VER SUCURSALES','CREAR SUCURSALES','ELIMINAR SUCURSALES','MODIFICAR SUCURSALES',
+        'VER EMPLEADOS','CREAR EMPLEADOS','ELIMINAR EMPLEADOS','MODIFICAR EMPLEADOS','MODIFICAR STATUS EMPLEADOS',
         'VER DEUDORES','VER CORTES','VER REPORTES','VER CLIENTES','CREAR CLIENTES','ELIMINAR CLIENTES','MODIFICAR CLIENTES'];
         //['ADMINISTRADOR','COMPRAS','VENTAS','INVENTARIO','SUCURSALES','EMPLEADOS','DEUDORES','CORTES','REPORTES'];
         $modulo = [0,1,1,1,1,
                    2,2,2,3,3,3,3,
-                   4,4,4,4,4,
-                   5,5,5,5,
+                   4,4,4,4,
+                   5,5,5,5,5,
                    6,7,8,9,9,9,9];
-        for($i=0;$i<count($modulo); $i++)
+        for($i=0;$i<count($nombres); $i++)
         {
             $role = new Role();
             $role->name = $nombres[$i];//'admin';

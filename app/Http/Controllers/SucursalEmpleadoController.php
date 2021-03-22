@@ -37,6 +37,9 @@ class SucursalEmpleadoController extends Controller
      */
     public function store(Request $request)
     {
+        $usuarios = ['crearEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $sucursal_empleado = new Sucursal_empleado;
         $sucursal_empleado->idSucursal = $request->input('idSucursal');
         $sucursal_empleado->idEmpleado = $request->input('idEmpleado');
@@ -59,6 +62,9 @@ class SucursalEmpleadoController extends Controller
      */
     public function show($sucursal)//Sucursal_empleado $sucursal_empleado)
     {
+        $usuarios = ['verEmpleado','crearEmpleado','eliminarEmpleado','modificarEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $sucursal_empleado = Sucursal_empleado::where('idSucursal','=',$sucursal)->get();
         //if($sucursal_empleado->count())
             return $sucursal_empleado;
@@ -85,6 +91,9 @@ class SucursalEmpleadoController extends Controller
      */
     public function update(Request $request,$id)//Request $request, Sucursal_empleado $sucursal_empleado)
     {
+        $usuarios = ['modificarEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         if($request->has('status'))
         {
             Sucursal_empleado::findOrFail($id)->update(['status' => $request->input('status')]);

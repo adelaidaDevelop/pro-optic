@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Oferta;
 use App\Models\Sucursal_producto;
+use App\Models\Sucursal_empleado;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,9 @@ class OfertaController extends Controller
      */
     public function index()
     {
+        $usuarios = ['verProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         return view('Producto.oferta');
     }
 
@@ -37,6 +41,9 @@ class OfertaController extends Controller
      */
     public function store(Request $request)
     {
+        $usuarios = ['crearProducto','modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $idSP = $request['producto']['idSucursalProducto'];
         $cantidad = $request['producto']['cantidad'];
         $oferta = Oferta::where('idSucursalProducto','=',$idSP);
@@ -75,6 +82,8 @@ class OfertaController extends Controller
     {
         //$productos = Producto::all();
         //$sucursalProducto = Sucursal_producto::where('idSucursal', '=',$idS)->get();
+        $usuarios = ['verProducto','crearProducto','modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $productosOferta = Oferta::all();//where('idSucursalProducto','=',$sP->id)->get();
         
@@ -121,6 +130,9 @@ class OfertaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $usuarios = ['modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         if(isset($request['restar']))
         {
             $oferta = Oferta::where('idSucursalProducto','=',$id);//->update(['existencia'])

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pago_compra;
 use App\Models\Proveedor;
 use App\Models\Compra;
+use App\Models\Sucursal_empleado;
 use Illuminate\Http\Request;
 
 class PagoCompraController extends Controller
@@ -16,6 +17,9 @@ class PagoCompraController extends Controller
      */
     public function index()
     {
+        $usuarios = ['verPago','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $pagosCompra = Pago_compra::all(); 
         $compras = Compra::all();
         $proveedores = Proveedor::all(); 

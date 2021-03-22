@@ -39,6 +39,9 @@ class SucursalProductoController extends Controller
      */
     public function store(Request $request)
     {
+        $usuarios = ['crearProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $datos = $request->input('datos');
         $datosCodificados = json_decode($datos,true);
         foreach($datosCodificados as $datosProducto)
@@ -165,6 +168,8 @@ class SucursalProductoController extends Controller
      */
     public function update(Request $request,$id)//, Sucursal_producto $sucursal_producto)
     {
+        $usuarios = ['modificarEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         if($id == 'productos')
         {

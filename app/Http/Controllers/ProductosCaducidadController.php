@@ -38,6 +38,9 @@ class ProductosCaducidadController extends Controller
      */
     public function create()
     {
+        $usuarios = ['crearProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         return view('Producto.caducidad');
     }
 
@@ -49,6 +52,9 @@ class ProductosCaducidadController extends Controller
      */
     public function store(Request $request)
     {
+        $usuarios = ['crearProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $productoCaducidad = new Productos_caducidad;
         //$productoCaducidad->
         return 'No sirve para nada >:v';//request();
@@ -119,6 +125,9 @@ class ProductosCaducidadController extends Controller
      */
     public function update(Request $request,$id)
     {
+        $usuarios = ['modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         if($request['oferta'] == true)
         {
             return Productos_caducidad::findOrFail($id)->update(['oferta' => true,'cantidad' =>$request['cantidad']]);
@@ -134,6 +143,9 @@ class ProductosCaducidadController extends Controller
      */
     public function destroy(Request $request,$id)
     {
+        $usuarios = ['eliminarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         if($request['cantidad']>0)
         {
             $pC = Productos_caducidad::findOrFail($id);

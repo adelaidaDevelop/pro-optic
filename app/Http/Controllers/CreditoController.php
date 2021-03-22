@@ -8,6 +8,7 @@ use App\Models\Venta;
 use App\Models\Producto;
 use App\Models\Detalle_venta;
 use App\Models\Pago_venta;
+use App\Models\Sucursal_empleado;
 
 
 
@@ -23,6 +24,9 @@ class CreditoController extends Controller
      */
     public function index()
     {
+        $usuarios = ['verDeudor','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $venta_clientes= Venta_cliente::all();
         $cliente= Cliente::all();
         $ventas= Venta::all();
@@ -52,6 +56,7 @@ class CreditoController extends Controller
      */
     public function store(Request $request)
     {
+        
          $datosProducto = request()->except('_token');
          Venta_cliente::insert($datosProducto);
          return redirect('credito');
@@ -111,6 +116,6 @@ class CreditoController extends Controller
         $productos = Producto::all();
         $pagos= Pago_venta::all();
         
-          return  compact( 'credito', 'cliente','ventas','detalleVentas', 'productos','pagos');
+        return  compact( 'credito', 'cliente','ventas','detalleVentas', 'productos','pagos');
     }
 }

@@ -14,6 +14,9 @@ class PerdidaController extends Controller
      */
     public function index()
     {
+        $usuarios = ['verProducto','modificarProducto','eliminarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         return view('Producto.perdidasSucursal');
     }
 

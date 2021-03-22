@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proveedor;
+use App\Models\Sucursal_empleado;
 use Illuminate\Http\Request;
 
 class ProveedorController extends Controller
 {
+    public function __construct()
+    {
+        //$usuarios = ['verCompra','crearCompra','admin'];
+        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,9 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = ['verCompra','crearCompra','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
         $datos['proveedores'] = Proveedor::paginate();
         return view('Proveedor.index',$datos);
     }
