@@ -84,10 +84,10 @@ PRODUCTOS
                     @endforeach
                 </select>
                 <div class=" input-group-text mt-4 px-0 py-auto ">
-                    <input class="" type="checkbox" value="existencia" name="bajosExistencia" id="bajosExistencia" onchange="buscarFiltroNombre2()">
-                    <h6 class="text-primary ml-1 my-auto ">
+                    <input type="checkbox" value="existencia" name="bajosExistencia" id="bajosExistencia" onchange="buscarFiltroNombre2()">
+                    <label class="text-primary ml-1 my-auto h6" for="bajosExistencia">
                         BAJOS DE EXISTENCIA
-                    </h6>
+                    </label>
                 </div>
             </div>
             <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
