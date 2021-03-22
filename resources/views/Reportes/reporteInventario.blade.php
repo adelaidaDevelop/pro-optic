@@ -325,7 +325,6 @@ REPORTES
                                 if (productos[i].id == detalle_compras[x].idProducto) {
                                     let totalCompra = detalle_compras[x].costo_unitario * detalle_compras[x].cantidad;
                                     totalEntradas = totalEntradas + totalCompra;
-
                                     productoCol = productos[i].nombre;
                                     for (let t in sucursal_productos) {
                                         if (sucursal_productos[t].idProducto == productos[i].id) {
@@ -659,7 +658,6 @@ REPORTES
     };
 
     function generaReportes() {
-
         //let devolucionFila = "";
         //  let salidaVP = "";
         //let entradaNuevosProductos = "";
@@ -705,7 +703,7 @@ REPORTES
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
-                } else if (moviName == "3") {
+                } else if (moviName == "3") { 
                     contador = 0;
                     devolucionesRealizadas(fechaXDia);
                     cuerpo = devolucionFila;
@@ -718,7 +716,7 @@ REPORTES
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
-                } else if (moviName == "4") {
+                } else if (moviName == "4") { 
                     contador = 0;
                     //uno
                     //BUSCAR ENTRADAS
