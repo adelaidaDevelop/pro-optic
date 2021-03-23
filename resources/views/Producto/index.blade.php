@@ -1227,7 +1227,6 @@ PRODUCTOS
                             }
                         }
                     }
-
                     if (bandera) {
                         redirect(id);
                         // response2 = await fetch(`/puntoVenta/subproducto/create/?id=${id}`);

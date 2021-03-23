@@ -45,6 +45,7 @@ class ReporteController extends Controller
         //Seleccionar empleados que son cajeros
         $idSucursal = session('sucursal');
         $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
+        //return $sucursalEmpleados;
         return view('Reportes.corteCaja', compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados'));
     }
 

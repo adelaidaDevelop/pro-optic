@@ -192,6 +192,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
 
 
     function buscarFolio() {
+
         document.getElementById("sinResult").innerHTML = "";
         let cont = 0;
         let botonDev = "";
@@ -203,59 +204,62 @@ $devolver = $sE->hasAnyRole($userDevolucion);
         if (palabraBusqueda.value.length > 0) {
             let folio = parseInt(palabraBusqueda.value);
             for (count in ventas) {
-                if (ventas[count].id === folio) {
-                    console.log(detalleVenta);
-                    console.log(ventas);
-                    for (count2 in detalleVenta) {
-                        if (detalleVenta[count2].idVenta == ventas[count].id) {
-                            console.log("Entra a la funcion de buscar folio");
-                            for (count3 in productos) {
-                                if (productos[count3].id == detalleVenta[count2].idProducto) {
-                                    cont = cont + 1;
-                                    document.getElementById("sinResult").innerHTML = "";
-                                    // idProductoD = productos[count3].id;
-                                    //idVentaD = ventas[count].id;
-                                    // cantTotal = detalleVenta[count2].cantidad;
-                                    console.log("De esta venta por cada producto que se vendi en esta venta entra");
-                                    let cantPD = 0; //CHECAR
-                                    console.log("dev");
-                                    console.log(devolucions);
-                                    // if (devolucions.length > 0) {
-                                    if (devolucions !== null) {
-                                        for (count51 in devolucions) {
-                                            console.log("devoluNo");
-                                            //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
-                                            if (ventas[count].id == devolucions[count51].idVenta) {
+                let idSucEmp = ventas[count].idSucursalEmpleado;
+                for (let h in sucursalEmpleado) {
+                    if (sucursalEmpleado[h].id == idSucEmp) {
+                        if (ventas[count].id === folio) {
+                            console.log(detalleVenta);
+                            console.log(ventas);
+                            for (count2 in detalleVenta) {
+                                if (detalleVenta[count2].idVenta == ventas[count].id) {
+                                    console.log("Entra a la funcion de buscar folio");
+                                    for (count3 in productos) {
+                                        if (productos[count3].id == detalleVenta[count2].idProducto) {
+                                            cont = cont + 1;
+                                            document.getElementById("sinResult").innerHTML = "";
+                                            // idProductoD = productos[count3].id;
+                                            //idVentaD = ventas[count].id;
+                                            // cantTotal = detalleVenta[count2].cantidad;
+                                            console.log("De esta venta por cada producto que se vendi en esta venta entra");
+                                            let cantPD = 0; //CHECAR
+                                            console.log("dev");
+                                            console.log(devolucions);
+                                            // if (devolucions.length > 0) {
+                                            if (devolucions !== null) {
+                                                for (count51 in devolucions) {
+                                                    console.log("devoluNo");
+                                                    //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
+                                                    if (ventas[count].id == devolucions[count51].idVenta) {
 
-                                                if (devolucions[count51].idProducto == productos[count3].id) {
-                                                    cantPD = cantPD + devolucions[count51].cantidad;
-                                                    console.log("Si entra en esta parte");
+                                                        if (devolucions[count51].idProducto == productos[count3].id) {
+                                                            cantPD = cantPD + devolucions[count51].cantidad;
+                                                            console.log("Si entra en esta parte");
+                                                        }
+                                                    }
                                                 }
                                             }
-                                        }
-                                    }
 
-                                    //RECUPERAR PRECIO IND
-                                    /*
-                                    for (let x in productos_sucursal) {
-                                        if (productos_sucursal[x].idProducto === productos[count3].id) {
-                                            precioSP = productos_sucursal[x].precio;
-                                            console.log("El precio es: ");
-                                        }
-                                    }
-                                    */
+                                            //RECUPERAR PRECIO IND
+                                            /*
+                                            for (let x in productos_sucursal) {
+                                                if (productos_sucursal[x].idProducto === productos[count3].id) {
+                                                    precioSP = productos_sucursal[x].precio;
+                                                    console.log("El precio es: ");
+                                                }
+                                            }
+                                            */
 
-                                    if (cantPD < detalleVenta[count2].cantidad) {
-                                        botonDev = `<button class="btn btn-light" onclick="idProdDV(` + productos[count3].id + `,` + ventas[count].id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)"
+                                            if (cantPD < detalleVenta[count2].cantidad) {
+                                                botonDev = `<button class="btn btn-light" onclick="idProdDV(` + productos[count3].id + `,` + ventas[count].id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)"
                                             type="button">DEVOLVER</button>`;
-                                    } else {
-                                        botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
+                                            } else {
+                                                botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
                                             type="button" disabled >DEVOLVER</button>`;
-                                    }
+                                            }
 
-                                    subtotalV = detalleVenta[count2].cantidad * detalleVenta[count2].precioIndividual;
-                                    console.log("sisisi");
-                                    cuerpo = cuerpo + `
+                                            subtotalV = detalleVenta[count2].cantidad * detalleVenta[count2].precioIndividual;
+                                            console.log("sisisi");
+                                            cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
                                             
@@ -269,16 +273,17 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                                             </td>        
                                                 </tr>
                                                 `;
+                                        }
+                                    }
+
                                 }
                             }
-
                         }
-                    }
+
+                        //document.getElementById("sinResult").innerHTML = "Folio no encontrado";
+
+                    } 
                 }
-
-                //document.getElementById("sinResult").innerHTML = "Folio no encontrado";
-
-
             }
             if (cuerpo === "") {
                 let sin = ` <h5 class= "text-dark  mx-0 px-0"> VENTA NO ENCONTRADA</h5>`;
