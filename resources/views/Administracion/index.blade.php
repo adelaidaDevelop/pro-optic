@@ -3,6 +3,18 @@
 @section('subtitulo')
 ADMINISTRACION
 @endsection
+@php
+        use App\Models\Sucursal_empleado;
+        $vE = ['verEmpleado','modificarEmpleado','eliminarEmpleado','crearEmpleado','admin'];
+        $mE= ['modificarEmpleado','admin'];
+        $cE= ['crearEmpleado','admin'];
+        $eE= ['eliminarEmpleado','admin'];
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
+        $modificarE = $sE->hasAnyRole($mE);
+        $crearE = $sE->hasAnyRole($cE);
+        $eliminarE = $sE->hasAnyRole($eE);
+        $verE = $sE->hasAnyRole($vE);
+        @endphp
 @section('opciones')
 <div class="ml-4">
     <form method="get" action="{{url('/puntoVenta/administracion/')}}">
@@ -149,7 +161,7 @@ ADMINISTRACION
                                 </div>
                                 <div class="col-8" id="verEmpleadoSucursal">
                                     <button class="btn btn-outline-primary mt-2 mr-5" onclick="empleadosSucursal()"
-                                        type="button" data-toggle="modal" data-target="#empleadosModal">
+                                        type="button">
                                         <img src="{{ asset('img\empleado.png') }}" alt="Editar" width="30px"
                                             height="30px">
                                         EMPLEADOS SUCURSAL
@@ -422,6 +434,11 @@ let idSucursal = @if(isset($sucursal))
 "{{$sucursal->id}}"
 @else 0 @endif;
 
+let verEmpleado = @json($verE);
+let modificarEmpleado = @json($modificarE);
+let crearEmpleado = @json($crearE);
+let eliminarEmpleado = @json($eliminarE);
+
 
 async function cargarEmpleados() {
     //let body = document.querySelector('#cuerpoEmpleadosModal');
@@ -511,6 +528,9 @@ async function cargarPermisosEmpleado(id)
 
 let footerOriginal = document.querySelector('#pieEmpleadosModal').innerHTML;
 async function empleadosSucursal() {
+    if(!verEmpleado)
+        return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION');
+    
     let header = document.querySelector('#cabezaEmpleadosModal');
     header.innerHTML = `<h5><strong class="text-uppercase">empleados de la sucursal ` + sucursal.direccion +
         `</strong></h5>`;
@@ -577,6 +597,7 @@ async function empleadosSucursal() {
             console.log(empleados);
             //return productos;
             //console.log(response);
+            $('#empleadosModal').modal('show');
 
         } else {
             console.log("No responde :'v");

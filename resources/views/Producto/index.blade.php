@@ -790,7 +790,7 @@ PRODUCTOS
                                             </button>
                                             <br/>
                                             <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return agregarProducto( ` + idProdSuc + `)" value="` + idProdSuc + `">
-                                            AGREGAR PRODUCTO
+                                            AGREGAR EXISTENCIA
                                             </button>
                                             <br/>
                                     `;
@@ -822,7 +822,7 @@ PRODUCTOS
                                             </button>
                                             <br/>
                                             <button type="button" class="btn btn-outline-primary mb-4 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
-                                            AGREGAR PRODUCTO
+                                            AGREGAR EXISTENCIA
                                             </button>
                                             <br/>`;
                             botonesProducto = botonesProducto + btnDarBaja;
