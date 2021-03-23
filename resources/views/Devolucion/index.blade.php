@@ -6,11 +6,11 @@ DEVOLUCION
 @section('opciones')
 @endsection
 @php
-        use App\Models\Sucursal_empleado;
-        $userDevolucion= ['crearDevolucion','admin'];
-        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
-        $devolver = $sE->hasAnyRole($userDevolucion);
-        @endphp
+use App\Models\Sucursal_empleado;
+$userDevolucion= ['crearDevolucion','admin'];
+$sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+$devolver = $sE->hasAnyRole($userDevolucion);
+@endphp
 <div class="row p-1 ">
     <!--CONSULTAR PRODUCTO -->
     <!--
@@ -292,7 +292,7 @@ DEVOLUCION
 
     function idProdDV(idP, idV, cantDV, cPD) {
         let devolver = @json($devolver);
-        if(!devolver)
+        if (!devolver)
             return alert('NO TIENE PERMISOS PARA REALIZAR LA DEVOLUCION');
         console.log("Entro verify");
         idProductoD = idP;
@@ -300,6 +300,10 @@ DEVOLUCION
         cantTotal = cantDV;
         let cantPD2 = cPD;
         diferencia = cantTotal - cantPD2;
+
+        $("input[id='cantidad']").val(0);
+        document.getElementById("totalD").innerHTML = 0;
+        document.getElementById("detalleD").value = "";
         $('#devolucion').modal('show');
     }
 
@@ -368,7 +372,7 @@ DEVOLUCION
                         //let cantidad = document.querySelector('#cantidad');
                         //let detalle = document.querySelector('#detalleD');
                         //let total = document.querySelector('#totalD');
-                        
+
                         // await cargarVentas();
                         //  await cargarDetalleVenta();
                         // await cargarProductos();
@@ -377,7 +381,6 @@ DEVOLUCION
                         await cargarDevolucion();
                         buscarFolio();
                         $("input[id='cantidad']").val(0);
-                        document.getElementById("detalleD").innerHTML = "hola";
                         document.getElementById("totalD").innerHTML = 0;
                     }
                 }

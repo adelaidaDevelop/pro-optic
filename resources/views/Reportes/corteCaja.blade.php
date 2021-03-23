@@ -31,9 +31,9 @@ CORTE DE CAJA
                     @foreach($empleados as $emp)
                     @if($cajero->idEmpleado == $emp->id)
                     @if( $emp->id == 1)
-                    <option value="{{$emp['id']}}">ADMINISTRADOR </option>
+                    <option value="{{$cajero['id']}}">ADMINISTRADOR </option>
                     @else
-                    <option value="{{$emp['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                    <option value="{{$cajero['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
                     @endif
                     @endif
                     @endforeach

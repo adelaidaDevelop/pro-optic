@@ -199,9 +199,7 @@ PRODUCTOS
                 <div id="subAgregar" class="col mx-auto mt-4 text-center"></div>
                 <div>
                 </div>
-
                 <div class="col modal-footer input-group">
-
                     <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal" onclick="">Close</button>
                 </div>
             </div>
@@ -883,8 +881,41 @@ PRODUCTOS
                                                 <h5 class="mb-1"> <strong>{{'FOTO '}}</strong></h5>
                                             </label>
                                             <br/>
+<<<<<<< HEAD
                                             <img class="mb-2" src="${urlImagen}" alt="" width="200"> 
                                              `+botonesProducto;
+=======
+                                            <img class="mb-2" src="${urlImagen}" alt="" width="200">
+                                            
+                                            <a class="btn btn-outline-primary mb-2 " href="{{ url('/puntoVenta/producto/` + x + `/edit')}}" onclick="return confirm('¿EDITAR ESTE PRODUCTO?')"> 
+                                            <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
+                                            EDITAR  </a>
+                                            <br/> 
+                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarPrecio( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                           EDITAR PRECIO
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarCosto( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                           EDITAR COSTO
+                                            </button>
+                                            <br/>
+                                            <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return agregarProducto( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                            AGREGAR PRODUCTO
+                                            </button>
+                                            <br/>
+                                            <a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                                            <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                                             DAR DE BAJA </a> 
+                                        </div>
+
+                                        <br/>
+                                    `;
+
+                        btnAgregarSubprod =
+                            ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
+                                             <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                                             AGREGAR A SUBPRODUCTO </a> 
+                                             `
+>>>>>>> 7cb5c2b5bb8da9da53164e7ebe6dcbd06df483a2
                     }
                 }
             }
