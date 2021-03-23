@@ -3,6 +3,44 @@
 @section('subtitulo')
 PRODUCTOS
 @endsection
+@php
+        use App\Models\Sucursal_empleado;
+        $producto= ['modificarProducto','admin'];
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
+        $modificar = $sE->hasAnyRole($producto);
+        $crearProducto= ['crearProducto','admin'];
+        $crear = $sE->hasAnyRole($crearProducto);
+        $eliminarProducto= ['eliminarProducto','admin'];
+        $eliminar = $sE->hasAnyRole($eliminarProducto);
+        @endphp
+@section('opciones')
+<div class="col-0  p-1">
+    <form method="get" action="{{url('/puntoVenta/departamento/')}}">
+        <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit">
+            <img src="{{ asset('img\depto.svg') }}" alt="Editar" width="33px" height="33px">
+            <br />
+            <p class="h6 my-auto text-dark"><small>DEPARTAMENTOS</small></p>
+        </button>
+    </form>
+</div>
+<!--BOTON CREAR EMPLEADO-->
+@if($crear)
+<div class="col-0  ml-3 p-1 ">
+    <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/producto/create')}}">
+        <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="33px" height="33px">
+        <p class="h6 my-auto text-dark"><small>NUEVO PRODUCTO </small></p>
+    </a>
+    </a>
+</div>
+@endif
+<div class="col-0  ml-3 p-1 ">
+    <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/producto/stock')}}">
+        <img src="{{ asset('img/stock.svg') }}" alt="Editar" width="32px" height="32px">
+        <p class="h6 my-auto text-dark"><small>AGREGAR DE STOCK</small></p>
+    </a>
+</div>
+
+@endsection
 <div class="col-12">
     <div class="row border">
         <h2 class="mx-auto text-center">CADUCIDAD DE LOS PRODUCTOS</h2>
@@ -84,7 +122,8 @@ async function productosPorCaducar() {
     }
 }
 
-
+let modificarProducto = @json($modificar);
+let eliminarProducto = @json($eliminar);
 async function mostrarProductosCaducidad() {
     try {
         await productosPorCaducar();
@@ -105,10 +144,22 @@ async function mostrarProductosCaducidad() {
                 productosCaducidad[i].id +
                 `)"> 
             DAR EN OFERTA</button> </td>`;
+            let btnBorrar = `<button class="btn btn-primary" onclick="eliminar(` + productosCaducidad[i].id + `,` +
+                productosCaducidad[i].idSucursalProducto + `)">BORRAR</button> </td>`;
+            if(!modificarProducto)
+            {
+                botonOferta = `<td> <button class="btn btn-primary" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
+            DAR EN OFERTA</button> </td>`;
+            }
+            if(!eliminarProducto)
+            {
+                btnBorrar = `<button class="btn btn-primary" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">BORRAR</button> </td>`;
+            }
             if (productosCaducidad[i].oferta == 1) {
                 oferta = `<span class="badge badge-success badge-pill">SI</span>`;
                 botonOferta = "";
             }
+            
             cuerpo = cuerpo + `
     
             <tr>
@@ -118,8 +169,7 @@ async function mostrarProductosCaducidad() {
             <td>` + productosCaducidad[i].cantidad + `</td>
             <td>` + fechaCaducidad + `</td>
             ` + botonOferta + `
-            <td> <button class="btn btn-primary" onclick="eliminar(` + productosCaducidad[i].id + `,` +
-                productosCaducidad[i].idSucursalProducto + `)">BORRAR</button> </td>
+            <td> `+btnBorrar+`
             </tr>`;
 
         }
