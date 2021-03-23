@@ -147,7 +147,7 @@ ADMINISTRACION
                                         GUARDAR CAMBIOS
                                     </button>
                                 </div>
-                                <div class="col-8">
+                                <div class="col-8" id="verEmpleadoSucursal">
                                     <button class="btn btn-outline-primary mt-2 mr-5" onclick="empleadosSucursal()"
                                         type="button" data-toggle="modal" data-target="#empleadosModal">
                                         <img src="{{ asset('img\empleado.png') }}" alt="Editar" width="30px"
