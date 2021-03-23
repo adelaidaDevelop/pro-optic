@@ -470,27 +470,32 @@ REPORTES
     };
 
     function nuevosProductos(fechaXDia2) {
-        //Entradas: NUEVOS PRODUCTOS
         entradaNuevosProductos = "";
-        console.log("nuevos pprod")
-        for (let p in productos) {
-            let fechaNuevoProd = new Date(productos[p].created_at);
-            if (comparacionFecha(fechaXDia2, fechaNuevoProd)) {
-                fechaCol = fechaNuevoProd.toLocaleDateString();
-                horaCol = fechaNuevoProd.toLocaleTimeString();
-                empleadoNombre = "NO ESPECIFICADO"; // NO SE SABE QUE EMPLEADO AGREGA NUEVOS PRODUCTOS
-                productoCol = productos[p].nombre;
-                for (let d in departamentos) {
-                    if (departamentos[d].id == productos[p].idDepartamento) {
-                        depto = departamentos[d].nombre;
+        let movi = document.querySelector('#idCajero');
+        let cajero = parseInt(movi.value);
+        console.log(cajero);
+        if (cajero == 0) {
+            console.log("entro igual a 0 ");
+            //Entradas: NUEVOS PRODUCTOS
+            console.log("nuevos pprod")
+            for (let p in productos) {
+                let fechaNuevoProd = new Date(productos[p].created_at);
+                if (comparacionFecha(fechaXDia2, fechaNuevoProd)) {
+                    fechaCol = fechaNuevoProd.toLocaleDateString();
+                    horaCol = fechaNuevoProd.toLocaleTimeString();
+                    empleadoNombre = "NO ESPECIFICADO"; // NO SE SABE QUE EMPLEADO AGREGA NUEVOS PRODUCTOS
+                    productoCol = productos[p].nombre;
+                    for (let d in departamentos) {
+                        if (departamentos[d].id == productos[p].idDepartamento) {
+                            depto = departamentos[d].nombre;
+                        }
                     }
-                }
-                contador = contador + 1;
-                cant_anterior = 0;
-                cant_actual = 0; // checar existencia si es x sucursal
-                movimientoTxt = "ENTRADA: NUEVOS PRODUCTOS";
-                //AGREGAR FILAS
-                entradaNuevosProductos = entradaNuevosProductos + `
+                    contador = contador + 1;
+                    cant_anterior = 0;
+                    cant_actual = 0; // checar existencia si es x sucursal
+                    movimientoTxt = "ENTRADA: NUEVOS PRODUCTOS";
+                    //AGREGAR FILAS
+                    entradaNuevosProductos = entradaNuevosProductos + `
                                             <tr>
                                                     <th scope="row">` + contador + `</th>
                                                     <td>` + movimientoTxt + `</td>
@@ -504,6 +509,7 @@ REPORTES
                                             </tr>
                                             `;
 
+                }
             }
         }
     };
@@ -588,9 +594,9 @@ REPORTES
                             // for (let y in sucursalEmpleados) {
                             //  if (sucursalEmpleados[y].id == ventas[v].idSucursalEmpleado) {
                             //BUSCAR EMPLEADOS
-                           // let movi2 = document.querySelector('#idCajero');
-                           // let moviName2 = parseInt(movi2.value);
-                           // console.log("imp");
+                            // let movi2 = document.querySelector('#idCajero');
+                            // let moviName2 = parseInt(movi2.value);
+                            // console.log("imp");
                             //console.log(moviName2.value);
                             if (sucursalEmpleados[h].idEmpleado == moviName) {
                                 // let empleado = "";
