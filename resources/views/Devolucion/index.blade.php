@@ -5,7 +5,12 @@ DEVOLUCION
 @endsection
 @section('opciones')
 @endsection
-
+@php
+        use App\Models\Sucursal_empleado;
+        $userDevolucion= ['crearDevolucion','admin'];
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
+        $devolver = $sE->hasAnyRole($userDevolucion);
+        @endphp
 <div class="row p-1 ">
     <!--CONSULTAR PRODUCTO -->
     <!--
@@ -238,7 +243,7 @@ DEVOLUCION
                                     */
 
                                     if (cantPD < detalleVenta[count2].cantidad) {
-                                        botonDev = `<button class="btn btn-light" onclick="idProdDV(` + productos[count3].id + `,` + ventas[count].id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)" data-toggle="modal" data-target="#devolucion"
+                                        botonDev = `<button class="btn btn-light" onclick="idProdDV(` + productos[count3].id + `,` + ventas[count].id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)"
                                             type="button">DEVOLVER</button>`;
                                     } else {
                                         botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
@@ -283,12 +288,16 @@ DEVOLUCION
     };
 
     function idProdDV(idP, idV, cantDV, cPD) {
+        let devolver = @json($devolver);
+        if(!devolver)
+            return alert('NO TIENE PERMISOS PARA REALIZAR LA DEVOLUCION');
         console.log("Entro verify");
         idProductoD = idP;
         idVentaD = idV;
         cantTotal = cantDV;
         let cantPD2 = cPD;
         diferencia = cantTotal - cantPD2;
+        $('#devolucion').modal('show');
     }
 
     function calcularTotalD(id) {

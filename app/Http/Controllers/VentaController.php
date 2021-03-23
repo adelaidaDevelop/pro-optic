@@ -35,8 +35,8 @@ class VentaController extends Controller
     public function index()
     {
         
-        $usuarios = ['crearVenta','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        //$usuarios = ['crearVenta','admin'];
+        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $datosP = Producto::all();
         $departamentos = Departamento::all();
@@ -71,8 +71,8 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        $usuarios = ['crearVenta','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        //$usuarios = ['crearVenta','admin'];
+        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $datos = $request->input('datos');
         $estado = $request->input('estado');

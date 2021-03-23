@@ -41,7 +41,7 @@ class SucursalProductoController extends Controller
     public function store(Request $request)
     {
         
-        $usuarios = ['crearProducto','admin'];
+        $usuarios = ['crearProducto','crearCompra','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         //return 'Todo bien';
         $datos = $request->input('datos');
@@ -114,7 +114,7 @@ class SucursalProductoController extends Controller
     {
         //if($id=='todos')
         
-        return Sucursal_producto::where('idSucursal', '=',$id)->where('status','=',1)->get();
+        return Sucursal_producto::where('idSucursal', '=',$id)->get();//->where('status','=',1)->get();
     }
 
     public function agregarProdStock_Suc($id){
@@ -170,7 +170,7 @@ class SucursalProductoController extends Controller
      */
     public function update(Request $request,$id)//, Sucursal_producto $sucursal_producto)
     {
-        $usuarios = ['modificarEmpleado','admin'];
+        $usuarios = ['modificarEmpleado','crearCompra','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         if($id == 'productos')
@@ -185,7 +185,7 @@ class SucursalProductoController extends Controller
                 $actualizarProducto = Sucursal_producto::where('idSucursal','=',session('sucursal'))
                 ->where('idProducto', '=',$datosProducto['id'])->get()->first();
                 $actualizarProducto->existencia = $actualizarProducto['existencia'] + $datosProducto['cantidad'];
-                
+                $actualizarProducto->status = 1;
                 $actualizarProducto->costo = $datosProducto['costo'];
                 $actualizarProducto->precio = $datosProducto['precio'];
                 $actualizarProducto->save();

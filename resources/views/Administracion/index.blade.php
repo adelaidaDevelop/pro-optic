@@ -390,8 +390,8 @@ ADMINISTRACION
                         @foreach($roles as $rol)
                         @if($rol->idModulo == $modulo->id)
                         <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="{{$modulo->id}}" 
-                            onclick="seleccionPermiso('{{$modulo->id}}{{$rol->id}}')" id="rol{{$modulo->id}}{{$rol->id}}">
+                            <input class="form-check-input" type="checkbox" value="{{$rol->id}}" 
+                            onclick="seleccionPermiso('{{$modulo->id}}','{{$rol->id}}')" id="rol{{$modulo->id}}{{$rol->id}}">
                             <label class="form-check-label" for="rol{{$modulo->id}}{{$rol->id}}">
                                 {{$rol->description}}
                                 @if($modulo->nombre == 'ADMINISTRADOR')
@@ -902,11 +902,11 @@ function seleccionModulo(idModulo){
     }
     //alert(modulo.nombre);
 }
-function seleccionPermiso(idModuloRol){
-    let inactivo = document.querySelector(`input[id="rol${idModuloRol}"]:checked`);
-    let modulo = document.querySelector(`input[id="rol${idModuloRol}"]`);
+function seleccionPermiso(idModulo,idRol){
+    let inactivo = document.querySelector(`input[id="rol${idModulo}${idRol}"]:checked`);
+    //let modulo = document.querySelector(`input[id="rol${idModuloRol}"]`);
     if (inactivo == null)
-        $(`#modulo${modulo.value}`).prop('checked',false);
+        $(`#modulo${idModulo}`).prop('checked',false);
     //console.log(inactivo.value);
     //alert(modulo.nombre);
 }
@@ -943,6 +943,7 @@ async function guardarPermisos()
                 //alert(data); }
             }
         });
+        $('#permisosModal').modal('hide');
         console.log(respuesta);
     }catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);

@@ -6,20 +6,30 @@
         VENTAS
         @endsection
         @section('opciones')
+        @php
+        use App\Models\Sucursal_empleado;
+        $userCliente= ['verCliente','crearCliente','modificarCliente','eliminarCliente','admin'];
+        $userDevolucion= ['verDevolucion','crearDevolucion','admin'];
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
+        
+        @endphp
         <!-- BOTON DEVOLUCION-->
+        @if($sE->hasAnyRole($userDevolucion))
         <div class="ml-4">
             <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/devolucion')}}">
                 <img src="{{ asset('img\devolucion.png') }}" alt="Editar" width="32px" height="32px">
                 <p class="h6 my-auto mx-2 text-dark"><small>DEVOLUCION</small></p>
             </a>
         </div>
+        @endif
+        @if($sE->hasAnyRole($userCliente))
         <div class=" ml-4">
             <a  class="btn btn-outline-secondary  p-1 border-0" href="/puntoVenta/cliente">
                 <img src="{{ asset('img\consumidor.png') }}" alt="Editar" width="30px" height="30px">
                 <p class="h6 my-auto mx-2 text-dark"><small>CLIENTES</small></p>
             </a>
         </div>
-
+        @endif
         @endsection
     </div>
     <!--div class="row p-1 "-->
