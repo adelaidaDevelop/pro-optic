@@ -3,6 +3,12 @@
 @section('subtitulo')
 PRODUCTOS
 @endsection
+@php
+        use App\Models\Sucursal_empleado;
+        $producto= ['crearProducto','admin'];
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
+        $agregar = $sE->hasAnyRole($producto);
+        @endphp
 @section('opciones')
 @endsection
 <div class="row p-1 ">
@@ -66,17 +72,23 @@ PRODUCTOS
                 }
                 console.log("entro0Vez");
                 contador = contador + 1;
+                let agregar = @json($agregar);
+                let btnAgregar = `<a class="btn btn-primary" href="{{ url('/puntoVenta/agregarProdStock/` +
+                    productos[t].id + `')}}"> AGREGAR </a>`;
+                if(!agregar)
+                {
+                    btnAgregar = `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA AGREGAR')"> AGREGAR </button>`
+                }
                 cuerpo = cuerpo + `
                  <tr onclick="" data-dismiss="modal">
                  <th scope="row">` + contador + `</th>
                    <td>` + productos[t].codigoBarras + `</td>
                    <td>` + productos[t].nombre + `</td>
                    <td>` + departamento + `</td>
-                    <td>` +
+                    <td>` +btnAgregar+
 
                     ` 
-                <a class="btn btn-primary" href="{{ url('/puntoVenta/agregarProdStock/` + productos[t].id + `')}}"> AGREGAR </a>
-                 </td>            
+                </td>            
                             </tr>
                             `;
             }

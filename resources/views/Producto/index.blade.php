@@ -3,7 +3,12 @@
 @section('subtitulo')
 PRODUCTOS
 @endsection
-
+@php
+        use App\Models\Sucursal_empleado;
+        $producto= ['modificarProducto','admin'];
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
+        $modificar = $sE->hasAnyRole($producto);
+        @endphp
 @section('opciones')
 <div class="col-0  p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
@@ -1246,7 +1251,7 @@ PRODUCTOS
         window.location = `/puntoVenta/subproducto/create/?id=${id}`;
     }
 
-    //
+    let modificarProducto = @json($modificar);
     async function productosEnBajaSucursal() {
         let cuerpo = "";
         let cont = 0;
@@ -1256,6 +1261,9 @@ PRODUCTOS
             for (let x in productos) {
                 if (productos[x].id === prod_baja[t].idProducto) {
                     cont = cont + 1;
+                    let btnAlta = `<a class="btn btn-primary" href="{{ url('/puntoVenta/altaProducto/` + productos[x].id + `')}}"> ALTA </a>`;
+                    if(!modificarProducto)
+                        btnAlta = `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" > ALTA </button>`;
                     cuerpo = cuerpo + `
                     <tr>
                     <th >` + cont + `</th>
@@ -1264,9 +1272,8 @@ PRODUCTOS
                     <td>` + productos[x].descripcion + `</td>
                     <td>` + productos[x].idDepartamento + `</td>
                     <td>` + productos[x].receta + `</td>
-                    <td>` +
+                    <td>` +btnAlta+
                         ` 
-                    <a class="btn btn-primary" href="{{ url('/puntoVenta/altaProducto/` + productos[x].id + `')}}"> ALTA </a>
                     </td>        
                     </tr>
                      `;
