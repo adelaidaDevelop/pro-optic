@@ -103,8 +103,8 @@ class ProductoController extends Controller
         
         if($producto=="productos")
         {
-            $usuarios = ['crearVenta','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+            //$usuarios = ['crearVenta','admin'];
+        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
             $productos = Producto::all();
             $productosCodificados = json_encode($productos);

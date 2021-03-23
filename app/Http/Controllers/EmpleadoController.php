@@ -325,10 +325,10 @@ class EmpleadoController extends Controller
             return false;
         return true;
     }
-    public function validarEmpleado($clave)
+    protected function validarEmpleado($clave)
     {
-        $usuarios = ['crearEmpleado','modificarEmpleado','crearVenta','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        //$usuarios = ['crearEmpleado','modificarEmpleado','crearVenta','admin'];
+        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $empleado = Empleado::where('claveE','=',$clave)->get();
         

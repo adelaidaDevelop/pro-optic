@@ -21,7 +21,7 @@ class DevolucionController extends Controller
      */
     public function index()
     {
-        $usuarios = ['verDevolucion','admin'];
+        $usuarios = ['verDevolucion','crearDevolucion','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $ventas= Venta::all();

@@ -6,24 +6,34 @@
         VENTAS
         @endsection
         @section('opciones')
+        @php
+        use App\Models\Sucursal_empleado;
+        $userCliente= ['verCliente','crearCliente','modificarCliente','eliminarCliente','admin'];
+        $userDevolucion= ['verDevolucion','crearDevolucion','admin'];
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
+        
+        @endphp
         <!-- BOTON DEVOLUCION-->
+        @if($sE->hasAnyRole($userDevolucion))
         <div class="ml-4">
             <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/devolucion')}}">
                 <img src="{{ asset('img\devolucion.png') }}" alt="Editar" width="32px" height="32px">
                 <p class="h6 my-auto mx-2 text-dark"><small>DEVOLUCION</small></p>
             </a>
         </div>
+        @endif
+        @if($sE->hasAnyRole($userCliente))
         <div class=" ml-4">
             <a  class="btn btn-outline-secondary  p-1 border-0" href="/puntoVenta/cliente">
                 <img src="{{ asset('img\consumidor.png') }}" alt="Editar" width="30px" height="30px">
                 <p class="h6 my-auto mx-2 text-dark"><small>CLIENTES</small></p>
             </a>
         </div>
-
+        @endif
         @endsection
     </div>
     <!--div class="row p-1 "-->
-    <div class="row border border-dark m-2 w-100">
+    <div class="row border border-dark my-2 mx-1">
         @php
         $var = 1;
         @endphp
@@ -45,26 +55,26 @@
                         @enderror
                     </div>
                     <div class="">
-                        <button class="btn btn-outline-primary  p-1" type="button" onclick="agregarPorCodigo()" value="informacion" id="botonAgregar">
+                        <button class="btn btn-outline-primary p-1" type="button" onclick="agregarPorCodigo()" value="informacion" id="botonAgregar">
                             <img src="{{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                             AGREGAR
                         </button>
                     </div>
                 </div>
 
-                <div class="mx-2">
-                    <button class="btn btn-outline-primary  p-1 " type="button" onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion" id="boton">
-                        <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="30px" height="30px">
+                <div class="my-1 mx-1 px-0">
+                    <button class="btn btn-outline-primary p-1 " type="button" onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion" id="boton">
+                        <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
                         BUSCAR PRODUCTO
                     </button>
                 </div>
-                <div class="mx-1">
+                <div class="my-1 mx-1 px-0">
                     <button class="btn btn-outline-primary  p-1" type="button" onclick=" buscarSubproducto()" data-toggle="modal" data-target="#exampleModal2" value="informacion" id="boton">
-                        <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="30px" height="30px">
+                        <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
                         BUSCAR SUBPRODUCTOS
                     </button>
                 </div>
-                <div>
+                <div class="my-1 mx-1 px-0">
                     <button class="btn btn-outline-primary  p-1" type="button" onclick="buscarOferta()" data-toggle="modal" data-target="#ofertasModal" value="informacion" id="boton">
                         <img src="{{ asset('img\oferta.png') }}" alt="Editar" width="25px" height="25px">
                         OFERTAS
@@ -186,17 +196,17 @@
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
-        <div class="modal-content">
+        <div class="modal-content" id="modalContenidoProducto">
             <div class="modal-header">
 
-                <h5 class="modal-title" id="exampleModalLabel">Ingresar Producto</h5>
+                <h5 class="modal-title" id="exampleModalLabel">PRODUCTOS</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarProducto()">
+                    <input type="text" class="form-control text-uppercase mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarProducto()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
                     <table class="table table-hover table-bordered" id="productos">
@@ -232,7 +242,7 @@
 
 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
-        <div class="modal-content">
+        <div class="modal-content" id="modalContenidoSubproducto">
             <div class="modal-header">
 
                 <h5 class="modal-title" id="exampleModalLabel">SUBPRODUCTOS</h5>
@@ -242,7 +252,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaSubproducto" onkeyup="buscarSubproducto()">
+                    <input type="text" class="form-control text-uppercase mx-2 my-3" placeholder="Buscar producto" id="busquedaSubproducto" onkeyup="buscarSubproducto()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
                     <table class="table table-hover table-bordered" id="productos">
@@ -277,8 +287,8 @@
 
 <div class="modal fade" id="ofertasModal" tabindex="-1" aria-labelledby="ofertasModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-content" id="modalContenidoOferta">
+            <div class="modal-header" >
 
                 <h5 class="modal-title text-center" id="ofertasModalLabel">OFERTAS</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -287,12 +297,12 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaOferta" onkeyup="buscarOferta()">
+                    <input type="text" class="form-control text-uppercase mx-2 my-3" placeholder="Buscar producto" id="busquedaOferta" onkeyup="buscarOferta()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
-                    <table class="table table-hover table-bordered" id="productos">
+                    <table class="table table-hover table-bordered text-center" id="productos">
                         <thead class="thead-light">
-                            <tr class="text-center">
+                            <tr class="">
                                 <th scope="col">CODIGO_BARRAS</th>
                                 <th scope="col">PRODUCTO</th>
                                 <th scope="col">EXISTENCIA</th>
@@ -534,7 +544,6 @@
         }
         //return response;
     }
-    //cargarProductosSucursal();
     async function cargarSubproductosSucursal() {
         let response = "Sin respuesta";
         try {
@@ -555,7 +564,6 @@
         }
         //return response;
     }
-    cargarSubproductosSucursal();
     async function cargarOfertasSucursal() {
         let response = "Sin respuesta";
         try {
@@ -577,7 +585,6 @@
         }
 
     }
-    cargarOfertasSucursal();
 
     function agregarProductoAVenta(id, codigoBarras, nombre, existencia, precio, cantidad, tipo) {
         //console.log(id);
@@ -780,12 +787,32 @@
     };*/
 
 
-    function buscarProducto() {
-
+    async function buscarProducto() {
+        try{
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         let cuerpo = "";
         let contador = 1;
         let departamento = "";
+        
+        if(productosSucursal.length == 0)
+        {
+            
+            const contenidoProducto = document.querySelector('#modalContenidoProducto');
+            const contenidoOriginal = contenidoProducto.innerHTML;
+            contenidoProducto.innerHTML = 
+            `<div class="d-flex justify-content-center my-3">
+                <button class="btn btn-info" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    CARGANDO PRODUCTOS
+                </button>
+            </div>
+            `;
+            if(productos.length == 0)
+                await cargarProductos();
+            await cargarProductosSucursal();
+            contenidoProducto.innerHTML = contenidoOriginal;
+        }
+        
         for (let x in productosSucursal) {
             for (let count5 in productos) {
                 if (productos[count5].id === productosSucursal[x].idProducto) {
@@ -811,13 +838,36 @@
 
         }
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-
+    }
+        catch (err) {
+            console.log("Error al realizar la petición de productos AJAX: " + err.message);
+        }
     };
 
-    function buscarSubproducto() {
+    async function buscarSubproducto() {
+        try{
         let cont = 0;
         let cuerpo = "";
         const palabraBusqueda = document.querySelector('#busquedaSubproducto');
+        if(subproductosSucursal.length == 0)
+        {
+            
+            const contenidoProducto = document.querySelector('#modalContenidoSubproducto');
+            const contenidoOriginal = contenidoProducto.innerHTML;
+            contenidoProducto.innerHTML = 
+            `<div class="d-flex justify-content-center my-3">
+                <button class="btn btn-info" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    CARGANDO SUBPRODUCTOS
+                </button>
+
+            </div>
+            `;
+            if(productos.length == 0)
+                await cargarProductos();
+            await cargarSubproductosSucursal();
+            contenidoProducto.innerHTML = contenidoOriginal;
+        }
         for (let count in subproductosSucursal) {
             let sucursalP = productosSucursal.find(p => p.id == subproductosSucursal[count].idSucursalProducto);
             let producto = productos.find(p => p.id == sucursalP.idProducto);
@@ -834,39 +884,11 @@
             </tr>
             `;
             }
-            /*for (count2 in sucursal_prod) {
-                if (subproductos[count].idSucursalProducto == sucursal_prod[count2].id) {
-                    let idProd = sucursal_prod[count2].idProducto;
-                    let nombre = "";
-                    let cBarras = "";
-                    let depto = "";
-                    for (let x in productos) {
-                        if (productos[x].id == idProd) {
-                            nombre = productos[x].nombre;
-                            cBarras = productos[x].codigoBarras;
-                            // idProd =productos[x].id;
-                            for (let d in departamentos) {
-                                if (productos[x].idDepartamento === departamentos[d].id)
-                                    depto = departamentos[d].nombre;
-                            }
-                        }
-                    }
-
-                    cont = cont + 1;
-                    cuerpo = cuerpo + `
-                            <tr onclick="agregarProducto(` + idProd + `)" data-dismiss="modal">
-                            <th >` + idProd + `</th>
-                            <th >` + cBarras + `</th>
-                            <td>` + nombre + `</td>
-                            <td>` + subproducto[count].existencia + `</td>
-                            <td>` + depto + `</td>  
-                        </tr>
-                        `;
-                }
-            }*/
         }
         document.getElementById("consultaBusquedaSubp").innerHTML = cuerpo;
-
+    }catch (err) {
+            console.log("Error al realizar la petición de productos AJAX: " + err.message);
+        }
     };
 
 
@@ -929,7 +951,7 @@
                 return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
             if (parseFloat(pago.value) < parseFloat(total))
                 return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
-            let funcion = $.ajax({
+            let funcion = await $.ajax({
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
@@ -954,6 +976,9 @@
             mostrarProductos();
             $('#confirmarVentaModal').modal('hide');
             $("input[id='pagoEfectivo']").val(0);
+            productosSucursal = [];
+            subproductosSucursal = [];
+            ofertasSucursal = [];
             await cargarProductos();
             await cargarProductosSucursal();
             await cargarSubproductosSucursal();
@@ -995,7 +1020,7 @@
         if (parseFloat(pago.value) >= parseFloat(total))
             return alert('SI EL PAGO ES MAYOR O IGUAL A LA COMPRA MEJOR USE EL PAGO CON EFECTIVO');
         try {
-            let funcion = $.ajax({
+            let funcion = await $.ajax({
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
@@ -1025,6 +1050,9 @@
             mostrarProductos();
             $('#confirmarVentaModal').modal('hide');
             $("input[id='pagoCredito']").val(0);
+            productosSucursal = [];
+            subproductosSucursal = [];
+            ofertasSucursal = [];
             await cargarProductos();
             await cargarProductosSucursal();
             await cargarSubproductosSucursal();
@@ -1131,11 +1159,31 @@
 
     }
 
-    function buscarOferta() {
+    async function buscarOferta() {
+        try{
         const palabraBusqueda = document.querySelector('#busquedaOferta');
         let cuerpo = "";
         let contador = 1;
         let departamento = "";
+        if(ofertasSucursal.length == 0)
+        {
+            
+            const contenidoProducto = document.querySelector('#modalContenidoOferta');
+            const contenidoOriginal = contenidoProducto.innerHTML;
+            contenidoProducto.innerHTML = 
+            `<div class="d-flex justify-content-center my-3">
+                <button class="btn btn-info" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    CARGANDO OFERTAS
+                </button>
+            </div>
+            `;
+            if(productos.length == 0)
+            
+                await cargarProductos();
+            await cargarOfertasSucursal();
+            contenidoProducto.innerHTML = contenidoOriginal;
+        }
         for (let x in ofertasSucursal) {
             /*for (let count5 in productos) {
                 if (productos[count5].id === productosSucursal[x].idProducto) {
@@ -1178,6 +1226,9 @@
 
         }
         document.getElementById("consultaBusquedaOferta").innerHTML = cuerpo;
+    }catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
     }
 </script>
 

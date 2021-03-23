@@ -31,7 +31,7 @@ class RegistrosPruebaTable extends Migration
         $sucursal->save();
 
         //MODULOS
-        $modulos = ['ADMINISTRADOR','COMPRAS','VENTAS','INVENTARIO','SUCURSALES','EMPLEADOS','DEUDORES','CORTES','REPORTES','CLIENTES'];
+        $modulos = ['ADMINISTRADOR','COMPRAS','DEVOLUCIONES','INVENTARIO','SUCURSALES','EMPLEADOS','DEUDORES','CORTES','REPORTES','CLIENTES'];
         for($i=0;$i<count($modulos);$i++)
         {
             $modulo = new Modulo;
@@ -39,21 +39,22 @@ class RegistrosPruebaTable extends Migration
             $modulo->save();
         }
         $nombres = ['admin','verCompra','crearCompra','modificarCompra','verPago',
-        'crearVenta','verDevolucion','crearDevolucion',
+        'verDevolucion','crearDevolucion',
         'verProducto','crearProducto','eliminarProducto','modificarProducto',
         'verSucursal','crearSucursal','eliminarSucursal','modificarSucursal',
         'verEmpleado','crearEmpleado','eliminarEmpleado','modificarEmpleado','statusEmpleado',
         'verDeudor','verCorte','verReporte','verCliente','crearCliente','eliminarCliente','modificarCliente'];
 
         $descripcion = ['ADMINISTRADOR','VER COMPRAS', 'CREAR COMPRAS','MODIFICAR COMPRAS', 'VER PAGOS',
-        'CREAR VENTAS','VER DEVOLUCIONES','CREAR DEVOLUCIONES',
+        'VER DEVOLUCIONES','CREAR DEVOLUCIONES',
         'VER PRODUCTOS','CREAR PRODUCTOS','ELIMINAR PRODUCTOS','MODIFICAR PRODUCTOS',
         'VER SUCURSALES','CREAR SUCURSALES','ELIMINAR SUCURSALES','MODIFICAR SUCURSALES',
         'VER EMPLEADOS','CREAR EMPLEADOS','ELIMINAR EMPLEADOS','MODIFICAR EMPLEADOS','MODIFICAR STATUS EMPLEADOS',
         'VER DEUDORES','VER CORTES','VER REPORTES','VER CLIENTES','CREAR CLIENTES','ELIMINAR CLIENTES','MODIFICAR CLIENTES'];
         //['ADMINISTRADOR','COMPRAS','VENTAS','INVENTARIO','SUCURSALES','EMPLEADOS','DEUDORES','CORTES','REPORTES'];
         $modulo = [0,1,1,1,1,
-                   2,2,2,3,3,3,3,
+                   2,2,
+                   3,3,3,3,
                    4,4,4,4,
                    5,5,5,5,5,
                    6,7,8,9,9,9,9];

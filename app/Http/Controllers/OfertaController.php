@@ -82,8 +82,8 @@ class OfertaController extends Controller
     {
         //$productos = Producto::all();
         //$sucursalProducto = Sucursal_producto::where('idSucursal', '=',$idS)->get();
-        $usuarios = ['verProducto','crearProducto','modificarProducto','crearVenta','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+    //    $usuarios = ['verProducto','crearProducto','modificarProducto','crearVenta','admin'];
+    //    Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $productosOferta = Oferta::all();//where('idSucursalProducto','=',$sP->id)->get();
         
