@@ -42,13 +42,14 @@ PRODUCTOS
         <p class="h6 my-auto text-dark"><small>PROXIMOS A CADUCAR</small></p>
     </a>
 </div>
-
+<!--
 <div class="col-2  ml-3 p-1 ">
     <a class="btn btn-outline-secondary p-1 border-0" href="{{ url('/puntoVenta/oferta')}}">
         <img src="{{ asset('img\ofertas.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>OFERTAS</small></p>
     </a>
 </div>
+-->
 <!-- COMENTADO TEMPORAL
 <div class="col-1 my-2  p-1 ">
     <button type="button" class="btn btn-secondary p-1" data-toggle="modal"  href="{{ url('/producto/create')}}" id="altaProd"  value="">
@@ -166,12 +167,12 @@ PRODUCTOS
                 <!--ENCABEZADO -->
                 <div class="container-fluid">
                     <div class="row" style="background:#3366FF">
-                        <h6 class="font-weight-bold my-2 ml-4 px-1 text-center mx-auto "  style="color:#FFFFFF" >
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 text-center mx-auto " style="color:#FFFFFF">
                             INFORMACION DEL PRODUCTO
                         </h6>
                     </div>
                     <div class="row" style="background:#ED4D46">
-                        <h6 class="font-weight-bold my-2 ml-4 px-1 mx-auto text-center"  style="color:#FFFFFF">
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 mx-auto text-center" style="color:#FFFFFF">
                             PRODUCTO
                         </h6>
                     </div>
@@ -203,8 +204,8 @@ PRODUCTOS
                 <!--ENCABEZADO -->
                 <div class="container-fluid">
                     <div class="row" style="background:#3366FF">
-                        <h6 class="font-weight-bold my-2 ml-4 px-1 mx-auto text-center" id="titulo"  style="color:#FFFFFF">
-                            
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 mx-auto text-center" id="titulo" style="color:#FFFFFF">
+
                         </h6>
                     </div>
                 </div>
@@ -290,6 +291,7 @@ PRODUCTOS
     let bajosExisBandera = true;
     let folioNombreBandera = true;
     let subproductos = @json($subproducto);
+    let ofertas = @json($ofertas);
     //  let nombreBandera = true;
 
     let prod_baja = "";
@@ -655,7 +657,6 @@ PRODUCTOS
         for (let y in subproductos) {
             for (let z in productosSucursal) {
                 if (subproductos[y].idSucursalProducto == productosSucursal[z].id) {
-
                     for (let p in productos) {
                         if (productos[p].id == productosSucursal[z].idProducto) {
                             for (count8 in d) {
@@ -685,10 +686,46 @@ PRODUCTOS
                         }
 
                     }
-
-
                 }
 
+            }
+
+        }
+        //MOSTRAR OFERTAS 
+        for (let i in ofertas) {
+            for (let z in productosSucursal) {
+                if (ofertas[i].idSucursalProducto == productosSucursal[z].id) {
+                    for (let p in productos) {
+                        if (productos[p].id == productosSucursal[z].idProducto) {
+                            for (count8 in d) {
+                                if (productos[p].idDepartamento === d[count8].id) {
+                                    departamento = d[count8].nombre;
+                                }
+                            }
+                            let costoOferta = productosSucursal[z].costo;
+
+                            contador = contador + 1;
+                            cuerpo = cuerpo + `
+                            <tr class="table-warning" onclick="" data-dismiss="modal">
+                                <th scope="row">` + contador + `</th>
+                                <td >` + "OFERTA" + `</td>
+                                <td>` + productos[p].codigoBarras + `</td>
+                                <td>` + productos[p].nombre + `</td>
+                                <td>` + departamento + `</td>
+                                <td>` +productosSucursal[z].costo + `</td>
+                                <td class="text-success">` + productosSucursal[z].precio + `</td>
+                                <td>` + ofertas[i].existencia + `</td>
+                                <td>` +
+                                ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return infoSubproducto( ` + productos[p].id + `)" value="` + productos[p].id + `">
+                                <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
+                                </button>
+                                </td>            
+                            </tr>
+                            `;
+                        }
+
+                    }
+                }
             }
 
         }
@@ -826,9 +863,9 @@ PRODUCTOS
             if (productosSucursal[j].id === idSP) {
                 idProd = productosSucursal[j].idProducto;
                 idSucPro = productosSucursal[j].id;
-                for(let x in productos){
-                    if(productos[x].id == idProd)
-                    nombreProd = productos[x].nombre;
+                for (let x in productos) {
+                    if (productos[x].id == idProd)
+                        nombreProd = productos[x].nombre;
                 }
                 console.log("entra");
                 cambiarPrecio = `
@@ -848,15 +885,15 @@ PRODUCTOS
         document.getElementById("titulo").innerHTML = nombreProd;
         document.getElementById("modiPrecioCosto").innerHTML = cambiarPrecio;
         $("input[name='precio_nuevo']").bind('keypress', function(tecla) {
-        let code = tecla.charCode;
-        if (code == 8) { // backspace.
-            return true;
-        } else if (code >= 48 && code <= 57) { // is a number.
-            return true;
-        } else { // other keys.
-            return false;
-        }
-    });
+            let code = tecla.charCode;
+            if (code == 8) { // backspace.
+                return true;
+            } else if (code >= 48 && code <= 57) { // is a number.
+                return true;
+            } else { // other keys.
+                return false;
+            }
+        });
     }
 
     function modificarCosto(idSP) {
@@ -868,9 +905,9 @@ PRODUCTOS
             if (productosSucursal[j].id === idSP) {
                 idProd = productosSucursal[j].idProducto;
                 idSucPro = productosSucursal[j].id;
-                for(let x in productos){
-                    if(productos[x].id == idProd)
-                    nombreProd = productos[x].nombre;
+                for (let x in productos) {
+                    if (productos[x].id == idProd)
+                        nombreProd = productos[x].nombre;
                 }
                 console.log("entra");
                 cambiarCosto = `
@@ -887,21 +924,21 @@ PRODUCTOS
         $("#actPrecioCosto").click(function() {
             actCosto(idSucPro);
         });
-        
+
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
         document.getElementById("titulo").innerHTML = nombreProd;
         document.getElementById("modiPrecioCosto").innerHTML = cambiarCosto;
         $("input[name='costo']").bind('keypress', function(tecla) {
-        if (this.value.length >= 10) return false;
-        let code = tecla.charCode;
-        if (code == 8) { // backspace.
-            return true;
-        } else if (code >= 48 && code <= 57) { // is a number.
-            return true;
-        } else { // other keys.
-            return false;
-        }
-    });
+            if (this.value.length >= 10) return false;
+            let code = tecla.charCode;
+            if (code == 8) { // backspace.
+                return true;
+            } else if (code >= 48 && code <= 57) { // is a number.
+                return true;
+            } else { // other keys.
+                return false;
+            }
+        });
     }
 
     function agregarProducto(idSP) {
@@ -913,9 +950,9 @@ PRODUCTOS
             if (productosSucursal[j].id === idSP) {
                 idProd = productosSucursal[j].idProducto;
                 idSucPro = productosSucursal[j].id;
-                for(let x in productos){
-                    if(productos[x].id == idProd)
-                    nombreProd = productos[x].nombre;
+                for (let x in productos) {
+                    if (productos[x].id == idProd)
+                        nombreProd = productos[x].nombre;
                 }
                 console.log("entra");
                 cambiarCantidad = `
@@ -932,22 +969,22 @@ PRODUCTOS
         $("#actPrecioCosto").click(function() {
             actExistencia(idSucPro);
         });
-        
+
 
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
         document.getElementById("titulo").innerHTML = nombreProd;
         document.getElementById("modiPrecioCosto").innerHTML = cambiarCantidad;
         $("input[name='cantidad']").bind('keypress', function(tecla) {
-        if (this.value.length >= 10) return false;
-        let code = tecla.charCode;
-        if (code == 8) { // backspace.
-            return true;
-        } else if (code >= 48 && code <= 57) { // is a number.
-            return true;
-        } else { // other keys.
-            return false;
-        }
-    });
+            if (this.value.length >= 10) return false;
+            let code = tecla.charCode;
+            if (code == 8) { // backspace.
+                return true;
+            } else if (code >= 48 && code <= 57) { // is a number.
+                return true;
+            } else { // other keys.
+                return false;
+            }
+        });
     }
 
 

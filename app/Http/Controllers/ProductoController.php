@@ -6,6 +6,7 @@ use App\Models\Departamento;
 use App\Models\Subproducto;
 use App\Models\Sucursal_producto;
 use App\Models\Sucursal_empleado;
+use App\Models\Oferta;
 
 use Illuminate\Http\Request;
 //para poder borrar informacion de los registros de la carpeta uploads de storage
@@ -28,10 +29,11 @@ class ProductoController extends Controller
         $depa= Departamento::all();
         $idSucursal = session('sucursal');
         $producto = Producto::all();
-        $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)->get();
         $subproducto = Subproducto::all();
+        $ofertas = Oferta::all();
      //   return $idSucursal;
-         return view('Producto.index',$depas, compact('depa', 'datosP','productosSucursal', 'producto','subproducto' ));
+         return view('Producto.index',$depas, compact('depa', 'datosP','productosSucursal', 'producto','subproducto', 'ofertas'));
     }
 
     /**

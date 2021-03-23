@@ -32,7 +32,7 @@ DEVOLUCION
                     <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="35px" height="35px" />
                 </button>
             </div>
-            <div id="sinResult" class="row mx-0 px-0">
+            <div id="sinResult" class="row ">
             </div>
 
             <!-- TABLA -->
@@ -147,8 +147,11 @@ DEVOLUCION
                     </div>
                     <div class="col-9 mt-4 ">
                         <input type="number" class="form-control mb-2" oninput="calcularTotalD(idProductoD)" name="cantidad" id="cantidad" placeholder="" value=0 autofocus required>
-                        <textarea name="detalleD" class="form-control mb-2" id="detalleD" placeholder="ESPECIFICAR DETALLE" rows="3" cols="23" required></textarea>
-                        <p class="h5 mb-2" id="totalD">$ 0.00</p>
+                        <textarea name="detalleD" class=" mb-2" id="detalleD" placeholder="ESPECIFICAR DETALLE" rows="3" cols="23" required></textarea>
+                        <div class="input-group">
+                            <h5>$</h5>
+                            <p class="h5 mb-2" id="totalD">0.00</p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-2"></div>
@@ -273,7 +276,7 @@ DEVOLUCION
 
             }
             if (cuerpo === "") {
-                let sin = ` <h3 class= "text-danger my-auto"> VENTA NO ENCONTRADA</h3>`;
+                let sin = ` <h5 class= "text-dark  mx-0 px-0"> VENTA NO ENCONTRADA</h5>`;
                 document.getElementById("sinResult").innerHTML = sin;
             }
         }
@@ -325,43 +328,49 @@ DEVOLUCION
                 if (detalle2.length == 0) {
                     return alert('AGREGAR DETALLE DE LA DEVOLUCION');
                 } else {
+                    let confirmar = confirm("¿PROCESAR DEVOLUCION?");
+                    if (confirmar) {
+                        try {
+                            let funcion = await $.ajax({
+                                // metodo: puede ser POST, GET, etc
+                                method: "POST",
+                                // la URL de donde voy a hacer la petición
+                                url: '/puntoVenta/devolucion',
+                                // los datos que voy a enviar para la relación
+                                data: {
+                                    cantidad: cant2,
+                                    detalle: detalle2,
+                                    precio: parseFloat(total.textContent) / cant2,
+                                    idVenta: idVentaD,
+                                    idProducto: idProductoD,
+                                    _token: "{{ csrf_token() }}"
+                                }
+                            }).done(function(respuesta) {
 
-                    try {
-                        let funcion = await $.ajax({
-                            // metodo: puede ser POST, GET, etc
-                            method: "POST",
-                            // la URL de donde voy a hacer la petición
-                            url: '/puntoVenta/devolucion',
-                            // los datos que voy a enviar para la relación
-                            data: {
-                                cantidad: cant2,
-                                detalle: detalle2,
-                                precio: parseFloat(total.textContent) / cant2,
-                                idVenta: idVentaD,
-                                idProducto: idProductoD,
-                                _token: "{{ csrf_token() }}"
-                            }
-                        }).done(function(respuesta) {
+                                $('#devolucion').modal('hide');
+                                // location.reload();
+                                console.log(respuesta); //JSON.stringify(respuesta));
+                            });
 
-                            $('#devolucion').modal('hide');
-                            $("input[id='totalD']").val(0);
-                            // location.reload();
-
-                            console.log(respuesta); //JSON.stringify(respuesta));
-                        });
-
-                        console.log(funcion);
-                    } catch (err) {
-                        console.log("Error al realizar la petición AJAX: " + err.message);
+                            console.log(funcion);
+                        } catch (err) {
+                            console.log("Error al realizar la petición AJAX: " + err.message);
+                        }
+                        //let cantidad = document.querySelector('#cantidad');
+                        //let detalle = document.querySelector('#detalleD');
+                        //let total = document.querySelector('#totalD');
+                        
+                        // await cargarVentas();
+                        //  await cargarDetalleVenta();
+                        // await cargarProductos();
+                        //  await cargarDevoluciones();
+                        // await cargarEmpleados();
+                        await cargarDevolucion();
+                        buscarFolio();
+                        $("input[id='cantidad']").val(0);
+                        document.getElementById("detalleD").innerHTML = "hola";
+                        document.getElementById("totalD").innerHTML = 0;
                     }
-
-                    // await cargarVentas();
-                    //  await cargarDetalleVenta();
-                    // await cargarProductos();
-                    //  await cargarDevoluciones();
-                    // await cargarEmpleados();
-                    await cargarDevolucion();
-                    buscarFolio();
                 }
             } else {
                 return alert('El máximo de productos a devolver es: ' + diferencia + ', ingrese una cantidad menor');
@@ -648,6 +657,5 @@ DEVOLUCION
             return false;
         }
     });
-
 </script>
 @endsection

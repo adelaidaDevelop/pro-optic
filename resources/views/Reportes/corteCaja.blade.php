@@ -30,7 +30,11 @@ CORTE DE CAJA
                     @foreach($sucursalEmpleados as $cajero)
                     @foreach($empleados as $emp)
                     @if($cajero->idEmpleado == $emp->id)
-                    <option value="{{$cajero['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                    @if( $emp->id == 1)
+                    <option value="{{$emp['id']}}">ADMINISTRADOR </option>
+                    @else
+                    <option value="{{$emp['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                    @endif
                     @endif
                     @endforeach
                     @endforeach
@@ -50,7 +54,8 @@ CORTE DE CAJA
         </div>
     </div>
     <div class="row w-100 mx-4 ">
-        <div class="col-3 mx-3">
+        <div class="col-1 "></div>
+        <div >
             <h6 class="text-primary">+ENTRADAS</h6>
             <h6 class="ml-3">+TOTAL VENTAS</h6>
             <h6 class="ml-3">+ABONO DEUDORES</h6>
@@ -62,20 +67,30 @@ CORTE DE CAJA
             -->
             <h6 class="ml-3 font-weight-bold">SUBTOTAL SALIDAS:</h6>
         </div>
-        <div class="col-3 mb-4">
-            <input type="number" id="totalVentas" class=" mt-4 my-0" style="height:23px" disabled />
-            <input type="number" id="abonoD" class=" mt-1 my-0" style="height:23px" disabled />
-            <input type="number" id="subtotalE" class=" mt-3 my-0" style="height:23px" disabled />
-            <input type="number" id="devolucionT" class=" mt-5 my-0" style="height:23px" disabled />
+        <div class="col-3 ml-3">
+            <div class=" mt-4 my-0 input-group">
+                <h6>$</h6><input type="number" style="height:23px" id="totalVentas" disabled />
+            </div>
+            <div class=" mt-1 my-0  input-group">
+                <h6>$</h6><input type="number" id="abonoD" style="height:23px" disabled />
+            </div>  
+            <div class="mt-2 my-0  input-group">
+                <h6>$</h6><input type="number" id="subtotalE"  style="height:23px" disabled />
+            </div>
+            <div class=" mt-5 my-0 input-group">
+                <h6>$</h6><input type="number" id="devolucionT" class="" style="height:23px" disabled />
+            </div>
             <!--<input type="number" onchange="filtrarCompras()" id="fechaFinal" class=" mt-1 my-0" style="height:23px" />
             <input type="number" onchange="filtrarCompras()" id="fechaFinal" class=" mt-1 my-0" style="height:23px" />
             -->
-            <input type="number" id="subtotalS" class=" mt-1 my-0" style="height:23px" disabled />
+            <div class=" mt-1 my-0 input-group">
+                <h6>$</h6><input type="number" id="subtotalS" style="height:23px" disabled />
+            </div>
         </div>
-        <div class="col-4 mt-5">
+        <div class="col-4  ">
             <div class="form-group input-group text-primary mt-4 mb-5">
                 <h5>TOTAL:</h5>
-                <input type="number" id="total" class="ml-2" style="height:23px" disabled />
+                <h5 class="ml-2">$</h5><input type="number" id="total"  style="height:23px" disabled />
             </div>
             <button class="btn btn-secondary ml-4 mb-5 mx-auto mt-5">IMPRIMIR CORTE
             </button>
@@ -86,7 +101,7 @@ CORTE DE CAJA
             </div>
             -->
         </div>
-        <div class="col-2"></div>
+
     </div>
 </div>
 

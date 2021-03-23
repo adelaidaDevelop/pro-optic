@@ -20,19 +20,28 @@ REPORTES
             VENTAS
         </strong>
     </h4>
-    <br/>
+    <br />
     <div class="row w-100 mx-auto my-auto ">
         <div class="col-4  text-center ">
             <h6 class=" text-primary"> COSTO DEL INVENTARIO: </h6>
-            <p class="h3 mb-2" id="costoInv">$ 0.00</p>
+            <div class=" input-group text-center mx-auto px-auto">
+                <h3 class="text-center ml-auto">$</h3>
+                <p class="h3 mr-auto" id="costoInv">0.00</p>
+            </div>
         </div class="text-center">
         <div id="" class="col-4 mx-auto text-center">
             <h6 class=" text-primary"> PRECIO DEL INVENTARIO </h6>
-            <p class="h3 mb-2" id="precioInv">$ 0.00</p>
+            <div class=" input-group text-center mx-auto px-auto">
+                <h3 class="text-center ml-auto">$</h3>
+                <p class="h3 mr-auto" id="precioInv">0.00</p>
+            </div>
         </div>
         <div class="col-4 text-center">
             <h6 class=" text-primary"> CANTIDAD DE PRODUCTOS EN INVENTARIO: </h6>
-            <div id="cantProdInv" class="h3"> 0.0</div>
+            <div class=" input-group text-center mx-auto px-auto">
+                <h3 class="text-center ml-auto">$</h3>
+                <p class="h3 mr-auto" id="cantProdInv">0.00</p>
+            </div>
         </div>
     </div>
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
@@ -51,7 +60,7 @@ REPORTES
                 <option value="3">ECOMMERCE</option>
                 <option value="4">TODOS</option>
             </select>
-           <!-- 
+            <!-- 
             <h6 class="my-auto mr-1">
                 TURNOS
             </h6>
@@ -69,7 +78,11 @@ REPORTES
                 @foreach($sucursalEmpleados as $cajero)
                 @foreach($empleados as $emp)
                 @if($cajero->idEmpleado == $emp->id)
+                @if( $emp->id == 1)
+                <option value="{{$emp['id']}}">ADMINISTRADOR </option>
+                @else
                 <option value="{{$emp['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                @endif
                 @endif
                 @endforeach
                 @endforeach
@@ -147,7 +160,7 @@ REPORTES
                             <th>CAJERO</th>
                             <th>PRODUCTO</th>
                             <th>DEPTO</th>
-                            <th>Pagos</th>
+                            <th>PAGOS</th>
                         </tr>
                     </thead>
                     <tbody id="consultaBusqueda">
@@ -341,6 +354,7 @@ REPORTES
         let cont = 0;
         let empleadoNombre = "";
         let fecha = "";
+        let depto = "";
         for (count5 in ventas) {
             let fechaVenta = new Date(ventas[count5].created_at);
             if (comparacionFecha(fechaXDia2, fechaVenta)) {
@@ -356,32 +370,44 @@ REPORTES
                         //  fecha = new Date(ventas[count5].created_at);
                         cont = cont + 1;
                         //nombr empleado
-                        for (let v in sucursalEmpleado) {
-                            if (sucursalEmpleado[v].id == ventas[v].idSucursalEmpleado) {
-                                for (let h in empleados) {
-                                    if (empleados[h].id == sucursalEmpleado[v].idEmpleado) {
-                                        empleadoNombre = empleados[h].primerNombre + " " + empleados[h].segundoNombre + " " + empleados[h].apellidoPaterno + " " + empleados[h].apellidoMaterno;
-                                    }
-                                }
-                            }
-                        }
+
                         for (count7 in detalleVenta) {
                             console.log("detalla V: ", detalleVenta);
                             if (detalleVenta[count7].idVenta == ventas[count5].id) {
+
                                 for (let j in productos) {
                                     if (productos[j].id == detalleVenta[count7].idProducto) {
                                         nombre = productos[j].nombre;
+                                        for (let z in departamentos) {
+                                            if (departamentos[z].id == productos[j].idDepartamento) {
+                                                depto = departamentos[z].nombre;
+                                            }
+                                        }
+
+                                        //
+
+                                    }
+                                }
+                                //empleados
+                                for (let v in sucursalEmpleado) {
+                                    if (sucursalEmpleado[v].id == ventas[v].idSucursalEmpleado) {
+                                        for (let h in empleados) {
+                                            if (empleados[h].id == sucursalEmpleado[v].idEmpleado) {
+                                                empleadoNombre = empleados[h].primerNombre + " " + empleados[h].segundoNombre + " " + empleados[h].apellidoPaterno + " " + empleados[h].apellidoMaterno;
+                                            }
+                                        }
                                     }
                                 }
                                 cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
                                             <td>` + movimiento + `</td>
+                                            <td>` + ventas[count5].tipo + `</td>
                                             <td>` + fechaCol + `</td> 
                                             <td>` + horaCol + `</td>
                                             <td>` + empleadoNombre + `</td>
                                             <td>` + nombre + `</td>
-                                            <td>` + ventas[count5].tipo + `</td>
+                                            <td>` + depto + `</td>
                                             <td>` + ventas[count5].pago + `</td>
                                         </tr>
                                         `;
@@ -396,7 +422,7 @@ REPORTES
                                 if (sucursalEmpleado[y].id == moviName) {
                                     for (count6 in empleados) {
                                         if (empleados[count6].id == sucursalEmpleado[y].idEmpleado) {
-                                            emple = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
+                                            empleadoNombre = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
                                         }
                                     }
                                     let movimiento = "VENTAS";
@@ -422,7 +448,7 @@ REPORTES
                                             <td>` + movimiento + `</td>
                                             <td>` + fechaCol + `</td> 
                                             <td>` + horaCol + `</td>
-                                            <td>` + emple + `</td>
+                                            <td>` + empleadoNombre + `</td>
                                             <td>` + nombre + `</td>
                                             <td>` + ventas[count5].tipo + `</td>
                                             <td>` + ventas[count5].pago + `</td>

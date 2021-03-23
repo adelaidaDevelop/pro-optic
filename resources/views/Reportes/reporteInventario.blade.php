@@ -33,17 +33,26 @@ REPORTES
     </h4>
     <br />
     <div class="row w-100 mx-auto my-auto ">
-        <div class="col-4  text-center ">
+        <div class="col-4  text-center mx-auto">
             <h6 class=" text-primary"> PRECIO DEL INVENTARIO: </h6>
-            <p class="h3 mb-2" id="costoInv">$ 0.00</p>
-        </div class="text-center">
+            <div class=" input-group text-center mx-auto px-auto">
+                <h3 class="text-center ml-auto">$</h3>
+                <p class="h3 mr-auto" id="costoInv">0.00</p>
+            </div>
+        </div>
         <div id="" class="col-4 mx-auto text-center">
             <h6 class=" text-primary"> TOTAL DE ENTRADAS </h6>
-            <p class="h3 mb-2" id="total_entradas">$ 0.00</p>
+            <div class=" input-group text-center mx-auto px-auto">
+                <h3 class="text-center ml-auto">$</h3>
+                <p class="h3 mr-auto" id="total_entradas">0.00</p>
+            </div>
         </div>
-        <div class="col-4 text-center">
+        <div class="col-4 mx-auto text-center">
             <h6 class=" text-primary"> TOTAL DE SALIDAS: </h6>
-            <div id="total_salidas" class="h3"> 0.0</div>
+            <div class=" input-group text-center mx-auto px-auto">
+                <h3 class="text-center ml-auto">$</h3>
+                <p class="h3 mr-auto" id="total_salidas">0.00</p>
+            </div>
         </div>
     </div>
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
@@ -78,7 +87,11 @@ REPORTES
                 @foreach($sucursalEmpleados as $cajero)
                 @foreach($empleados as $emp)
                 @if($cajero->idEmpleado == $emp->id)
-                <option value="{{$emp['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                @if( $emp->id == 1)
+                <option value="{{$cajero['id']}}">ADMINISTRADOR </option>
+                @else
+                <option value="{{$cajero['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                @endif
                 @endif
                 @endforeach
                 @endforeach
@@ -551,8 +564,8 @@ REPORTES
                     for (let y in sucursalEmpleados) {
                         if (sucursalEmpleados[y].id == ventas[v].idSucursalEmpleado) {
                             //BUSCAR EMPLEADOS
-                            if (sucursalEmpleados[y].id == moviName) {
-                                let empleado = "";
+                            if (sucursalEmpleados[y].id == moviName.value) {
+                               // let empleado = "";
                                 for (count6 in empleados) {
                                     if (empleados[count6].id == sucursalEmpleados[y].idEmpleado) {
                                         empleado = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
@@ -610,7 +623,7 @@ REPORTES
         empleadoNombre = 0;
         cuerpo = "";
         devolucionFila = "";
-        totalDevolucion =0;
+        totalDevolucion = 0;
         //BUSCAR DEVOLUCIONES
         for (let f in devoluciones) {
             console.log("entra al for de devoluciones")
@@ -631,7 +644,7 @@ REPORTES
                             }
                         }
                         //total devoluciones
-                        let total_devolucion = detalle_ventas[z].precioIndividual * detalle_ventas[z].cantidad;
+                        let total_devolucion = devoluciones[f].precio * devoluciones[f].cantidad;
                         totalDevolucion = totalDevolucion + total_devolucion;
 
                         contador = contador + 1;
@@ -662,7 +675,7 @@ REPORTES
         //  let salidaVP = "";
         //let entradaNuevosProductos = "";
         // let entradaCompraProduct = "";
-        let empleadoNombre = "";
+  //      let empleadoNombre = "";
         let filaprod_caducados = "";
         let cant_actual = 0;
         let fechaXDia = "";
@@ -703,9 +716,10 @@ REPORTES
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
-                } else if (moviName == "3") { 
+                } else if (moviName == "3") {
                     contador = 0;
                     devolucionesRealizadas(fechaXDia);
+                    document.getElementById("total_salidas").innerHTML = totalDevolucion;
                     cuerpo = devolucionFila;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
@@ -716,7 +730,7 @@ REPORTES
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
-                } else if (moviName == "4") { 
+                } else if (moviName == "4") {
                     contador = 0;
                     //uno
                     //BUSCAR ENTRADAS
@@ -731,6 +745,8 @@ REPORTES
                     //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
                     //tres
                     devolucionesRealizadas(fechaXDia);
+                    document.getElementById("total_entradas").innerHTML = totalEntradas;
+                    document.getElementById("total_salidas").innerHTML = totalVenta + totalDevolucion;
                     //BUSCAR TODOS
                     cuerpo = entradaCompraProduct + entradaNuevosProductos + salidaVP + devolucionFila;
                     if (cuerpo === "") {
