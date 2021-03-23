@@ -187,9 +187,7 @@ PRODUCTOS
                 <div id="subAgregar" class="col mx-auto mt-4 text-center"></div>
                 <div>
                 </div>
-
                 <div class="col modal-footer input-group">
-
                     <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal" onclick="">Close</button>
                 </div>
             </div>
@@ -833,7 +831,7 @@ PRODUCTOS
                                             AGREGAR PRODUCTO
                                             </button>
                                             <br/>
-                                            <a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                                            <a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              DAR DE BAJA </a> 
                                         </div>
