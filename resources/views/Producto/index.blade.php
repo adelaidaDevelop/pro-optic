@@ -1166,41 +1166,26 @@ PRODUCTOS
                             `
                                     <div class="col-3">
                                             <br/>
-                                            <label for="codigoBarras">
-                                                <h6 class="ml-4"> {{'CODIGO DE BARRAS'}}</h6>
-                                            </label>
                                         <br/>
                                             <label for="Nombre">
                                                 <h6  class="ml-4 mt-4">{{'NOMBRE'}}</h6>
                                             </label>
                                             <br /><br/>
-                                            <label for="Descripcion">
-                                                <h6  class="ml-4"> {{'DESCRIPCION'}} </h6>
-                                            </label>
                                             <br /><br /> <br/> <br/>
-                                            <label for="MinimoStock">
-                                                <h6  class="ml-4"> {{'MINIMO STOCK'}}</h6>
-                                            </label>
                                             <br /> <br/>
                                             <label for="Receta">
                                                 <h6  class="ml-4"> {{'RECETA MEDICA'}} </h6>
                                             </label>
                                             <br /><br />
-                                            <label for="idDepartamento">
-                                                <h6  class="ml-4"> {{'DEPARTAMENTO'}}</h6>
-                                            </label>
                                             <br />
                                         </div>
                                         <div class="col-5">
                                             <br />
                                             <!--El name debe ser igual al de la base de datos-->
-                                            <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase " placeholder="Ingresar codigo de barras" value="` + productos[count10].codigoBarras + `" required autocomplete="codigoBarras" autofocus disabled>
                                             <br />
                                             <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required disabled>
                                             <br />
-                                            <textarea name="descripcion" id="descripcion" class="form-control text-uppercase" placeholder="Descripcion del producto" rows="3" cols="23" required disabled>` + productos[count10].descripcion + `</textarea>
                                             <br />
-                                            <input type="number" name="minimoStock" id="minimoStock" class="form-control text-uppercase" placeholder="Ingrese el minimo de productos permitidos" value="` + ms + `" autofocus required disabled>
                                             <br />
                                             <select class="form-control text-uppercase" name="Receta" id="Receta"  disabled>
                                                 <option value="" selected>` + productos[count10].receta + ` </option>
@@ -1271,7 +1256,6 @@ PRODUCTOS
                             }
                         }
                     }
-
                     if (bandera) {
                         redirect(id);
                         // response2 = await fetch(`/puntoVenta/subproducto/create/?id=${id}`);

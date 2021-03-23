@@ -30,10 +30,10 @@ CORTE DE CAJA
                     @foreach($sucursalEmpleados as $cajero)
                     @foreach($empleados as $emp)
                     @if($cajero->idEmpleado == $emp->id)
-                    @if( $emp->id == 1)
-                    <option value="{{$cajero['id']}}">ADMINISTRADOR </option>
+                    @if( $cajero->idEmpleado == 1)
+                    <option value="{{$cajero['idEmpleado']}}">ADMINISTRADOR </option>
                     @else
-                    <option value="{{$cajero['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                    <option value="{{$cajero['idEmpleado']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
                     @endif
                     @endif
                     @endforeach
@@ -55,7 +55,7 @@ CORTE DE CAJA
     </div>
     <div class="row w-100 mx-4 ">
         <div class="col-1 "></div>
-        <div >
+        <div>
             <h6 class="text-primary">+ENTRADAS</h6>
             <h6 class="ml-3">+TOTAL VENTAS</h6>
             <h6 class="ml-3">+ABONO DEUDORES</h6>
@@ -73,9 +73,9 @@ CORTE DE CAJA
             </div>
             <div class=" mt-1 my-0  input-group">
                 <h6>$</h6><input type="number" id="abonoD" style="height:23px" disabled />
-            </div>  
+            </div>
             <div class="mt-2 my-0  input-group">
-                <h6>$</h6><input type="number" id="subtotalE"  style="height:23px" disabled />
+                <h6>$</h6><input type="number" id="subtotalE" style="height:23px" disabled />
             </div>
             <div class=" mt-5 my-0 input-group">
                 <h6>$</h6><input type="number" id="devolucionT" class="" style="height:23px" disabled />
@@ -90,7 +90,7 @@ CORTE DE CAJA
         <div class="col-4  ">
             <div class="form-group input-group text-primary mt-4 mb-5">
                 <h5>TOTAL:</h5>
-                <h5 class="ml-2">$</h5><input type="number" id="total"  style="height:23px" disabled />
+                <h5 class="ml-2">$</h5><input type="number" id="total" style="height:23px" disabled />
             </div>
             <button class="btn btn-secondary ml-4 mb-5 mx-auto mt-5">IMPRIMIR CORTE
             </button>
@@ -315,26 +315,36 @@ CORTE DE CAJA
                 }
             } else {
                 for (let j in ventas) {
-                    if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
-                        let fechaVC = new Date(ventas[j].created_at);
-                        if (comparacionFecha(fechaCorte, fechaVC)) {
-                            totalVentas = totalVentas + ventas[j].pago;
-                        }
-                    }
-                    //ABONO COMPLETADOS
-                    for (let z in pagos) {
-                        let fechaP = new Date(pagos[z].created_at);
-                        if (ventas[j].id == pagos[z].idVenta) {
-                            if (comparacionFecha(fechaCorte, fechaP)) {
-                                abonos = abonos + pagos[z].monto;
+                    let idSucEmp = ventas[j].idSucursalEmpleado;
+                    for (let h in sucursalEmpleado) {
+                        if (sucursalEmpleado[h].id == idSucEmp) {
+                            if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
+                                let fechaVC = new Date(ventas[j].created_at);
+                                if (comparacionFecha(fechaCorte, fechaVC)) {
+
+                                    totalVentas = totalVentas + ventas[j].pago;
+
+                                }
                             }
-                        }
-                    }
-                    for (let x in devoluciones) {
-                        let fechaD = new Date(devoluciones[x].created_at);
-                        if (devoluciones[x].idVenta === ventas[j].id) {
-                            if (comparacionFecha(fechaCorte, fechaD)) {
-                                totalDev = totalDev + devoluciones[x].totalDevolucion;
+                            //ABONO COMPLETADOS
+                            for (let z in pagos) {
+                                let fechaP = new Date(pagos[z].created_at);
+                                if (ventas[j].id == pagos[z].idVenta) {
+                                    if (comparacionFecha(fechaCorte, fechaP)) {
+
+                                        abonos = abonos + pagos[z].monto;
+                                    }
+                                }
+                            }
+                            for (let x in devoluciones) {
+                                let fechaD = new Date(devoluciones[x].created_at);
+                                if (devoluciones[x].idVenta === ventas[j].id) {
+                                    if (comparacionFecha(fechaCorte, fechaD)) {
+
+                                        let total2 = devoluciones[x].precio * devoluciones[x].cantidad;
+                                        totalDev = totalDev + total2;
+                                    }
+                                }
                             }
                         }
                     }
