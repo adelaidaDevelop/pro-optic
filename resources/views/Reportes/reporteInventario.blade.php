@@ -527,6 +527,8 @@ REPORTES
                         horaCol = fechaVenta.toLocaleTimeString();
                         let movi = document.querySelector('#idCajero');
                         let moviName = parseInt(movi.value);
+                        console.log("imp2");
+                        console.log(moviName);
                         if (moviName == 0) {
                             //empleado
                             for (let z in detalle_ventas) {
@@ -581,11 +583,16 @@ REPORTES
                                     }
                                 }
                             }
+
                         } else {
                             // for (let y in sucursalEmpleados) {
                             //  if (sucursalEmpleados[y].id == ventas[v].idSucursalEmpleado) {
                             //BUSCAR EMPLEADOS
-                            if (sucursalEmpleados[h].idEmpleado == moviName.value) {
+                           // let movi2 = document.querySelector('#idCajero');
+                           // let moviName2 = parseInt(movi2.value);
+                           // console.log("imp");
+                            //console.log(moviName2.value);
+                            if (sucursalEmpleados[h].idEmpleado == moviName) {
                                 // let empleado = "";
                                 for (count6 in empleados) {
                                     if (empleados[count6].id == sucursalEmpleados[h].idEmpleado) {
