@@ -156,6 +156,7 @@ class ProductoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function stock(){
+        
         $productos= Producto::all();
         $idSucursal = session('sucursal');
         $productosSucursal= Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();

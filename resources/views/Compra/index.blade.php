@@ -6,9 +6,10 @@ COMPRAS
 @php
         use App\Models\Sucursal_empleado;
         $verPago= ['verPago','admin'];
-        $compra= ['crearCompra','modificarCompra','admin'];
+        $compra= ['crearCompra','admin'];
+        $modificar = ['modificarCompra','admin'];
         $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
-        
+        $abonar = $sE->hasAnyRole($modificar);
         @endphp
 @section('opciones')
 @if($sE->hasAnyRole($compra))
@@ -20,7 +21,8 @@ COMPRAS
         </button>
     </form>
 </div>
-
+@endif
+@if($sE->hasAnyRole($verPago))
 <div class="ml-4">
     <form method="get" action="{{url('/puntoVenta/pagoCompra/')}}">
         <button class="btn btn-outline-secondary p-1 border-0" type="submit" >
@@ -766,6 +768,9 @@ COMPRAS
     }
     async function abonarPago(id, adeudo) {
         try {
+            let abono = @json($abonar);
+            if(!abono)
+                return alert('NO TIENE PERMISOS PARA REALIZAR ESTA ACCION');
             console.log('Entra');
             //let _token =  "{{ csrf_token() }}";
             let pago = parseFloat(document.getElementById("pagoCredito").value);

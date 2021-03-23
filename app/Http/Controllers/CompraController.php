@@ -22,7 +22,7 @@ class CompraController extends Controller
      */
     public function index()
     {
-        $usuarios = ['verCompra','admin'];
+        $usuarios = ['verCompra','crearCompra','modificarCompra','verPago','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $compras = Compra::all();
@@ -124,7 +124,7 @@ class CompraController extends Controller
      */
     public function show($compra)
     {
-        $usuarios = ['verCompra','admin'];
+        $usuarios = ['verCompra','modificarCompra','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $compras = Compra::all();

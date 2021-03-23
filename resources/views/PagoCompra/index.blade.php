@@ -3,7 +3,13 @@
 @section('subtitulo')
 PAGOS
 @endsection
+@php
+        use App\Models\Sucursal_empleado;
+        $compra= ['crearCompra','admin'];
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+        @endphp
 @section('opciones')
+@if($sE->hasAnyRole($compra))
 <div class="ml-4">
     <form method="get" action="{{url('/puntoVenta/compra/create/')}}">
         <button class="btn btn-outline-secondary p-1 border-0" type="submit" >
@@ -12,6 +18,7 @@ PAGOS
         </button>
     </form>
 </div>
+@endif
 @endsection
 <div class="row col-12 mx-0 my-auto py-1">
     <h4 class="text-primary">
