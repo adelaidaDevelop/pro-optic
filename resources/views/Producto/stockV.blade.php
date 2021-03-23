@@ -8,8 +8,30 @@ PRODUCTOS
         $producto= ['crearProducto','admin'];
         $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
         $agregar = $sE->hasAnyRole($producto);
+        $crearProducto= ['crearProducto','admin'];
+        $crear = $sE->hasAnyRole($crearProducto);
+        
         @endphp
 @section('opciones')
+<div class="col-0  p-1">
+    <form method="get" action="{{url('/puntoVenta/departamento/')}}">
+        <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit">
+            <img src="{{ asset('img\depto.svg') }}" alt="Editar" width="33px" height="33px">
+            <br />
+            <p class="h6 my-auto text-dark"><small>DEPARTAMENTOS</small></p>
+        </button>
+    </form>
+</div>
+<!--BOTON CREAR EMPLEADO-->
+@if($crear)
+<div class="col-0  ml-3 p-1 ">
+    <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/producto/create')}}">
+        <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="33px" height="33px">
+        <p class="h6 my-auto text-dark"><small>NUEVO PRODUCTO </small></p>
+    </a>
+    </a>
+</div>
+@endif
 @endsection
 <div class="row p-1 ">
     <div class="row col-12 ml-2 w-100">

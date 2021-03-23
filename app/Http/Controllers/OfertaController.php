@@ -130,7 +130,7 @@ class OfertaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $usuarios = ['modificarProducto','admin'];
+        $usuarios = ['eliminarProducto','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         if(isset($request['restar']))

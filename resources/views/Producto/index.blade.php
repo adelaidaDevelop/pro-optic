@@ -6,8 +6,13 @@ PRODUCTOS
 @php
         use App\Models\Sucursal_empleado;
         $producto= ['modificarProducto','admin'];
+        
         $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
         $modificar = $sE->hasAnyRole($producto);
+        $crearProducto= ['crearProducto','admin'];
+        $crear = $sE->hasAnyRole($crearProducto);
+        $eliminarProducto= ['eliminarProducto','admin'];
+        $eliminar = $sE->hasAnyRole($eliminarProducto);
         @endphp
 @section('opciones')
 <div class="col-0  p-1">
@@ -20,6 +25,7 @@ PRODUCTOS
     </form>
 </div>
 <!--BOTON CREAR EMPLEADO-->
+@if($crear)
 <div class="col-0  ml-3 p-1 ">
     <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/producto/create')}}">
         <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="33px" height="33px">
@@ -27,6 +33,7 @@ PRODUCTOS
     </a>
     </a>
 </div>
+@endif
 <div class="col-0  ml-3 p-1 ">
     <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/producto/stock')}}">
         <img src="{{ asset('img/stock.svg') }}" alt="Editar" width="32px" height="32px">
@@ -767,6 +774,64 @@ PRODUCTOS
                         if (productos[count10].imagen != null)
                             urlImagen = "{{asset('storage')}}" + "/" + productos[count10].imagen;
                         console.log(urlImagen);
+                        btnAgregarSubprod =
+                            ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
+                                             <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                                             AGREGAR A SUBPRODUCTO </a>`;
+                        let botonesProducto = `<a class="btn btn-outline-primary mb-2 " href="{{ url('/puntoVenta/producto/` + x + `/edit')}}" onclick="return confirm('¿EDITAR ESTE PRODUCTO?')"> 
+                                            <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
+                                            EDITAR  </a>
+                                            <br/> 
+                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarPrecio( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                           EDITAR PRECIO
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarCosto( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                           EDITAR COSTO
+                                            </button>
+                                            <br/>
+                                            <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return agregarProducto( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                            AGREGAR PRODUCTO
+                                            </button>
+                                            <br/>
+                                    `;
+                                            let btnDarBaja=`<a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                                            <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                                             DAR DE BAJA </a> 
+                                        </div>
+
+                                        <br/>
+                                    `;
+                                        if(!eliminarProducto)
+                                            btnDarBaja = `<a class="btn btn-outline-danger mb-2 mt-4" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
+                                            <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                                             DAR DE BAJA </a></div>
+                                        <br/>
+                                    `;
+                        botonesProducto = botonesProducto + btnDarBaja;
+                        if(!modificarProducto)
+                        {
+                        botonesProducto = `<button class="btn btn-outline-primary mb-2 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
+                                            <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
+                                            EDITAR  </button>
+                                            <br/> 
+                                            <button type="button" class="btn btn-outline-primary mb-2 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
+                                           EDITAR PRECIO
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary mb-2 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
+                                           EDITAR COSTO
+                                            </button>
+                                            <br/>
+                                            <button type="button" class="btn btn-outline-primary mb-4 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
+                                            AGREGAR PRODUCTO
+                                            </button>
+                                            <br/>`;
+                            botonesProducto = botonesProducto + btnDarBaja;
+                                    btnAgregarSubprod =
+                            ` <button class="btn btn-outline-primary " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
+                                             <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                                             AGREGAR A SUBPRODUCTO </button>`;
+                        }
+                        
                         datosProduct =
                             `
                                     <div class="col-3">
@@ -819,30 +884,9 @@ PRODUCTOS
                                                 <h5 class="mb-1"> <strong>{{'FOTO '}}</strong></h5>
                                             </label>
                                             <br/>
-                                            <img class="mb-2" src="${urlImagen}" alt="" width="200">
+                                            <img class="mb-2" src="${urlImagen}" alt="" width="200"> 
+                                             `+botonesProducto;
                                             
-                                            <a class="btn btn-outline-primary mb-2 " href="{{ url('/puntoVenta/producto/` + x + `/edit')}}" onclick="return confirm('¿EDITAR ESTE PRODUCTO?')"> 
-                                            <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
-                                            EDITAR  </a>
-                                            <br/> 
-                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarPrecio( ` + idProdSuc + `)" value="` + idProdSuc + `">
-                                           EDITAR PRECIO
-                                            </button>
-                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarCosto( ` + idProdSuc + `)" value="` + idProdSuc + `">
-                                           EDITAR COSTO
-                                            </button>
-                                            <br/>
-                                            <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return agregarProducto( ` + idProdSuc + `)" value="` + idProdSuc + `">
-                                            AGREGAR PRODUCTO
-                                            </button>
-                                            <br/>
-                                            <a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
-                                            <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
-                                             DAR DE BAJA </a> 
-                                        </div>
-
-                                        <br/>
-                                    `;
 
                         btnAgregarSubprod =
                             ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
@@ -1249,6 +1293,7 @@ PRODUCTOS
     }
 
     let modificarProducto = @json($modificar);
+    let eliminarProducto = @json($eliminar);
     async function productosEnBajaSucursal() {
         let cuerpo = "";
         let cont = 0;
