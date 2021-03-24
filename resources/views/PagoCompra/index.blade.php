@@ -81,6 +81,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
         </table>
     </div>
 </div>
+<script src="{{ asset('js\app.js') }}"></script>
 <script>
     let pagosCompra = @json($pagosCompra);
     let compras = @json($compras);

@@ -10,6 +10,7 @@
     <script href="{{ asset('js\jquery-3.5.1.min.js') }}"></script>
     <script href="{{ asset('js\popper.min.js') }}"></script>
     <script href="{{ asset('js\bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js\app.js') }}"></script>
 </head>
 
 <body>
