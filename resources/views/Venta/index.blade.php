@@ -31,12 +31,14 @@
             </a>
         </div>
         @endif
+        <!--
         <div class="col-6 ml-4"></div>
         <div class=" ml-4 my-auto">
             <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
                 <img src="{{ asset('img\inicio.png') }}" class="my-auto mx-2" alt="Editar" width="30px" height="30px">
             </a>
         </div>
+        -->
         @endsection
     </div>
     <!--div class="row p-1 "-->
