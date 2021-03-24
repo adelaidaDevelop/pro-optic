@@ -40,8 +40,8 @@
                     </div>
                     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
 
-                    <div class="row col-12 mx-auto mb-2 py-2 border border-secondary">
-                        <div class="col-3 form-group-inline m-auto">
+                    <div class="row mx-1 mb-2 py-2 border border-secondary">
+                        <div class="col-3 form-group row m-auto">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" for="proveedor">PROVEEDOR</span>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
 
-                        <div class="col-3 form-group-inline m-auto ">
+                        <div class="col-3 form-group row m-auto ">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" for="fechaCompra">COMPRA</span>
@@ -77,7 +77,7 @@
                                     class="form-control my-auto" />
                             </div>
                         </div>
-                        <div class="col-4 form-group row m-auto border">
+                        <div class="col-4 form-group row m-auto">
                             <!--div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
@@ -90,18 +90,18 @@
                                 <input type="number" data-prefix="" id="pagoCredito" name="pagoCredito"
                                     data-decimals="2" value=0 min=0 class="form-control" />
                             </div-->
-                            <div class="col-auto mx-0 px-0">
-                                <div class="form-check my-2">
+                            <div class="col-auto ml-auto px-1 py-0 border border-secondary rounded">
+                                <div class="form-check my-1">
                                 <input type="checkbox" name="credito" id="credito"
-                                class="form-check-input my-2" onchange="activarCredito()" />
-                                <label class="form-check-label" for="credito">
+                                class="form-check-input mt-2" onchange="activarCredito()" />
+                                <label class="form-check-label " for="credito">
                                     CREDITO
                                 </label>
                                 </div>
                             </div>
-                            <div class="col-8 mx-auto px-0">
+                            <div class="col-8 mr-auto px-0">
                                 <input type="number" data-prefix="ABONO $" id="pagoCredito" name="pagoCredito"
-                                    data-decimals="2" value=0 min=0 class="form-control" />
+                                    data-decimals="2" value=0 min=0 class="form-control px-0" />
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                         </button>
                     </div>
                     <!-- TABLA -->
-                    <div class="row mt-1 mb-1 ml-1 mr-1 border border-dark" style="height:300px;overflow-y:auto;">
+                    <div class="row m-1 border border-dark" style="height:300px;overflow-y:auto;">
                         <table class="table table-bordered border-primary col-12">
                             <thead class="table-secondary text-primary">
                                 <tr class="text-center">
@@ -211,7 +211,7 @@
 <div class="modal fade" id="confirmarCompraModal" tabindex="-1" role="dialog"
     aria-labelledby="confirmarCompraModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" id="modalConfirmarCompra">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmarCompraModalLabel">CONFIRMAR COMPRA</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -929,6 +929,7 @@ async function guardarCompra() {
         if (fechaCompra.value.length == 0) {
             return alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
         }
+        
         let json = JSON.stringify(productosCompra);
         let productos0 = [];
         let productos1 = [];
@@ -946,13 +947,27 @@ async function guardarCompra() {
             iva = document.querySelector('#inputIva').value;
         //return alert(iva);
         let btn = document.querySelector('input[name="credito"]:checked');
+        const pagoCredito = document.querySelector('#pagoCredito');
         if (btn != null) {
             estado = "credito";
-        }
-        const pagoCredito = document.querySelector('#pagoCredito');
-        //if (parseFloat(pagoCredito.value) > 0) {
-        if(pagoCredito.value>=total)
+            if(pagoCredito.value.length==0)
+                return alert('INGRESE UN VALOR VALIDO');
+            if(pagoCredito.value>=total)
             return alert('EL ABONO NO PUEDE SER MAYOR O IGUAL AL PAGO DE LA COMPRA');
+        }
+        
+        //if (parseFloat(pagoCredito.value) > 0) {
+        
+            const contenidoProducto = document.querySelector('#modalConfirmarCompra');
+                const contenidoOriginal = contenidoProducto.innerHTML;
+                contenidoProducto.innerHTML =
+                    `<div class="d-flex justify-content-center my-3">
+                <button class="btn btn-info" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    GUARDANDO COMPRA
+                </button>
+            </div>
+            `;
         let spp = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
@@ -1005,12 +1020,14 @@ async function guardarCompra() {
             alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
         });
+        contenidoProducto.innerHTML = contenidoOriginal;
         alert('COMPRA GUARDADA EXITOSAMENTE');
         productosCompra = [];
         mostrarProductos();
+        $('#confirmarCompraModal').modal('hide');
         await cargarProductosSucursal();
         await cargarProductos();
-        $('#confirmarCompraModal').modal('hide');
+        
 
         /*let respuestaCaducidad =  await $.ajax({
             // metodo: puede ser POST, GET, etc
