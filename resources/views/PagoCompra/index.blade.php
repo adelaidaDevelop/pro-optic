@@ -4,22 +4,30 @@
 PAGOS
 @endsection
 @php
-        use App\Models\Sucursal_empleado;
-        $compra= ['crearCompra','admin'];
-        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
-        @endphp
+use App\Models\Sucursal_empleado;
+$compra= ['crearCompra','admin'];
+$sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+@endphp
+
 @section('opciones')
 @if($sE->hasAnyRole($compra))
 <div class="ml-4">
     <form method="get" action="{{url('/puntoVenta/compra/create/')}}">
-        <button class="btn btn-outline-secondary p-1 border-0" type="submit" >
+        <button class="btn btn-outline-secondary p-1 border-0" type="submit">
             <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
             <p class="h6 my-auto mx-2 text-dark"><small>CREAR COMPRA</small></p>
         </button>
     </form>
 </div>
 @endif
+<div class="col-7 ml-4"></div>
+<div class=" ml-3 my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/compra">
+        <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
+    </a>
+</div>
 @endsection
+
 <div class="row col-12 mx-0 my-auto py-1">
     <h4 class="text-primary">
         <strong>

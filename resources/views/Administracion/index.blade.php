@@ -4,26 +4,26 @@
 ADMINISTRACION
 @endsection
 @php
-        use App\Models\Sucursal_empleado;
-        $vE = ['verEmpleado','modificarEmpleado','eliminarEmpleado','crearEmpleado','admin'];
-        $mE= ['modificarEmpleado','admin'];
-        $cE= ['crearEmpleado','admin'];
-        $eE= ['eliminarEmpleado','admin'];
-        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
-        $modificarE = $sE->hasAnyRole($mE);
-        $crearE = $sE->hasAnyRole($cE);
-        $eliminarE = $sE->hasAnyRole($eE);
-        $verE = $sE->hasAnyRole($vE);
+use App\Models\Sucursal_empleado;
+$vE = ['verEmpleado','modificarEmpleado','eliminarEmpleado','crearEmpleado','admin'];
+$mE= ['modificarEmpleado','admin'];
+$cE= ['crearEmpleado','admin'];
+$eE= ['eliminarEmpleado','admin'];
+$sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+$modificarE = $sE->hasAnyRole($mE);
+$crearE = $sE->hasAnyRole($cE);
+$eliminarE = $sE->hasAnyRole($eE);
+$verE = $sE->hasAnyRole($vE);
 
-        $vS = ['veriSucursal','modificarSucursal','eliminarSucursal','crearSucursal','admin'];
-        $mS= ['modificarSucursal','admin'];
-        $cS= ['crearSucursal','admin'];
-        $eS= ['eliminarSucursal','admin'];
-        $modificarS = $sE->hasAnyRole($mS);
-        $crearS = $sE->hasAnyRole($cS);
-        $eliminarS = $sE->hasAnyRole($eS);
-        $verS = $sE->hasAnyRole($vS);
-        @endphp
+$vS = ['veriSucursal','modificarSucursal','eliminarSucursal','crearSucursal','admin'];
+$mS= ['modificarSucursal','admin'];
+$cS= ['crearSucursal','admin'];
+$eS= ['eliminarSucursal','admin'];
+$modificarS = $sE->hasAnyRole($mS);
+$crearS = $sE->hasAnyRole($cS);
+$eliminarS = $sE->hasAnyRole($eS);
+$verS = $sE->hasAnyRole($vS);
+@endphp
 @section('opciones')
 @if($crearS)
 <div class="ml-4">
@@ -37,8 +37,7 @@ ADMINISTRACION
 @endif
 @if($modificarS || $crearS)
 <div class=" ">
-    <button type="button" class="btn btn-outline-secondary  p-1 border-0" data-toggle="modal"
-        href=".modal_sucursales_inactivas" id="ver" onclick=" return datosTablaSuc()" value="">
+    <button type="button" class="btn btn-outline-secondary  p-1 border-0" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver" onclick=" return datosTablaSuc()" value="">
         <img src="{{ asset('img\alta2.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto mx-2 text-dark"><small>ALTA SUCURSALES</small></p>
 
@@ -65,9 +64,12 @@ ADMINISTRACION
     </button>
 </div>
 -->
-
-
-
+<div class="col-5 "></div>
+<div class="ml-2 my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
+    </a>
+</div>
 
 @endsection
 <div class="container-fluid">
@@ -82,8 +84,7 @@ ADMINISTRACION
                     <h4 style="color:#4388CC">SUCURSALES</h4>
 
                     <div>
-                        <input type="text" class=" form-control my-1" onkeyup="mayus(this);"
-                            placeholder="BUSCAR SUCURSALES" id="texto">
+                        <input type="text" class=" form-control my-1" onkeyup="mayus(this);" placeholder="BUSCAR SUCURSALES" id="texto">
                         <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL, EDITAR O
                                 ELIMINAR SUCURSAL </small> </h6>
                         <!--div class="input-group-append">
@@ -119,15 +120,13 @@ ADMINISTRACION
                 <!--EDITAR  -->
                 @if(isset($d))
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion/'.$d->id)}}"
-                        enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion/'.$d->id)}}" enctype="multipart/form-data">
                         <div class="form-group">
                             {{ csrf_field() }}
                             {{ method_field('PATCH')}}
                             <label for="ndepartamento">
                                 <h4 style="color:#4388CC">EDITAR
-                                    <img class="ml-1 my-auto" src="{{ asset('img\edit.png') }}" alt="Editar"
-                                        width="23px" height="23px">
+                                    <img class="ml-1 my-auto" src="{{ asset('img\edit.png') }}" alt="Editar" width="23px" height="23px">
                                 </h4>
                             </label>
                             <br />
@@ -140,11 +139,9 @@ ADMINISTRACION
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="form-control" onkeyup="mayus(this);" name="direccion"
-                                            id="direccion" value="{{$d->direccion}}" required>
+                                        <input type="text" class="form-control" onkeyup="mayus(this);" name="direccion" id="direccion" value="{{$d->direccion}}" required>
                                         <label for="">TELEFONO</label>
-                                        <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono"
-                                            id="telefono" value="{{$d->telefono}}" required>
+                                        <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono" id="telefono" value="{{$d->telefono}}" required>
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -162,31 +159,25 @@ ADMINISTRACION
                             </div>
                             <div class="form-row w-100">
                                 <div class="col-4">
-                                @if($modificarS)
-                                    <button class="btn btn-outline-secondary mt-2" type="submit"
-                                        onclick="return confirm('¿DESEA EDITAR ESTA SUCURSAL?');">
-                                        <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                            width="30px" height="30px">
+                                    @if($modificarS)
+                                    <button class="btn btn-outline-secondary mt-2" type="submit" onclick="return confirm('¿DESEA EDITAR ESTA SUCURSAL?');">
+                                        <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                                         GUARDAR CAMBIOS
                                     </button>
-                                @endif
-                                @if($sE->hasRole('admin'))
+                                    @endif
+                                    @if($sE->hasRole('admin'))
                                 </div>
                                 <div class="col-8" id="verEmpleadoSucursal">
-                                    <button class="btn btn-outline-primary mt-2 mr-5" onclick="empleadosSucursal()"
-                                        type="button">
-                                        <img src="{{ asset('img\empleado.png') }}" alt="Editar" width="30px"
-                                            height="30px">
+                                    <button class="btn btn-outline-primary mt-2 mr-5" onclick="empleadosSucursal()" type="button">
+                                        <img src="{{ asset('img\empleado.png') }}" alt="Editar" width="30px" height="30px">
                                         EMPLEADOS SUCURSAL
                                     </button>
                                 </div>
                                 @endif
                                 @if($eliminarS)
                                 <div class="col-4">
-                                    <button class=" btn btn-outline-danger ml-auto mt-4"
-                                        onclick="veriSucursal('{{$d->id}}')" type="button">
-                                        <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px"
-                                            height="25px">
+                                    <button class=" btn btn-outline-danger ml-auto mt-4" onclick="veriSucursal('{{$d->id}}')" type="button">
+                                        <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                         ELIMINAR
                                     </button>
                                 </div>
@@ -212,14 +203,12 @@ ADMINISTRACION
                 </div>
                 @else
                 <div class="row px-3 py-3 m-0">
-                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion')}}"
-                        enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{url('/puntoVenta/administracion')}}" enctype="multipart/form-data">
                         <!--NUEVA SUCURSAL-->
                         {{ csrf_field() }}
                         <label for="nempleado">
                             <h4 style="color:#4388CC">CREAR SUCURSAL
-                                <img src="{{ asset('img\agregar.png') }}" class="mx-1" alt="Editar" width="23px"
-                                    height="23px">
+                                <img src="{{ asset('img\agregar.png') }}" class="mx-1" alt="Editar" width="23px" height="23px">
                             </h4>
 
                         </label>
@@ -233,8 +222,7 @@ ADMINISTRACION
                                     <label for="nombre">
                                         DIRECCION
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="direccion" id="direccion" onkeyup="mayus(this);" required>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="direccion" id="direccion" onkeyup="mayus(this);" required>
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -243,8 +231,7 @@ ADMINISTRACION
                                     <label for="nombre">
                                         TELEFONO
                                     </label>
-                                    <input type="number" class=" form-control @error('nombre') is-invalid @enderror"
-                                        name="telefono" id="telefono" required>
+                                    <input type="number" class=" form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" required>
 
                                 </div>
                             </div>
@@ -257,17 +244,13 @@ ADMINISTRACION
                             </div>
                         </div>
                         @if($crearS)
-                        <button class="btn btn-outline-secondary mt-2" type="submit"
-                            onclick="return confirm('¿AGREGAR NUEVA SUCURSAL?');">
-                            <img src="{{ asset('img\guardar.png') }}" class="p-1" alt="Editar" width="30px"
-                                height="30px">
+                        <button class="btn btn-outline-secondary mt-2" type="submit" onclick="return confirm('¿AGREGAR NUEVA SUCURSAL?');">
+                            <img src="{{ asset('img\guardar.png') }}" class="p-1" alt="Editar" width="30px" height="30px">
                             AGREGAR
                         </button>
                         @else
-                        <button class="btn btn-outline-secondary mt-2" type="button"
-                            onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
-                            <img src="{{ asset('img\guardar.png') }}" class="p-1" alt="Editar" width="30px"
-                                height="30px">
+                        <button class="btn btn-outline-secondary mt-2" type="button" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
+                            <img src="{{ asset('img\guardar.png') }}" class="p-1" alt="Editar" width="30px" height="30px">
                             AGREGAR
                         </button>
                         @endif
@@ -290,8 +273,7 @@ ADMINISTRACION
 
 
 <!-- MODAL-->
-<div class="modal fade modal_sucursales_inactivas" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
+<div class="modal fade modal_sucursales_inactivas" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="width:900px;height:500px;">
             <div class="modal-header w-100 ">
@@ -338,8 +320,7 @@ ADMINISTRACION
 </div>
 
 <!-- MODAL VER TODOS LOS PRODUCTOS-->
-<div class="modal fade modalAllProductos" id="modalAllProductos" tabindex="-1" role="dialog"
-    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade modalAllProductos" id="modalAllProductos" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="width:900px;height:500px;">
             <div class="modal-header w-100 ">
@@ -413,12 +394,11 @@ ADMINISTRACION
             </div>
             <div class="modal-body" id="cuerpoPermisosModal">
                 <div class="row col-12 mx-auto">
-                @if(isset($sucursal))
-                @foreach($modulos as $modulo)
+                    @if(isset($sucursal))
+                    @foreach($modulos as $modulo)
                     <div class="col border border-primary m-1">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="{{$modulo->id}}" 
-                            onclick="seleccionModulo('{{$modulo->id}}')" id="modulo{{$modulo->id}}">
+                            <input class="form-check-input" type="checkbox" value="{{$modulo->id}}" onclick="seleccionModulo('{{$modulo->id}}')" id="modulo{{$modulo->id}}">
                             <label class="form-check-label" for="modulo{{$modulo->id}}">
                                 <strong>{{$modulo->nombre}}</strong>
                             </label>
@@ -426,504 +406,112 @@ ADMINISTRACION
                         @foreach($roles as $rol)
                         @if($rol->idModulo == $modulo->id)
                         <div class="form-check mx-auto">
-                            <input class="form-check-input" type="checkbox" value="{{$rol->id}}" 
-                            onclick="seleccionPermiso('{{$modulo->id}}','{{$rol->id}}')" id="rol{{$modulo->id}}{{$rol->id}}">
+                            <input class="form-check-input" type="checkbox" value="{{$rol->id}}" onclick="seleccionPermiso('{{$modulo->id}}','{{$rol->id}}')" id="rol{{$modulo->id}}{{$rol->id}}">
                             <label class="form-check-label" for="rol{{$modulo->id}}{{$rol->id}}">
                                 {{$rol->description}}
                                 @if($modulo->nombre == 'ADMINISTRADOR')
-                                    <p class="text-danger">(ESTE PERMISO LE DA ACCESO TOTAL AL SISTEMA)</p>
+                                <p class="text-danger">(ESTE PERMISO LE DA ACCESO TOTAL AL SISTEMA)</p>
                                 @endif
                             </label>
                         </div>
                         @endif
                         @endforeach
                     </div>
-                @endforeach
-                @endif
+                    @endforeach
+                    @endif
                 </div>
             </div>
             <div class="modal-footer" id="piePermisosModal">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                <button type="button" class="btn btn-primary" 
-                id="btnGuardarPermisos"onclick="guardarPermisos()">GUARDAR PERMISOS</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarPermisos" onclick="guardarPermisos()">GUARDAR PERMISOS</button>
             </div>
         </div>
     </div>
 </div>
 <script>
-let SucursalEmpleados = [];
-let empleados = [];
-let sucursal = @if(isset($sucursal)) @json($sucursal) @else[] @endif;
-let idSucursal = @if(isset($sucursal))
-"{{$sucursal->id}}"
-@else 0 @endif;
+    let SucursalEmpleados = [];
+    let empleados = [];
+    let sucursal = @if(isset($sucursal)) @json($sucursal) @else[] @endif;
+    let idSucursal = @if(isset($sucursal))
+    "{{$sucursal->id}}"
+    @else 0 @endif;
 
-let verEmpleado = @json($verE);
-let modificarEmpleado = @json($modificarE);
-let crearEmpleado = @json($crearE);
-let eliminarEmpleado = @json($eliminarE);
-
-
-async function cargarEmpleados() {
-    //let body = document.querySelector('#cuerpoEmpleadosModal');
-    //let body = document.querySelector('#cuerpoEmpleadosModal');
-    //body.innerHTML = ""; //NO HAY NINGUN EMPLEADO EN LA EMPRESA";
-    //let cuerpo = `<div class="row mx-auto my-auto p-5"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
-    try {
-        let response = await fetch(`/puntoVenta/empleado/empleados`);
-        if (response.ok) {
-
-            console.log("Los empleados son:");
-            empleados = await response.json();
-            /*if(empleados.length>0)
-            {
-            for(let i in empleados)
-            {
-            cuerpo = cuerpo + `<a class="btn btn-secondary btn-block text-uppercase border" onclick="agregarEmpleado(`+empleados[i].id+`)">`+empleados[i].nombre +` `+
-                empleados[i].apellidoPaterno+` `+empleados[i].apellidoMaterno+`</a>`;
-            }
-
-            body.innerHTML = cuerpo;
-            }
-            else{
-            body.innerHTML = "NO HAY NINGUN EMPLEADO EN LA EMPRESA";
-            }*/
-            console.log(empleados);
-        } else {
-            console.log("No responde :'v");
-            console.log(response);
-            throw new Error(response.statusText);
-        }
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-};
-
-async function cargarPermisosEmpleado(id)
-{
-    try{
-        let permisosEmpleado = null;
-        let response = await fetch(`/puntoVenta/permisosEmpleado/${id}`);
-        if (response.ok) {
-
-            console.log("Los empleados son:");
-            permisosEmpleado = await response.json();
-            document.querySelector('#btnGuardarPermisos').value = id;
-            //$('#btnGuardarPermisos').prop('click',);
-            for(let i in modulos)
-            {
-                let countR = 0;
-                let countPE = 0;
-                for(let o in roles)
-                {
-                    if(roles[o].idModulo == modulos[i].id)
-                        countR++;
-                }
-                for(let o in permisosEmpleado)
-                {
-                    if(permisosEmpleado[o].idModulo == modulos[i].id)
-                        countPE++;
-                }
-                if(countPE == countR)
-                {
-                    console.log(modulos[i].nombre);
-                    $(`#modulo${modulos[i].id}`).prop('checked',true);
-                }
-                    
-            }
-            for(let i in permisosEmpleado)
-            {
-                
-                let pE = permisosEmpleado[i];
-                $(`#rol${pE.idModulo}${pE.id}`).prop('checked',true);
-                
-            }
-            
-        }
-        else {
-            console.log("No responde :'v");
-            console.log(response);
-            throw new Error(response.statusText);
-        }
-    }catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-}
-
-let footerOriginal = document.querySelector('#pieEmpleadosModal').innerHTML;
-async function empleadosSucursal() {
-    if(!verEmpleado)
-        return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION');
-    
-    let header = document.querySelector('#cabezaEmpleadosModal');
-    header.innerHTML = `<h5><strong class="text-uppercase">empleados de la sucursal ` + sucursal.direccion +
-        `</strong></h5>`;
-    let body = document.querySelector('#cuerpoEmpleadosModal');
-    body.innerHTML = ""; //NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
-    document.querySelector('#pieEmpleadosModal').innerHTML = footerOriginal;
-    let cuerpo = "";
-    try {
-
-        let response = await fetch(`/puntoVenta/sucursalEmpleado/${idSucursal}`);
-        if (response.ok) {
-            console.log("Las sucursales son:");
-            SucursalEmpleados = await response.json();
-            if (SucursalEmpleados.length > 1) {
-                await cargarEmpleados();
-                //cuerpo =;
-                for (let i in SucursalEmpleados) {
-                    for (let e in empleados) {
-
-                        if (SucursalEmpleados[i].idEmpleado == empleados[e].id && i != 0) {
-                            let status = "";
-                            let botonAltaBaja = "";
-                            let permisos = `<button class="btn btn-primary" onclick="cargarPermisosEmpleado(${SucursalEmpleados[i].id})"
-                                type="button" data-toggle="modal" data-target="#permisosModal">PERMISOS</button>`;
-                            if (SucursalEmpleados[i].status == 'alta') {
-                                status = `<span class="badge badge-success badge-pill my-auto">ACTIVO</span>`;
-                                botonAltaBaja =
-                                    `<button class="btn btn-danger" onclick="cambiarStatusEmpleado('baja',` +
-                                    SucursalEmpleados[i].id +
-                                    `)">DAR DE BAJA</button>`;
-                            } else {
-                                status = `<span class="badge badge-danger badge-pill my-auto">INACTIVO</span>`;
-                                botonAltaBaja =
-                                    `<button class="btn btn-success" onclick="cambiarStatusEmpleado('alta',` +
-                                    SucursalEmpleados[i].id +
-                                    `)">DAR DE ALTA</button>`;
-                            }
-                            let segundoNombre = "";
-                            if (empleados[e].segundoNombre != null)
-                                segundoNombre = empleados[e].segundoNombre;
-                            cuerpo = cuerpo + `<ul class="list-group list-group-horizontal-sm my-1 border border-dark">
-    <li class="list-group-item text-uppercase col-6">` +
-                                empleados[e].primerNombre + ` ` + segundoNombre + ` ` + empleados[e]
-                                .apellidoPaterno + ` ` + empleados[e].apellidoMaterno +
-                                `</li>
-    <li class="list-group-item text-uppercase mx-0 px-1">` +
-                                status + `</li>
-                                    <li class="list-group-item text-uppercase mx-auto">` +
-                                permisos + `</li>
-    <li class="list-group-item text-uppercase mx-auto">` + botonAltaBaja +
-                                `</li>
-</ul>`;
-                            //<li class="list-group-item">`+
-                            //empleados[e].nombre+`</< /li>`;
-                        }
-                    }
-
-                }
-                //cuerpo = cuerpo + `</ul>`;
-                body.innerHTML = cuerpo;
-            } else {
-                body.innerHTML = "NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
-            }
-            console.log(empleados);
-            //return productos;
-            //console.log(response);
-            $('#empleadosModal').modal('show');
-
-        } else {
-            console.log("No responde :'v");
-            console.log(response);
-            throw new Error(response.statusText);
-        }
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-}
-
-async function cambiarStatusEmpleado(status, idSucursalEmpleado) {
-    try {
-        const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/" + idSucursalEmpleado;
-        let respuesta = await $.ajax({
-            url: url,
-            type: 'PUT',
-            data: {
-                'status': status,
-                '_token': "{{ csrf_token() }}",
-            },
-            //processData: false, // tell jQuery not to process the data
-            //contentType: false,
-            success: function(data) {
-                //alert(data); }
-            }
-        });
-        console.log(respuesta);
-        if (respuesta == true) {
-            await empleadosSucursal();
-            alert('El empleado se ha dado de ' + status);
-
-        } else {
-            alert('El empleado no se dio de ' + status);
-        }
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-}
+    let verEmpleado = @json($verE);
+    let modificarEmpleado = @json($modificarE);
+    let crearEmpleado = @json($crearE);
+    let eliminarEmpleado = @json($eliminarE);
 
 
-async function mostrarEmpleados() {
-    let header = document.querySelector('#cabezaEmpleadosModal');
-    header.innerHTML = `<h5><strong class="text-uppercase">empleados de la empresa </strong></h5>`;
-    let body = document.querySelector('#cuerpoEmpleadosModal');
-    body.innerHTML = ""; //NO HAY NINGUN EMPLEADO EN LA EMPRESA";
-    let footer = document.querySelector('#pieEmpleadosModal');
-    footer.innerHTML = `<button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-    <button type="button" class="btn btn-primary" onclick="empleadosSucursal()">REGRESAR</button>`;
-    let cuerpo =
-        `<div class="row mx-auto my-auto p-1"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
-    try {
-        await cargarEmpleados();
-        let existeEmpleado = false;
-        for (let i in empleados) {
-            let bandera = true;
-            for (let s in SucursalEmpleados) {
-                if (SucursalEmpleados[s].idEmpleado == empleados[i].id)
-                    bandera = false;
-            }
-            if (bandera) {
-                existeEmpleado = true;
-                let segundoNombre = "";
-                if (empleados[i].segundoNombre != null)
-                    segundoNombre = empleados[i].segundoNombre;
-                cuerpo = cuerpo +
-                    `<a class="btn btn-secondary btn-block text-uppercase border" onclick="agregarEmpleado(` +
-                    empleados[i].id + `)">` +
-                    empleados[i].primerNombre + ` ` + segundoNombre + ` ` +
-                    empleados[i].apellidoPaterno + ` ` + empleados[i].apellidoMaterno + `</a>`;
-            }
-        }
-        body.innerHTML = cuerpo;
-        if (!existeEmpleado) {
-            body.innerHTML =
-                `<div class="row mx-auto my-auto p-1"><strong class="text-uppercase">NO HAY EMPLEADOS NUEVOS QUE AGREGAR</strong></div>`;
-
-        }
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-}
-
-async function agregarEmpleado(idEmpleado) {
-    let body = document.querySelector('#cuerpoEmpleadosModal');
-    /*body.innerHTML = `
-    <div class="alert alert-primary" role="alert">
-        OK YA LO AGREGO
-    </div>
-    `;*/
-    try {
-        let datos = new FormData();
-        datos.append('_token', "{{ csrf_token() }}");
-        datos.append('idSucursal', idSucursal);
-        datos.append('idEmpleado', idEmpleado);
-        var init = {
-            // el método de envío de la información será POST
-            method: "POST",
-            // el cuerpo de la petición es una cadena de texto
-            // con los datos en formato JSON
-            body: datos // convertimos el objeto a texto
-        };
-        let response = await fetch(`/puntoVenta/sucursalEmpleado/`, init);
-        if (response.ok) {
-            await empleadosSucursal();
-            console.log(response.text());
-        } else {
-            console.log("No responde :'v");
-            console.log(response);
-            throw new Error(response.statusText);
-        }
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-
-}
-</script>
-<script>
-let Suc_Inac = "";
-let productosT = "";
-let sucUsadaF = "";
-let sucUsadaT = "";
-let depa = @json($depa);
-
-const texto = document.querySelector('#texto');
-//MAYUSCULA
-function mayus(e) {
-    e.value = e.value.toUpperCase();
-    const ppb = document.querySelector('#codigoBarras');
-    console.log(ppb.value);
-}
-
-//SOLO NUMEROS
-$("input[name='telefono']").bind('keypress', function(tecla) {
-    if (this.value.length >= 10) return false;
-    let code = tecla.charCode;
-    if (code == 8) { // backspace.
-        return true;
-    } else if (code >= 48 && code <= 57) { // is a number.
-        return true;
-    } else { // other keys.
-        return false;
-    }
-});
-
-async function datosTablaSuc() {
-    let cuerpo = "";
-    let cont = 0;
-    await sucursales0();
-    console.log(Suc_Inac);
-
-    for (let t in Suc_Inac) {
-        cont = cont + 1;
-        cuerpo = cuerpo + `
-                    <tr>
-                    <th >` + cont + `</th>
-                    <td>` + Suc_Inac[t].direccion + `</td>
-                    <td>` + Suc_Inac[t].telefono + `</td>
-                    <td>` +
-            ` 
-                    <a class="btn btn-primary" href="{{ url('/puntoVenta/altaSucursal/` + Suc_Inac[t].id + `')}}"> ALTA </a>
-                                           
-
-                    </td>        
-                    </tr>
-                     `;
-    }
-
-    if (cuerpo === "") {
-        let sin = ` <h3 class= "text-danger my-auto"> NO HAY SUCURSALES DADAS DE BAJA </h3>`;
-        document.getElementById("vacio").innerHTML = sin;
-    } else {
-        document.getElementById("filaTablas").innerHTML = cuerpo;
-    }
-
-
-
-}
-//reucperar sucursales inactivas
-async function sucursales0() {
-    let response = "Sin respuesta";
-    try {
-        response = await fetch(`/puntoVenta/sucursalesInactivos`);
-        if (response.ok) {
-            Suc_Inac = await response.json();
-        } else {
-            // Suc_Inac = "";
-            console.log("No responde :'v");
-            console.log(response);
-            throw new Error(response.statusText);
-        }
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-};
-
-
-async function cargaProductos() {
-    let cuerpo = "";
-    let cont = 0;
-    let departamento = "";
-    await productosAll();
-    console.log(productosT);
-    for (let t in productosT) {
-
-        cont = cont + 1;
-        for (let d in depa) {
-            if (depa[d].id == productosT[t].idDepartamento) {
-                departamento = depa[d].nombre;
-                console.log(departamento);
-            }
-        }
-        cuerpo = cuerpo + `
-                    <tr>
-                    <th >` + cont + `</th>
-                    <td>` + productosT[t].codigoBarras + `</td>
-                    <td>` + productosT[t].nombre + `</td>
-                    <td>` + productosT[t].descripcion + `</td>
-                    <td>` + productosT[t].receta + `</td>
-                    <td>` + departamento + `</td>
-                    <td>` +
-            ` 
-                    <a class="btn btn-primary" href="{{ url('/puntoVenta/eliProd/` + productosT[t].id + `')}}"> ELIMINAR </a>
-                                           
-                    </td>        
-                    </tr>
-                     `;
-    }
-    /*
-            if (cuerpo === "") {
-                let sin = ` <h3 class= "text-danger my-auto"> NO HAY PRODUCTOS </h3>`;
-                document.getElementById("modalAllProductos").innerHTML = sin;
-            } else {
-                */
-    document.getElementById("producTabla").innerHTML = cuerpo;
-    // }
-};
-
-async function productosAll() {
-    let response = "Sin respuesta";
-    try {
-        response = await fetch(`/puntoVenta/productosTodos`);
-        if (response.ok) {
-            productosT = await response.json();
-        } else {
-            // Suc_Inac = "";
-            console.log("No responde :'v");
-            console.log(response);
-            throw new Error(response.statusText);
-        }
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-};
-
-
-texto.addEventListener('keyup', filtrar);
-filtrar();
-
-function filtrar() {
-    document.getElementById("resultados").innerHTML = "";
-    fetch(`/puntoVenta/administracion/buscador?texto=${texto.value}`, {
-            method: 'get'
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById("resultados").innerHTML = html
-        })
-};
-
-
-async function correrVeriSuc(id) {
-    //  await veriSucursal(id);
-};
-
-//VERIFICAR SI LA SUCURSAL YA ESTA USADA
-async function veriSucursal(id) {
-    let revi = confirm("¿DESEA ELIMINAR ESTA SUCURSAL?");
-    if (revi) {
-        let response = "Sin respuesta";
+    async function cargarEmpleados() {
+        //let body = document.querySelector('#cuerpoEmpleadosModal');
+        //let body = document.querySelector('#cuerpoEmpleadosModal');
+        //body.innerHTML = ""; //NO HAY NINGUN EMPLEADO EN LA EMPRESA";
+        //let cuerpo = `<div class="row mx-auto my-auto p-5"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
         try {
-            response = await fetch(`/puntoVenta/destroy2/${id}`);
+            let response = await fetch(`/puntoVenta/empleado/empleados`);
             if (response.ok) {
-                let respuesta = await response.text();
-                if (respuesta.length > 1) {
-                    return alert(respuesta)
-                } else if (respuesta.length == 1) {
-                    //recargar la pag
-                    alert("La sucursal fue eliminada");
-                    location.href = "{{url('/puntoVenta/administracion')}}";
-                } else {
-                    let sucUsada = confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA DARLO DE BAJA?");
-                    if (sucUsada) {
-                        let respuesta2 = await fetch(`/puntoVenta/actualizar/${id}`);
-                        if (respuesta2.ok) {
-                            alert("La sucursal se ha dado de baja");
-                            location.href = "{{url('/puntoVenta/administracion')}}";
-                        }
-                    }
+
+                console.log("Los empleados son:");
+                empleados = await response.json();
+                /*if(empleados.length>0)
+                {
+                for(let i in empleados)
+                {
+                cuerpo = cuerpo + `<a class="btn btn-secondary btn-block text-uppercase border" onclick="agregarEmpleado(`+empleados[i].id+`)">`+empleados[i].nombre +` `+
+                    empleados[i].apellidoPaterno+` `+empleados[i].apellidoMaterno+`</a>`;
                 }
+
+                body.innerHTML = cuerpo;
+                }
+                else{
+                body.innerHTML = "NO HAY NINGUN EMPLEADO EN LA EMPRESA";
+                }*/
+                console.log(empleados);
             } else {
-                return confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA ELIMINARLO?");
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
+
+    async function cargarPermisosEmpleado(id) {
+        try {
+            let permisosEmpleado = null;
+            let response = await fetch(`/puntoVenta/permisosEmpleado/${id}`);
+            if (response.ok) {
+
+                console.log("Los empleados son:");
+                permisosEmpleado = await response.json();
+                document.querySelector('#btnGuardarPermisos').value = id;
+                //$('#btnGuardarPermisos').prop('click',);
+                for (let i in modulos) {
+                    let countR = 0;
+                    let countPE = 0;
+                    for (let o in roles) {
+                        if (roles[o].idModulo == modulos[i].id)
+                            countR++;
+                    }
+                    for (let o in permisosEmpleado) {
+                        if (permisosEmpleado[o].idModulo == modulos[i].id)
+                            countPE++;
+                    }
+                    if (countPE == countR) {
+                        console.log(modulos[i].nombre);
+                        $(`#modulo${modulos[i].id}`).prop('checked', true);
+                    }
+
+                }
+                for (let i in permisosEmpleado) {
+
+                    let pE = permisosEmpleado[i];
+                    $(`#rol${pE.idModulo}${pE.id}`).prop('checked', true);
+
+                }
+
+            } else {
                 console.log("No responde :'v");
                 console.log(response);
                 throw new Error(response.statusText);
@@ -932,69 +520,448 @@ async function veriSucursal(id) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
-};
-const modulos = @if(isset($modulos))@json($modulos) @else null @endif;
-const roles = @if(isset($modulos))@json($roles) @else null @endif;
-function seleccionModulo(idModulo){
-    let modulo = modulos.find(p => p.id == idModulo);
-    let check = false;
-    let activo = document.querySelector(`input[id="modulo${modulo.id}"]:checked`);
-    if (activo != null)
-        check = true;
-    for(let i in roles)
-    {
-        $(`#rol${modulo.id}${roles[i].id}`).prop('checked',check);
-    }
-    //alert(modulo.nombre);
-}
-function seleccionPermiso(idModulo,idRol){
-    let inactivo = document.querySelector(`input[id="rol${idModulo}${idRol}"]:checked`);
-    //let modulo = document.querySelector(`input[id="rol${idModuloRol}"]`);
-    if (inactivo == null)
-        $(`#modulo${idModulo}`).prop('checked',false);
-    //console.log(inactivo.value);
-    //alert(modulo.nombre);
-}
 
-async function guardarPermisos()
-{
-    try{
-        let id = document.querySelector('#btnGuardarPermisos').value;
-        let permisos = [];
-        for(let i in modulos)
-        {
-            for(let o in roles)
-            {
-                let permiso = document.querySelector(`input[id="rol${modulos[i].id}${roles[o].id}"]:checked`);
-                if(permiso != null)
-                {
-                    permisos.push(permiso.value);
+    let footerOriginal = document.querySelector('#pieEmpleadosModal').innerHTML;
+    async function empleadosSucursal() {
+        if (!verEmpleado)
+            return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION');
+
+        let header = document.querySelector('#cabezaEmpleadosModal');
+        header.innerHTML = `<h5><strong class="text-uppercase">empleados de la sucursal ` + sucursal.direccion +
+            `</strong></h5>`;
+        let body = document.querySelector('#cuerpoEmpleadosModal');
+        body.innerHTML = ""; //NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
+        document.querySelector('#pieEmpleadosModal').innerHTML = footerOriginal;
+        let cuerpo = "";
+        try {
+
+            let response = await fetch(`/puntoVenta/sucursalEmpleado/${idSucursal}`);
+            if (response.ok) {
+                console.log("Las sucursales son:");
+                SucursalEmpleados = await response.json();
+                if (SucursalEmpleados.length > 1) {
+                    await cargarEmpleados();
+                    //cuerpo =;
+                    for (let i in SucursalEmpleados) {
+                        for (let e in empleados) {
+
+                            if (SucursalEmpleados[i].idEmpleado == empleados[e].id && i != 0) {
+                                let status = "";
+                                let botonAltaBaja = "";
+                                let permisos = `<button class="btn btn-primary" onclick="cargarPermisosEmpleado(${SucursalEmpleados[i].id})"
+                                type="button" data-toggle="modal" data-target="#permisosModal">PERMISOS</button>`;
+                                if (SucursalEmpleados[i].status == 'alta') {
+                                    status = `<span class="badge badge-success badge-pill my-auto">ACTIVO</span>`;
+                                    botonAltaBaja =
+                                        `<button class="btn btn-danger" onclick="cambiarStatusEmpleado('baja',` +
+                                        SucursalEmpleados[i].id +
+                                        `)">DAR DE BAJA</button>`;
+                                } else {
+                                    status = `<span class="badge badge-danger badge-pill my-auto">INACTIVO</span>`;
+                                    botonAltaBaja =
+                                        `<button class="btn btn-success" onclick="cambiarStatusEmpleado('alta',` +
+                                        SucursalEmpleados[i].id +
+                                        `)">DAR DE ALTA</button>`;
+                                }
+                                let segundoNombre = "";
+                                if (empleados[e].segundoNombre != null)
+                                    segundoNombre = empleados[e].segundoNombre;
+                                cuerpo = cuerpo + `<ul class="list-group list-group-horizontal-sm my-1 border border-dark">
+    <li class="list-group-item text-uppercase col-6">` +
+                                    empleados[e].primerNombre + ` ` + segundoNombre + ` ` + empleados[e]
+                                    .apellidoPaterno + ` ` + empleados[e].apellidoMaterno +
+                                    `</li>
+    <li class="list-group-item text-uppercase mx-0 px-1">` +
+                                    status + `</li>
+                                    <li class="list-group-item text-uppercase mx-auto">` +
+                                    permisos + `</li>
+    <li class="list-group-item text-uppercase mx-auto">` + botonAltaBaja +
+                                    `</li>
+</ul>`;
+                                //<li class="list-group-item">`+
+                                //empleados[e].nombre+`</< /li>`;
+                            }
+                        }
+
+                    }
+                    //cuerpo = cuerpo + `</ul>`;
+                    body.innerHTML = cuerpo;
+                } else {
+                    body.innerHTML = "NO HAY NINGUN EMPLEADO ASOCIADO A ESTA SUCURSAL";
+                }
+                console.log(empleados);
+                //return productos;
+                //console.log(response);
+                $('#empleadosModal').modal('show');
+
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+
+    async function cambiarStatusEmpleado(status, idSucursalEmpleado) {
+        try {
+            const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/" + idSucursalEmpleado;
+            let respuesta = await $.ajax({
+                url: url,
+                type: 'PUT',
+                data: {
+                    'status': status,
+                    '_token': "{{ csrf_token() }}",
+                },
+                //processData: false, // tell jQuery not to process the data
+                //contentType: false,
+                success: function(data) {
+                    //alert(data); }
+                }
+            });
+            console.log(respuesta);
+            if (respuesta == true) {
+                await empleadosSucursal();
+                alert('El empleado se ha dado de ' + status);
+
+            } else {
+                alert('El empleado no se dio de ' + status);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+
+
+    async function mostrarEmpleados() {
+        let header = document.querySelector('#cabezaEmpleadosModal');
+        header.innerHTML = `<h5><strong class="text-uppercase">empleados de la empresa </strong></h5>`;
+        let body = document.querySelector('#cuerpoEmpleadosModal');
+        body.innerHTML = ""; //NO HAY NINGUN EMPLEADO EN LA EMPRESA";
+        let footer = document.querySelector('#pieEmpleadosModal');
+        footer.innerHTML = `<button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+    <button type="button" class="btn btn-primary" onclick="empleadosSucursal()">REGRESAR</button>`;
+        let cuerpo =
+            `<div class="row mx-auto my-auto p-1"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
+        try {
+            await cargarEmpleados();
+            let existeEmpleado = false;
+            for (let i in empleados) {
+                let bandera = true;
+                for (let s in SucursalEmpleados) {
+                    if (SucursalEmpleados[s].idEmpleado == empleados[i].id)
+                        bandera = false;
+                }
+                if (bandera) {
+                    existeEmpleado = true;
+                    let segundoNombre = "";
+                    if (empleados[i].segundoNombre != null)
+                        segundoNombre = empleados[i].segundoNombre;
+                    cuerpo = cuerpo +
+                        `<a class="btn btn-secondary btn-block text-uppercase border" onclick="agregarEmpleado(` +
+                        empleados[i].id + `)">` +
+                        empleados[i].primerNombre + ` ` + segundoNombre + ` ` +
+                        empleados[i].apellidoPaterno + ` ` + empleados[i].apellidoMaterno + `</a>`;
                 }
             }
-        }
-        console.log(permisos);
-        const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/permisos";
-        let respuesta = await $.ajax({
-            url: url,
-            type: 'PUT',
-            data: {
-                'idSE': id,
-                'permisos':JSON.stringify(permisos),
-                '_token': "{{ csrf_token() }}",
-            },
-            //processData: false, // tell jQuery not to process the data
-            //contentType: false,
-            success: function(data) {
-                //alert(data); }
-            }
-        });
-        $('#permisosModal').modal('hide');
-        console.log(respuesta);
-    }catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-    //alert('Ya guardo lo cambios '+ id);
-}
+            body.innerHTML = cuerpo;
+            if (!existeEmpleado) {
+                body.innerHTML =
+                    `<div class="row mx-auto my-auto p-1"><strong class="text-uppercase">NO HAY EMPLEADOS NUEVOS QUE AGREGAR</strong></div>`;
 
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+
+    async function agregarEmpleado(idEmpleado) {
+        let body = document.querySelector('#cuerpoEmpleadosModal');
+        /*body.innerHTML = `
+        <div class="alert alert-primary" role="alert">
+            OK YA LO AGREGO
+        </div>
+        `;*/
+        try {
+            let datos = new FormData();
+            datos.append('_token', "{{ csrf_token() }}");
+            datos.append('idSucursal', idSucursal);
+            datos.append('idEmpleado', idEmpleado);
+            var init = {
+                // el método de envío de la información será POST
+                method: "POST",
+                // el cuerpo de la petición es una cadena de texto
+                // con los datos en formato JSON
+                body: datos // convertimos el objeto a texto
+            };
+            let response = await fetch(`/puntoVenta/sucursalEmpleado/`, init);
+            if (response.ok) {
+                await empleadosSucursal();
+                console.log(response.text());
+            } else {
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+
+    }
+</script>
+<script>
+    let Suc_Inac = "";
+    let productosT = "";
+    let sucUsadaF = "";
+    let sucUsadaT = "";
+    let depa = @json($depa);
+
+    const texto = document.querySelector('#texto');
+    //MAYUSCULA
+    function mayus(e) {
+        e.value = e.value.toUpperCase();
+        const ppb = document.querySelector('#codigoBarras');
+        console.log(ppb.value);
+    }
+
+    //SOLO NUMEROS
+    $("input[name='telefono']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
+
+    async function datosTablaSuc() {
+        let cuerpo = "";
+        let cont = 0;
+        await sucursales0();
+        console.log(Suc_Inac);
+
+        for (let t in Suc_Inac) {
+            cont = cont + 1;
+            cuerpo = cuerpo + `
+                    <tr>
+                    <th >` + cont + `</th>
+                    <td>` + Suc_Inac[t].direccion + `</td>
+                    <td>` + Suc_Inac[t].telefono + `</td>
+                    <td>` +
+                ` 
+                    <a class="btn btn-primary" href="{{ url('/puntoVenta/altaSucursal/` + Suc_Inac[t].id + `')}}"> ALTA </a>
+                                           
+
+                    </td>        
+                    </tr>
+                     `;
+        }
+
+        if (cuerpo === "") {
+            let sin = ` <h3 class= "text-danger my-auto"> NO HAY SUCURSALES DADAS DE BAJA </h3>`;
+            document.getElementById("vacio").innerHTML = sin;
+        } else {
+            document.getElementById("filaTablas").innerHTML = cuerpo;
+        }
+
+
+
+    }
+    //reucperar sucursales inactivas
+    async function sucursales0() {
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/puntoVenta/sucursalesInactivos`);
+            if (response.ok) {
+                Suc_Inac = await response.json();
+            } else {
+                // Suc_Inac = "";
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
+
+
+    async function cargaProductos() {
+        let cuerpo = "";
+        let cont = 0;
+        let departamento = "";
+        await productosAll();
+        console.log(productosT);
+        for (let t in productosT) {
+
+            cont = cont + 1;
+            for (let d in depa) {
+                if (depa[d].id == productosT[t].idDepartamento) {
+                    departamento = depa[d].nombre;
+                    console.log(departamento);
+                }
+            }
+            cuerpo = cuerpo + `
+                    <tr>
+                    <th >` + cont + `</th>
+                    <td>` + productosT[t].codigoBarras + `</td>
+                    <td>` + productosT[t].nombre + `</td>
+                    <td>` + productosT[t].descripcion + `</td>
+                    <td>` + productosT[t].receta + `</td>
+                    <td>` + departamento + `</td>
+                    <td>` +
+                ` 
+                    <a class="btn btn-primary" href="{{ url('/puntoVenta/eliProd/` + productosT[t].id + `')}}"> ELIMINAR </a>
+                                           
+                    </td>        
+                    </tr>
+                     `;
+        }
+        /*
+                if (cuerpo === "") {
+                    let sin = ` <h3 class= "text-danger my-auto"> NO HAY PRODUCTOS </h3>`;
+                    document.getElementById("modalAllProductos").innerHTML = sin;
+                } else {
+                    */
+        document.getElementById("producTabla").innerHTML = cuerpo;
+        // }
+    };
+
+    async function productosAll() {
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/puntoVenta/productosTodos`);
+            if (response.ok) {
+                productosT = await response.json();
+            } else {
+                // Suc_Inac = "";
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
+
+
+    texto.addEventListener('keyup', filtrar);
+    filtrar();
+
+    function filtrar() {
+        document.getElementById("resultados").innerHTML = "";
+        fetch(`/puntoVenta/administracion/buscador?texto=${texto.value}`, {
+                method: 'get'
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("resultados").innerHTML = html
+            })
+    };
+
+
+    async function correrVeriSuc(id) {
+        //  await veriSucursal(id);
+    };
+
+    //VERIFICAR SI LA SUCURSAL YA ESTA USADA
+    async function veriSucursal(id) {
+        let revi = confirm("¿DESEA ELIMINAR ESTA SUCURSAL?");
+        if (revi) {
+            let response = "Sin respuesta";
+            try {
+                response = await fetch(`/puntoVenta/destroy2/${id}`);
+                if (response.ok) {
+                    let respuesta = await response.text();
+                    if (respuesta.length > 1) {
+                        return alert(respuesta)
+                    } else if (respuesta.length == 1) {
+                        //recargar la pag
+                        alert("La sucursal fue eliminada");
+                        location.href = "{{url('/puntoVenta/administracion')}}";
+                    } else {
+                        let sucUsada = confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA DARLO DE BAJA?");
+                        if (sucUsada) {
+                            let respuesta2 = await fetch(`/puntoVenta/actualizar/${id}`);
+                            if (respuesta2.ok) {
+                                alert("La sucursal se ha dado de baja");
+                                location.href = "{{url('/puntoVenta/administracion')}}";
+                            }
+                        }
+                    }
+                } else {
+                    return confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA ELIMINARLO?");
+                    console.log("No responde :'v");
+                    console.log(response);
+                    throw new Error(response.statusText);
+                }
+            } catch (err) {
+                console.log("Error al realizar la petición AJAX: " + err.message);
+            }
+        }
+    };
+    const modulos = @if(isset($modulos)) @json($modulos) @else null @endif;
+    const roles = @if(isset($modulos)) @json($roles) @else null @endif;
+
+    function seleccionModulo(idModulo) {
+        let modulo = modulos.find(p => p.id == idModulo);
+        let check = false;
+        let activo = document.querySelector(`input[id="modulo${modulo.id}"]:checked`);
+        if (activo != null)
+            check = true;
+        for (let i in roles) {
+            $(`#rol${modulo.id}${roles[i].id}`).prop('checked', check);
+        }
+        //alert(modulo.nombre);
+    }
+
+    function seleccionPermiso(idModulo, idRol) {
+        let inactivo = document.querySelector(`input[id="rol${idModulo}${idRol}"]:checked`);
+        //let modulo = document.querySelector(`input[id="rol${idModuloRol}"]`);
+        if (inactivo == null)
+            $(`#modulo${idModulo}`).prop('checked', false);
+        //console.log(inactivo.value);
+        //alert(modulo.nombre);
+    }
+
+    async function guardarPermisos() {
+        try {
+            let id = document.querySelector('#btnGuardarPermisos').value;
+            let permisos = [];
+            for (let i in modulos) {
+                for (let o in roles) {
+                    let permiso = document.querySelector(`input[id="rol${modulos[i].id}${roles[o].id}"]:checked`);
+                    if (permiso != null) {
+                        permisos.push(permiso.value);
+                    }
+                }
+            }
+            console.log(permisos);
+            const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/permisos";
+            let respuesta = await $.ajax({
+                url: url,
+                type: 'PUT',
+                data: {
+                    'idSE': id,
+                    'permisos': JSON.stringify(permisos),
+                    '_token': "{{ csrf_token() }}",
+                },
+                //processData: false, // tell jQuery not to process the data
+                //contentType: false,
+                success: function(data) {
+                    //alert(data); }
+                }
+            });
+            $('#permisosModal').modal('hide');
+            console.log(respuesta);
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+        //alert('Ya guardo lo cambios '+ id);
+    }
 </script>
 @endsection

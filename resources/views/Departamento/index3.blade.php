@@ -16,6 +16,13 @@
             </form>
         </div>
         @endif
+
+        <div class="col-8 ml-4"></div>
+        <div class=" ml-3 my-auto">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/producto">
+                <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
+            </a>
+        </div>
         @endsection
     </div>
     <div class="row p-1">
@@ -137,13 +144,13 @@
                                     {{$message}}
                                 </div>
                                 @enderror
-                                
+
                             </div>
                         </div>
-                            <button class="btn btn-outline-secondary " type="submit" onclick="return confirm('¿AGREGAR NUEVO DEPARTAMENTO?')">
-                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
-                                AGREGAR
-                            </button>
+                        <button class="btn btn-outline-secondary " type="submit" onclick="return confirm('¿AGREGAR NUEVO DEPARTAMENTO?')">
+                            <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
+                            AGREGAR
+                        </button>
                     </form>
 
                 </div>

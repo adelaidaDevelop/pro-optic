@@ -49,6 +49,7 @@
                 </button>
             </form>
         </div>
+        
         @endif
         <!--div class="">
             <form method="get" action="{url('/puntoVenta/empleado/')}}">
@@ -58,6 +59,7 @@
                 </button>
             </form>
         </div-->
+        
         @endsection
     </div>
     <div class="row p-1 ">

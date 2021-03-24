@@ -8,9 +8,15 @@ REPORTES
     <form method="get" action="{{url('/puntoVenta/reporteInventario/')}}">
         <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
             <img src="{{ asset('img\inventario.png') }}" alt="Editar" width="30px" height="30px">
-            <p class="h6 my-auto mx-2 text-dark"><small>INVENTARIO</small></p>
+            <p class="h6 my-auto mx-2 text-dark"><small>REPORTE INVENTARIO</small></p>
         </button>
     </form>
+</div>
+<div class="col-7 "></div>
+<div class=" my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
+    </a>
 </div>
 @endsection
 <!--CONSULTAR PRODUCTO -->

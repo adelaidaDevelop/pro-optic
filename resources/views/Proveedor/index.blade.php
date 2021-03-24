@@ -22,6 +22,20 @@
                 <p class="h6 my-auto mx-2 text-dark"><small>ALTA PROVEEDORES</small></p>
             </button>
         </div>
+
+        <div class="col-6 "></div>
+        <div class=" my-auto">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/compra">
+                <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
+            </a>
+        </div>
+        <!--
+        <div class=" ml-3 my-auto">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+                <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
+            </a>
+        </div>
+        -->
         @endsection
     </div>
     <div class="row p-1">

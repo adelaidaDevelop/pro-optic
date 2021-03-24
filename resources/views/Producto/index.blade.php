@@ -70,6 +70,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     </button>
 </div>
 -->
+<div class="col-3 "></div>
+<div class=" my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
+    </a>
+</div>
 @endsection
 
 <div class="row p-1 ">
@@ -1158,7 +1164,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             if (productos[count10].id === id) {
 
 
-                              //  x1 = productos[count10].id;
+                                //  x1 = productos[count10].id;
                                 x = productosSucursal[j].id;
                                 datosProduct =
                                     `
@@ -1191,14 +1197,14 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                                 <option value="" selected>` + productos[count10].receta + ` </option>
                                             </select>
                                             <br />
-                                            <input type="text" name="piezas" id="piezas" class="form-control text-uppercase" placeholder="PIEZAS" value="`+ subproductos[h].piezas+` " autofocus required disabled>
+                                            <input type="text" name="piezas" id="piezas" class="form-control text-uppercase" placeholder="PIEZAS" value="` + subproductos[h].piezas + ` " autofocus required disabled>
                                             <br />
                                             <input type="text" name="observacion" id="observacion" class="form-control text-uppercase" placeholder="OBSERVACION" value="` + subproductos[h].observacion + ` " autofocus required disabled>
                                             <br />
                                         </div>
                                         <div class="col-4 text-center">
                                             <br /><br />
-                                            <a class="btn btn-outline-danger mb-4" data-method="delete" onclick="return confirm('¿DESEA ELIMINAR ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/subproducto/`+x+`')}}"> 
+                                            <a class="btn btn-outline-danger mb-4" data-method="delete" onclick="return confirm('¿DESEA ELIMINAR ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/subproducto/` + x + `')}}"> 
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              ELIMINAR </a> 
                                              <div class="mt-4 mb-4"> </div>

@@ -2,6 +2,7 @@
 @section('contenido')
 <div class="container-fluid">
     <div class="row" style="background:#ED4D46">
+
         @section('subtitulo')
         VENTAS
         @endsection
@@ -10,8 +11,8 @@
         use App\Models\Sucursal_empleado;
         $userCliente= ['verCliente','crearCliente','modificarCliente','eliminarCliente','admin'];
         $userDevolucion= ['verDevolucion','crearDevolucion','admin'];
-        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
-        
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+
         @endphp
         <!-- BOTON DEVOLUCION-->
         @if($sE->hasAnyRole($userDevolucion))
@@ -24,12 +25,18 @@
         @endif
         @if($sE->hasAnyRole($userCliente))
         <div class=" ml-4">
-            <a  class="btn btn-outline-secondary  p-1 border-0" href="/puntoVenta/cliente">
+            <a class="btn btn-outline-secondary  p-1 border-0" href="/puntoVenta/cliente">
                 <img src="{{ asset('img\consumidor.png') }}" alt="Editar" width="30px" height="30px">
                 <p class="h6 my-auto mx-2 text-dark"><small>CLIENTES</small></p>
             </a>
         </div>
         @endif
+        <div class="col-6 ml-4"></div>
+        <div class=" ml-4 my-auto">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+                <img src="{{ asset('img\inicio.png') }}" class="my-auto mx-2" alt="Editar" width="30px" height="30px">
+            </a>
+        </div>
         @endsection
     </div>
     <!--div class="row p-1 "-->
@@ -288,7 +295,7 @@
 <div class="modal fade" id="ofertasModal" tabindex="-1" aria-labelledby="ofertasModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content" id="modalContenidoOferta">
-            <div class="modal-header" >
+            <div class="modal-header">
 
                 <h5 class="modal-title text-center" id="ofertasModalLabel">OFERTAS</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -602,7 +609,7 @@
         //if(tipo==0)
         productosVenta.push(producto);
     };
-    
+
     let total = 0;
 
     function calcularTotal() {
@@ -788,43 +795,42 @@
 
 
     async function buscarProducto() {
-        try{
-        const palabraBusqueda = document.querySelector('#busquedaProducto');
-        let cuerpo = "";
-        let contador = 1;
-        let departamento = "";
-        
-        if(productosSucursal.length == 0)
-        {
-            
-            const contenidoProducto = document.querySelector('#modalContenidoProducto');
-            const contenidoOriginal = contenidoProducto.innerHTML;
-            contenidoProducto.innerHTML = 
-            `<div class="d-flex justify-content-center my-3">
+        try {
+            const palabraBusqueda = document.querySelector('#busquedaProducto');
+            let cuerpo = "";
+            let contador = 1;
+            let departamento = "";
+
+            if (productosSucursal.length == 0) {
+
+                const contenidoProducto = document.querySelector('#modalContenidoProducto');
+                const contenidoOriginal = contenidoProducto.innerHTML;
+                contenidoProducto.innerHTML =
+                    `<div class="d-flex justify-content-center my-3">
                 <button class="btn btn-info" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     CARGANDO PRODUCTOS
                 </button>
             </div>
             `;
-            if(productos.length == 0)
-                await cargarProductos();
-            await cargarProductosSucursal();
-            contenidoProducto.innerHTML = contenidoOriginal;
-        }
-        
-        for (let x in productosSucursal) {
-            for (let count5 in productos) {
-                if (productos[count5].id === productosSucursal[x].idProducto) {
-                    if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                        for (let d in departamentos) {
-                            if (productos[count5].idDepartamento === departamentos[d].id)
-                                departamento = departamentos[d].nombre;
-                        }
-                        cuerpo = cuerpo + `
+                if (productos.length == 0)
+                    await cargarProductos();
+                await cargarProductosSucursal();
+                contenidoProducto.innerHTML = contenidoOriginal;
+            }
+
+            for (let x in productosSucursal) {
+                for (let count5 in productos) {
+                    if (productos[count5].id === productosSucursal[x].idProducto) {
+                        if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                            for (let d in departamentos) {
+                                if (productos[count5].idDepartamento === departamentos[d].id)
+                                    departamento = departamentos[d].nombre;
+                            }
+                            cuerpo = cuerpo + `
                             <tr onclick="agregarProducto(` + productos[count5].id + `,` + 0 + `,` + productosSucursal[
-                                x].existencia +
-                            `,` + productosSucursal[x].precio + `)" data-dismiss="modal">
+                                    x].existencia +
+                                `,` + productosSucursal[x].precio + `)" data-dismiss="modal">
                                 <th scope="row">` + productos[count5].id + `</th>
                                 <td>` + productos[count5].codigoBarras + `</td>
                                 <td>` + productos[count5].nombre + `</td>
@@ -832,30 +838,28 @@
                                 <td>` + departamento + `</td>
                             </tr>
                             `;
+                        }
                     }
                 }
-            }
 
-        }
-        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-    }
-        catch (err) {
+            }
+            document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        } catch (err) {
             console.log("Error al realizar la petición de productos AJAX: " + err.message);
         }
     };
 
     async function buscarSubproducto() {
-        try{
-        let cont = 0;
-        let cuerpo = "";
-        const palabraBusqueda = document.querySelector('#busquedaSubproducto');
-        if(subproductosSucursal.length == 0)
-        {
-            
-            const contenidoProducto = document.querySelector('#modalContenidoSubproducto');
-            const contenidoOriginal = contenidoProducto.innerHTML;
-            contenidoProducto.innerHTML = 
-            `<div class="d-flex justify-content-center my-3">
+        try {
+            let cont = 0;
+            let cuerpo = "";
+            const palabraBusqueda = document.querySelector('#busquedaSubproducto');
+            if (subproductosSucursal.length == 0) {
+
+                const contenidoProducto = document.querySelector('#modalContenidoSubproducto');
+                const contenidoOriginal = contenidoProducto.innerHTML;
+                contenidoProducto.innerHTML =
+                    `<div class="d-flex justify-content-center my-3">
                 <button class="btn btn-info" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     CARGANDO SUBPRODUCTOS
@@ -863,30 +867,29 @@
 
             </div>
             `;
-            if(productos.length == 0)
-                await cargarProductos();
-            await cargarSubproductosSucursal();
-            contenidoProducto.innerHTML = contenidoOriginal;
-        }
-        for (let count in subproductosSucursal) {
-            let sucursalP = productosSucursal.find(p => p.id == subproductosSucursal[count].idSucursalProducto);
-            let producto = productos.find(p => p.id == sucursalP.idProducto);
-            let departamento = departamentos.find(p => p.id == producto.idDepartamento);
-            if(producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase()))
-            {
-            cuerpo = cuerpo + `
+                if (productos.length == 0)
+                    await cargarProductos();
+                await cargarSubproductosSucursal();
+                contenidoProducto.innerHTML = contenidoOriginal;
+            }
+            for (let count in subproductosSucursal) {
+                let sucursalP = productosSucursal.find(p => p.id == subproductosSucursal[count].idSucursalProducto);
+                let producto = productos.find(p => p.id == sucursalP.idProducto);
+                let departamento = departamentos.find(p => p.id == producto.idDepartamento);
+                if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                    cuerpo = cuerpo + `
             <tr onclick="agregarProducto(` + producto.id + `,` + 1 + `,` + subproductosSucursal[count].existencia +
-                `,` + subproductosSucursal[count].precio + `)" data-dismiss="modal">
+                        `,` + subproductosSucursal[count].precio + `)" data-dismiss="modal">
                 <td>` + producto.codigoBarras + `</td>
                 <td>` + producto.nombre + `</td>
                 <td>` + subproductosSucursal[count].existencia + `</td>
                 <td>` + departamento.nombre + `</td>  
             </tr>
             `;
+                }
             }
-        }
-        document.getElementById("consultaBusquedaSubp").innerHTML = cuerpo;
-    }catch (err) {
+            document.getElementById("consultaBusquedaSubp").innerHTML = cuerpo;
+        } catch (err) {
             console.log("Error al realizar la petición de productos AJAX: " + err.message);
         }
     };
@@ -941,8 +944,7 @@
                 } else {
                     return alert('LA CLAVE INGRESADA ES INVALIDA' + valido);
                 }
-            }
-            else{
+            } else {
                 return alert('HUBO UN ERROR');
             }
             let json = JSON.stringify(productosVenta);
@@ -1006,10 +1008,9 @@
             } else {
                 return alert('LA CLAVE INGRESADA ES INVALIDA');
             }
+        } else {
+            return alert('HUBO UN ERROR');
         }
-        else{
-                return alert('HUBO UN ERROR');
-            }
         let json = JSON.stringify(productosVenta);
         const pago = document.querySelector('#pagoCredito');
         const cliente = document.querySelector('#clientes');
@@ -1160,73 +1161,71 @@
     }
 
     async function buscarOferta() {
-        try{
-        const palabraBusqueda = document.querySelector('#busquedaOferta');
-        let cuerpo = "";
-        let contador = 1;
-        let departamento = "";
-        if(ofertasSucursal.length == 0)
-        {
-            
-            const contenidoProducto = document.querySelector('#modalContenidoOferta');
-            const contenidoOriginal = contenidoProducto.innerHTML;
-            contenidoProducto.innerHTML = 
-            `<div class="d-flex justify-content-center my-3">
+        try {
+            const palabraBusqueda = document.querySelector('#busquedaOferta');
+            let cuerpo = "";
+            let contador = 1;
+            let departamento = "";
+            if (ofertasSucursal.length == 0) {
+
+                const contenidoProducto = document.querySelector('#modalContenidoOferta');
+                const contenidoOriginal = contenidoProducto.innerHTML;
+                contenidoProducto.innerHTML =
+                    `<div class="d-flex justify-content-center my-3">
                 <button class="btn btn-info" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     CARGANDO OFERTAS
                 </button>
             </div>
             `;
-            if(productos.length == 0)
-            
-                await cargarProductos();
-            await cargarOfertasSucursal();
-            contenidoProducto.innerHTML = contenidoOriginal;
-        }
-        for (let x in ofertasSucursal) {
-            /*for (let count5 in productos) {
-                if (productos[count5].id === productosSucursal[x].idProducto) {
-                    if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                        for (let d in departamentos) {
-                            if (productos[count5].idDepartamento === departamentos[d].id)
-                                departamento = departamentos[d].nombre;
+                if (productos.length == 0)
+
+                    await cargarProductos();
+                await cargarOfertasSucursal();
+                contenidoProducto.innerHTML = contenidoOriginal;
+            }
+            for (let x in ofertasSucursal) {
+                /*for (let count5 in productos) {
+                    if (productos[count5].id === productosSucursal[x].idProducto) {
+                        if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                            for (let d in departamentos) {
+                                if (productos[count5].idDepartamento === departamentos[d].id)
+                                    departamento = departamentos[d].nombre;
+                            }
+                            cuerpo = cuerpo + `
+                                    <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">
+                                        <th scope="row">` + productos[count5].id + `</th>
+                                        <td>` + productos[count5].codigoBarras + `</td>
+                                        <td>` + productos[count5].nombre + `</td>
+                                        <td>` + productosSucursal[x].existencia + `</td>
+                                        <td>` + departamento + `</td>
+                                    </tr>
+                                    `;
                         }
-                        cuerpo = cuerpo + `
-                                <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">
-                                    <th scope="row">` + productos[count5].id + `</th>
-                                    <td>` + productos[count5].codigoBarras + `</td>
-                                    <td>` + productos[count5].nombre + `</td>
-                                    <td>` + productosSucursal[x].existencia + `</td>
-                                    <td>` + departamento + `</td>
-                                </tr>
-                                `;
                     }
-                }
-            }*/
-            /*for (let d in departamentos) {
-                if (productosOferta[x].idDepartamento === departamentos[d].id)
-                    departamento = departamentos[d].nombre;
-            }*/
-            let sucursalP = productosSucursal.find(p => p.id == ofertasSucursal[x].idSucursalProducto);
-            let producto = productos.find(p => p.id == sucursalP.idProducto);
-            let departamento = departamentos.find(p => p.id == producto.idDepartamento);
-            if(producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase()))
-            {
-                cuerpo = cuerpo + `
+                }*/
+                /*for (let d in departamentos) {
+                    if (productosOferta[x].idDepartamento === departamentos[d].id)
+                        departamento = departamentos[d].nombre;
+                }*/
+                let sucursalP = productosSucursal.find(p => p.id == ofertasSucursal[x].idSucursalProducto);
+                let producto = productos.find(p => p.id == sucursalP.idProducto);
+                let departamento = departamentos.find(p => p.id == producto.idDepartamento);
+                if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                    cuerpo = cuerpo + `
             <tr onclick="agregarProducto(` + producto.id + `,` + 2 + `,` +
-                ofertasSucursal[x].existencia + `,` + sucursalP.costo + `)" data-dismiss="modal">
+                        ofertasSucursal[x].existencia + `,` + sucursalP.costo + `)" data-dismiss="modal">
                 <td>` + producto.codigoBarras + `</td>
                 <td>` + producto.nombre + `</td>
                 <td>` + ofertasSucursal[x].existencia + `</td>
                 <td>` + departamento.nombre + `</td>
             </tr>
             `;
-            }
+                }
 
-        }
-        document.getElementById("consultaBusquedaOferta").innerHTML = cuerpo;
-    }catch (err) {
+            }
+            document.getElementById("consultaBusquedaOferta").innerHTML = cuerpo;
+        } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }

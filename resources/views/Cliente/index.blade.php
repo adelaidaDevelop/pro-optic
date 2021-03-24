@@ -4,16 +4,16 @@
 CLIENTES
 @endsection
 @php
-        use App\Models\Sucursal_empleado;
-        $vC = ['verCliente','modificarCliente','eliminarCliente','crearCliente','admin'];
-        $mC= ['modificarCliente','admin'];
-        $cC= ['crearCliente','admin'];
-        $eC= ['eliminarCliente','admin'];
-        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
-        $modificarC = $sE->hasAnyRole($mC);
-        $crearC = $sE->hasAnyRole($cC);
-        $eliminarC = $sE->hasAnyRole($eC);
-        $verC = $sE->hasAnyRole($vC);
+use App\Models\Sucursal_empleado;
+$vC = ['verCliente','modificarCliente','eliminarCliente','crearCliente','admin'];
+$mC= ['modificarCliente','admin'];
+$cC= ['crearCliente','admin'];
+$eC= ['eliminarCliente','admin'];
+$sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+$modificarC = $sE->hasAnyRole($mC);
+$crearC = $sE->hasAnyRole($cC);
+$eliminarC = $sE->hasAnyRole($eC);
+$verC = $sE->hasAnyRole($vC);
 @endphp
 @section('opciones')
 <!-- BOTON DEVOLUCION-->
@@ -23,6 +23,18 @@ CLIENTES
         <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>NUEVO CLIENTE</small></p>
     </a>
+    </a>
+</div>
+
+<div class="col-7 ml-4"></div>
+<div class=" ml-3 my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+        <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
+    </a>
+</div>
+<div class=" ml-3 my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
     </a>
 </div>
 
@@ -120,7 +132,7 @@ CLIENTES
                         </button>
                     </form>
                     -->
-                    @if($eliminarC)
+                @if($eliminarC)
                 <button class="btn btn-outline-danger my-2" onclick="veriEliminar('{{$d->id}}')" type="button">
                     <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
                     ELIMINAR
@@ -146,7 +158,7 @@ CLIENTES
                                 <label for="nombre">
                                     NOMBRE
                                 </label>
-                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" onkeyup="mayus(this)"  id="nombre" required>
+                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" onkeyup="mayus(this)" id="nombre" required>
                                 @error('nombre')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
