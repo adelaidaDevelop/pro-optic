@@ -69,9 +69,9 @@ class isEmpleado
                 }
                 Auth::logout();
             }
-            
-            //$idUsuario = session('idUsuario');
-            //Auth::loginUsingId($idUsuario);
+            //Auth::logout();
+            $idUsuario = session('idUsuario');
+            Auth::loginUsingId($idUsuario);
             
         }
         else
