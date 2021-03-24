@@ -56,13 +56,13 @@
                             <p class="h6 my-auto ml-1"><small>ADMINISTRACION</small></p>
                             </button>
                             <span class="sr-only">(current)</span></a>
-                        delse
+                        
                         <!--a class="nav-link" href="/puntoVenta/empleado">
                                 <button class="btn btn-light">
                                     EMPLEADOS
                                 </button>
                                 <span class="sr-only">(current)</span></a-->
-                        endif
+                        
                     </li>
                     <li class="nav-item active">
                         <!--

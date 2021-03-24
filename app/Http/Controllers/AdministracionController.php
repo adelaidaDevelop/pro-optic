@@ -20,7 +20,7 @@ class AdministracionController extends Controller
     }
     public function index()
     {
-         $usuarios = ['admin','verSucursal'];//,'admin'];
+         $usuarios = ['admin','verSucursal','crearSucursal','eliminarSucursal','modificarSucursal'];//,'admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         $sucursalesInac = Sucursal::where('status', '=', 0)->get();
         $depa =Departamento::all();
@@ -30,7 +30,7 @@ class AdministracionController extends Controller
 
     public function edit($id)
     {
-        $usuarios = ['admin','modificarSucursal'];//,'admin'];
+        $usuarios = ['admin','verSucursal','modificarSucursal','eliminarSucursal'];//,'admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $depa = Departamento::all();

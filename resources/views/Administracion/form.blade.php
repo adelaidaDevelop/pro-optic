@@ -13,10 +13,26 @@
 </head>
 
 <body>
+@php
+use App\Models\Sucursal_empleado;
+$sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
+$vS = ['veriSucursal','modificarSucursal','eliminarSucursal','admin'];
+        $mS= ['modificarSucursal','admin'];
+        $cS= ['crearSucursal','admin'];
+        $eS= ['eliminarSucursal','admin'];
+        $modificarS = $sE->hasAnyRole($mS);
+        $crearS = $sE->hasAnyRole($cS);
+        $eliminarS = $sE->hasAnyRole($eS);
+        $verS = $sE->hasAnyRole($vS);
+@endphp
     @if (count($sucursalB)) 
     @foreach($sucursalB as $sucursal)
     @if($sucursal->status === 1)
-    <a href="{{url('/puntoVenta/administracion/'.$sucursal->id.'/edit/')}}" class="btn btn-light btn-block border border-dark  my-2 mx-1">{{$sucursal->direccion}}</a-->
+        @if($verS)
+        <a href="{{url('/puntoVenta/administracion/'.$sucursal->id.'/edit/')}}" class="btn btn-light btn-block border border-dark  my-2 mx-1">{{$sucursal->direccion}}</a>
+        @else
+        <button onclick="alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" class="btn btn-light btn-block border border-dark  my-2 mx-1">{{$sucursal->direccion}}</button> 
+        @endif
     @endif
     @endforeach
     @else

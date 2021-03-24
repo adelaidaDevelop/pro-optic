@@ -14,8 +14,18 @@ ADMINISTRACION
         $crearE = $sE->hasAnyRole($cE);
         $eliminarE = $sE->hasAnyRole($eE);
         $verE = $sE->hasAnyRole($vE);
+
+        $vS = ['veriSucursal','modificarSucursal','eliminarSucursal','crearSucursal','admin'];
+        $mS= ['modificarSucursal','admin'];
+        $cS= ['crearSucursal','admin'];
+        $eS= ['eliminarSucursal','admin'];
+        $modificarS = $sE->hasAnyRole($mS);
+        $crearS = $sE->hasAnyRole($cS);
+        $eliminarS = $sE->hasAnyRole($eS);
+        $verS = $sE->hasAnyRole($vS);
         @endphp
 @section('opciones')
+@if($crearS)
 <div class="ml-4">
     <form method="get" action="{{url('/puntoVenta/administracion/')}}">
         <button class="btn btn-outline-secondary   border-0" type="submit">
@@ -24,7 +34,8 @@ ADMINISTRACION
         </button>
     </form>
 </div>
-
+@endif
+@if($modificarS || $crearS)
 <div class=" ">
     <button type="button" class="btn btn-outline-secondary  p-1 border-0" data-toggle="modal"
         href=".modal_sucursales_inactivas" id="ver" onclick=" return datosTablaSuc()" value="">
@@ -33,9 +44,8 @@ ADMINISTRACION
 
     </button>
 </div>
-
-
-
+@endif
+@if($verE)
 <div class="">
     <form method="get" action="{{url('/puntoVenta/empleado/')}}">
         <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
@@ -45,7 +55,7 @@ ADMINISTRACION
         </button>
     </form>
 </div>
-
+@endif
 <!--
 <div class=" my-2 ml-3 p-1 ">
     <button type="button" class="btn btn-secondary p-1" data-toggle="modal" href=".modalAllProductos" id="ver"
@@ -152,12 +162,15 @@ ADMINISTRACION
                             </div>
                             <div class="form-row w-100">
                                 <div class="col-4">
+                                @if($modificarS)
                                     <button class="btn btn-outline-secondary mt-2" type="submit"
                                         onclick="return confirm('¿DESEA EDITAR ESTA SUCURSAL?');">
                                         <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
                                             width="30px" height="30px">
                                         GUARDAR CAMBIOS
                                     </button>
+                                @endif
+                                @if($verE)
                                 </div>
                                 <div class="col-8" id="verEmpleadoSucursal">
                                     <button class="btn btn-outline-primary mt-2 mr-5" onclick="empleadosSucursal()"
@@ -167,7 +180,8 @@ ADMINISTRACION
                                         EMPLEADOS SUCURSAL
                                     </button>
                                 </div>
-
+                                @endif
+                                @if($eliminarS)
                                 <div class="col-4">
                                     <button class=" btn btn-outline-danger ml-auto mt-4"
                                         onclick="veriSucursal('{{$d->id}}')" type="button">
@@ -176,6 +190,7 @@ ADMINISTRACION
                                         ELIMINAR
                                     </button>
                                 </div>
+                                @endif
                             </div>
 
 
@@ -241,12 +256,21 @@ ADMINISTRACION
                                 @enderror
                             </div>
                         </div>
+                        @if($crearS)
                         <button class="btn btn-outline-secondary mt-2" type="submit"
                             onclick="return confirm('¿AGREGAR NUEVA SUCURSAL?');">
                             <img src="{{ asset('img\guardar.png') }}" class="p-1" alt="Editar" width="30px"
                                 height="30px">
                             AGREGAR
                         </button>
+                        @else
+                        <button class="btn btn-outline-secondary mt-2" type="button"
+                            onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
+                            <img src="{{ asset('img\guardar.png') }}" class="p-1" alt="Editar" width="30px"
+                                height="30px">
+                            AGREGAR
+                        </button>
+                        @endif
                     </form>
                     <div class="text-danger">
                         @error('noEliminado')
