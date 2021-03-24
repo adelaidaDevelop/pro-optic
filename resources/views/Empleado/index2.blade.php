@@ -1,4 +1,25 @@
 @extends('header2')
+@php
+        use App\Models\Sucursal_empleado;
+        $vE = ['verEmpleado','modificarEmpleado','eliminarEmpleado','crearEmpleado','admin'];
+        $mE= ['modificarEmpleado','admin'];
+        $cE= ['crearEmpleado','admin'];
+        $eE= ['eliminarEmpleado','admin'];
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
+        $modificarE = $sE->hasAnyRole($mE);
+        $crearE = $sE->hasAnyRole($cE);
+        $eliminarE = $sE->hasAnyRole($eE);
+        $verE = $sE->hasAnyRole($vE);
+
+        $vS = ['veriSucursal','modificarSucursal','eliminarSucursal','crearSucursal','admin'];
+        $mS= ['modificarSucursal','admin'];
+        $cS= ['crearSucursal','admin'];
+        $eS= ['eliminarSucursal','admin'];
+        $modificarS = $sE->hasAnyRole($mS);
+        $crearS = $sE->hasAnyRole($cS);
+        $eliminarS = $sE->hasAnyRole($eS);
+        $verS = $sE->hasAnyRole($vS);
+        @endphp
 @section('contenido')
 <div class="container-fluid">
     <div class="row" style="background:#ED4D46">
@@ -7,6 +28,7 @@
         @endsection
         @section('opciones')
         @if(isset($datosEmpleado) || isset($admin))
+        @if($crearE)
         <div class="  ml-4">
             <form method="get" action="{{url('/puntoVenta/empleado')}}">
                 <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit" >
@@ -17,6 +39,8 @@
             </form>
         </div>
         @endif
+        @endif
+        @if($verS)
         <div class=" ">
             <form method="get" action="{{url('/puntoVenta/administracion/')}}">
                 <button class="btn btn-outline-secondary  p-1 border-0" type="submit" >
@@ -25,14 +49,15 @@
                 </button>
             </form>
         </div>
-        <div class="">
-            <form method="get" action="{{url('/puntoVenta/empleado/')}}">
+        @endif
+        <!--div class="">
+            <form method="get" action="{url('/puntoVenta/empleado/')}}">
                 <button class="btn btn-outline-secondary  p-1 border-0" type="submit" >
-                <img src="{{ asset('img\empleado.png') }}" alt="Editar" width="30px" height="30px">
+                <img src="{ asset('img\empleado.png') }}" alt="Editar" width="30px" height="30px">
                     <p class="h6 my-auto mx-2 text-dark"><small>EMPLEADOS</small></p>
                 </button>
             </form>
-        </div>
+        </div-->
         @endsection
     </div>
     <div class="row p-1 ">
@@ -193,6 +218,7 @@
                                 </div>
                             </fieldset>
                             <div class="form-row d-flex flex-row-reverse px-1">
+                            @if($modificarE)
                                 <a class="btn btn-outline-secondary" type="button" id="btnFormCancelar"
                                     href="{{url('puntoVenta/empleado/0/edit/')}}">
                                     <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
@@ -204,18 +230,20 @@
                                         width="25px" height="25px">
                                     GUARDAR CAMBIOS
                                 </button>
+                                
                                 <button class="btn btn-outline-secondary mr-auto" type="button" id="btnEditar"
                                     onclick="habilitar()">
                                     <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
                                         width="25px" height="25px">
                                     EDITAR DATOS
                                 </button>
-
+                                @endif
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="row px-3 mb-4">
+                    @if($modificarE)
                     <div class="col-auto ">
                         <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
                             data-target="#modalPassword" value="SI">
@@ -224,6 +252,7 @@
                             CAMBIAR CONTRASEÑA
                         </button>
                     </div>
+                    @endif
                     <!--div class="col-auto ml-auto mr-0">
                         <form method="post" action="{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {csrf_field()}}
@@ -608,6 +637,7 @@
                                 </div>
                             </fieldset>
                             <div class="form-row d-flex flex-row-reverse px-1">
+                            @if($modificarE)
                                 <a class="btn btn-outline-secondary" type="button" id="btnFormCancelar"
                                     href="{{url('puntoVenta/empleado/'.$datosEmpleado->id.'/edit/')}}">
                                     <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
@@ -625,12 +655,24 @@
                                         width="25px" height="25px">
                                     EDITAR DATOS
                                 </button>
-
+                            @endif
+                            
                             </div>
+                            @if($eliminarE)
+                            <div class="col-4 px-1">
+                                    <button class=" btn btn-outline-danger ml-auto mt-4"
+                                        onclick="eliminarEmpleado({{$datosEmpleado->id}})" type="button">
+                                        <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px"
+                                            height="25px">
+                                        ELIMINAR
+                                    </button>
+                                </div>
+                                @endif
                         </div>
                     </form>
                 </div>
                 <div class="row px-3 mb-4">
+                    @if($modificarE)
                     <div class="col-auto ">
                         <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
                             data-target="#modalPassword" value="SI">
@@ -639,6 +681,7 @@
                             CAMBIAR CONTRASEÑA
                         </button>
                     </div>
+                    @endif
                     <!--div class="col-auto ml-auto mr-0">
                         <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {{csrf_field()}}
@@ -983,6 +1026,7 @@
                                 </div>
                             </div>
                         </div>
+                        @if($crearE)
                         <div class="form-row w-100 d-flex flex-row-reverse">
                             <div class="form-group">
                                 <button class="btn btn-outline-dark d-flex" type="submit">
@@ -992,6 +1036,17 @@
                                 </button>
                             </div>
                         </div>
+                        @else
+                        <div class="form-row w-100 d-flex flex-row-reverse">
+                            <div class="form-group">
+                                <button class="btn btn-outline-dark d-flex" onclick="alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" type="button">
+                                    <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
+                                        width="25px" height="25px">
+                                    GUARDAR EMPLEADO
+                                </button>
+                            </div>
+                        </div>
+                        @endif
                     </form>
                 </div>
                 @endif
@@ -1309,6 +1364,45 @@ function mostrarPasswordClave() {
     }
 }
 //console.log();
+async function eliminarEmpleado(id) {
+    let revi = confirm("¿DESEA ELIMINAR ESTE EMPLEADO?");
+    if (revi) {
+        try {
+            let respuesta= await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "DELETE",
+            // la URL de donde voy a hacer la petición
+            url: `/puntoVenta/empleado/${id}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                //_token: $("meta[name='csrf-token']").attr("content")
+                _token: "{{ csrf_token() }}",
+            }
+            });
+            //response = await fetch(`/puntoVenta/destroy/${id}`);
+            //if (response.ok) {
+              //  let respuesta = await response.text();
+                if (respuesta.length > 1) {
+                    return alert(respuesta)
+                } else if (respuesta.length == 1) {
+                    //recargar la pag
+                    alert("EL EMPLEADO HA SIDO ELIMINADO");
+                    location.href = "{{url('/puntoVenta/empleado')}}";
+                } else {
+                    return alert("NO SE PUEDE ELIMINAR, ESTE EMPLEADO YA ESTA SIENDO USADO");
+                    
+                }
+            /*} else {
+                return confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA ELIMINARLO?");
+                console.log("No responde :'v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }*/
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+};
 </script>
 
 @endsection

@@ -49,6 +49,7 @@
                     </li>
                     <li class="nav-item active">
                         <!--if(session('idUsuario') == 1)-->
+                        
                         <a class="nav-link px-0 mx-2" href="/puntoVenta/administracion">
                             <button class="btn btn-light input-group">
                             <img src="{{ asset('img\administracion.png') }}" alt="Editar" width="30px" height="30px">
@@ -56,13 +57,13 @@
                             <p class="h6 my-auto ml-1"><small>ADMINISTRACION</small></p>
                             </button>
                             <span class="sr-only">(current)</span></a>
-                        delse
+                        
                         <!--a class="nav-link" href="/puntoVenta/empleado">
                                 <button class="btn btn-light">
                                     EMPLEADOS
                                 </button>
                                 <span class="sr-only">(current)</span></a-->
-                        endif
+                        
                     </li>
                     <li class="nav-item active">
                         <!--

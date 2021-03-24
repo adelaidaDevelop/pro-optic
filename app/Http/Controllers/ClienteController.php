@@ -15,7 +15,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $usuarios = ['admin','verCliente'];//,'admin'];
+        $usuarios = ['admin','modificarCliente','verCliente','eliminarCliente','crearCliente'];//,'admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $datos['proveedores'] = Cliente::paginate();
@@ -72,7 +72,7 @@ class ClienteController extends Controller
     {
         //
       //  $datos['departamentos'] = Cliente::paginate();
-        $usuarios = ['admin','modificarCliente'];//,'admin'];
+        $usuarios = ['admin','modificarCliente','verCliente','eliminarCliente'];//,'admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $datosD['d'] = Cliente::findOrFail($id);

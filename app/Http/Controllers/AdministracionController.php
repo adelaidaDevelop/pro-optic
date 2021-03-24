@@ -20,17 +20,24 @@ class AdministracionController extends Controller
     }
     public function index()
     {
-         $usuarios = ['admin','verSucursal'];//,'admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        $sucursalesInac = Sucursal::where('status', '=', 0)->get();
-        $depa =Departamento::all();
+        $usuariosSucursal = ['admin','verSucursal','crearSucursal','eliminarSucursal','modificarSucursal'];
+        $usuariosEmpleado = ['admin','verEmpleado','crearEmpleado','eliminarEmpleado','modificarEmpleado'];//,'admin'];
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));//->authorizeRoles($usuarios);  
+        if($sE->hasAnyRole($usuariosSucursal))
+        {
+            $sucursalesInac = Sucursal::where('status', '=', 0)->get();
+            $depa =Departamento::all();
       //  $sucursalesInac = Sucursal::where('status', '=', 0)->get();
-        return view('Administracion.index', $sucursalesInac, compact('depa'));
+            return view('Administracion.index', $sucursalesInac, compact('depa'));
+        }
+        if($sE->hasAnyRole($usuariosEmpleado))
+            return redirect('puntoVenta/empleado');
+        return abort_unless(false, 401);
     }
 
     public function edit($id)
     {
-        $usuarios = ['admin','modificarSucursal'];//,'admin'];
+        $usuarios = ['admin','verSucursal','modificarSucursal','eliminarSucursal'];//,'admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $depa = Departamento::all();
