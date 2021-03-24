@@ -3,6 +3,18 @@
 @section('subtitulo')
 CLIENTES
 @endsection
+@php
+        use App\Models\Sucursal_empleado;
+        $vC = ['verCliente','modificarCliente','eliminarCliente','crearCliente','admin'];
+        $mC= ['modificarCliente','admin'];
+        $cC= ['crearCliente','admin'];
+        $eC= ['eliminarCliente','admin'];
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
+        $modificarC = $sE->hasAnyRole($mC);
+        $crearC = $sE->hasAnyRole($cC);
+        $eliminarC = $sE->hasAnyRole($eC);
+        $verC = $sE->hasAnyRole($vC);
+@endphp
 @section('opciones')
 <!-- BOTON DEVOLUCION-->
 
@@ -14,13 +26,13 @@ CLIENTES
     </a>
 </div>
 
-<div class="ml-3 my-auto ">
-    <a class="btn btn-outline-secondary ml-3 my-auto border-0 " href="{{ url('/puntoVenta/credito')}}">
-        <img src="{{ asset('img\deudor.png') }}" alt="Editar" width="30px" height="30px">
+<!--div class="ml-3 my-auto ">
+    <a class="btn btn-outline-secondary ml-3 my-auto border-0 " href="{ url('/puntoVenta/credito')}}">
+        <img src="{ asset('img\deudor.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>DEUDORES</small></p>
     </a>
     </a>
-</div>
+</div-->
 @endsection
 
 
@@ -89,10 +101,12 @@ CLIENTES
                                 @enderror
 
                             </div>
+                            @if($modificarC)
                             <button class="btn btn-outline-secondary  ml-1" type="submit" onclick="return confirm('DESEA EDITAR ESTE CLIENTE?');">
                                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                                 GUARDAR CAMBIOS
                             </button>
+                            @endif
                         </div>
                     </div>
                 </form>
@@ -106,10 +120,12 @@ CLIENTES
                         </button>
                     </form>
                     -->
+                    @if($eliminarC)
                 <button class="btn btn-outline-danger my-2" onclick="veriEliminar('{{$d->id}}')" type="button">
                     <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
                     ELIMINAR
                 </button>
+                @endif
             </div>
             @else
             <div class="row px-3 py-3 m-0">
@@ -157,10 +173,17 @@ CLIENTES
 
 
                     </div>
+                    @if($crearC)
                     <button class="btn btn-outline-secondary" type="submit" onclick="return confirm('¿AGREGAR NUEVO CLIENTE?');">
                         <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                         AGREGAR
                     </button>
+                    @else
+                    <button class="btn btn-outline-secondary" type="button" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
+                        <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
+                        AGREGAR
+                    </button>
+                    @endif
                 </form>
             </div>
             @endif

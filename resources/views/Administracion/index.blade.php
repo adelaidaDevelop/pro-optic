@@ -170,7 +170,7 @@ ADMINISTRACION
                                         GUARDAR CAMBIOS
                                     </button>
                                 @endif
-                                @if($verE)
+                                @if($sE->hasRole('admin'))
                                 </div>
                                 <div class="col-8" id="verEmpleadoSucursal">
                                     <button class="btn btn-outline-primary mt-2 mr-5" onclick="empleadosSucursal()"

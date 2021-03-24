@@ -30,7 +30,7 @@ class EmpleadoController extends Controller
 
     public function index()
     {
-        $usuarios = ['verEmpleado','admin'];
+        $usuarios = ['verEmpleado','crearEmpleado','eliminarEmpleado','modificarEmpleado','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         return view('Empleado.index2');
@@ -59,8 +59,8 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         $usuarios = ['crearEmpleado','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+        $sE->authorizeRoles($usuarios);  
         $this->validator($request->all())->validate();
         //return 'si lo valida';
         $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
@@ -82,7 +82,13 @@ class EmpleadoController extends Controller
         $SucursalEmpleado->idSucursal = session('sucursal');
         $SucursalEmpleado->save();*/
         //Empleado::insert($datosEmpleado);
-        return redirect('puntoVenta/empleado/'.$empleado->id.'/edit');
+        $editar = ['verEmpleado','modificarEmpleado','eliminarEmpleado','admin'];
+        if($sE->hasAnyRole($editar))
+        {
+            return redirect('puntoVenta/empleado/'.$empleado->id.'/edit');
+        }else{
+            return redirect('puntoVenta/empleado');
+        }
         
     }
 
@@ -135,7 +141,7 @@ class EmpleadoController extends Controller
     public function edit($id)//Empleado $empleado)
     {
         //$datos['empleados'] = Departamento::paginate();
-        $usuarios = ['modificarEmpleado','admin'];
+        $usuarios = ['verEmpleado','eliminarEmpleado','modificarEmpleado','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         if($id == 1)
@@ -296,17 +302,26 @@ class EmpleadoController extends Controller
         $usuarios = ['eliminarEmpleado','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
-        $empleado = Empleado::findOrFail($id);
-        User::destroy($empleado->idUsuario);
-        Empleado::destroy($id);
+        
+        try{            
+            $empleado = Empleado::findOrFail($id);
+            $usuario = User::findOrFail($empleado->idUsuario); //destroy();
+            Empleado::destroy($id);
+            $usuario->delete();
+            return true;
+        }
+        catch (\Illuminate\Database\QueryException $e)
+        { 
+            return false;//'ID'.$empleado->idUsuario;
+        }
         //$dato = (['status'=>'baja']);;
         //Empleado::where('id','=',$id)->update($dato);
-        return $empleado->idUsuario;//redirect('puntoVenta/empleado');
+        //return $empleado->idUsuario;//redirect('puntoVenta/empleado');
     }
 
     public function buscadorEmpleado(Request $request)
     {
-        $usuarios = ['verEmpleado','admin'];
+        $usuarios = ['verEmpleado','crearEmpleado','eliminarEmpleado','modificarEmpleado','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
         $datosConsulta['empleados'] = Empleado::where("primerNombre",'like',$request->texto."%")->orderBy('primerNombre')->get();
