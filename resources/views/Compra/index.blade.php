@@ -270,6 +270,7 @@ COMPRAS
         </div>
     </div>
 </div-->
+<script src="{{ asset('js\app.js') }}"></script>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
     const texto = document.querySelector('#ver');

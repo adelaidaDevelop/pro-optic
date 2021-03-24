@@ -82,7 +82,7 @@ ADMINISTRACION
                     <h4 style="color:#4388CC">SUCURSALES</h4>
 
                     <div>
-                        <input type="text" class=" form-control my-1" onkeyup="mayus(this);"
+                        <input type="text" class="form-control my-1"
                             placeholder="BUSCAR SUCURSALES" id="texto">
                         <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL, EDITAR O
                                 ELIMINAR SUCURSAL </small> </h6>
@@ -140,10 +140,10 @@ ADMINISTRACION
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="form-control" onkeyup="mayus(this);" name="direccion"
+                                        <input type="text" class="form-control" name="direccion"
                                             id="direccion" value="{{$d->direccion}}" required>
                                         <label for="">TELEFONO</label>
-                                        <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono"
+                                        <input type="number" class="form-control" name="telefono"
                                             id="telefono" value="{{$d->telefono}}" required>
                                     </div>
                                 </div>
@@ -234,7 +234,7 @@ ADMINISTRACION
                                         DIRECCION
                                     </label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="direccion" id="direccion" onkeyup="mayus(this);" required>
+                                        name="direccion" id="direccion" required>
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -997,4 +997,5 @@ async function guardarPermisos()
 }
 
 </script>
+<script src="{{ asset('js\app.js') }}"></script>
 @endsection

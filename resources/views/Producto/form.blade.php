@@ -26,9 +26,9 @@
     </div>
     <div class="col-4">
         <!--El name debe ser igual al de la base de datos-->
-        <input type="text" name="codigoBarras" maxlength="13" onkeyup="mayus(this);" id="codigoBarras" class="form-control text-uppercase mb-4 mt-3" placeholder="Ingresar codigo de barras" value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:old('codigoBarras')}}" required autocomplete="codigoBarras" autofocus>
+        <input type="text" name="codigoBarras" maxlength="13" id="codigoBarras" class="form-control text-uppercase mb-4 mt-3" placeholder="Ingresar codigo de barras" value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:old('codigoBarras')}}" required autocomplete="codigoBarras" autofocus>
         <input type="text" name="nombre" id="nombre" class=" form-control mb-4 " placeholder="Nombre productos" value="{{ isset($producto->nombre)?$producto->nombre:old('nombre')}}" autofocus required>
-        <textarea name="descripcion" id="descripcion" class="text-uppercase form-control " onkeyup="mayus(this);" placeholder="Descripcion del producto" rows="2" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:old('descripcion')}}</textarea>
+        <textarea name="descripcion" id="descripcion" class="text-uppercase form-control " placeholder="Descripcion del producto" rows="2" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:old('descripcion')}}</textarea>
         @if(isset($producto))
         @foreach($sucursalProd as $sucursalProd)
         @if($sucursalProd->idProducto === $producto->id)

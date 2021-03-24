@@ -478,6 +478,7 @@
 </div>
 </div>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
+<script src="{{ asset('js\app.js') }}"></script>
 <script>
     let productosVenta = [];
     let subproductosVenta = [];
@@ -1232,7 +1233,7 @@
     }
 </script>
 
-<script>
+<script >
     //let valor = $("input[type='number']").inputSpinner();
     //console.log(valor);
 </script>

@@ -28,7 +28,7 @@
                     <h4 style="color:#4388CC">ACTIVOS</h4>
 
                     <div>
-                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR " onkeyup="mayus(this)" id="texto">
+                        <input type="text" class="text-uppercase  form-control my-1" placeholder="BUSCAR "  id="texto">
                         <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL </small> </h6>
                         <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
@@ -64,7 +64,7 @@
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="  form-control" name="nombre" id="nombre" value="{{$d->nombre}}" onkeyup="mayus(this)" required>
+                                        <input type="text" class="  form-control" name="nombre" id="nombre" value="{{$d->nombre}}" required>
 
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" placeholder="AGREGAR NOMBRE" onkeyup="mayus(this)" required>
+                                    <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" placeholder="AGREGAR NOMBRE" required>
 
                                 </div>
                             </div>

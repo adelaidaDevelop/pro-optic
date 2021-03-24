@@ -46,7 +46,7 @@ CLIENTES
                 <h4 class="row" style="color:#4388CC">ACTIVOS</h4>
 
                 <div>
-                    <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto" onkeyup="mayus(this)">
+                    <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto">
                     <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL </small> </h6>
                     <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
@@ -81,15 +81,15 @@ CLIENTES
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" onkeyup="mayus(this)" value="{{$d->nombre}}" required>
+                                    <input type="text" class="form-control" name="nombre" id="nombre" value="{{$d->nombre}}" required>
                                     <label for="telefono" class="mt-2">
                                         TELEFONO
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" onkeyup="mayus(this)" value="{{$d->telefono}}" required>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" value="{{$d->telefono}}" required>
                                     <label for="telefono" class="mt-2">
                                         DOMICILIO
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="domicilio" id="domicilio" onkeyup="mayus(this)" value="{{$d->domicilio}}" required>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="domicilio" id="domicilio" value="{{$d->domicilio}}" required>
 
                                 </div>
                             </div>
@@ -146,7 +146,7 @@ CLIENTES
                                 <label for="nombre">
                                     NOMBRE
                                 </label>
-                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" onkeyup="mayus(this)"  id="nombre" required>
+                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre"  id="nombre" required>
                                 @error('nombre')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -155,11 +155,11 @@ CLIENTES
                                 <label for="telefono">
                                     TELEFONO
                                 </label>
-                                <input type="number" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" onkeyup="mayus(this)" required>
+                                <input type="number" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" required>
                                 <label for="domicilio">
                                     DOMICILIO
                                 </label>
-                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="domicilio" id="domicilio" onkeyup="mayus(this)" required>
+                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="domicilio" id="domicilio" required>
                                 </select>
                             </div>
                         </div>
@@ -192,7 +192,7 @@ CLIENTES
 </div>
 
 </div>
-
+<script src="{{ asset('js\app.js') }}"></script>
 <script>
     const texto = document.querySelector('#texto');
 

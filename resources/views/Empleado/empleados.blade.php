@@ -12,7 +12,7 @@
 </head>
 @php
         use App\Models\Sucursal_empleado;
-        $vE = ['verEmpleado','modificarEmpleado','eliminarEmpleado','crearEmpleado','admin'];
+        $vE = ['verEmpleado','modificarEmpleado','eliminarEmpleado','admin'];
         $mE= ['modificarEmpleado','admin'];
         $cE= ['crearEmpleado','admin'];
         $eE= ['eliminarEmpleado','admin'];
@@ -30,18 +30,17 @@
         $crearS = $sE->hasAnyRole($cS);
         $eliminarS = $sE->hasAnyRole($eS);
         $verS = $sE->hasAnyRole($vS);
-        $admin = $sE->hasRole('admin');
+        $userAdmin = $sE->hasRole('admin');
         @endphp
 <body>
-    @if($admin)
+    @if($userAdmin)
     <a href="{{url('puntoVenta/empleado/0/edit/')}}" class="btn btn-success btn-block my-2 border border-dark text-uppercase">{{$admin->username}}</a>    
     @endif
     @if (count($empleados))
     @foreach($empleados as $empleado)
         @if($empleado->id > 1)
-            @if($crearE)
+            @if(!$verE)
             <button onclick="alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" class="btn btn-light btn-block my-2 border border-dark text-uppercase" style="color:#3366FF">{{$empleado->primerNombre}} {{$empleado->segundoNombre}} {{$empleado->apellidoPaterno}} {{$empleado->apellidoMaterno}}</button>
-            
             @else
             <a href="{{url('puntoVenta/empleado/'.$empleado->id.'/edit/')}}" class="btn btn-light btn-block my-2 border border-dark text-uppercase" style="color:#3366FF">{{$empleado->primerNombre}} {{$empleado->segundoNombre}} {{$empleado->apellidoPaterno}} {{$empleado->apellidoMaterno}}</a>
             @endif

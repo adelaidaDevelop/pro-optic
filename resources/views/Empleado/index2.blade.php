@@ -1125,23 +1125,23 @@ $('input').bind('keypress', function(tecla) {
     if (this.value.length == 0 & tecla.charCode == 32)
         return false;
 });
-$("input[type='text']").bind('keyup', function(tecla) {
+/*$("input[type='text']").bind('keyup', function(tecla) {
     this.value = this.value.toUpperCase();
     validarCURP();
     //if (this.value.length == 0 & tecla.charCode == 32)
     //  return false;
-});
+});*/
 $("input[type='date']").bind('keyup', function(tecla) {
     //this.value = this.value.toUpperCase();
     validarCURP();
     //if (this.value.length == 0 & tecla.charCode == 32)
     //  return false;
 });
-$("textarea").bind('keyup', function(tecla) {
+/*$("textarea").bind('keyup', function(tecla) {
     this.value = this.value.toUpperCase();
     //if (this.value.length == 0 & tecla.charCode == 32)
     //  return false;
-});
+});*/
 $("input[name='telefono']").bind('keypress', function(tecla) {
     if (this.value.length >= 10) return false;
     let code = tecla.charCode;
@@ -1237,7 +1237,7 @@ function mostrarPassword() {
 
     var cambio = document.getElementById("passwordChange");
     if (cambio.type == "password") {
-        cambio.type = "text";
+        cambio.type = "texto";
         var cambioicono = document.getElementById("iconPassword").innerHTML =
             `<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
                                     <path

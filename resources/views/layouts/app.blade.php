@@ -23,6 +23,7 @@
     <script src="{{ asset('js\bootstrap.min.js') }}"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -96,7 +97,7 @@
 
 
     @yield('content')
-
+    <script src="{{ asset('js\app.js') }}"></script>
 </body>
 
 </html>
