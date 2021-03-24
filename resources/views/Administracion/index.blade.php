@@ -84,12 +84,8 @@ $verS = $sE->hasAnyRole($vS);
                     <h4 style="color:#4388CC">SUCURSALES</h4>
 
                     <div>
-<<<<<<< HEAD
-                        <input type="text" class=" form-control my-1" onkeyup="mayus(this);" placeholder="BUSCAR SUCURSALES" id="texto">
-=======
                         <input type="text" class="form-control my-1"
                             placeholder="BUSCAR SUCURSALES" id="texto">
->>>>>>> 3231c225973f3f63288736cd779bc9cbd0e099e2
                         <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL, EDITAR O
                                 ELIMINAR SUCURSAL </small> </h6>
                         <!--div class="input-group-append">
@@ -144,17 +140,11 @@ $verS = $sE->hasAnyRole($vS);
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-<<<<<<< HEAD
-                                        <input type="text" class="form-control" onkeyup="mayus(this);" name="direccion" id="direccion" value="{{$d->direccion}}" required>
-                                        <label for="">TELEFONO</label>
-                                        <input type="number" class="form-control" onkeyup="mayus(this);" name="telefono" id="telefono" value="{{$d->telefono}}" required>
-=======
                                         <input type="text" class="form-control" name="direccion"
                                             id="direccion" value="{{$d->direccion}}" required>
                                         <label for="">TELEFONO</label>
                                         <input type="number" class="form-control" name="telefono"
                                             id="telefono" value="{{$d->telefono}}" required>
->>>>>>> 3231c225973f3f63288736cd779bc9cbd0e099e2
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -235,12 +225,8 @@ $verS = $sE->hasAnyRole($vS);
                                     <label for="nombre">
                                         DIRECCION
                                     </label>
-<<<<<<< HEAD
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="direccion" id="direccion" onkeyup="mayus(this);" required>
-=======
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror"
                                         name="direccion" id="direccion" required>
->>>>>>> 3231c225973f3f63288736cd779bc9cbd0e099e2
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

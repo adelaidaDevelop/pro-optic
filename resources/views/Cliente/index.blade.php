@@ -158,11 +158,7 @@ $verC = $sE->hasAnyRole($vC);
                                 <label for="nombre">
                                     NOMBRE
                                 </label>
-<<<<<<< HEAD
-                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" onkeyup="mayus(this)" id="nombre" required>
-=======
                                 <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre"  id="nombre" required>
->>>>>>> 3231c225973f3f63288736cd779bc9cbd0e099e2
                                 @error('nombre')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
