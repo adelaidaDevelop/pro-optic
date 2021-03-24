@@ -40,8 +40,8 @@
                     </div>
                     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
 
-                    <div class="row col-12 mx-auto mb-2 py-2 px-0 border border-secondary">
-                        <div class="col-3 form-group-inline m-auto">
+                    <div class="row mx-1 mb-2 py-2 border border-secondary">
+                        <div class="col-3 form-group row m-auto">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" for="proveedor">PROVEEDOR</span>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
 
-                        <div class="col-3 form-group-inline m-auto ">
+                        <div class="col-3 form-group row m-auto ">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" for="fechaCompra">COMPRA</span>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
 
-                        <div class="col-2 form-group-inline m-auto">
+                        <div class="col-2 form-group row m-auto">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
@@ -77,8 +77,8 @@
                                     class="form-control my-auto" />
                             </div>
                         </div>
-                        <div class="col-4 form-group-inline m-auto">
-                            <div class="input-group">
+                        <div class="col-4 form-group row m-auto">
+                            <!--div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                         <input type="checkbox" name="credito" id="credito"
@@ -87,8 +87,21 @@
                                     <span class="input-group-text" for="credito">CREDITO</span>
                                     <span class="input-group-text"><strong>ABONO $</strong></span>
                                 </div>
-                                <input type="number" data-prefix="ABONO $" id="pagoCredito" name="pagoCredito"
+                                <input type="number" data-prefix="" id="pagoCredito" name="pagoCredito"
                                     data-decimals="2" value=0 min=0 class="form-control" />
+                            </div-->
+                            <div class="col-auto ml-auto px-1 py-0 border border-secondary rounded">
+                                <div class="form-check my-1">
+                                <input type="checkbox" name="credito" id="credito"
+                                class="form-check-input mt-2" onchange="activarCredito()" />
+                                <label class="form-check-label " for="credito">
+                                    CREDITO
+                                </label>
+                                </div>
+                            </div>
+                            <div class="col-8 mr-auto px-0">
+                                <input type="number" data-prefix="ABONO $" id="pagoCredito" name="pagoCredito"
+                                    data-decimals="2" value=0 min=0 class="form-control px-0" />
                             </div>
                         </div>
                     </div>
@@ -100,7 +113,7 @@
                         </button>
                     </div>
                     <!-- TABLA -->
-                    <div class="row mt-1 mb-1 ml-1 mr-1 border border-dark" style="height:300px;overflow-y:auto;">
+                    <div class="row m-1 border border-dark" style="height:300px;overflow-y:auto;">
                         <table class="table table-bordered border-primary col-12">
                             <thead class="table-secondary text-primary">
                                 <tr class="text-center">
@@ -129,11 +142,21 @@
                         </table>
 
                     </div>
-                    <div class="row mx-1 my-2">
+                    <div class="col my-2 ml-1 pr-0 border">
+                        <div class="d-flex flex-row-reverse">
+                            <h4 class="border border-dark m-0 ml-2 p-1" id="total">$ 0.00</h4>
+                            <!--form method="get" action="{url('/empleado')}}"-->
+                            <!--{url('/departamento/'.$departamento->id.'/edit/')}}-->
+                            <button type="button" onclick="verificarCompra()" class="btn btn-secondary d-flex ml-auto p-2">
+                            GUARDAR COMPRA</button>
+                            <!--/form-->
+                        </div>
+                    </div>
+                    <!--div class="row mx-1 my-2 border">
 
                         <button type="button" onclick="verificarCompra()" class="btn btn-secondary d-flex ml-auto p-2">
                             GUARDAR COMPRA</button>
-                    </div>
+                    </div-->
                     <!--div class="d-flex flex-row-reverse bd-highlight m-1 ">
                         <button type="button" onclick="verificarCompra()" class="btn btn-secondary"> GUARDAR
                             COMPRA</button>
@@ -146,7 +169,7 @@
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content" id="modalConsulta">
             <div class="modal-header">
 
                 <h5 class="modal-title" id="exampleModalLabel">Ingresar Producto</h5>
@@ -188,7 +211,7 @@
 <div class="modal fade" id="confirmarCompraModal" tabindex="-1" role="dialog"
     aria-labelledby="confirmarCompraModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" id="modalConfirmarCompra">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmarCompraModalLabel">CONFIRMAR COMPRA</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -291,7 +314,6 @@ async function cargarProductosSucursal() {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
 }
-cargarProductos();
 
 let ingresarProducto = document.querySelector('#cuerpoModal').innerHTML;
 let ingresarProductoTitulo = document.querySelector('#exampleModalLabel').innerHTML;
@@ -299,7 +321,21 @@ let ingresarProductoTitulo = document.querySelector('#exampleModalLabel').innerH
 async function buscarProducto() {
     try {
         if (productos.length === 0)
+        {
+            const contenidoProducto = document.querySelector('#modalConsulta');
+            const contenidoOriginal = contenidoProducto.innerHTML;
+            contenidoProducto.innerHTML = 
+            `<div class="d-flex justify-content-center my-3">
+                <button class="btn btn-info" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    CARGANDO PRODUCTOS
+                </button>
+            </div>
+            `;
             productos = await cargarProductos();
+            contenidoProducto.innerHTML = contenidoOriginal;
+        }
+            
 
         const entrada = document.querySelector('#busquedaProducto');
         let productosEncontrados = document.querySelector('#consultaBusqueda');
@@ -377,6 +413,7 @@ var preProps = {
         '</div>';
 */
 //$("input[name='inputIva']").inputSpinner(preProps);
+$("input[name='pagoCredito']").inputSpinner(preProps);
 $('input[id="pagoCredito"]').prop('disabled', true);
 $('input[id="inputIva"]').prop('disabled', true);
 
@@ -492,6 +529,7 @@ function cantidad(id) {
             console.log(productosCompra[i]);
         }
     }
+    actualizarTotal();
 }
 
 function costo(id) {
@@ -515,6 +553,7 @@ function costo(id) {
             //productosCompra[i].costo;
         }
     }
+    actualizarTotal();
 }
 
 function ganancia(id) {
@@ -599,6 +638,18 @@ function fechaActual() {
 
     return anio + "-" + mes + "-" + dia;
 }
+let total = 0;
+function actualizarTotal()
+{
+    let etiquetaTotal = document.querySelector('#total');
+    total = 0;
+    for(let i in productosCompra)
+    {
+        let subtotal = productosCompra[i].cantidad * parseFloat(productosCompra[i].costo);
+        total = total + subtotal;
+    }
+    etiquetaTotal.textContent = "$ " + total;
+}
 
 function agregarProducto(id) {
     for (let i in productos) {
@@ -621,6 +672,7 @@ function agregarProducto(id) {
     }
     const entrada = document.querySelector('#busquedaProducto').value = "";
     mostrarProductos();
+    actualizarTotal();
     activarIva();
     //console.log(productosCompra);
 }
@@ -633,6 +685,7 @@ function quitarProducto(id) {
             if (productosCompra[i].id === id)
                 productosCompra.splice(i, 1);
         }
+        actualizarTotal();
         mostrarProductos();
     }
     //var i = arr.indexOf( item );
@@ -876,6 +929,7 @@ async function guardarCompra() {
         if (fechaCompra.value.length == 0) {
             return alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
         }
+        
         let json = JSON.stringify(productosCompra);
         let productos0 = [];
         let productos1 = [];
@@ -893,11 +947,27 @@ async function guardarCompra() {
             iva = document.querySelector('#inputIva').value;
         //return alert(iva);
         let btn = document.querySelector('input[name="credito"]:checked');
+        const pagoCredito = document.querySelector('#pagoCredito');
         if (btn != null) {
             estado = "credito";
+            if(pagoCredito.value.length==0)
+                return alert('INGRESE UN VALOR VALIDO');
+            if(pagoCredito.value>=total)
+            return alert('EL ABONO NO PUEDE SER MAYOR O IGUAL AL PAGO DE LA COMPRA');
         }
-        const pagoCredito = document.querySelector('#pagoCredito');
+        
         //if (parseFloat(pagoCredito.value) > 0) {
+        
+            const contenidoProducto = document.querySelector('#modalConfirmarCompra');
+                const contenidoOriginal = contenidoProducto.innerHTML;
+                contenidoProducto.innerHTML =
+                    `<div class="d-flex justify-content-center my-3">
+                <button class="btn btn-info" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    GUARDANDO COMPRA
+                </button>
+            </div>
+            `;
         let spp = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
@@ -950,12 +1020,14 @@ async function guardarCompra() {
             alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
         });
+        contenidoProducto.innerHTML = contenidoOriginal;
         alert('COMPRA GUARDADA EXITOSAMENTE');
         productosCompra = [];
         mostrarProductos();
+        $('#confirmarCompraModal').modal('hide');
         await cargarProductosSucursal();
         await cargarProductos();
-        $('#confirmarCompraModal').modal('hide');
+        
 
         /*let respuestaCaducidad =  await $.ajax({
             // metodo: puede ser POST, GET, etc
