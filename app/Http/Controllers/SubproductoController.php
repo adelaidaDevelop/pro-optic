@@ -166,8 +166,10 @@ class SubproductoController extends Controller
      * @param  \App\Models\Subproducto  $subproducto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subproducto $subproducto)
+    public function destroy($id)
     {
         //
+        Subproducto::destroy($id);
+        return redirect('puntoVenta/producto');
     }
 }

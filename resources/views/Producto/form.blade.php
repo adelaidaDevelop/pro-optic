@@ -27,7 +27,7 @@
     <div class="col-4">
         <!--El name debe ser igual al de la base de datos-->
         <input type="text" name="codigoBarras" maxlength="13" onkeyup="mayus(this);" id="codigoBarras" class="form-control text-uppercase mb-4 mt-3" placeholder="Ingresar codigo de barras" value="{{ isset($producto->codigoBarras)?$producto->codigoBarras:old('codigoBarras')}}" required autocomplete="codigoBarras" autofocus>
-        <input type="text" name="nombre" id="nombre" onkeyup="mayus(this);" class="text-uppercase  form-control mb-4 " placeholder="Nombre productos" value="{{ isset($producto->nombre)?$producto->nombre:old('nombre')}}" autofocus required>
+        <input type="text" name="nombre" id="nombre" class=" form-control mb-4 " placeholder="Nombre productos" value="{{ isset($producto->nombre)?$producto->nombre:old('nombre')}}" autofocus required>
         <textarea name="descripcion" id="descripcion" class="text-uppercase form-control " onkeyup="mayus(this);" placeholder="Descripcion del producto" rows="2" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:old('descripcion')}}</textarea>
         @if(isset($producto))
         @foreach($sucursalProd as $sucursalProd)
@@ -108,9 +108,26 @@
     let ps = @json('sucursalProd');
 
 
-    function mayus(e) {
+    function mayus(e, event) {
         e.value = e.value.toUpperCase();
-    }
+    };
+
+    $("textarea[name='descripcion']").on('input', function(evt) {
+        var input = $(this);
+        var start = input[0].selectionStart;
+        $(this).val(function(_, val) {
+            return val.toUpperCase();
+        });
+        input[0].selectionStart = input[0].selectionEnd = start;
+    });
+
+
+
+    function onKeyDown(event) {
+        const key = event.key; // "A", "1", "Enter", "ArrowRight"...
+
+        console.log("Presionada: " + key);
+    };
 
     //$('.minimoStock').on('input', function() {
     //     this.value = this.value.replace(/[^0-9,.]/g, '').replace(/,/g, 'x');
@@ -133,4 +150,5 @@
     // frase3 = frase.replace(/[aiou]/gi, 'e');
     //  alert(frase3);
 </script>
+<script src="{{asset('js\app.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.13/jquery.mask.min.js"></script>

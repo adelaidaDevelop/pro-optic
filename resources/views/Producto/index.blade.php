@@ -4,16 +4,16 @@
 PRODUCTOS
 @endsection
 @php
-        use App\Models\Sucursal_empleado;
-        $producto= ['modificarProducto','admin'];
-        
-        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
-        $modificar = $sE->hasAnyRole($producto);
-        $crearProducto= ['crearProducto','admin'];
-        $crear = $sE->hasAnyRole($crearProducto);
-        $eliminarProducto= ['eliminarProducto','admin'];
-        $eliminar = $sE->hasAnyRole($eliminarProducto);
-        @endphp
+use App\Models\Sucursal_empleado;
+$producto= ['modificarProducto','admin'];
+
+$sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+$modificar = $sE->hasAnyRole($producto);
+$crearProducto= ['crearProducto','admin'];
+$crear = $sE->hasAnyRole($crearProducto);
+$eliminarProducto= ['eliminarProducto','admin'];
+$eliminar = $sE->hasAnyRole($eliminarProducto);
+@endphp
 @section('opciones')
 <div class="col-0  p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
@@ -675,6 +675,10 @@ PRODUCTOS
                                 }
                             }
                             let costoSubp = productosSucursal[z].costo / subproductos[y].piezas;
+                            let costoTempSub = costoSubp * subproductos[y].existencia;
+                            costo_inventario = costo_inventario + costoTempSub;
+                            let precioTempSub = subproductos[y].precio * subproductos[y].existencia;
+                            precio_inventario = precio_inventario + precioTempSub;
                             contador = contador + 1;
                             cuerpo = cuerpo + `
                             <tr class="table-warning" onclick="" data-dismiss="modal">
@@ -712,7 +716,11 @@ PRODUCTOS
                                     departamento = d[count8].nombre;
                                 }
                             }
-                            let costoOferta = productosSucursal[z].costo;
+                            let costoOferta = productosSucursal[z].costo * ofertas[i].existencia;
+                            costo_inventario = costo_inventario + costoOferta;
+                            let precioTempOferta = productosSucursal[z].precio * ofertas[i].existencia;
+                            precio_inventario = precio_inventario + precioTempOferta;
+
 
                             contador = contador + 1;
                             cuerpo = cuerpo + `
@@ -722,18 +730,11 @@ PRODUCTOS
                                 <td>` + productos[p].codigoBarras + `</td>
                                 <td>` + productos[p].nombre + `</td>
                                 <td>` + departamento + `</td>
-                                <td>` +productosSucursal[z].costo + `</td>
+                                <td>` + productosSucursal[z].costo + `</td>
                                 <td class="text-success">` + productosSucursal[z].precio + `</td>
                                 <td>` + ofertas[i].existencia + `</td>
-                                <td>` +
-                                ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return infoSubproducto( ` + productos[p].id + `)" value="` + productos[p].id + `">
-                                <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
-                                </button>
-                                </td>            
-                            </tr>
-                            `;
+                                <td>`;
                         }
-
                     }
                 }
             }
@@ -794,23 +795,22 @@ PRODUCTOS
                                             </button>
                                             <br/>
                                     `;
-                                            let btnDarBaja=`<a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                        let btnDarBaja = `<a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              DAR DE BAJA </a> 
                                         </div>
 
                                         <br/>
                                     `;
-                                        if(!eliminarProducto)
-                                            btnDarBaja = `<a class="btn btn-outline-danger mb-2 mt-4" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
+                        if (!eliminarProducto)
+                            btnDarBaja = `<a class="btn btn-outline-danger mb-2 mt-4" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              DAR DE BAJA </a></div>
                                         <br/>
                                     `;
                         botonesProducto = botonesProducto + btnDarBaja;
-                        if(!modificarProducto)
-                        {
-                        botonesProducto = `<button class="btn btn-outline-primary mb-2 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
+                        if (!modificarProducto) {
+                            botonesProducto = `<button class="btn btn-outline-primary mb-2 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
                                             <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
                                             EDITAR  </button>
                                             <br/> 
@@ -826,12 +826,12 @@ PRODUCTOS
                                             </button>
                                             <br/>`;
                             botonesProducto = botonesProducto + btnDarBaja;
-                                    btnAgregarSubprod =
-                            ` <button class="btn btn-outline-primary " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
+                            btnAgregarSubprod =
+                                ` <button class="btn btn-outline-primary " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
                                              <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                                              AGREGAR A SUBPRODUCTO </button>`;
                         }
-                        
+
                         datosProduct =
                             `
                                     <div class="col-3">
@@ -885,8 +885,8 @@ PRODUCTOS
                                             </label>
                                             <br/>
                                             <img class="mb-2" src="${urlImagen}" alt="" width="200"> 
-                                             `+botonesProducto;
-                                            
+                                             ` + botonesProducto;
+
 
                         btnAgregarSubprod =
                             ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
@@ -1146,81 +1146,67 @@ PRODUCTOS
         //Modal
         //let x1= 0;
         let datosProduct = "";
-        let imagen = "";
-        let departamento = "";
-        let ms = 0;
+        // let imagen = "";
+        //  let departamento = "";
+        // let ms = 0;
         for (let j in productosSucursal) {
-            for (count10 in productos) {
-                if (productos[count10].id === productosSucursal[j].idProducto) {
-                    if (productos[count10].id === id) {
-                        for (count11 in d) {
-                            if (productos[count10].idDepartamento === d[count11].id) {
-                                departamento = d[count11].nombre;
-                            }
-                        }
-                        x1 = productos[count10].id;
-                        x = productos[count10].id;
-                        console.log(x);
-                        ms = productosSucursal[j].minimoStock;
-                        datosProduct =
-                            `
+            for (let h in subproductos) {
+                if (subproductos[h].idSucursalProducto == productosSucursal[j].id) {
+                    for (count10 in productos) {
+                        if (productos[count10].id === productosSucursal[j].idProducto) {
+
+                            if (productos[count10].id === id) {
+
+
+                              //  x1 = productos[count10].id;
+                                x = productosSucursal[j].id;
+                                datosProduct =
+                                    `
                                     <div class="col-3">
-                                            <br/>
-                                        <br/>
+                                    <br/>
                                             <label for="Nombre">
-                                                <h6  class="ml-4 mt-4">{{'NOMBRE'}}</h6>
+                                                <h6  class="ml-4 ">{{'NOMBRE'}}</h6>
                                             </label>
-                                            <br /><br/>
-                                            <br /><br /> <br/> <br/>
-                                            <br /> <br/>
+                                            <br/><br/>
                                             <label for="Receta">
                                                 <h6  class="ml-4"> {{'RECETA MEDICA'}} </h6>
                                             </label>
-                                            <br /><br />
+                                            <br /> <br/>
+                                            <label for="Piezas">
+                                                <h6  class="ml-4 mt-1"> {{'PIEZAS'}} </h6>
+                                            </label>
+                                            <br/>
+                                            <br />
+                                            <label for="Receta">
+                                                <h6  class="ml-4 mt-1"> {{'OBSERVACION'}} </h6>
+                                            </label>
                                             <br />
                                         </div>
                                         <div class="col-5">
-                                            <br />
                                             <!--El name debe ser igual al de la base de datos-->
                                             <br />
-                                            <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required disabled>
+                                            <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="NOMBRE PRODUCTOS" value="` + productos[count10].nombre + ` " autofocus required disabled>
                                             <br />
-                                            <br />
-                                            <br />
-                                            <select class="form-control text-uppercase" name="Receta" id="Receta"  disabled>
+                                             <select class="form-control text-uppercase" name="Receta" id="Receta"  disabled>
                                                 <option value="" selected>` + productos[count10].receta + ` </option>
                                             </select>
                                             <br />
-                                            <select class="form-control text-uppercase" name="Depa" id="Depa"  disabled>
-                                                <option value="" selected>` + departamento + ` </option>
-                                            </select>
+                                            <input type="text" name="piezas" id="piezas" class="form-control text-uppercase" placeholder="PIEZAS" value="`+ subproductos[h].piezas+` " autofocus required disabled>
+                                            <br />
+                                            <input type="text" name="observacion" id="observacion" class="form-control text-uppercase" placeholder="OBSERVACION" value="` + subproductos[h].observacion + ` " autofocus required disabled>
+                                            <br />
                                         </div>
                                         <div class="col-4 text-center">
-                                            <br/>
-                                            <label for="Imagen">
-                                                <h5> <strong>{{'FOTO aqui'}}</strong></h5>
-                                            </label required>
-                                            <br />
-                                            
-                                            
                                             <br /><br />
-                                            <a class="btn btn-outline-primary" href="{{ url('/puntoVenta/producto/` + x + `/edit')}}" onclick="return confirm('¿EDITAR ESTE PRODUCTO?')"> 
-                                            <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
-                                            EDITAR  </a>
-                                            <br/><br/>
-                                            
-                                            <a class="btn btn-outline-danger mb-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
+                                            <a class="btn btn-outline-danger mb-4" data-method="delete" onclick="return confirm('¿DESEA ELIMINAR ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/subproducto/`+x+`')}}"> 
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
-                                             DAR DE BAJA </a> 
+                                             ELIMINAR </a> 
                                              <div class="mt-4 mb-4"> </div>
-
-                                             <a class="btn btn-outline-primary mt-4"   href="#" onclick="subproductoExiste(` + x + `);return false;">
-                                             <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
-                                             AGREGAR A SUBPRODUCTO </a>
                                         </div>
-
                                         <br/>
                                     `;
+                            }
+                        }
                     }
                 }
             }
@@ -1289,7 +1275,7 @@ PRODUCTOS
                 if (productos[x].id === prod_baja[t].idProducto) {
                     cont = cont + 1;
                     let btnAlta = `<a class="btn btn-primary" href="{{ url('/puntoVenta/altaProducto/` + productos[x].id + `')}}"> ALTA </a>`;
-                    if(!modificarProducto)
+                    if (!modificarProducto)
                         btnAlta = `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" > ALTA </button>`;
                     cuerpo = cuerpo + `
                     <tr>
@@ -1299,7 +1285,7 @@ PRODUCTOS
                     <td>` + productos[x].descripcion + `</td>
                     <td>` + productos[x].idDepartamento + `</td>
                     <td>` + productos[x].receta + `</td>
-                    <td>` +btnAlta+
+                    <td>` + btnAlta +
                         ` 
                     </td>        
                     </tr>
