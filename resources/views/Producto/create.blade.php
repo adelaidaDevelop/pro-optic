@@ -13,6 +13,12 @@ PRODUCTOS
         </button>
     </form>
 </div>
+<div class="col-7 "></div>
+<div class="my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/producto">
+        <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
+    </a>
+</div>
 @endsection
 
 <form method="post" action="{{url('/puntoVenta/producto')}}" enctype="multipart/form-data">

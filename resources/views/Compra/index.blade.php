@@ -4,13 +4,13 @@
 COMPRAS
 @endsection
 @php
-        use App\Models\Sucursal_empleado;
-        $verPago= ['verPago','admin'];
-        $compra= ['crearCompra','admin'];
-        $modificar = ['modificarCompra','admin'];
-        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
-        $abonar = $sE->hasAnyRole($modificar);
-        @endphp
+use App\Models\Sucursal_empleado;
+$verPago= ['verPago','admin'];
+$compra= ['crearCompra','admin'];
+$modificar = ['modificarCompra','admin'];
+$sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+$abonar = $sE->hasAnyRole($modificar);
+@endphp
 @section('opciones')
 @if($sE->hasAnyRole($compra))
 <div class="ml-4">
@@ -25,7 +25,7 @@ COMPRAS
 @if($sE->hasAnyRole($verPago))
 <div class="ml-4">
     <form method="get" action="{{url('/puntoVenta/pagoCompra/')}}">
-        <button class="btn btn-outline-secondary p-1 border-0" type="submit" >
+        <button class="btn btn-outline-secondary p-1 border-0" type="submit">
             <img src="{{ asset('img\pago.png') }}" alt="Editar" width="30px" height="30px">
             <p class="h6 my-auto mx-2 text-dark"><small>PAGOS</small></p>
         </button>
@@ -33,13 +33,26 @@ COMPRAS
 </div>
 @endif
 <div class="my-auto">
-            <form method="get" action="{{url('/puntoVenta/proveedor/')}}">
-                <button class="btn btn-outline-secondary p-1 border-0" type="submit" >
-                <img src="{{ asset('img\proveedor.png') }}" alt="Editar" width="30px" height="30px">
-                <p class="h6 my-auto mx-2 text-dark"><small>PROVEEDORES</small></p>
-                </button>
-            </form>
-        </div>
+    <form method="get" action="{{url('/puntoVenta/proveedor/')}}">
+        <button class="btn btn-outline-secondary p-1 border-0" type="submit">
+            <img src="{{ asset('img\proveedor.png') }}" alt="Editar" width="30px" height="30px">
+            <p class="h6 my-auto mx-2 text-dark"><small>PROVEEDORES</small></p>
+        </button>
+    </form>
+</div>
+<div class="col-6 "></div>
+<!--
+<div class=" ml-3 my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+        <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
+    </a>
+</div>
+-->
+<div class=" my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
+    </a>
+</div>
 @endsection
 <!--div class="row p-1 "-->
 <!--CONSULTAR PRODUCTO -->
@@ -770,7 +783,7 @@ COMPRAS
     async function abonarPago(id, adeudo) {
         try {
             let abono = @json($abonar);
-            if(!abono)
+            if (!abono)
                 return alert('NO TIENE PERMISOS PARA REALIZAR ESTA ACCION');
             console.log('Entra');
             //let _token =  "{{ csrf_token() }}";

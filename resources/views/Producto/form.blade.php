@@ -1,14 +1,14 @@
 <div class="row ">
-    <div class="text-primary p-1 mt-2">
-        <h4>
+    <div class="text-primary p-1 ">
+        <h5>
             <strong class="ml-4 ">
                 {{ $Modo == 'crear' ? 'NUEVO PRODUCTO': 'EDITAR PRODUCTO'}}
             </strong>
-        </h4>
+        </h5>
     </div>
 </div>
 
-<div class="row p-1 border border-dark m-2 w-100 ">
+<div class="row  border border-dark m-1 w-100 ">
     <div class="col-2"></div>
     <div class="col-2 ">
         <h5 class="mb-3 mt-3"> {{'CODIGO DE BARRAS'}}</h5>
@@ -98,9 +98,12 @@
         <button class="btn btn-outline-secondary" type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
             <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">{{ $Modo== 'crear' ?'GUARDAR PRODUCTO' : 'EDITAR PRODUCTO' }}
         </button>
+        <br/>
+        <br/>
 
-        <a title="Regresar" href="{{url('/puntoVenta/producto')}}" class="text-dark">
+       <!-- <a title="Regresar" href="{{url('/puntoVenta/producto')}}" class="text-dark">
             <img src="{{ asset('img\regresar2.png') }}" class="img-thumbnail" alt="Regresar" width="50px" height="50px" />CANCELAR</a>
+            -->
     </div>
 </div>
 
