@@ -811,7 +811,6 @@ function crearProducto() {
 
     cuerpoModal.innerHTML = cuerpo;
 
-
 }
 
 function previsualizarImagen(id) {
@@ -1072,4 +1071,5 @@ function setFechaCaducidad(id) {
     $(`#caducidad${id}`).prop('disabled', !seleccion);
 }
 </script>
+<script src="{{ asset('js\app.js') }}"></script>
 @endsection

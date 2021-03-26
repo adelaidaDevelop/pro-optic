@@ -148,32 +148,50 @@ class RegistrosPruebaTable extends Migration
         $departamento = Departamento::create(
             ['nombre' => 'PATENTE']
         );
+        $departamento = Departamento::create(
+            ['nombre' => 'GENERICO']
+        );
+        $departamento = Departamento::create(
+            ['nombre' => 'PAPELERIA']
+        );
+        $departamento = Departamento::create(
+            ['nombre' => 'MATERIAL DE CURACION']
+        );
+        $departamento = Departamento::create(
+            ['nombre' => 'BEBES']
+        );
+        $departamento = Departamento::create(
+            ['nombre' => 'REBOTICA']
+        );
+        $departamento = Departamento::create(
+            ['nombre' => 'PASTILLAS SUELTAS']
+        );
 
         //CREACION DE PRODUCTOS
-        $producto = new Producto;
+    /*    $producto = new Producto;
         $producto->codigoBarras = '7501607705006';
         $producto->nombre = 'ALCOHOL ROJO 96 500ML';
         $producto->imagen = 'uploads\zMlAh4qsuAy38QGtRaABBogpx7rYeKIW6xSTXfKj.jpg';
         $producto->descripcion = 'ETILICO SIN DESNATURALIZAR';
         $producto->receta = 'NO';
-        $producto->idDepartamento = $departamento->id;
+        $producto->idDepartamento = $departamento->id;*/
     //  $producto->minimo_stock = 10;
         //$producto->existencia = 12;
       //  $producto->costo = 15;
       //  $producto->precio = 18;
-        $producto->save();
+    /*    $producto->save();
         $producto2 = new Producto;
         $producto2->codigoBarras = '759684437151';
         $producto2->nombre = 'ACETONA JALOMA 120ml';
         $producto2->imagen = 'uploads\zMlAh4qsuAy38QGtRaABBogpx7rYeKIW6xSTXfKj.jpg';
         $producto2->descripcion = 'ETILICO SIN DESNATURALIZAR';
         $producto2->receta = 'NO';
-        $producto2->idDepartamento = $departamento->id;
+        $producto2->idDepartamento = $departamento->id;*/
      //   $producto2->minimo_stock = 10;
         //$producto->existencia = 12;
       //  $producto2->costo = 8;
        // $producto2->precio = 15;
-        $producto2->save();
+      //  $producto2->save();
 
         //CREACION DE PROVEEDOR
         Proveedor::create([
@@ -201,7 +219,7 @@ class RegistrosPruebaTable extends Migration
         $cliente->save();
 */
         
-
+/*
         $productosSucursal = new Sucursal_producto;
         $productosSucursal->costo = 10;
         $productosSucursal->precio = 10;
@@ -221,6 +239,7 @@ class RegistrosPruebaTable extends Migration
         $productosSucursal2->idSucursal= $sucursal->id;
         $productosSucursal2->idProducto= $producto2->id;
         $productosSucursal2->save();
+        */
     }
 
     /**
