@@ -75,7 +75,7 @@ class SubproductoController extends Controller
         $suc_prod->update($existencia1);
         $existencia['existencia'] =$subproducto['piezas'] + $subproducto['existencia'];
         $subproducto->update($existencia);
-        return redirect('puntoVenta/producto');
+        return redirect('/puntoVenta/producto');
     }
     /**
      * Store a newly created resource in storage.
@@ -85,32 +85,71 @@ class SubproductoController extends Controller
      */
     public function store(Request $request)
     {
-        
         $usuarios = ['crearProducto','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
        // $datosSubproducto = request()->except('_token');
         $datosSubproducto = $request->except('_token');
-        $idSP = $datosSubproducto['idSucursalProducto'];
-        $sucProd = Sucursal_producto::findOrFail($idSP);
-        $idProducto = $sucProd['idProducto'];
-       // $existenciaNue['existencia'] = 
-       // return $idProducto;
+      //  $idSP = $datosSubproducto['idSucursalProducto'];
+      //  $sucProd = Sucursal_producto::findOrFail($idSP);
+       // $idProducto = $sucProd['idProducto'];
+       // $actualizarProducto = Sucursal_producto::where('idSucursal','=',session('sucursal'))
+      //  ->where('idProducto', '=', $idProducto)->get()->first();
+       // $exisAct = $actualizarProducto->existencia;
+       // if ($exisAct > 1 ) {
        Subproducto::create($datosSubproducto);
-       $actualizarProducto = Sucursal_producto::where('idSucursal','=',session('sucursal'))
-        ->where('idProducto', '=', $idProducto)->get()->first();
-        $existenciaNuevo['existencia'] = $actualizarProducto->existencia - 1;
-        //return $existenciaNuevo;
-       $actualizarProducto->update($existenciaNuevo);
-       return redirect('puntoVenta/producto');
+       // $existenciaNuevo['existencia'] = $actualizarProducto->existencia - 1;
+       //  $actualizarProducto->update($existenciaNuevo);
+       return redirect('/puntoVenta/producto');
+       /*
+    }
+    else {
+        Subproducto::create($datosSubproducto);
+        return redirect('/puntoVenta/producto');
+    }
+    */
+    //else return redirect()->back()->withErrors(['mensajeError' => '']);  
+       
     }
 
+    public function subProdExisStock($id){
+     //   $datosSubproducto = $request->except('_token');
+       // $idSP = $datosSubproducto['idSucursalProducto'];
+        $sucProd = Sucursal_producto::findOrFail($id);
+      //  $idProducto = $sucProd['idProducto'];
+      //  $actualizarProducto = Sucursal_producto::where('idSucursal','=',session('sucursal'))
+       // ->where('idProducto', '=', $idProducto)->get()->first();
+        $exisAct = $sucProd->existencia;
+        if ($exisAct > 1) {
+        $subproducto = Subproducto::where('idSucursalProducto', '=', $id);//->first();
+       // $piezas['existencia'] = $subproducto->first()->piezas;
+       
+        $piezas['existencia'] = $subproducto->first()->existencia + $subproducto->first()->piezas;
+       // return 'si entra';
+        $subproducto->update($piezas);
+        
+        $existenciaNuevo['existencia'] = $sucProd->existencia - 1;
+         $sucProd->update($existenciaNuevo);
+        return redirect('/puntoVenta/producto');
+    }
+    else {
+         return redirect()->back()->withErrors(['mensajeError' => 'EL PRODUCTO NO TIENE EXISTENCIA EN INVENTARIO']);  
+    }
+    
+    //else return redirect()->back()->withErrors(['mensajeError' => '']);  
+    }
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Subproducto  $subproducto
      * @return \Illuminate\Http\Response
      */
+    public function subProdExisNuevo(Request $request, $id){
+        $subproducto = Subproducto::where('idSucursalProducto', '=', $id);//->first();
+        $exisNuevo['existencia'] =  $subproducto->first()->existencia + $request->input('cantidad');
+       // return $exisNuevo;
+        $subproducto->update($exisNuevo);
+        return redirect('/puntoVenta/producto');
+    }
     public function show($idS)//Subproducto $subproducto)
     {
         $subproductos = Subproducto::all();
@@ -169,7 +208,11 @@ class SubproductoController extends Controller
     public function destroy($id)
     {
         //
-        Subproducto::destroy($id);
-        return redirect('puntoVenta/producto');
+       
+    }
+    public function eliminar($id){
+        Subproducto::where('idSucursalProducto', '=', $id)->delete();
+      
+        return redirect('/puntoVenta/producto');
     }
 }
