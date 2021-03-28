@@ -4,6 +4,12 @@
 SUBPRODUCTOS
 @endsection
 @section('opciones')
+<div class="col-8 ml-4"></div>
+<div class=" ml-3 my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/producto">
+        <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
+    </a>
+</div>
 @endsection
 <form method="post" id="formSubproducto" action="" enctype="multipart/form-data">
     {{ csrf_field() }}
@@ -78,15 +84,15 @@ SUBPRODUCTOS
             </div>
             <div class="col-2"></div>
             <div class=" mb-3 mx-auto">
-            <!--
+                <!--
             <button class="btn btn-primary" type="button" style="background-color:#3366FF" onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion" id="boton">
                 <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
                 NUEVO SUBPRODUCTO
             </button>
             -->
+            </div>
         </div>
-        </div>
-        
+
     </div>
     <div class="row text-right">
         <div class="col-6"> </div>
@@ -182,11 +188,12 @@ SUBPRODUCTOS
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
     };
 
-    
-    
+
+
     console.log("si recupera id");
     console.log(idProd);
     agregarProducto(idProd);
+
     function agregarProducto(id) {
         console.log('xxxxxxxxxxxx')
         let costoG = 0;
@@ -194,7 +201,7 @@ SUBPRODUCTOS
         let name = "";
         for (count4 in productosSuc) {
             if (productosSuc[count4].idProducto == id) {
-                    costoG = productosSuc[count4].costo;
+                costoG = productosSuc[count4].costo;
                 idSucProd = productosSuc[count4].id;
                 for (let x in productos) {
                     if (productos[x].id == id) {
@@ -211,8 +218,8 @@ SUBPRODUCTOS
                     url;
             }
         }
-       // const palabraBusqueda = document.querySelector('#busquedaProducto');
-       // palabraBusqueda.value = "";
+        // const palabraBusqueda = document.querySelector('#busquedaProducto');
+        // palabraBusqueda.value = "";
     };
 
     function calcularCostoInd() {

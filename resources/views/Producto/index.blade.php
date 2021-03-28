@@ -1040,6 +1040,55 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         });
     }
 
+    function agregarSubproducto(idSP) {
+        let cambiarCantidad = "";
+        let idProd = 0;
+        let idSucPro = 0;
+        let nombreProd = "";
+        for (let j in productosSucursal) {
+            if (productosSucursal[j].id === idSP) {
+                for (let t in subproductos) {
+                    if (subproductos[t].idSucursalProducto == idSP) {
+                        idProd = productosSucursal[j].idProducto;
+                        idSucPro = productosSucursal[j].id;
+                        for (let x in productos) {
+                            if (productos[x].id == idProd)
+                                nombreProd = productos[x].nombre;
+                        }
+                        console.log("entra");
+                        cambiarCantidad = `
+                                <h6>EXISTENCIA ACTUAL DEL SUBPRODUCTO</h6>
+                                <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` + subproductos[t].existencia + `" autofocus required disabled>
+                                <h6>CANTIDAD DE PIEZAS A AGREGAR</h6>        
+                                <input type="number" name="cantidad" id="cantidad" class="form-control text-center" placeholder="PIEZAS DEL SUBPRODUCTO" value="" min="0" autofocus required>
+                                    `;
+                    }
+                }
+            }
+        }
+        $("#volverInfo4").click(function() {
+            infoSubproducto(idSucPro);
+        });
+        $("#actPrecioCosto").click(function() {
+            agregarSubprod(idSucPro);
+        });
+
+
+        // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
+        document.getElementById("titulo").innerHTML = nombreProd;
+        document.getElementById("modiPrecioCosto").innerHTML = cambiarCantidad;
+        $("input[name='cantidad']").bind('keypress', function(tecla) {
+            if (this.value.length >= 10) return false;
+            let code = tecla.charCode;
+            if (code == 8) { // backspace.
+                return true;
+            } else if (code >= 48 && code <= 57) { // is a number.
+                return true;
+            } else { // other keys.
+                return false;
+            }
+        });
+    }
 
     async function actPrecio(idSucProd) {
         console.log("entroade");
@@ -1147,6 +1196,43 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         }
     }
 
+    async function agregarSubprod(idSucProd) {
+        try {
+            //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
+            const costo = document.querySelector('#cantidad');
+            /*
+            if (pago.value.length === 0)
+                return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
+            if (parseFloat(pago.value) < parseFloat(total))
+                return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
+           */
+            let funcion = $.ajax({
+                // metodo: puede ssubProdExisNuevoer POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `/puntoVenta/subProdExisNuevo/${idSucProd}`,
+                // los datos que voy a enviar para la relación
+                data: {
+                    cantidad: parseInt(cantidad.value),
+                    _token: "{{ csrf_token() }}"
+                    //  id: idSucProd
+                }
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                //alert(respuesta);
+                console.log(respuesta); //JSON.stringify(respuesta));
+            });
+            // console.log("h y a");
+            $('#modal_precio_venta').modal('hide');
+            $('#detalleProducto').modal('hide');
+            alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
+            refrescar();
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+
+
 
     function infoSubproducto(id) {
         //Modal
@@ -1204,10 +1290,24 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                         </div>
                                         <div class="col-4 text-center">
                                             <br /><br />
-                                            <a class="btn btn-outline-danger mb-4" data-method="delete" onclick="return confirm('¿DESEA ELIMINAR ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/subproducto/` + x + `')}}"> 
+                                            <a class="btn btn-outline-danger mb-4" data-method="delete" onclick="return confirm('¿DESEA ELIMINAR ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/subproductoEli/` + x + `')}}"> 
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              ELIMINAR </a> 
                                              <div class="mt-4 mb-4"> </div>
+                                             <a class="btn btn-outline-primary " data-method="delete" onclick="return confirm('¿AGREGAR EXISTENCIA DE STOCK?')"  href="{{ url('/puntoVenta/subProdExisStock/` + x + `')}}"> 
+                                            <img src="{{ asset('img/nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
+                                              EXISTENCIA STOCK </a> 
+                                            <br/><br/>  
+                                            
+                                              <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return agregarSubproducto( ` + x + `)" value="` + x + `">
+                                              <img src="{{ asset('img/nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
+                                              EXISTENCIA NUEVO
+                                            </button>
+                                              @error('mensajeError')
+                                                <div class="alert alert-danger my-auto" role="alert">
+                                                    {{$message}}
+                                                </div>
+                                                @enderror
                                         </div>
                                         <br/>
                                     `;
@@ -1217,6 +1317,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 }
             }
         }
+        document.getElementById("subAgregar").innerHTML = "";
         document.getElementById("resultados").innerHTML = datosProduct;
     };
 
@@ -1243,8 +1344,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         for (let x in subproductos) {
                             if (subproductos[x].idSucursalProducto == producto_sucursal[y].id) {
                                 bandera = false;
-                                return redirect(`/puntoVenta/subproducto/actExistencia/?idSucProd=${producto_sucursal[y].id}`);
-                                //return alert("Este producto ya está activo en subproducto y no se puede volver a agregar");
+                                // return redirect(`/puntoVenta/subproducto/actExistencia/?idSucProd=${producto_sucursal[y].id}`);
+                                return alert("Este producto ya está activo en subproducto y no se puede volver a agregar");
                             }
                         }
                     }

@@ -26,7 +26,9 @@ class CreditoController extends Controller
     {
         $usuarios = ['verDeudor','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        $idSucursal = session('sucursal');
+        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
+        $sucursalEmpleados;
         $venta_clientes= Venta_cliente::all();
         $cliente= Cliente::all();
         $ventas= Venta::all();
@@ -34,8 +36,7 @@ class CreditoController extends Controller
         $productos = Producto::all();
         $pagos_ventas= Pago_venta::all();
         
-        
-          return view('ListaDeudor.index', compact( 'venta_clientes', 'cliente','ventas','detalleVentas', 'productos','pagos_ventas'));
+          return view('ListaDeudor.index', compact( 'venta_clientes', 'cliente','ventas','detalleVentas', 'productos','pagos_ventas','sucursalEmpleados'));
     }
 
     /**

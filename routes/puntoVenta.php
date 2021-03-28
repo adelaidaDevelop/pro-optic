@@ -129,7 +129,10 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('veriUniqueSubproducto', [SubproductoController::class,'existeEnSubproducto']);
 
     Route::get('subproducto/actExistencia', [SubproductoController::class,'actExistencia']);
-    
+    Route::get('subproductoEli/{id}', [SubproductoController::class,'eliminar']);
+    Route::get('subprodExisNueva/{id}', [SubproductoController::class,'subprodExisNueva']);
+    Route::get('subProdExisStock/{id}', [SubproductoController::class,'subProdExisStock']);
+    Route::post('subProdExisNuevo/{id}', [SubproductoController::class,'subProdExisNuevo']);
     
 
     //ELIMINAR PRODUCTOS DE SUCURSAL
