@@ -76,19 +76,19 @@ class RegistrosPruebaTable extends Migration
         //CREACION DE ADMINISTRADOR
         $admin = User::create([
             'username' => 'ADMINISTRADOR',
-            'email' => 'admin@gmail.com',
+            'email' => 'farmaciasgizimatlan@gmail.com',
             'password' => Hash::make('admin12345'),
             'tipo' => 0,
         ]);
         
         //$admin->roles()->attach($role_admin);
         //CREACION USUARIO ADMIN P/DEUDORES
-        $adminDeudor = User::create([
+        /*$adminDeudor = User::create([
             'username' => 'DEUDOR',
             'email' => 'deudor@gmail.com',
             'password' => Hash::make('deudor12345'),
             'tipo' => 1,
-        ]);
+        ]);*/
 
         $empleadoAdmin = new Empleado;
         $empleadoAdmin->primerNombre = 'ADMINISTRADOR';
