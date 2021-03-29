@@ -48,7 +48,7 @@ class SucursalProductoController extends Controller
         $datosCodificados = json_decode($datos,true);
         foreach($datosCodificados as $datosProducto)
         {
-            return $datosProducto['fechaCaducidad'];
+            //return $datosProducto['fechaCaducidad'];
             //$actualizarProductoInd = Sucursal_producto::find($datosProducto['id']);//->update(['existencia'=>]);
             $sucursalProducto = new Sucursal_producto;//::where('idSucursal','=',session('sucursal'))
             //->where('idProducto', '=',$datosProducto['id'])->get()->first();

@@ -180,11 +180,11 @@
             </div>
             <div class="modal-body" id="cuerpoModal">
                 <div class="row">
-                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto"
+                    <input type="text" class="form-control mx-2 my-3 text-uppercase" placeholder="Buscar producto"
                         id="busquedaProducto" onkeyup="buscarProducto()">
                 </div>
-                <div class="row" style="height:200px;overflow:auto;">
-                    <table class="table table-hover table-bordered" id="productos">
+                <div class="row" style="height:200px;overflow:auto;" id="productosBusqueda">
+                    <table class="table table-hover table-bordered">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">#</th>
@@ -195,6 +195,7 @@
                             </tr>
                         </thead>
                         <tbody id="consultaBusqueda">
+                        
                         </tbody>
                     </table>
                 </div>
@@ -260,10 +261,10 @@ function buscarProductoEnCompra(idProducto) {
 };
 
 
-async function cargarProductos() {
+async function cargarProductos(producto) {
     let response = "Sin respuesta";
     try {
-        response = await fetch(`/puntoVenta/producto/productos`);
+        response = await fetch(`/puntoVenta/producto/${producto}`);
         if (response.ok) {
             productos = await response.json();
             if (productosSucursal.length === 0)
@@ -320,30 +321,41 @@ let ingresarProductoTitulo = document.querySelector('#exampleModalLabel').innerH
 //let botonCerrarModal = 0;
 async function buscarProducto() {
     try {
-        if (productos.length === 0)
-        {
-            const contenidoProducto = document.querySelector('#modalConsulta');
+        //if (productos.length === 0)
+        //{
+            const contenidoProducto = document.querySelector('#consultaBusqueda');
             const contenidoOriginal = contenidoProducto.innerHTML;
             contenidoProducto.innerHTML = 
-            `<div class="d-flex justify-content-center my-3">
+            `<tr>
+            <td colspan="5">
+            <div class="d-flex justify-content-center my-3">
                 <button class="btn btn-info" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     CARGANDO PRODUCTOS
                 </button>
             </div>
+            </td>
+            </tr>
             `;
-            productos = await cargarProductos();
-            contenidoProducto.innerHTML = contenidoOriginal;
+            
+        //}
+        const entrada = document.querySelector('#busquedaProducto');
+        if(entrada.value.length == 0)
+        {
+            contenidoProducto.innerHTML = "";//contenidoOriginal;
+            return;
         }
             
-
-        const entrada = document.querySelector('#busquedaProducto');
+        productos = await cargarProductos(entrada.value);
+        console.log('Productos: ',productos);
+        contenidoProducto.innerHTML = "";//contenidoOriginal;
         let productosEncontrados = document.querySelector('#consultaBusqueda');
         let contador = 1;
         let cuerpo = "";
         let departamentos = @json($departamentos);
+        
         for (let i in productos) {
-            if (productos[i].nombre.toUpperCase().includes(entrada.value.toUpperCase())) {
+            //if (productos[i].nombre.toUpperCase().includes(entrada.value.toUpperCase())) {
                 let departamento = "No lo busca";
 
                 for (let o in departamentos) {
@@ -352,7 +364,7 @@ async function buscarProducto() {
                 }
                 console.log(productos);
                 cuerpo = cuerpo + `
-            <tr onclick="agregarProducto(` + productos[i].id + `)" data-dismiss="modal">
+                <tr onclick="agregarProducto(` + productos[i].id + `)" data-dismiss="modal">
                 <td>` + contador++ + `</td>
                 <td>` + productos[i].codigoBarras + `</td>
                 <td>` + productos[i].nombre + `</td>
@@ -360,7 +372,7 @@ async function buscarProducto() {
                 <td>` + departamento + `</td>
             </tr>
             `;
-            }
+            //}
         }
         productosEncontrados.innerHTML = cuerpo;
     } catch (err) {
