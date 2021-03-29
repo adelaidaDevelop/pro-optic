@@ -180,7 +180,7 @@
             </div>
             <div class="modal-body" id="cuerpoModal">
                 <div class="row">
-                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto"
+                    <input type="text" class="form-control mx-2 my-3 text-uppercase" placeholder="Buscar producto"
                         id="busquedaProducto" onkeyup="buscarProducto()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;" id="productosBusqueda">
@@ -342,13 +342,13 @@ async function buscarProducto() {
         const entrada = document.querySelector('#busquedaProducto');
         if(entrada.value.length == 0)
         {
-            contenidoProducto.innerHTML = contenidoOriginal;
+            contenidoProducto.innerHTML = "";//contenidoOriginal;
             return;
         }
             
         productos = await cargarProductos(entrada.value);
         console.log('Productos: ',productos);
-        contenidoProducto.innerHTML = contenidoOriginal;
+        contenidoProducto.innerHTML = "";//contenidoOriginal;
         let productosEncontrados = document.querySelector('#consultaBusqueda');
         let contador = 1;
         let cuerpo = "";
