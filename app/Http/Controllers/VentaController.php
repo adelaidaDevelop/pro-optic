@@ -13,6 +13,7 @@ use App\Models\Pago;
 use App\Models\Pago_venta;
 use App\Models\Sucursal_producto;
 use App\Models\Sucursal_empleado;
+use App\Models\Empleado;
 use App\Models\venta_cliente;
 use App\Models\Subproducto;
 use App\Models\Oferta;
@@ -78,6 +79,7 @@ class VentaController extends Controller
         $estado = $request->input('estado');
         $pago = $request->input('pago');
         $idSucursalEmpleado = $request->input('idSucursalEmpleado');
+        $venta = "";
         $datosCodificados = json_decode($datos, true);
         if ($request->has('cliente')) {
             $cliente = $request->input('cliente');
@@ -147,8 +149,7 @@ class VentaController extends Controller
             }
             
         }
-
-        return true;
+        return $venta->id;
     }
 
     /**
@@ -157,9 +158,27 @@ class VentaController extends Controller
      * @param  \App\Models\Venta  $venta
      * @return \Illuminate\Http\Response
      */
-    public function show(Venta $venta)
+    public function show($folio)//Venta $venta)
     {
-        return view('Venta.ticket');
+        $venta= Venta::findOrFail($folio);
+        $sE = Sucursal_empleado::findOrFail($venta->idSucursalEmpleado);
+        $e = Empleado::findOrFail($sE->idEmpleado);
+
+        if($e->id == 1)
+            $cajero =  "ADMINISTRADOR DE LA TIENDA";
+        else
+            $cajero = $e->primerNombre ." " . $e->segundoNombre." " . $e->apellidoPaterno." " . $e->apellidoMaterno;
+        //return $nombre;
+
+        $detalleVenta = Detalle_venta::where('idVenta','=',$folio)->get(['cantidad','precioIndividual']);
+        $pago = $venta->pago;
+        /*$total = 0;
+        foreach($detalleVenta as $dV)
+        {
+
+            $total = $total + $dV->
+        }*/
+        return view('Venta.ticket', compact('cajero','folio','pago'));
     }
 
     /**
