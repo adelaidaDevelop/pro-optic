@@ -56,7 +56,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 </div>
 
 <div class="col-0  ml-3 p-1 ">
-    <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" data-target="#modalInventarioRapido" value="">
+    <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" data-target="#modalPeticionInventario" value="">
         <img src="{{ asset('img\alta2.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>INVENTARIO RÁPIDO</small></p>
     </button>
@@ -368,6 +368,30 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     </div>
 </div>
 
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modalPeticionInventario">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--ENCABEZADO -->
+                <h5 class="modal-title" id="exampleModalLabel">INVENTARIO RAPIDO</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="cantidadProductos">CANTIDAD DE PRODUCTOS A INVENTAREAR</label>
+                    <input type="number" class="form-control" id="cantidadProductos" aria-describedby="cantpro">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">CERRAR</button>
+                <button type="button" class="btn btn-success"  onclick="getInventarioRapido()">CONTINUAR</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!--MODAL PARA CARGAR INVENTARIO RAPIDO-->
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modalInventarioRapido">
     <div class="modal-dialog modal-lg " role="document">
@@ -379,7 +403,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                      <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="cuerpoInventarioRapido">
                 <!-- TABLA -->
                 AQUI VA EL INVENTARIO RAPIDO
             </div>
@@ -1571,6 +1595,21 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     };
+    async function getInventarioRapido()
+    {
+        try{
+            let cantidad = document.getElementById("cantidadProductos").value;
+            let cuerpo = document.getElementById("cuerpoInventarioRapido");
+            let respuesta = await fetch(`/puntoVenta/inventarioRapido/${clave}`);
+            let productos = await respuesta.json();
+            console.log(productos);
+            cuerpo.innerHTML = cantidad;
+            $('#modalPeticionInventario').modal('hide');
+            $('#modalInventarioRapido').modal('show');
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
 </script>
 
 @endsection
