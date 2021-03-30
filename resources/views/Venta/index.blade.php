@@ -472,7 +472,7 @@
                         <p class="h5">CLAVE</p>
                     </div>
                     <div class="col-8">
-                        <input type="number" id="claveEmpleado" data-decimals="2" class="form-control" />
+                        <input type="password" id="claveEmpleado" data-decimals="2" class="form-control" />
                     </div>
                 </div>
             </div>
