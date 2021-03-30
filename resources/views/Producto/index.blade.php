@@ -54,6 +54,13 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         <p class="h6 my-auto text-dark"><small>PROXIMOS A CADUCAR</small></p>
     </a>
 </div>
+
+<div class="col-0  ml-3 p-1 ">
+    <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" data-target="#modalInventarioRapido" value="">
+        <img src="{{ asset('img\alta2.png') }}" alt="Editar" width="30px" height="30px">
+        <p class="h6 my-auto text-dark"><small>INVENTARIO RÁPIDO</small></p>
+    </button>
+</div>
 <!--
 <div class="col-2  ml-3 p-1 ">
     <a class="btn btn-outline-secondary p-1 border-0" href="{{ url('/puntoVenta/oferta')}}">
@@ -300,6 +307,27 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     </div>
 </div>
 
+<!--MODAL PARA CARGAR INVENTARIO RAPIDO-->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modalInventarioRapido">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--ENCABEZADO -->
+                <h5 class="modal-title" id="exampleModalLabel">INVENTARIO RAPIDO</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- TABLA -->
+                AQUI VA EL INVENTARIO RAPIDO
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!--POP UP-->
 
 <!-- SCRIPT-->
