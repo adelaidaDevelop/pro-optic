@@ -77,7 +77,7 @@ $crear = $sE->hasAnyRole($crearProducto);
     let productos = @json($noAgregado);
     let deptos = @json($depa);
 
-
+    let tabla2 = document.querySelector('#vacio').outerHTML;
     console.log(productos);
 
     function cargarProductos() {
@@ -86,20 +86,50 @@ $crear = $sE->hasAnyRole($crearProducto);
         let contador = 0;
         let departamento = "";
         const palabraBusqueda = document.querySelector('#busquedaProducto');
-
+        let cont = 1;
         for (let t in productos) {
-            if (productos[t].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                /*
-                bandera = true;
-                for (let x in producto_sucursal) {
-                    if (productos[t].id === producto_sucursal[x].idProducto) {
-                        bandera = false;
-                        console.log("ya es igual");
+           // if (palabraBusqueda.value.length > 0) {
+                if (cont <= 30) {
+                    if (productos[t].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                        cont++;
+                        /*
+                        bandera = true;
+                        for (let x in producto_sucursal) {
+                            if (productos[t].id === producto_sucursal[x].idProducto) {
+                                bandera = false;
+                                console.log("ya es igual");
+                            }
+                        }
+                        */
+                        // if (bandera) {
+
+                        for (count in deptos) {
+                            if (productos[t].idDepartamento === deptos[count].id) {
+                                departamento = deptos[count].nombre;
+                            }
+                        }
+                        contador = contador + 1;
+                        let agregar = @json($agregar);
+                        let btnAgregar = `<a class="btn btn-primary" href="{{ url('/puntoVenta/agregarProdStock/` +
+                            productos[t].id + `')}}"> AGREGAR </a>`;
+                        if (!agregar) {
+                            btnAgregar = `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA AGREGAR')"> AGREGAR </button>`
+                        }
+                        cuerpo = cuerpo + `
+                            <tr onclick="" data-dismiss="modal">
+                            <th scope="row">` + contador + `</th>
+                            <td>` + productos[t].codigoBarras + `</td>
+                            <td>` + productos[t].nombre + `</td>
+                            <td>` + departamento + `</td>
+                                <td>` + btnAgregar +
+                            ` 
+                            </td>            
+                                        </tr>
+                                        `;
                     }
                 }
-                */
-                // if (bandera) {
-
+           // } 
+            /*else {
                 for (count in deptos) {
                     if (productos[t].idDepartamento === deptos[count].id) {
                         departamento = deptos[count].nombre;
@@ -123,15 +153,17 @@ $crear = $sE->hasAnyRole($crearProducto);
                             </td>            
                                         </tr>
                                         `;
+
             }
-            //  }
+            */
         }
-        if (cuerpo === "") {
-            let sin = ` <h3 class= "text-danger my-auto"> TODOS LOS PRODUTOS HAN SIDO AGREGADOS A ESTA SUCURSAL </h3>`;
+        if (cuerpo == "") {
+            // tabla2 = document.querySelector('#tablaR');
+            let sin = ` <h4 class= "text-dark my-auto  mt-4 "> NO HAY PRODUCTO </h4>`;
             document.getElementById("vacio").innerHTML = sin;
         } else {
+            document.getElementById("vacio").innerHTML = tabla2;
             document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-
         }
     }
     cargarProductos();
