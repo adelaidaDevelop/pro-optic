@@ -114,11 +114,17 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     <div class="row mx-auto my-auto ">
                         <div class=" text-center ">
                             <h6 class=" text-primary"> COSTO DEL INVENTARIO: </h6>
-                            <p class="h3 mb-2" id="costoInv">$ 0.00</p>
-                        </div class="text-center">
-                        <div id="" class=" mx-4 text-center">
-                            <h6 class=" text-primary"> PRECIO DEL INVENTARIO </h6>
-                            <p class="h3 mb-2" id="precioInv">$ 0.00</p>
+                            <div class=" input-group text-center  px-auto">
+                                <h3 class="text-center ml-auto">$</h3>
+                                <p class="h3 mr-auto" id="costoInv">0.00</p>
+                            </div>
+                        </div>
+                        <div class="mx-4 text-center ">
+                            <h6 class=" text-primary"> PRECIO DEL INVENTARIO: </h6>
+                            <div class=" input-group text-center mx-auto ">
+                                <h3 class="text-center ml-auto">$</h3>
+                                <p class="h3 mr-auto " id="precioInv">$ 0.00</p>
+                            </div>
                         </div>
                         <div class=" text-center">
                             <h6 class=" text-primary"> CANT. PRODUCTOS: </h6>
@@ -126,11 +132,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         </div>
                         <div class=" mx-4 text-center">
                             <h6 class=" text-primary"> CANT. SUBPRODUCTOS: </h6>
-                            <div id="cantProdInv" class="h3"> 0.0</div>
+                            <div id="cantProdSub" class="h3"> 0.0</div>
                         </div>
                         <div class=" text-center">
                             <h6 class=" text-primary"> CANT. OFERTAS: </h6>
-                            <div id="cantProdInv" class="h3"> 0.0</div>
+                            <div id="cantProdOferta" class="h3"> 0.0</div>
                         </div>
                     </div>
                     <div class="row my-0 mx-0 mt-3">
@@ -241,9 +247,64 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="actPrecioCosto">GUARDAR</button>
+                <button type="button" class="btn btn-primary" id="actPrecioCosto" onclick="actPrecio();">GUARDAR</button>
                 <button type="button" class="btn btn-secondary" id="volverInfo4" data-dismiss="modal">CANCELAR</button>
 
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL CAMBIAR COSTO-->
+<div class="modal fade modal_precio_venta2" id="modal_precio_venta2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-small " role="document">
+        <div class="modal-content" style="width:500px;">
+            <div class="modal-header  ">
+                <!--ENCABEZADO -->
+                <div class="container-fluid">
+                    <div class="row" style="background:#3366FF">
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 mx-auto text-center" id="titulo2" style="color:#FFFFFF">
+
+                        </h6>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body col-8 mx-4 text-center mx-auto" id="">
+                <div class="row  " id="modiPrecioCosto2">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="actPrecioCosto2" onclick="actCosto();">GUARDAR</button>
+                <button type="button" class="btn btn-secondary" id="volverInfo42" data-dismiss="modal">CANCELAR</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL CAMBIAR EXISTENCIA-->
+<div class="modal fade modal_precio_venta3" id="modal_precio_venta3" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-small " role="document">
+        <div class="modal-content" style="width:500px;">
+            <div class="modal-header  ">
+                <!--ENCABEZADO -->
+                <div class="container-fluid">
+                    <div class="row" style="background:#3366FF">
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 mx-auto text-center" id="titulo3" style="color:#FFFFFF">
+
+                        </h6>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body col-8 mx-4 text-center mx-auto" id="">
+                <div class="row  " id="modiPrecioCosto3">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="actPrecioCosto3" onclick="actExistencia();">GUARDAR</button>
+                <button type="button" class="btn btn-secondary" id="volverInfo43" data-dismiss="modal">CANCELAR</button>
             </div>
         </div>
     </div>
@@ -474,13 +535,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         } else {
                             // MENSAJE PRODUCTOS NO ENCONTRADOS
                         }
-
-
                     } else if (opcFolioNombre === 'folio') {
                         $("#idDepartamento").prop('disabled', true);
                         $("#bajosExistencia").prop('disabled', true);
-
-
                         if (productos[count5].codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                             let departamento = "";
                             for (count21 in d) {
@@ -499,8 +556,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             productosList.push(productosAdd);
                         }
                     }
-
-
                 }
             }
         }
@@ -637,25 +692,27 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let costo_inventario = 0;
         let precio_inventario = 0;
         let cantProdInventario = 0;
-
+        let cantOfertas = 0;
+        let cantSubproductos = 0;
         let departamento = "";
         for (let t in productosList) {
             console.log("prod list");
             for (let z in productosSucursal) {
                 if (productosList[t].id === productosSucursal[z].idProducto) {
-                    if (productosSucursal[z].status === 1) {
-                        for (count8 in d) {
-                            if (productosList[t].idDepartamento === d[count8].id) {
-                                departamento = d[count8].nombre;
-                            }
+                    //  if (productosSucursal[z].status === 1) {
+                    for (count8 in d) {
+                        if (productosList[t].idDepartamento === d[count8].id) {
+                            departamento = d[count8].nombre;
                         }
-                        let costoTemporal = productosSucursal[z].costo * productosList[t].existencia;
-                        let precioTemporal = productosSucursal[z].precio * productosList[t].existencia;
-                        costo_inventario = costo_inventario + costoTemporal;
-                        precio_inventario = precio_inventario + precioTemporal;
-                        cantProdInventario = cantProdInventario + productosList[t].existencia;
-                        contador = contador + 1;
-                        cuerpo = cuerpo + `
+                    }
+                    let costoTemporal = productosSucursal[z].costo * productosList[t].existencia;
+                    let precioTemporal = productosSucursal[z].precio * productosList[t].existencia;
+                    costo_inventario = costo_inventario + costoTemporal;
+                    precio_inventario = precio_inventario + precioTemporal;
+                    cantProdInventario = cantProdInventario + productosList[t].existencia;
+
+                    contador = contador + 1;
+                    cuerpo = cuerpo + `
                             <tr onclick="" data-dismiss="modal">
                                 <th scope="row">` + contador + `</th>
                                 <td >` + "NORMAL" + `</td>
@@ -666,13 +723,13 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <td class="text-success">` + productosSucursal[z].precio + `</td>
                                 <td>` + productosList[t].existencia + `</td>
                                 <td>` +
-                            ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
+                        ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
                                 <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
                                 </button>
                                 </td>            
                             </tr>
                             `;
-                    }
+                    //}
 
                 }
             }
@@ -694,6 +751,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             let precioTempSub = subproductos[y].precio * subproductos[y].existencia;
                             precio_inventario = precio_inventario + precioTempSub;
                             contador = contador + 1;
+                            cantSubproductos = cantSubproductos + subproductos[y].existencia;
+
                             cuerpo = cuerpo + `
                             <tr class="table-warning" onclick="" data-dismiss="modal">
                                 <th scope="row">` + contador + `</th>
@@ -734,8 +793,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             costo_inventario = costo_inventario + costoOferta;
                             let precioTempOferta = productosSucursal[z].precio * ofertas[i].existencia;
                             precio_inventario = precio_inventario + precioTempOferta;
-
-
+                            cantOfertas = cantOfertas + ofertas[i].existencia;
                             contador = contador + 1;
                             cuerpo = cuerpo + `
                             <tr class="table-warning" onclick="" data-dismiss="modal">
@@ -759,6 +817,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         document.getElementById("costoInv").innerHTML = costo_inventario;
         document.getElementById("precioInv").innerHTML = precio_inventario;
         document.getElementById("cantProdInv").innerHTML = cantProdInventario;
+        document.getElementById("cantProdSub").innerHTML = cantSubproductos;
+        document.getElementById("cantProdOferta").innerHTML = cantOfertas;
     };
 
     function info4(id) {
@@ -800,12 +860,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                             <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarPrecio( ` + idProdSuc + `)" value="` + idProdSuc + `">
                                            EDITAR PRECIO
                                             </button>
-                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarCosto( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta2"  onclick=" return modificarCosto( ` + idProdSuc + `)" value="` + idProdSuc + `">
                                            EDITAR COSTO
                                             </button>
                                             <br/>
-                                            <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return agregarProducto( ` + idProdSuc + `)" value="` + idProdSuc + `">
-                                            AGREGAR EXISTENCIA
+                                            <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta3"  onclick=" return agregarProducto( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                            MODIFICAR EXISTENCIA
                                             </button>
                                             <br/>
                                     `;
@@ -836,7 +896,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                             </button>
                                             <br/>
                                             <button type="button" class="btn btn-outline-primary mb-4 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
-                                            AGREGAR EXISTENCIA
+                                            MODIFICAR EXISTENCIA
                                             </button>
                                             <br/>`;
                             botonesProducto = botonesProducto + btnDarBaja;
@@ -920,29 +980,44 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let idProd = 0;
         let idSucPro = 0;
         let nombreProd = "";
+        let bandera = true;
+
         for (let j in productosSucursal) {
-            if (productosSucursal[j].id === idSP) {
-                idProd = productosSucursal[j].idProducto;
-                idSucPro = productosSucursal[j].id;
-                for (let x in productos) {
-                    if (productos[x].id == idProd)
-                        nombreProd = productos[x].nombre;
-                }
-                console.log("entra");
-                cambiarPrecio = `
+            if (bandera) {
+                if (productosSucursal[j].id === idSP) {
+                    bandera = false;
+                    idProd = productosSucursal[j].idProducto;
+                    idSucPro = productosSucursal[j].id;
+                    let band_prod = true;
+                    for (let x in productos) {
+                        if (band_prod) {
+                            if (productos[x].id == idProd)
+                                nombreProd = productos[x].nombre;
+                            band_prod = false;
+                        }
+                    }
+                    console.log("entra");
+                    cambiarPrecio = `
                                 <h6>PRECIO ACTUAL DEL PRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center" placeholder="" value="` + productosSucursal[j].precio + `" autofocus required disabled>
                                 <h6 >INGRESAR NUEVO PRECIO DEL PRODUCTO</h6>        
                                 <input type="number" name="precio_nuevo" id="precio_nuevo" class="form-control text-center" placeholder="PRECIO NUEVO" value="" autofocus required>
                                     `;
+                }
             }
+
         }
         $("#volverInfo4").click(function() {
             info4(idProd);
         });
+        let btnGuardar = document.getElementById("actPrecioCosto");
+        btnGuardar.value = idSucPro;
+        // $("#actPrecioCosto").removeAttr('onclick');
+        /*
         $("#actPrecioCosto").click(function() {
-            actPrecio(idSucPro);
+            
         });
+        */
         document.getElementById("titulo").innerHTML = nombreProd;
         document.getElementById("modiPrecioCosto").innerHTML = cambiarPrecio;
         $("input[name='precio_nuevo']").bind('keypress', function(tecla) {
@@ -955,7 +1030,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 return false;
             }
         });
+
     }
+
 
     function modificarCosto(idSP) {
         let cambiarCosto = "";
@@ -979,16 +1056,20 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                     `;
             }
         }
-        $("#volverInfo4").click(function() {
+        $("#volverInfo42").click(function() {
             info4(idProd);
         });
+        /*
         $("#actPrecioCosto").click(function() {
             actCosto(idSucPro);
         });
+        */
+        let btnGuardar2 = document.getElementById("actPrecioCosto2");
+        btnGuardar2.value = idSucPro;
 
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
-        document.getElementById("titulo").innerHTML = nombreProd;
-        document.getElementById("modiPrecioCosto").innerHTML = cambiarCosto;
+        document.getElementById("titulo2").innerHTML = nombreProd;
+        document.getElementById("modiPrecioCosto2").innerHTML = cambiarCosto;
         $("input[name='costo']").bind('keypress', function(tecla) {
             if (this.value.length >= 10) return false;
             let code = tecla.charCode;
@@ -1003,6 +1084,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     }
 
     function agregarProducto(idSP) {
+
         let cambiarCantidad = "";
         let idProd = 0;
         let idSucPro = 0;
@@ -1024,17 +1106,18 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                     `;
             }
         }
-        $("#volverInfo4").click(function() {
+        $("#volverInfo43").click(function() {
             info4(idProd);
         });
-        $("#actPrecioCosto").click(function() {
-            actExistencia(idSucPro);
-        });
+        let btnGuardar3 = document.getElementById("actPrecioCosto3");
+        btnGuardar3.value = idSucPro;
+       
+        
 
 
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
-        document.getElementById("titulo").innerHTML = nombreProd;
-        document.getElementById("modiPrecioCosto").innerHTML = cambiarCantidad;
+        document.getElementById("titulo3").innerHTML = nombreProd;
+        document.getElementById("modiPrecioCosto3").innerHTML = cambiarCantidad;
         $("input[name='cantidad']").bind('keypress', function(tecla) {
             if (this.value.length >= 10) return false;
             let code = tecla.charCode;
@@ -1077,9 +1160,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         $("#volverInfo4").click(function() {
             infoSubproducto(idSucPro);
         });
-        $("#actPrecioCosto").click(function() {
-            agregarSubprod(idSucPro);
-        });
 
 
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
@@ -1098,9 +1178,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         });
     }
 
-    async function actPrecio(idSucProd) {
+    async function actPrecio() {
+        let btnGuardar = document.getElementById("actPrecioCosto");
+        let idSucProd = btnGuardar.value;
         console.log("entroade");
         try {
+            //return alert(idSucProd);
             //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
             const precio = document.querySelector('#precio_nuevo');
             /*
@@ -1122,19 +1205,42 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 }
                 // si tuvo éxito la petición
             }).done(function(respuesta) {
+                $('#modal_precio_venta').modal('hide');
+                $('#detalleProducto').modal('hide');
+
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-            $('#modal_precio_venta').modal('hide');
-            $('#detalleProducto').modal('hide');
-            alert("COSTO ACTUALIZADO CORRECTAMENTE");
-            refrescar();
+            alert("PRECIO ACTUALIZADO CORRECTAMENTE :p");
+            await act_datos();
+            await buscarFiltroNombre2();
+            // refrescar();
             // await cargarProductosSucursal();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-    }
-    async function actCosto(idSucProd) {
+    };
+    async function act_datos() {
+        let response = "Sin respuesta";
+        try {
+            console.log("llego aqui ");
+            response = await fetch(`/puntoVenta/act_inventario`);
+            if (response.ok) {
+
+                productosSucursal = await response.json();
+            } else {
+                console.log("No responde :v");
+                console.log(response);
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: X " + err.message);
+        }
+    };
+
+    async function actCosto() {
+        let btnGuardar = document.getElementById("actPrecioCosto2");
+        let idSucProd = btnGuardar.value;
         try {
             //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
             const costo = document.querySelector('#costo_nuevo');
@@ -1160,16 +1266,20 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-            $('#modal_precio_venta').modal('hide');
+            $('#modal_precio_venta2').modal('hide');
             $('#detalleProducto').modal('hide');
             alert("COSTO ACTUALIZADO CORRECTAMENTE");
-            refrescar();
+            // refrescar();
+            await act_datos();
+            await buscarFiltroNombre2();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
 
-    async function actExistencia(idSucProd) {
+    async function actExistencia() {
+        let btnGuardar = document.getElementById("actPrecioCosto3");
+        let idSucProd = btnGuardar.value;
         try {
             //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
             const costo = document.querySelector('#cantidad');
@@ -1181,12 +1291,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
            */
             let funcion = $.ajax({
                 // metodo: puede ser POST, GET, etc
-                method: "POST",
+                method: "post",
                 // la URL de donde voy a hacer la petición
                 url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
                 // los datos que voy a enviar para la relación
                 data: {
-                    cantidad: parseInt(cantidad.value),
+                    cantidad: parseInt(costo.value),
                     _token: "{{ csrf_token() }}"
                     //  id: idSucProd
                 }
@@ -1195,10 +1305,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-            $('#modal_precio_venta').modal('hide');
+            $('#modal_precio_venta3').modal('hide');
             $('#detalleProducto').modal('hide');
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
-            refrescar();
+            //  refrescar();
+            await act_datos();
+            await buscarFiltroNombre2();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
@@ -1302,7 +1414,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              ELIMINAR </a> 
                                              <div class="mt-4 mb-4"> </div>
-                                             <a class="btn btn-outline-primary " data-method="delete" onclick="return confirm('¿AGREGAR EXISTENCIA DE STOCK?')"  href="{{ url('/puntoVenta/subProdExisStock/` + x + `')}}"> 
+                                             <a class="btn btn-outline-primary " data-method="delete" onclick="return confirm('¿MODIFICAR EXISTENCIA DE STOCK?')"  href="{{ url('/puntoVenta/subProdExisStock/` + x + `')}}"> 
                                             <img src="{{ asset('img/nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
                                               EXISTENCIA STOCK </a> 
                                             <br/><br/>  
@@ -1409,7 +1521,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             }
         }
         if (cuerpo === "") {
-            let sin = ` <h3 class= "text-danger my-auto"> NO HAY PRODUCTOS DADOS DE BAJA EN ESTA SUCURSAL </h3>`;
+            let sin = ` <h4 class= "text-dark my-auto"> NO HAY PRODUCTOS DADOS DE BAJA EN ESTA SUCURSAL </h4>`;
             document.getElementById("vacio").innerHTML = sin;
         } else {
             document.getElementById("filaTablas").innerHTML = cuerpo;

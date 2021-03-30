@@ -48,7 +48,7 @@ class ClienteController extends Controller
         $datosCliente['idUsuario'] = 2;
         Cliente::insert($datosCliente);
         
-        return redirect('puntoVenta/cliente')->withErrors(['mensajeConf' => 'ESTE CLIENTE SE AGREGO CORRECTAMENTE']);
+        return redirect('puntoVenta/cliente')->withErrors(['mensajeConf' => 'EL CLIENTE SE AGREGO CORRECTAMENTE']);
     }
 
     /**
