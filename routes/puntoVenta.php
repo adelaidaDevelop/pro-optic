@@ -85,6 +85,7 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('/eliProd/{id}', [ProductoController::class,'eliProd']);
     
     //Sucursal producto
+    Route::get('/inventarioRapido/{total}', [SucursalProductoController::class,'inventarioRapido']);
      Route::resource('sucursalProducto', SucursalProductoController::class);
      //RUTA SUCURSALES INACTIVAS
      Route::get('/sucursalesInactivos', [SucursalController::class,'sucu_inactivas']);

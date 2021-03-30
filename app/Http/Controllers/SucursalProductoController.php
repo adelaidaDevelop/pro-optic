@@ -119,7 +119,16 @@ class SucursalProductoController extends Controller
     public function show($id)//Sucursal_producto $sucursal_producto)
     {
         //if($id=='todos')
-        
+        if($id == 'aleatorio')
+        {
+            //return session()->all();
+            $productosSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursal'))->get(['id','idProducto','existencia']);
+            $valor = mt_rand(1, count($productosSucursal)); 
+            $producto = Producto::findOrFail($productosSucursal[$valor-1]->id);
+            $productosSucursal[$valor-1]->nombre = $producto->nombre;
+            //$productosSucursal[$valor-1]->nombre = $producto->nombre;
+            return $productosSucursal[$valor-1];
+        }
         return Sucursal_producto::where('idSucursal', '=',$id)->get();//->where('status','=',1)->get();
     }
 
@@ -231,5 +240,9 @@ class SucursalProductoController extends Controller
         //
     }
 
+    public function inventarioRapido($total)
+    {
+        return view('Producto.inventarioRapido');
+    }
     
 }
