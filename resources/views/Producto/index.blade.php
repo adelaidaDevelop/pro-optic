@@ -112,16 +112,24 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             <div class="col-10 mx-0 mb-4 px-0">
                 <div class="form-group mx-4">
                     <div class="row mx-auto my-auto ">
-                        <div class="col-4  text-center ">
+                        <div class=" text-center ">
                             <h6 class=" text-primary"> COSTO DEL INVENTARIO: </h6>
                             <p class="h3 mb-2" id="costoInv">$ 0.00</p>
                         </div class="text-center">
-                        <div id="" class="col-4 mx-auto text-center">
+                        <div id="" class=" mx-4 text-center">
                             <h6 class=" text-primary"> PRECIO DEL INVENTARIO </h6>
                             <p class="h3 mb-2" id="precioInv">$ 0.00</p>
                         </div>
-                        <div class="col-4 text-center">
-                            <h6 class=" text-primary"> CANTIDAD DE PRODUCTOS EN INVENTARIO: </h6>
+                        <div class=" text-center">
+                            <h6 class=" text-primary"> CANT. PRODUCTOS: </h6>
+                            <div id="cantProdInv" class="h3"> 0.0</div>
+                        </div>
+                        <div class=" mx-4 text-center">
+                            <h6 class=" text-primary"> CANT. SUBPRODUCTOS: </h6>
+                            <div id="cantProdInv" class="h3"> 0.0</div>
+                        </div>
+                        <div class=" text-center">
+                            <h6 class=" text-primary"> CANT. OFERTAS: </h6>
                             <div id="cantProdInv" class="h3"> 0.0</div>
                         </div>
                     </div>
