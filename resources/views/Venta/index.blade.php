@@ -170,20 +170,20 @@
             </div>
             <div class="row m-0 px-0">
                 <div class="col my-2 ml-5 px-1">
-                    <div class="row">
-                        <form method="get" action="{{url('/empleado')}}">
+                    <!--div class="row">
+                        <form method="get" action="{url('/empleado')}}">
                             <button class="btn btn-outline-primary  p-1" type="submit">
-                                <img src="{{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                                <img src="{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                                 AGREGAR TICKET
                             </button>
                         </form>
-                        <form method="get" action="{{url('/empleado')}}">
+                        <form method="get" action="{url('/empleado')}}">
                             <button class="btn btn-outline-primary  p-1 ml-5" type="submit">
-                                <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                                <img src="{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                 ELIMINAR TICKET
                             </button>
                         </form>
-                    </div>
+                    </div-->
                 </div>
                 <div class="col my-2 ml-5 mr-0 pr-0 ">
                     <div class="d-flex flex-row-reverse">
@@ -472,14 +472,14 @@
                         <p class="h5">CLAVE</p>
                     </div>
                     <div class="col-8">
-                        <input type="number" id="claveEmpleado" data-decimals="2" class="form-control" />
+                        <input type="password" id="claveEmpleado" data-decimals="2" class="form-control" />
                     </div>
                 </div>
             </div>
             <div id="pieModal" class="modal-footer">
-                <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">COBRAR E IMPRIMIR
+                <button type="button" onclick="realizarVentaEfectivo(true)" class="btn btn-primary">COBRAR E IMPRIMIR
                     TICKET</button>
-                <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">SOLO COBRAR</button>
+                <button type="button" onclick="realizarVentaEfectivo(false)" class="btn btn-primary">SOLO COBRAR</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -490,7 +490,7 @@
 <script src="{{ asset('js\app.js') }}"></script>
 <script>
     let productosVenta = [];
-    let subproductosVenta = [];
+    //let subproductosVenta = [];
     let productos = @json($datosP);
     let productosSucursal = @json($productosSucursal);
     let departamentos = @json($departamentos);
@@ -930,9 +930,9 @@
 
     }*/
 
-    async function realizarVentaEfectivo() {
+    async function realizarVentaEfectivo(ticket) {
         try {
-
+            
             let clave = document.querySelector('#claveEmpleado').value;
             let idSucursalEmpleado = "";
             if (!clave.length > 0) {
@@ -956,7 +956,7 @@
                 return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
             if (parseFloat(pago.value) < parseFloat(total))
                 return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
-            let funcion = await $.ajax({
+            let venta = await $.ajax({
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
@@ -976,7 +976,12 @@
 
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-            console.log(funcion);
+            console.log(venta);
+            if(ticket)
+            {
+                let url = `{{url('/puntoVenta/venta/${venta}?productos=')}}`+json;
+                window.open(url, "_blank");
+            }
             productosVenta = [];
             mostrarProductos();
             $('#confirmarVentaModal').modal('hide');
@@ -991,6 +996,7 @@
             document.querySelector('#claveEmpleado').value = "";
             //console.log(p);
             //console.log(funcion);
+            
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
@@ -1132,8 +1138,8 @@
         let cuerpo = "";
         if (tipoPago === 'efectivo') {
             cuerpo = `
-        <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
-        <button type="button" onclick="realizarVentaEfectivo()" class="btn btn-primary">SOLO COBRAR</button>
+        <button type="button" onclick="realizarVentaEfectivo(true)" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
+        <button type="button" onclick="realizarVentaEfectivo(false)" class="btn btn-primary">SOLO COBRAR</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     `;
             calcularCambioEfectivo();
