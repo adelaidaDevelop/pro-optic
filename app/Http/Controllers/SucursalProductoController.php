@@ -77,10 +77,15 @@ class SucursalProductoController extends Controller
     public function crear($id){
         return "creado";
     }
-
+    public function act_inventario(){
+        $idSucursal = session('sucursal');
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)->get();
+        return $productosSucursal;
+    }
 
     public function actPrecio(Request $request,$id){
         $suc_prod = Sucursal_producto::findOrFail($id);
+        //return $suc_prod;
         $precio['precio'] =  $request->input('precio');
         $suc_prod->update($precio);
         return true;
@@ -95,7 +100,8 @@ class SucursalProductoController extends Controller
     }
     public function actExistencia(Request $request,$id){
         $suc_prod = Sucursal_producto::findOrFail($id);
-        $existencia['existencia'] = $suc_prod->existencia + $request->input('cantidad');
+       // $existencia['existencia'] = $suc_prod->existencia + $request->input('cantidad');
+        $existencia['existencia'] = $request->input('cantidad');
         $suc_prod->update($existencia);
         return  true;
     }

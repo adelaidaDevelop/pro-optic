@@ -28,31 +28,30 @@ REPORTES
     </h4>
     <br />
     <div class="row w-100 mx-auto my-auto ">
-        <div class="col-4  text-center ">
-            <h6 class=" text-primary"> COSTO DEL INVENTARIO: </h6>
+        <div class="col-4  text-center mx-auto">
+            <h6 class=" text-primary"> PRECIO DEL INVENTARIO: </h6>
             <div class=" input-group text-center mx-auto px-auto">
                 <h3 class="text-center ml-auto">$</h3>
                 <p class="h3 mr-auto" id="costoInv">0.00</p>
             </div>
-        </div class="text-center">
+        </div>
         <div id="" class="col-4 mx-auto text-center">
-            <h6 class=" text-primary"> PRECIO DEL INVENTARIO </h6>
+            <h6 class=" text-primary"> TOTAL DE ENTRADAS </h6>
             <div class=" input-group text-center mx-auto px-auto">
                 <h3 class="text-center ml-auto">$</h3>
-                <p class="h3 mr-auto" id="precioInv">0.00</p>
+                <p class="h3 mr-auto" id="total_entradas">0.00</p>
             </div>
         </div>
-        <div class="col-4 text-center">
-            <h6 class=" text-primary"> CANTIDAD DE PRODUCTOS EN INVENTARIO: </h6>
+        <div class="col-4 mx-auto text-center">
+            <h6 class=" text-primary"> TOTAL DE SALIDAS: </h6>
             <div class=" input-group text-center mx-auto px-auto">
                 <h3 class="text-center ml-auto">$</h3>
-                <p class="h3 mr-auto" id="cantProdInv">0.00</p>
+                <p class="h3 mr-auto" id="total_salidas">0.00</p>
             </div>
         </div>
     </div>
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
     <div class="row w-100   ml-5">
-
         <h5 class="text-primary ml-3 ">BUSCAR POR:</h5>
         <div class="row form-group input-group  ml-3 ">
             <h6 class=" my-auto mr-1">
@@ -84,10 +83,10 @@ REPORTES
                 @foreach($sucursalEmpleados as $cajero)
                 @foreach($empleados as $emp)
                 @if($cajero->idEmpleado == $emp->id)
-                @if( $emp->id == 1)
-                <option value="{{$emp['id']}}">ADMINISTRADOR </option>
+                @if( $cajero->idEmpleado == 1)
+                <option value="{{$cajero['idEmpleado']}}">ADMINISTRADOR </option>
                 @else
-                <option value="{{$emp['id']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                <option value="{{$cajero['idEmpleado']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
                 @endif
                 @endif
                 @endforeach
@@ -358,80 +357,75 @@ REPORTES
 
     function modalVenta(tipoV, fechaXDia2) {
         let cont = 0;
-        let empleadoNombre = "";
+        let empleado = "";
         let fecha = "";
         let depto = "";
         for (count5 in ventas) {
-            let fechaVenta = new Date(ventas[count5].created_at);
-            if (comparacionFecha(fechaXDia2, fechaVenta)) {
-                fechaCol = fechaVenta.toLocaleDateString();
-                horaCol = fechaVenta.toLocaleTimeString();
-                let movi = document.querySelector('#idCajero');
-                let moviName = parseInt(movi.value);
-                if (moviName == 0) {
-                    if (ventas[count5].tipo.toUpperCase() == tipoV) {
-                        //SIN BUSCAR EMPLEADO
+            let idSucEmp = ventas[count5].idSucursalEmpleado;
+            for (let h in sucursalEmpleado) {
+                if (sucursalEmpleado[h].id == idSucEmp) {
+                    let fechaVenta = new Date(ventas[count5].created_at);
+                    if (comparacionFecha(fechaXDia2, fechaVenta)) {
                         let movimiento = "VENTAS";
-                        let total = 0;
-                        //  fecha = new Date(ventas[count5].created_at);
-                        cont = cont + 1;
-                        //nombr empleado
+                        fechaCol = fechaVenta.toLocaleDateString();
+                        horaCol = fechaVenta.toLocaleTimeString();
+                        let movi = document.querySelector('#idCajero');
+                        let moviName = parseInt(movi.value);
+                        if (moviName == 0) {
+                            if (ventas[count5].tipo.toUpperCase() == tipoV) {
+                                //SIN BUSCAR EMPLEADO
+                                for (count7 in detalleVenta) {
+                                    console.log("detalla V: ", detalleVenta);
+                                    if (detalleVenta[count7].idVenta == ventas[count5].id) {
+                                        for (let j in productos) {
+                                            if (productos[j].id == detalleVenta[count7].idProducto) {
+                                                nombre = productos[j].nombre;
+                                                for (let z in departamentos) {
+                                                    if (departamentos[z].id == productos[j].idDepartamento) {
+                                                        depto = departamentos[z].nombre;
+                                                    }
+                                                }
 
-                        for (count7 in detalleVenta) {
-                            console.log("detalla V: ", detalleVenta);
-                            if (detalleVenta[count7].idVenta == ventas[count5].id) {
-
-                                for (let j in productos) {
-                                    if (productos[j].id == detalleVenta[count7].idProducto) {
-                                        nombre = productos[j].nombre;
-                                        for (let z in departamentos) {
-                                            if (departamentos[z].id == productos[j].idDepartamento) {
-                                                depto = departamentos[z].nombre;
+                                                //empleados
+                                                for (count6 in empleados) {
+                                                    if (empleados[count6].id == sucursalEmpleado[h].idEmpleado) {
+                                                        if (empleados[count6].id == 1) {
+                                                            empleado = empleados[count6].primerNombre;
+                                                        } else {
+                                                            empleado = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
+                                                        }
+                                                    }
+                                                }
+                                                cuerpo = cuerpo + `
+                                                    <tr onclick="" data-dismiss="modal">
+                                                    <th scope="row">` + cont + `</th>
+                                                    <td>` + movimiento + `</td>
+                                                    <td>` + ventas[count5].tipo + `</td>
+                                                    <td>` + fechaCol + `</td> 
+                                                    <td>` + horaCol + `</td>
+                                                    <td>` + empleado + `</td>
+                                                    <td>` + nombre + `</td>
+                                                    <td>` + depto + `</td>
+                                                    <td>` + ventas[count5].pago + `</td>
+                                                </tr>
+                                                `;
                                             }
                                         }
-
-                                        //
-
                                     }
                                 }
-                                //empleados
-                                for (let v in sucursalEmpleado) {
-                                    if (sucursalEmpleado[v].id == ventas[v].idSucursalEmpleado) {
-                                        for (let h in empleados) {
-                                            if (empleados[h].id == sucursalEmpleado[v].idEmpleado) {
-                                                empleadoNombre = empleados[h].primerNombre + " " + empleados[h].segundoNombre + " " + empleados[h].apellidoPaterno + " " + empleados[h].apellidoMaterno;
-                                            }
-                                        }
-                                    }
-                                }
-                                cuerpo = cuerpo + `
-                                            <tr onclick="" data-dismiss="modal">
-                                            <th scope="row">` + cont + `</th>
-                                            <td>` + movimiento + `</td>
-                                            <td>` + ventas[count5].tipo + `</td>
-                                            <td>` + fechaCol + `</td> 
-                                            <td>` + horaCol + `</td>
-                                            <td>` + empleadoNombre + `</td>
-                                            <td>` + nombre + `</td>
-                                            <td>` + depto + `</td>
-                                            <td>` + ventas[count5].pago + `</td>
-                                        </tr>
-                                        `;
-                            }
-                        }
-                    }
-                } else {
-                    if (ventas[count5].tipo.toUpperCase() == tipoV) {
-                        for (let y in sucursalEmpleado) {
-                            if (sucursalEmpleado[y].id == ventas[count5].idSucursalEmpleado)
-                                //BUSCAR EMPLEADOS
-                                if (sucursalEmpleado[y].id == moviName) {
+                            } else {
+                                if (sucursalEmpleado[h].id == moviName) {
+                                    //BUSCAR EMPLEADOS
                                     for (count6 in empleados) {
-                                        if (empleados[count6].id == sucursalEmpleado[y].idEmpleado) {
-                                            empleadoNombre = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
+                                        if (empleados[count6].id == sucursalEmpleado[h].idEmpleado) {
+                                            if (empleados[count6].id == 1) {
+                                                empleado = empleados[count6].primerNombre;
+                                            } else {
+                                                empleado = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
+                                            }
                                         }
                                     }
-                                    let movimiento = "VENTAS";
+
                                     let total = 0;
                                     //  fecha = new Date(ventas[count5].created_at);
                                     cont = cont + 1;
@@ -442,32 +436,38 @@ REPORTES
                                             for (let j in productos) {
                                                 if (productos[j].id == detalleVenta[count7].idProducto) {
                                                     nombre = productos[j].nombre;
-                                                }
-                                            }
-                                            //   let subtotal = detalleVenta[count7].cantidad * detalleVenta[count7].precioIndividual;
-                                            //     total = total + subtotal;
-                                            //   }
-                                            // }
-                                            cuerpo = cuerpo + `
+
+
+                                                    //   let subtotal = detalleVenta[count7].cantidad * detalleVenta[count7].precioIndividual;
+                                                    //     total = total + subtotal;
+                                                    //   }
+                                                    // }
+                                                    cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
                                             <td>` + movimiento + `</td>
                                             <td>` + fechaCol + `</td> 
                                             <td>` + horaCol + `</td>
-                                            <td>` + empleadoNombre + `</td>
+                                            <td>` + empleado + `</td>
                                             <td>` + nombre + `</td>
                                             <td>` + ventas[count5].tipo + `</td>
                                             <td>` + ventas[count5].pago + `</td>
-                                        </tr>
-                                        `;
+                                            </tr>
+                                            `;
+                                                }
+                                            }
                                         }
                                     }
+
                                 }
+                            }
                         }
+
                     }
                 }
             }
         }
+
     };
 
     function generaReportes() {
@@ -497,9 +497,9 @@ REPORTES
                 } else if (tipo_venta == "2") {
                     modalVenta("CREDITO", fechaXDia);
                     if (cuerpo === "") {
-                        // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h3 class= "text-danger my-auto"> NO SE ENCONTRARON REGISTROS </h3>`;
+                        let sin = `<h5 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h5>`;
                         document.getElementById("tablaR").innerHTML = sin;
+                        document.getElementById("imp").disabled = true;
                     } else {
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
@@ -507,8 +507,7 @@ REPORTES
                 } else if (tipo_venta == "3") {
                     modalVenta("ECOMMERCE", fechaXDia);
                     if (cuerpo === "") {
-                        // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h5 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h5>`;
+                        let sin = `<h5 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h5>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
@@ -521,12 +520,10 @@ REPORTES
                     modalVenta("ECOMMERCE", fechaXDia);
                     // cuerpo = devolucionFila + salidaVP + entradaNuevosProductos + entradaCompraProduct;
                     if (cuerpo === "") {
-                        // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h5 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h5>`;
+                        let sin = `<h5 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h5>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
-                        console.log(tabla2);
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
@@ -608,7 +605,7 @@ REPORTES
             $('input[id="fechaFinalC"]').prop('disabled', true);
         }
         return false;
-    }
+    };
 
     function comparacionFecha(fecha1, fecha2) {
         let selectFecha = document.querySelector('input[name="fecha"]:checked');

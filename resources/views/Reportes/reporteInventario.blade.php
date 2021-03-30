@@ -481,11 +481,7 @@ REPORTES
         entradaNuevosProductos = "";
         let movi = document.querySelector('#idCajero');
         let cajero = parseInt(movi.value);
-        console.log(cajero);
         if (cajero == 0) {
-            console.log("entro igual a 0 ");
-            //Entradas: NUEVOS PRODUCTOS
-            console.log("nuevos pprod")
             for (let p in productos) {
                 let fechaNuevoProd = new Date(productos[p].created_at);
                 if (comparacionFecha(fechaXDia2, fechaNuevoProd)) {
@@ -541,8 +537,6 @@ REPORTES
                         horaCol = fechaVenta.toLocaleTimeString();
                         let movi = document.querySelector('#idCajero');
                         let moviName = parseInt(movi.value);
-                        console.log("imp2");
-                        console.log(moviName);
                         if (moviName == 0) {
                             //empleado
                             for (let z in detalle_ventas) {

@@ -4,14 +4,14 @@
 PRODUCTOS
 @endsection
 @php
-        use App\Models\Sucursal_empleado;
-        $producto= ['crearProducto','admin'];
-        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
-        $agregar = $sE->hasAnyRole($producto);
-        $crearProducto= ['crearProducto','admin'];
-        $crear = $sE->hasAnyRole($crearProducto);
-        
-        @endphp
+use App\Models\Sucursal_empleado;
+$producto= ['crearProducto','admin'];
+$sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+$agregar = $sE->hasAnyRole($producto);
+$crearProducto= ['crearProducto','admin'];
+$crear = $sE->hasAnyRole($crearProducto);
+
+@endphp
 @section('opciones')
 <div class="col-0  p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
@@ -42,84 +42,96 @@ PRODUCTOS
         </h4>
     </div>
     <div class="row border border-primary m-2 ml-4 mr-4 col ">
+        <div class="col-12 row my-0 mx-0 mt-3 ml-2">
+            <input class="form-control text-uppercase  col-4" type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="cargarProductos()">
+            <a title="buscar" href="" class="text-dark ">
+                <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
+            <div class="mt-2 mx-2"> </div>
+
+        </div>
         <div class="col mt-1 mb-4 ml-4 mr-4">
             <!-- TABLA -->
             <div id="vacio" class="text-center my-auto">
-            <div class="row border mt-4" style="height:300px;overflow-y:auto;">
-                <table class="table table-bordered border-primary">
-                    <thead class="table-secondary text-primary">
-                        <tr>
-                            <th>#</th>
-                            <th>CODIGO BARRAS</th>
-                            <th>NOMBRE</th>
-                            <th>DEPARTAMENTO</th>
-                            <th>ACCIONES</th>
-                        </tr>
-                    </thead>
-                    <tbody id="consultaBusqueda">
+                <div class="row border mt-4" style="height:300px;overflow-y:auto;">
+                    <table class="table table-bordered border-primary">
+                        <thead class="table-secondary text-primary">
+                            <tr>
+                                <th>#</th>
+                                <th>CODIGO BARRAS</th>
+                                <th>NOMBRE</th>
+                                <th>DEPARTAMENTO</th>
+                                <th>ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="consultaBusqueda">
 
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    let productos = @json($productos);
+    let productos = @json($noAgregado);
     let deptos = @json($depa);
-    let producto_sucursal = @json($productosSucursal);
 
+
+    console.log(productos);
 
     function cargarProductos() {
-        let bandera = true;
+        // let bandera = true;
         let cuerpo = "";
         let contador = 0;
         let departamento = "";
+        const palabraBusqueda = document.querySelector('#busquedaProducto');
 
         for (let t in productos) {
-            bandera = true;
-            for (let x in producto_sucursal) {
-                if (productos[t].id === producto_sucursal[x].idProducto) {
-                    bandera = false;
-                    console.log("entro");
+            if (productos[t].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                /*
+                bandera = true;
+                for (let x in producto_sucursal) {
+                    if (productos[t].id === producto_sucursal[x].idProducto) {
+                        bandera = false;
+                        console.log("ya es igual");
+                    }
                 }
-            }
-            if (bandera === true) {
+                */
+                // if (bandera) {
+
                 for (count in deptos) {
                     if (productos[t].idDepartamento === deptos[count].id) {
                         departamento = deptos[count].nombre;
                     }
                 }
-                console.log("entro0Vez");
                 contador = contador + 1;
                 let agregar = @json($agregar);
                 let btnAgregar = `<a class="btn btn-primary" href="{{ url('/puntoVenta/agregarProdStock/` +
                     productos[t].id + `')}}"> AGREGAR </a>`;
-                if(!agregar)
-                {
+                if (!agregar) {
                     btnAgregar = `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA AGREGAR')"> AGREGAR </button>`
                 }
                 cuerpo = cuerpo + `
-                 <tr onclick="" data-dismiss="modal">
-                 <th scope="row">` + contador + `</th>
-                   <td>` + productos[t].codigoBarras + `</td>
-                   <td>` + productos[t].nombre + `</td>
-                   <td>` + departamento + `</td>
-                    <td>` +btnAgregar+
-
+                            <tr onclick="" data-dismiss="modal">
+                            <th scope="row">` + contador + `</th>
+                            <td>` + productos[t].codigoBarras + `</td>
+                            <td>` + productos[t].nombre + `</td>
+                            <td>` + departamento + `</td>
+                                <td>` + btnAgregar +
                     ` 
-                </td>            
-                            </tr>
-                            `;
+                            </td>            
+                                        </tr>
+                                        `;
             }
+            //  }
         }
         if (cuerpo === "") {
-           let sin= ` <h3 class= "text-danger my-auto"> TODOS LOS PRODUTOS HAN SIDO AGREGADOS A ESTA SUCURSAL </h3>`;
-            document.getElementById("vacio").innerHTML = sin ;
+            let sin = ` <h3 class= "text-danger my-auto"> TODOS LOS PRODUTOS HAN SIDO AGREGADOS A ESTA SUCURSAL </h3>`;
+            document.getElementById("vacio").innerHTML = sin;
         } else {
             document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+
         }
     }
     cargarProductos();

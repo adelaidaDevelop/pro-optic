@@ -23,13 +23,13 @@ class ProductoController extends Controller
     {
         $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        $idSucursal = session('sucursal');
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)->get();
+       
         $depas['d']= Departamento::paginate();
         $datosP= Producto::all();
         $depa= Departamento::all();
-        $idSucursal = session('sucursal');
         $producto = Producto::all();
-        $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)->get();
         $subproducto = Subproducto::all();
         $ofertas = Oferta::all();
      //   return $idSucursal;
@@ -161,10 +161,28 @@ class ProductoController extends Controller
         $productos= Producto::all();
         $idSucursal = session('sucursal');
         $productosSucursal= Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
+        //$noAgregado = $productos::where('id','!=' )
         $depa= Departamento::all();
-        return view('Producto.stockV', compact('productos', 'depa', 'productosSucursal'));
+        $noAgregado = [];
+        foreach($productos as $p)
+        {
+            $bandera = true;
+            foreach($productosSucursal as $ps)
+            {
+                if($p->id == $ps->idProducto){
+                    $bandera = false;
+                }
+            }
+            if($bandera){
+                array_push($noAgregado,$p);
+            }
+
+        }
+       // return view('Producto.stockV', compact('productos', 'depa', 'productosSucursal','noAgregado'));
+        return view('Producto.stockV', compact('depa', 'noAgregado'));
         
     }
+    
     public function update(Request $request, $id)
     {
         $usuarios = ['modificarProducto','admin'];
