@@ -1,4 +1,24 @@
 @extends('layouts.app')
+@php
+use App\Models\Sucursal_empleado;
+$compra= ['verCompra','crearCompra','modificarCompra','verPago','admin'];
+$inventario= ['verProducto','crearProducto','modificarProducto','eliminarProducto','admin'];
+$administracion = ['verSucursal','crearSucursal','modificarSucursal','eliminarSucursal',
+    'verEmpleado','crearEmpleado','eliminarEmpleado','modificarEmpleado','admin'];
+$deudor= ['verDeudor','admin'];
+$corte= ['verCorte','admin'];
+$reporte= ['verReporte','admin'];
+
+$sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+
+$verCompra = $sE->hasAnyRole($compra);
+$verInventario = $sE->hasAnyRole($inventario);
+$verAdministracion = $sE->hasAnyRole($administracion);
+$verDeudor = $sE->hasAnyRole($deudor);
+$verCorte = $sE->hasAnyRole($corte);
+$verReporte = $sE->hasAnyRole($reporte);
+
+@endphp
 @section('content')
 
 <div class="container-fluid">
@@ -13,6 +33,7 @@
             <!--cambios de ruta-->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
+                    
                     <li class="nav-item active">
                         <a class="nav-link px-0 mx-2" href="/puntoVenta/venta">
                             <button class="btn btn-light input-group border" type="submit">
@@ -22,9 +43,10 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
+                    
                     <li class="nav-item active">
-                        <a class="nav-link px-0 mx-2" href="/puntoVenta/compra">
-                            <button class="btn btn-light input-group">
+                        <a class="nav-link px-0 mx-2 @if(!$verCompra) disabled @endif" href="/puntoVenta/compra">
+                            <button class="btn btn-light input-group" @if(!$verCompra) disabled @endif>
                                 <img src="{{ asset('img\compra.png') }}" alt="Editar" width="30px" height="30px">
                                 <p class="h6 my-auto"><small>COMPRAS</small></p>
                             </button>
@@ -40,8 +62,8 @@
                     </li>
                     -->
                     <li class="nav-item active">
-                        <a class="nav-link px-0 mx-2" href="/puntoVenta/producto">
-                            <button class="btn btn-light input-group">
+                        <a class="nav-link px-0 mx-2 @if(!$verInventario) disabled @endif" href="/puntoVenta/producto">
+                            <button class="btn btn-light input-group"  @if(!$verInventario) disabled @endif>
                             <img src="{{ asset('img\inventario.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto ml-1"><small>INVENTARIO</small></p>
                             </button>
@@ -50,8 +72,8 @@
                     <li class="nav-item active">
                         <!--if(session('idUsuario') == 1)-->
                         
-                        <a class="nav-link px-0 mx-2" href="/puntoVenta/administracion">
-                            <button class="btn btn-light input-group">
+                        <a class="nav-link px-0 mx-2 @if(!$verAdministracion) disabled @endif" href="/puntoVenta/administracion">
+                            <button class="btn btn-light input-group"  @if(!$verAdministracion) disabled @endif>
                             <img src="{{ asset('img\administracion.png') }}" alt="Editar" width="30px" height="30px">
                             
                             <p class="h6 my-auto ml-1"><small>ADMINISTRACION</small></p>
@@ -74,8 +96,8 @@
                             </button>
                             <span class="sr-only">(current)</span></a>
                             -->
-                        <a class="nav-link px-0 mx-2" href="/puntoVenta/credito">
-                            <button class="btn btn-light input-group">
+                        <a class="nav-link px-0 mx-2 @if(!$verDeudor) disabled @endif" href="/puntoVenta/credito">
+                            <button class="btn btn-light input-group" @if(!$verDeudor) disabled @endif>
                             <img src="{{ asset('img\deudores.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto ml-1"><small>LISTA DEUDORES</small></p>
                             </button>
@@ -84,20 +106,29 @@
 
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link px-0 mx-2" href="/puntoVenta/corteCaja">
-                            <button class="btn btn-light input-group">
+                        <a class="nav-link px-0 mx-2 @if(!$verCorte) disabled @endif" href="/puntoVenta/corteCaja">
+                            <button class="btn btn-light input-group"  @if(!$verCorte) disabled @endif>
                                 <img src="{{ asset('img\corteC.png') }}" alt="Editar" width="30px" height="30px">
                                 <p class="h6 my-auto"><small>CORTE</small></p>
                                 </button>
                             <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
+                        @if($verReporte)
                         <a class="nav-link px-0 mx-2" href="/puntoVenta/reporteInventario">
-                            <button class="btn btn-light input-group">
+                            <button class="btn btn-light input-group" >
                             <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto"><small>REPORTES</small></p>
                                 </button>
                             <span class="sr-only">(current)</span></a>
+                        @else
+                        <a class="nav-link px-0 mx-2 disabled" href="/puntoVenta/reporteInventario">
+                            <button class="btn btn-light input-group" @if(!$verCorte) disabled @endif>
+                            <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
+                            <p class="h6 my-auto"><small>REPORTES</small></p>
+                                </button>
+                            <span class="sr-only">(current)</span></a>
+                        @endif
                     </li>
                 </ul>
                 <!--ul class="navbar-nav ml-auto">
