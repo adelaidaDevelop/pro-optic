@@ -372,7 +372,7 @@ REPORTES
     };
 
 
-    function ventasRealizadas(fechaXDia) {
+    function ventas_compras(fechaXDia) {
         salidaVP = "";
         cant_anterior = 0;
         cant_actual = 0;
@@ -405,6 +405,45 @@ REPORTES
             }
         }
         //COMPRAS
+        entradaCompraProduct = "";
+        totalEntradas = 0;
+        //let emple = "";
+        // let existencia = 0;
+        // let prov = "";
+        total_compras = 0;
+        //COMPRA DE PRODUCTOS AGREGADAS EN ESA FECHA
+        for (let c in compras) {
+            let fechaCompra = new Date(compras[c].created_at);
+            console.log(fechaCompra);
+            if (comparacionFecha(fechaXDia2, fechaCompra)) {
+                fechaCol = fechaCompra.toLocaleDateString();
+                for (let x in detalle_compras) {
+                    if (detalle_compras[x].idCompra == compras[c].id) {
+                        for (let i in productos) {
+                            if (productos[i].id == detalle_compras[x].idProducto) {
+                                let totalCompra = detalle_compras[x].costo_unitario * detalle_compras[x].cantidad;
+                                totalEntradas = totalEntradas + totalCompra;
+                            }
+                        }
+                    }
+                }
+               // contador = contador + 1;
+                total_compras = total_compras + totalEntradas;
+            }
+
+        }
+        entradaCompraProduct = entradaCompraProduct + `
+                                            <tr>
+                                                    <th scope="row">` + contador + `</th>
+                                                    <td>` + fechaCol + `</td>
+                                                    <td>` + 0 + `</td>
+                                                    <td>` + total_compras + `</td>
+                                                    <td>` + +`</td>
+                                                    <td>` + "inv final" + `</td> 
+                                            </tr>
+                                            `;
+
+
 
 
         //TOTAL VENTAS X DIA
@@ -412,9 +451,10 @@ REPORTES
                  <tr>
                 <th scope="row">` + contador + `</th>
                 <td>` + fechaCol + `</td>
-                <td>` + 0 + `</td>
-                <td>` + +`</td>
-                <td>` + totalVenta + `</td>  
+                <td>` + "tonInv" + `</td>
+                <td>` + total_compras + `</td>
+                <td>` + total_ventas + `</td> 
+                <td>` +0 +`</td>
                  </tr>
                   `;
         //HASTA AQUI
@@ -431,13 +471,13 @@ REPORTES
         if (validarCamposFechas()) {
             fechaXDia = new Date(fechaDia.value);
             fechaXDia.setDate(fechaXDia.getDate() + 1);
-            
-            compraProductos(fechaXDia);
-            ventasRealizadas(fechaXDia);
+
+           // compraProductos(fechaXDia);
+            ventas_compras(fechaXDia);
             document.getElementById("total_salidas").innerHTML = total_ventas;
             document.getElementById("total_entradas").innerHTML = total_compras;
             //BUSCAR TODOS
-            cuerpo = entradaCompraProduct + salidaVP;
+            cuerpo = salidaVP;
             if (cuerpo === "") {
                 let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
                 document.getElementById("tablaR").innerHTML = sin;

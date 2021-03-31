@@ -103,7 +103,7 @@ class ReporteController extends Controller
             $bandera = true;
             foreach($sucursalEmpleados as $suc_emp)
             {
-                if($sucursalEmpleados->id == $c->idSucursalEmpleado){
+                if($suc_emp->id == $c->idSucursalEmpleado){
                     array_push($comprasFiltro,$c);
                 }
             }
@@ -115,7 +115,7 @@ class ReporteController extends Controller
            // $bandera = true;
             foreach($sucursalEmpleados as $suc_emp)
             {
-                if($sucursalEmpleados->id == $v->idSucursalEmpleado){
+                if($suc_emp->id == $v->idSucursalEmpleado){
                     array_push($ventasFiltro,$v);
                 }
             }
