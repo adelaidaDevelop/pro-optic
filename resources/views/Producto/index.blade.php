@@ -1640,6 +1640,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 return alert('INGRESE UNA CANTIDAD VALIDA PARA CONTINUAR')
             let respuesta = await fetch(`/puntoVenta/inventarioRapido/${cantidad}`);
             productosRapidos = await respuesta.json();
+            console.log(productosRapidos);
             mostrarInventarioRapido()
             $('#modalPeticionInventario').modal('hide');
             
@@ -1661,8 +1662,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 <tr>
                     <td>`+productosRapidos[i].nombre+`</td>
                     <td>`+productosRapidos[i].existencia+`</td>
-                    <td><input type="number" class="form-control" placeholder="CANTIDAD" aria-label="Username" aria-describedby="basic-addon1"></td>
-                    <td><button type="button" class="btn btn-primary">ACTUALIZAR</button></td>
+                    <td><input type="number" class="form-control" placeholder="CANTIDAD" 
+                    id="nuevaExistencia${i}" aria-describedby="basic-addon1"></td>
+                    <td><button type="button" class="btn btn-primary " onclick="actualizar(${i})">ACTUALIZAR</button></td>
                     <td><button type="button" class="btn btn-warning" onclick="ignorar(`+i+`)">IGNORAR</button></td>
                 </tr>
                 `;
@@ -1683,17 +1685,21 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         else
             mostrarInventarioRapido();
     }
-    /*
-    function actualizar()
+    
+    /*async function actualizar(i)
     {
-        let funcion = $.ajax({
+        let existencia = document.getElementById(`nuevaExistencia${i}`).value;
+        //idSucProd = productosRapidos[i]
+        if(productosRapidos[i].producto)
+        {
+            let funcion = $.ajax({
                 // metodo: puede ser POST, GET, etc
                 method: "post",
                 // la URL de donde voy a hacer la petición
                 url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
                 // los datos que voy a enviar para la relación
                 data: {
-                    cantidad: parseInt(costo.value),
+                    cantidad: existencia,
                     _token: "{{ csrf_token() }}"
                     //  id: idSucProd
                 }
@@ -1702,14 +1708,33 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
+        }else
+        {
+            let funcion = $.ajax({
+                // metodo: puede ssubProdExisNuevoer POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `/puntoVenta/subProdExisNuevo/${idSucProd}`,
+                // los datos que voy a enviar para la relación
+                data: {
+                    cantidad: existencia,
+                    _token: "{{ csrf_token() }}"
+                    //  id: idSucProd
+                }
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                //alert(respuesta);
+                console.log(respuesta); //JSON.stringify(respuesta));
+            });
+        }
             $('#modal_precio_venta3').modal('hide');
             $('#detalleProducto').modal('hide');
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
             //  refrescar();
             await act_datos();
             await buscarFiltroNombre2();
-    }
-    */
+    }*/
+    
 
 </script>
 
