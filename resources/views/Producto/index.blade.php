@@ -1691,54 +1691,60 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             mostrarInventarioRapido();
     }
     
-    /*async function actualizar(i)
+    async function actualizar(i)
     {
-        let existencia = document.getElementById(`nuevaExistencia${i}`).value;
-        //idSucProd = productosRapidos[i]
-        if(productosRapidos[i].producto)
+        try
         {
-            let funcion = $.ajax({
-                // metodo: puede ser POST, GET, etc
-                method: "post",
-                // la URL de donde voy a hacer la petición
-                url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
-                // los datos que voy a enviar para la relación
-                data: {
-                    cantidad: existencia,
-                    _token: "{{ csrf_token() }}"
-                    //  id: idSucProd
-                }
-                // si tuvo éxito la petición
-            }).done(function(respuesta) {
-                //alert(respuesta);
-                console.log(respuesta); //JSON.stringify(respuesta));
-            });
-        }else
-        {
-            let funcion = $.ajax({
-                // metodo: puede ssubProdExisNuevoer POST, GET, etc
-                method: "POST",
-                // la URL de donde voy a hacer la petición
-                url: `/puntoVenta/subProdExisNuevo/${idSucProd}`,
-                // los datos que voy a enviar para la relación
-                data: {
-                    cantidad: existencia,
-                    _token: "{{ csrf_token() }}"
-                    //  id: idSucProd
-                }
-                // si tuvo éxito la petición
-            }).done(function(respuesta) {
-                //alert(respuesta);
-                console.log(respuesta); //JSON.stringify(respuesta));
-            });
-        }
-            $('#modal_precio_venta3').modal('hide');
-            $('#detalleProducto').modal('hide');
+            let existencia = document.getElementById(`nuevaExistencia${i}`).value;
+            let idSucProd = productosRapidos[i].id;
+            if(productosRapidos[i].producto)
+            {
+                let funcion = $.ajax({
+                    // metodo: puede ser POST, GET, etc
+                    method: "post",
+                    // la URL de donde voy a hacer la petición
+                    url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
+                    // los datos que voy a enviar para la relación
+                    data: {
+                        cantidad: existencia,
+                        _token: "{{ csrf_token() }}"
+                        //  id: idSucProd
+                    }
+                    // si tuvo éxito la petición
+                }).done(function(respuesta) {
+                    //alert(respuesta);
+                    console.log(respuesta); //JSON.stringify(respuesta));
+                });
+            }else
+            {
+                let funcion = $.ajax({
+                    // metodo: puede ssubProdExisNuevoer POST, GET, etc
+                    method: "POST",
+                    // la URL de donde voy a hacer la petición
+                    url: `/puntoVenta/subProdExisNuevo/${idSucProd}`,
+                    // los datos que voy a enviar para la relación
+                    data: {
+                        cantidad: existencia,
+                        _token: "{{ csrf_token() }}"
+                        //  id: idSucProd
+                    }
+                    // si tuvo éxito la petición
+                }).done(function(respuesta) {
+                    //alert(respuesta);
+                    console.log(respuesta); //JSON.stringify(respuesta));
+                });
+            }
+            //$('#modal_precio_venta3').modal('hide');
+            //$('#detalleProducto').modal('hide');
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
             //  refrescar();
+            ignorar(i);
             await act_datos();
             await buscarFiltroNombre2();
-    }*/
+        }catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
     
 
 </script>
