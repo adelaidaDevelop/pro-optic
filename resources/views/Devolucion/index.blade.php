@@ -454,7 +454,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
         try {
             response = await fetch(`/datosVentas`);
             if (response.ok) {
-                8
+                
                 ventas = await response;
             } else {
                 console.log("No responde :'v");

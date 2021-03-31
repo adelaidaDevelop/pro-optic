@@ -1306,8 +1306,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             console.log("llego aqui ");
             response = await fetch(`/puntoVenta/act_inventario`);
             if (response.ok) {
-
-                productosSucursal = await response.json();
+                //productosSucursal = await response.json();
+                let datos = await response.json();
+                productosSucursal = datos['productosSucursal'];
+                subproductos = datos['subproducto']
             } else {
                 console.log("No responde :v");
                 console.log(response);
@@ -1427,10 +1429,13 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
             // console.log("h y a");
-            $('#modal_precio_venta').modal('hide');
+            $('#modal_precio_venta5').modal('hide');
             $('#detalleProducto').modal('hide');
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
-            refrescar();
+            //refrescar();
+            await act_datos();
+            await buscarFiltroNombre2();
+
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
