@@ -6,6 +6,7 @@ use App\Models\Sucursal;
 use App\Models\Sucursal_producto;
 use App\Models\Sucursal_empleado;
 use App\Models\Producto;
+use App\Models\Subproducto;
 use App\Models\Productos_caducidad;
 use Illuminate\Http\Request;
 
@@ -119,16 +120,7 @@ class SucursalProductoController extends Controller
     public function show($id)//Sucursal_producto $sucursal_producto)
     {
         //if($id=='todos')
-        if($id == 'aleatorio')
-        {
-            //return session()->all();
-            $productosSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursal'))->get(['id','idProducto','existencia']);
-            $valor = mt_rand(1, count($productosSucursal)); 
-            $producto = Producto::findOrFail($productosSucursal[$valor-1]->id);
-            $productosSucursal[$valor-1]->nombre = $producto->nombre;
-            //$productosSucursal[$valor-1]->nombre = $producto->nombre;
-            return $productosSucursal[$valor-1];
-        }
+        
         return Sucursal_producto::where('idSucursal', '=',$id)->get();//->where('status','=',1)->get();
     }
 
@@ -242,7 +234,46 @@ class SucursalProductoController extends Controller
 
     public function inventarioRapido($total)
     {
-        return view('Producto.inventarioRapido');
+        //return session()->all();
+        $productosRapidos = [];
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursal'))->get(['id','idProducto','existencia']);
+        $subproductosSucursal = [];
+        foreach($productosSucursal as $pS)
+        {
+            $subproducto = Subproducto::where('idSucursalProducto', '=',$pS->id)->first(['existencia']);
+            if(isset($subproducto))
+            {
+                $subproducto->idProducto = $pS->idProducto;
+                array_push($subproductosSucursal,$subproducto);
+            }
+                
+        }
+        $totalProductos = count($productosSucursal) + count($subproductosSucursal);
+        if($total>$totalProductos)
+            $total = $totalProductos;
+        $valores = [];
+        for($i=0;$i<$total;$i++)
+        {
+            do {
+                $valor = mt_rand(1, $totalProductos);
+            } while (in_array($valor, $valores)); 
+            array_push($valores,$valor);
+            //if(in_array($valor, $valores))
+            if($valor>count($productosSucursal))
+            {
+                $valorAux = $valor - count($productosSucursal);
+                $producto = Producto::findOrFail($subproductosSucursal[$valorAux-1]->idProducto);
+                $subproductosSucursal[$valorAux-1]->nombre = $producto->nombre." (SUBPRODUCTO)";
+                array_push($productosRapidos,$subproductosSucursal[$valorAux-1]);
+            }
+            else{
+                $producto = Producto::findOrFail($productosSucursal[$valor-1]->idProducto);
+                $productosSucursal[$valor-1]->nombre = $producto->nombre;
+                //$productosSucursal[$valor-1]->nombre = $producto->nombre;
+                array_push($productosRapidos,$productosSucursal[$valor-1]);
+            }
+        }
+        return $productosRapidos;// view('Producto.inventarioRapido');
     }
     
 }

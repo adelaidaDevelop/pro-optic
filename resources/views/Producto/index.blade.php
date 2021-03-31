@@ -56,7 +56,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 </div>
 
 <div class="col-0  ml-3 p-1 ">
-    <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" data-target="#modalPeticionInventario" value="">
+    <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" data-target="#modalPeticionInventario" onclick="restaurarPeticionInventario()" value="">
         <img src="{{ asset('img\alta2.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>INVENTARIO RÁPIDO</small></p>
     </button>
@@ -408,7 +408,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 AQUI VA EL INVENTARIO RAPIDO
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">CERRAR</button>
             </div>
         </div>
     </div>
@@ -1595,21 +1595,88 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     };
+    let productosRapidos = [];
     async function getInventarioRapido()
     {
+        
         try{
             let cantidad = document.getElementById("cantidadProductos").value;
-            let cuerpo = document.getElementById("cuerpoInventarioRapido");
-            let respuesta = await fetch(`/puntoVenta/inventarioRapido/${clave}`);
-            let productos = await respuesta.json();
-            console.log(productos);
-            cuerpo.innerHTML = cantidad;
+            //return alert(cantidad);
+            if(cantidad.length == 0)
+                return alert('INGRESE UNA CANTIDAD VALIDA PARA CONTINUAR')
+            if(cantidad <= 0)
+                return alert('INGRESE UNA CANTIDAD VALIDA PARA CONTINUAR')
+            let respuesta = await fetch(`/puntoVenta/inventarioRapido/${cantidad}`);
+            productosRapidos = await respuesta.json();
+            mostrarInventarioRapido()
             $('#modalPeticionInventario').modal('hide');
+            
             $('#modalInventarioRapido').modal('show');
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
+    function mostrarInventarioRapido()
+    {
+        let cuerpoModal = document.getElementById("cuerpoInventarioRapido");
+        let cuerpo = `<table class="table">
+            <thead>
+            </thead>
+            <tbody>`;
+            for(let i in productosRapidos)
+            {
+                cuerpo = cuerpo + `
+                <tr>
+                    <td>`+productosRapidos[i].nombre+`</td>
+                    <td>`+productosRapidos[i].existencia+`</td>
+                    <td><input type="number" class="form-control" placeholder="CANTIDAD" aria-label="Username" aria-describedby="basic-addon1"></td>
+                    <td><button type="button" class="btn btn-primary">ACTUALIZAR</button></td>
+                    <td><button type="button" class="btn btn-warning" onclick="ignorar(`+i+`)">IGNORAR</button></td>
+                </tr>
+                `;
+            }
+            cuerpo = cuerpo + `</tbody></table>`;
+            //console.log(productos);
+            cuerpoModal.innerHTML = cuerpo;
+    }
+    function restaurarPeticionInventario()
+    {
+        document.getElementById("cantidadProductos").value = "";
+    }
+    function ignorar(i)
+    {
+        productosRapidos.splice(i,1);
+        if(productosRapidos.length == 0)
+            $('#modalInventarioRapido').modal('hide');
+        else
+            mostrarInventarioRapido();
+    }
+    function actualizar()
+    {
+        let funcion = $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "post",
+                // la URL de donde voy a hacer la petición
+                url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
+                // los datos que voy a enviar para la relación
+                data: {
+                    cantidad: parseInt(costo.value),
+                    _token: "{{ csrf_token() }}"
+                    //  id: idSucProd
+                }
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                //alert(respuesta);
+                console.log(respuesta); //JSON.stringify(respuesta));
+            });
+            $('#modal_precio_venta3').modal('hide');
+            $('#detalleProducto').modal('hide');
+            alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
+            //  refrescar();
+            await act_datos();
+            await buscarFiltroNombre2();
+    }
+
 </script>
 
 @endsection
