@@ -12,7 +12,7 @@
 </head>
 @php
         use App\Models\Sucursal_empleado;
-        $vC = ['verCliente','modificarCliente','eliminarCliente','crearCliente','admin'];
+        $vC = ['verCliente','modificarCliente','eliminarCliente','admin'];
         $mC= ['modificarCliente','admin'];
         $cC= ['crearCliente','admin'];
         $eC= ['eliminarCliente','admin'];
@@ -25,10 +25,12 @@
 <body>
     @if (count($clienteB)) 
     @foreach($clienteB as $cliente)
-    @if($crearC)
-    <button onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" class="btn btn-light btn-block my-2  border border-dark  mx-1">{{$cliente->nombre}}</button>
-    @else
+    @if($verC)
     <a href="{{url('/puntoVenta/cliente/'.$cliente->id.'/edit/')}}" class="btn btn-light btn-block my-2  border border-dark  mx-1">{{$cliente->nombre}}</a>
+    
+    @else
+    <button onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" class="btn btn-light btn-block my-2  border border-dark  mx-1">{{$cliente->nombre}}</button>
+    
     @endif
     @endforeach
     @else
