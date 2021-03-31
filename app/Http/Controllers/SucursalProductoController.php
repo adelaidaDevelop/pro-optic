@@ -245,6 +245,7 @@ class SucursalProductoController extends Controller
             if(isset($subproducto))
             {
                 $subproducto->idProducto = $pS->idProducto;
+                $subproducto->id = $pS->id;
                 array_push($subproductosSucursal,$subproducto);
             }
                 
@@ -265,12 +266,14 @@ class SucursalProductoController extends Controller
                 $valorAux = $valor - count($productosSucursal);
                 $producto = Producto::findOrFail($subproductosSucursal[$valorAux-1]->idProducto);
                 $subproductosSucursal[$valorAux-1]->nombre = $producto->nombre." (SUBPRODUCTO)";
+                $subproductosSucursal[$valorAux-1]->producto = false;
                 array_push($productosRapidos,$subproductosSucursal[$valorAux-1]);
             }
             else{
                 $producto = Producto::findOrFail($productosSucursal[$valor-1]->idProducto);
                 $productosSucursal[$valor-1]->nombre = $producto->nombre;
                 //$productosSucursal[$valor-1]->nombre = $producto->nombre;
+                $productosSucursal[$valor-1]->producto = true;
                 array_push($productosRapidos,$productosSucursal[$valor-1]);
             }
         }

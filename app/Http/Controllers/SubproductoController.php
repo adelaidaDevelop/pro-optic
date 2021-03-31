@@ -145,7 +145,7 @@ class SubproductoController extends Controller
      */
     public function subProdExisNuevo(Request $request, $id){
         $subproducto = Subproducto::where('idSucursalProducto', '=', $id);//->first();
-        $exisNuevo['existencia'] =  $subproducto->first()->existencia + $request->input('cantidad');
+        $exisNuevo['existencia'] =$request->input('cantidad');  //$subproducto->first()->existencia + $request->input('cantidad');
        // return $exisNuevo;
         $subproducto->update($exisNuevo);
         return redirect('/puntoVenta/producto');
