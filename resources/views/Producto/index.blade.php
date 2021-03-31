@@ -77,8 +77,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     </button>
 </div>
 -->
-<div class="col-3 "></div>
-<div class=" my-auto">
+<div class="col-1 "></div>
+<div class="mx-3 my-auto">
     <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
     </a>

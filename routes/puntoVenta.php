@@ -50,7 +50,7 @@ Route::prefix('/puntoVenta')->group(function()
     Route::resource('pagoCompra', PagoCompraController::class);
     Route::resource('devolucion', DevolucionController::class);
     
-    Route::get('reporteVentas', [ReporteController::class,'index3']);
+    
 
     Route::get('/empleado/buscadorEmpleado', [EmpleadoController::class,'buscadorEmpleado']);
 
@@ -144,6 +144,7 @@ Route::prefix('/puntoVenta')->group(function()
     Route::resource('corteCaja', ReporteController::class);
     Route::get('reporteInventario', [ReporteController::class,'index2']);
     Route::get('reporteVentas', [ReporteController::class,'index3']);
+    Route::get('reporteCompraVenta', [ReporteController::class,'index4']);
     
     Route::get('act_inventario', [SucursalProductoController::class,'act_inventario']);
     

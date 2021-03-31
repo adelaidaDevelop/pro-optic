@@ -22,7 +22,15 @@ REPORTES
         </button>
     </form>
 </div>
-<div class="col-7 "></div>
+<div class="col-0  p-1 ml-4">
+    <form method="get" action="{{url('/puntoVenta/reporteCompraVenta/')}}">
+        <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
+            <img src="{{ asset('img\ventas.png') }}" alt="Editar" width="30px" height="30px">
+            <p class="h6 my-auto mx-2 text-dark"><small>REPORTE COMPRAS-VENTAS</small></p>
+        </button>
+    </form>
+</div>
+<div class="col-5 "></div>
 <div class=" my-auto">
     <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
@@ -41,25 +49,33 @@ REPORTES
     </h4>
     <br />
     <div class="row w-100 mx-auto my-auto ">
-        <div class="col-4  text-center mx-auto">
-            <h6 class=" text-primary"> PRECIO DEL INVENTARIO: </h6>
-            <div class=" input-group text-center mx-auto px-auto">
-                <h3 class="text-center ml-auto">$</h3>
-                <p class="h3 mr-auto" id="costoInv">0.00</p>
-            </div>
-        </div>
-        <div id="" class="col-4 mx-auto text-center">
+        
+        <div id="" class="col-3 mx-auto text-center">
             <h6 class=" text-primary"> TOTAL DE ENTRADAS </h6>
             <div class=" input-group text-center mx-auto px-auto">
                 <h3 class="text-center ml-auto">$</h3>
                 <p class="h3 mr-auto" id="total_entradas">0.00</p>
             </div>
         </div>
-        <div class="col-4 mx-auto text-center">
+        <div class="col-3 mx-auto text-center">
             <h6 class=" text-primary"> TOTAL DE SALIDAS: </h6>
             <div class=" input-group text-center mx-auto px-auto">
                 <h3 class="text-center ml-auto">$</h3>
                 <p class="h3 mr-auto" id="total_salidas">0.00</p>
+            </div>
+        </div>
+        <div class="col-3 mx-auto text-center">
+            <h6 class=" text-primary"> TOTAL GANANCIA: </h6>
+            <div class=" input-group text-center mx-auto px-auto">
+                <h3 class="text-center ml-auto">$</h3>
+                <p class="h3 mr-auto" id="ganancia">0.00</p>
+            </div>
+        </div>
+        <div class="col-3  text-center mx-auto">
+            <h6 class=" text-primary"> TOTAL PERDIDA: </h6>
+            <div class=" input-group text-center mx-auto px-auto">
+                <h3 class="text-center ml-auto">$</h3>
+                <p class="h3 mr-auto" id="perdida">0.00</p>
             </div>
         </div>
     </div>
@@ -723,6 +739,7 @@ REPORTES
     };
 
     function generaReportes() {
+        document.getElementById("imp").disabled = false;
         //let devolucionFila = "";
         //  let salidaVP = "";
         //let entradaNuevosProductos = "";

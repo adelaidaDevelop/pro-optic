@@ -13,6 +13,7 @@ use App\Models\Producto;
 use App\Models\Departamento;
 use App\Models\Detalle_compra;
 use App\Models\Detalle_venta;
+use App\Models\Proveedor;
 use App\Models\Sucursal_empleado;
 use App\Models\Sucursal_producto;
 use Illuminate\Http\Request;
@@ -79,6 +80,39 @@ class ReporteController extends Controller
         $detalle_ventas = Detalle_venta::all();
         $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
         return view('Reportes.reporteVentas', compact('empleados','sucursalEmpleados','productos','departamentos','ventas','detalle_ventas', 'sucursal_productos'));
+    }
+
+    public function index4()
+    {
+        $usuarios = ['verReporte','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
+        $empleados = Empleado::all();
+        $idSucursal = session('sucursal');
+        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
+        $compras= Compra::all();
+        $detalleCompra= Detalle_compra::all();
+        $productos= Producto::all();
+        $devoluciones= Devolucion::all();
+        $departamentos= Departamento::all();
+        $ventas = Venta::all();
+
+        $comprasFiltro = [];
+        foreach($compras as $c)
+        {
+            $bandera = true;
+            foreach($sucursalEmpleados as $suc_emp)
+            {
+                if($sucursalEmpleados->id == $c->idSucursalEmpleado){
+                    array_push($comprasFiltro,$c);
+                }
+            }
+        }
+
+        $proveedores = Proveedor::where('status','=', 1)->get();
+        $detalle_ventas = Detalle_venta::all();
+        $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
+        return view('Reportes.entradas_salidas', compact('empleados', 'compras', 'detalleCompra', 'productos', 'devoluciones', 'departamentos', 'ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados','proveedores','comprasFiltro'));    
     }
       
 
