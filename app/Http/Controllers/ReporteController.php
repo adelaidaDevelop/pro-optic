@@ -109,10 +109,24 @@ class ReporteController extends Controller
             }
         }
 
+        $ventasFiltro = [];
+        foreach($ventas as $v)
+        {
+           // $bandera = true;
+            foreach($sucursalEmpleados as $suc_emp)
+            {
+                if($sucursalEmpleados->id == $v->idSucursalEmpleado){
+                    array_push($ventasFiltro,$v);
+                }
+            }
+        }
+
+
+
         $proveedores = Proveedor::where('status','=', 1)->get();
         $detalle_ventas = Detalle_venta::all();
         $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
-        return view('Reportes.entradas_salidas', compact('empleados', 'compras', 'detalleCompra', 'productos', 'devoluciones', 'departamentos', 'ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados','proveedores','comprasFiltro'));    
+        return view('Reportes.entradas_salidas', compact('empleados', 'compras', 'detalleCompra', 'productos', 'devoluciones', 'departamentos', 'ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados','proveedores','comprasFiltro','ventasFiltro'));    
     }
       
 

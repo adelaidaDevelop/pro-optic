@@ -231,7 +231,6 @@ REPORTES
         let opcFecha = selectFecha.value;
         if (opcFecha === 'dia') {
             fechaDia = document.querySelector('#fechaXDia');
-
             if (fechaDia.value.length > 0) {
                 return true;
             }
@@ -365,7 +364,7 @@ REPORTES
                                                     <td>` + fechaCol + `</td>
                                                     <td>` + 0 + `</td>
                                                     <td>` + total_compras + `</td>
-                                                    <td>` +  + `</td>
+                                                    <td>` + +`</td>
                                                     <td>` + "inv final" + `</td> 
                                             </tr>
                                             `;
@@ -382,32 +381,27 @@ REPORTES
         total_ventas = 0;
         let fechaCol = "";
         //VENTA DE PRODUCTOS
+
         for (let v in ventas) {
             totalVenta = 0;
-            let idSucEmp = ventas[v].idSucursalEmpleado;
-            for (let h in sucursalEmpleados) {
-                if (sucursalEmpleados[h].id == idSucEmp) {
-                    let fechaVenta = new Date(ventas[v].created_at);
-                    //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
-                    if (comparacionFecha(fechaXDia, fechaVenta)) {
-                        fechaCol = fechaVenta.toLocaleDateString();
-                        //empleado
-                        for (let z in detalle_ventas) {
-                            if (detalle_ventas[z].idVenta == ventas[v].id) {
-                                for (let e in productos) {
-                                    if (productos[e].id == detalle_ventas[z].idProducto) {
-                                        //totalventas
-                                        let total_venta = detalle_ventas[z].precioIndividual * detalle_ventas[z].cantidad;
-                                        totalVenta = totalVenta + total_venta;
-                                    }
-                                }
+            let fechaVenta = new Date(ventas[v].created_at);
+            //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
+            if (comparacionFecha(fechaXDia, fechaVenta)) {
+                fechaCol = fechaVenta.toLocaleDateString();
+                //empleado
+                for (let z in detalle_ventas) {
+                    if (detalle_ventas[z].idVenta == ventas[v].id) {
+                        for (let e in productos) {
+                            if (productos[e].id == detalle_ventas[z].idProducto) {
+                                //totalventas
+                                let total_venta = detalle_ventas[z].precioIndividual * detalle_ventas[z].cantidad;
+                                totalVenta = totalVenta + total_venta;
                             }
                         }
-                        contador = contador + 1;
-                        total_ventas = total_ventas + totalVenta;
-
                     }
                 }
+                contador = contador + 1;
+                total_ventas = total_ventas + totalVenta;
             }
         }
         //COMPRAS
@@ -419,7 +413,7 @@ REPORTES
                 <th scope="row">` + contador + `</th>
                 <td>` + fechaCol + `</td>
                 <td>` + 0 + `</td>
-                <td>` +  + `</td>
+                <td>` + +`</td>
                 <td>` + totalVenta + `</td>  
                  </tr>
                   `;
@@ -437,8 +431,7 @@ REPORTES
         if (validarCamposFechas()) {
             fechaXDia = new Date(fechaDia.value);
             fechaXDia.setDate(fechaXDia.getDate() + 1);
-            console.log("entro a movimiento");
-            contador = 0;
+            
             compraProductos(fechaXDia);
             ventasRealizadas(fechaXDia);
             document.getElementById("total_salidas").innerHTML = total_ventas;
@@ -534,6 +527,7 @@ REPORTES
         }
         return false;
     }
+
 
     function comparacionFecha(fecha1, fecha2) {
         let selectFecha = document.querySelector('input[name="fecha"]:checked');
