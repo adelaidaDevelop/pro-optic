@@ -317,6 +317,34 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     </div>
 </div>
 
+<!--MODAL SUBPRODUCTO-->
+<div class="modal fade modal_precio_venta5" id="modal_precio_venta5" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-small " role="document">
+        <div class="modal-content" style="width:500px;">
+            <div class="modal-header  ">
+                <!--ENCABEZADO -->
+                <div class="container-fluid">
+                    <div class="row" style="background:#3366FF">
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 mx-auto text-center" id="titulo5" style="color:#FFFFFF">
+
+                        </h6>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body col-8 mx-4 text-center mx-auto" id="">
+                <div class="row  " id="modiPrecioCosto5">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="actPrecioCosto5" onclick="agregarSubprod();">GUARDAR</button>
+                <button type="button" class="btn btn-secondary" id="volverInfo45" data-dismiss="modal">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- END MODAL-->
 <!--MODAL PARA CARGAR PRODUCTOS DADOS DE BAJA EN SUCURSAL LOGEADO-->
 <div class="modal fade modal_altaProductos_SucursalLogeado" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -816,7 +844,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <td class="text-success">` + subproductos[y].precio + `</td>
                                 <td>` + subproductos[y].existencia + `</td>
                                 <td>` +
-                                ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return infoSubproducto( ` + productos[p].id + `)" value="` + productos[p].id + `">
+                                ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` + productos[p].id + `)" value="` + productos[p].id + `">
                                 <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
                                 </button>
                                 </td>            
@@ -1163,9 +1191,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         });
         let btnGuardar3 = document.getElementById("actPrecioCosto3");
         btnGuardar3.value = idSucPro;
-       
-        
-
 
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
         document.getElementById("titulo3").innerHTML = nombreProd;
@@ -1213,10 +1238,13 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             infoSubproducto(idSucPro);
         });
 
+        
+        let btnGuardar3 = document.getElementById("actPrecioCosto5");
+        btnGuardar3.value = idSucPro;
 
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
-        document.getElementById("titulo").innerHTML = nombreProd;
-        document.getElementById("modiPrecioCosto").innerHTML = cambiarCantidad;
+        document.getElementById("titulo5").innerHTML = nombreProd;
+        document.getElementById("modiPrecioCosto5").innerHTML = cambiarCantidad;
         $("input[name='cantidad']").bind('keypress', function(tecla) {
             if (this.value.length >= 10) return false;
             let code = tecla.charCode;
@@ -1330,6 +1358,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     }
 
     async function actExistencia() {
+        
         let btnGuardar = document.getElementById("actPrecioCosto3");
         let idSucProd = btnGuardar.value;
         try {
@@ -1368,7 +1397,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         }
     }
 
-    async function agregarSubprod(idSucProd) {
+    async function agregarSubprod() {
+        
+        let btnGuardar = document.getElementById("actPrecioCosto5");
+        let idSucProd = btnGuardar.value;
         try {
             //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
             const costo = document.querySelector('#cantidad');
@@ -1471,7 +1503,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                               EXISTENCIA STOCK </a> 
                                             <br/><br/>  
                                             
-                                              <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return agregarSubproducto( ` + x + `)" value="` + x + `">
+                                              <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta5"  onclick=" return agregarSubproducto( ` + x + `)" value="` + x + `">
                                               <img src="{{ asset('img/nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
                                               EXISTENCIA NUEVO
                                             </button>
@@ -1651,6 +1683,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         else
             mostrarInventarioRapido();
     }
+    /*
     function actualizar()
     {
         let funcion = $.ajax({
@@ -1676,6 +1709,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             await act_datos();
             await buscarFiltroNombre2();
     }
+    */
 
 </script>
 
