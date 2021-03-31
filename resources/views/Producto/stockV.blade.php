@@ -32,6 +32,12 @@ $crear = $sE->hasAnyRole($crearProducto);
     </a>
 </div>
 @endif
+<div class="col-6 ml-4"></div>
+<div class=" ml-3 my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/producto">
+        <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
+    </a>
+</div>
 @endsection
 <div class="row p-1 ">
     <div class="row col-12 ml-2 w-100">
@@ -88,47 +94,47 @@ $crear = $sE->hasAnyRole($crearProducto);
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         let cont = 1;
         for (let t in productos) {
-           // if (palabraBusqueda.value.length > 0) {
-                if (cont <= 30) {
-                    if (productos[t].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                        cont++;
-                        /*
-                        bandera = true;
-                        for (let x in producto_sucursal) {
-                            if (productos[t].id === producto_sucursal[x].idProducto) {
-                                bandera = false;
-                                console.log("ya es igual");
-                            }
+            // if (palabraBusqueda.value.length > 0) {
+            if (cont <= 30) {
+                if (productos[t].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                    cont++;
+                    /*
+                    bandera = true;
+                    for (let x in producto_sucursal) {
+                        if (productos[t].id === producto_sucursal[x].idProducto) {
+                            bandera = false;
+                            console.log("ya es igual");
                         }
-                        */
-                        // if (bandera) {
+                    }
+                    */
+                    // if (bandera) {
 
-                        for (count in deptos) {
-                            if (productos[t].idDepartamento === deptos[count].id) {
-                                departamento = deptos[count].nombre;
-                            }
+                    for (count in deptos) {
+                        if (productos[t].idDepartamento === deptos[count].id) {
+                            departamento = deptos[count].nombre;
                         }
-                        contador = contador + 1;
-                        let agregar = @json($agregar);
-                        let btnAgregar = `<a class="btn btn-primary" href="{{ url('/puntoVenta/agregarProdStock/` +
-                            productos[t].id + `')}}"> AGREGAR </a>`;
-                        if (!agregar) {
-                            btnAgregar = `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA AGREGAR')"> AGREGAR </button>`
-                        }
-                        cuerpo = cuerpo + `
+                    }
+                    contador = contador + 1;
+                    let agregar = @json($agregar);
+                    let btnAgregar = `<a class="btn btn-primary" href="{{ url('/puntoVenta/agregarProdStock/` +
+                        productos[t].id + `')}}"> AGREGAR </a>`;
+                    if (!agregar) {
+                        btnAgregar = `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA AGREGAR')"> AGREGAR </button>`
+                    }
+                    cuerpo = cuerpo + `
                             <tr onclick="" data-dismiss="modal">
                             <th scope="row">` + contador + `</th>
                             <td>` + productos[t].codigoBarras + `</td>
                             <td>` + productos[t].nombre + `</td>
                             <td>` + departamento + `</td>
                                 <td>` + btnAgregar +
-                            ` 
+                        ` 
                             </td>            
                                         </tr>
                                         `;
-                    }
                 }
-           // } 
+            }
+            // } 
             /*else {
                 for (count in deptos) {
                     if (productos[t].idDepartamento === deptos[count].id) {

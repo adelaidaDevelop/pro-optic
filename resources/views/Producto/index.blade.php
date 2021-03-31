@@ -404,7 +404,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 <!--ENCABEZADO -->
                 <h5 class="modal-title" id="exampleModalLabel">INVENTARIO RAPIDO</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -415,7 +415,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">CERRAR</button>
-                <button type="button" class="btn btn-success"  onclick="getInventarioRapido()">CONTINUAR</button>
+                <button type="button" class="btn btn-success" onclick="getInventarioRapido()">CONTINUAR</button>
             </div>
         </div>
     </div>
@@ -428,7 +428,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 <!--ENCABEZADO -->
                 <h5 class="modal-title" id="exampleModalLabel">INVENTARIO RAPIDO</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="cuerpoInventarioRapido">
@@ -767,6 +767,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     */
 
     function rellenar() {
+        const palabraBusqueda = document.querySelector('#busquedaProducto');
         let cuerpo = "";
         let contador = 0;
         let costo_inventario = 0;
@@ -790,7 +791,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     costo_inventario = costo_inventario + costoTemporal;
                     precio_inventario = precio_inventario + precioTemporal;
                     cantProdInventario = cantProdInventario + productosList[t].existencia;
-
                     contador = contador + 1;
                     cuerpo = cuerpo + `
                             <tr onclick="" data-dismiss="modal">
@@ -820,20 +820,21 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 if (subproductos[y].idSucursalProducto == productosSucursal[z].id) {
                     for (let p in productos) {
                         if (productos[p].id == productosSucursal[z].idProducto) {
-                            for (count8 in d) {
-                                if (productos[p].idDepartamento === d[count8].id) {
-                                    departamento = d[count8].nombre;
+                            if (productos[p].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                                for (count8 in d) {
+                                    if (productos[p].idDepartamento === d[count8].id) {
+                                        departamento = d[count8].nombre;
+                                    }
                                 }
-                            }
-                            let costoSubp = productosSucursal[z].costo / subproductos[y].piezas;
-                            let costoTempSub = costoSubp * subproductos[y].existencia;
-                            costo_inventario = costo_inventario + costoTempSub;
-                            let precioTempSub = subproductos[y].precio * subproductos[y].existencia;
-                            precio_inventario = precio_inventario + precioTempSub;
-                            contador = contador + 1;
-                            cantSubproductos = cantSubproductos + subproductos[y].existencia;
+                                let costoSubp = productosSucursal[z].costo / subproductos[y].piezas;
+                                let costoTempSub = costoSubp * subproductos[y].existencia;
+                                costo_inventario = costo_inventario + costoTempSub;
+                                let precioTempSub = subproductos[y].precio * subproductos[y].existencia;
+                                precio_inventario = precio_inventario + precioTempSub;
+                                contador = contador + 1;
+                                cantSubproductos = cantSubproductos + subproductos[y].existencia;
 
-                            cuerpo = cuerpo + `
+                                cuerpo = cuerpo + `
                             <tr class="table-warning" onclick="" data-dismiss="modal">
                                 <th scope="row">` + contador + `</th>
                                 <td >` + "SUBPRODUCTO" + `</td>
@@ -844,12 +845,13 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <td class="text-success">` + subproductos[y].precio + `</td>
                                 <td>` + subproductos[y].existencia + `</td>
                                 <td>` +
-                                ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` + productos[p].id + `)" value="` + productos[p].id + `">
+                                    ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` + productos[p].id + `)" value="` + productos[p].id + `">
                                 <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
                                 </button>
                                 </td>            
                             </tr>
                             `;
+                            }
                         }
 
                     }
@@ -864,18 +866,19 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 if (ofertas[i].idSucursalProducto == productosSucursal[z].id) {
                     for (let p in productos) {
                         if (productos[p].id == productosSucursal[z].idProducto) {
-                            for (count8 in d) {
-                                if (productos[p].idDepartamento === d[count8].id) {
-                                    departamento = d[count8].nombre;
+                            if (productos[p].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                                for (count8 in d) {
+                                    if (productos[p].idDepartamento === d[count8].id) {
+                                        departamento = d[count8].nombre;
+                                    }
                                 }
-                            }
-                            let costoOferta = productosSucursal[z].costo * ofertas[i].existencia;
-                            costo_inventario = costo_inventario + costoOferta;
-                            let precioTempOferta = productosSucursal[z].precio * ofertas[i].existencia;
-                            precio_inventario = precio_inventario + precioTempOferta;
-                            cantOfertas = cantOfertas + ofertas[i].existencia;
-                            contador = contador + 1;
-                            cuerpo = cuerpo + `
+                                let costoOferta = productosSucursal[z].costo * ofertas[i].existencia;
+                                costo_inventario = costo_inventario + costoOferta;
+                                let precioTempOferta = productosSucursal[z].precio * ofertas[i].existencia;
+                                precio_inventario = precio_inventario + precioTempOferta;
+                                cantOfertas = cantOfertas + ofertas[i].existencia;
+                                contador = contador + 1;
+                                cuerpo = cuerpo + `
                             <tr class="table-warning" onclick="" data-dismiss="modal">
                                 <th scope="row">` + contador + `</th>
                                 <td >` + "OFERTA" + `</td>
@@ -886,6 +889,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <td class="text-success">` + productosSucursal[z].precio + `</td>
                                 <td>` + ofertas[i].existencia + `</td>
                                 <td>`;
+                            }
                         }
                     }
                 }
@@ -1238,7 +1242,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             infoSubproducto(idSucPro);
         });
 
-        
+
         let btnGuardar3 = document.getElementById("actPrecioCosto5");
         btnGuardar3.value = idSucPro;
 
@@ -1360,7 +1364,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     }
 
     async function actExistencia() {
-        
+
         let btnGuardar = document.getElementById("actPrecioCosto3");
         let idSucProd = btnGuardar.value;
         try {
@@ -1400,7 +1404,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     }
 
     async function agregarSubprod() {
-        
+
         let btnGuardar = document.getElementById("actPrecioCosto5");
         let idSucProd = btnGuardar.value;
         try {
@@ -1633,72 +1637,67 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         }
     };
     let productosRapidos = [];
-    async function getInventarioRapido()
-    {
-        
-        try{
+    async function getInventarioRapido() {
+
+        try {
             let cantidad = document.getElementById("cantidadProductos").value;
             //return alert(cantidad);
-            if(cantidad.length == 0)
+            if (cantidad.length == 0)
                 return alert('INGRESE UNA CANTIDAD VALIDA PARA CONTINUAR')
-            if(cantidad <= 0)
+            if (cantidad <= 0)
                 return alert('INGRESE UNA CANTIDAD VALIDA PARA CONTINUAR')
             let respuesta = await fetch(`/puntoVenta/inventarioRapido/${cantidad}`);
             productosRapidos = await respuesta.json();
             console.log(productosRapidos);
             mostrarInventarioRapido()
             $('#modalPeticionInventario').modal('hide');
-            
+
             $('#modalInventarioRapido').modal('show');
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
-    function mostrarInventarioRapido()
-    {
+
+    function mostrarInventarioRapido() {
         let cuerpoModal = document.getElementById("cuerpoInventarioRapido");
         let cuerpo = `<table class="table">
             <thead>
             </thead>
             <tbody>`;
-            for(let i in productosRapidos)
-            {
-                cuerpo = cuerpo + `
+        for (let i in productosRapidos) {
+            cuerpo = cuerpo + `
                 <tr>
-                    <td>`+productosRapidos[i].nombre+`</td>
-                    <td>`+productosRapidos[i].existencia+`</td>
+                    <td>` + productosRapidos[i].nombre + `</td>
+                    <td>` + productosRapidos[i].existencia + `</td>
                     <td><input type="number" class="form-control" placeholder="CANTIDAD" 
                     id="nuevaExistencia${i}" aria-describedby="basic-addon1"></td>
                     <td><button type="button" class="btn btn-primary " onclick="actualizar(${i})">ACTUALIZAR</button></td>
-                    <td><button type="button" class="btn btn-warning" onclick="ignorar(`+i+`)">IGNORAR</button></td>
+                    <td><button type="button" class="btn btn-warning" onclick="ignorar(` + i + `)">IGNORAR</button></td>
                 </tr>
                 `;
-            }
-            cuerpo = cuerpo + `</tbody></table>`;
-            //console.log(productos);
-            cuerpoModal.innerHTML = cuerpo;
+        }
+        cuerpo = cuerpo + `</tbody></table>`;
+        //console.log(productos);
+        cuerpoModal.innerHTML = cuerpo;
     }
-    function restaurarPeticionInventario()
-    {
+
+    function restaurarPeticionInventario() {
         document.getElementById("cantidadProductos").value = "";
     }
-    function ignorar(i)
-    {
-        productosRapidos.splice(i,1);
-        if(productosRapidos.length == 0)
+
+    function ignorar(i) {
+        productosRapidos.splice(i, 1);
+        if (productosRapidos.length == 0)
             $('#modalInventarioRapido').modal('hide');
         else
             mostrarInventarioRapido();
     }
-    
-    async function actualizar(i)
-    {
-        try
-        {
+
+    async function actualizar(i) {
+        try {
             let existencia = document.getElementById(`nuevaExistencia${i}`).value;
             let idSucProd = productosRapidos[i].id;
-            if(productosRapidos[i].producto)
-            {
+            if (productosRapidos[i].producto) {
                 let funcion = $.ajax({
                     // metodo: puede ser POST, GET, etc
                     method: "post",
@@ -1715,8 +1714,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     //alert(respuesta);
                     console.log(respuesta); //JSON.stringify(respuesta));
                 });
-            }else
-            {
+            } else {
                 let funcion = $.ajax({
                     // metodo: puede ssubProdExisNuevoer POST, GET, etc
                     method: "POST",
@@ -1741,12 +1739,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             ignorar(i);
             await act_datos();
             await buscarFiltroNombre2();
-        }catch (err) {
+        } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
-    
-
 </script>
 
 @endsection
