@@ -116,8 +116,8 @@
                         <form method="post" action="{{url('/puntoVenta/proveedor/'.$d->id)}}">
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
-                            <button class="btn btn-outline-secondary my-3" type="submit" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PROVEEDOR?');">
-                                <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
+                            <button class="btn btn-outline-danger my-3" type="submit" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PROVEEDOR?');">
+                                <img src="{{ asset('img\eliReg.png') }}"  alt="Editar" width="28px" height="28px">
                                 DAR DE BAJA
                             </button>
                         </form>

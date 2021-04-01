@@ -415,7 +415,7 @@ REPORTES
         for (let c in compras) {
             let fechaCompra = new Date(compras[c].created_at);
             console.log(fechaCompra);
-            if (comparacionFecha(fechaXDia2, fechaCompra)) {
+            if (comparacionFecha(fechaXDia, fechaCompra)) {
                 fechaCol = fechaCompra.toLocaleDateString();
                 for (let x in detalle_compras) {
                     if (detalle_compras[x].idCompra == compras[c].id) {

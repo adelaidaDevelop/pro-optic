@@ -114,7 +114,7 @@ $verC = $sE->hasAnyRole($vC);
 
                             </div>
                             @if($modificarC)
-                            <button class="btn btn-outline-secondary  ml-1" type="submit" onclick="return confirm('DESEA EDITAR ESTE CLIENTE?');">
+                            <button class="btn btn-outline-secondary  ml-1" type="submit" onclick="return confirm('¿DESEA EDITAR ESTE CLIENTE?');">
                                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                                 GUARDAR CAMBIOS
                             </button>
@@ -231,7 +231,7 @@ $verC = $sE->hasAnyRole($vC);
     });
 
     async function veriEliminar(id) {
-        let conf_Eli = confirm('DESEA ELIMINAR ESTE CLIENTE?');
+        let conf_Eli = confirm('¿DESEA ELIMINAR ESTE CLIENTE?');
         if (conf_Eli) {
             let response = "Sin respuesta";
             try {
