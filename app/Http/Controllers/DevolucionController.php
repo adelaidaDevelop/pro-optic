@@ -32,8 +32,22 @@ class DevolucionController extends Controller
         $devolucions = Devolucion::all();
         $idSucursal = session('sucursal');
         $sucursalEmpleado = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
-        $productX_Sucursal = Sucursal_producto::where('id','=', $idSucursal)->get();
-        return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions', 'sucursalEmpleado',  'productX_Sucursal'));
+
+        $productX_Sucursal = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
+
+        $ventasFiltro = [];
+        foreach($ventas as $v)
+        {
+            $bandera = true;
+            foreach($sucursalEmpleado as $suc_emp)
+            {
+                if($suc_emp->id == $v->idSucursalEmpleado){
+                    array_push($ventasFiltro,$v);
+                }
+            }
+        }
+
+        return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions', 'sucursalEmpleado',  'productX_Sucursal', 'ventasFiltro'));
     }
 
     /**

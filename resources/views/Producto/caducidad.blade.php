@@ -50,7 +50,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 @endsection
 <div class="col-12">
     <div class="row border">
-        <h2 class="mx-auto text-center">CADUCIDAD DE LOS PRODUCTOS</h2>
+        <h4 class="mx-auto text-center">CADUCIDAD DE LOS PRODUCTOS</h4>
     </div>
     <div class="row border border-dark" style="height:300px;overflow-y:auto;">
         <table class="table table-bordered border-primary text-center">

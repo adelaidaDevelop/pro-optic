@@ -106,10 +106,10 @@
                         </div>
                     </div>
                     <div class="row ml-1">
-                        <button type="button" class="btn btn-outline-primary my-auto " data-toggle="modal"
+                        <button type="button" class="btn btn-secondary my-auto " data-toggle="modal"
                             data-target="#exampleModal" onclick="buscarProducto()">
                             <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
-                            <p class="h6 my-auto text-dark mx-2">AGREGAR PRODUCTO</p>
+                            <p class="h6 my-auto mx-2">AGREGAR PRODUCTO</p>
                         </button>
                     </div>
                     <!-- TABLA -->
@@ -172,7 +172,7 @@
         <div class="modal-content" id="modalConsulta">
             <div class="modal-header">
 
-                <h5 class="modal-title" id="exampleModalLabel">Ingresar Producto</h5>
+                <h5 class="modal-title" id="exampleModalLabel">INGRESAR PRODUCTO</h5>
                 <button id="cerrar" type="button" class="close" onclick="cerrarModal()" data-dismiss="modal"
                     aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -180,7 +180,8 @@
             </div>
             <div class="modal-body" id="cuerpoModal">
                 <div class="row">
-                    <input type="text" class="form-control mx-2 my-3 text-uppercase" placeholder="Buscar producto"
+                    <div class="text-secondary mx-2 mt-2 h6"> <small> ESCRIBA EL NOMBRE DEL PRODUCTO A AGREGAR </small></div>
+                    <input type="text" class="form-control mx-2 mb-3 text-uppercase" placeholder="Buscar producto"
                         id="busquedaProducto" onkeyup="buscarProducto()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;" id="productosBusqueda">

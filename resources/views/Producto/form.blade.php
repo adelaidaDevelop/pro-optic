@@ -95,7 +95,8 @@
 <div class="row text-right w-100">
     <div class="col-md-6"> </div>
     <div class="col-md-6">
-        <button class="btn btn-outline-secondary" type="submit" value=" {{ $Modo== 'crear' ?'Agregar' : 'Editar' }}">
+    
+        <button class="btn btn-outline-secondary" onclick="return confirm('')" type="submit" value=" {{ $Modo== 'crear' ?'AGREGAR' : 'EDITAR' }}">
             <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">{{ $Modo== 'crear' ?'GUARDAR PRODUCTO' : 'EDITAR PRODUCTO' }}
         </button>
         <br/>
