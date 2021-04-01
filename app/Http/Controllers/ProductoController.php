@@ -113,8 +113,26 @@ class ProductoController extends Controller
         else{
             $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
             Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-            return Producto::where("nombre",'like',$producto."%")->paginate(30,
+            
+            $productos = Producto::where("nombre",'like',$producto."%")->paginate(30,
             ['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
+            for($i=0;$i< count($productos);$i++)
+            {
+                $productos[$i]->existencia = 0;
+                $productos[$i]->costo = 0;
+                $productos[$i]->precio = 0;
+                $productos[$i]->idSucursal = false;
+                $sP = Sucursal_producto::where('idProducto', '=', $productos[$i]->id)->where('idSucursal','=',session('sucursal'))
+                ->first(['existencia','costo','precio']);
+                if(isset($sP))
+                {
+                    $productos[$i]->existencia = $sP->existencia;
+                    $productos[$i]->costo = $sP->costo;
+                    $productos[$i]->precio = $sP->precio;
+                    $productos[$i]->idSucursal = true;
+                }
+            }
+            return $productos;
             //$existencia = Producto::where("")
             //$id = Producto::whereColumn('minimo_stock','>=','existencia')->get();
             //return $id;

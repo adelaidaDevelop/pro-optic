@@ -118,11 +118,50 @@ class SucursalProductoController extends Controller
      * @param  \App\Models\Sucursal_producto  $sucursal_producto
      * @return \Illuminate\Http\Response
      */
-    public function show($id)//Sucursal_producto $sucursal_producto)
+    public function show($producto)//Sucursal_producto $sucursal_producto)
     {
-        //if($id=='todos')
+        $productos = Producto::where("nombre",'like',$producto."%")->get(['id', 'codigoBarras', 'nombre', 'idDepartamento']);//paginate(30,
+            //['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
+        $productosBusqueda = [];
+        //return $productos;
+        for($i=0;$i< count($productos);$i++)
+        {
+            $sP = Sucursal_producto::where('idProducto', '=', $productos[$i]->id)
+            ->where('idSucursal','=',session('sucursal'))->where('status','=',1)
+                ->first(['existencia','costo','precio']);
+            if(isset($sP))
+            {
+                $productos[$i]->existencia = $sP->existencia;
+                $productos[$i]->costo = $sP->costo;
+                $productos[$i]->precio = $sP->precio;
+                array_push($productosBusqueda,$productos[$i]);
+            }
+            if(count($productosBusqueda) >= 30)
+                return $productosBusqueda;
+        }
+        return $productosBusqueda;//Sucursal_producto::where('idSucursal', '=',$id)->get();//->where('status','=',1)->get();
+    }
+
+    public function buscarPorCodigo($codigo)
+    {
         
-        return Sucursal_producto::where('idSucursal', '=',$id)->get();//->where('status','=',1)->get();
+        $producto = Producto::where("codigoBarras",'like',$codigo."%")->first(['id', 'codigoBarras', 'nombre', 'idDepartamento']);
+            //return $producto;
+        if(isset($producto))
+        {
+            //'Entra';
+            $sP = Sucursal_producto::where('idProducto', '=', $producto->id)->where('idSucursal','=',session('sucursal'))
+                ->first(['existencia','costo','precio']);  
+            if(isset($sP))
+            {
+                $producto->existencia = $sP->existencia;
+                $producto->costo = $sP->costo;
+                $producto->precio = $sP->precio;
+            return $producto;
+            }
+        }
+        return [];//json_encode(false);
+        
     }
 
     public function agregarProdStock_Suc($id){
