@@ -150,9 +150,37 @@ class SubproductoController extends Controller
         $subproducto->update($exisNuevo);
         return redirect('/puntoVenta/producto');
     }
-    public function show($idS)//Subproducto $subproducto)
+    public function show($producto)//Subproducto $subproducto)
     {
-        $subproductos = Subproducto::all();
+        $productos = Producto::where("nombre",'like',$producto."%")->get(['id', 'codigoBarras', 'nombre', 'idDepartamento']);//paginate(30,
+            //['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
+        $productosBusqueda = [];
+        //return $productos;
+        for($i=0;$i< count($productos);$i++)
+        {
+            $sP = Sucursal_producto::where('idProducto', '=', $productos[$i]->id)
+            ->where('idSucursal','=',session('sucursal'))->where('status','=',1)
+                ->first(['id','existencia','costo','precio']);
+            if(isset($sP))
+            {
+                //return $sP;
+                $ss = Subproducto::where('idSucursalProducto', '=', $sP->id)
+                ->first(['existencia','precio']);
+                if(isset($ss))
+                {
+                    $productos[$i]->existencia = $ss->existencia;
+                    //$productos[$i]->costo = $ss->costo;
+                    $productos[$i]->precio = $ss->precio;
+                    array_push($productosBusqueda,$productos[$i]);
+                }
+            }
+            if(count($productosBusqueda) >= 30)
+                return $productosBusqueda;
+        }
+        return $productosBusqueda;
+
+
+        /*$subproductos = Subproducto::all();
         $productosS = [];
         
         foreach($subproductos as $pO)
@@ -173,7 +201,7 @@ class SubproductoController extends Controller
             }
         }
         return $productosS;//ProductosCaducidad::where('idSucursalProducto', '=',$id)->get();
-        
+        */
     }
 
     /**

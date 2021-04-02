@@ -78,14 +78,39 @@ class OfertaController extends Controller
      * @param  \App\Models\Oferta  $oferta
      * @return \Illuminate\Http\Response
      */
-    protected function show($idS)
+    protected function show($producto)
     {
         //$productos = Producto::all();
         //$sucursalProducto = Sucursal_producto::where('idSucursal', '=',$idS)->get();
     //    $usuarios = ['verProducto','crearProducto','modificarProducto','crearVenta','admin'];
     //    Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
-        $productosOferta = Oferta::all();//where('idSucursalProducto','=',$sP->id)->get();
+        $productos = Producto::where("nombre",'like',$producto."%")->get(['id', 'codigoBarras', 'nombre', 'idDepartamento']);//paginate(30,
+        //['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
+        $productosBusqueda = [];
+        //return $productos;
+        for($i=0;$i< count($productos);$i++)
+        {
+            $sP = Sucursal_producto::where('idProducto', '=', $productos[$i]->id)
+            ->where('idSucursal','=',session('sucursal'))->where('status','=',1)
+            ->first(['id','costo','precio']);
+            if(isset($sP))
+            {
+                //return $sP;
+                $ss = Oferta::where('idSucursalProducto', '=', $sP->id)
+                ->first(['existencia']);
+                if(isset($ss))
+                {
+                    $productos[$i]->existencia = $ss->existencia;
+                    //$productos[$i]->costo = $ss->costo;
+                    $productos[$i]->precio = $sP->costo;
+                    array_push($productosBusqueda,$productos[$i]);
+                }
+            }
+            if(count($productosBusqueda) >= 30)
+            return $productosBusqueda;
+        }
+        return $productosBusqueda;
+        /*    $productosOferta = Oferta::all();//where('idSucursalProducto','=',$sP->id)->get();
         
         $productosO = [];
         
@@ -107,7 +132,7 @@ class OfertaController extends Controller
             }
         }
         return $productosO;//ProductosCaducidad::where('idSucursalProducto', '=',$id)->get();
-        
+        */
     }
 
     /**

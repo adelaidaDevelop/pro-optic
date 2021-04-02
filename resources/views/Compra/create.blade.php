@@ -238,7 +238,7 @@
 <script>
 let productosCompra = [];
 let productos = [];
-let productosSucursal = [];
+//let productosSucursal = [];
 
 function cargarProveedores() {
     const proveedor = document.querySelector('#proveedor');
@@ -268,9 +268,9 @@ async function cargarProductos(producto) {
         response = await fetch(`/puntoVenta/producto/${producto}`);
         if (response.ok) {
             productos = await response.json();
-            if (productosSucursal.length === 0)
-                productosSucursal = await cargarProductosSucursal();
-            for (let i in productos) {
+            //if (productosSucursal.length === 0)
+              //  productosSucursal = await cargarProductosSucursal();
+            /*for (let i in productos) {
                 productos[i].existencia = 0;
                 productos[i].costo = 0; //productosSucursal[s].costo;
                 productos[i].precio = 0; //productosSucursal[s].precio;
@@ -284,7 +284,7 @@ async function cargarProductos(producto) {
                     }
 
                 }
-            }
+            }*/
             //console.log(productos);
             return productos;
 
@@ -298,7 +298,7 @@ async function cargarProductos(producto) {
     }
 }
 
-async function cargarProductosSucursal() {
+/*async function cargarProductosSucursal() {
     let response = "Sin respuesta";
     try {
         response = await fetch(`/puntoVenta/sucursalProducto/{{session('sucursal')}}`);
@@ -306,7 +306,6 @@ async function cargarProductosSucursal() {
             productosSucursal = await response.json();
             //console.log('los productosde la sucursal son: ',productosSucursal);
             return productosSucursal;
-
         } else {
             console.log("No responde :'v");
             console.log(response);
@@ -315,7 +314,7 @@ async function cargarProductosSucursal() {
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
-}
+}*/
 
 let ingresarProducto = document.querySelector('#cuerpoModal').innerHTML;
 let ingresarProductoTitulo = document.querySelector('#exampleModalLabel').innerHTML;
@@ -891,7 +890,7 @@ function nuevoProducto() {
                 const tituloModal = document.querySelector('#exampleModalLabel');
                 cuerpoModal.innerHTML = ingresarProducto;
                 tituloModal.innerHTML = ingresarProductoTitulo;
-                await cargarProductos();
+                //await cargarProductos();
                 agregarProducto(productos[productos.length - 1].id);
                 $('#exampleModal').modal('hide');
             }
@@ -1037,8 +1036,8 @@ async function guardarCompra() {
         productosCompra = [];
         mostrarProductos();
         $('#confirmarCompraModal').modal('hide');
-        await cargarProductosSucursal();
-        await cargarProductos();
+        //await cargarProductosSucursal();
+        //await cargarProductos();
         
 
         /*let respuestaCaducidad =  await $.ajax({

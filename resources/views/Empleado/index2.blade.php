@@ -31,7 +31,8 @@
         @if($crearE)
         <div class="  ml-4">
             <form method="get" action="{{url('/puntoVenta/empleado')}}">
-                <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit" >
+                <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit" 
+                >
                 <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="30px" height="30px">
                 <p class="h6 my-auto text-dark"><small>AGREGAR EMPLEADO</small></p>
                     
@@ -82,7 +83,8 @@
                     </div>
 
                 </div>
-                <div class="row m-0 px-0" style="height:200px;overflow-y:auto;">
+                <!--div class="row m-0 px-0 border" style="height:300px;overflow-y:auto;"-->
+                <div class="row m-0 px-0 border h-50" style="overflow-y:auto;">
                     <div id="resultados" class="col btn-block h-100">
                     </div>
                 </div>
@@ -1039,7 +1041,8 @@
                         @if($crearE)
                         <div class="form-row w-100 d-flex flex-row-reverse">
                             <div class="form-group">
-                                <button class="btn btn-outline-dark d-flex" type="submit">
+                                <button class="btn btn-outline-dark d-flex" type="submit"
+                                onclick="return confirm('DESEA AGREGAR ESTE EMPLEADO');">
                                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
                                         width="25px" height="25px">
                                     GUARDAR EMPLEADO

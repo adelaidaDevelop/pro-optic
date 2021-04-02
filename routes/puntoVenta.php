@@ -80,6 +80,7 @@ Route::prefix('/puntoVenta')->group(function()
     
     //Sucursal producto
     Route::get('/inventarioRapido/{total}', [SucursalProductoController::class,'inventarioRapido']);
+    Route::get('/sucursalProducto/buscarPorCodigo/{codigo}', [SucursalProductoController::class,'buscarPorCodigo']);
      Route::resource('sucursalProducto', SucursalProductoController::class);
      //RUTA SUCURSALES INACTIVAS
      Route::get('/sucursalesInactivos', [SucursalController::class,'sucu_inactivas']);
