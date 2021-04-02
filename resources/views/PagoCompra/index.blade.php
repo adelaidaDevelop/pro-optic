@@ -39,9 +39,9 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
 <div class="row border border-dark mb-2 ml-2 mr-2 px-3" id="pagina">
     <div class="row col-12 mb-2 mt-4 mx-0 p-0">
         <div class="row mx-auto px-0 form-group input-group my-auto w-75">
-            <input type="text" class="form-control border-primary pr-0 mr-0 col-6" size="15" placeholder="BUSCAR PAGO" id="busquedaPago" onkeyup="buscarPago()">
-            <a title="buscar" href="" class="text-dark  ml-2 ">
-                <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
+            <input type="text" class="form-control border-primary pr-0 py-0 my-auto mr-0 col-6" size="15" placeholder="BUSCAR PAGO" id="busquedaPago" onkeyup="buscarPago()">
+            <button type="button" title="buscar" onclick="buscarPago()" class="btn text-dark p-0">
+                <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></button>
             <div class="row col my-auto ml-2 p-0" id="modoBusqueda">
                 <label for="modoBusqueda" class="mx-3 mt-2">
                     <h6> BUSCAR POR:</h6>

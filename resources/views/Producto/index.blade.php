@@ -98,17 +98,17 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         </div>
 
         <div class="row col-12 px-0 mx-0">
-            <div class="col-2 border border-primary  mb-4">
+            <div class="col-2 border border-primary p-1 mb-4">
                 <h6 class="text-primary mt-4">
                     FILTRAR POR:
                 </h6>
-                <select class="mt-1" name="idDepartamento" id="idDepartamento" onchange="buscarFiltroNombre2()" required>
+                <select class="form-control mt-1" name="idDepartamento" id="idDepartamento" onchange="buscarFiltroNombre2()" required>
                     <option value="">DEPARTAMENTO</option>
                     @foreach($d as $departamento)
                     <option value="{{ $departamento['id']}}"> {{$departamento['nombre']}}</option>
                     @endforeach
                 </select>
-                <div class=" input-group-text mt-4 px-0 py-auto ">
+                <div class=" input-group-text mt-4 px-auto mx-0 py-auto ">
                     <input type="checkbox" value="existencia" name="bajosExistencia" id="bajosExistencia" onchange="buscarFiltroNombre2()">
                     <label class="text-primary ml-1 my-auto h6" for="bajosExistencia">
                         BAJOS DE EXISTENCIA
