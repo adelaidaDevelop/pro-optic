@@ -149,7 +149,7 @@ Route::prefix('/puntoVenta')->group(function()
     //Route::get('eliminar/{id}', [ProductoController::class,'eliminar']);
     Route::resource('sucursal', SucursalController::class);
     Route::middleware('isEmpleado')->group(function () {
-        Route::middleware('verified')->group(function () {
+       // Route::middleware('verified')->group(function () {
         
         Route::get('empleado/validarClave/{clave}', [EmpleadoController::class,'validarClave']);
         Route::get('empleado/claveEmpleado/{clave}', [EmpleadoController::class,'validarEmpleado']);
@@ -163,11 +163,11 @@ Route::prefix('/puntoVenta')->group(function()
         Route::resource('compra', CompraController::class);
         Route::get('/proveedor/buscador', [ProveedorController::class,'buscador']);
         Route::resource('proveedor', ProveedorController::class);
-    //   Route::get('proximosACaducar', [ProductosCaducidadController::class,'caducidad']);;///
+     //   Route::get('proximosACaducar', [ProductosCaducidadController::class,'caducidad']);;///
         Route::resource('oferta', OfertaController::class);  
         Route::resource('productosCaducidad', ProductosCaducidadController::class);
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
-        });
+       // });
     });
     
 });
