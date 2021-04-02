@@ -44,6 +44,8 @@ Route::post('/loginCliente', [LoginClienteController::class,'loginPost'])->name(
 Route::post('/logoutCliente', [LoginClienteController::class,'logout'])->name('Login');
 
 Route::resource('/', EcommerceController::class)->middleware('isCliente');
+Route::get('/productosNuevos', [EcommerceController::class,'productosNuevos'])->middleware('isCliente');
+Route::get('/productosDestacados', [EcommerceController::class,'productosDestacados'])->middleware('isCliente');
 
 //Auth::routes();
 
