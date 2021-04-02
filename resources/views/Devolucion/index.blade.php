@@ -104,7 +104,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                         <div class="input-group-prepend ">
                             <label for="fechaInicio" class="input-group-text">DE: </label>
                         </div>
-                        <input type="date" min="" id="fechaInicio" onchange="filtrarCompras()" class="form-control" disabled />
+                        <input type="date" min="" id="fechaInicio" name="fechaInicio" onchange="filtrarCompras()" class="form-control" disabled />
                     </div>
                     <div class="input-group my-1 mx-0 col-4">
                         <div class="input-group-prepend">
@@ -122,7 +122,6 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                                 <th scope="col">EMPLEADO</th>
                                 <th scope="col">ESTADO</th>
                                 <th scope="col">PAGO</th>
-                                <th scope="col">PRODUCTOS</th>
                                 <th scope="col">TOTAL</th>
                                 <th scope="col">FECHA</th>
                                 <th scope="col">HORA</th>
@@ -336,69 +335,69 @@ $devolver = $sE->hasAnyRole($userDevolucion);
     };
     //CREAR DEVOLUCION
     async function devolver() {
-        
-            let cantidad = document.querySelector('#cantidad');
-            let detalle = document.querySelector('#detalleD');
-            let total = document.querySelector('#totalD');
-            let cant2 = parseInt(cantidad.value);
-            let detalle2 = detalle.value;
-            let pInd = 0;
-            pInd = parseFloat(total.textContent) / cant2;
-            if (cant2 > 0) {
-                if (cant2 <= diferencia) {
-                    if (detalle2.length == 0) {
-                        return alert('AGREGAR DETALLE DE LA DEVOLUCION');
-                    } else {
-                        let confirmar = confirm("¿PROCESAR DEVOLUCION?");
-                        if (confirmar) {
-                            try {
-                                let funcion = await $.ajax({
-                                    // metodo: puede ser POST, GET, etc
-                                    method: "POST",
-                                    // la URL de donde voy a hacer la petición
-                                    url: '/puntoVenta/devolucion',
-                                    // los datos que voy a enviar para la relación
-                                    data: {
-                                        cantidad: cant2,
-                                        detalle: detalle2,
-                                        precio: parseFloat(total.textContent) / cant2,
-                                        idVenta: idVentaD,
-                                        idProducto: idProductoD,
-                                        _token: "{{ csrf_token() }}"
-                                    }
-                                }).done(function(respuesta) {
 
-                                    $('#devolucion').modal('hide');
-                                    // location.reload();
-                                    console.log(respuesta); //JSON.stringify(respuesta));
-                                });
-
-                                console.log(funcion);
-                            } catch (err) {
-                                console.log("Error al realizar la petición AJAX: " + err.message);
-                            }
-                            //let cantidad = document.querySelector('#cantidad');
-                            //let detalle = document.querySelector('#detalleD');
-                            //let total = document.querySelector('#totalD');
-
-                            // await cargarVentas();
-                            //  await cargarDetalleVenta();
-                            // await cargarProductos();
-                            //  await cargarDevoluciones();
-                            // await cargarEmpleados();
-                            await cargarDevolucion();
-                            buscarFolio();
-                            $("input[id='cantidad']").val(0);
-                            document.getElementById("totalD").innerHTML = 0;
-                        }
-                    }
+        let cantidad = document.querySelector('#cantidad');
+        let detalle = document.querySelector('#detalleD');
+        let total = document.querySelector('#totalD');
+        let cant2 = parseInt(cantidad.value);
+        let detalle2 = detalle.value;
+        let pInd = 0;
+        pInd = parseFloat(total.textContent) / cant2;
+        if (cant2 > 0) {
+            if (cant2 <= diferencia) {
+                if (detalle2.length == 0) {
+                    return alert('AGREGAR DETALLE DE LA DEVOLUCION');
                 } else {
-                    return alert('El máximo de productos a devolver es: ' + diferencia + ', ingrese una cantidad menor');
+                    let confirmar = confirm("¿PROCESAR DEVOLUCION?");
+                    if (confirmar) {
+                        try {
+                            let funcion = await $.ajax({
+                                // metodo: puede ser POST, GET, etc
+                                method: "POST",
+                                // la URL de donde voy a hacer la petición
+                                url: '/puntoVenta/devolucion',
+                                // los datos que voy a enviar para la relación
+                                data: {
+                                    cantidad: cant2,
+                                    detalle: detalle2,
+                                    precio: parseFloat(total.textContent) / cant2,
+                                    idVenta: idVentaD,
+                                    idProducto: idProductoD,
+                                    _token: "{{ csrf_token() }}"
+                                }
+                            }).done(function(respuesta) {
+
+                                $('#devolucion').modal('hide');
+                                // location.reload();
+                                console.log(respuesta); //JSON.stringify(respuesta));
+                            });
+
+                            console.log(funcion);
+                        } catch (err) {
+                            console.log("Error al realizar la petición AJAX: " + err.message);
+                        }
+                        //let cantidad = document.querySelector('#cantidad');
+                        //let detalle = document.querySelector('#detalleD');
+                        //let total = document.querySelector('#totalD');
+
+                        // await cargarVentas();
+                        //  await cargarDetalleVenta();
+                        // await cargarProductos();
+                        //  await cargarDevoluciones();
+                        // await cargarEmpleados();
+                        await cargarDevolucion();
+                        buscarFolio();
+                        $("input[id='cantidad']").val(0);
+                        document.getElementById("totalD").innerHTML = 0;
+                    }
                 }
             } else {
-                return alert('DEBE INGRESAR UNA CANTIDAD VALIDA DE PRODUCTOS A DEVOLVER');
+                return alert('El máximo de productos a devolver es: ' + diferencia + ', ingrese una cantidad menor');
             }
-        
+        } else {
+            return alert('DEBE INGRESAR UNA CANTIDAD VALIDA DE PRODUCTOS A DEVOLVER');
+        }
+
     };
 
     async function cargarDevolucion() {
@@ -549,7 +548,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     <td>` + emple + `</td>
                     <td>` + ventas[count5].tipo + `</td>
                     <td>` + ventas[count5].pago + `</td>
-                    <td> ver </td>
+                   
                     <td>` + total + `</td> 
                     <td>` + fecha.toLocaleDateString() + `</td> 
                     <td>` + fecha.toLocaleTimeString() + `</td>   
@@ -557,6 +556,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                 `;
         }
         document.getElementById("tablaVenta").innerHTML = cuerpo;
+      
     };
 
 
@@ -605,8 +605,10 @@ $devolver = $sE->hasAnyRole($userDevolucion);
 
                         if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
                             for (count6 in empleados) {
-                                if (empleados[count6].id == sucursalEmpleado[s].idEmpleado) {
-                                    emple = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
+                                if (empleados[count6].id == 1) {
+                                    empleado = empleados[count6].primerNombre;
+                                } else {
+                                    empleado = empleados[e].primerNombre + " " + empleados[e].segundoNombre + " " + empleados[e].apellidoPaterno + " " + empleados[e].apellidoMaterno;
                                 }
                             }
                         }
@@ -616,13 +618,12 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     cont = cont + 1;
                     fecha.setDate(fecha.getDate() + 1);
                     cuerpo = cuerpo + `
-                        <tr onclick="" data-dismiss="modal">
-                        <th scope="row">` + cont + `</th>
+                        <tr >
+                        <th >` + cont + `</th>
                         <td>` + ventas[j].id + `</td>
-                        <td>` + emple + `</td>
+                        <td>` + empleado + `</td>
                         <td>` + ventas[j].tipo + `</td>
                         <td>` + ventas[j].pago + `</td>
-                        <td> ver </td>
                         <td>` + total + `</td> 
                         <td>` + fecha.toLocaleDateString() + `</td> 
                         <td>` + fecha.toLocaleTimeString() + `</td>   
