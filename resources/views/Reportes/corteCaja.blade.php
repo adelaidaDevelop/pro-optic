@@ -15,99 +15,104 @@ CORTE DE CAJA
 
 <!--CONSULTAR PRODUCTO -->
 
-<div class="row col border border-dark ml-0 mr-0 mb-4 mt-2 ">
-    <h4 class=" row col-5 ml-1 mt-2 mb-4 mx-auto text-primary ">
-        <strong>
-            CORTE DE CAJA
-        </strong>
-    </h4>
-    <br />
-    <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-    <div class="row w-100   mr-2 ">
-        <div class="row  form-group input-group  ml-4">
-            <div class="row col-4 form-group input-group mx-4">
-                <h5 class=" my-0 mr-3">FECHA CORTE:</h5>
-                <input type="date" min="" id="fechaCorte" name="fechaCorte" class="form-control my-0" />
+<div class="PrintArea" id="PrintArea" name="PrintArea">
+    <div class="row col border border-dark ml-0 mr-0 mb-4 mt-2 ">
+        <h4 class=" row col-5 ml-1 mt-2 mb-4 mx-auto text-primary ">
+            <strong>
+                CORTE DE CAJA
+            </strong>
+        </h4>
+        <br />
+        <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
+        <div class="row w-100   mr-2 ">
+            <div class="row  form-group input-group  ml-4">
+                <div class="row col-4 form-group input-group mx-4">
+                    <h5 class=" my-0 mr-3">FECHA CORTE:</h5>
+                    <input type="date" min="" id="fechaCorte" name="fechaCorte" class="form-control my-0" />
+                </div>
+                <div class="col-6 mx-4 form-group input-group ">
+                    <h5 class="mr-3 mx-3 my-0">CAJERO</h5>
+                    <select class="col-4 mt-1" name="idCajero" id="idCajero" onchange="" required>
+                        <option value="0">TODOS</option>
+                        @foreach($sucursalEmpleados as $cajero)
+                        @foreach($empleados as $emp)
+                        @if($cajero->idEmpleado == $emp->id)
+                        @if( $cajero->idEmpleado == 1)
+                        <option value="{{$cajero['idEmpleado']}}">ADMINISTRADOR </option>
+                        @else
+                        <option value="{{$cajero['idEmpleado']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
+                        @endif
+                        @endif
+                        @endforeach
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <div class="col-6 mx-4 form-group input-group ">
-                <h5 class="mr-3 mx-3 my-0">CAJERO</h5>
-                <select class="col-4 mt-1" name="idCajero" id="idCajero" onchange="" required>
-                    <option value="0">TODOS</option>
-                    @foreach($sucursalEmpleados as $cajero)
-                    @foreach($empleados as $emp)
-                    @if($cajero->idEmpleado == $emp->id)
-                    @if( $cajero->idEmpleado == 1)
-                    <option value="{{$cajero['idEmpleado']}}">ADMINISTRADOR </option>
-                    @else
-                    <option value="{{$cajero['idEmpleado']}}"> {{$emp['primerNombre']}} {{ $emp['segundoNombre']}} {{ $emp['apellidoPaterno']}} {{ $emp['apellidoMaterno'] }}</option>
-                    @endif
-                    @endif
-                    @endforeach
-                    @endforeach
-                </select>
+            <!-- BOTON CORTE-->
+            <div class="row col-5 ml-1 mt-2 mx-auto">
+                <button class="btn btn-outline-primary text-dark" onclick="calcularCorte()">
+                    CALCULAR
+                    <img src="{{ asset('img\corte.png') }}" alt="Editar" width="35px" height="35px">
+                </button>
             </div>
         </div>
-        <!-- BOTON CORTE-->
-        <div class="row col-5 ml-1 mt-2 mx-auto">
-            <button class="btn btn-outline-primary text-dark" onclick="calcularCorte()">
-                CALCULAR
-                <img src="{{ asset('img\corte.png') }}" alt="Editar" width="35px" height="35px">
-            </button>
+        <div class="row col-9 mt-1 ">
+            <div id="sinRegistros" class="col">
+            </div>
         </div>
-    </div>
-    <div class="row col-9 mt-1 ">
-        <div id="sinRegistros" class="col">
-        </div>
-    </div>
-    <div class="row w-100 mx-4 ">
-        <div class="col-1 "></div>
-        <div>
-            <h6 class="text-primary">+ENTRADAS</h6>
-            <h6 class="ml-3">+TOTAL VENTAS</h6>
-            <h6 class="ml-3">+ABONO DEUDORES</h6>
-            <h6 class="ml-4 mt-3 font-weight-bold"> SUBTOTAL ENTRADAS:</h6>
-            <h6 class="text-primary mt-3">-SALIDAS</h6>
-            <h6 class="mt-3 ml-3 ">-TOTAL DEVOLUCIONES</h6>
-            <!--<h6 class="ml-3">-ABONO PROVEEDORES</h6>
+        <div class="row w-100 mx-4 ">
+            <div class="col-1 "></div>
+            <div>
+                <h6 class="text-primary">+ENTRADAS</h6>
+                <h6 class="ml-3">+TOTAL VENTAS</h6>
+                <h6 class="ml-3">+ABONO DEUDORES</h6>
+                <h6 class="ml-4 mt-3 font-weight-bold"> SUBTOTAL ENTRADAS:</h6>
+                <h6 class="text-primary mt-3">-SALIDAS</h6>
+                <h6 class="mt-3 ml-3 ">-TOTAL DEVOLUCIONES</h6>
+                <!--<h6 class="ml-3">-ABONO PROVEEDORES</h6>
             <h6 class="ml-3">-COMPRAS AL CONTADO</h6>
             -->
-            <h6 class="ml-3 font-weight-bold">SUBTOTAL SALIDAS:</h6>
-        </div>
-        <div class="col-3 ml-3">
-            <div class=" mt-4 my-0 input-group">
-                <h6>$</h6><input type="number" style="height:23px" id="totalVentas" disabled />
+                <h6 class="ml-3 font-weight-bold">SUBTOTAL SALIDAS:</h6>
             </div>
-            <div class=" mt-1 my-0  input-group">
-                <h6>$</h6><input type="number" id="abonoD" style="height:23px" disabled />
-            </div>
-            <div class="mt-2 my-0  input-group">
-                <h6>$</h6><input type="number" id="subtotalE" style="height:23px" disabled />
-            </div>
-            <div class=" mt-5 my-0 input-group">
-                <h6>$</h6><input type="number" id="devolucionT" class="" style="height:23px" disabled />
-            </div>
-            <!--<input type="number" onchange="filtrarCompras()" id="fechaFinal" class=" mt-1 my-0" style="height:23px" />
+            <div class="col-3 ml-3">
+                <div class=" mt-4 my-0 input-group">
+                    <h6>$</h6><input type="number" style="height:23px" id="totalVentas" disabled />
+                </div>
+                <div class=" mt-1 my-0  input-group">
+                    <h6>$</h6><input type="number" id="abonoD" style="height:23px" disabled />
+                </div>
+                <div class="mt-2 my-0  input-group">
+                    <h6>$</h6><input type="number" id="subtotalE" style="height:23px" disabled />
+                </div>
+                <div class=" mt-5 my-0 input-group">
+                    <h6>$</h6><input type="number" id="devolucionT" class="" style="height:23px" disabled />
+                </div>
+                <!--<input type="number" onchange="filtrarCompras()" id="fechaFinal" class=" mt-1 my-0" style="height:23px" />
             <input type="number" onchange="filtrarCompras()" id="fechaFinal" class=" mt-1 my-0" style="height:23px" />
             -->
-            <div class=" mt-1 my-0 input-group">
-                <h6>$</h6><input type="number" id="subtotalS" style="height:23px" disabled />
+                <div class=" mt-1 my-0 input-group">
+                    <h6>$</h6><input type="number" id="subtotalS" style="height:23px" disabled />
+                </div>
             </div>
-        </div>
-        <div class="col-4  ">
-            <div class="form-group input-group text-primary mt-4 mb-5">
-                <h5>TOTAL:</h5>
-                <h5 class="ml-2">$</h5><input type="number" id="total" style="height:23px" disabled />
-            </div>
-            <button class="btn btn-secondary ml-4 mb-5 mx-auto mt-5">IMPRIMIR CORTE
-            </button>
-            <!--
+            <div class="col-4  ">
+                <div class="form-group input-group text-primary mt-4 mb-5">
+                    <h5>TOTAL:</h5>
+                    <h5 class="ml-2">$</h5><input type="number" id="total" style="height:23px" disabled />
+                </div>
+
+                <button id="btnCrearPdf"  class="btn btn-secondary ml-4 mb-5 mx-auto mt-5">IMPRIMIR CORTE
+                </button>
+
+
+                <!--
             <div class="row form-group input-group">
                 <h6 class="mt-3 text-primary">GANANCIA DEL DIA:</h6>
                 <input type="number" id="fechaFinal" class="ml-2 mt-3 my-0" style="height:23px" />
             </div>
             -->
-        </div>
+            </div>
 
+        </div>
     </div>
 </div>
 
@@ -219,6 +224,8 @@ CORTE DE CAJA
         </div>
     </div>
 </div>
+<script src="{{ asset('js\jquery.PrintArea.js') }}" type="text/JavaScript" language="javascript"></script>
+<script src="{{ asset('js\html2pdf.bundle.min.js')}}"></script>
 <script>
     const ventas = @json($ventas);
     const pagos = @json($pagos);
@@ -390,5 +397,107 @@ CORTE DE CAJA
         }
         return false;
     };
+
+    function imprimirOK() {
+        console.log("entra aqui");
+        var mode = 'iframe'; //popup
+        var close = mode == "popup";
+        var options = {
+            mode: mode,
+            popClose: close
+        };
+        $("#PrintArea").printArea([options]);
+
+    }
+
+    //imprimir reporte
+    /*
+    $(document).ready(function() {
+        $("#printButton").click(function() {
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {
+                mode: mode,
+                popClose: close
+            };
+            $("div.printableArea").printArea(options);
+        });
+    });
+
+
+
+    $("#print_button").click(function() {
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.PrintArea").printArea([options]);
+            }
+            */
+    jQuery.downloadReporte = function(url, data) {
+
+        url = "reportes/" + url;
+
+        $.ajax({
+
+            url: url,
+
+            data: data,
+
+            type: 'post',
+
+            success: function(datar) {
+
+                var randomDivImpresion = Math.floor(Math.random()); //Numero aleatorio
+
+                var nombreDivImpresion = 'recibeImpresion' + randomDivImpresion; //Div temporal con numero aleatorio en el nombre
+
+                var div_impresion = '<div id="' + nombreDivImpresion + '"></div>'; //codigo html del div
+
+                $(div_impresion).appendTo('body'); //se agrega al elemento body, para hacerlo funcional.
+
+                $("#" + nombreDivImpresion).html(datar); //se asigna la pagina que viene desde el servidor.
+
+                $("#" + nombreDivImpresion).jqprint(); //se invoca la impresion.
+
+                $("#" + nombreDivImpresion).remove(); //se remueve el div temporal despues de la impresion.
+
+            }
+
+        });
+    }
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Escuchamos el click del botón
+        const $boton = document.querySelector("#btnCrearPdf");
+        $boton.addEventListener("click", () => {
+            const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+            html2pdf()
+                .set({
+                    margin: 1,
+                    filename: 'documento.pdf',
+                    image: {
+                        type: 'jpeg',
+                        quality: 0.98
+                    },
+                    html2canvas: {
+                        scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                        letterRendering: true,
+                    },
+                    jsPDF: {
+                        unit: "in",
+                        format: "a4",
+                        orientation: 'landscape' // landscape o portrait
+                    }
+                })
+                .from($elementoParaConvertir)
+                .save()
+                .catch(err => console.log(err));
+        });
+    });
 </script>
+
 @endsection

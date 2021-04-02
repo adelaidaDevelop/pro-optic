@@ -17,6 +17,8 @@ use App\Models\Proveedor;
 use App\Models\Sucursal_empleado;
 use App\Models\Sucursal_producto;
 use Illuminate\Http\Request;
+//use PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class ReporteController extends Controller
 {
@@ -35,7 +37,6 @@ class ReporteController extends Controller
     {
         $usuarios = ['verCorte','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
         //CORTE DE CAJA INDEX
         $ventas = Venta::all();
         $pagos = Pago_venta::all();
@@ -195,4 +196,56 @@ class ReporteController extends Controller
     {
         //
     }
+
+    function pdf() {
+
+        $ventas = Venta::all();
+        $pagos = Pago_venta::all();
+        $devoluciones = Devolucion::all();
+        $pagoCompras= Pago_compra::all();
+        $compras = Compra::all();
+        $empleados = Empleado::all();
+        //Seleccionar empleados que son cajeros
+        $idSucursal = session('sucursal');
+        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
+        //return $sucursalEmpleados;
+      //  return view('Reportes.corteCaja', compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados'));
+
+     //  $datos = compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados');
+       
+       $data = [
+            'empleados' => $empleados,
+            'ventas' => $ventas,
+            'pagos' => $pagos,
+            'devoluciones' => $devoluciones,
+            'pagoCompras' => $pagoCompras,
+            'compras' =>$compras,
+            'sucursalEmpleados' => $sucursalEmpleados
+        ];
+        
+        
+        $pdf = PDF::loadHTML('Reportes\corteCaja', $data)
+        ->setPaper('a4', 'landscape');
+        
+        //return $pdf;
+        $pdf->save('corteCaja10.pdf');
+        return back(); 
+    }
+/*
+    function pdf2(){
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->guardar());
+       }
+    public function guardar()
+    {
+    $data = [
+        'titulo' => 'Styde.net'
+    ];
+
+    $pdf = \PDF::loadView('Reportes\corteCaja', $data);
+
+    return $pdf->save('corte_caja.pdf');
+    }
+
+    */
 }
