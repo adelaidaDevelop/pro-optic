@@ -143,6 +143,9 @@ Route::prefix('/puntoVenta')->group(function()
     
     Route::get('act_inventario', [SucursalProductoController::class,'act_inventario']);
     
+    //RUTA IMPRIMIR CORTE CAJA
+    Route::get('imp_corteCaja', [ReporteController::class,'pdf']);
+
     //Route::get('eliminar/{id}', [ProductoController::class,'eliminar']);
     Route::resource('sucursal', SucursalController::class);
     Route::middleware('isEmpleado')->group(function () {
