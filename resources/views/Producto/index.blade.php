@@ -953,8 +953,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                             </button>
                                             <br/>
                                     `;
-                        let btnDarBaja = `<a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/` + x + `', [` + x + `])}}"> 
-                                            <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                        let btnDarBaja = `<a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/${x}')}}>` + //x + `', [` + x + `])}}"> 
+                                            `<img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              DAR DE BAJA </a> 
                                         </div>
 

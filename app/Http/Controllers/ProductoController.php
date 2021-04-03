@@ -24,12 +24,13 @@ class ProductoController extends Controller
         $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         $idSucursal = session('sucursal');
-        $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)->get();
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)
+        ->get(['id','costo','precio','existencia','minimoStock','idProducto']);
        
         $depas['d']= Departamento::paginate();
-        $datosP= Producto::all();
-        $depa= Departamento::all();
-        $producto = Producto::all();
+        $datosP= Producto::all(['id','codigoBarras', 'nombre','receta' ,'idDepartamento']);
+        $depa= Departamento::all(['id','nombre']);
+        $producto = Producto::all(['id','codigoBarras', 'nombre','receta' ,'idDepartamento']);
         $subproducto = Subproducto::all();
         $ofertas = Oferta::all();
      //   return $idSucursal;
