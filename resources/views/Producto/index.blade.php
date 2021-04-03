@@ -147,9 +147,13 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         </div>
                     </div>
                     <div class="row my-0 mx-0 mt-3">
-                        <input class="form-control text-uppercase  col-4" type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarFiltroNombre2()">
-                        <a title="buscar" href="" class="text-dark ">
-                            <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
+                        <div class="input-group col-4">
+                            <input class="form-control text-uppercase my-auto" type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarFiltroNombre2()">
+                            <div class="input-group-append">
+                                <button class="btn text-dark">
+                                    <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail m-0" alt="Regresar" width="38px" height="38px" /></button>
+                            </div>
+                        </div>
                         <div class="mt-2 mx-2"> </div>
                         <h6 class="mx-3 mt-2"> BUSCAR POR:</h6>
                         <div class=" input-group-text my-auto">
