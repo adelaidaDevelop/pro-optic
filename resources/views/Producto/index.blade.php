@@ -259,7 +259,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="actPrecioCosto" onclick="actPrecio();">GUARDAR</button>
-                <button type="button" class="btn btn-secondary" id="volverInfo4" data-dismiss="modal">CANCELAR</button>
+                <button type="button" class="btn btn-secondary"  data-dismiss="modal">CANCELAR</button>
 
             </div>
         </div>
@@ -287,7 +287,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="actPrecioCosto2" onclick="actCosto();">GUARDAR</button>
-                <button type="button" class="btn btn-secondary" id="volverInfo42" data-dismiss="modal">CANCELAR</button>
+                <button type="button" class="btn btn-secondary"  data-dismiss="modal">CANCELAR</button>
 
             </div>
         </div>
@@ -315,7 +315,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="actPrecioCosto3" onclick="actExistencia();">GUARDAR</button>
-                <button type="button" class="btn btn-secondary" id="volverInfo43" data-dismiss="modal">CANCELAR</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
             </div>
         </div>
     </div>
@@ -343,7 +343,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="actPrecioCosto5" onclick="agregarSubprod();">GUARDAR</button>
-                <button type="button" class="btn btn-secondary" id="volverInfo45" data-dismiss="modal">CANCELAR</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
             </div>
         </div>
     </div>
@@ -1095,9 +1095,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             }
 
         }
+        /*
         $("#volverInfo4").click(function() {
             info4(idProd);
         });
+        */
         let btnGuardar = document.getElementById("actPrecioCosto");
         btnGuardar.value = idSucPro;
         // $("#actPrecioCosto").removeAttr('onclick');
@@ -1144,9 +1146,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                     `;
             }
         }
+        /*
         $("#volverInfo42").click(function() {
             info4(idProd);
         });
+        */
         /*
         $("#actPrecioCosto").click(function() {
             actCosto(idSucPro);
@@ -1194,9 +1198,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                     `;
             }
         }
+        /*
         $("#volverInfo43").click(function() {
             info4(idProd);
         });
+        */
         let btnGuardar3 = document.getElementById("actPrecioCosto3");
         btnGuardar3.value = idSucPro;
 
@@ -1242,9 +1248,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 }
             }
         }
+        /*
         $("#volverInfo4").click(function() {
             infoSubproducto(idSucPro);
         });
+        */
 
 
         let btnGuardar3 = document.getElementById("actPrecioCosto5");
