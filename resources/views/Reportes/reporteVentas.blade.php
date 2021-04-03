@@ -27,6 +27,7 @@ REPORTES
         </strong>
     </h4>
     <br />
+    <!--
     <div class="row w-100 mx-auto my-auto ">
         <div class="col-4  text-center mx-auto">
             <h6 class=" text-primary"> PRECIO DEL INVENTARIO: </h6>
@@ -50,6 +51,7 @@ REPORTES
             </div>
         </div>
     </div>
+    -->
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
     <div class="row w-100   ml-5">
         <h5 class="text-primary ml-3 ">BUSCAR POR:</h5>
@@ -94,7 +96,7 @@ REPORTES
             </select>
         </div>
         <h5 class="text-primary ml-3">FECHA:</h5>
-        <div class="form-group input-group border  ">
+        <div class="form-group input-group  ">
             <div class="col-1 form-group input-group">
                 <h6 class="text-primary  my-auto mr-1">
                     DIA
@@ -148,8 +150,8 @@ REPORTES
             <button class="btn btn-outline-primary  p-1 mx-3 text-dark" onclick="generaReportes()">
                 <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                 GENERAR </button>
-            <button id="imp" name="imp" class="btn btn-outline-primary  p-1 text-dark">
-                <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px"> IMPRIMIR REPORTE</button>
+            <button id="imp" name="imp" class="btn btn-outline-primary  p-1 text-dark" disabled>
+                <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px" > IMPRIMIR REPORTE</button>
         </div>
         <!-- TABLA -->
         <div id="tablaR" class="row col-12 mb-3">
@@ -175,6 +177,7 @@ REPORTES
         </div>
     </div>
 </div>
+<script src="{{ asset('js\html2pdf.bundle.min.js')}}"></script>
 <script>
     let productos = @json($productos);
     let departamentos = @json($departamentos);
@@ -471,6 +474,7 @@ REPORTES
     };
 
     function generaReportes() {
+        
         //let devolucionFila = "";
         let empleadoNombre = "";
         // let filaprod_caducados = "";
@@ -491,6 +495,7 @@ REPORTES
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
+                        document.getElementById("imp").disabled = false;
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
@@ -501,6 +506,7 @@ REPORTES
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
+                        document.getElementById("imp").disabled = false;
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
@@ -511,6 +517,7 @@ REPORTES
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
+                        document.getElementById("imp").disabled = false;
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
@@ -524,6 +531,7 @@ REPORTES
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("imp").disabled = true;
                     } else {
+                        document.getElementById("imp").disabled = false;
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
@@ -640,5 +648,36 @@ REPORTES
         }
         return false;
     };
+
+    // imprimir
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        // Escuchamos el click del botón
+        const $boton = document.querySelector("#imp");
+        $boton.addEventListener("click", () => {
+            const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+            html2pdf()
+                .set({
+                    margin: 1,
+                    filename: 'reporteVentas.pdf',
+                    image: {
+                        type: 'jpeg',
+                        quality: 0.98
+                    },
+                    html2canvas: {
+                        scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                        letterRendering: true,
+                    },
+                    jsPDF: {
+                        unit: "in",
+                        format: "a2",
+                        orientation: 'portrait' // landscape o portrait
+                    }
+                })
+                .from($elementoParaConvertir)
+                .save()
+                .catch(err => console.log(err));
+        });
+    });
 </script>
 @endsection

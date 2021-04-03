@@ -23,7 +23,7 @@ PRODUCTOS
 
 <form method="post" action="{{url('/puntoVenta/producto')}}" enctype="multipart/form-data">
     {{ csrf_field() }}
-    @include('producto.form', ['Modo' => 'crear'])
+    @include('Producto.form', ['Modo' => 'crear'])
 </form>
 
 @endsection

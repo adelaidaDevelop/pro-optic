@@ -179,7 +179,7 @@ REPORTES
             <button class="btn btn-outline-secondary  p-1 mx-3 text-dark" onclick="generaReportes()">
                 <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                 GENERAR</button>
-            <button id="imp" name="imp" class="btn btn-outline-secondary  p-1 text-dark">
+            <button id="btnCrearPdf"  class="btn btn-outline-secondary  p-1 text-dark">
                 <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px">
                 IMPRIMIR </button>
 
@@ -211,6 +211,7 @@ REPORTES
     </div>
 </div>
 
+<script src="{{ asset('js\html2pdf.bundle.min.js')}}"></script>
 <script>
     let compras = @json($compras);
     let detalle_compras = @json($detalleCompra);
@@ -739,7 +740,7 @@ REPORTES
     };
 
     function generaReportes() {
-        document.getElementById("imp").disabled = false;
+        document.getElementById("btnCrearPdf").disabled = false;
         //let devolucionFila = "";
         //  let salidaVP = "";
         //let entradaNuevosProductos = "";
@@ -765,7 +766,7 @@ REPORTES
                     if (cuerpo === "") {
                         let sin = `<h4 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
-                        document.getElementById("imp").disabled = true;
+                        document.getElementById("btnCrearPdf").disabled = true;
                     } else {
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
@@ -794,7 +795,7 @@ REPORTES
                         // tabla2 = document.querySelector('#tablaR');
                         let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
-                        document.getElementById("imp").disabled = true;
+                        document.getElementById("btnCrearPdf").disabled = true;
                     } else {
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
@@ -822,7 +823,7 @@ REPORTES
                         // tabla2 = document.querySelector('#tablaR');
                         let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
-                        document.getElementById("imp").disabled = true;
+                        document.getElementById("btnCrearPdf").disabled = true;
                     } else {
                         console.log(tabla2);
                         document.getElementById("tablaR").innerHTML = tabla2;
@@ -949,6 +950,37 @@ REPORTES
         }
         return false;
     };
+
+    //imprimir
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Escuchamos el click del botón
+        const $boton = document.querySelector("#btnCrearPdf");
+        $boton.addEventListener("click", () => {
+            const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+            html2pdf()
+                .set({
+                    margin: 1,
+                    filename: 'reporteInventario.pdf',
+                    image: {
+                        type: 'jpeg',
+                        quality: 0.98
+                    },
+                    html2canvas: {
+                        scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                        letterRendering: true,
+                    },
+                    jsPDF: {
+                        unit: "in",
+                        format: "a2",
+                        orientation: 'portrait' // landscape o portrait
+                    }
+                })
+                .from($elementoParaConvertir)
+                .save()
+                .catch(err => console.log(err));
+        });
+    });
 </script>
 
 @endsection

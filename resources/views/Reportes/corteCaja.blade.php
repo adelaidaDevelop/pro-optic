@@ -489,8 +489,8 @@ CORTE DE CAJA
                     },
                     jsPDF: {
                         unit: "in",
-                        format: "a4",
-                        orientation: 'landscape' // landscape o portrait
+                        format: "a2",
+                        orientation: 'portrait' // landscape o portrait
                     }
                 })
                 .from($elementoParaConvertir)
