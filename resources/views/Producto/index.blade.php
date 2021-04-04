@@ -781,7 +781,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let cantSubproductos = 0;
         let departamento = "";
         for (let t in productosList) {
-            console.log("prod list");
+            //console.log("prod list");
             for (let z in productosSucursal) {
                 if (productosList[t].id === productosSucursal[z].idProducto) {
                     //  if (productosSucursal[z].status === 1) {
@@ -923,11 +923,27 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             for (count10 in productos) {
                 if (productos[count10].id === productosSucursal[j].idProducto) {
                     if (productos[count10].id === id) {
+                        let departamentos = "";
                         for (count11 in d) {
                             if (productos[count10].idDepartamento === d[count11].id) {
-                                departamento = d[count11].nombre;
+                                departamentos = departamentos + `<option value="${d[count11].id}" selected>${d[count11].nombre}</option>`;
+                                //departamento = d[count11].nombre;
+                            }
+                            else{
+                                departamentos = departamentos + `<option value="${d[count11].id}">${d[count11].nombre}</option>`;
                             }
                         }
+                        let receta = "";
+                        if(productos[count10].receta == "NO")
+                        {
+                            receta = `<option value="NO" selected>${productos[count10].receta}</option>
+                                      <option value="SI">SI</option>`
+                        }
+                        else{
+                            receta = `<option value="SI" selected>${productos[count10].receta}</option>
+                                      <option value="NO">NO</option>`
+                        }
+                        
                         x1 = productos[count10].id;
                         x = productos[count10].id;
                         idProdSuc = productosSucursal[j].id;
@@ -941,9 +957,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
                                              <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                                              AGREGAR A SUBPRODUCTO </a>`;
-                        let botonesProducto = `<a class="btn btn-outline-primary mb-2 " href="{{ url('/puntoVenta/producto/` + x + `/edit')}}" onclick="return confirm('¿EDITAR ESTE PRODUCTO?')"> 
-                                            <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
-                                            EDITAR  </a>
+                        let botonesProducto = `<button class="btn btn-outline-primary mb-2" id="btnEditar" onclick="habilitarEditar(${x})" value=true> 
+                                            <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
+                                            EDITAR</button>
                                             <br/> 
                                             <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarPrecio( ` + idProdSuc + `)" value="` + idProdSuc + `">
                                            EDITAR PRECIO
@@ -1024,22 +1040,24 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                             <br />
                                         </div>
                                         <div class="col-5">
+                                        <fieldset disabled id="formEditar">
                                             <!--El name debe ser igual al de la base de datos-->
-                                            <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase " placeholder="Ingresar codigo de barras" value="` + productos[count10].codigoBarras + `" required autocomplete="codigoBarras" autofocus disabled>
+                                            <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase " placeholder="Ingresar codigo de barras" value="` + productos[count10].codigoBarras + `" required autocomplete="codigoBarras" autofocus>
                                             <br />
-                                            <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required disabled>
+                                            <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="Nombre productos" value="` + productos[count10].nombre + ` " autofocus required>
                                             <br />
-                                            <textarea name="descripcion" id="descripcion" class="form-control text-uppercase" placeholder="Descripcion del producto" rows="3" cols="23" required disabled>` + productos[count10].descripcion + `</textarea>
+                                            <textarea name="descripcion" id="descripcion" class="form-control text-uppercase" placeholder="Descripcion del producto" rows="3" cols="23" required>` + productos[count10].descripcion + `</textarea>
                                             <br />
-                                            <input type="number" name="minimoStock" id="minimoStock" class="form-control text-uppercase" placeholder="Ingrese el minimo de productos permitidos" value="` + ms + `" autofocus required disabled>
+                                            <input type="number" name="minimoStock" id="minimoStock" class="form-control text-uppercase" placeholder="Ingrese el minimo de productos permitidos" value="` + ms + `" autofocus required>
                                             <br />
-                                            <select class="form-control text-uppercase" name="Receta" id="Receta"  disabled>
-                                                <option value="" selected>` + productos[count10].receta + ` </option>
-                                            </select>
+                                            <select class="form-control text-uppercase" name="receta" id="receta">`
+                                                +receta+
+                                            `</select>
                                             <br />
-                                            <select class="form-control text-uppercase" name="Depa" id="Depa"  disabled>
-                                                <option value="" selected>` + departamento + ` </option>
-                                            </select>
+                                            <select class="form-control text-uppercase" name="departamento" id="departamento">`
+                                                +departamentos+
+                                            `</select>
+                                            </fieldset>
                                         </div>
                                         <div class="col-4 text-center">
                                             <label for="Imagen">
@@ -1754,6 +1772,102 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
+    }
+    function habilitarEditar(x)
+    {
+        let btnEditar = document.getElementById("btnEditar");
+        console.log(btnEditar.value);
+        console.log(true);
+        if(btnEditar.value == "true")
+        {
+
+            document.getElementById("formEditar").disabled = false;
+            document.getElementById("btnEditar").innerHTML = 
+            `<img src="{{ asset('img/guardar.png') }}" alt="Editar" width="25px" height="25px">
+            GUARDAR CAMBIOS`;
+            btnEditar.value = false;
+        }
+        else{
+            
+            editarProducto(x);
+        }
+        
+    }
+    async function editarProducto(x)
+    {
+        try{
+        //return alert("ejecuta editarProducto");
+        let datosProducto = new FormData();
+        const codigoBarras = document.getElementById("codigoBarras").value;
+        const nombre = document.getElementById("nombre").value;
+        const descripcion = $('#descripcion').val();//document.getElementById("descripcion").value;
+        const minimoStock = document.getElementById("minimoStock").value;
+        const receta = document.getElementById("receta").value;
+        const departamento = document.getElementById("departamento").value;
+       /*datosProducto.append('_token', "{{ csrf_token() }}");
+        datosProducto.append('codigoBarras', codigoBarras);
+        datosProducto.append('nombre', nombre);
+        datosProducto.append('descripcion', descripcion);
+        datosProducto.append('minimoStock', minimoStock);
+        datosProducto.append('receta', receta);
+        datosProducto.append('idDepartamento', departamento);
+        datosProducto.append('ajax', true);
+        console.log('minimoStock', descripcion);*/
+        let spp = await $.ajax({
+            headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
+            // metodo: puede ser POST, GET, etc
+            method: "PUT",
+            // la URL de donde voy a hacer la petición
+            url: `/puntoVenta/producto/${x}`,
+            // los datos que voy a enviar para la relación
+            //dataType: 'json',
+            data:{
+                codigoBarras: codigoBarras,
+                nombre:nombre,
+                descripcion:descripcion,
+                minimoStock:minimoStock,
+                receta:receta,
+                idDepartamento:departamento,
+                '_token': "{{ csrf_token() }}",
+                ajax:true
+
+            },
+                //_token: $("meta[name='csrf-token']").attr("content")
+                //_token: "{{ csrf_token() }}",
+            //processData: false,  // tell jQuery not to process the data
+            //contentType: false
+        });
+        console.log(spp);
+        alert("DATOS ACTUALIZADOS CORRECTAMENTE");
+        document.getElementById("formEditar").disabled = true;
+        document.getElementById("btnEditar").innerHTML = 
+        `<img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
+        EDITAR`;
+        btnEditar.value = true;
+        await act_datos();
+            await buscarFiltroNombre2();
+        /*var init = {
+                // el método de envío de la información será POST
+                method: "PUT",
+                // el cuerpo de la petición es una cadena de texto 
+                // con los datos en formato JSON
+                body: datosProducto // convertimos el objeto a texto
+            };
+            //console.log('Aun llega aquí');
+            
+            let respuesta = await fetch(`/puntoVenta/producto/${x}`, init);
+            if (respuesta.ok) {
+                let res = await respuesta.text();
+                console.log(res);
+                //const cuerpoModal = document.querySelector('#cuerpoModal');
+                //const tituloModal = document.querySelector('#exampleModalLabel');
+                //cuerpoModal.innerHTML = ingresarProducto;
+                //tituloModal.innerHTML = ingresarProductoTitulo;
+            }*/
+        }catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+
     }
 </script>
 
