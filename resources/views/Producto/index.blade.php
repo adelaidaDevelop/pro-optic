@@ -175,7 +175,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 </div>
 
                 <!-- TABLA -->
-                <div class="row border mx-0 px-0 border-dark mx-4" style="height:500px;overflow-y:auto;">
+                <div class="row border mx-0 px-0 border-dark mx-4" style="height:500px;overflow-y:auto;" id="tablaBusqueda">
                     <table class="table table-bordered table-responsive-lg  border-primary  text-center table-hover" id="productos">
                         <thead class="table-secondary text-dark">
                             <tr>
@@ -467,6 +467,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     let prod_baja = "";
 
     // nombreOpc();
+    const numPorGrupo = 1000;
+    let grupos = 1;
+    let paginas = 1;
     buscarFiltroNombre2();
 
     /*
@@ -501,6 +504,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
      }
 
      */
+    
     function buscarFiltroNombre2() {
         productosList = [];
         const palabraBusqueda = document.querySelector('#busquedaProducto');
@@ -653,6 +657,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             //}
         }
         console.log('Empieza a rellenar');
+        grupos = parseInt(productosList.length/numPorGrupo);
+        pagina = 0;
+        console.log('grupos',grupos);
         rellenar();
     };
     /*
@@ -782,7 +789,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 
     function rellenar() {
         const palabraBusqueda = document.querySelector('#busquedaProducto');
-        let cuerpo = "";
+        let consulta = document.getElementById("consultaBusqueda");
+        if(pagina == 0)
+            consulta.innerHTML ="";
+        let cuerpo =  "";//document.getElementById("consultaBusqueda").innerHTML;
+        
         let contador = 0;
         let costo_inventario = 0;
         let precio_inventario = 0;
@@ -790,7 +801,13 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let cantOfertas = 0;
         let cantSubproductos = 0;
         //let departamento = "";
-        for (let t in productosList) {
+        //for (let t in productosList) {
+        if(pagina>grupos)
+            return;
+        let totalProductos =  parseInt((pagina+1)*numPorGrupo);
+        if(pagina==grupos)
+            totalProductos = productosList.length;
+        for(let t = parseInt(pagina*numPorGrupo);t<totalProductos;t++){    
             //console.log("prod list");
             let productoSucursal = productosSucursal.find(p => p.idProducto == productosList[t].id);
             //for (let z in productosSucursal) {
@@ -833,16 +850,19 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         console.log('Ya acabo producto');
         //MOSTRAR SUBPRODUCTOS
         for (let y in subproductos) {
-            for (let z in productosSucursal) {
-                if (subproductos[y].idSucursalProducto == productoSucursal.id) {
-                    for (let p in productos) {
-                        if (productos[p].id == productoSucursal.idProducto) {
-                            if (productos[p].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                                for (count8 in d) {
+            //for (let z in productosSucursal) {
+                //if (subproductos[y].idSucursalProducto == productoSucursal.id) {
+                let productoSucursal = productosSucursal.find(p => p.id == subproductos[y].idSucursalProducto);
+                    //for (let p in productos) {
+                        //if (productos[p].id == productoSucursal.idProducto) {
+                        let producto = productos.find(p => p.id == productoSucursal.idProducto);
+                            if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                                departamento = d.find(p => p.id == producto.idDepartamento);
+                                /*for (count8 in d) {
                                     if (productos[p].idDepartamento === d[count8].id) {
                                         departamento = d[count8].nombre;
                                     }
-                                }
+                                }*/
                                 let costoSubp = productoSucursal.costo / subproductos[y].piezas;
                                 let costoTempSub = costoSubp * subproductos[y].existencia;
                                 costo_inventario = costo_inventario + costoTempSub;
@@ -854,41 +874,44 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 cuerpo = cuerpo + `
                             <tr class="table-warning" onclick="" data-dismiss="modal">
                                 <td >` + "SUBPRODUCTO" + `</td>
-                                <td>` + productos[p].codigoBarras + `</td>
-                                <td>` + productos[p].nombre + `</td>
+                                <td>` + producto.codigoBarras + `</td>
+                                <td>` + producto.nombre + `</td>
                                 <td>` + departamento + `</td>
                                 <td>` + Number(costoSubp.toFixed(2)) + `</td>
                                 <td class="text-success">` + subproductos[y].precio + `</td>
                                 <td>` + subproductos[y].existencia + `</td>
                                 <td>` +
-                                    ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` + productos[p].id + `)" value="` + productos[p].id + `">
+                                    ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` + producto.id + `)" value="` + producto.id + `">
                                 <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
                                 </button>
                                 </td>            
                             </tr>
                             `;
                             }
-                        }
+                        //}
 
-                    }
-                }
+                    //}
+                //}
 
-            }
+            //}
 
         }
         console.log('Ya acabo subproducto');
         //MOSTRAR OFERTAS 
         for (let i in ofertas) {
-            for (let z in productosSucursal) {
-                if (ofertas[i].idSucursalProducto == productoSucursal.id) {
-                    for (let p in productos) {
-                        if (productos[p].id == productoSucursal.idProducto) {
-                            if (productos[p].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                                for (count8 in d) {
-                                    if (productos[p].idDepartamento === d[count8].id) {
+            //for (let z in productosSucursal) {
+                //if (ofertas[i].idSucursalProducto == productoSucursal.id) {
+                let productoSucursal = productosSucursal.find(p => p.id == ofertas[i].idSucursalProducto);
+                    //for (let p in productos) {
+                        //if (productos[p].id == productoSucursal.idProducto) {
+                        let producto = productos.find(p => p.id == productoSucursal.idProducto);
+                            if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                                departamento = d.find(p => p.id == producto.idDepartamento);
+                                /*for (count8 in d) {
+                                    if (producto.idDepartamento === d[count8].id) {
                                         departamento = d[count8].nombre;
                                     }
-                                }
+                                }*/
                                 let costoOferta = productoSucursal.costo * ofertas[i].existencia;
                                 costo_inventario = costo_inventario + costoOferta;
                                 let precioTempOferta = productoSucursal.precio * ofertas[i].existencia;
@@ -898,22 +921,23 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 cuerpo = cuerpo + `
                             <tr class="table-warning" onclick="" data-dismiss="modal">
                                 <td >` + "OFERTA" + `</td>
-                                <td>` + productos[p].codigoBarras + `</td>
-                                <td>` + productos[p].nombre + `</td>
+                                <td>` + producto.codigoBarras + `</td>
+                                <td>` + producto.nombre + `</td>
                                 <td>` + departamento + `</td>
                                 <td>` + productoSucursal.costo + `</td>
                                 <td class="text-success">` + productosSucursal.precio + `</td>
                                 <td>` + ofertas[i].existencia + `</td>
                                 <td>`;
                             }
-                        }
-                    }
-                }
-            }
+                        //}
+                    //}
+                //}
+            //}
 
         }
         console.log('Ya acabo subproducto');
-        document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        //document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+        consulta.innerHTML = consulta.innerHTML + cuerpo;
         document.getElementById("costoInv").innerHTML = costo_inventario;
         document.getElementById("precioInv").innerHTML = precio_inventario;
         document.getElementById("cantProdInv").innerHTML = cantProdInventario;
@@ -1888,6 +1912,18 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         }
 
     }
+    //$('#tablaBusqueda').scrollTop() == $('#consultaBusqueda').height() - $('#tablaBusqueda').height()
+    $('#tablaBusqueda').scroll(function(){
+        //console.log('scrollea');
+        if ($('#tablaBusqueda').scrollTop() >= $('#consultaBusqueda').height() - $('#tablaBusqueda').height()){
+            pagina++;
+            rellenar();
+            //cargardatos()
+            
+        }	
+        console.log('tablaBusqueda',$('#tablaBusqueda').scrollTop());
+        console.log('comparacion',$('#consultaBusqueda').height() - $('#tablaBusqueda').height());				
+    });
 </script>
 
 @endsection
