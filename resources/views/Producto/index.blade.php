@@ -512,16 +512,18 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             //console.log('secuencia',x);
             //for (count5 in productos) {
                 //if (productos[count5].id === productosSucursal[x].idProducto) {
+
                     //BUSCAR POR FOLIO NOMBRE 
-                    let producto = productos.find(p => p.id == productosSucursal[x].idProducto);
-                    
+                let producto = productos.find(p => p.id == productosSucursal[x].idProducto);
+                if(producto!=null){
                     
                     if (opcFolioNombre === 'nombre') {
                         $("#idDepartamento").prop('disabled', false);
                         $("#bajosExistencia").prop('disabled', false);
-
+                        //
                         //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
                         if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                            console.log(producto.id);
                             //BUSCAR POR DEPARTAMENTO
                             //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
                             let depa = document.querySelector('#idDepartamento');
@@ -646,7 +648,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             productosList.push(productosAdd);
                         }
                     }     
-                //}
+                }
             //}
         }
         console.log('Empieza a rellenar');
