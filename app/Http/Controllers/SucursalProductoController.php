@@ -81,7 +81,8 @@ class SucursalProductoController extends Controller
     public function act_inventario(){
         $idSucursal = session('sucursal');
         $subproducto = Subproducto::all();
-        $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)->get();
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)
+        ->get(['id','costo','precio','existencia','minimoStock','idProducto']);
         return compact('productosSucursal', 'subproducto');
     }
 
