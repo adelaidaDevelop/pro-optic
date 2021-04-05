@@ -28,9 +28,9 @@ class ProductoController extends Controller
         ->get(['id','costo','precio','existencia','minimoStock','idProducto']);
        
         $depas['d']= Departamento::paginate();
-        $datosP= Producto::all(['id','codigoBarras', 'nombre','receta' ,'idDepartamento']);
+        $datosP= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento']);
         $depa= Departamento::all(['id','nombre']);
-        $producto = Producto::all(['id','codigoBarras', 'nombre','receta' ,'idDepartamento']);
+        $producto = Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento']);
         $subproducto = Subproducto::all();
         $ofertas = Oferta::all();
      //   return $idSucursal;
@@ -207,29 +207,37 @@ class ProductoController extends Controller
     
     public function update(Request $request, $id)
     {
+        //return 'Recibo tu solicitud';
         $usuarios = ['modificarProducto','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
-        $datosProducto = request()->except('_token', 'minimoStock');
-       if($request->hasFile('imagen')){
-        $producto=Producto::findOrFail($id);
-        Storage::delete('public/'.$producto->imagen);
-        $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
-    }
+        $datosProducto = request()->except('_token', 'minimoStock','ajax');
+        
+        if($request->hasFile('imagen')){
+            $producto=Producto::findOrFail($id);
+            Storage::delete('public/'.$producto->imagen);
+            $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
+        }
+        
         $producto = Producto::findOrFail($id);
+        
         $producto->update($datosProducto);
-
-
+        
        // $producto = Producto::where('id', '=', $id)->update($datosProducto);
 
         //  $datosSP['costo']= 0;
         // $datosSP['precio']= 0;
         // $datosSP['existencia']= 0;
          $datosSP['minimoStock']= $request->input('minimoStock');
+         //return $request->input('descripcion');
          $sp = Sucursal_producto::where('idProducto', '=', $id);
+         //return $request->input('descripcion');//$datosSP['minimoStock'];
          $sp->update($datosSP);
+         
        //   Sucursal_producto::create($datosSP);
-        ///
+        
+        if($request['ajax'])
+            return true;
         return redirect('puntoVenta/producto');
     }
 
