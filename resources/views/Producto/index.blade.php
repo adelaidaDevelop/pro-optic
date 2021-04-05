@@ -516,7 +516,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     let producto = productos.find(p => p.id == productosSucursal[x].idProducto);
                     
                     
-            /*        if (opcFolioNombre === 'nombre') {
+                    if (opcFolioNombre === 'nombre') {
                         $("#idDepartamento").prop('disabled', false);
                         $("#bajosExistencia").prop('disabled', false);
 
@@ -645,12 +645,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             };
                             productosList.push(productosAdd);
                         }
-                    }     */
+                    }     
                 //}
             //}
         }
         console.log('Empieza a rellenar');
-        //rellenar();
+        rellenar();
     };
     /*
 
@@ -789,16 +789,17 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let departamento = "";
         for (let t in productosList) {
             //console.log("prod list");
-            for (let z in productosSucursal) {
-                if (productosList[t].id === productosSucursal[z].idProducto) {
+            let productoSucursal = productosSucursal.find(p => p.idProducto == productosList[t].id);
+            //for (let z in productosSucursal) {
+              //  if (productosList[t].id === productosSucursal[z].idProducto) {
                     //  if (productosSucursal[z].status === 1) {
                     for (count8 in d) {
                         if (productosList[t].idDepartamento === d[count8].id) {
                             departamento = d[count8].nombre;
                         }
                     }
-                    let costoTemporal = productosSucursal[z].costo * productosList[t].existencia;
-                    let precioTemporal = productosSucursal[z].precio * productosList[t].existencia;
+                    let costoTemporal = productoSucursal.costo * productosList[t].existencia;
+                    let precioTemporal = productoSucursal.precio * productosList[t].existencia;
                     costo_inventario = costo_inventario + costoTemporal;
                     precio_inventario = precio_inventario + precioTemporal;
                     cantProdInventario = cantProdInventario + productosList[t].existencia;
@@ -810,8 +811,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <td>` + productosList[t].codigoBarras + `</td>
                                 <td>` + productosList[t].nombre + `</td>
                                 <td>` + departamento + `</td>
-                                <td>` + productosSucursal[z].costo + `</td>
-                                <td class="text-success">` + productosSucursal[z].precio + `</td>
+                                <td>` + productoSucursal.costo + `</td>
+                                <td class="text-success">` + productoSucursal.precio + `</td>
                                 <td>` + productosList[t].existencia + `</td>
                                 <td>` +
                         ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
@@ -822,22 +823,22 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             `;
                     //}
 
-                }
-            }
+              //  }
+            //}
         }
         //MOSTRAR SUBPRODUCTOS
         for (let y in subproductos) {
             for (let z in productosSucursal) {
-                if (subproductos[y].idSucursalProducto == productosSucursal[z].id) {
+                if (subproductos[y].idSucursalProducto == productoSucursal.id) {
                     for (let p in productos) {
-                        if (productos[p].id == productosSucursal[z].idProducto) {
+                        if (productos[p].id == productoSucursal.idProducto) {
                             if (productos[p].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                                 for (count8 in d) {
                                     if (productos[p].idDepartamento === d[count8].id) {
                                         departamento = d[count8].nombre;
                                     }
                                 }
-                                let costoSubp = productosSucursal[z].costo / subproductos[y].piezas;
+                                let costoSubp = productoSucursal.costo / subproductos[y].piezas;
                                 let costoTempSub = costoSubp * subproductos[y].existencia;
                                 costo_inventario = costo_inventario + costoTempSub;
                                 let precioTempSub = subproductos[y].precio * subproductos[y].existencia;
@@ -873,18 +874,18 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         //MOSTRAR OFERTAS 
         for (let i in ofertas) {
             for (let z in productosSucursal) {
-                if (ofertas[i].idSucursalProducto == productosSucursal[z].id) {
+                if (ofertas[i].idSucursalProducto == productoSucursal.id) {
                     for (let p in productos) {
-                        if (productos[p].id == productosSucursal[z].idProducto) {
+                        if (productos[p].id == productoSucursal.idProducto) {
                             if (productos[p].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                                 for (count8 in d) {
                                     if (productos[p].idDepartamento === d[count8].id) {
                                         departamento = d[count8].nombre;
                                     }
                                 }
-                                let costoOferta = productosSucursal[z].costo * ofertas[i].existencia;
+                                let costoOferta = productoSucursal.costo * ofertas[i].existencia;
                                 costo_inventario = costo_inventario + costoOferta;
-                                let precioTempOferta = productosSucursal[z].precio * ofertas[i].existencia;
+                                let precioTempOferta = productoSucursal.precio * ofertas[i].existencia;
                                 precio_inventario = precio_inventario + precioTempOferta;
                                 cantOfertas = cantOfertas + ofertas[i].existencia;
                                 contador = contador + 1;
@@ -894,8 +895,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <td>` + productos[p].codigoBarras + `</td>
                                 <td>` + productos[p].nombre + `</td>
                                 <td>` + departamento + `</td>
-                                <td>` + productosSucursal[z].costo + `</td>
-                                <td class="text-success">` + productosSucursal[z].precio + `</td>
+                                <td>` + productoSucursal.costo + `</td>
+                                <td class="text-success">` + productosSucursal.precio + `</td>
                                 <td>` + ofertas[i].existencia + `</td>
                                 <td>`;
                             }
