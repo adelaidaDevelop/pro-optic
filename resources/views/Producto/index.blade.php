@@ -504,9 +504,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         productosList = [];
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         for (let x in productosSucursal) {
-            for (count5 in productos) {
-                if (productos[count5].id === productosSucursal[x].idProducto) {
+            console.log('secuencia',x);
+            //for (count5 in productos) {
+                //if (productos[count5].id === productosSucursal[x].idProducto) {
                     //BUSCAR POR FOLIO NOMBRE 
+                    let producto = productos.find(p => p.id == productosSucursal[x].idProducto);
                     let seleccion = document.querySelector("input[name='checkbox2']:checked");
                     let opcFolioNombre = seleccion.value;
                     folioNombreBandera = true;
@@ -515,12 +517,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         $("#bajosExistencia").prop('disabled', false);
 
                         //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
-                        if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                        if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                             //BUSCAR POR DEPARTAMENTO
                             //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
                             let depa = document.querySelector('#idDepartamento');
                             if (depa.value != "") {
-                                if (productos[count5].idDepartamento === parseInt(depa.value)) {
+                                if (producto.idDepartamento === parseInt(depa.value)) {
                                     //Cargar datos encontrados filtrado depto, nombre
                                     //BUSCAR PRODUCTOS BAJOS DE EXISTENCIA
                                     let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
@@ -532,17 +534,17 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                                 //PRODUCTOS POR NOMBRE, DEPTO Y BAJOS EXISTENCIA
                                                 let departamento = "";
                                                 for (count21 in d) {
-                                                    if (productos[count5].idDepartamento === d[count21].id) {
+                                                    if (producto.idDepartamento === d[count21].id) {
                                                         departamento = d[count21].nombre;
                                                     }
                                                 }
-                                                let id = productos[count5].id;
+                                                let id = producto.id;
                                                 let productosAdd = {
                                                     id: id,
-                                                    codigoBarras: productos[count5].codigoBarras,
-                                                    nombre: productos[count5].nombre,
+                                                    codigoBarras: producto.codigoBarras,
+                                                    nombre: producto.nombre,
                                                     existencia: productosSucursal[x].existencia,
-                                                    idDepartamento: productos[count5].idDepartamento
+                                                    idDepartamento: producto.idDepartamento
                                                 };
                                                 productosList.push(productosAdd);
 
@@ -554,17 +556,17 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                         // buscarFiltroNombre();
                                         let departamento = "";
                                         for (count21 in d) {
-                                            if (productos[count5].idDepartamento === d[count21].id) {
+                                            if (producto.idDepartamento === d[count21].id) {
                                                 departamento = d[count21].nombre;
                                             }
                                         }
-                                        let id = productos[count5].id;
+                                        let id = producto.id;
                                         let productosAdd = {
                                             id: id,
-                                            codigoBarras: productos[count5].codigoBarras,
-                                            nombre: productos[count5].nombre,
+                                            codigoBarras: producto.codigoBarras,
+                                            nombre: producto.nombre,
                                             existencia: productosSucursal[x].existencia,
-                                            idDepartamento: productos[count5].idDepartamento
+                                            idDepartamento: producto.idDepartamento
                                         };
                                         productosList.push(productosAdd);
                                     }
@@ -581,17 +583,17 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                             //PRODUCTOS POR NOMBRE Y BAJOS EXISTENCIA
                                             let departamento = "";
                                             for (count21 in d) {
-                                                if (productos[count5].idDepartamento === d[count21].id) {
+                                                if (producto.idDepartamento === d[count21].id) {
                                                     departamento = d[count21].nombre;
                                                 }
                                             }
-                                            let id = productos[count5].id;
+                                            let id = producto.id;
                                             let productosAdd = {
                                                 id: id,
-                                                codigoBarras: productos[count5].codigoBarras,
-                                                nombre: productos[count5].nombre,
+                                                codigoBarras: producto.codigoBarras,
+                                                nombre: producto.nombre,
                                                 existencia: productosSucursal[x].existencia,
-                                                idDepartamento: productos[count5].idDepartamento
+                                                idDepartamento: producto.idDepartamento
                                             };
                                             productosList.push(productosAdd);
                                         }
@@ -600,17 +602,17 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                     //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE
                                     let departamento = "";
                                     for (count21 in d) {
-                                        if (productos[count5].idDepartamento === d[count21].id) {
+                                        if (producto.idDepartamento === d[count21].id) {
                                             departamento = d[count21].nombre;
                                         }
                                     }
-                                    let id = productos[count5].id;
+                                    let id = producto.id;
                                     let productosAdd = {
                                         id: id,
-                                        codigoBarras: productos[count5].codigoBarras,
-                                        nombre: productos[count5].nombre,
+                                        codigoBarras: producto.codigoBarras,
+                                        nombre: producto.nombre,
                                         existencia: productosSucursal[x].existencia,
-                                        idDepartamento: productos[count5].idDepartamento
+                                        idDepartamento: producto.idDepartamento
                                     };
                                     productosList.push(productosAdd);
                                 }
@@ -622,27 +624,28 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     } else if (opcFolioNombre === 'folio') {
                         $("#idDepartamento").prop('disabled', true);
                         $("#bajosExistencia").prop('disabled', true);
-                        if (productos[count5].codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                        if (producto.codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                             let departamento = "";
                             for (count21 in d) {
-                                if (productos[count5].idDepartamento === d[count21].id) {
+                                if (producto.idDepartamento === d[count21].id) {
                                     departamento = d[count21].nombre;
                                 }
                             }
-                            let id = productos[count5].id;
+                            let id = producto.id;
                             let productosAdd = {
                                 id: id,
-                                codigoBarras: productos[count5].codigoBarras,
-                                nombre: productos[count5].nombre,
+                                codigoBarras: producto.codigoBarras,
+                                nombre: producto.nombre,
                                 existencia: productosSucursal[x].existencia,
-                                idDepartamento: productos[count5].idDepartamento
+                                idDepartamento: producto.idDepartamento
                             };
                             productosList.push(productosAdd);
                         }
                     }
-                }
-            }
+                //}
+            //}
         }
+        console.log('Empieza a rellenar');
         rellenar();
     };
     /*
