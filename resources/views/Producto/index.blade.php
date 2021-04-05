@@ -507,6 +507,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let seleccion = document.querySelector("input[name='checkbox2']:checked");
         let opcFolioNombre = seleccion.value;
         //folioNombreBandera = true;
+        console.log('Empieza');
         for (let x in productosSucursal) {
         //for(let x=0;x<productosSucursal.length;x++){
             //console.log('secuencia',x);
@@ -523,7 +524,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         //
                         //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
                         if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                            console.log(producto.id);
+                            //console.log(producto.id);
                             //BUSCAR POR DEPARTAMENTO
                             //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
                             let depa = document.querySelector('#idDepartamento');
@@ -788,18 +789,19 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let cantProdInventario = 0;
         let cantOfertas = 0;
         let cantSubproductos = 0;
-        let departamento = "";
+        //let departamento = "";
         for (let t in productosList) {
             //console.log("prod list");
             let productoSucursal = productosSucursal.find(p => p.idProducto == productosList[t].id);
             //for (let z in productosSucursal) {
               //  if (productosList[t].id === productosSucursal[z].idProducto) {
                     //  if (productosSucursal[z].status === 1) {
-                    for (count8 in d) {
+                    let departamento = d.find(p => p.id == productosList[t].idDepartamento).nombre;
+                    /*for (count8 in d) {
                         if (productosList[t].idDepartamento === d[count8].id) {
                             departamento = d[count8].nombre;
                         }
-                    }
+                    }*/
                     let costoTemporal = productoSucursal.costo * productosList[t].existencia;
                     let precioTemporal = productoSucursal.precio * productosList[t].existencia;
                     costo_inventario = costo_inventario + costoTemporal;
@@ -828,6 +830,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
               //  }
             //}
         }
+        console.log('Ya acabo producto');
         //MOSTRAR SUBPRODUCTOS
         for (let y in subproductos) {
             for (let z in productosSucursal) {
@@ -873,6 +876,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             }
 
         }
+        console.log('Ya acabo subproducto');
         //MOSTRAR OFERTAS 
         for (let i in ofertas) {
             for (let z in productosSucursal) {
@@ -908,7 +912,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             }
 
         }
-
+        console.log('Ya acabo subproducto');
         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
         document.getElementById("costoInv").innerHTML = costo_inventario;
         document.getElementById("precioInv").innerHTML = precio_inventario;
