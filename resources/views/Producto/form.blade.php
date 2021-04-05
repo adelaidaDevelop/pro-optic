@@ -23,6 +23,12 @@
         <h5 class="mb-1"> {{'RECETA MEDICA'}} </h5>
         <br />
         <h5 class="mb-1"> {{'DEPARTAMENTO'}}</h5>
+        <br />
+        <h5 class="mb-1"> {{'EXISTENCIA'}}</h5>
+        <br />
+        <h5 class="mb-1"> {{'PRECIO'}}</h5>
+        <br />
+        <h5 class="mb-1"> {{'COSTO'}}</h5>
     </div>
     <div class="col-4">
         <!--El name debe ser igual al de la base de datos-->
@@ -69,6 +75,11 @@
             @endif
             @endforeach
         </select>
+        <input type="number" name="existencia" id="existencia" class=" form-control mb-4 " placeholder="" value="{{ isset($producto->nombre)?$producto->nombre:old('nombre')}}" autofocus required>
+        <input type="number" name="costo" id="costo" class=" form-control mb-4 " placeholder="" value="{{ isset($producto->nombre)?$producto->nombre:old('nombre')}}" autofocus required>
+        <input type="number" name="precio" id="precio" class=" form-control mb-4 " placeholder="" value="{{ isset($producto->nombre)?$producto->nombre:old('nombre')}}" autofocus required>
+
+
     </div>
     <div class="col-1"></div>
     <div class="col-3 text-center mt-3">
