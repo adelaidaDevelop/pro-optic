@@ -503,16 +503,19 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     function buscarFiltroNombre2() {
         productosList = [];
         const palabraBusqueda = document.querySelector('#busquedaProducto');
+        let seleccion = document.querySelector("input[name='checkbox2']:checked");
+        let opcFolioNombre = seleccion.value;
+        //folioNombreBandera = true;
         for (let x in productosSucursal) {
-            console.log('secuencia',x);
+        //for(let x=0;x<productosSucursal.length;x++){
+            //console.log('secuencia',x);
             //for (count5 in productos) {
                 //if (productos[count5].id === productosSucursal[x].idProducto) {
                     //BUSCAR POR FOLIO NOMBRE 
                     let producto = productos.find(p => p.id == productosSucursal[x].idProducto);
-                    let seleccion = document.querySelector("input[name='checkbox2']:checked");
-                    let opcFolioNombre = seleccion.value;
-                    folioNombreBandera = true;
-                    if (opcFolioNombre === 'nombre') {
+                    
+                    
+            /*        if (opcFolioNombre === 'nombre') {
                         $("#idDepartamento").prop('disabled', false);
                         $("#bajosExistencia").prop('disabled', false);
 
@@ -641,12 +644,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             };
                             productosList.push(productosAdd);
                         }
-                    }
+                    }     */
                 //}
             //}
         }
         console.log('Empieza a rellenar');
-        rellenar();
+        //rellenar();
     };
     /*
 
