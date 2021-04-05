@@ -660,6 +660,50 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         grupos = parseInt(productosList.length/numPorGrupo);
         pagina = 0;
         console.log('grupos',grupos);
+        let contador = 0;
+        let costo_inventario = 0;
+        let precio_inventario = 0;
+        let cantProdInventario = 0;
+        let cantOfertas = 0;
+        let cantSubproductos = 0;
+
+        for(let t in productosList)
+        {
+            let productoSucursal = productosSucursal.find(p => p.idProducto == productosList[t].id);
+            
+            let costoTemporal = productoSucursal.costo * productosList[t].existencia;
+            let precioTemporal = productoSucursal.precio * productosList[t].existencia;
+            costo_inventario = costo_inventario + costoTemporal;
+            precio_inventario = precio_inventario + precioTemporal;
+            cantProdInventario = cantProdInventario + productosList[t].existencia;
+
+            let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
+            if(subproducto!=null)
+            {
+                let costoSubp = productoSucursal.costo / subproducto.piezas;
+                let costoTempSub = costoSubp * subproducto.existencia;
+                costo_inventario = costo_inventario + costoTempSub;
+                let precioTempSub = subproducto.precio * subproducto.existencia;
+                precio_inventario = precio_inventario + precioTempSub;
+                contador = contador + 1;
+                cantSubproductos = cantSubproductos + subproducto.existencia;
+            }
+            let oferta = ofertas.find(p => p.idSucursalProducto == productoSucursal.id);
+            if(oferta!=null)
+            {
+                let costoOferta = productoSucursal.costo * oferta.existencia;
+                costo_inventario = costo_inventario + costoOferta;
+                let precioTempOferta = productoSucursal.precio * oferta.existencia;
+                precio_inventario = precio_inventario + precioTempOferta;
+                cantOfertas = cantOfertas + oferta.existencia;
+            }
+            
+        }
+        document.getElementById("costoInv").innerHTML = costo_inventario;
+            document.getElementById("precioInv").innerHTML = precio_inventario;
+            document.getElementById("cantProdInv").innerHTML = cantProdInventario;
+            document.getElementById("cantProdSub").innerHTML = cantSubproductos;
+            document.getElementById("cantProdOferta").innerHTML = cantOfertas;
         rellenar();
     };
     /*
@@ -795,11 +839,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let cuerpo =  "";//document.getElementById("consultaBusqueda").innerHTML;
         
         let contador = 0;
-        let costo_inventario = 0;
+       /* let costo_inventario = 0;
         let precio_inventario = 0;
         let cantProdInventario = 0;
         let cantOfertas = 0;
-        let cantSubproductos = 0;
+        let cantSubproductos = 0;*/
         //let departamento = "";
         //for (let t in productosList) {
         if(pagina>grupos)
@@ -819,11 +863,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             departamento = d[count8].nombre;
                         }
                     }*/
-                    let costoTemporal = productoSucursal.costo * productosList[t].existencia;
+                    /*let costoTemporal = productoSucursal.costo * productosList[t].existencia;
                     let precioTemporal = productoSucursal.precio * productosList[t].existencia;
                     costo_inventario = costo_inventario + costoTemporal;
                     precio_inventario = precio_inventario + precioTemporal;
-                    cantProdInventario = cantProdInventario + productosList[t].existencia;
+                    cantProdInventario = cantProdInventario + productosList[t].existencia;*/
                     contador = contador + 1;
                     cuerpo = cuerpo + `
                             <tr onclick="" data-dismiss="modal">
@@ -863,13 +907,13 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                         departamento = d[count8].nombre;
                                     }
                                 }*/
-                                let costoSubp = productoSucursal.costo / subproductos[y].piezas;
+                                /*let costoSubp = productoSucursal.costo / subproductos[y].piezas;
                                 let costoTempSub = costoSubp * subproductos[y].existencia;
                                 costo_inventario = costo_inventario + costoTempSub;
                                 let precioTempSub = subproductos[y].precio * subproductos[y].existencia;
                                 precio_inventario = precio_inventario + precioTempSub;
                                 contador = contador + 1;
-                                cantSubproductos = cantSubproductos + subproductos[y].existencia;
+                                cantSubproductos = cantSubproductos + subproductos[y].existencia;*/
 
                                 cuerpo = cuerpo + `
                             <tr class="table-warning" onclick="" data-dismiss="modal">
@@ -912,11 +956,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                         departamento = d[count8].nombre;
                                     }
                                 }*/
-                                let costoOferta = productoSucursal.costo * ofertas[i].existencia;
+                                /*let costoOferta = productoSucursal.costo * ofertas[i].existencia;
                                 costo_inventario = costo_inventario + costoOferta;
                                 let precioTempOferta = productoSucursal.precio * ofertas[i].existencia;
                                 precio_inventario = precio_inventario + precioTempOferta;
-                                cantOfertas = cantOfertas + ofertas[i].existencia;
+                                cantOfertas = cantOfertas + ofertas[i].existencia;*/
                                 contador = contador + 1;
                                 cuerpo = cuerpo + `
                             <tr class="table-warning" onclick="" data-dismiss="modal">
@@ -938,11 +982,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         console.log('Ya acabo subproducto');
         //document.getElementById("consultaBusqueda").innerHTML = cuerpo;
         consulta.innerHTML = consulta.innerHTML + cuerpo;
-        document.getElementById("costoInv").innerHTML = costo_inventario;
+        /*document.getElementById("costoInv").innerHTML = costo_inventario;
         document.getElementById("precioInv").innerHTML = precio_inventario;
         document.getElementById("cantProdInv").innerHTML = cantProdInventario;
         document.getElementById("cantProdSub").innerHTML = cantSubproductos;
-        document.getElementById("cantProdOferta").innerHTML = cantOfertas;
+        document.getElementById("cantProdOferta").innerHTML = cantOfertas;*/
     };
 
     function info4(id) {
