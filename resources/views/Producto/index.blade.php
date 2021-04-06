@@ -949,9 +949,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let cargando =  document.querySelector('#cargandoProductos');
         if(cargando!=null)
             cargando.remove();
-        cargando =  document.querySelector('#cargandoProductos1');
-        if(cargando!=null)
-            cargando.remove();
+        if(pagina<grupos){
         cargando = document.createElement("tr");
         cargando.id= "cargandoProductos";
         cargando.innerHTML =   `
@@ -967,6 +965,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         
         //let consulta = document.getElementById("consultaBusqueda");
         consulta.appendChild(cargando);
+        }
         //let cargando1 = document.createElement("tr");
         //cargando1.id= "cargandoProductos1";
         //cargando1.innerHTML = cargando.innerHTML;
@@ -1956,6 +1955,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             const minimoStock = document.getElementById("minimoStock").value;
             const receta = document.getElementById("receta").value;
             const departamento = document.getElementById("departamento").value;
+            //if()
             let spp = await $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -1982,12 +1982,15 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 //processData: false,  // tell jQuery not to process the data
                 //contentType: false
             });
-            //console.log(spp);
-            alert("DATOS ACTUALIZADOS CORRECTAMENTE");
+            console.log(spp);
+            if(spp == 1)
+              alert("DATOS ACTUALIZADOS CORRECTAMENTE");
+            else
+              return;
             document.getElementById("formEditar").disabled = true;
             document.getElementById("btnEditar").innerHTML =
                 `<img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
-        EDITAR`;
+            EDITAR`;
             btnEditar.value = true;
             await act_datos();
             await buscarFiltroNombre2();
