@@ -177,7 +177,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 <!-- TABLA -->
                 <div class="row border mx-0 px-0 border-dark mx-4" style="height:500px;overflow-y:auto;" id="tablaBusqueda">
                     <table class="table table-bordered table-responsive-lg  border-primary  text-center table-hover" id="productos">
-                        <thead class="table-secondary text-dark">
+                        <thead class="table-secondary text-dark" id="cabeceraProductos">
                             <tr>
                                 <th>TIPO</th>
                                 <th>CODIGO BARRAS</th>
@@ -846,6 +846,20 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let cantSubproductos = 0;*/
         //let departamento = "";
         //for (let t in productosList) {
+          //document.createElement("tr");
+        /*cargando.id= "cargandoProductos";
+        cargando.innerHTML =   `<tr>
+            <td colspan="5">
+            <div class="d-flex justify-content-center my-3">
+                <button class="btn btn-info" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    CARGANDO PRODUCTOS
+                </button>
+            </div>
+            </td>
+            </tr>
+        `;
+        consulta.appendChild(cargando);*/
         if(pagina>grupos)
             return;
         let totalProductos =  parseInt((pagina+1)*numPorGrupo);
@@ -868,10 +882,13 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     costo_inventario = costo_inventario + costoTemporal;
                     precio_inventario = precio_inventario + precioTemporal;
                     cantProdInventario = cantProdInventario + productosList[t].existencia;*/
-                    contador = contador + 1;
-                    cuerpo = cuerpo + `
-                            <tr onclick="" data-dismiss="modal">
+                    //contador = contador + 1;
+                    const tr = document.createElement("tr");
+                    if(productoSucursal.status == 1){
+                    cuerpo = //`
+                            //<tr onclick="" data-dismiss="modal">
                                
+                                `
                                 <td >` + "NORMAL" + `</td>
                                 <td>` + productosList[t].codigoBarras + `</td>
                                 <td>` + productosList[t].nombre + `</td>
@@ -883,17 +900,89 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
                                 <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
                                 </button>
-                                </td>            
-                            </tr>
+                                </td>`;           
+                            //</tr>
+                            //`;
+                            tr.innerHTML = cuerpo;
+                            consulta.appendChild(tr);
+                    }
+                    
+                    
+                    
+                        let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
+                        if(subproducto!=null)
+                        {
+                            cuerpo = 
+                            //<tr class="table-warning" onclick="" data-dismiss="modal">
+                            `<td >` + contador + `</td>
+                            <td >` + "SUBPRODUCTO" + `</td>
+                            <td>` + producto.codigoBarras + `</td>
+                            <td>` + producto.nombre + `</td>
+                            <td>` + departamento + `</td>
+                            <td>` + Number(costoSubp.toFixed(2)) + `</td>
+                            <td class="text-success">` + subproductos[y].precio + `</td>
+                            <td>` + subproductos[y].existencia + `</td>
+                            <td>` +
+                                ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` + producto.id + `)" value="` + producto.id + `">
+                            <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
+                            </button>
+                            </td>            
+                            
                             `;
+                            tr.innerHTML = cuerpo;
+                            consulta.appendChild(tr);
+                        }
+                        let oferta = ofertas.find(p => p.idSucursalProducto == productoSucursal.id);
+                        if(oferta!=null)
+                        {
+                            //contador = contador + 1;
+                            cuerpo =
+                            //<tr class="table-warning" onclick="" data-dismiss="modal">
+                            `<td >` + contador + `</td>
+                            <td >` + "OFERTA" + `</td>
+                            <td>` + producto.codigoBarras + `</td>
+                            <td>` + producto.nombre + `</td>
+                            <td>` + departamento + `</td>
+                            <td>` + productoSucursal.costo + `</td>
+                            <td class="text-success">` + productosSucursal.precio + `</td>
+                            <td>` + ofertas[i].existencia + `</td>
+                            `;
+                            tr.innerHTML = cuerpo;
+                            consulta.appendChild(tr);
+                        }    
                     //}
 
               //  }
             //}
         }
-        console.log('Ya acabo producto');
+        let cargando =  document.querySelector('#cargandoProductos');
+        if(cargando!=null)
+            cargando.remove();
+        cargando =  document.querySelector('#cargandoProductos1');
+        if(cargando!=null)
+            cargando.remove();
+        cargando = document.createElement("tr");
+        cargando.id= "cargandoProductos";
+        cargando.innerHTML =   `
+            <td colspan="8">
+            <div class="d-flex justify-content-center my-3">
+                <button class="btn btn-info" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    CARGANDO PRODUCTOS
+                </button>
+            </div>
+            </td>
+        `;
+        
+        //let consulta = document.getElementById("consultaBusqueda");
+        consulta.appendChild(cargando);
+        //let cargando1 = document.createElement("tr");
+        //cargando1.id= "cargandoProductos1";
+        //cargando1.innerHTML = cargando.innerHTML;
+        //consulta.appendChild(cargando1);
+        console.log(consulta,'Ya acabo producto');
         //MOSTRAR SUBPRODUCTOS
-        for (let y in subproductos) {
+        /*for (let y in subproductos) {
             //for (let z in productosSucursal) {
                 //if (subproductos[y].idSucursalProducto == productoSucursal.id) {
                 let productoSucursal = productosSucursal.find(p => p.id == subproductos[y].idSucursalProducto);
@@ -902,18 +991,18 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         let producto = productos.find(p => p.id == productoSucursal.idProducto);
                             if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                                 departamento = d.find(p => p.id == producto.idDepartamento);
-                                /*for (count8 in d) {
+                                for (count8 in d) {
                                     if (productos[p].idDepartamento === d[count8].id) {
                                         departamento = d[count8].nombre;
                                     }
-                                }*/
+                                }
                                 /*let costoSubp = productoSucursal.costo / subproductos[y].piezas;
                                 let costoTempSub = costoSubp * subproductos[y].existencia;
                                 costo_inventario = costo_inventario + costoTempSub;
                                 let precioTempSub = subproductos[y].precio * subproductos[y].existencia;
                                 precio_inventario = precio_inventario + precioTempSub;
                                 contador = contador + 1;
-                                cantSubproductos = cantSubproductos + subproductos[y].existencia;*/
+                                cantSubproductos = cantSubproductos + subproductos[y].existencia;
 
                                 cuerpo = cuerpo + `
                             <tr class="table-warning" onclick="" data-dismiss="modal">
@@ -939,10 +1028,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 
             //}
 
-        }
+        }*/
         console.log('Ya acabo subproducto');
         //MOSTRAR OFERTAS 
-        for (let i in ofertas) {
+        /*for (let i in ofertas) {
             //for (let z in productosSucursal) {
                 //if (ofertas[i].idSucursalProducto == productoSucursal.id) {
                 let productoSucursal = productosSucursal.find(p => p.id == ofertas[i].idSucursalProducto);
@@ -955,12 +1044,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                     if (producto.idDepartamento === d[count8].id) {
                                         departamento = d[count8].nombre;
                                     }
-                                }*/
+                                }
                                 /*let costoOferta = productoSucursal.costo * ofertas[i].existencia;
                                 costo_inventario = costo_inventario + costoOferta;
                                 let precioTempOferta = productoSucursal.precio * ofertas[i].existencia;
                                 precio_inventario = precio_inventario + precioTempOferta;
-                                cantOfertas = cantOfertas + ofertas[i].existencia;*/
+                                cantOfertas = cantOfertas + ofertas[i].existencia;
                                 contador = contador + 1;
                                 cuerpo = cuerpo + `
                             <tr class="table-warning" onclick="" data-dismiss="modal">
@@ -978,10 +1067,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 //}
             //}
 
-        }
+        }*/
         console.log('Ya acabo subproducto');
         //document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-        consulta.innerHTML = consulta.innerHTML + cuerpo;
+        
+    //    consulta.innerHTML = consulta.innerHTML + cuerpo;
         /*document.getElementById("costoInv").innerHTML = costo_inventario;
         document.getElementById("precioInv").innerHTML = precio_inventario;
         document.getElementById("cantProdInv").innerHTML = cantProdInventario;
@@ -1959,14 +2049,21 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     //$('#tablaBusqueda').scrollTop() == $('#consultaBusqueda').height() - $('#tablaBusqueda').height()
     $('#tablaBusqueda').scroll(function(){
         //console.log('scrollea');
-        if ($('#tablaBusqueda').scrollTop() >= $('#consultaBusqueda').height() - $('#tablaBusqueda').height()){
+        const comparacion = ($('#consultaBusqueda').height()-$('#tablaBusqueda').height()+$('#cabeceraProductos').height()+32)
+        if ($('#tablaBusqueda').scrollTop() == comparacion){// - $('#tablaBusqueda').height()){
+        //const cargando =  document.querySelector('#cargandoProductos')
+        /*if(cargando!=null)
+            cargando.remove();*/
             pagina++;
             rellenar();
-            //cargardatos()
             
         }	
         console.log('tablaBusqueda',$('#tablaBusqueda').scrollTop());
-        console.log('comparacion',$('#consultaBusqueda').height() - $('#tablaBusqueda').height());				
+        console.log('tabla',$('#tablaBusqueda').height());
+        console.log('consulta',$('#consultaBusqueda').height());
+        console.log('cabecera',$('#cabeceraProductos').height());
+        console.log('productos',$('#productos').height());
+        console.log('comparacion',($('#consultaBusqueda').height()-$('#tablaBusqueda').height()+$('#cabeceraProductos').height()+32));
     });
 </script>
 
