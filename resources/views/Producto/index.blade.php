@@ -511,10 +511,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let seleccion = document.querySelector("input[name='checkbox2']:checked");
         let opcFolioNombre = seleccion.value;
         //folioNombreBandera = true;
-        console.log('Empieza');
         for (let x in productosSucursal) {
         //for(let x=0;x<productosSucursal.length;x++){
-            //console.log('secuencia',x);
             //for (count5 in productos) {
                 //if (productos[count5].id === productosSucursal[x].idProducto) {
 
@@ -528,7 +526,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         //
                         //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
                         if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                            //console.log(producto.id);
                             //BUSCAR POR DEPARTAMENTO
                             //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
                             let depa = document.querySelector('#idDepartamento');
@@ -540,7 +537,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                     if (seleccion != null) {
                                         opcBajosE = seleccion.value; //VARIABLE opcBajosE?
                                         if (opcBajosE === 'existencia') {
-                                            console.log("si entra");
                                             if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
                                                 //PRODUCTOS POR NOMBRE, DEPTO Y BAJOS EXISTENCIA
                                                 let departamento = "";
@@ -589,7 +585,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 if (seleccion != null) {
                                     opcBajosE = seleccion.value; //VARIABLE opcBajosE?
                                     if (opcBajosE === 'existencia') {
-                                        console.log("si entra");
                                         if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
                                             //PRODUCTOS POR NOMBRE Y BAJOS EXISTENCIA
                                             let departamento = "";
@@ -656,10 +651,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 }
             //}
         }
-        console.log('Empieza a rellenar');
         grupos = parseInt(productosList.length/numPorGrupo);
         pagina = 0;
-        console.log('grupos',grupos);
         let contador = 0;
         let costo_inventario = 0;
         let precio_inventario = 0;
@@ -796,7 +789,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         if (seleccion != null) {
                             opcBajosE = seleccion.value;
                             if (opcBajosE === 'existencia') {
-                                console.log("si entra");
                                 if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
                                     // if (productos[count20].idDepartamento.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                                     let departamento = "";
@@ -866,7 +858,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         if(pagina==grupos)
             totalProductos = productosList.length;
         for(let t = parseInt(pagina*numPorGrupo);t<totalProductos;t++){    
-            //console.log("prod list");
             let productoSucursal = productosSucursal.find(p => p.idProducto == productosList[t].id);
             //for (let z in productosSucursal) {
               //  if (productosList[t].id === productosSucursal[z].idProducto) {
@@ -980,7 +971,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         //cargando1.id= "cargandoProductos1";
         //cargando1.innerHTML = cargando.innerHTML;
         //consulta.appendChild(cargando1);
-        console.log(consulta,'Ya acabo producto');
         //MOSTRAR SUBPRODUCTOS
         /*for (let y in subproductos) {
             //for (let z in productosSucursal) {
@@ -1029,7 +1019,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             //}
 
         }*/
-        console.log('Ya acabo subproducto');
+        
         //MOSTRAR OFERTAS 
         /*for (let i in ofertas) {
             //for (let z in productosSucursal) {
@@ -1068,7 +1058,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             //}
 
         }*/
-        console.log('Ya acabo subproducto');
+        //console.log('Ya acabo subproducto');
         //document.getElementById("consultaBusqueda").innerHTML = cuerpo;
         
     //    consulta.innerHTML = consulta.innerHTML + cuerpo;
@@ -1114,12 +1104,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         x1 = productos[count10].id;
                         x = productos[count10].id;
                         idProdSuc = productosSucursal[j].id;
-                        console.log(x);
                         ms = productosSucursal[j].minimoStock;
                         let urlImagen = "";
                         if (productos[count10].imagen != null)
                             urlImagen = "{{asset('storage')}}" + "/" + productos[count10].imagen;
-                        console.log(urlImagen);
+                        //console.log(urlImagen);
                         btnAgregarSubprod =
                             ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
                                              <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
@@ -1269,7 +1258,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             band_prod = false;
                         }
                     }
-                    console.log("entra");
                     cambiarPrecio = `
                                 <h6>PRECIO ACTUAL DEL PRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center" placeholder="" value="` + productosSucursal[j].precio + `" autofocus required disabled>
@@ -1301,7 +1289,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
           //  let tam = document.getElementById("precio_nuevo");
             //let tam2= tam.value.length;
             if (code == '.') { // backspace.
-                console.log("si entra");
                 return true;
             } else {
                 return false;
@@ -1333,7 +1320,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     if (productos[x].id == idProd)
                         nombreProd = productos[x].nombre;
                 }
-                console.log("entra");
                 cambiarCosto = `
                                 <h6>COSTO ACTUAL DEL PRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` + productosSucursal[j].costo + `" autofocus required disabled>
@@ -1385,7 +1371,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     if (productos[x].id == idProd)
                         nombreProd = productos[x].nombre;
                 }
-                console.log("entra");
                 cambiarCantidad = `
                                 <h6>EXISTENCIA ACTUAL DEL PRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` + productosSucursal[j].existencia + `" autofocus required disabled>
@@ -1433,7 +1418,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             if (productos[x].id == idProd)
                                 nombreProd = productos[x].nombre;
                         }
-                        console.log("entra");
                         cambiarCantidad = `
                                 <h6>EXISTENCIA ACTUAL DEL SUBPRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` + subproductos[t].existencia + `" autofocus required disabled>
@@ -1473,7 +1457,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     async function actPrecio() {
         let btnGuardar = document.getElementById("actPrecioCosto");
         let idSucProd = btnGuardar.value;
-        console.log("entroade");
         try {
             //return alert(idSucProd);
             //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
@@ -1515,7 +1498,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     async function act_datos() {
         let response = "Sin respuesta";
         try {
-            console.log("llego aqui ");
             response = await fetch(`/puntoVenta/act_inventario`);
             if (response.ok) {
                 //productosSucursal = await response.json();
@@ -1640,7 +1622,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-            // console.log("h y a");
             $('#modal_precio_venta5').modal('hide');
             $('#detalleProducto').modal('hide');
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
@@ -1743,7 +1724,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     };
 
     function refrescar() {
-        console.log("refrescar");
+        //console.log("refrescar");
         location.reload();
     };
 
@@ -1774,7 +1755,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         redirect(id);
                         // response2 = await fetch(`/puntoVenta/subproducto/create/?id=${id}`);
                     }
-                    console.log(Suc_Inac);
+                    //console.log(Suc_Inac);
                 } else {
                     // Suc_Inac = "";
                     console.log("No responde :'v");
@@ -1797,7 +1778,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let cuerpo = "";
         let cont = 0;
         await productos0();
-        console.log(prod_baja);
+        //console.log(prod_baja);
         for (let t in prod_baja) {
             for (let x in productos) {
                 if (productos[x].id === prod_baja[t].idProducto) {
@@ -1856,7 +1837,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 return alert('INGRESE UNA CANTIDAD VALIDA PARA CONTINUAR')
             let respuesta = await fetch(`/puntoVenta/inventarioRapido/${cantidad}`);
             productosRapidos = await respuesta.json();
-            console.log(productosRapidos);
             mostrarInventarioRapido()
             $('#modalPeticionInventario').modal('hide');
 
@@ -1885,7 +1865,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 `;
         }
         cuerpo = cuerpo + `</tbody></table>`;
-        //console.log(productos);
         cuerpoModal.innerHTML = cuerpo;
     }
 
@@ -1954,8 +1933,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 
     function habilitarEditar(x) {
         let btnEditar = document.getElementById("btnEditar");
-        console.log(btnEditar.value);
-        console.log(true);
         if (btnEditar.value == "true") {
 
             document.getElementById("formEditar").disabled = false;
@@ -1979,15 +1956,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             const minimoStock = document.getElementById("minimoStock").value;
             const receta = document.getElementById("receta").value;
             const departamento = document.getElementById("departamento").value;
-            /*datosProducto.append('_token', "{{ csrf_token() }}");
-             datosProducto.append('codigoBarras', codigoBarras);
-             datosProducto.append('nombre', nombre);
-             datosProducto.append('descripcion', descripcion);
-             datosProducto.append('minimoStock', minimoStock);
-             datosProducto.append('receta', receta);
-             datosProducto.append('idDepartamento', departamento);
-             datosProducto.append('ajax', true);
-             console.log('minimoStock', descripcion);*/
             let spp = await $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -2014,7 +1982,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 //processData: false,  // tell jQuery not to process the data
                 //contentType: false
             });
-            console.log(spp);
+            //console.log(spp);
             alert("DATOS ACTUALIZADOS CORRECTAMENTE");
             document.getElementById("formEditar").disabled = true;
             document.getElementById("btnEditar").innerHTML =
@@ -2030,12 +1998,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     // con los datos en formato JSON
                     body: datosProducto // convertimos el objeto a texto
                 };
-                //console.log('Aun llega aquí');
                 
                 let respuesta = await fetch(`/puntoVenta/producto/${x}`, init);
                 if (respuesta.ok) {
                     let res = await respuesta.text();
-                    console.log(res);
                     //const cuerpoModal = document.querySelector('#cuerpoModal');
                     //const tituloModal = document.querySelector('#exampleModalLabel');
                     //cuerpoModal.innerHTML = ingresarProducto;
@@ -2048,22 +2014,22 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     }
     //$('#tablaBusqueda').scrollTop() == $('#consultaBusqueda').height() - $('#tablaBusqueda').height()
     $('#tablaBusqueda').scroll(function(){
-        //console.log('scrollea');
         const comparacion = ($('#consultaBusqueda').height()-$('#tablaBusqueda').height()+$('#cabeceraProductos').height()+32)
         if ($('#tablaBusqueda').scrollTop() == comparacion){// - $('#tablaBusqueda').height()){
         //const cargando =  document.querySelector('#cargandoProductos')
         /*if(cargando!=null)
             cargando.remove();*/
             pagina++;
-            rellenar();
+            setTimeout(rellenar, 500); //rellenar();
             
         }	
-        console.log('tablaBusqueda',$('#tablaBusqueda').scrollTop());
+        /*console.log('tablaBusqueda',$('#tablaBusqueda').scrollTop());
         console.log('tabla',$('#tablaBusqueda').height());
         console.log('consulta',$('#consultaBusqueda').height());
         console.log('cabecera',$('#cabeceraProductos').height());
         console.log('productos',$('#productos').height());
         console.log('comparacion',($('#consultaBusqueda').height()-$('#tablaBusqueda').height()+$('#cabeceraProductos').height()+32));
+    */
     });
 </script>
 
