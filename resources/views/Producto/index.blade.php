@@ -887,9 +887,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <td id="codigo${productosList[t].id}">` + productosList[t].codigoBarras + `</td>
                                 <td id="nombre${productosList[t].id}">` + productosList[t].nombre + `</td>
                                 <td id="departamento${productosList[t].id}">` + departamento + `</td>
-                                <td id="costo${productosSucursal.id}">` + productoSucursal.costo + `</td>
-                                <td id="precio${productosSucursal.id}" class="text-success">` + productoSucursal.precio + `</td>
-                                <td id="existencia${productosSucursal.id}">` + productosList[t].existencia + `</td>
+                                <td id="costo${productoSucursal.id}">` + productoSucursal.costo + `</td>
+                                <td id="precio${productoSucursal.id}" class="text-success">` + productoSucursal.precio + `</td>
+                                <td id="existenciaP${productoSucursal.id}">` + productosList[t].existencia + `</td>
                                 <td>` +
                         ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
                                 <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
@@ -1597,8 +1597,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             //  refrescar();
             //await act_datos();
             //await buscarFiltroNombre2();
-            document.getElementById(`existencia${idSucProd}`).textContent = existencia.value;
-            productosSucursal.find(p => p.id == idSucProd).existencia = existencia.value;
+            console.log(document.getElementById(`existenciaP${idSucProd}`));
+            document.getElementById(`existenciaP${idSucProd}`).textContent = parseInt(existencia.value);
+            productosSucursal.find(p => p.id == idSucProd).existencia = parseInt(existencia.value);
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
@@ -1939,7 +1940,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
             //  refrescar();
             ignorar(i);
-            document.getElementById(`existencia${idSucProd}`).textContent = existencia;
+            document.getElementById(`existenciaP${idSucProd}`).textContent = existencia;
             productosSucursal.find(p => p.id == idSucProd).existencia = existencia;
             //await act_datos();
             //await buscarFiltroNombre2();
@@ -1978,15 +1979,17 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 return alert('EXISTE UN ERROR CON SUS DATOS, REVISELOS POR FAVOR');
             }
             let spp = await $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                },
+                //headers: {
+                    //'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    //'Access-Control-Allow-Origin', 'http://localhost:3000'
+                //},
                 // metodo: puede ser POST, GET, etc
-                method: "PUT",
+                method: "POST",
                 // la URL de donde voy a hacer la petición
-                url: `/puntoVenta/producto/${x}`,
+                url: `/puntoVenta/producto/editar/${x}`,
                 // los datos que voy a enviar para la relación
                 //dataType: 'json',
+                mode:'no-cors',
                 data: {
                     codigoBarras: codigoBarras,
                     nombre: nombre,

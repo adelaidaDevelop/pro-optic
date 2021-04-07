@@ -55,6 +55,8 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('/producto/buscarProducto', [ProductoController::class,'buscarProducto']);
 
     Route::get('/producto/buscador', [ProductoController::class,'buscador']);
+    Route::post('/producto/editar/{id}', [ProductoController::class,'update']);
+    Route::post('/sucursalProducto/editar/{id}', [SucursalProductoController::class,'update']);
 
     Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
     Route::get('/cliente/buscador', [ClienteController::class,'buscador']);

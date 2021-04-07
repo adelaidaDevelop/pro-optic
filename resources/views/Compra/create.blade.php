@@ -994,9 +994,9 @@ async function guardarCompra() {
         console.log(spp);
         let resp = await $.ajax({
             // metodo: puede ser POST, GET, etc
-            method: "PUT",
+            method: "POST",
             // la URL de donde voy a hacer la petición
-            url: '/puntoVenta/sucursalProducto/productos',
+            url: '/puntoVenta/sucursalProducto/editar/productos',
             // los datos que voy a enviar para la relación
             data: {
                 datos: JSON.stringify(productos1),
