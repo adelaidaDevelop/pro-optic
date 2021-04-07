@@ -450,7 +450,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 
 <!-- SCRIPT-->
 <script>
-    const productos = @json($datosP);
+    let productos = @json($datosP);
     const d = @json($depa);
 
     let opcFolioNombre = "";
@@ -511,6 +511,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let seleccion = document.querySelector("input[name='checkbox2']:checked");
         let opcFolioNombre = seleccion.value;
         //folioNombreBandera = true;
+        //console.log(productos);
         for (let x in productosSucursal) {
         //for(let x=0;x<productosSucursal.length;x++){
             //for (count5 in productos) {
@@ -648,6 +649,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             productosList.push(productosAdd);
                         }
                     }     
+                }
+                else{
+                    console.log("Producto no encontrado");
                 }
             //}
         }
@@ -906,9 +910,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             cuerpo = 
                             //<tr class="table-warning" onclick="" data-dismiss="modal">
                             `<td >` + "SUBPRODUCTO" + `</td>
-                            <td>` + productosList[t].codigoBarras + `</td>
-                            <td>` + productosList[t].nombre + `</td>
-                            <td>` + departamento + `</td>
+                            <td id="scodigo${productosList[t].id}">` + productosList[t].codigoBarras + `</td>
+                            <td id="snombre${productosList[t].id}">` + productosList[t].nombre + `</td>
+                            <td id="sdepartamento${productosList[t].id}">` + departamento + `</td>
                             <td>` + Number(costoSubp.toFixed(2)) + `</td>
                             <td class="text-success">` + subproducto.precio + `</td>
                             <td id="SubpExistencia${productoSucursal.id}">` + subproducto.existencia + `</td>
@@ -931,9 +935,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             //<tr class="table-warning" onclick="" data-dismiss="modal">
                             `
                             <td >` + "OFERTA" + `</td>
-                            <td>` + productosList[t].codigoBarras + `</td>
-                            <td>` + productosList[t].nombre + `</td>
-                            <td>` + departamento + `</td>
+                            <td id="ocodigo${productosList[t].id}">` + productosList[t].codigoBarras + `</td>
+                            <td id="onombre${productosList[t].id}">` + productosList[t].nombre + `</td>
+                            <td id="odepartamento${productosList[t].id}">` + departamento + `</td>
                             <td>` + productoSucursal.costo + `</td>
                             <td class="text-success">` + productosSucursal.costo + `</td>
                             <td>` + oferta.existencia + `</td>
@@ -1966,9 +1970,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             const codigoBarras = document.getElementById("codigoBarras").value;
             const nombre = document.getElementById("nombre").value;
             const descripcion = $('#descripcion').val(); //document.getElementById("descripcion").value;
-            const minimoStock = document.getElementById("minimoStock").value;
+            const minimoStock = parseInt(document.getElementById("minimoStock").value);
             const receta = document.getElementById("receta").value;
-            const departamento = document.getElementById("departamento").value;
+            const departamento = parseInt(document.getElementById("departamento").value);
             if(codigoBarras.length==0 || nombre.length == 0 || minimoStock.length==0)
             {
                 return alert('EXISTE UN ERROR CON SUS DATOS, REVISELOS POR FAVOR');
@@ -2008,13 +2012,41 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             document.getElementById(`codigo${x}`).textContent = codigoBarras;
             document.getElementById(`nombre${x}`).textContent = nombre;
             document.getElementById(`departamento${x}`).textContent = d.find(p => p.id == departamento).nombre;
+            let productoSucursal = productosSucursal.find(p => p.idProducto == x)
+            if(productoSucursal!=null)
+            {
+                let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
+                if(subproducto!=null)
+                {
+                    document.getElementById(`scodigo${x}`).textContent = codigoBarras;
+                    document.getElementById(`snombre${x}`).textContent = nombre;
+                    document.getElementById(`sdepartamento${x}`).textContent = d.find(p => p.id == departamento).nombre;
+                }
+                let oferta = ofertas.find(p => p.idSucursalProducto == productoSucursal.id);
+                if(oferta!=null)
+                {
+                    document.getElementById(`ocodigo${x}`).textContent = codigoBarras;
+                    document.getElementById(`onombre${x}`).textContent = nombre;
+                    document.getElementById(`odepartamento${x}`).textContent = d.find(p => p.id == departamento).nombre;
+                }
+            }
+            //const indice = productos.indexOf(productos.find(p => p.id == x));
+            // = nombre;
             productos.find(p => p.id == x).nombre = nombre;
             productos.find(p => p.id == x).codigoBarras = codigoBarras;
             productos.find(p => p.id == x).idDepartamento = departamento;
             productos.find(p => p.id == x).receta = receta;
             productos.find(p => p.id == x).minimoStock = minimoStock;
             productos.find(p => p.id == x).receta = receta;
-            //console.log('nombre',productosList.find(p => p.id == x).nombre);
+            
+            productosList.find(p => p.id == x).nombre = nombre;
+            productosList.find(p => p.id == x).codigoBarras = codigoBarras;
+            productosList.find(p => p.id == x).idDepartamento = departamento;
+            productosList.find(p => p.id == x).receta = receta;
+            productosList.find(p => p.id == x).minimoStock = minimoStock;
+            productosList.find(p => p.id == x).receta = receta;
+            console.log('nombre',productos.find(p => p.id == x).nombre);
+            //console.log('nombreIndice',productos[indice].nombre);
             document.getElementById("formEditar").disabled = true;
             document.getElementById("btnEditar").innerHTML =
                 `<img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
