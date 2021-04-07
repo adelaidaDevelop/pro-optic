@@ -874,19 +874,18 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     precio_inventario = precio_inventario + precioTemporal;
                     cantProdInventario = cantProdInventario + productosList[t].existencia;*/
                     //contador = contador + 1;
-                    const tr = document.createElement("tr");
+                    
                     if(productoSucursal.status == 1){
                     cuerpo = //`
                             //<tr onclick="" data-dismiss="modal">
                                
-                                `
-                                <td >` + "NORMAL" + `</td>
-                                <td>` + productosList[t].codigoBarras + `</td>
-                                <td>` + productosList[t].nombre + `</td>
-                                <td>` + departamento + `</td>
-                                <td>` + productoSucursal.costo + `</td>
-                                <td class="text-success">` + productoSucursal.precio + `</td>
-                                <td>` + productosList[t].existencia + `</td>
+                                `<td>` + "NORMAL" + `</td>
+                                <td id="codigo${productosList[t].id}">` + productosList[t].codigoBarras + `</td>
+                                <td id="nombre${productosList[t].id}">` + productosList[t].nombre + `</td>
+                                <td id="departamento${productosList[t].id}">` + departamento + `</td>
+                                <td id="costo${productosSucursal.id}">` + productoSucursal.costo + `</td>
+                                <td id="precio${productosSucursal.id}" class="text-success">` + productoSucursal.precio + `</td>
+                                <td id="existencia${productosSucursal.id}">` + productosList[t].existencia + `</td>
                                 <td>` +
                         ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
                                 <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
@@ -894,32 +893,33 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 </td>`;           
                             //</tr>
                             //`;
+                            const tr = document.createElement("tr");
                             tr.innerHTML = cuerpo;
+                            tr.id= "producto"+productosList[t].id;
                             consulta.appendChild(tr);
                     }
-                    
-                    
                     
                         let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
                         if(subproducto!=null)
                         {
+                            let costoSubp = productoSucursal.costo / subproducto.piezas;
                             cuerpo = 
                             //<tr class="table-warning" onclick="" data-dismiss="modal">
-                            `<td >` + contador + `</td>
-                            <td >` + "SUBPRODUCTO" + `</td>
-                            <td>` + producto.codigoBarras + `</td>
-                            <td>` + producto.nombre + `</td>
+                            `<td >` + "SUBPRODUCTO" + `</td>
+                            <td>` + productosList[t].codigoBarras + `</td>
+                            <td>` + productosList[t].nombre + `</td>
                             <td>` + departamento + `</td>
                             <td>` + Number(costoSubp.toFixed(2)) + `</td>
-                            <td class="text-success">` + subproductos[y].precio + `</td>
-                            <td>` + subproductos[y].existencia + `</td>
+                            <td class="text-success">` + subproducto.precio + `</td>
+                            <td id="SubpExistencia${productoSucursal.id}">` + subproducto.existencia + `</td>
                             <td>` +
-                                ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` + producto.id + `)" value="` + producto.id + `">
+                                ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
                             <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
                             </button>
                             </td>            
                             
                             `;
+                            const tr = document.createElement("tr");
                             tr.innerHTML = cuerpo;
                             consulta.appendChild(tr);
                         }
@@ -929,15 +929,16 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             //contador = contador + 1;
                             cuerpo =
                             //<tr class="table-warning" onclick="" data-dismiss="modal">
-                            `<td >` + contador + `</td>
+                            `
                             <td >` + "OFERTA" + `</td>
-                            <td>` + producto.codigoBarras + `</td>
-                            <td>` + producto.nombre + `</td>
+                            <td>` + productosList[t].codigoBarras + `</td>
+                            <td>` + productosList[t].nombre + `</td>
                             <td>` + departamento + `</td>
                             <td>` + productoSucursal.costo + `</td>
-                            <td class="text-success">` + productosSucursal.precio + `</td>
-                            <td>` + ofertas[i].existencia + `</td>
+                            <td class="text-success">` + productosSucursal.costo + `</td>
+                            <td>` + oferta.existencia + `</td>
                             `;
+                            const tr = document.createElement("tr");
                             tr.innerHTML = cuerpo;
                             consulta.appendChild(tr);
                         }    
@@ -1486,8 +1487,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
             alert("PRECIO ACTUALIZADO CORRECTAMENTE :p");
-            await act_datos();
-            await buscarFiltroNombre2();
+            //await act_datos();
+            //await buscarFiltroNombre2();
+            document.getElementById(`precio${idSucProd}`).textContent = precio.value;
+            productosSucursal.find(p => p.id == idSucProd).precio = precio.value;
+            
             // refrescar();
             // await cargarProductosSucursal();
         } catch (err) {
@@ -1545,8 +1549,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             $('#detalleProducto').modal('hide');
             alert("COSTO ACTUALIZADO CORRECTAMENTE");
             // refrescar();
-            await act_datos();
-            await buscarFiltroNombre2();
+            //await act_datos();
+            //await buscarFiltroNombre2();
+            document.getElementById(`costo${idSucProd}`).textContent = costo.value;
+            productosSucursal.find(p => p.id == idSucProd).costo = costo.value;
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
@@ -1558,7 +1564,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let idSucProd = btnGuardar.value;
         try {
             //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
-            const costo = document.querySelector('#cantidad');
+            const existencia = document.querySelector('#cantidad');
             /*
             if (pago.value.length === 0)
                 return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
@@ -1572,7 +1578,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
                 // los datos que voy a enviar para la relación
                 data: {
-                    cantidad: parseInt(costo.value),
+                    cantidad: parseInt(existencia.value),
                     _token: "{{ csrf_token() }}"
                     //  id: idSucProd
                 }
@@ -1585,8 +1591,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             $('#detalleProducto').modal('hide');
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
             //  refrescar();
-            await act_datos();
-            await buscarFiltroNombre2();
+            //await act_datos();
+            //await buscarFiltroNombre2();
+            document.getElementById(`existencia${idSucProd}`).textContent = existencia.value;
+            productosSucursal.find(p => p.id == idSucProd).existencia = existencia.value;
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
@@ -1625,9 +1633,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             $('#detalleProducto').modal('hide');
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
             //refrescar();
-            await act_datos();
-            await buscarFiltroNombre2();
-
+            //await act_datos();
+            //await buscarFiltroNombre2();
+            document.getElementById(`subpExistencia${idSucProd}`).textContent = cantidad.value;
+            subproductos.find(p => p.id == idSucProd).existencia = cantidad.value;
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
@@ -1728,6 +1737,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     };
 
     async function subproductoExiste(id) {
+
         let preguntar = confirm("¿AGREGAR SUBPRODUCTO?");
         if (preguntar) {
             let response = "Sin respuesta";
@@ -1751,7 +1761,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         }
                     }
                     if (bandera) {
-                        redirect(id);
+                        //console.log(`{url("/puntoVenta/subproducto/create/?id=${id}")}}`);
+                        window.location = `/puntoVenta/subproducto/create/?id=${id}`;
+                        //redirect(id);
                         // response2 = await fetch(`/puntoVenta/subproducto/create/?id=${id}`);
                     }
                     //console.log(Suc_Inac);
@@ -1923,8 +1935,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
             //  refrescar();
             ignorar(i);
-            await act_datos();
-            await buscarFiltroNombre2();
+            document.getElementById(`existencia${idSucProd}`).textContent = existencia;
+            productosSucursal.find(p => p.id == idSucProd).existencia = existencia;
+            //await act_datos();
+            //await buscarFiltroNombre2();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
@@ -1948,14 +1962,17 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     async function editarProducto(x) {
         try {
             //return alert("ejecuta editarProducto");
-            let datosProducto = new FormData();
+            //let datosProducto = new FormData();
             const codigoBarras = document.getElementById("codigoBarras").value;
             const nombre = document.getElementById("nombre").value;
             const descripcion = $('#descripcion').val(); //document.getElementById("descripcion").value;
             const minimoStock = document.getElementById("minimoStock").value;
             const receta = document.getElementById("receta").value;
             const departamento = document.getElementById("departamento").value;
-            //if()
+            if(codigoBarras.length==0 || nombre.length == 0 || minimoStock.length==0)
+            {
+                return alert('EXISTE UN ERROR CON SUS DATOS, REVISELOS POR FAVOR');
+            }
             let spp = await $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -1986,14 +2003,25 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             if(spp == 1)
               alert("DATOS ACTUALIZADOS CORRECTAMENTE");
             else
-              return;
+                return;
+           //const consulta =  document.querySelector('#consultaBusqueda');
+            document.getElementById(`codigo${x}`).textContent = codigoBarras;
+            document.getElementById(`nombre${x}`).textContent = nombre;
+            document.getElementById(`departamento${x}`).textContent = d.find(p => p.id == departamento).nombre;
+            productos.find(p => p.id == x).nombre = nombre;
+            productos.find(p => p.id == x).codigoBarras = codigoBarras;
+            productos.find(p => p.id == x).idDepartamento = departamento;
+            productos.find(p => p.id == x).receta = receta;
+            productos.find(p => p.id == x).minimoStock = minimoStock;
+            productos.find(p => p.id == x).receta = receta;
+            //console.log('nombre',productosList.find(p => p.id == x).nombre);
             document.getElementById("formEditar").disabled = true;
             document.getElementById("btnEditar").innerHTML =
                 `<img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
             EDITAR`;
             btnEditar.value = true;
-            await act_datos();
-            await buscarFiltroNombre2();
+            //await act_datos();
+            //await buscarFiltroNombre2();
             /*var init = {
                     // el método de envío de la información será POST
                     method: "PUT",
