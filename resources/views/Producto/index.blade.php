@@ -1,5 +1,3 @@
-
-
 @extends('header2')
 @section('contenido')
 @section('subtitulo')
@@ -239,7 +237,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     </div>
 </div>
 <!-- MODAL CAMBIAR PRECIO COSTO-->
-<div class="modal fade modal_precio_venta" id="modal_precio_venta" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade modal_precio2" id="modal_precio2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-small " role="document">
         <div class="modal-content" style="width:500px;">
             <div class="modal-header  ">
@@ -255,7 +253,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 </button>
             </div>
             <div class="modal-body col-8 mx-4 text-center mx-auto" id="">
-                <div class="row  " id="modiPrecioCosto">
+                <div class="row  " id="modiPrecio">
                 </div>
             </div>
             <div class="modal-footer">
@@ -267,7 +265,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     </div>
 </div>
 <!--MODAL CAMBIAR COSTO-->
-<div class="modal fade modal_precio_venta2" id="modal_precio_venta2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade modal_costo" id="modal_costo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-small " role="document">
         <div class="modal-content" style="width:500px;">
             <div class="modal-header  ">
@@ -283,11 +281,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 </button>
             </div>
             <div class="modal-body col-8 mx-4 text-center mx-auto" id="">
-                <div class="row  " id="modiPrecioCosto2">
+                <div class="row  " id="modiCosto">
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="actPrecioCosto2" onclick="actCosto();">GUARDAR</button>
+                <button type="button" class="btn btn-primary" id="actCosto2" onclick="actCosto();">GUARDAR</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
 
             </div>
@@ -504,7 +502,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
      }
 
      */
-    
+
     function buscarFiltroNombre2() {
         productosList = [];
         const palabraBusqueda = document.querySelector('#busquedaProducto');
@@ -513,55 +511,81 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         //folioNombreBandera = true;
         //console.log(productos);
         for (let x in productosSucursal) {
-        //for(let x=0;x<productosSucursal.length;x++){
+            //for(let x=0;x<productosSucursal.length;x++){
             //for (count5 in productos) {
-                //if (productos[count5].id === productosSucursal[x].idProducto) {
+            //if (productos[count5].id === productosSucursal[x].idProducto) {
 
-                    //BUSCAR POR FOLIO NOMBRE 
-                let producto = productos.find(p => p.id == productosSucursal[x].idProducto);
-                if(producto!=null){
-                    
-                    if (opcFolioNombre === 'nombre') {
-                        $("#idDepartamento").prop('disabled', false);
-                        $("#bajosExistencia").prop('disabled', false);
-                        //
-                        //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
-                        if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                            //BUSCAR POR DEPARTAMENTO
-                            //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
-                            let depa = document.querySelector('#idDepartamento');
-                            if (depa.value != "") {
-                                if (producto.idDepartamento === parseInt(depa.value)) {
-                                    //Cargar datos encontrados filtrado depto, nombre
-                                    //BUSCAR PRODUCTOS BAJOS DE EXISTENCIA
-                                    let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
-                                    if (seleccion != null) {
-                                        opcBajosE = seleccion.value; //VARIABLE opcBajosE?
-                                        if (opcBajosE === 'existencia') {
-                                            if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
-                                                //PRODUCTOS POR NOMBRE, DEPTO Y BAJOS EXISTENCIA
-                                                let departamento = "";
-                                                for (count21 in d) {
-                                                    if (producto.idDepartamento === d[count21].id) {
-                                                        departamento = d[count21].nombre;
-                                                    }
+            //BUSCAR POR FOLIO NOMBRE 
+            let producto = productos.find(p => p.id == productosSucursal[x].idProducto);
+            if (producto != null) {
+
+                if (opcFolioNombre === 'nombre') {
+                    $("#idDepartamento").prop('disabled', false);
+                    $("#bajosExistencia").prop('disabled', false);
+                    //
+                    //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
+                    if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                        //BUSCAR POR DEPARTAMENTO
+                        //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
+                        let depa = document.querySelector('#idDepartamento');
+                        if (depa.value != "") {
+                            if (producto.idDepartamento === parseInt(depa.value)) {
+                                //Cargar datos encontrados filtrado depto, nombre
+                                //BUSCAR PRODUCTOS BAJOS DE EXISTENCIA
+                                let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
+                                if (seleccion != null) {
+                                    opcBajosE = seleccion.value; //VARIABLE opcBajosE?
+                                    if (opcBajosE === 'existencia') {
+                                        if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
+                                            //PRODUCTOS POR NOMBRE, DEPTO Y BAJOS EXISTENCIA
+                                            let departamento = "";
+                                            for (count21 in d) {
+                                                if (producto.idDepartamento === d[count21].id) {
+                                                    departamento = d[count21].nombre;
                                                 }
-                                                let id = producto.id;
-                                                let productosAdd = {
-                                                    id: id,
-                                                    codigoBarras: producto.codigoBarras,
-                                                    nombre: producto.nombre,
-                                                    existencia: productosSucursal[x].existencia,
-                                                    idDepartamento: producto.idDepartamento
-                                                };
-                                                productosList.push(productosAdd);
-
-
                                             }
+                                            let id = producto.id;
+                                            let productosAdd = {
+                                                id: id,
+                                                codigoBarras: producto.codigoBarras,
+                                                nombre: producto.nombre,
+                                                existencia: productosSucursal[x].existencia,
+                                                idDepartamento: producto.idDepartamento
+                                            };
+                                            productosList.push(productosAdd);
+
+
                                         }
-                                    } else {
-                                        //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE, DEPTO
-                                        // buscarFiltroNombre();
+                                    }
+                                } else {
+                                    //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE, DEPTO
+                                    // buscarFiltroNombre();
+                                    let departamento = "";
+                                    for (count21 in d) {
+                                        if (producto.idDepartamento === d[count21].id) {
+                                            departamento = d[count21].nombre;
+                                        }
+                                    }
+                                    let id = producto.id;
+                                    let productosAdd = {
+                                        id: id,
+                                        codigoBarras: producto.codigoBarras,
+                                        nombre: producto.nombre,
+                                        existencia: productosSucursal[x].existencia,
+                                        idDepartamento: producto.idDepartamento
+                                    };
+                                    productosList.push(productosAdd);
+                                }
+                            }
+                        } else {
+                            //VERIFICAR BAJOS EXISTENCIA 
+                            //BUSCAR PRODUCTOS POR NOMBRE, BAJOS DE EXISTENCIA
+                            let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
+                            if (seleccion != null) {
+                                opcBajosE = seleccion.value; //VARIABLE opcBajosE?
+                                if (opcBajosE === 'existencia') {
+                                    if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
+                                        //PRODUCTOS POR NOMBRE Y BAJOS EXISTENCIA
                                         let departamento = "";
                                         for (count21 in d) {
                                             if (producto.idDepartamento === d[count21].id) {
@@ -580,82 +604,55 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                     }
                                 }
                             } else {
-                                //VERIFICAR BAJOS EXISTENCIA 
-                                //BUSCAR PRODUCTOS POR NOMBRE, BAJOS DE EXISTENCIA
-                                let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
-                                if (seleccion != null) {
-                                    opcBajosE = seleccion.value; //VARIABLE opcBajosE?
-                                    if (opcBajosE === 'existencia') {
-                                        if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
-                                            //PRODUCTOS POR NOMBRE Y BAJOS EXISTENCIA
-                                            let departamento = "";
-                                            for (count21 in d) {
-                                                if (producto.idDepartamento === d[count21].id) {
-                                                    departamento = d[count21].nombre;
-                                                }
-                                            }
-                                            let id = producto.id;
-                                            let productosAdd = {
-                                                id: id,
-                                                codigoBarras: producto.codigoBarras,
-                                                nombre: producto.nombre,
-                                                existencia: productosSucursal[x].existencia,
-                                                idDepartamento: producto.idDepartamento
-                                            };
-                                            productosList.push(productosAdd);
-                                        }
+                                //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE
+                                let departamento = "";
+                                for (count21 in d) {
+                                    if (producto.idDepartamento === d[count21].id) {
+                                        departamento = d[count21].nombre;
                                     }
-                                } else {
-                                    //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE
-                                    let departamento = "";
-                                    for (count21 in d) {
-                                        if (producto.idDepartamento === d[count21].id) {
-                                            departamento = d[count21].nombre;
-                                        }
-                                    }
-                                    let id = producto.id;
-                                    let productosAdd = {
-                                        id: id,
-                                        codigoBarras: producto.codigoBarras,
-                                        nombre: producto.nombre,
-                                        existencia: productosSucursal[x].existencia,
-                                        idDepartamento: producto.idDepartamento
-                                    };
-                                    productosList.push(productosAdd);
                                 }
+                                let id = producto.id;
+                                let productosAdd = {
+                                    id: id,
+                                    codigoBarras: producto.codigoBarras,
+                                    nombre: producto.nombre,
+                                    existencia: productosSucursal[x].existencia,
+                                    idDepartamento: producto.idDepartamento
+                                };
+                                productosList.push(productosAdd);
                             }
-                            //  }
-                        } else {
-                            // MENSAJE PRODUCTOS NO ENCONTRADOS
                         }
-                    } else if (opcFolioNombre === 'folio') {
-                        $("#idDepartamento").prop('disabled', true);
-                        $("#bajosExistencia").prop('disabled', true);
-                        if (producto.codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                            let departamento = "";
-                            for (count21 in d) {
-                                if (producto.idDepartamento === d[count21].id) {
-                                    departamento = d[count21].nombre;
-                                }
+                        //  }
+                    } else {
+                        // MENSAJE PRODUCTOS NO ENCONTRADOS
+                    }
+                } else if (opcFolioNombre === 'folio') {
+                    $("#idDepartamento").prop('disabled', true);
+                    $("#bajosExistencia").prop('disabled', true);
+                    if (producto.codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                        let departamento = "";
+                        for (count21 in d) {
+                            if (producto.idDepartamento === d[count21].id) {
+                                departamento = d[count21].nombre;
                             }
-                            let id = producto.id;
-                            let productosAdd = {
-                                id: id,
-                                codigoBarras: producto.codigoBarras,
-                                nombre: producto.nombre,
-                                existencia: productosSucursal[x].existencia,
-                                idDepartamento: producto.idDepartamento
-                            };
-                            productosList.push(productosAdd);
                         }
-                    }     
+                        let id = producto.id;
+                        let productosAdd = {
+                            id: id,
+                            codigoBarras: producto.codigoBarras,
+                            nombre: producto.nombre,
+                            existencia: productosSucursal[x].existencia,
+                            idDepartamento: producto.idDepartamento
+                        };
+                        productosList.push(productosAdd);
+                    }
                 }
-                else{
-                    console.log("Producto no encontrado");
-                }
+            } else {
+                console.log("Producto no encontrado");
+            }
             //}
         }
-        grupos = parseInt(productosList.length/numPorGrupo);
+        grupos = parseInt(productosList.length / numPorGrupo);
         pagina = 0;
         let contador = 0;
         let costo_inventario = 0;
@@ -664,10 +661,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let cantOfertas = 0;
         let cantSubproductos = 0;
 
-        for(let t in productosList)
-        {
+        for (let t in productosList) {
             let productoSucursal = productosSucursal.find(p => p.idProducto == productosList[t].id);
-            
+
             let costoTemporal = productoSucursal.costo * productosList[t].existencia;
             let precioTemporal = productoSucursal.precio * productosList[t].existencia;
             costo_inventario = costo_inventario + costoTemporal;
@@ -675,8 +671,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             cantProdInventario = cantProdInventario + productosList[t].existencia;
 
             let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
-            if(subproducto!=null)
-            {
+            if (subproducto != null) {
                 let costoSubp = productoSucursal.costo / subproducto.piezas;
                 let costoTempSub = costoSubp * subproducto.existencia;
                 costo_inventario = costo_inventario + costoTempSub;
@@ -686,21 +681,20 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 cantSubproductos = cantSubproductos + subproducto.existencia;
             }
             let oferta = ofertas.find(p => p.idSucursalProducto == productoSucursal.id);
-            if(oferta!=null)
-            {
+            if (oferta != null) {
                 let costoOferta = productoSucursal.costo * oferta.existencia;
                 costo_inventario = costo_inventario + costoOferta;
                 let precioTempOferta = productoSucursal.precio * oferta.existencia;
                 precio_inventario = precio_inventario + precioTempOferta;
                 cantOfertas = cantOfertas + oferta.existencia;
             }
-            
+
         }
         document.getElementById("costoInv").innerHTML = costo_inventario;
-            document.getElementById("precioInv").innerHTML = precio_inventario;
-            document.getElementById("cantProdInv").innerHTML = cantProdInventario;
-            document.getElementById("cantProdSub").innerHTML = cantSubproductos;
-            document.getElementById("cantProdOferta").innerHTML = cantOfertas;
+        document.getElementById("precioInv").innerHTML = precio_inventario;
+        document.getElementById("cantProdInv").innerHTML = cantProdInventario;
+        document.getElementById("cantProdSub").innerHTML = cantSubproductos;
+        document.getElementById("cantProdOferta").innerHTML = cantOfertas;
         rellenar();
     };
     /*
@@ -830,19 +824,19 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     function rellenar() {
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         let consulta = document.getElementById("consultaBusqueda");
-        if(pagina == 0)
-            consulta.innerHTML ="";
-        let cuerpo =  "";//document.getElementById("consultaBusqueda").innerHTML;
-        
+        if (pagina == 0)
+            consulta.innerHTML = "";
+        let cuerpo = ""; //document.getElementById("consultaBusqueda").innerHTML;
+
         let contador = 0;
-       /* let costo_inventario = 0;
-        let precio_inventario = 0;
-        let cantProdInventario = 0;
-        let cantOfertas = 0;
-        let cantSubproductos = 0;*/
+        /* let costo_inventario = 0;
+         let precio_inventario = 0;
+         let cantProdInventario = 0;
+         let cantOfertas = 0;
+         let cantSubproductos = 0;*/
         //let departamento = "";
         //for (let t in productosList) {
-          //document.createElement("tr");
+        //document.createElement("tr");
         /*cargando.id= "cargandoProductos";
         cargando.innerHTML =   `<tr>
             <td colspan="5">
@@ -856,34 +850,34 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             </tr>
         `;
         consulta.appendChild(cargando);*/
-        if(pagina>grupos)
+        if (pagina > grupos)
             return;
-        let totalProductos =  parseInt((pagina+1)*numPorGrupo);
-        if(pagina==grupos)
+        let totalProductos = parseInt((pagina + 1) * numPorGrupo);
+        if (pagina == grupos)
             totalProductos = productosList.length;
-        for(let t = parseInt(pagina*numPorGrupo);t<totalProductos;t++){    
+        for (let t = parseInt(pagina * numPorGrupo); t < totalProductos; t++) {
             let productoSucursal = productosSucursal.find(p => p.idProducto == productosList[t].id);
             //for (let z in productosSucursal) {
-              //  if (productosList[t].id === productosSucursal[z].idProducto) {
-                    //  if (productosSucursal[z].status === 1) {
-                    let departamento = d.find(p => p.id == productosList[t].idDepartamento).nombre;
-                    /*for (count8 in d) {
-                        if (productosList[t].idDepartamento === d[count8].id) {
-                            departamento = d[count8].nombre;
-                        }
-                    }*/
-                    /*let costoTemporal = productoSucursal.costo * productosList[t].existencia;
-                    let precioTemporal = productoSucursal.precio * productosList[t].existencia;
-                    costo_inventario = costo_inventario + costoTemporal;
-                    precio_inventario = precio_inventario + precioTemporal;
-                    cantProdInventario = cantProdInventario + productosList[t].existencia;*/
-                    //contador = contador + 1;
-                    
-                    if(productoSucursal.status == 1){
-                    cuerpo = //`
-                            //<tr onclick="" data-dismiss="modal">
-                               
-                                `<td>` + "NORMAL" + `</td>
+            //  if (productosList[t].id === productosSucursal[z].idProducto) {
+            //  if (productosSucursal[z].status === 1) {
+            let departamento = d.find(p => p.id == productosList[t].idDepartamento).nombre;
+            /*for (count8 in d) {
+                if (productosList[t].idDepartamento === d[count8].id) {
+                    departamento = d[count8].nombre;
+                }
+            }*/
+            /*let costoTemporal = productoSucursal.costo * productosList[t].existencia;
+            let precioTemporal = productoSucursal.precio * productosList[t].existencia;
+            costo_inventario = costo_inventario + costoTemporal;
+            precio_inventario = precio_inventario + precioTemporal;
+            cantProdInventario = cantProdInventario + productosList[t].existencia;*/
+            //contador = contador + 1;
+
+            if (productoSucursal.status == 1) {
+                cuerpo = //`
+                    //<tr onclick="" data-dismiss="modal">
+
+                    `<td>` + "NORMAL" + `</td>
                                 <td id="codigo${productosList[t].id}">` + productosList[t].codigoBarras + `</td>
                                 <td id="nombre${productosList[t].id}">` + productosList[t].nombre + `</td>
                                 <td id="departamento${productosList[t].id}">` + departamento + `</td>
@@ -891,25 +885,24 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <td id="precio${productoSucursal.id}" class="text-success">` + productoSucursal.precio + `</td>
                                 <td id="existenciaP${productoSucursal.id}">` + productosList[t].existencia + `</td>
                                 <td>` +
-                        ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
+                    ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
                                 <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
                                 </button>
-                                </td>`;           
-                            //</tr>
-                            //`;
-                            const tr = document.createElement("tr");
-                            tr.innerHTML = cuerpo;
-                            tr.id= "producto"+productosList[t].id;
-                            consulta.appendChild(tr);
-                    }
-                    
-                        let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
-                        if(subproducto!=null)
-                        {
-                            let costoSubp = productoSucursal.costo / subproducto.piezas;
-                            cuerpo = 
-                            //<tr class="table-warning" onclick="" data-dismiss="modal">
-                            `<td >` + "SUBPRODUCTO" + `</td>
+                                </td>`;
+                //</tr>
+                //`;
+                const tr = document.createElement("tr");
+                tr.innerHTML = cuerpo;
+                tr.id = "producto" + productosList[t].id;
+                consulta.appendChild(tr);
+            }
+
+            let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
+            if (subproducto != null) {
+                let costoSubp = productoSucursal.costo / subproducto.piezas;
+                cuerpo =
+                    //<tr class="table-warning" onclick="" data-dismiss="modal">
+                    `<td >` + "SUBPRODUCTO" + `</td>
                             <td id="scodigo${productosList[t].id}">` + productosList[t].codigoBarras + `</td>
                             <td id="snombre${productosList[t].id}">` + productosList[t].nombre + `</td>
                             <td id="sdepartamento${productosList[t].id}">` + departamento + `</td>
@@ -917,23 +910,22 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             <td class="text-success">` + subproducto.precio + `</td>
                             <td id="SubpExistencia${productoSucursal.id}">` + subproducto.existencia + `</td>
                             <td>` +
-                                ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
+                    ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` + productosList[t].id + `)" value="` + productosList[t].id + `">
                             <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
                             </button>
                             </td>            
                             
                             `;
-                            const tr = document.createElement("tr");
-                            tr.innerHTML = cuerpo;
-                            consulta.appendChild(tr);
-                        }
-                        let oferta = ofertas.find(p => p.idSucursalProducto == productoSucursal.id);
-                        if(oferta!=null)
-                        {
-                            //contador = contador + 1;
-                            cuerpo =
-                            //<tr class="table-warning" onclick="" data-dismiss="modal">
-                            `
+                const tr = document.createElement("tr");
+                tr.innerHTML = cuerpo;
+                consulta.appendChild(tr);
+            }
+            let oferta = ofertas.find(p => p.idSucursalProducto == productoSucursal.id);
+            if (oferta != null) {
+                //contador = contador + 1;
+                cuerpo =
+                    //<tr class="table-warning" onclick="" data-dismiss="modal">
+                    `
                             <td >` + "OFERTA" + `</td>
                             <td id="ocodigo${productosList[t].id}">` + productosList[t].codigoBarras + `</td>
                             <td id="onombre${productosList[t].id}">` + productosList[t].nombre + `</td>
@@ -942,22 +934,22 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             <td class="text-success">` + productosSucursal.costo + `</td>
                             <td>` + oferta.existencia + `</td>
                             `;
-                            const tr = document.createElement("tr");
-                            tr.innerHTML = cuerpo;
-                            consulta.appendChild(tr);
-                        }    
-                    //}
+                const tr = document.createElement("tr");
+                tr.innerHTML = cuerpo;
+                consulta.appendChild(tr);
+            }
+            //}
 
-              //  }
+            //  }
             //}
         }
-        let cargando =  document.querySelector('#cargandoProductos');
-        if(cargando!=null)
+        let cargando = document.querySelector('#cargandoProductos');
+        if (cargando != null)
             cargando.remove();
-        if(pagina<grupos){
-        cargando = document.createElement("tr");
-        cargando.id= "cargandoProductos";
-        cargando.innerHTML =   `
+        if (pagina < grupos) {
+            cargando = document.createElement("tr");
+            cargando.id = "cargandoProductos";
+            cargando.innerHTML = `
             <td colspan="8">
             <div class="d-flex justify-content-center my-3">
                 <button class="btn btn-info" type="button" disabled>
@@ -967,9 +959,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             </div>
             </td>
         `;
-        
-        //let consulta = document.getElementById("consultaBusqueda");
-        consulta.appendChild(cargando);
+
+            //let consulta = document.getElementById("consultaBusqueda");
+            consulta.appendChild(cargando);
         }
         //let cargando1 = document.createElement("tr");
         //cargando1.id= "cargandoProductos1";
@@ -1023,7 +1015,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             //}
 
         }*/
-        
+
         //MOSTRAR OFERTAS 
         /*for (let i in ofertas) {
             //for (let z in productosSucursal) {
@@ -1064,8 +1056,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         }*/
         //console.log('Ya acabo subproducto');
         //document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-        
-    //    consulta.innerHTML = consulta.innerHTML + cuerpo;
+
+        //    consulta.innerHTML = consulta.innerHTML + cuerpo;
         /*document.getElementById("costoInv").innerHTML = costo_inventario;
         document.getElementById("precioInv").innerHTML = precio_inventario;
         document.getElementById("cantProdInv").innerHTML = cantProdInventario;
@@ -1121,10 +1113,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                             <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
                                             EDITAR</button>
                                             <br/> 
-                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta"  onclick=" return modificarPrecio( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio2"  onclick=" return modificarPrecio( ` + idProdSuc + `)" value="` + idProdSuc + `">
                                            EDITAR PRECIO
                                             </button>
-                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio_venta2"  onclick=" return modificarCosto( ` + idProdSuc + `)" value="` + idProdSuc + `">
+                                            <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_costo"  onclick=" return modificarCosto( ` + idProdSuc + `)" value="` + idProdSuc + `">
                                            EDITAR COSTO
                                             </button>
                                             <br/>
@@ -1266,7 +1258,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <h6>PRECIO ACTUAL DEL PRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center" placeholder="" value="` + productosSucursal[j].precio + `" autofocus required disabled>
                                 <h6 >INGRESAR NUEVO PRECIO DEL PRODUCTO</h6>        
-                                <input type="number"  step="0.01" name="precio_nuevo" id="precio_nuevo" class="form-control text-center" placeholder="PRECIO NUEVO" value="" autofocus required>
+                                <input type="number"   name="precio_nuevo" id="precio_nuevo" class="form-control text-center" placeholder="PRECIO NUEVO" onkeypress="return filterFloat(event,this);" value="" autofocus required>
                                     `;
                 }
             }
@@ -1286,8 +1278,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         });
         */
         document.getElementById("titulo").innerHTML = nombreProd;
-        document.getElementById("modiPrecioCosto").innerHTML = cambiarPrecio;
-        
+        document.getElementById("modiPrecio").innerHTML = cambiarPrecio;
+        /*
         $("input[name='precio_nuevo']").bind('keypress', function(tecla) {
             let code = tecla.charCode;
           //  let tam = document.getElementById("precio_nuevo");
@@ -1298,18 +1290,20 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 return false;
             }
         });
+        */
 
 
-        
-    
-        $(document).ready(function() {
-            $("#precio_nuevo").keyup(function() {
-                $(this).val(parseFloat($(this).val()).toFixed(2));
+
+        /*
+            $(document).ready(function() {
+                $("#precio_nuevo").keyup(function() {
+                    $(this).val(parseFloat($(this).val()).toFixed(2));
+                });
             });
-        });
 
-    }
-
+        }
+        */
+    };
 
     function modificarCosto(idSP) {
         let cambiarCosto = "";
@@ -1328,7 +1322,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <h6>COSTO ACTUAL DEL PRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` + productosSucursal[j].costo + `" autofocus required disabled>
                                 <h6>INGRESAR NUEVO COSTO DEL PRODUCTO</h6>        
-                                <input type="number" name="costo" id="costo_nuevo" class="form-control text-center" placeholder="COSTO NUEVO" value="" autofocus required>
+                                <input type="number" name="costo" id="costo_nuevo" class="form-control text-center" placeholder="COSTO NUEVO" onkeypress="return filterFloat(event,this)" value="" autofocus required>
                                     `;
             }
         }
@@ -1342,12 +1336,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             actCosto(idSucPro);
         });
         */
-        let btnGuardar2 = document.getElementById("actPrecioCosto2");
+        let btnGuardar2 = document.getElementById("actCosto2");
         btnGuardar2.value = idSucPro;
 
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
         document.getElementById("titulo2").innerHTML = nombreProd;
-        document.getElementById("modiPrecioCosto2").innerHTML = cambiarCosto;
+        document.getElementById("modiCosto").innerHTML = cambiarCosto;
         $("input[name='costo']").bind('keypress', function(tecla) {
             if (this.value.length >= 10) return false;
             let code = tecla.charCode;
@@ -1484,7 +1478,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 }
                 // si tuvo éxito la petición
             }).done(function(respuesta) {
-                $('#modal_precio_venta').modal('hide');
+                $('#modal_precio2').modal('hide');
                 $('#detalleProducto').modal('hide');
 
                 //alert(respuesta);
@@ -1495,7 +1489,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             //await buscarFiltroNombre2();
             document.getElementById(`precio${idSucProd}`).textContent = precio.value;
             productosSucursal.find(p => p.id == idSucProd).precio = precio.value;
-            
+
             // refrescar();
             // await cargarProductosSucursal();
         } catch (err) {
@@ -1522,7 +1516,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     };
 
     async function actCosto() {
-        let btnGuardar = document.getElementById("actPrecioCosto2");
+        let btnGuardar = document.getElementById("actCosto2");
         let idSucProd = btnGuardar.value;
         try {
             //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
@@ -1549,7 +1543,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-            $('#modal_precio_venta2').modal('hide');
+            $('#modal_costo').modal('hide');
             $('#detalleProducto').modal('hide');
             alert("COSTO ACTUALIZADO CORRECTAMENTE");
             // refrescar();
@@ -1974,14 +1968,13 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             const minimoStock = parseInt(document.getElementById("minimoStock").value);
             const receta = document.getElementById("receta").value;
             const departamento = parseInt(document.getElementById("departamento").value);
-            if(codigoBarras.length==0 || nombre.length == 0 || minimoStock.length==0)
-            {
+            if (codigoBarras.length == 0 || nombre.length == 0 || minimoStock.length == 0) {
                 return alert('EXISTE UN ERROR CON SUS DATOS, REVISELOS POR FAVOR');
             }
             let spp = await $.ajax({
                 //headers: {
-                    //'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    //'Access-Control-Allow-Origin', 'http://localhost:3000'
+                //'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                //'Access-Control-Allow-Origin', 'http://localhost:3000'
                 //},
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
@@ -1989,7 +1982,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 url: `/puntoVenta/producto/editar/${x}`,
                 // los datos que voy a enviar para la relación
                 //dataType: 'json',
-                mode:'no-cors',
+                mode: 'no-cors',
                 data: {
                     codigoBarras: codigoBarras,
                     nombre: nombre,
@@ -2007,27 +2000,24 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 //contentType: false
             });
             console.log(spp);
-            if(spp == 1)
-              alert("DATOS ACTUALIZADOS CORRECTAMENTE");
+            if (spp == 1)
+                alert("DATOS ACTUALIZADOS CORRECTAMENTE");
             else
                 return;
-           //const consulta =  document.querySelector('#consultaBusqueda');
+            //const consulta =  document.querySelector('#consultaBusqueda');
             document.getElementById(`codigo${x}`).textContent = codigoBarras;
             document.getElementById(`nombre${x}`).textContent = nombre;
             document.getElementById(`departamento${x}`).textContent = d.find(p => p.id == departamento).nombre;
             let productoSucursal = productosSucursal.find(p => p.idProducto == x)
-            if(productoSucursal!=null)
-            {
+            if (productoSucursal != null) {
                 let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
-                if(subproducto!=null)
-                {
+                if (subproducto != null) {
                     document.getElementById(`scodigo${x}`).textContent = codigoBarras;
                     document.getElementById(`snombre${x}`).textContent = nombre;
                     document.getElementById(`sdepartamento${x}`).textContent = d.find(p => p.id == departamento).nombre;
                 }
                 let oferta = ofertas.find(p => p.idSucursalProducto == productoSucursal.id);
-                if(oferta!=null)
-                {
+                if (oferta != null) {
                     document.getElementById(`ocodigo${x}`).textContent = codigoBarras;
                     document.getElementById(`onombre${x}`).textContent = nombre;
                     document.getElementById(`odepartamento${x}`).textContent = d.find(p => p.id == departamento).nombre;
@@ -2041,19 +2031,19 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             productos.find(p => p.id == x).receta = receta;
             productos.find(p => p.id == x).minimoStock = minimoStock;
             productos.find(p => p.id == x).receta = receta;
-            
+
             productosList.find(p => p.id == x).nombre = nombre;
             productosList.find(p => p.id == x).codigoBarras = codigoBarras;
             productosList.find(p => p.id == x).idDepartamento = departamento;
             productosList.find(p => p.id == x).receta = receta;
             productosList.find(p => p.id == x).minimoStock = minimoStock;
             productosList.find(p => p.id == x).receta = receta;
-            console.log('nombre',productos.find(p => p.id == x).nombre);
+            console.log('nombre', productos.find(p => p.id == x).nombre);
             //console.log('nombreIndice',productos[indice].nombre);
             document.getElementById("formEditar").disabled = true;
             document.getElementById("btnEditar").innerHTML =
                 `<img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
-            EDITAR`;
+              EDITAR`;
             btnEditar.value = true;
             //await act_datos();
             //await buscarFiltroNombre2();
@@ -2079,24 +2069,61 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 
     }
     //$('#tablaBusqueda').scrollTop() == $('#consultaBusqueda').height() - $('#tablaBusqueda').height()
-    $('#tablaBusqueda').scroll(function(){
-        const comparacion = ($('#consultaBusqueda').height()-$('#tablaBusqueda').height()+$('#cabeceraProductos').height()+32)
-        if ($('#tablaBusqueda').scrollTop() == comparacion){// - $('#tablaBusqueda').height()){
-        //const cargando =  document.querySelector('#cargandoProductos')
-        /*if(cargando!=null)
-            cargando.remove();*/
+    $('#tablaBusqueda').scroll(function() {
+        const comparacion = ($('#consultaBusqueda').height() - $('#tablaBusqueda').height() + $('#cabeceraProductos').height() + 32)
+        if ($('#tablaBusqueda').scrollTop() == comparacion) { // - $('#tablaBusqueda').height()){
+            //const cargando =  document.querySelector('#cargandoProductos')
+            /*if(cargando!=null)
+                cargando.remove();*/
             pagina++;
             setTimeout(rellenar, 500); //rellenar();
-            
-        }	
+
+        }
         /*console.log('tablaBusqueda',$('#tablaBusqueda').scrollTop());
-        console.log('tabla',$('#tablaBusqueda').height());
-        console.log('consulta',$('#consultaBusqueda').height());
-        console.log('cabecera',$('#cabeceraProductos').height());
-        console.log('productos',$('#productos').height());
-        console.log('comparacion',($('#consultaBusqueda').height()-$('#tablaBusqueda').height()+$('#cabeceraProductos').height()+32));
-    */
+                console.log('tabla',$('#tablaBusqueda').height());
+                console.log('consulta',$('#consultaBusqueda').height());
+                console.log('cabecera',$('#cabeceraProductos').height());
+                console.log('productos',$('#productos').height());
+                console.log('comparacion',($('#consultaBusqueda').height()-$('#tablaBusqueda').height()+$('#cabeceraProductos').height()+32));
+            */
     });
+    //numeros enteros con dos decimales
+
+    function filterFloat(evt, input) {
+        // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+        var key = window.Event ? evt.which : evt.keyCode;
+        var chark = String.fromCharCode(key);
+        var tempValue = input.value + chark;
+        if (key >= 48 && key <= 57) {
+            if (filter(tempValue) === false) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            if (key == 8 || key == 13 || key == 0) {
+                return true;
+            } else if (key == 46) {
+                if (filter(tempValue) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+
+    function filter(__val__) {
+        var preg = /^([0-9]+\.?[0-9]{0,2})$/;
+        if (preg.test(__val__) === true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 </script>
 
 @endsection
