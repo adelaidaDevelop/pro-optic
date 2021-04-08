@@ -257,7 +257,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="actPrecioCosto" onclick="actPrecio();">GUARDAR</button>
+                <button type="button" class="btn btn-primary" id="actPrecio2" onclick="actPrecio();">GUARDAR</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
 
             </div>
@@ -1269,7 +1269,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             info4(idProd);
         });
         */
-        let btnGuardar = document.getElementById("actPrecioCosto");
+        let btnGuardar = document.getElementById("actPrecio2");
         btnGuardar.value = idSucPro;
         // $("#actPrecioCosto").removeAttr('onclick');
         /*
@@ -1322,7 +1322,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <h6>COSTO ACTUAL DEL PRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` + productosSucursal[j].costo + `" autofocus required disabled>
                                 <h6>INGRESAR NUEVO COSTO DEL PRODUCTO</h6>        
-                                <input type="number" name="costo" id="costo_nuevo" class="form-control text-center" placeholder="COSTO NUEVO" onkeypress="return filterFloat(event,this)" value="" autofocus required>
+                                <input type="number" name="costo" id="costo_nuevo" class="form-control text-center" placeholder="COSTO NUEVO" onkeypress="return filterFloat(event,this);" value="" autofocus required>
                                     `;
             }
         }
@@ -1342,6 +1342,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
         document.getElementById("titulo2").innerHTML = nombreProd;
         document.getElementById("modiCosto").innerHTML = cambiarCosto;
+/*
         $("input[name='costo']").bind('keypress', function(tecla) {
             if (this.value.length >= 10) return false;
             let code = tecla.charCode;
@@ -1353,6 +1354,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 return false;
             }
         });
+        */
     }
 
     function agregarProducto(idSP) {
@@ -1453,7 +1455,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     }
 
     async function actPrecio() {
-        let btnGuardar = document.getElementById("actPrecioCosto");
+        let btnGuardar = document.getElementById("actPrecio2");
         let idSucProd = btnGuardar.value;
         try {
             //return alert(idSucProd);
@@ -1479,12 +1481,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 // si tuvo éxito la petición
             }).done(function(respuesta) {
                 $('#modal_precio2').modal('hide');
-                $('#detalleProducto').modal('hide');
+               // $('#detalleProducto').modal('hide'); //cerrar?
 
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-            alert("PRECIO ACTUALIZADO CORRECTAMENTE :p");
+            alert("PRECIO ACTUALIZADO CORRECTAMENTE");
             //await act_datos();
             //await buscarFiltroNombre2();
             document.getElementById(`precio${idSucProd}`).textContent = precio.value;
@@ -1544,7 +1546,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
             $('#modal_costo').modal('hide');
-            $('#detalleProducto').modal('hide');
+           // $('#detalleProducto').modal('hide');
             alert("COSTO ACTUALIZADO CORRECTAMENTE");
             // refrescar();
             //await act_datos();
