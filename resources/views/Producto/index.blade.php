@@ -718,6 +718,13 @@ function buscarFiltroNombre2() {
     console.log("Productos no encontrados",productoNoEncontrado);
     grupos = parseInt(productosList.length / numPorGrupo);
     pagina = 0;
+    actualizarCabeceraProductos();
+    rellenar();
+};
+
+function actualizarCabeceraProductos()
+{
+    
     let contador = 0;
     let costo_inventario = 0;
     let precio_inventario = 0;
@@ -759,9 +766,9 @@ function buscarFiltroNombre2() {
     document.getElementById("cantProdInv").innerHTML = cantProdInventario;
     document.getElementById("cantProdSub").innerHTML = cantSubproductos;
     document.getElementById("cantProdOferta").innerHTML = cantOfertas;
-    rellenar();
-};
+}
 /*
+
 
 function filtroProducto() {
     productosList = [];
@@ -1619,7 +1626,7 @@ function agregarSubproducto(idSP) {
             //await buscarFiltroNombre2();
             document.getElementById(`precio${idSucProd}`).textContent = precio.value;
             productosSucursal.find(p => p.id == idSucProd).precio = precio.value;
-
+            actualizarCabeceraProductos();
             // refrescar();
             // await cargarProductosSucursal();
         } catch (err) {
@@ -1653,7 +1660,7 @@ function agregarSubproducto(idSP) {
         //await buscarFiltroNombre2();
         document.getElementById(`precio${idSucProd}`).textContent = precio.value;
         productosSucursal.find(p => p.id == idSucProd).precio = precio.value;
-
+        actualizarCabeceraProductos();
         // refrescar();
         // await cargarProductosSucursal();
     } catch (err) {
@@ -1715,6 +1722,7 @@ async function actCosto() {
             //await buscarFiltroNombre2();
             document.getElementById(`costo${idSucProd}`).textContent = costo.value;
             productosSucursal.find(p => p.id == idSucProd).costo = costo.value;
+            actualizarCabeceraProductos();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
@@ -1759,6 +1767,7 @@ async function actExistencia() {
         console.log(document.getElementById(`existenciaP${idSucProd}`));
         document.getElementById(`existenciaP${idSucProd}`).textContent = parseInt(existencia.value);
         productosSucursal.find(p => p.id == idSucProd).existencia = parseInt(existencia.value);
+        actualizarCabeceraProductos();
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
@@ -1801,6 +1810,7 @@ async function agregarSubprod() {
         //await buscarFiltroNombre2();
         document.getElementById(`subpExistencia${idSucProd}`).textContent = cantidad.value;
         subproductos.find(p => p.id == idSucProd).existencia = cantidad.value;
+        actualizarCabeceraProductos();
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
@@ -2114,6 +2124,7 @@ async function actualizar(i) {
         ignorar(i);
         document.getElementById(`existenciaP${idSucProd}`).textContent = existencia;
         productosSucursal.find(p => p.id == idSucProd).existencia = existencia;
+        actualizarCabeceraProductos();
         //await act_datos();
         //await buscarFiltroNombre2();
     } catch (err) {
@@ -2223,6 +2234,7 @@ async function editarProducto(x) {
             `<img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
               EDITAR`;
         btnEditar.value = true;
+        actualizarCabeceraProductos();
         //await act_datos();
         //await buscarFiltroNombre2();
         /*var init = {
