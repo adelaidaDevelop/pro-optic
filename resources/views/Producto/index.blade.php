@@ -270,12 +270,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 </div>
             </div>
             <div class="modal-footer">
-<<<<<<< HEAD
-                <button type="button" class="btn btn-primary" id="actPrecioCosto"
-                    onclick="actPrecio();">GUARDAR</button>
-=======
                 <button type="button" class="btn btn-primary" id="actPrecio2" onclick="actPrecio();">GUARDAR</button>
->>>>>>> f3b1afcf56a66990dfe16c78e3ca52bd2a4ec4f7
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
 
             </div>
@@ -1380,10 +1375,6 @@ function modificarPrecio(idSP) {
         } else {
             return false;
         }
-<<<<<<< HEAD
-    });
-    */
-=======
         /*
         $("#volverInfo4").click(function() {
             info4(idProd);
@@ -1411,7 +1402,6 @@ function modificarPrecio(idSP) {
             }
         });
         */
->>>>>>> f3b1afcf56a66990dfe16c78e3ca52bd2a4ec4f7
 
 
 
@@ -1448,8 +1438,6 @@ function modificarCosto(idSP) {
                                 <input type="number" name="costo" id="costo_nuevo" class="form-control text-center" placeholder="COSTO NUEVO" onkeypress="return filterFloat(event,this);" value="" autofocus required>
                                     `;
         }
-<<<<<<< HEAD
-=======
         /*
         $("#volverInfo42").click(function() {
             info4(idProd);
@@ -1479,7 +1467,6 @@ function modificarCosto(idSP) {
             }
         });
         */
->>>>>>> f3b1afcf56a66990dfe16c78e3ca52bd2a4ec4f7
     }
     /*
     $("#volverInfo42").click(function() {
@@ -1595,32 +1582,6 @@ function agregarSubproducto(idSP) {
     let btnGuardar3 = document.getElementById("actPrecioCosto5");
     btnGuardar3.value = idSucPro;
 
-<<<<<<< HEAD
-    // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
-    document.getElementById("titulo5").innerHTML = nombreProd;
-    document.getElementById("modiPrecioCosto5").innerHTML = cambiarCantidad;
-    $("input[name='cantidad']").bind('keypress', function(tecla) {
-        if (this.value.length >= 10) return false;
-        let code = tecla.charCode;
-        if (code == 8) { // backspace.
-            return true;
-        } else if (code >= 48 && code <= 57) { // is a number.
-            return true;
-        } else { // other keys.
-            return false;
-        }
-    });
-}
-
-async function actPrecio() {
-    let btnGuardar = document.getElementById("actPrecioCosto");
-    let idSucProd = btnGuardar.value;
-    try {
-        //return alert(idSucProd);
-        //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
-        const precio = document.querySelector('#precio_nuevo');
-        /*
-=======
     async function actPrecio() {
         let btnGuardar = document.getElementById("actPrecio2");
         let idSucProd = btnGuardar.value;
@@ -1629,24 +1590,11 @@ async function actPrecio() {
             //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
             const precio = document.querySelector('#precio_nuevo');
             /*
->>>>>>> f3b1afcf56a66990dfe16c78e3ca52bd2a4ec4f7
             if (pago.value.length === 0)
                 return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
             if (parseFloat(pago.value) < parseFloat(total))
                 return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
            */
-<<<<<<< HEAD
-        let funcion = $.ajax({
-            // metodo: puede ser POST, GET, etc
-            method: "POST",
-            // la URL de donde voy a hacer la petición
-            url: `/puntoVenta/productoSuc/actPrecio/${idSucProd}`,
-            // los datos que voy a enviar para la relación
-            data: {
-                precio: parseFloat(precio.value),
-                _token: "{{ csrf_token() }}"
-                //  id: idSucProd
-=======
             let funcion = $.ajax({
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
@@ -1691,7 +1639,6 @@ async function actPrecio() {
                 console.log("No responde :v");
                 console.log(response);
                 throw new Error(response.statusText);
->>>>>>> f3b1afcf56a66990dfe16c78e3ca52bd2a4ec4f7
             }
             // si tuvo éxito la petición
         }).done(function(respuesta) {
@@ -1744,34 +1691,6 @@ async function actCosto() {
             if (parseFloat(pago.value) < parseFloat(total))
                 return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
            */
-<<<<<<< HEAD
-        let funcion = $.ajax({
-            // metodo: puede ser POST, GET, etc
-            method: "POST",
-            // la URL de donde voy a hacer la petición
-            url: `/puntoVenta/productoSuc/actCosto/${idSucProd}`,
-            // los datos que voy a enviar para la relación
-            data: {
-                costo: parseFloat(costo.value),
-                _token: "{{ csrf_token() }}"
-                //  id: idSucProd
-            }
-            // si tuvo éxito la petición
-        }).done(function(respuesta) {
-            //alert(respuesta);
-            console.log(respuesta); //JSON.stringify(respuesta));
-        });
-        $('#modal_costo').modal('hide');
-        $('#detalleProducto').modal('hide');
-        alert("COSTO ACTUALIZADO CORRECTAMENTE");
-        // refrescar();
-        //await act_datos();
-        //await buscarFiltroNombre2();
-        document.getElementById(`costo${idSucProd}`).textContent = costo.value;
-        productosSucursal.find(p => p.id == idSucProd).costo = costo.value;
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-=======
             let funcion = $.ajax({
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
@@ -1799,7 +1718,6 @@ async function actCosto() {
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
->>>>>>> f3b1afcf56a66990dfe16c78e3ca52bd2a4ec4f7
     }
 }
 
