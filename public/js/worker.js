@@ -22,13 +22,18 @@ this.onmessage = function(e)
         seleccion = e.data.seleccion;
         bajosExis = e.data.bajosExis;
         depa = e.data.depa;
-        //setTimeout(buscarFiltroNombre2(),500);
+        
         //buscarFiltroNombre2();
+        setTimeout(buscarFiltroNombre2(),500);
         this.postMessage({respuesta:productosList,pal:palabra});
         
     }
 }
 
+function esperando()
+{
+
+}
 function buscarFiltroNombre2() {
     productosList = [];
     const palabraBusqueda = palabra;//document.querySelector('#busquedaProducto');

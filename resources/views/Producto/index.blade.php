@@ -2254,14 +2254,16 @@ function filter(__val__) {
 }
 
 // Objeto Worker
+let worker = new Worker("{{ asset('js/worker.js') }}"); // Ruta del archivo JS
 
 function buscar()
 {
     if(window.Worker)
     {
         //src="{{ asset('js\bootstrap-input-spinner.js') }}"
-        var worker = new Worker("{{ asset('js/worker.js') }}"); // Ruta del archivo JS
         //var message = {mensaje:"Hola Worker"};
+        worker.terminate();
+        worker = new Worker("{{ asset('js/worker.js') }}");
         let seleccion = document.querySelector("input[name='checkbox2']:checked");
         //if(seleccion)
         let palabraBusqueda = document.querySelector('#busquedaProducto');
@@ -2282,13 +2284,20 @@ function buscar()
             
             if(document.querySelector('#busquedaProducto').value == e.data.pal)
             {
+                console.log("Iguales");
+                //buscarFiltroNombre2();
                 productosList = e.data.respuesta;
                 grupos = parseInt(productosList.length / numPorGrupo);
-            pagina = 0;
-            actualizarCabecera();
-            rellenar();
+                pagina = 0;
+                actualizarCabecera();
+                rellenar();
             }
-            
+            else
+            {
+                console.log(document.querySelector('#busquedaProducto').value);
+                console.log(e.data.pal);
+            }
+
             //console.log(e.data.respuesta);
         };
     }
