@@ -153,9 +153,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     <div class="row my-0 mx-0 mt-3">
                         <div class="input-group col-4">
                             <input class="form-control text-uppercase my-auto" type="text" placeholder="Buscar producto"
-                                id="busquedaProducto" onkeyup="buscarFiltroNombre2()">
-                            <div class="input-group-append">
-                                <button class="btn text-dark">
+                                id="busquedaProducto" onkeyup="buscar()">
+                            <div class="input-group-appendborder">
+                                <button class="btn text-dark border p-0" onclick="">
                                     <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail m-0" alt="Regresar"
                                         width="38px" height="38px" /></button>
                             </div>
@@ -494,7 +494,7 @@ let grupos = 1;
 let paginas = 1;
 let palabraAux = "";
 let productoNoEncontrado = [];
-buscarFiltroNombre2();
+//buscarFiltroNombre2();
 
 /*
  function folioNombreOpc() {
@@ -534,7 +534,7 @@ function comparar(palabra) {
     return palabra == palabraAux;
 }
 
-function buscar() {
+/*function buscar() {
 
     var filtro = $("#busquedaProducto").val().toUpperCase();
 
@@ -556,7 +556,7 @@ function buscar() {
     })
 
 }
-
+*/
 function buscarFiltroNombre2() {
     productosList = [];
     const palabraBusqueda = document.querySelector('#busquedaProducto');
@@ -718,13 +718,11 @@ function buscarFiltroNombre2() {
     console.log("Productos no encontrados",productoNoEncontrado);
     grupos = parseInt(productosList.length / numPorGrupo);
     pagina = 0;
-    actualizarCabeceraProductos();
+    actualizarCabecera();
     rellenar();
 };
-
-function actualizarCabeceraProductos()
+function actualizarCabecera()
 {
-    
     let contador = 0;
     let costo_inventario = 0;
     let precio_inventario = 0;
@@ -735,11 +733,11 @@ function actualizarCabeceraProductos()
     for (let t in productosList) {
         let productoSucursal = productosSucursal.find(p => p.idProducto == productosList[t].id);
 
-        let costoTemporal = productoSucursal.costo * productosList[t].existencia;
-        let precioTemporal = productoSucursal.precio * productosList[t].existencia;
+        let costoTemporal = productoSucursal.costo * productoSucursal.existencia;
+        let precioTemporal = productoSucursal.precio * productoSucursal.existencia;
         costo_inventario = costo_inventario + costoTemporal;
         precio_inventario = precio_inventario + precioTemporal;
-        cantProdInventario = cantProdInventario + productosList[t].existencia;
+        cantProdInventario = cantProdInventario + productoSucursal.existencia;
 
         let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
         if (subproducto != null) {
@@ -766,9 +764,9 @@ function actualizarCabeceraProductos()
     document.getElementById("cantProdInv").innerHTML = cantProdInventario;
     document.getElementById("cantProdSub").innerHTML = cantSubproductos;
     document.getElementById("cantProdOferta").innerHTML = cantOfertas;
+    
 }
 /*
-
 
 function filtroProducto() {
     productosList = [];
@@ -1149,13 +1147,15 @@ function info4(id) {
     let departamento = "";
     let idProdSuc = 0;
     let ms = 0;
-    for (let j in productosSucursal) {
-        for (count10 in productos) {
-            if (productos[count10].id === productosSucursal[j].idProducto) {
-                if (productos[count10].id === id) {
+    let producto = productos.find(p => p.id == id);
+    let productoSucursal = productosSucursal.find(p => p.idProducto == producto.id);
+    //for (let j in productosSucursal) {
+        //for (count10 in productos) {
+            //if (productos[count10].id === productosSucursal[j].idProducto) {
+                //if (productos[count10].id === id) {
                     let departamentos = "";
                     for (count11 in d) {
-                        if (productos[count10].idDepartamento === d[count11].id) {
+                        if (producto.idDepartamento === d[count11].id) {
                             departamentos = departamentos +
                                 `<option value="${d[count11].id}" selected>${d[count11].nombre}</option>`;
                             //departamento = d[count11].nombre;
@@ -1165,21 +1165,21 @@ function info4(id) {
                         }
                     }
                     let receta = "";
-                    if (productos[count10].receta == "NO") {
-                        receta = `<option value="NO" selected>${productos[count10].receta}</option>
+                    if (producto.receta == "NO") {
+                        receta = `<option value="NO" selected>${producto.receta}</option>
                                       <option value="SI">SI</option>`
                     } else {
-                        receta = `<option value="SI" selected>${productos[count10].receta}</option>
+                        receta = `<option value="SI" selected>${producto.receta}</option>
                                       <option value="NO">NO</option>`
                     }
 
-                    x1 = productos[count10].id;
-                    x = productos[count10].id;
-                    idProdSuc = productosSucursal[j].id;
-                    ms = productosSucursal[j].minimoStock;
+                    x1 = producto.id;
+                    x = producto.id;
+                    idProdSuc = productoSucursal.id;
+                    ms = productoSucursal.minimoStock;
                     let urlImagen = "";
-                    if (productos[count10].imagen != null)
-                        urlImagen = "{{asset('storage')}}" + "/" + productos[count10].imagen;
+                    if (producto.imagen != null)
+                        urlImagen = "{{asset('storage')}}" + "/" + producto.imagen;
                     //console.log(urlImagen);
                     btnAgregarSubprod =
                         ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
@@ -1279,15 +1279,15 @@ function info4(id) {
                                         <fieldset disabled id="formEditar">
                                             <!--El name debe ser igual al de la base de datos-->
                                             <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase " placeholder="Ingresar codigo de barras" value="` +
-                        productos[count10].codigoBarras +
+                        producto.codigoBarras +
                         `" required autocomplete="codigoBarras" autofocus>
                                             <br />
                                             <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="Nombre productos" value="` +
-                        productos[count10].nombre +
+                        producto.nombre +
                         ` " autofocus required>
                                             <br />
                                             <textarea name="descripcion" id="descripcion" class="form-control text-uppercase" placeholder="Descripcion del producto" rows="3" cols="23" required>` +
-                        productos[count10].descripcion +
+                        producto.descripcion +
                         `</textarea>
                                             <br />
                                             <input type="number" name="minimoStock" id="minimoStock" class="form-control text-uppercase" placeholder="Ingrese el minimo de productos permitidos" value="` +
@@ -1316,10 +1316,10 @@ function info4(id) {
                                              <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                                              AGREGAR A SUBPRODUCTO </a> 
                                              `
-                }
-            }
-        }
-    }
+                //}
+            //}
+        //}
+    //}
     document.getElementById("subAgregar").innerHTML = btnAgregarSubprod;
     document.getElementById("resultados").innerHTML = datosProduct;
 };
@@ -1357,31 +1357,6 @@ function modificarPrecio(idSP) {
         }
 
     }
-    /*
-    $("#volverInfo4").click(function() {
-        info4(idProd);
-    });
-    */
-    let btnGuardar = document.getElementById("actPrecioCosto");
-    btnGuardar.value = idSucPro;
-    // $("#actPrecioCosto").removeAttr('onclick');
-    /*
-    $("#actPrecioCosto").click(function() {
-        
-    });
-    */
-    document.getElementById("titulo").innerHTML = nombreProd;
-    document.getElementById("modiPrecio").innerHTML = cambiarPrecio;
-    /*
-    $("input[name='precio_nuevo']").bind('keypress', function(tecla) {
-        let code = tecla.charCode;
-      //  let tam = document.getElementById("precio_nuevo");
-        //let tam2= tam.value.length;
-        if (code == '.') { // backspace.
-            return true;
-        } else {
-            return false;
-        }
         /*
         $("#volverInfo4").click(function() {
             info4(idProd);
@@ -1461,7 +1436,7 @@ function modificarCosto(idSP) {
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
         document.getElementById("titulo2").innerHTML = nombreProd;
         document.getElementById("modiCosto").innerHTML = cambiarCosto;
-/*
+    /*
         $("input[name='costo']").bind('keypress', function(tecla) {
             if (this.value.length >= 10) return false;
             let code = tecla.charCode;
@@ -1475,34 +1450,7 @@ function modificarCosto(idSP) {
         });
         */
     }
-    /*
-    $("#volverInfo42").click(function() {
-        info4(idProd);
-    });
-    */
-    /*
-    $("#actPrecioCosto").click(function() {
-        actCosto(idSucPro);
-    });
-    */
-    let btnGuardar2 = document.getElementById("actCosto2");
-    btnGuardar2.value = idSucPro;
-
-    // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
-    document.getElementById("titulo2").innerHTML = nombreProd;
-    document.getElementById("modiCosto").innerHTML = cambiarCosto;
-    $("input[name='costo']").bind('keypress', function(tecla) {
-        if (this.value.length >= 10) return false;
-        let code = tecla.charCode;
-        if (code == 8) { // backspace.
-            return true;
-        } else if (code >= 48 && code <= 57) { // is a number.
-            return true;
-        } else { // other keys.
-            return false;
-        }
-    });
-}
+   }
 
 function agregarProducto(idSP) {
 
@@ -1589,6 +1537,23 @@ function agregarSubproducto(idSP) {
     let btnGuardar3 = document.getElementById("actPrecioCosto5");
     btnGuardar3.value = idSucPro;
 
+    // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
+    document.getElementById("titulo5").innerHTML = nombreProd;
+    document.getElementById("modiPrecioCosto5").innerHTML = cambiarCantidad;
+    $("input[name='cantidad']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
+}
+
+
     async function actPrecio() {
         let btnGuardar = document.getElementById("actPrecio2");
         let idSucProd = btnGuardar.value;
@@ -1624,9 +1589,10 @@ function agregarSubproducto(idSP) {
             alert("PRECIO ACTUALIZADO CORRECTAMENTE");
             //await act_datos();
             //await buscarFiltroNombre2();
+            
             document.getElementById(`precio${idSucProd}`).textContent = precio.value;
             productosSucursal.find(p => p.id == idSucProd).precio = precio.value;
-            actualizarCabeceraProductos();
+            actualizarCabecera();
             // refrescar();
             // await cargarProductosSucursal();
         } catch (err) {
@@ -1646,41 +1612,7 @@ function agregarSubproducto(idSP) {
                 console.log("No responde :v");
                 console.log(response);
                 throw new Error(response.statusText);
-            }
-            // si tuvo éxito la petición
-        }).done(function(respuesta) {
-            $('#modal_precio2').modal('hide');
-            $('#detalleProducto').modal('hide');
-
-            //alert(respuesta);
-            console.log(respuesta); //JSON.stringify(respuesta));
-        });
-        alert("PRECIO ACTUALIZADO CORRECTAMENTE :p");
-        //await act_datos();
-        //await buscarFiltroNombre2();
-        document.getElementById(`precio${idSucProd}`).textContent = precio.value;
-        productosSucursal.find(p => p.id == idSucProd).precio = precio.value;
-        actualizarCabeceraProductos();
-        // refrescar();
-        // await cargarProductosSucursal();
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-};
-async function act_datos() {
-    let response = "Sin respuesta";
-    try {
-        response = await fetch(`/puntoVenta/act_inventario`);
-        if (response.ok) {
-            //productosSucursal = await response.json();
-            let datos = await response.json();
-            productosSucursal = datos['productosSucursal'];
-            subproductos = datos['subproducto']
-        } else {
-            console.log("No responde :v");
-            console.log(response);
-            throw new Error(response.statusText);
-        }
+                    }
     } catch (err) {
         console.log("Error al realizar la petición AJAX: X " + err.message);
     }
@@ -1720,13 +1652,14 @@ async function actCosto() {
             // refrescar();
             //await act_datos();
             //await buscarFiltroNombre2();
+            
             document.getElementById(`costo${idSucProd}`).textContent = costo.value;
             productosSucursal.find(p => p.id == idSucProd).costo = costo.value;
-            actualizarCabeceraProductos();
+            actualizarCabecera();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-    }
+    
 }
 
 async function actExistencia() {
@@ -1764,10 +1697,12 @@ async function actExistencia() {
         //  refrescar();
         //await act_datos();
         //await buscarFiltroNombre2();
+        
         console.log(document.getElementById(`existenciaP${idSucProd}`));
         document.getElementById(`existenciaP${idSucProd}`).textContent = parseInt(existencia.value);
         productosSucursal.find(p => p.id == idSucProd).existencia = parseInt(existencia.value);
-        actualizarCabeceraProductos();
+        actualizarCabecera();
+        //productosList.find(p => p.id == idSucProd).existencia = parseInt(existencia.value);
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
@@ -1808,9 +1743,10 @@ async function agregarSubprod() {
         //refrescar();
         //await act_datos();
         //await buscarFiltroNombre2();
+        
         document.getElementById(`subpExistencia${idSucProd}`).textContent = cantidad.value;
         subproductos.find(p => p.id == idSucProd).existencia = cantidad.value;
-        actualizarCabeceraProductos();
+        actualizarCabecera();
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
@@ -2122,9 +2058,10 @@ async function actualizar(i) {
         alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
         //  refrescar();
         ignorar(i);
+        
         document.getElementById(`existenciaP${idSucProd}`).textContent = existencia;
         productosSucursal.find(p => p.id == idSucProd).existencia = existencia;
-        actualizarCabeceraProductos();
+        actualizarCabecera();
         //await act_datos();
         //await buscarFiltroNombre2();
     } catch (err) {
@@ -2234,7 +2171,7 @@ async function editarProducto(x) {
             `<img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
               EDITAR`;
         btnEditar.value = true;
-        actualizarCabeceraProductos();
+        //actualizarCabecera();
         //await act_datos();
         //await buscarFiltroNombre2();
         /*var init = {
@@ -2315,6 +2252,57 @@ function filter(__val__) {
     }
 
 }
+
+// Objeto Worker
+
+function buscar()
+{
+    if(window.Worker)
+    {
+        //src="{{ asset('js\bootstrap-input-spinner.js') }}"
+        var worker = new Worker("{{ asset('js/worker.js') }}"); // Ruta del archivo JS
+        //var message = {mensaje:"Hola Worker"};
+        let seleccion = document.querySelector("input[name='checkbox2']:checked");
+        //if(seleccion)
+        let palabraBusqueda = document.querySelector('#busquedaProducto');
+        let depa = document.querySelector('#idDepartamento');
+        let bajosExis = document.querySelector('input[name="bajosExistencia"]:checked');
+        if(bajosExis != null)
+            bajosExis = bajosExis.value;
+        else
+            bajosExis = null;
+        /*var message = {productos:productos,productosSucursal:productosSucursal,
+        palabra:palabraBusqueda,seleccion:seleccion,depa:depa,bajosExis:bajosExis};*/
+        //palabraBusqueda = JSON.stringify(palabraBusqueda);
+        var message = {productos:productos,productosSucursal:productosSucursal,
+        palabra:palabraBusqueda.value,seleccion:seleccion.value,depa:depa.value,bajosExis:bajosExis};
+        
+        worker.postMessage(message);
+        worker.onmessage = setTimeOut(function(e){
+            
+            if(document.querySelector('#busquedaProducto').value == e.data.pal)
+            {
+                productosList = e.data.respuesta;
+                grupos = parseInt(productosList.length / numPorGrupo);
+            pagina = 0;
+            actualizarCabecera();
+            rellenar();
+            }
+            
+            //console.log(e.data.respuesta);
+        },500);
+    }
+}
+
+/*var worker = new Worker('script/worker.js'); // Ruta del archivo JS
+
+// Permite mandar mensajes al Worker
+worker.postMessage("Hola Mundo!");
+worker.postMessage(100);
+worker.postMessage({status:1,error:['ping','pong']});
+  
+// Termina la ejecución del Worker (esté en el estado que esté)
+worker.terminate();*/
 </script>
 
 @endsection

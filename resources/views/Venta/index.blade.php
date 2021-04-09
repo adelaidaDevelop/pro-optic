@@ -215,6 +215,8 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                
+                    <h6 class="mx-2 my-0 text-secondary"> <small>INGRESE EL NOMBRE DEL PRODUCTO A BUSCAR</small> </h6>
                     <input type="text" class="form-control text-uppercase mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarProducto()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
@@ -261,6 +263,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                    <h6 class="mx-2 my-0 text-secondary"> <small>INGRESE EL NOMBRE DEL SUBPRODUCTO A BUSCAR</small> </h6>
                     <input type="text" class="form-control text-uppercase mx-2 my-3" placeholder="Buscar producto" id="busquedaSubproducto" onkeyup="buscarSubproducto()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
@@ -304,6 +307,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                    <h6 class="mx-2 my-0 text-secondary"> <small>INGRESE EL NOMBRE DEL PRODUCTO A BUSCAR</small> </h6>
                     <input type="text" class="form-control text-uppercase mx-2 my-3" placeholder="Buscar producto" id="busquedaOferta" onkeyup="buscarOferta()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
@@ -330,7 +334,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Agregar Producto</button>
+                    <!--button type="button" class="btn btn-primary">Agregar Producto</button-->
                 </div>
             </div>
         </div>
