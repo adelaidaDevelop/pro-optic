@@ -494,7 +494,7 @@ let grupos = 1;
 let paginas = 1;
 let palabraAux = "";
 let productoNoEncontrado = [];
-//buscarFiltroNombre2();
+buscarFiltroNombre2();
 
 /*
  function folioNombreOpc() {
@@ -2278,7 +2278,7 @@ function buscar()
         palabra:palabraBusqueda.value,seleccion:seleccion.value,depa:depa.value,bajosExis:bajosExis};
         
         worker.postMessage(message);
-        worker.onmessage = setTimeOut(function(e){
+        worker.onmessage = function(e){
             
             if(document.querySelector('#busquedaProducto').value == e.data.pal)
             {
@@ -2290,7 +2290,7 @@ function buscar()
             }
             
             //console.log(e.data.respuesta);
-        },500);
+        };
     }
 }
 
