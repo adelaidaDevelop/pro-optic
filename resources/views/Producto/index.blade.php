@@ -2289,7 +2289,7 @@ function buscar()
                 productosList = e.data.respuesta;
                 grupos = parseInt(productosList.length / numPorGrupo);
                 pagina = 0;
-                actualizarCabecera();
+                //actualizarCabecera();
                 rellenar();
             }
             else
