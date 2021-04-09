@@ -58,8 +58,8 @@
                                 <form method="POST" action="{{ url('puntoVenta/login') }}">
                                     @csrf
                                     <div class="row" style="background:#A9CCE3">
-                                        <div class="col-md-3" style="background:#A9CCE3"></div>
-                                        <div class="col-md-6 text-center" style="background:#A9CCE3">
+                                        <div class="col-md-1" style="background:#A9CCE3"></div>
+                                        <div class="col-md-10 text-center" style="background:#A9CCE3">
                                             <br />
                                             <div>
                                                 <h4 style="font-family: 'Open Sans', sans-serif;"><strong> INICIO DE SESION </strong></h4>
@@ -123,7 +123,7 @@
                                             <button type="submit" class="btn btn-outline-dark my-2" ><strong>INICIAR SESION</strong></button>
                                         </div>
 
-                                        <div class="col-md-3" style="background:#A9CCE3"></div>
+                                        <div class="col-md-1" style="background:#A9CCE3"></div>
 
                                         <br /><br /><br /> <br />
                                         <br /><br /><br /><br /><br /><br />

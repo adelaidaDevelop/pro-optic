@@ -59,7 +59,7 @@ $verC = $sE->hasAnyRole($vC);
 
                 <div>
                     <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto">
-                    <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL </small> </h6>
+                    <h6 class="form-control text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL </small> </h6>
                     <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
