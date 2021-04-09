@@ -119,12 +119,13 @@ REPORTES
         <h5 class="text-primary ml-3">FECHA:</h5>
 
         <div class="form-group input-group  ">
-            <div class="col-1 form-group input-group">
+            <div class="col-2 form-group input-group">
                 <h6 class="text-primary  my-auto mr-1">
                     DIA
                 </h6>
                 <input class="my-auto" type="radio" value="dia" name="fecha" id="fechaDia" onchange="habilitarFecha()" checked>
             </div>
+<!--
             <div class="col-1 form-group input-group">
                 <h6 class="text-primary ml-1 my-auto mr-1">
                     MES
@@ -137,6 +138,7 @@ REPORTES
                 </h6>
                 <input class="my-auto" type="radio" value="anio" name="fecha" id="fechaAnio" onchange="habilitarFecha()">
             </div>
+            -->
             <div class="col-2 form-group input-group">
                 <h6 class="text-primary ml-1 my-auto mr-1">
                     PERIODO
@@ -146,7 +148,8 @@ REPORTES
         </div>
 
         <div class="  form-group input-group ml-3 ">
-            <input type="date" min="" onchange="" id="fechaXDia" class="form-control my-0 col-2" />
+            <input type="date" min="" onchange="" id="fechaXDia" class="form-control my-0 col-2 mr-2" />
+           <!--
             <select class="form-control col-1 my-0 ml-2 mr-2" name="meses" id="fechaXmeses" required disabled>
                 <option value="0" selected>MES</option>
                 <option value="1">ENERO</option>
@@ -167,8 +170,9 @@ REPORTES
                 <option value="1">2021</option>
                 <option value="2">2022</option>
                 <option value="3">2023</option>
-                <!--Escribir manualmente el anio-->
+                Escribir manualmente el anio
             </select>
+            -->
             <input type="date" min="" onchange="" id="fechaPInicio" class="form-control my-0 col-2 mr-2" disabled />
             <input type="date" min="" onchange="" id="fechaPFinal" class="form-control my-0 col-2 mr-2" disabled />
             <button class="btn btn-outline-secondary  p-1 mx-3 text-dark" onclick="generaReportes()">
