@@ -164,14 +164,14 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         <div class="mt-2 mx-2"> </div>
                         <h6 class="mx-3 mt-2"> BUSCAR POR:</h6>
                         <div class=" input-group-text my-auto">
-                            <input type="radio" value="folio" name="checkbox2" onchange="buscarFiltroNombre2()"
+                            <input type="radio" value="folio" name="checkbox2" onchange="buscar()"
                                 id="codigoBusq">
                             <label class="ml-1 my-0" for="codigoBusq">
                                 CODIGO
                             </label>
                         </div>
                         <div class=" input-group-text  ml-1 my-auto ">
-                            <input type="radio" value="nombre" name="checkbox2" onchange="buscarFiltroNombre2()"
+                            <input type="radio" value="nombre" name="checkbox2" onchange="buscar()"
                                 id="nombreBusq" checked>
                             <label class="ml-1 my-0" for="nombreBusq">
                                 NOMBRE
@@ -582,12 +582,18 @@ function buscarFiltroNombre2() {
         let producto = productos.find(p => p.id == productosSucursal[x].idProducto);
         if (producto != null) {
 
-            if (opcFolioNombre === 'nombre') {
-                $("#idDepartamento").prop('disabled', false);
-                $("#bajosExistencia").prop('disabled', false);
+            //if (opcFolioNombre === 'nombre') {
+                //$("#idDepartamento").prop('disabled', false);
+                //$("#bajosExistencia").prop('disabled', false);
                 //
+                let comparar = "";
+                if (opcFolioNombre === 'nombre')
+                    comparar = producto.nombre.toUpperCase();
+                if (opcFolioNombre === 'folio')
+                    comparar = producto.codigoBarras.toUpperCase();
+                
                 //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
-                if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                if (comparar.includes(palabraBusqueda.value.toUpperCase())) {
                     //BUSCAR POR DEPARTAMENTO
                     //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
                     let depa = document.querySelector('#idDepartamento');
@@ -689,7 +695,7 @@ function buscarFiltroNombre2() {
                 } else {
                     // MENSAJE PRODUCTOS NO ENCONTRADOS
                 }
-            } else if (opcFolioNombre === 'folio') {
+            /*} else if (opcFolioNombre === 'folio') {
                 $("#idDepartamento").prop('disabled', true);
                 $("#bajosExistencia").prop('disabled', true);
                 if (producto.codigoBarras.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
@@ -709,7 +715,7 @@ function buscarFiltroNombre2() {
                     };
                     productosList.push(productosAdd);
                 }
-            }
+            }*/
         } else {
             productoNoEncontrado.push(productosSucursal[x]);
             
