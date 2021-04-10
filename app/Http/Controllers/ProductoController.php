@@ -180,28 +180,33 @@ class ProductoController extends Controller
      */
     public function stock(){
         
-        $productos= Producto::all();
+        $productos= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento']);
         $idSucursal = session('sucursal');
-        $productosSucursal= Sucursal_producto::where('idSucursal', '=', $idSucursal)->get();
+        $productosSucursal= Sucursal_producto::where('idSucursal', '=', $idSucursal)->get(['id','costo','precio','existencia','minimoStock','idProducto','status']);
         //$noAgregado = $productos::where('id','!=' )
         $depa= Departamento::all();
-        $noAgregado = [];
+        //$noAgregado = [];
+        /*
         foreach($productos as $p)
         {
             $bandera = true;
             foreach($productosSucursal as $ps)
             {
+                if($bandera){
                 if($p->id == $ps->idProducto){
                     $bandera = false;
+                }else{
+                    array_push($noAgregado,$p);
+
+                }
                 }
             }
-            if($bandera){
-                array_push($noAgregado,$p);
-            }
+          
 
         }
-       // return view('Producto.stockV', compact('productos', 'depa', 'productosSucursal','noAgregado'));
-        return view('Producto.stockV', compact('depa', 'noAgregado'));
+        */
+        return view('Producto.stockV', compact('productos', 'depa', 'productosSucursal'));
+       // return view('Producto.stockV', compact('depa', 'noAgregado'));
         
     }
     
