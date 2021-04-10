@@ -15,6 +15,7 @@ $eliminarProducto= ['eliminarProducto','admin'];
 $eliminar = $sE->hasAnyRole($eliminarProducto);
 @endphp
 @section('opciones')
+<a href="javascript:window.print()">Imprimir</a>
 <div class="col-0  p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
         <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit">
@@ -2300,6 +2301,7 @@ function buscar()
 
             //console.log(e.data.respuesta);
         };
+        //worker.terminate();
     }
 }
 
