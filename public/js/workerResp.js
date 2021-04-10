@@ -58,17 +58,12 @@ function buscarFiltroNombre2() {
         let producto = productos.find(p => p.id == productosSucursal[x].idProducto);
         if (producto != null) {
 
-            //if (opcFolioNombre === 'nombre') {
+            if (opcFolioNombre === 'nombre') {
             //    //$("#idDepartamento").prop('disabled', false);
             //    //$("#bajosExistencia").prop('disabled', false);
                 //
                 //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
-                let comparar = "";
-                if (opcFolioNombre === 'nombre')
-                    comparar = producto.nombre.toUpperCase();
-                if (opcFolioNombre === 'folio')
-                    comparar = producto.codigoBarras.toUpperCase();
-                if (comparar.includes(palabraBusqueda.toUpperCase())) {
+                if (producto.nombre.toUpperCase().includes(palabraBusqueda.toUpperCase())) {
                     //BUSCAR POR DEPARTAMENTO
                     //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
                     //let depa = depa;//document.querySelector('#idDepartamento');
@@ -82,6 +77,12 @@ function buscarFiltroNombre2() {
                                 if (opcBajosE === 'existencia') {
                                     if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
                                         //PRODUCTOS POR NOMBRE, DEPTO Y BAJOS EXISTENCIA
+                                        let departamento = "";
+                                        for (count21 in d) {
+                                            if (producto.idDepartamento === d[count21].id) {
+                                                departamento = d[count21].nombre;
+                                            }
+                                        }
                                         let id = producto.id;
                                         let productosAdd = {
                                             id: id,
@@ -98,6 +99,12 @@ function buscarFiltroNombre2() {
                             } else {
                                 //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE, DEPTO
                                 // buscarFiltroNombre();
+                                let departamento = "";
+                                for (count21 in d) {
+                                    if (producto.idDepartamento === d[count21].id) {
+                                        departamento = d[count21].nombre;
+                                    }
+                                }
                                 let id = producto.id;
                                 let productosAdd = {
                                     id: id,
@@ -118,6 +125,12 @@ function buscarFiltroNombre2() {
                             if (opcBajosE === 'existencia') {
                                 if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
                                     //PRODUCTOS POR NOMBRE Y BAJOS EXISTENCIA
+                                    let departamento = "";
+                                    for (count21 in d) {
+                                        if (producto.idDepartamento === d[count21].id) {
+                                            departamento = d[count21].nombre;
+                                        }
+                                    }
                                     let id = producto.id;
                                     let productosAdd = {
                                         id: id,
@@ -131,6 +144,12 @@ function buscarFiltroNombre2() {
                             }
                         } else {
                             //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE
+                            /*let departamento = "";
+                            for (count21 in d) {
+                                if (producto.idDepartamento === d[count21].id) {
+                                    departamento = d[count21].nombre;
+                                }
+                            }*/
                             let id = producto.id;
                             let productosAdd = {
                                 id: id,
@@ -146,11 +165,16 @@ function buscarFiltroNombre2() {
                 } else {
                     // MENSAJE PRODUCTOS NO ENCONTRADOS
                 }
-            /*} else if (opcFolioNombre === 'folio') {
+            } else if (opcFolioNombre === 'folio') {
                 //$("#idDepartamento").prop('disabled', true);
                 //$("#bajosExistencia").prop('disabled', true);
                 if (producto.codigoBarras.toUpperCase().includes(palabraBusqueda.toUpperCase())) {
-                    
+                    let departamento = "";
+                    /*for (count21 in d) {
+                        if (producto.idDepartamento === d[count21].id) {
+                            departamento = d[count21].nombre;
+                        }
+                    }*/
                     let id = producto.id;
                     let productosAdd = {
                         id: id,
@@ -161,7 +185,7 @@ function buscarFiltroNombre2() {
                     };
                     productosList.push(productosAdd);
                 }
-            }*/
+            }
         } else {
             //productoNoEncontrado.push(productosSucursal[x]);
             
@@ -173,5 +197,4 @@ function buscarFiltroNombre2() {
     //pagina = 0;
     //actualizarCabecera();
     //rellenar();
-    
 };
