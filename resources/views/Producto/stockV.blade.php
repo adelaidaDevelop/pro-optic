@@ -40,14 +40,13 @@ $crear = $sE->hasAnyRole($crearProducto);
 </div>
 @endsection
 <div class="row p-1 ">
-    <div class="row col-12 ml-2 w-100">
-        <h4 class="text-primary ml-2 my-2">
-            <strong>
-                STOCK DE PRODUCTOS
+    <div class="row col-12  ml-1 w-100">
+            <strong class="  h5 mx-auto text-center">
+                PRODUCTOS QUE AÚN NO SE AGREGAN A ESTA SUCURSAL
             </strong>
-        </h4>
     </div>
     <div class="row border border-primary m-2 ml-4 mr-4 col ">
+    <!--
         <div class="col-12 row my-0 mx-0 mt-3 ml-2">
             <input class="form-control text-uppercase  col-4" type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="cargarProductos()">
             <a title="buscar" href="" class="text-dark ">
@@ -55,6 +54,7 @@ $crear = $sE->hasAnyRole($crearProducto);
             <div class="mt-2 mx-2"> </div>
 
         </div>
+        -->
         <div class="col mt-1 mb-4 ml-4 mr-4">
             <!-- TABLA -->
             <div id="vacio" class="text-center my-auto">

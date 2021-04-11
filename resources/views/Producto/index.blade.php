@@ -15,7 +15,7 @@ $eliminarProducto= ['eliminarProducto','admin'];
 $eliminar = $sE->hasAnyRole($eliminarProducto);
 @endphp
 @section('opciones')
-<a href="javascript:window.print()">Imprimir</a>
+
 <div class="col-0  p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
         <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit">
@@ -1919,28 +1919,28 @@ async function productosEnBajaSucursal() {
     await productos0();
     //console.log(prod_baja);
     for (let t in prod_baja) {
-        for (let x in productos) {
-            if (productos[x].id === prod_baja[t].idProducto) {
+        let producto = productos.find(p => p.id == prod_baja[t].idProducto);
+        if (producto != null) {
+       // for (let x in productos) {
+            //if (productos[x].id === prod_baja[t].idProducto) {
                 cont = cont + 1;
-                let btnAlta = `<a class="btn btn-primary" href="{{ url('/puntoVenta/altaProducto/` + productos[x]
-                    .id + `')}}"> ALTA </a>`;
+                let btnAlta = `<a class="btn btn-primary" href="{{ url('/puntoVenta/altaProducto/` + producto.id + `')}}"> ALTA </a>`;
                 if (!modificarProducto)
                     btnAlta =
                     `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" > ALTA </button>`;
                 cuerpo = cuerpo + `
                     <tr>
                     <th >` + cont + `</th>
-                    <td>` + productos[x].codigoBarras + `</td>
-                    <td>` + productos[x].nombre + `</td>
-                    <td>` + productos[x].descripcion + `</td>
-                    <td>` + productos[x].idDepartamento + `</td>
-                    <td>` + productos[x].receta + `</td>
+                    <td>` + producto.codigoBarras + `</td>
+                    <td>` + producto.nombre + `</td>
+                    <td>` + producto.descripcion + `</td>
+                    <td>` + producto.idDepartamento + `</td>
+                    <td>` + producto.receta + `</td>
                     <td>` + btnAlta +
                     ` 
                     </td>        
                     </tr>
                      `;
-            }
         }
     }
     if (cuerpo === "") {

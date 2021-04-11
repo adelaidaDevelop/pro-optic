@@ -24,14 +24,15 @@ class DevolucionController extends Controller
         $usuarios = ['verDevolucion','crearDevolucion','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
-        $ventas= Venta::all();
-        $detalleVenta= Detalle_venta::all();
-        $productos= Producto::all();
+        $ventas= Venta::all(['id','tipo', 'pago','status','idSucursalEmpleado','created_at','updated_at']);
+        $detalleVenta= Detalle_venta::all(['idVenta','idProducto', 'cantidad','precioIndividual']);
+        $productos= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento']);
         $idSucursal = session('sucursal');
         $empleados= Empleado::all();
         $devolucions = Devolucion::all();
         $idSucursal = session('sucursal');
-        $sucursalEmpleado = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
+        $sucursalEmpleado = Sucursal_empleado::where('idSucursal', '=', $idSucursal)
+        ->get(['id','idSucursal','idEmpleado','status','created_at','updated_at']);
 
         $productX_Sucursal = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
 

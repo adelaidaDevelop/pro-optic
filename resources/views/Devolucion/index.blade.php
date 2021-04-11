@@ -214,65 +214,71 @@ $devolver = $sE->hasAnyRole($userDevolucion);
         let precioSP = 0;
         if (palabraBusqueda.value.length > 0) {
             let folio = parseInt(palabraBusqueda.value);
-            for (count in ventas) {
-                if (ventas[count].id === folio) {
-                    //console.log(detalleVenta);
-                    //console.log(ventas);
-                    for (count2 in detalleVenta) {
-                        if (detalleVenta[count2].idVenta == ventas[count].id) {
-                            //console.log("Entra a la funcion de buscar folio");
-                            for (count3 in productos) {
-                                if (productos[count3].id == detalleVenta[count2].idProducto) {
-                                    cont = cont + 1;
-                                    document.getElementById("sinResult").innerHTML = "";
-                                    // idProductoD = productos[count3].id;
-                                    //idVentaD = ventas[count].id;
-                                    // cantTotal = detalleVenta[count2].cantidad;
-                                    console.log("De esta venta por cada producto que se vendi en esta venta entra");
-                                    let cantPD = 0; //CHECAR
-                                    console.log("dev");
-                                    console.log(devolucions);
-                                    // if (devolucions.length > 0) {
-                                    if (devolucions !== null) {
-                                        for (count51 in devolucions) {
-                                            console.log("devoluNo");
-                                            //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
-                                            if (ventas[count].id == devolucions[count51].idVenta) {
+            //  for (count in ventas) {
+            // if (ventas[count].id === folio) {
+            let venta = ventas.find(v => v.id === folio);
+            if (venta != null) {
+                //console.log(detalleVenta);
+                //console.log(ventas);
+                //  for (count2 in detalleVenta) {
+                //  if (detalleVenta[count2].idVenta == ventas[count].id) {
+                let detalleV = detalleVenta.find(p => p.idVenta == venta.id);
+                if (detalleV != null) {
+                    //console.log("Entra a la funcion de buscar folio");
+                    // for (count3 in productos) {
+                    //  if (productos[count3].id == detalleVenta[count2].idProducto) {
+                    let product = productos.find(p => p.id == detalleV.idProducto);
+                    if (product != null) {
+                        cont = cont + 1;
+                        document.getElementById("sinResult").innerHTML = "";
+                        // idProductoD = productos[count3].id;
+                        //idVentaD = ventas[count].id;
+                        // cantTotal = detalleVenta[count2].cantidad;
+                        console.log("De esta venta por cada producto que se vendi en esta venta entra");
+                        let cantPD = 0; //CHECAR
+                        console.log("dev");
+                        console.log(devolucions);
+                        // if (devolucions.length > 0) {
+                        if (devolucions !== null) {
+                            for (count51 in devolucions) {
+                                console.log("devoluNo");
+                                //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
+                                if (venta.id == devolucions[count51].idVenta) {
 
-                                                if (devolucions[count51].idProducto == productos[count3].id) {
-                                                    cantPD = cantPD + devolucions[count51].cantidad;
-                                                    console.log("Si entra en esta parte");
-                                                }
-                                            }
-                                        }
+                                    if (devolucions[count51].idProducto == productos[count3].id) {
+                                        cantPD = cantPD + devolucions[count51].cantidad;
+                                        console.log("Si entra en esta parte");
                                     }
-                                    if (cantPD < detalleVenta[count2].cantidad) {
-                                        botonDev = `<button class="btn btn-light" onclick="idProdDV(` + productos[count3].id + `,` + ventas[count].id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)"
+                                }
+                            }
+                        }
+                        if (cantPD < detalleV.cantidad) {
+                            botonDev = `<button class="btn btn-light" onclick="idProdDV(` + product.id + `,` + venta.id + `,` + detalleV.cantidad + `,` + cantPD + `)"
                                             type="button">DEVOLVER</button>`;
-                                    } else {
-                                        botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
+                        } else {
+                            botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
                                             type="button" disabled >DEVOLVER</button>`;
-                                    }
-                                    subtotalV = detalleVenta[count2].cantidad * detalleVenta[count2].precioIndividual;
-                                    console.log("sisisi");
-                                    cuerpo = cuerpo + `
+                        }
+                        subtotalV = detalleV.cantidad * detalleV.precioIndividual;
+                        console.log("sisisi");
+                        cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
-                                            <td>` + productos[count3].codigoBarras + `</td>
-                                            <td>` + productos[count3].nombre + `</td>
-                                            <td>` + detalleVenta[count2].cantidad + `</td>
-                                            <td>` + detalleVenta[count2].precioIndividual + `</td>
+                                            <td>` + product.codigoBarras + `</td>
+                                            <td>` + product.nombre + `</td>
+                                            <td>` + detalleV.cantidad + `</td>
+                                            <td>` + detalleV.precioIndividual + `</td>
                                             <td>` + subtotalV + `</td> 
                                             <td>` + cantPD + `</td> 
                                             <td>` + botonDev + `
                                             </td>        
                                                 </tr>
                                                 `;
-                                }
-                            }
-                        }
                     }
+
                 }
+
+                // }
                 //document.getElementById("sinResult").innerHTML = "Folio no encontrado";
             }
             if (cuerpo === "") {
@@ -556,7 +562,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                 `;
         }
         document.getElementById("tablaVenta").innerHTML = cuerpo;
-      
+
     };
 
 
@@ -594,30 +600,35 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     console.log("minimo");
                     // if (fecha.getTime() <= fechaF.getTime()) {
                     console.log("maximo");
-                    for (count7 in detalleVenta) {
-                        console.log("detalla V: ", detalleVenta);
-                        if (detalleVenta[count7].idVenta == ventas[count5].id) {
-                            let subtotal = detalleVenta[count7].cantidad * detalleVenta[count7].precioIndividual;
-                            total = total + subtotal;
-                        }
-                    }
-                    for (let s in sucursalEmpleado) {
+                    // for (count7 in detalleVenta) {
+                    //   console.log("detalla V: ", detalleVenta);
+                    // if (detalleVenta[count7].idVenta == ventas[j].id) {
+                    let detalleV = detalleVenta.find(d => d.idVenta == ventas[j].id);
+                    if (detalleV != null) {
 
-                        if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
-                            for (count6 in empleados) {
-                                if (empleados[count6].id == 1) {
-                                    empleado = empleados[count6].primerNombre;
-                                } else {
-                                    empleado = empleados[e].primerNombre + " " + empleados[e].segundoNombre + " " + empleados[e].apellidoPaterno + " " + empleados[e].apellidoMaterno;
-                                }
+                        let subtotal = detalleV.cantidad * detalleV.precioIndividual;
+                        total = total + subtotal;
+
+                    }
+
+                    // for (let s in sucursalEmpleado) {
+                    //  if (sucursalEmpleado[s].id == ventas[j].idSucursalEmpleado) {
+                    let suc_emp = sucursalEmpleado.find(s => s.id == ventas[j].idSucursalEmpleado);
+                    if (suc_emp != null) {
+                        for (count6 in empleados) {
+                            if (empleados[count6].id == 1) {
+                                empleado = empleados[count6].primerNombre;
+                            } else {
+                                empleado = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
                             }
                         }
                     }
-                    console.log(ventas[j].tipo);
-                    console.log(emple);
-                    cont = cont + 1;
-                    fecha.setDate(fecha.getDate() + 1);
-                    cuerpo = cuerpo + `
+                
+                console.log(ventas[j].tipo);
+                console.log(emple);
+                cont = cont + 1;
+                fecha.setDate(fecha.getDate() + 1);
+                cuerpo = cuerpo + `
                         <tr >
                         <th >` + cont + `</th>
                         <td>` + ventas[j].id + `</td>
@@ -629,17 +640,17 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                         <td>` + fecha.toLocaleTimeString() + `</td>   
                     </tr>
                     `;
-                    // }
-                } else {
-                    console.log("no entra");
-                }
+                // }
+            } else {
+                console.log("no entra");
             }
-            document.getElementById("tablaVenta").innerHTML = cuerpo;
-
-        } else {
-            console.log("No verifico bien");
-            modalVenta();
         }
+        document.getElementById("tablaVenta").innerHTML = cuerpo;
+
+    } else {
+        console.log("No verifico bien");
+        modalVenta();
+    }
 
 
     };
