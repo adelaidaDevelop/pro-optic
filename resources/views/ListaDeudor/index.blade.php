@@ -399,23 +399,23 @@ CREDITOS
                                 //  folio = venta_clientes[count12].idVenta;
                                 folio = venta_clientes[count12].idVenta;
                                 idVentClient = venta_clientes[count12].id;
-                              //  for (count13 in detalleVentas) {
-                                  //  if (detalleVentas[count13].idVenta == folio) {
-                                        let detalleV = detalleVentas.find(d => d.idVenta == folio);
-                                        if (product != null) {
-                                        let subtotal = detalleV.cantidad * detalleV.precioIndividual;
+                                for (count13 in detalleVentas) {
+                                    if (detalleVentas[count13].idVenta == folio) {
+                                        // let detalleV = detalleVentas.find(d => d.idVenta == folio);
+                                        // if (product != null) {
+                                        let subtotal = detalleVentas[count13].cantidad * detalleVentas[count13].precioIndividual;
                                         total = total + subtotal;
                                     }
-                               // }
-                                for (count14 in ventas) {
-                                    if (ventas[count14].id == folio) {
-                                        
-                                        fechaVenta = new Date(ventas[count14].created_at);
-                                        fechaVenta.getTime();
-                                    }
                                 }
+                                //  for (count14 in ventas) {
+                                if (venta.id == folio) {
+                                    fechaVenta = new Date(venta.created_at);
+                                    fechaVenta.getTime();
+                                }
+                                //  }
                                 for (count13 in pagos_ventas) {
                                     if (pagos_ventas[count13].idVentaCliente == idVentClient) {
+
                                         pago = pago + pagos_ventas[count13].monto;
                                     }
                                 }
@@ -470,9 +470,6 @@ CREDITOS
             document.getElementById("tablaR").innerHTML = tabla2;
             document.getElementById("consultaBusqueda").innerHTML = cuerpo;
         }
-
-
-
     };
 
 
