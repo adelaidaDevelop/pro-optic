@@ -157,7 +157,7 @@
                             <th scope="col">#</th>
                             <th scope="col">CODIGO_BARRAS</th>
                             <th scope="col">PRODUCTO</th>
-                            <th scope="col">OBSERVACION</th>
+                            <th scope="col">TIPO</th>
                             <th scope="col">EXISTENCIA</th>
                             <th scope="col">PRECIO</th>
                             <th scope="col">CANTIDAD</th>
@@ -617,7 +617,7 @@
         let contador = 1;
 
         for (let count1 in productosVenta) {
-            let tipo = `SIN OBSERVACION`;
+            let tipo = `NORMAL`;
             if (productosVenta[count1].tipo == 1)
                 tipo = `SUBPRODUCTO`;
             if (productosVenta[count1].tipo == 2)
