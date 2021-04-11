@@ -459,9 +459,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="cuerpoInventarioRapido">
+            <div class="modal-body" >
+                <div class="row" style="height:400px;overflow-y:auto;" id="cuerpoInventarioRapido" >
                 <!-- TABLA -->
                 AQUI VA EL INVENTARIO RAPIDO
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">CERRAR</button>
@@ -2205,7 +2207,7 @@ async function editarProducto(x) {
 //$('#tablaBusqueda').scrollTop() == $('#consultaBusqueda').height() - $('#tablaBusqueda').height()
 $('#tablaBusqueda').scroll(function() {
     const comparacion = ($('#consultaBusqueda').height() - $('#tablaBusqueda').height() + $(
-        '#cabeceraProductos').height() + 32)
+        '#cabeceraProductos').height())
     if ($('#tablaBusqueda').scrollTop() >= comparacion) { // - $('#tablaBusqueda').height()){
         //const cargando =  document.querySelector('#cargandoProductos')
         /*if(cargando!=null)

@@ -146,7 +146,7 @@ class SucursalProductoController extends Controller
     public function buscarPorCodigo($codigo)
     {
         
-        $producto = Producto::where("codigoBarras",'like',$codigo."%")->first(['id', 'codigoBarras', 'nombre', 'idDepartamento']);
+        $producto = Producto::where("codigoBarras",'=',$codigo)->first(['id', 'codigoBarras', 'nombre', 'idDepartamento']);
             //return $producto;
         if(isset($producto))
         {
