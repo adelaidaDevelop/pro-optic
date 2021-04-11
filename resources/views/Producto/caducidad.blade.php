@@ -207,10 +207,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             let confirmacion = confirm('CONFIRME LA ACCION');
             if (confirmacion) {
 
-                const url = `{{url('/')}}/puntoVenta/productosCaducidad/${id}`;
+                const url = `{{url('/')}}/puntoVenta/productosCaducidad/editar/${id}`;
                 let respuesta = await $.ajax({
                     url: url,
-                    type: 'PUT',
+                    type: 'POST',
                     data: {
                         'oferta': true,
                         'cantidad': cantidad,
@@ -307,10 +307,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 
         //console.log(productoActualizar.oferta);
         if (productoActualizar.oferta) {
-            const url2 = `{{url('/')}}/puntoVenta/oferta/${idSP}`;
+            const url2 = `{{url('/')}}/puntoVenta/oferta/editar/${idSP}`;
             let respuesta2 = await $.ajax({
                 url: url2,
-                type: 'PUT',
+                type: 'POST',
                 data: {
                     'restar': cantidad,
                     '_token': "{{ csrf_token() }}"
@@ -323,10 +323,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             });
             console.log(respuesta2);
         } else {
-            const url = `{{url('/')}}/puntoVenta/sucursalProducto/${idSP}`;
+            const url = `{{url('/')}}/puntoVenta/sucursalProducto/editar/${idSP}`;
             let respuesta = await $.ajax({
                 url: url,
-                type: 'PUT',
+                type: 'POST',
                 data: {
                     'restar': cantidad,
                     '_token': "{{ csrf_token() }}"

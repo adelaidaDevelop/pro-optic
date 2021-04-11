@@ -610,10 +610,10 @@ $verS = $sE->hasAnyRole($vS);
 
     async function cambiarStatusEmpleado(status, idSucursalEmpleado) {
         try {
-            const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/" + idSucursalEmpleado;
+            const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/editar/" + idSucursalEmpleado;
             let respuesta = await $.ajax({
                 url: url,
-                type: 'PUT',
+                type: 'POST',
                 data: {
                     'status': status,
                     '_token': "{{ csrf_token() }}",
@@ -945,10 +945,10 @@ $verS = $sE->hasAnyRole($vS);
                 }
             }
             console.log(permisos);
-            const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/permisos";
+            const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/editar/permisos";
             let respuesta = await $.ajax({
                 url: url,
-                type: 'PUT',
+                type: 'POST',
                 data: {
                     'idSE': id,
                     'permisos': JSON.stringify(permisos),

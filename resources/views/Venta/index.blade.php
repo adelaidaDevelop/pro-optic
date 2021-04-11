@@ -219,7 +219,7 @@
                 <div class="row">
                 
                     <h6 class="mx-2 my-0 text-secondary"> <small>INGRESE EL NOMBRE DEL PRODUCTO A BUSCAR</small> </h6>
-                    <input type="text" class="form-control text-uppercase mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarProducto()">
+                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarProducto()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
                     <table class="table table-hover table-bordered" id="productos">
@@ -324,8 +324,6 @@
                         </thead>
                         <tbody id="consultaBusquedaOferta">
                             <tr class="text-center">
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -491,7 +489,7 @@
 </div>
 </div>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
-<script src="{{ asset('js\app.js') }}"></script>
+<!--script src="{{ asset('js\mayusculas.js') }}"></script-->
 <script>
     let productosVenta = [];
     //let subproductosVenta = [];
@@ -661,13 +659,26 @@
             template: // the template of the input
                 '<div class="input-group ${groupClass}">' +
                 '<div class="input-group-prepend"><button style="min-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
-                '<input type="text" inputmode="decimal" style="text-align: ${textAlign};width:20px;" class="form-control form-control-text-input"/>' +
+                '<input type="text" name="number" inputmode="decimal" style="text-align: ${textAlign};width:20px;" class="form-control form-control-text-input"/>' +
                 '<div class="input-group-append"><button style="min-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
                 '</div>'
         }
         for (let i in productosVenta) {
             $("input[id='valor" + productosVenta[i].id + "']").inputSpinner(props);
+            
         }
+        $("input[name='number']").bind('keypress', function(tecla) {
+                //if (this.value.length >= 10) return false;
+                let code = tecla.charCode;
+                if (code == 8) { // backspace.
+                    return true;
+                } else if (code >= 48 && code <= 57) { // is a number.
+                    return true;
+                } else { // other keys.
+                    return false;
+                }
+            });
+        
         console.log(productosVenta);
         calcularTotal();
         //min="1" max="` + productosVenta[count].existencia+`"
@@ -1260,7 +1271,7 @@
 
     
 </script>
-
+<!--script src="{{ asset('js\mayusculas.js') }}"></script-->
 <script >
     //let valor = $("input[type='number']").inputSpinner();
     //console.log(valor);

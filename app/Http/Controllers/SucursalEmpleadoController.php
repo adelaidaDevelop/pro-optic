@@ -135,4 +135,35 @@ class SucursalEmpleadoController extends Controller
     {
         return Sucursal_empleado::findOrFail($id)->roles()->get();//->where('sucursal_empleado_id',$id)->get();
     }
+    public function editarEmpleado(Request $request,$id)//Request $request, Sucursal_empleado $sucursal_empleado)
+    {
+        $usuarios = ['modificarEmpleado','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
+        if($request->has('status'))
+        {
+            Sucursal_empleado::findOrFail($id)->update(['status' => $request->input('status')]);
+            //where('id','=',$id)->update(['status' => $request->input('status')]);
+            //return redirect('puntoVenta/empleado/'.$id.'/edit');
+            return true;
+        }
+        if($id == 'permisos')
+        {
+            $datos = $request->input('permisos');
+            $id = $request->input('idSE');
+            $permisos = json_decode($datos, true);
+            //$rsE = Role_sucursal_empleado::where('sucursal_empleado_id','=',$id);//->get();
+            //$rsE->delete();
+            $sE = Sucursal_empleado::findOrFail($id)->roles();
+            $sE->detach();
+            foreach($permisos as $idP)
+            {
+                $rol = Role::findOrFail($idP);
+                $sE->attach($rol);
+            }
+            return 'Listo';//'Ya recibi el mensaje';
+        }
+        return $request;
+    }
+
 }

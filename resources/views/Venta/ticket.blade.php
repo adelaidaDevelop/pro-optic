@@ -19,7 +19,7 @@ foreach($productos as $p)
     $subtotal = $p->precio * $p->cantidad;
     $total = $total + $subtotal;
 }
-$cambio = $total - $pago;
+$cambio = $pago - $total;
 @endphp
     
 <div class="ticket">

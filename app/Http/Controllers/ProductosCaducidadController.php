@@ -164,4 +164,15 @@ class ProductosCaducidadController extends Controller
     {
         return view('Producto.caducidad');
     }
+    public function editarCaducidad(Request $request,$id)
+    {
+        $usuarios = ['modificarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
+        if($request['oferta'] == true)
+        {
+            return Productos_caducidad::findOrFail($id)->update(['oferta' => true,'cantidad' =>$request['cantidad']]);
+        }
+        return;
+    }
 }

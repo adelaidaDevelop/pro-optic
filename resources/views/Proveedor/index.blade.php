@@ -247,10 +247,10 @@
 
     async function altaProveedor(id) {
         try {
-            const url = "{{url('/')}}/puntoVenta/proveedor/" + id;
+            const url = "{{url('/')}}/puntoVenta/proveedor/editar/" + id;
             let respuesta = await $.ajax({
                 url: url,
-                type: 'PUT',
+                type: 'POST',
                 data: {
                     'status': 'alta',
                     '_token': "{{ csrf_token() }}",
@@ -287,17 +287,6 @@
         }
     }
     //VALIDAR TELEFONO
-    $("input[name='telefono']").bind('keypress', function(tecla) {
-        if (this.value.length >= 10) return false;
-        let code = tecla.charCode;
-        if (code == 8) { // backspace.
-            return true;
-        } else if (code >= 48 && code <= 57) { // is a number.
-            return true;
-        } else { // other keys.
-            return false;
-        }
-    });
     $("input[name='telefono']").bind('keypress', function(tecla) {
         if (this.value.length >= 10) return false;
         let code = tecla.charCode;
