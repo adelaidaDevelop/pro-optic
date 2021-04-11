@@ -47,8 +47,8 @@ class DevolucionController extends Controller
                 }
             }
         }
-
         return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions', 'sucursalEmpleado',  'productX_Sucursal', 'ventasFiltro'));
+    
     }
 
     /**

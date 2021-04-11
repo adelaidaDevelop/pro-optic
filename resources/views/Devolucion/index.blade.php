@@ -245,7 +245,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                                 //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
                                 if (venta.id == devolucions[count51].idVenta) {
 
-                                    if (devolucions[count51].idProducto == productos[count3].id) {
+                                    if (devolucions[count51].idProducto == product.id) {
                                         cantPD = cantPD + devolucions[count51].cantidad;
                                         console.log("Si entra en esta parte");
                                     }
@@ -522,31 +522,31 @@ $devolver = $sE->hasAnyRole($userDevolucion);
             fecha = new Date(ventas[count5].created_at);
             cont = cont + 1;
 
-            for (count7 in detalleVenta) {
-                console.log("detalla V: ", detalleVenta);
-                if (detalleVenta[count7].idVenta == ventas[count5].id) {
-                    let subtotal = detalleVenta[count7].cantidad * detalleVenta[count7].precioIndividual;
-                    total = total + subtotal;
-                }
+            // for (count7 in detalleVenta) {
+            // console.log("detalla V: ", detalleVenta);
+            //k if (detalleVenta[count7].idVenta == ventas[count5].id) {
+            let detalleV = detalleVenta.find(d => d.idVenta == ventas[count5].id);
+            if (detalleV != null) {
+                let subtotal = detalleV.cantidad * detalleV.precioIndividual;
+                total = total + subtotal;
             }
-            for (let s in sucursalEmpleado) {
-                if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
-                    for (count6 in empleados) {
-                        if (empleados[count6].id == sucursalEmpleado[s].idEmpleado) {
-                            if (empleados[count6].id == 1) {
-                                emple = empleados[count6].primerNombre;
-                            } else {
-                                emple = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
-                            }
-                            // emple = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
+            // }
+            //  for (let s in sucursalEmpleado) {
+            //  if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
+            let suc_emp = sucursalEmpleado.find(s => s.id == ventas[count5].idSucursalEmpleado);
+            if (suc_emp != null) {
+                for (count6 in empleados) {
+                    if (empleados[count6].id == suc_emp.idEmpleado) {
+                        if (empleados[count6].id == 1) {
+                            emple = empleados[count6].primerNombre;
+                        } else {
+                            emple = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
                         }
+                        // emple = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
                     }
                 }
             }
-
-
-
-
+            //}
             cuerpo = cuerpo + `
                     <tr >
                     <th scope="row">` + cont + `</th>
@@ -554,7 +554,6 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     <td>` + emple + `</td>
                     <td>` + ventas[count5].tipo + `</td>
                     <td>` + ventas[count5].pago + `</td>
-                   
                     <td>` + total + `</td> 
                     <td>` + fecha.toLocaleDateString() + `</td> 
                     <td>` + fecha.toLocaleTimeString() + `</td>   
@@ -605,7 +604,6 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     // if (detalleVenta[count7].idVenta == ventas[j].id) {
                     let detalleV = detalleVenta.find(d => d.idVenta == ventas[j].id);
                     if (detalleV != null) {
-
                         let subtotal = detalleV.cantidad * detalleV.precioIndividual;
                         total = total + subtotal;
 
@@ -623,12 +621,12 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                             }
                         }
                     }
-                
-                console.log(ventas[j].tipo);
-                console.log(emple);
-                cont = cont + 1;
-                fecha.setDate(fecha.getDate() + 1);
-                cuerpo = cuerpo + `
+
+                    console.log(ventas[j].tipo);
+                    console.log(emple);
+                    cont = cont + 1;
+                    fecha.setDate(fecha.getDate() + 1);
+                    cuerpo = cuerpo + `
                         <tr >
                         <th >` + cont + `</th>
                         <td>` + ventas[j].id + `</td>
@@ -640,17 +638,17 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                         <td>` + fecha.toLocaleTimeString() + `</td>   
                     </tr>
                     `;
-                // }
-            } else {
-                console.log("no entra");
+                    // }
+                } else {
+                    console.log("no entra");
+                }
             }
-        }
-        document.getElementById("tablaVenta").innerHTML = cuerpo;
+            document.getElementById("tablaVenta").innerHTML = cuerpo;
 
-    } else {
-        console.log("No verifico bien");
-        modalVenta();
-    }
+        } else {
+            console.log("No verifico bien");
+            modalVenta();
+        }
 
 
     };
