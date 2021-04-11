@@ -27,11 +27,12 @@ class CreditoController extends Controller
         $usuarios = ['verDeudor','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         $idSucursal = session('sucursal');
-        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
-        $sucursalEmpleados;
+        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)
+        ->get(['id','idSucursal','idEmpleado','status','created_at','updated_at']);
+
         $venta_clientes= Venta_cliente::all();
-        $cliente= Cliente::all();
-        $ventas= Venta::all();
+        $cliente= Cliente::all(['id', 'nombre','telefono','domicilio' ,'tipo','idUsuario','created_at','updated_at']);
+        $ventas= Venta::all(['id', 'tipo','pago','status' ,'idSucursalEmpleado','created_at','updated_at']);
         $detalleVentas= Detalle_venta::all();
         $productos = Producto::all();
         $pagos_ventas= Pago_venta::all();

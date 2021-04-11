@@ -368,57 +368,66 @@ CREDITOS
         let cuerpo = "";
         let cont = 0;
         for (count12 in venta_clientes) { //CREDITOS
-            for (let v in ventas) {
-                if (ventas[v].id == venta_clientes[count12].idVenta) { 
-                   // let idSucEmp = ventas[v].idSucursalEmpleado;
-                    for (let h in sucursalEmpleados) {
-                        console.log("entra aqui 25_03_21");
-                        if (sucursalEmpleados[h].id == ventas[v].idSucursalEmpleado) {
+            // for (let v in ventas) {
+            // if (ventas[v].id == venta_clientes[count12].idVenta) { 
+            let venta = ventas.find(v => v.id == venta_clientes[count12].idVenta);
+            if (venta != null) {
 
-                            if (venta_clientes[count12].estado === "incompleto") {
-                                
-                                let nombre = "";
-                                //   let folio = 0;
-                                let idVentClient = 0;
-                                let total = 0;
-                                let pago = 0;
-                                let fechaVenta = "";
-                                let debe = 0;
-                                for (count11 in clientes) {
-                                    if (venta_clientes[count12].idCliente == clientes[count11].id) {
-                                        if (clientes[count11].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                                            nombre = clientes[count11].nombre;
-                                            // idCliente = clientes[count11].id;
-                                            cont = cont + 1;
-                                            //  folio = venta_clientes[count12].idVenta;
-                                            folio = venta_clientes[count12].idVenta;
-                                            idVentClient = venta_clientes[count12].id;
-                                            for (count13 in detalleVentas) {
-                                                if (detalleVentas[count13].idVenta == folio) {
-                                                    let subtotal = detalleVentas[count13].cantidad * detalleVentas[count13].precioIndividual;
-                                                    total = total + subtotal;
-                                                }
-                                            }
-                                            for (count14 in ventas) {
-                                                if (ventas[count14].id == folio) {
-                                                    fechaVenta = new Date(ventas[count14].created_at);
-                                                    fechaVenta.getTime();
-                                                }
-                                            }
-                                            for (count13 in pagos_ventas) {
-                                                if (pagos_ventas[count13].idVentaCliente == idVentClient) {
-                                                    pago = pago + pagos_ventas[count13].monto;
-                                                }
-                                            }
-                                            //   descripcion2 = ventas[count2].id;
-                                            console.log("veri");
-                                            debe = total - pago;
-                                            console.log(total);
-                                            console.log(pago);
-                                            console.log(debe);
-                                            if (debe > 0) {
+                // let idSucEmp = ventas[v].idSucursalEmpleado;
+                // for (let h in sucursalEmpleados) {
+                //  console.log("entra aqui 25_03_21");
+                // if (sucursalEmpleados[h].id == ventas[v].idSucursalEmpleado) {
+                let suc_emp = sucursalEmpleados.find(s => s.id == venta.idSucursalEmpleado);
+                if (suc_emp != null) {
+                    if (venta_clientes[count12].estado === "incompleto") {
 
-                                                cuerpo = cuerpo + `
+                        let nombre = "";
+                        //   let folio = 0;
+                        let idVentClient = 0;
+                        let total = 0;
+                        let pago = 0;
+                        let fechaVenta = "";
+                        let debe = 0;
+                        //  for (count11 in clientes) {
+                        //  if (venta_clientes[count12].idCliente == clientes[count11].id) {
+                        let cliente = clientes.find(c => c.id == venta_clientes[count12].idCliente);
+                        if (cliente != null) {
+                            if (cliente.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                                nombre = cliente.nombre;
+                                // idCliente = clientes[count11].id;
+                                cont = cont + 1;
+                                //  folio = venta_clientes[count12].idVenta;
+                                folio = venta_clientes[count12].idVenta;
+                                idVentClient = venta_clientes[count12].id;
+                                for (count13 in detalleVentas) {
+                                    if (detalleVentas[count13].idVenta == folio) {
+                                        // let detalleV = detalleVentas.find(d => d.idVenta == folio);
+                                        // if (product != null) {
+                                        let subtotal = detalleVentas[count13].cantidad * detalleVentas[count13].precioIndividual;
+                                        total = total + subtotal;
+                                    }
+                                }
+                                //  for (count14 in ventas) {
+                                if (venta.id == folio) {
+                                    fechaVenta = new Date(venta.created_at);
+                                    fechaVenta.getTime();
+                                }
+                                //  }
+                                for (count13 in pagos_ventas) {
+                                    if (pagos_ventas[count13].idVentaCliente == idVentClient) {
+
+                                        pago = pago + pagos_ventas[count13].monto;
+                                    }
+                                }
+                                //   descripcion2 = ventas[count2].id;
+                                console.log("veri");
+                                debe = total - pago;
+                                console.log(total);
+                                console.log(pago);
+                                console.log(debe);
+                                if (debe > 0) {
+
+                                    cuerpo = cuerpo + `
                                         <tr onclick="" data-dismiss="modal">
                                         <th scope="row">` + cont + `</th>
                                             <td>` + nombre + `</td>    
@@ -427,31 +436,31 @@ CREDITOS
                                             <td id="d">` + debe + `</td>
                                             <td>` + folio + `</td>
                                             <td>` +
-                                                    `<button class="btn btn-light" onclick="modalVerMas(` + folio + `)" data-toggle="modal" data-target="#detalleCompraModal"
+                                        `<button class="btn btn-light" onclick="modalVerMas(` + folio + `)" data-toggle="modal" data-target="#detalleCompraModal"
                                                 type="button">VER MAS</button>
                                             </td>
                                             <td>` +
-                                                    `<button class="btn btn-light" onclick="modalAbonar(` + idVentClient + `,` + folio + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
+                                        `<button class="btn btn-light" onclick="modalAbonar(` + idVentClient + `,` + folio + `)" data-toggle="modal" data-target="#confirmarVentaModal" 
                                                 type="button">ABONAR</button>
                                             </td>
 
                                         </tr>
                                         `;
 
-                                            }
-
-                                        }
-
-                                    }
-
                                 }
 
                             }
+
+                            // }
+
                         }
+
                     }
                 }
-
+                //  }
             }
+
+            //}
         }
         if (cuerpo == "") {
             // tabla2 = document.querySelector('#tablaR');
@@ -461,9 +470,6 @@ CREDITOS
             document.getElementById("tablaR").innerHTML = tabla2;
             document.getElementById("consultaBusqueda").innerHTML = cuerpo;
         }
-
-
-
     };
 
 
