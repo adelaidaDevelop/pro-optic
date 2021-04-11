@@ -184,6 +184,17 @@ class CompraController extends Controller
     {
         //
     }
+
+    public function estadoCompra(Request $request, $id)
+    {
+        
+        $usuarios = ['modificarCompra','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
+        Compra::where('id','=',$id)->update(['estado' => 'pagado']);
+        //$estado = $request->input('estado');
+        return $id;
+    }
 /*
     public function buscadorProducto(Request $request)
     {

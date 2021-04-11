@@ -51,12 +51,14 @@
                 <!--div class="col-9 m-0 px-0"-->
                 <div class="form-group row col my-1 mx-0 px-0">
                     <!--div class="col"-->
-                    <label for="nombre" class=" font-weight-bold my-auto pt-1" style="color:#3366FF">
+                    <label for="codigoBarras" class=" font-weight-bold my-auto pt-1" style="color:#3366FF">
                         <h4>CODIGO DEL PRODUCTO</h4>
                     </label>
                     <!--/div-->
                     <div class="col-5">
-                        <input type="text" class="form-control  mx-auto @error('codigoBarras') is-invalid @enderror" name="codigoBarras" id="codigoBarras" value="{{ old('codigoBarras') }}" placeholder="Ingresar codigo de barras" required autocomplete="codigoBarras" autofocus>
+                        <input type="text" class="form-control  mx-auto @error('codigoBarras') is-invalid @enderror" name="codigoBarras" 
+                        id="codigoBarras" value="{{ old('codigoBarras') }}" placeholder="Ingresar codigo de barras" 
+                        required autocomplete="codigoBarras" autofocus onclick="agregarPorCodigo()">
                         @error('codigoBarras')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -157,7 +159,7 @@
                             <th scope="col">#</th>
                             <th scope="col">CODIGO_BARRAS</th>
                             <th scope="col">PRODUCTO</th>
-                            <th scope="col">OBSERVACION</th>
+                            <th scope="col">TIPO</th>
                             <th scope="col">EXISTENCIA</th>
                             <th scope="col">PRECIO</th>
                             <th scope="col">CANTIDAD</th>
@@ -617,7 +619,7 @@
         let contador = 1;
 
         for (let count1 in productosVenta) {
-            let tipo = `SIN OBSERVACION`;
+            let tipo = `NORMAL`;
             if (productosVenta[count1].tipo == 1)
                 tipo = `SUBPRODUCTO`;
             if (productosVenta[count1].tipo == 2)

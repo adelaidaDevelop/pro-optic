@@ -162,6 +162,8 @@ Route::prefix('/puntoVenta')->group(function()
         //Route::get('/login', [LoginController::class,'login'])->name('Login');
         //->middleware('isEmpleado');
         Route::resource('venta', VentaController::class);
+        Route::post('/compra/editar/{id}', [CompraController::class,'estadoCompra']);
+
         Route::resource('compra', CompraController::class);
         Route::get('/proveedor/buscador', [ProveedorController::class,'buscador']);
         Route::resource('proveedor', ProveedorController::class);

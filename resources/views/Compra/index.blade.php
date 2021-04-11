@@ -793,8 +793,9 @@ $abonar = $sE->hasAnyRole($modificar);
             const datos = new FormData();
             datos.append('id', id);
             datos.append('pago', pago);
+            datos.append('_token', "{{ csrf_token() }}");
 
-            var init = {
+            /*var init = {
                 // el método de envío de la información será POST
                 method: "POST",
                 headers: {
@@ -804,19 +805,80 @@ $abonar = $sE->hasAnyRole($modificar);
                 // el cuerpo de la petición es una cadena de texto 
                 // con los datos en formato JSON
                 body: datos
-            };
+            };*/
             let btnAux = document.getElementById("etiquetaAbonar").innerHTML;
             document.getElementById("etiquetaAbonar").innerHTML = `
-        <button class="btn border border-dark" type="button" disabled>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Loading...
-        </button>`;
-            let respuesta = await fetch('/puntoVenta/pagoCompra/', init);
+            <button class="btn border border-dark" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading...
+            </button>`;
+            let resp = await $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `{{url('/puntoVenta/pagoCompra/')}}`,//'/puntoVenta/sucursalProducto/editar/productos',
+                // los datos que voy a enviar para la relación
+                data: {'id':id,
+                    'pago':pago,
+                    '_token':"{{ csrf_token() }}"}
+                    //datos,//{
+                //    datos: JSON.stringify(productos1),
+                    //_token: $("meta[name='csrf-token']").attr("content")
+                //    _token: "{{ csrf_token() }}",
+                //}
+            });
+            console.log('respuesta:', resp);
+            document.getElementById("etiquetaAbonar").innerHTML = btnAux;
+            if (pago == adeudo) {
+                //const datosCompra = new FormData();
+                //datosCompra.append('estado', 'pagado');
+                //datosCompra.append('_token',"{{ csrf_token() }}");
+                /*var initUpdate = {
+                    // el método de envío de la información será POST
+                    method: 'PATCH',
+                    //mode: 'no-cors',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        'Content-Type': 'multipart/form-data'
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    // el cuerpo de la petición es una cadena de texto 
+                    // con los datos en formato JSON
+                    body: datosCompra
+                };*/
+                //console.log(init);
+                //console.log(init);
+                let resp2 = await $.ajax({
+                    // metodo: puede ser POST, GET, etc
+                    method: "POST",
+                    // la URL de donde voy a hacer la petición
+                    url: `{{url('/puntoVenta/compra/editar/${id}')}}`,//'/puntoVenta/sucursalProducto/editar/productos',
+                    // los datos que voy a enviar para la relación
+                    data: {'_token':"{{ csrf_token() }}"}//datosCompra,//{
+                    //    datos: JSON.stringify(productos1),
+                    //_token: $("meta[name='csrf-token']").attr("content")
+                    //    _token: "{{ csrf_token() }}",
+                    //}
+                });
+                console.log(resp2);
+                //let respuestaCompra = await fetch(`/puntoVenta/compra/${id}`, initUpdate);
+                //if (respuestaCompra.ok) {
+                    //let rC = await respuestaCompra.json();
+                    //console.log(rC);
+                    alert('TU DEUDA ESTA SALDADA');
+                    compras = [];
+                    await cargarComprasPagina();
+                    console.log(compras);
+                //}
+            }
+
+            $('#detalleCompraModal').modal('hide');
+            /*let respuesta = await fetch('/puntoVenta/pagoCompra/', init);
             let cuerpo = "";
             if (respuesta.ok) {
                 console.log('Si me respondió :3');
-                let r = await respuesta.json();
-                console.log(r);
+                //let r = await respuesta.json();
+                //console.log(r);
                 document.getElementById("etiquetaAbonar").innerHTML = btnAux;
                 if (pago == adeudo) {
                     const datosCompra = new FormData();
@@ -856,7 +918,7 @@ $abonar = $sE->hasAnyRole($modificar);
                 console.log("No responde :'v");
                 console.log(respuesta);
                 throw new Error(respuesta.statusText);
-            }
+            }*/
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
