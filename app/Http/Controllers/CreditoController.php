@@ -28,7 +28,6 @@ class CreditoController extends Controller
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         $idSucursal = session('sucursal');
         $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
-        $sucursalEmpleados;
         $venta_clientes= Venta_cliente::all();
         $cliente= Cliente::all();
         $ventas= Venta::all();
