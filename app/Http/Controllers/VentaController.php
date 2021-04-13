@@ -169,13 +169,11 @@ class VentaController extends Controller
         else
             $cajero = $e->primerNombre ." " . $e->segundoNombre." " . $e->apellidoPaterno." " . $e->apellidoMaterno;
         //return $nombre;
-
         $detalleVenta = Detalle_venta::where('idVenta','=',$folio)->get(['cantidad','precioIndividual']);
         $pago = $venta->pago;
         /*$total = 0;
         foreach($detalleVenta as $dV)
         {
-
             $total = $total + $dV->
         }*/
         return view('Venta.ticket', compact('cajero','folio','pago'));

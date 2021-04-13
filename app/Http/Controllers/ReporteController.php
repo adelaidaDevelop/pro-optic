@@ -14,6 +14,7 @@ use App\Models\Departamento;
 use App\Models\Detalle_compra;
 use App\Models\Detalle_venta;
 use App\Models\Proveedor;
+use App\Models\Sucursal;
 use App\Models\Sucursal_empleado;
 use App\Models\Sucursal_producto;
 use Illuminate\Http\Request;
@@ -44,11 +45,22 @@ class ReporteController extends Controller
         $pagoCompras= Pago_compra::all();
         $compras = Compra::all();
         $empleados = Empleado::all();
-        //Seleccionar empleados que son cajeros
+        $productos = Producto::all();
+        $detalleV = Detalle_venta::all();
         $idSucursal = session('sucursal');
+        $suc_prod = Sucursal_producto::where('idSucursal', '=', $idSucursal)
+        ->get(['id','costo','precio','existencia','minimoStock','idProducto','status']);
+        //Seleccionar empleados que son cajeros
+        
+        $suc_act = Sucursal::findOrFail($idSucursal)->get(['direccion','telefono','status']);
         $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
         //return $sucursalEmpleados;
-        return view('Reportes.corteCaja', compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados'));
+        return view('Reportes.corteCaja', compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados','suc_act','detalleV', 'productos', 'suc_prod'));
+    }
+    public function corte_cajaView(){
+        $idSucursal = session('sucursal');
+        $suc_act = Sucursal::findOrFail($idSucursal)->first(['direccion','telefono','status']);
+        return view('Reportes.formato_corteCaja', compact('suc_act'));
     }
 
     public function index2()

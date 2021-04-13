@@ -234,7 +234,7 @@ REPORTES
                 return true;
             }
             return false;
-        } else if (opcFecha === 'mes') {
+        }/* else if (opcFecha === 'mes') {
             fechaDia = document.querySelector('#fechaXmeses');
             if (fechaDia.value > 0) {
                 return true;
@@ -246,7 +246,7 @@ REPORTES
                 return true;
             }
             return false;
-        } else if (opcFecha === 'periodo') {
+        } */else if (opcFecha === 'periodo') {
             let fechaIni = document.getElementById('fechaPInicio');
             fechaDia = document.getElementById('fechaPFinal');
             if (fechaDia.value.length > 0 && fechaIni.value.length > 0) {
@@ -278,11 +278,11 @@ REPORTES
             $("#fechaXanio").val('0')
             document.getElementById("tablaR").innerHTML = tabla2;
             document.getElementById("consultaBusqueda").innerHTML = "";
-            mes.disabled = true;
-            anio.disabled = true;
+            //mes.disabled = true;
+           // anio.disabled = true;
             periodoIni.disabled = true;
             periodoFin.disabled = true;
-        } else if (opcFecha === 'mes') {
+        }/* else if (opcFecha === 'mes') {
             dia.disabled = true;
             mes.disabled = false;
             $("#fechaXDia").val('')
@@ -302,10 +302,10 @@ REPORTES
             document.getElementById("consultaBusqueda").innerHTML = "";
             periodoIni.disabled = true;
             periodoFin.disabled = true;
-        } else if (opcFecha === 'periodo') {
+        }*/ else if (opcFecha === 'periodo') {
             dia.disabled = true;
-            mes.disabled = true;
-            anio.disabled = true;
+            //mes.disabled = true;
+           // anio.disabled = true;
             periodoIni.disabled = false;
             periodoFin.disabled = false;
         }

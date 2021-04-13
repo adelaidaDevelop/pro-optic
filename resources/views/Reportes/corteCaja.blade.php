@@ -60,7 +60,7 @@ CORTE DE CAJA
             <div id="sinRegistros" class="col">
             </div>
         </div>
-        <div class="row w-100 mx-4 ">
+        <div id="imp_div" class="row w-100 mx-4 ">
             <div class="col-1 "></div>
             <div>
                 <h6 class="text-primary">+ENTRADAS</h6>
@@ -100,16 +100,18 @@ CORTE DE CAJA
                     <h5 class="ml-2">$</h5><input type="number" id="total" style="height:23px" disabled />
                 </div>
 
-                <button id="btnCrearPdf"  class="btn btn-secondary ml-4 mb-5 mx-auto mt-5">IMPRIMIR CORTE
+                <button id="btnCrearPdf" class="btn btn-secondary ml-4 mb-5 mx-auto mt-5">IMPRIMIR CORTE
                 </button>
+                <br />
+                <button id="getUser">Print Details</button>
 
 
-                <!--
+                
             <div class="row form-group input-group">
                 <h6 class="mt-3 text-primary">GANANCIA DEL DIA:</h6>
-                <input type="number" id="fechaFinal" class="ml-2 mt-3 my-0" style="height:23px" />
+                <input type="number" id="gananciaId" class="ml-2 mt-3 my-0" style="height:23px" />
             </div>
-            -->
+            
             </div>
 
         </div>
@@ -233,6 +235,10 @@ CORTE DE CAJA
     const pagoCompras = @json($pagoCompras);
     const compras = @json($compras);
     let sucursalEmpleado = @json($sucursalEmpleados);
+    let detalleV = @json($detalleV);
+    let productos = @json($productos);
+    let suc_prod = @json($suc_prod);
+    let cant_ventas =0;
 
     function validarCamposFechas() {
         // let selectFecha = document.querySelector('input[name="fechaCorte"]:checked');
@@ -263,6 +269,8 @@ CORTE DE CAJA
         let salidas = 0;
         let total = 0;
         let idCajeroOK = 0;
+        let cantVentas =0;
+        let ganancia = 0;
         if (validarCamposFechas()) {
             //VERIFIAR CAJERO
             let fechaC = document.querySelector('#fechaCorte');
@@ -280,11 +288,24 @@ CORTE DE CAJA
                             for (let h in sucursalEmpleado) {
                                 if (sucursalEmpleado[h].id == idSucEmp) {
                                     if (sucursalEmpleado[h].idEmpleado == idCajeroOK) {
-                                        {
-                                            totalVentas = totalVentas + ventas[j].pago;
+                                        cantVentas = cantVentas +1;
+                                        totalVentas = totalVentas + ventas[j].pago;
+                                        for (let d in detalleV) {
+                                            if (detalleV[d].idVenta == ventas[j].id) {
+                                                let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
+                                                if (suc_product != null) {
+                                                  //  cantProd = cantProd + detalleV[d].cantidad;
+                                                    totCosto =  detalleV[d].cantidad * suc_product.costo;
+                                                    totPrecio = detalleV[d].cantidad * suc_product.precio;
+                                                    let gananciaTemp = totPrecio - totCosto;
+                                                    ganancia = ganancia + gananciaTemp;
+
+                                                }
+                                            }
                                         }
 
                                     }
+
                                 }
                             }
 
@@ -334,10 +355,28 @@ CORTE DE CAJA
                             if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
                                 let fechaVC = new Date(ventas[j].created_at);
                                 if (comparacionFecha(fechaCorte, fechaVC)) {
+                                    cantVentas = cantVentas +1;
 
                                     totalVentas = totalVentas + ventas[j].pago;
+                                    for (let d in detalleV) {
+                                            if (detalleV[d].idVenta == ventas[j].id) {
+                                                let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
+                                                if (suc_product != null) {
+                                                  //  cantProd = cantProd + detalleV[d].cantidad;
+                                                  console.log(suc_product.costo);
+                                                  console.log(suc_product.precio);
+                                                    totCosto =  detalleV[d].cantidad * suc_product.costo;
+                                                    totPrecio = detalleV[d].cantidad * suc_product.precio;
+                                                    let gananciaTemp = totPrecio - totCosto;
+                                                    console.log("ganancia: " + gananciaTemp);
+                                                    ganancia = ganancia + gananciaTemp;
+                                                    console.log("ganancia: " + ganancia);
 
+                                                }
+                                            }
+                                        }
                                 }
+
                             }
                             //ABONO COMPLETADOS
                             for (let z in pagos) {
@@ -375,12 +414,16 @@ CORTE DE CAJA
             $("input[id='devolucionT']").val(Number(totalDev.toFixed(2)));
             $("input[id='subtotalS']").val(Number(salidas.toFixed(2)));
             $("input[id='total']").val(Number(total.toFixed(2)));
+            $("input[id='gananciaId']").val(Number(ganancia.toFixed(2)));
+            cant_ventas = cantVentas;
             console.log(totalVentas);
+
             if (totalVentas == 0 && abonos == 0 && entradas == 0 && totalDev == 0 && salidas == 0) {
                 let sin = `<h5 class= "text-dark text-center mx-auto"> NO SE ENCONTRARON REGISTROS </h5>`;
                 document.getElementById("sinRegistros").innerHTML = sin;
 
             }
+
             //document.getElementById("totalVentas").innerHTML = cuerpo;
         } else {
             return alert("ELEGIR UNA FECHA");
@@ -471,6 +514,7 @@ CORTE DE CAJA
 
 
     document.addEventListener("DOMContentLoaded", () => {
+
         // Escuchamos el click del botón
         const $boton = document.querySelector("#btnCrearPdf");
         $boton.addEventListener("click", () => {
@@ -498,6 +542,89 @@ CORTE DE CAJA
                 .catch(err => console.log(err));
         });
     });
+
+    function formatoCorteCaja(totalV, abonoD, subtotalE, totalD, subtotalS, total) {
+        var formato =
+            //<div id="formatoImp" class= "text-center w-100">
+            `
+      <div class="col-4"></div>
+      <div class="col-4 text-left">
+    <h5> FARMACIAS GI ZIMATLAN</h5>
+    <br/>
+    {{session('sucursalNombre')}}
+    <h5> </h5>
+    <h5> CORTE DEL DIA</h5>
+    DEL <h5 id="fecha"> </h5>
+    <<< CANT. VENTAS DEL DIA >>> 
+    <h4 id="cant"></h4> <h4> VENTAS EN EL DIA</h4>
+    <<< ENTRADAS DEL DIA >>>
+    <h4>
+    TOTAL VENTAS: 
+    <br/>
+    ABONO DEUDORES
+    <br/>
+    SUBTOTAL ENTRADAS
+    </h4>
+    <<< SALIDAS DEL DIA >>>
+    <h4>
+    TOTAL DEVOLUCIONES
+    <br/>
+    SUBTOTAL SALIDAS
+    </h4>
+    <<< TOTAL >>>
+    <h4>
+    TOTAL
+    </h4>
+    </div>
+      <div class="col-4"></div>
+        `;
+        var printContent = document.createElement("div"); //document.getElementById('formatoImp');
+        printContent.innerHTML = formato;
+        printContent.class = "text-center w-100 mx-auto";
+        printContent.id = "formatoImp";
+        //  printContent
+        //  printContent.outerHTML = formato;
+        //var printContent =  formato;
+        //  return formato
+        return printContent;
+    };
+
+    // imprimir automa
+    $(document).ready(function() {
+        $('#getUser').on('click', function() {
+            let totalVentas = $('#totalVentas').val();
+            let abonoD = $('#abonoD').val();
+            let subtotalE = $('#subtotalE').val();
+            let devolucionT = $('#devolucionT').val();
+            let subtotalS = $('#subtotalS').val();
+            let total = $('#total').val();
+            let gananciaT = $('#gananciaId').val();
+            
+          //  let cantVenta = 5;
+            // let fecha = $('#fechaCorte').val();
+            let fecha = document.querySelector('#fechaCorte');
+            let fecha2 = new Date(fecha.value);
+            fecha2.setDate(fecha2.getDate() + 1);
+            fechaF = fecha2.getDate() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getFullYear();
+
+            //  impFinal(formatoCorteCaja(totalVentas, abonoD, subtotalE, devolucionT, subtotalS, total));
+
+            let url = `{{url('/puntoVenta/corte_cajaView')}}?totalVentas=${totalVentas}&abonoD=${abonoD}&subtotalE=${subtotalE}&devolucionT=${devolucionT}&subtotalS=${subtotalS}&total=${total}&cantVenta=${cant_ventas}&fecha=${fechaF}&ganancia=${gananciaT}`;
+            window.open(url, "_blank");
+        });
+
+
+    });
+
+    function impFinal(printContent) {
+        var WinPrint = window.open('', '', 'width=900,height=650 ');
+        WinPrint.document.write(printContent.outerHTML);
+
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+    }
 </script>
 
 @endsection
