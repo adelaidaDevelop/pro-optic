@@ -39,7 +39,7 @@ use App\Http\Controllers\ProductoController;
     return view('welcome');
 });*/
 Auth::routes(['verify' => true]);
-Route::get('/loginCliente', [LoginClienteController::class,'login'])->name('Login')->middleware('isCliente');
+Route::get('/loginCliente', [LoginClienteController::class,'loginCliente'])->name('Login');//->middleware('isCliente');
 Route::post('/loginCliente', [LoginClienteController::class,'loginPost'])->name('Login');
 Route::post('/logoutCliente', [LoginClienteController::class,'logout'])->name('Login');
 
@@ -47,5 +47,8 @@ Route::resource('/', EcommerceController::class)->middleware('isCliente');
 Route::get('/productosNuevos', [EcommerceController::class,'productosNuevos'])->middleware('isCliente');
 Route::get('/productosDestacados', [EcommerceController::class,'productosDestacados'])->middleware('isCliente');
 
+Route::get('/registerCliente', [LoginClienteController::class,'register']);//->middleware('isCliente');
+Route::post('/registerPost', [LoginClienteController::class,'registerPost'])->middleware('isCliente');
+        
 //Auth::routes();
 

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\User;
+use App\Models\Cliente;
+use Illuminate\Support\Arr;
 use Validator, Hash, Auth;
 //use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -17,7 +20,7 @@ class LoginClienteController extends Controller
         //$this->middleware('guest')->except('logout');
     }
 
-    public function login()
+    public function loginCliente()
     {
         //$this->middleware('isCliente');
         if(!Auth::check())
@@ -80,4 +83,40 @@ class LoginClienteController extends Controller
         return redirect('/loginCliente');
         //return 'Tambien entra a esta funcion';
     }
+    public function register()
+    {
+        if(!Auth::check())
+            return view('auth.registerCliente');
+        return redirect('/');
+        
+    }
+    public function registerPost(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
+        $usuario = User::create([
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'tipo' => 2,
+        ]);
+        $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$usuario->id);
+        $datosEmpleado = Arr::add($datosEmpleado,'tipo',2);
+        //$empleado = new Empleado;
+        $cliente = Cliente::create($datosEmpleado);
+        return $datosEmpleado;//view('auth.registerCliente');
+    }
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'nombre' => ['required', 'string', 'max:50'],
+            'domicilio' => ['required', 'string', 'max:50'],
+            'telefono' => ['required', 'string', 'max:10'],
+            'username' => ['required', 'string', 'max:255','unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);    
+    }
+
+
 }

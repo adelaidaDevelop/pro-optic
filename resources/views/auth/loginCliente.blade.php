@@ -3,8 +3,8 @@
 <div class="row mx-auto my-3 p-1">
     <h4 class="text-primary mx-auto"><strong> INICIO DE SESION</strong></h4>
 </div>
-<div class="row col-6 mx-auto p-3 border">
-    <form method="POST" class="mx-auto" action="{{ url('loginCliente') }}">
+<div class="row col-7 mx-auto p-3 border">
+    <form method="POST" class="col-10 mx-auto" action="{{ url('loginCliente') }}">
         @csrf
         <div class="form-group">
             <label for="email"><strong>Correo Electronico</strong></label>
@@ -46,8 +46,9 @@
         </div>
         <button type="submit" class="btn btn-block btn-success my-2">INICIAR SESION</button>
     </form>
-    <div class="row w-100">
-        <a href="#" class=" mx-auto text-center">¿Olvidaste tu contraseña?</a>
+    <div class="row col-10 mx-auto">
+        <a href="" class="mr-auto">¿Olvidaste tu contraseña?</a>
+        <a href="{{url('registerCliente')}}" class="ml-auto">Registrarse</a>
     </div>
 </div>
 

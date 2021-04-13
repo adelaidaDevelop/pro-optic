@@ -35,7 +35,7 @@
                 <img src="{{ asset('img\usuario.png') }}" class="p-1" alt="LOGO" height="40px">
             </a>
             <li class="nav-item">
-                <a class="nav-link text-white" href="{{ url('loginCliente') }}">{{ __('Login') }}</a>
+                <a class="nav-link text-white" href="{{ url('/loginCliente') }}">{{ __('Login') }}</a>
             </li>
             <!--@ if (Route:d:has('register'))
             <li class="nav-item">
