@@ -43,6 +43,9 @@ Route::prefix('/puntoVenta')->group(function()
     Route::post('/venta/productos', [VentaController::class,'productos']);
     
     Route::get('emple', [EmpleadoController::class,'index2']);
+    //cargar vista imp corte caja
+    Route::get('/corte_cajaView', [ReporteController::class,'corte_cajaView']);
+    
     
     Route::resource('credito', CreditoController::class);
     Route::get('/datosNuevos', [CreditoController::class,'datosNuevos']);
