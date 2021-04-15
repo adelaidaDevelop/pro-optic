@@ -54,12 +54,11 @@ Route::prefix('/puntoVenta')->group(function()
     Route::resource('devolucion', DevolucionController::class);
     
     Route::get('/empleado/buscadorEmpleado', [EmpleadoController::class,'buscadorEmpleado']);
+    Route::get('/empleado/editar/{id}', [EmpleadoController::class,'editarEmpleado']);
 
     Route::get('/producto/buscarProducto', [ProductoController::class,'buscarProducto']);
 
     Route::get('/producto/buscador', [ProductoController::class,'buscador']);
-    Route::post('/producto/editar/{id}', [ProductoController::class,'update']);
-    Route::post('/sucursalProducto/editar/{id}', [SucursalProductoController::class,'update']);
 
     Route::get('/departamento/buscador', [DepartamentoController::class,'buscador']);
     Route::get('/cliente/buscador', [ClienteController::class,'buscador']);
@@ -68,6 +67,7 @@ Route::prefix('/puntoVenta')->group(function()
 
    // Route::resource('sucursal', SucursalController::class);
     Route::get('/permisosEmpleado/{id}', [SucursalEmpleadoController::class,'permisosEmpleado']);
+    Route::post('/sucursalEmpleado/editar/{id}', [SucursalEmpleadoController::class,'editarEmpleado']);
     Route::resource('sucursalEmpleado', SucursalEmpleadoController::class);
 
     Route::get('/login', [LoginController::class,'login'])->name('Login');//->middleware('isEmpleado');
@@ -155,7 +155,10 @@ Route::prefix('/puntoVenta')->group(function()
     Route::resource('sucursal', SucursalController::class);
     Route::middleware('isEmpleado')->group(function () {
        // Route::middleware('verified')->group(function () {
-        
+        Route::post('/oferta/editar/{id}', [OfertaController::class,'update']);
+        Route::post('/sucursalProducto/editar/{id}', [ProductosCaducidadController::class,'update']);
+        Route::post('/producto/editar/{id}', [ProductoController::class,'update']);
+
         Route::get('empleado/validarClave/{clave}', [EmpleadoController::class,'validarClave']);
         Route::get('empleado/claveEmpleado/{clave}', [EmpleadoController::class,'validarEmpleado']);
         Route::resource('administracion', AdministracionController::class);
@@ -169,9 +172,12 @@ Route::prefix('/puntoVenta')->group(function()
 
         Route::resource('compra', CompraController::class);
         Route::get('/proveedor/buscador', [ProveedorController::class,'buscador']);
+        Route::post('/proveedor/editar/{id}', [ProveedorController::class,'editarProveedor']);
         Route::resource('proveedor', ProveedorController::class);
      //   Route::get('proximosACaducar', [ProductosCaducidadController::class,'caducidad']);;///
-        Route::resource('oferta', OfertaController::class);  
+           
+     Route::resource('oferta', OfertaController::class);  
+        Route::post('/productosCaducidad/editar/{id}', [ProductosCaducidadController::class,'editarCaducidad']);
         Route::resource('productosCaducidad', ProductosCaducidadController::class);
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
        // });

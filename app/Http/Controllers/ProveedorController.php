@@ -104,13 +104,7 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->has('status'))
-        {
-            Proveedor::findOrFail($id)->update(['status' => true ]);
-            //where('id','=',$id)->update(['status' => $request->input('status')]);
-            //return redirect('puntoVenta/empleado/'.$id.'/edit');
-            return true;
-        }
+        
         $datosProveedor = request()->except(['_token','_method']);
         $nombre = $request['nombre'];
         $rfc= $request['rfc'];
@@ -147,5 +141,15 @@ class ProveedorController extends Controller
         $datosConsulta['proveedorB'] = Proveedor::where("nombre",'like',$request->texto."%")->get();
         return view('Proveedor.form',$datosConsulta);
         //return $datosConsulta;
+    }
+    public function editarProveedor(Request $request, $id)
+    {
+        if($request->has('status'))
+        {
+            Proveedor::findOrFail($id)->update(['status' => true ]);
+            //where('id','=',$id)->update(['status' => $request->input('status')]);
+            //return redirect('puntoVenta/empleado/'.$id.'/edit');
+            return true;
+        }
     }
 }

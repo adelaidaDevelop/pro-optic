@@ -1200,14 +1200,14 @@ async function actualizarPassword() {
                 let usuario = @if(isset($datosEmpleado) || isset($admin)) @json($users)
                 @else null @endif;
                 let id = usuario.id;
-                const url = "{{url('/')}}/puntoVenta/empleado/" + id;
+                const url = "{{url('/')}}/puntoVenta/empleado/editar/" + id;
                 console.log(url);
                 let datos = new FormData();
                 datos.append('_token', "{{ csrf_token() }}");
                 datos.append('passwordChange', cambio.value);
                 respuestaCompra = await $.ajax({
                     url: url,
-                    type: 'PUT',
+                    type: 'POST',
                     data: {
                         'passwordChange': cambio.value,
                         '_token': "{{ csrf_token() }}",

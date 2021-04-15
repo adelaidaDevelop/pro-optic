@@ -97,9 +97,9 @@
 
     <!--/div-->
 
-    <script src="{{ asset('js\app.js') }}"></script>
+    
     @yield('content')
-    <script src="{{ asset('js\app.js') }}"></script>
+    <script src="{{ asset('js\mayusculas.js') }}"></script>
 </body>
 
 </html>

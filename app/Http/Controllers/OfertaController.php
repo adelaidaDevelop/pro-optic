@@ -178,4 +178,19 @@ class OfertaController extends Controller
     {
         //
     }
+
+    public function editarOferta(Request $request, $id)
+    {
+        $usuarios = ['eliminarProducto','admin'];
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        
+        if(isset($request['restar']))
+        {
+            $oferta = Oferta::where('idSucursalProducto','=',$id);//->update(['existencia'])
+            $resta = $oferta->get()->first()->existencia - $request['restar'];
+            $oferta->update(['existencia' => $resta]);
+            return true;
+        }
+        return ':p';
+    }
 }
