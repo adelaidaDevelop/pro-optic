@@ -90,6 +90,7 @@
     @endif
 </div>
 <script>
+console.log('carrito',@json(session('carrito')));
 async function addCarrito(id) {
     try{
         //return alert('Listo'+id);
@@ -104,6 +105,7 @@ async function addCarrito(id) {
                 _token: "{{ csrf_token() }}",
             }
         });
+        console.log('carrito',respuesta);
         return alert("Listo"+ respuesta);
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);

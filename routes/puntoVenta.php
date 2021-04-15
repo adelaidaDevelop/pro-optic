@@ -31,7 +31,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/puntoVenta')->group(function()
 {
-    //Rutas ade
+    Route::get('/login', [LoginController::class,'login'])->name('Login');//->middleware('isEmpleado');
+    Route::post('/login', [LoginController::class,'loginPost'])->name('Login');
+    Route::post('/logout', [LoginController::class,'logout'])->name('Login');
+
+    Route::middleware('isEmpleado')->group(function () {
+        //Rutas ade
     
     
     Route::get('/datosDevoluciones', [DevolucionController::class,'datoDev']);
@@ -70,10 +75,7 @@ Route::prefix('/puntoVenta')->group(function()
     Route::post('/sucursalEmpleado/editar/{id}', [SucursalEmpleadoController::class,'editarEmpleado']);
     Route::resource('sucursalEmpleado', SucursalEmpleadoController::class);
 
-    Route::get('/login', [LoginController::class,'login'])->name('Login');//->middleware('isEmpleado');
-    Route::post('/login', [LoginController::class,'loginPost'])->name('Login');
-    Route::post('/logout', [LoginController::class,'logout'])->name('Login');
-
+    
     //AGREGAR PRODUCTOS A SUCURSAL DESDE STOCK
     Route::get('/producto/stock', [ProductoController::class,'stock']);
     Route::get('/sucursalProducto/crear/{id}', [SucursalProductoController::class,'crear']);
@@ -153,7 +155,8 @@ Route::prefix('/puntoVenta')->group(function()
 
     //Route::get('eliminar/{id}', [ProductoController::class,'eliminar']);
     Route::resource('sucursal', SucursalController::class);
-    Route::middleware('isEmpleado')->group(function () {
+    
+
        // Route::middleware('verified')->group(function () {
         Route::post('/oferta/editar/{id}', [OfertaController::class,'update']);
         Route::post('/sucursalProducto/editar/{id}', [ProductosCaducidadController::class,'update']);
@@ -184,4 +187,3 @@ Route::prefix('/puntoVenta')->group(function()
     });
     
 });
-

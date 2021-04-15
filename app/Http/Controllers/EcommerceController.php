@@ -108,13 +108,20 @@ class EcommerceController extends Controller
             
         }
         //return 'Si existe el carrito';
-        //return session('carrito');
+        $carrito =  session('carrito');
         if(isset($carrito))
         {
-            return 'Si existe el carrito';
+            $producto = Producto::findOrFail($id);
+            array_push($carrito,$producto);
+            session(['carrito' => $carrito]);
+            return $carrito;//'Si existe el carrito';
         }
         else{
-            return 'No existe el carrito';
+            $carrito = [];
+            $producto = Producto::findOrFail($id);
+            array_push($carrito,$producto);
+            session(['carrito' => $carrito]);
+            return $carrito;//'No existe el carrito';
         }
         
 
