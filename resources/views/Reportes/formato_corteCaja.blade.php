@@ -97,13 +97,13 @@
                 </div>
             </div>
             <br /><br />
-            <h1 class="font-weight-bold"> === GANACIAS DEL DIA === </h1>
+            <h1 class="font-weight-bold"> === GANANCIAS DEL DIA === </h1>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
                 <h2 class="row">GANANCIA: </h2>
                 </div>
                 <div class="col-4 mx-auto px-auto">
-                <h2> {{ $ganancia}} </h2>
+                <h2> ${{ $ganancia}} </h2>
                 </div>
             </div>
             <br /><br />

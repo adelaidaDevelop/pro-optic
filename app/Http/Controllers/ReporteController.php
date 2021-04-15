@@ -69,17 +69,20 @@ class ReporteController extends Controller
         $usuarios = ['verReporte','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
-        $empleados = Empleado::all();
+        $empleados = Empleado::all(['id','primerNombre','segundoNombre','apellidoPaterno','apellidoMaterno','genero']);
         $idSucursal = session('sucursal');
-        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
+        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)
+        ->get(['id','idEmpleado','status']);
+
         $compras= Compra::all();
         $detalleCompra= Detalle_compra::all();
-        $productos= Producto::all();
+        $productos= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento']);
         $devoluciones= Devolucion::all();
-        $departamentos= Departamento::all();
-        $ventas = Venta::all();
+        $departamentos= Departamento::all(['id','nombre']);
+        $ventas = Venta::all(['id','tipo','pago','status','idSucursalEmpleado','created_at','updated_at']);
         $detalle_ventas = Detalle_venta::all();
-        $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
+        $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)
+        ->get(['id','costo','precio', 'existencia','minimoStock','status','idSucursal','idProducto']);
         return view('Reportes.reporteInventario', compact('empleados','compras','detalleCompra', 'productos','devoluciones', 'departamentos','ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados'));
     }
     public function index3()
