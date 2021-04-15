@@ -1070,6 +1070,7 @@ async function guardarCompra() {
         $("#credito").prop('checked', false);
         activarIva();
         activarCredito();
+        actualizarTotal();
 
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);

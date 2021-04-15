@@ -9,7 +9,8 @@
         </ol>
     </nav>
 </div-->
-<div class="row">
+
+<div class="row ">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -17,14 +18,14 @@
             <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="{{ asset('img\carusel.jpg') }}" alt="First slide" -->
+            <div class="carousel-item active position-relative">
+                <img class="d-block w-100" src="{ asset('img\carusel.jpg') }}" alt="First slide">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="{{ asset('img\carusel2.jpg') }}" alt="Second slide" -->
+                <img class="d-block w-100" src="{ asset('img\carusel2.jpg') }}" alt="Second slide">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="{{ asset('img\carusel.jpg') }}" alt="Third slide">
+                <img class="d-block w-100" src="{ asset('img\carusel.jpg') }}" alt="Third slide">
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -38,6 +39,8 @@
     </div>
 </div>
 <div class="row mx-1">
+<!--div class="collapse " id="collapseCarrito"-->
+<!--/div-->
     @if(count($productosNuevos)>0)
     <div class="row col-12">
         <h4 class="text-primary mx-auto mt-1"><strong>Productos Nuevos</strong></h4>
@@ -90,7 +93,9 @@
     @endif
 </div>
 <script>
-console.log('carrito',@json(session('carrito')));
+let carrito = @json(session('carrito'));
+console.log('carrito',carrito);
+document.querySelector('#cantidadCarrito').textContent = "{{count(session('carrito'))}}";
 async function addCarrito(id) {
     try{
         //return alert('Listo'+id);
@@ -105,6 +110,7 @@ async function addCarrito(id) {
                 _token: "{{ csrf_token() }}",
             }
         });
+        document.querySelector('#cantidadCarrito').textContent = respuesta.length;
         console.log('carrito',respuesta);
         return alert("Listo"+ respuesta);
     } catch (err) {
