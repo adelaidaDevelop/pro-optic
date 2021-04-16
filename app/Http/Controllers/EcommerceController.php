@@ -7,6 +7,7 @@ use App\Models\Detalle_venta;
 use Illuminate\Http\Request;
 use DateInterval;
 
+use Validator, Hash, Auth;
 class EcommerceController extends Controller
 {
     public function __construct()
@@ -19,8 +20,11 @@ class EcommerceController extends Controller
     {
         //$this->middleware('isCliente');
         //return 'Esta entrando x2';
+        //return Producto::all()[0];
         $productos = [];//Producto::all();
-        return view('Ecommerce.index',compact('productos'));
+        $productosNuevos = $this->productosNuevos();
+        $productosDestacados = $this->productosDestacados();
+        return view('Ecommerce.index',compact('productos','productosNuevos','productosDestacados'));
         //return session('idCliente');
         //return session('idEmpleado');
     }
@@ -37,6 +41,14 @@ class EcommerceController extends Controller
             return [];//$productos = Producto::where("created_at",'=',now()->toDateString());
     }
     
+    public function cmp($a, $b)
+    {
+        if ($a['cantidad'] == $b['cantidad']) {
+            return 0;
+        }
+        return ($a['cantidad'] < $b['cantidad']) ? -1 : 1;
+    }
+
     public function productosDestacados()
     {
         $fecha = now()->sub(new DateInterval('P1M'));//->toDateString();
@@ -47,7 +59,7 @@ class EcommerceController extends Controller
         //$p = array_search(11, $pos);
         //if($p == NULL)
           //  return 'No econtrado';
-        //return $p;
+        
         foreach($ventas as $venta)
         {
             $detalle_ventas = Detalle_venta::where('idVenta','=',$venta->id)->get(['idProducto','cantidad']);
@@ -61,6 +73,7 @@ class EcommerceController extends Controller
                     //array_search($dv->cantidad, $productos);
                 }else
                 {
+                    $producto = [];
                     $producto['id'] = $dv->idProducto;
                     $producto['cantidad'] = $dv->cantidad;
                     array_push($productos,$producto);
@@ -69,21 +82,48 @@ class EcommerceController extends Controller
                 }
             }
         }
-        //return $productos;
-        function cmp($a, $b)
-        {
+        
+        if(usort($productos,function($a,$b) {
             if ($a['cantidad'] == $b['cantidad']) {
                 return 0;
             }
-            return ($a['cantidad'] < $b['cantidad']) ? -1 : 1;
-        }
-        if(usort($productos,cmp('cantidad')))
-            return $productos;
-        return 'Algo pasó';
-        foreach($cantidades as $c)
+            return ($a['cantidad'] > $b['cantidad']) ? -1 : 1;
+        }))
+        //return $productos;
+        for($i=0;$i<count($productos);$i++)
         {
-            //if($c)
+            $producto = Producto::findOrFail($productos[$i]['id']);
+            $productos[$i]['nombre'] = $producto->nombre;
+            $productos[$i]['descripcion'] = $producto->descripcion;
         }
-        return $ventas;
+        return $productos;
+        
+    }
+
+    public function addCarrito(Request $request, $id)
+    {
+        //return $id;//'Si existe el carrito';
+        if(Auth::check())
+        {
+            
+        }
+        //return 'Si existe el carrito';
+        $carrito =  session('carrito');
+        if(isset($carrito))
+        {
+            $producto = Producto::findOrFail($id);
+            array_push($carrito,$producto);
+            session(['carrito' => $carrito]);
+            return $carrito;//'Si existe el carrito';
+        }
+        else{
+            $carrito = [];
+            $producto = Producto::findOrFail($id);
+            array_push($carrito,$producto);
+            session(['carrito' => $carrito]);
+            return $carrito;//'No existe el carrito';
+        }
+        
+
     }
 }
