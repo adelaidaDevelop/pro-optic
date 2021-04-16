@@ -74,8 +74,11 @@
                                                 <select name="opcionSucursal"
                                                     class="form-control @error('farmacia') is-invalid @enderror"
                                                     id="opcionSucursal" required autocomplete="farmacia" autofocus>
-                                                    <!--option value="0">PROVEEDOR</option>
-                                                    <option value="1">farmacia 1</option-->
+                                                    @foreach($sucursales as $s)
+
+                                                    <!--option value="0">PROVEEDOR</option-->
+                                                    <option value="{{$s->id}}">{{$s->direccion}}</option>
+                                                    @endforeach
                                                 </select>
                                                 @error('farmacia')
                                                 <span class="invalid-feedback" role="alert">
@@ -146,45 +149,7 @@
             </div>
         </div>
     </div>
-    <script>
-    let sucursales;
-    async function cargarSucursales() {
-        try {
-            let response = await fetch(`/puntoVenta/sucursal/sucursales`);
-            if (response.ok) {
-                sucursales = await response.json();
-
-            } else {
-                console.log("No responde :'v");
-                console.log(response);
-                throw new Error(response.statusText);
-            }
-
-        } catch (err) {
-            console.log("Error al realizar la petición AJAX: " + err.message);
-        }
-    }
-
-    function mostrarSucursales() {
-        let cuerpo = ""; //`<option value="0"> --SIN SUCURSAL-- </option>`;
-        for (let i in sucursales) {
-            cuerpo = cuerpo +
-                `<option value="` + sucursales[i].id + `">` + sucursales[i].direccion + `</option>`;
-        }
-        document.querySelector('#opcionSucursal').innerHTML = cuerpo;
-    }
-
-    async function iniciar() {
-        try {
-            await cargarSucursales();
-            mostrarSucursales();
-
-        } catch (err) {
-            console.log("Error al realizar la petición AJAX: " + err.message);
-        }
-    }
-    iniciar();
-    </script>
+    
 </body>
 
 </html>
