@@ -58,7 +58,7 @@
                     <div class="col-5">
                         <input type="text" class="form-control  mx-auto @error('codigoBarras') is-invalid @enderror" name="codigoBarras" 
                         id="codigoBarras" value="{{ old('codigoBarras') }}" placeholder="Ingresar codigo de barras" 
-                        required autocomplete="codigoBarras" autofocus onclick="agregarPorCodigo()">
+                        required autocomplete="codigoBarras" autofocus>
                         @error('codigoBarras')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
