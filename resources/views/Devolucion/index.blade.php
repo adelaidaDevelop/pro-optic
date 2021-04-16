@@ -40,8 +40,8 @@ $devolver = $sE->hasAnyRole($userDevolucion);
         <div class="col mt-1 mb-4 ml-4 mr-4">
             <div class="row  px-0 col-8 input-group my-4">
                 <h4 class=" mx-0 px-0 my-auto"> FOLIO VENTA:</h4>
-                <input type="number" min=0 class="form-control col-4 my-auto ml-3" size="15" placeholder="INGRESAR FOLIO VENTA" id="busquedaFolio" onkeyup="buscarFolio()">
-                <a title="buscar" href="" class="text-dark ml-2 mr-5 my-auto">
+                <input type="number" min=0 class="form-control col-4 my-auto ml-3" size="15" placeholder="INGRESAR FOLIO VENTA" id="busquedaFolio" name="busquedaFolio" onkeyup="buscarFolio()">
+                <a title="buscar" class="text-dark ml-2 mr-5 my-auto">
                     <img src="{{ asset('img\search.svg') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
                 <div class="col-2 ml-5"> </div>
                 <button class=" btn btn-outline-info my-auto " onclick="modalVenta()" data-toggle="modal" data-target="#buscarVenta" type="button">
@@ -146,7 +146,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
         <div class="modal-content">
             <div class="modal-header">
 
-                <h5 class="modal-title text-primary">DEVOLUCION</h5>
+                <h5 class="modal-title text-primary">DEVOLUCION EFECTIVO </h5>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -156,14 +156,14 @@ $devolver = $sE->hasAnyRole($userDevolucion);
 
                 <div class="col-2"></div>
                 <div class="row col-8">
-                    <div class="col-3  mt-4">
-                        <h6 class="mb-5 mt-1"> CANTIDAD:</h6>
+                    <div class="col-4  mt-4">
+                        <h6 class="mb-5 mt-1"> CANTIDAD PROD:</h6>
                         <h6 class="mb-5"> DETALLE:</h6>
-                        <p class="h6 mb-2  ">DEVOLUCION:</p>
+                        <p class="h6 mb-2  ">TOTAL DEVOLUCION:</p>
                     </div>
-                    <div class="col-9 mt-4 ">
-                        <input type="number" class="form-control mb-2" oninput="calcularTotalD()" name="cantidad" id="cantidad" placeholder="" value=0 autofocus required>
-                        <textarea name="detalleD" class=" mb-2" id="detalleD" placeholder="ESPECIFICAR DETALLE" rows="3" cols="23" required></textarea>
+                    <div class="col-8 mt-4 ">
+                        <input type="number" class="form-control mb-2" oninput="calcularTotalD()" name="cantidad" id="cantidad" placeholder="CANTIDAD DE PRODUCTOS DEVUELTOS" value=0 autofocus required>
+                        <textarea name="detalleD" class=" mb-3" id="detalleD" placeholder="ESPECIFICAR DETALLE" rows="3" cols="23" required></textarea>
                         <div class="input-group">
                             <h5>$</h5>
                             <p class="h5 mb-2" id="totalD">0.00</p>
@@ -527,9 +527,11 @@ $devolver = $sE->hasAnyRole($userDevolucion);
             //k if (detalleVenta[count7].idVenta == ventas[count5].id) {
             let detalleV = detalleVenta.find(d => d.idVenta == ventas[count5].id);
             if (detalleV != null) {
+
                 let subtotal = detalleV.cantidad * detalleV.precioIndividual;
                 total = total + subtotal;
             }
+
             // }
             //  for (let s in sucursalEmpleado) {
             //  if (sucursalEmpleado[s].id == ventas[count5].idSucursalEmpleado) {
@@ -546,6 +548,13 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     }
                 }
             }
+            let pago2= 0;
+            console.log("total", total);
+            if (ventas[count5].pago  == null) {
+                pago2 = 0;
+            }else {
+                pago2 = ventas[count5].pago ;
+            }
             //}
             cuerpo = cuerpo + `
                     <tr >
@@ -553,7 +562,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     <td>` + ventas[count5].id + `</td>
                     <td>` + emple + `</td>
                     <td>` + ventas[count5].tipo + `</td>
-                    <td>` + ventas[count5].pago + `</td>
+                    <td>` + pago2 + `</td>
                     <td>` + total + `</td> 
                     <td>` + fecha.toLocaleDateString() + `</td> 
                     <td>` + fecha.toLocaleTimeString() + `</td>   
@@ -683,6 +692,18 @@ $devolver = $sE->hasAnyRole($userDevolucion);
         }
         return false;
     };
+
+    $("input[name='busquedaFolio']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
 
     $("input[name='cantidad']").bind('keypress', function(tecla) {
         if (this.value.length >= 10) return false;

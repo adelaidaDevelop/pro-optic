@@ -2225,7 +2225,7 @@ $('#tablaBusqueda').scroll(function() {
         */
 });
 //numeros enteros con dos decimales
-
+//float dos decimales
 function filterFloat(evt, input) {
     // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
     var key = window.Event ? evt.which : evt.keyCode;

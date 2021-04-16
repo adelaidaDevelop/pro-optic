@@ -26,9 +26,9 @@ PRODUCTOS
 
     <div class="row my-auto">
         <div class="text-primary p-1 my-auto ">
-                <strong class="ml-4 my-auto h5">
-                    NUEVO PRODUCTO
-                </strong>
+            <strong class="ml-4 my-auto h5">
+                NUEVO PRODUCTO
+            </strong>
         </div>
     </div>
 
@@ -36,21 +36,21 @@ PRODUCTOS
         <div class="col-2"></div>
         <div class="col-2 ">
             <h5 class="mb-4 mt-3"> {{'CODIGO DE BARRAS'}}</h5>
-          
+
             <h5 class="mb-3">{{'NOMBRE'}}</h5>
             <br />
             <h5 class="mb-2"> {{'DESCRIPCION'}} </h5>
             <br />
             <h5 class="mb-4"> {{'MINIMO STOCK'}}</h5>
-            
+
             <h5 class="mb-4"> {{'RECETA MEDICA'}} </h5>
-            
+
             <h5 class="mb-4"> {{'DEPARTAMENTO'}}</h5>
-           
+
             <h5 class="mb-3"> {{'EXISTENCIA'}}</h5>
-           
+
             <h5 class="mb-3"> {{'COSTO'}}</h5>
-           
+
             <h5 class="mb-1"> {{'PRECIO'}}</h5>
         </div>
         <div class="col-4">
@@ -126,10 +126,14 @@ PRODUCTOS
                 {{$message}}
             </div>
             @enderror
-            
-        </div>
 
+            <br/><br/><br/><br/><br/><br/>
+            <button class="btn btn-outline-secondary mt-4" onclick="return confirm('¿AGREGAR NUEVO PRODUCTO?')" type="submit" value="  AGREGAR">
+                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px"> GUARDAR PRODUCTO
+            </button>
+        </div>
     </div>
+    <!--
     <div class="row text-right w-100">
         <div class="col-md-6"> </div>
         <div class="col-md-6">
@@ -140,11 +144,10 @@ PRODUCTOS
             <br />
             <br />
 
-            <!-- <a title="Regresar" href="{{url('/puntoVenta/producto')}}" class="text-dark">
-            <img src="{{ asset('img\regresar2.png') }}" class="img-thumbnail" alt="Regresar" width="50px" height="50px" />CANCELAR</a>
-            -->
+           
         </div>
     </div>
+    -->
 </form>
 
 
@@ -167,18 +170,18 @@ PRODUCTOS
 
     function agregarProducto() {
 
-       // let btnGuardar = document.getElementById("actPrecioCosto3");
-       // let idSucProd = btnGuardar.value;
+        // let btnGuardar = document.getElementById("actPrecioCosto3");
+        // let idSucProd = btnGuardar.value;
         try {
             //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
-           // const costo = document.querySelector('#cantidad');
-            let codigoBarras = document.getElementById("codigoBarras"); 
-            let nombre = document.getElementById("nombre"); 
-            let descripcion = document.getElementById("descripcion"); 
-            let minimoStock = document.getElementById("minimoStock"); 
-            let receta = document.getElementById("receta"); 
-            let idDepto = document.getElementById("idDepartamento"); 
-            let existencia = document.getElementById("existencia"); 
+            // const costo = document.querySelector('#cantidad');
+            let codigoBarras = document.getElementById("codigoBarras");
+            let nombre = document.getElementById("nombre");
+            let descripcion = document.getElementById("descripcion");
+            let minimoStock = document.getElementById("minimoStock");
+            let receta = document.getElementById("receta");
+            let idDepto = document.getElementById("idDepartamento");
+            let existencia = document.getElementById("existencia");
             let costo = document.getElementById("costo");
             let precio = document.getElementById("precio");
 
@@ -194,7 +197,7 @@ PRODUCTOS
                 // la URL de donde voy a hacer la petición
                 //url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
                 url: `/puntoVenta/producto`,
-                
+
                 // los datos que voy a enviar para la relación
                 data: {
                     codigoBarras: codigoBarras,
@@ -204,7 +207,7 @@ PRODUCTOS
                     idDepartamento: idDepto,
                     existencia: parseInt(existencia.value),
                     costo: parseFloat(costo.value),
-                    precio:parseFloat(precio.value),
+                    precio: parseFloat(precio.value),
                     _token: "{{ csrf_token() }}"
                     //  id: idSucProd
                 }
@@ -213,8 +216,8 @@ PRODUCTOS
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-           // $('#modal_precio_venta3').modal('hide');
-           // $('#detalleProducto').modal('hide');
+            // $('#modal_precio_venta3').modal('hide');
+            // $('#detalleProducto').modal('hide');
             alert("PRODUCTO AGREGADO CORRECTAMENTE");
             location.href = "{{url('/puntoVenta/producto/')}}";
             //  refrescar();
@@ -222,7 +225,7 @@ PRODUCTOS
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
-    
+
 
     function onKeyDown(event) {
         const key = event.key; // "A", "1", "Enter", "ArrowRight"...

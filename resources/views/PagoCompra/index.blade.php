@@ -29,11 +29,11 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
 @endsection
 
 <div class="row col-12 mx-0 my-auto py-1">
-    <h4 class="text-primary">
+    <h5 class="text-dark">
         <strong>
-            LISTA DE PAGOS
+            LISTA DE PAGOS A COMPRAS
         </strong>
-    </h4>
+    </h5>
 
 </div>
 <div class="row border border-dark mb-2 ml-2 mr-2 px-3" id="pagina">

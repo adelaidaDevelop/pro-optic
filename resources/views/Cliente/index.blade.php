@@ -55,11 +55,11 @@ $verC = $sE->hasAnyRole($vC);
                 <!--input type="text" id="buscador" class="form-control my-2">
                         <button class="btn btn-info mb-2" id="boton">Buscar</button-->
 
-                <h4 class="row" style="color:#4388CC">ACTIVOS</h4>
+                <h4 class="row my-1 mx-1" style="color:#4388CC">ACTIVOS</h4>
 
                 <div>
                     <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto">
-                    <h6 class="form-control text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL </small> </h6>
+                    <h6 class=" text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL </small> </h6>
                     <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
