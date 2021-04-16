@@ -35,23 +35,23 @@ PRODUCTOS
     <div class="row  border border-dark m-1 w-100 ">
         <div class="col-2"></div>
         <div class="col-2 ">
-            <h5 class="mb-4 mt-3"> {{'CODIGO DE BARRAS'}}</h5>
-
-            <h5 class="mb-3">{{'NOMBRE'}}</h5>
+            <h6 class="mb-2 mt-3"> {{'CODIGO DE BARRAS'}}</h6>
+            <br/>
+            <h6 class="mb-3 ">{{'NOMBRE'}}</h6>
             <br />
-            <h5 class="mb-2"> {{'DESCRIPCION'}} </h5>
+            <h6 class="mb-3"> {{'DESCRIPCION'}} </h6>
             <br />
-            <h5 class="mb-4"> {{'MINIMO STOCK'}}</h5>
+            <h6 class="mb-4"> {{'MINIMO STOCK'}}</h6>
 
-            <h5 class="mb-4"> {{'RECETA MEDICA'}} </h5>
+            <h6 class="mb-2"> {{'RECETA MEDICA'}} </h6>
+            <br/>
+            <h6 class="mb-4"> {{'DEPARTAMENTO'}}</h6>
 
-            <h5 class="mb-4"> {{'DEPARTAMENTO'}}</h5>
+            <h6 class="mb-4"> {{'EXISTENCIA'}}</h6>
 
-            <h5 class="mb-3"> {{'EXISTENCIA'}}</h5>
+            <h6 class="mb-4"> {{'COSTO'}}</h6>
 
-            <h5 class="mb-3"> {{'COSTO'}}</h5>
-
-            <h5 class="mb-1"> {{'PRECIO'}}</h5>
+            <h6 class="mb-1"> {{'PRECIO'}}</h6>
         </div>
         <div class="col-4">
             <!--El name debe ser igual al de la base de datos-->

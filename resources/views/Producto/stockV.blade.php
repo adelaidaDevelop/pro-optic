@@ -42,7 +42,7 @@ $crear = $sE->hasAnyRole($crearProducto);
 <div class="row p-1 ">
     <div class="row col-12  ml-1 w-100">
             <strong class="  h5 mx-auto text-center">
-                PRODUCTOS QUE AÚN NO SE AGREGAN A ESTA SUCURSAL
+                TODOS LOS PRODUCTOS SE HAN AGREGADO ESTA SUCURSAL
             </strong>
     </div>
     <div class="row border border-primary m-2 ml-4 mr-4 col ">

@@ -60,6 +60,12 @@
                 </button>
             </form>
         </div-->
+        <div class="col-5 ml-4"></div>
+        <div class=" ml-3 my-auto">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/administracion">
+                <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
+            </a>
+        </div>
         
         @endsection
     </div>
