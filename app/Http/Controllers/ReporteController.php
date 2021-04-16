@@ -139,7 +139,7 @@ class ReporteController extends Controller
 
 
 
-        $proveedores = Proveedor::where('status','=', 1)->get();
+        $proveedores = Proveedor::where('status','=', 1)->get(['id','nombre']);
         $detalle_ventas = Detalle_venta::all();
         $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
         return view('Reportes.entradas_salidas', compact('empleados', 'compras', 'detalleCompra', 'productos', 'devoluciones', 'departamentos', 'ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados','proveedores','comprasFiltro','ventasFiltro'));    
