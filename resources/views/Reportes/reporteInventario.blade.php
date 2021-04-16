@@ -4,7 +4,7 @@
 REPORTES
 @endsection
 @section('opciones')
-
+<!--
 <div class="col-0  p-1 ml-4">
     <form method="get" action="{{url('/puntoVenta/reporteVentas/')}}">
         <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
@@ -13,6 +13,7 @@ REPORTES
         </button>
     </form>
 </div>
+-->
 <div class="col-0  p-1 ml-4">
     <form method="get" action="{{url('/puntoVenta/reporteCompraVenta/')}}">
         <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
@@ -39,6 +40,7 @@ REPORTES
         </strong>
     </h4>
     <br />
+    <!--
     <div class="row w-100 mx-auto my-auto ">
 
         <div id="" class="col-3 mx-auto text-center">
@@ -70,6 +72,7 @@ REPORTES
             </div>
         </div>
     </div>
+    -->
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
     <div class="row w-100   mr-2 ml-5">
         <h6 class="text-primary ml-3 ">BUSCAR POR:</h6>
@@ -174,9 +177,11 @@ REPORTES
             <button class="btn btn-outline-secondary  p-1 mx-3 text-dark" onclick="generaReportes()">
                 <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                 GENERAR</button>
+<!--
             <button id="btnCrearPdf" class="btn btn-outline-secondary  p-1 text-dark">
                 <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px">
                 IMPRIMIR </button>
+                -->
 
         </div>
 
@@ -193,6 +198,7 @@ REPORTES
                             <th>CAJERO</th>
                             <th>PRODUCTO</th>
                             <th>DEPTO</th>
+                            <th>CANT</th>
                             <th>CANT. ANTES</th>
                             <th>CANT. ACTUAL</th>
                         </tr>
@@ -397,7 +403,7 @@ REPORTES
                                     let empleados_enc = empleados.find(e => e.id == suc_emp.idEmpleado);
                                     if (empleados_enc != null) {
                                         if (empleados_enc.id == 1) {
-                                            empleado = empleados_enc.primerNombre;
+                                            emple = empleados_enc.primerNombre;
                                         } else {
                                             emple = empleados_enc.primerNombre + " " + empleados_enc.segundoNombre + " " + empleados_enc.apellidoPaterno + " " + empleados_enc.apellidoMaterno;
                                         }
@@ -409,8 +415,8 @@ REPORTES
 
                                     contador = contador + 1;
                                     cantidad = detalle_compras[x].cantidad;
-                                    cant_anterior = existencia;
-                                    cant_actual = existencia + cantidad;
+                                    cant_actual = existencia;
+                                    cant_anterior = existencia - cantidad;
                                     movimientoTxt = "ENTRADAS: COMPRA PRODUCTOS";
                                     // console.log("RELLENANDO");
                                     //AQUI HACER LAS FILAS PARA LA TABLA PASANDOLE LOS DATOS
@@ -702,7 +708,7 @@ REPORTES
         console.log(salidaVP);
     };
 
-    function devolucionesRealizadas(fechaXDia) {
+    function devolucionesEfectivo(fechaXDia) {
         cant_anterior = 0;
         cant_actual = 0;
         empleadoNombre = 0;
@@ -825,7 +831,7 @@ REPORTES
                     }
                 } else if (moviName == "3") {
                     contador = 0;
-                    devolucionesRealizadas(fechaXDia);
+                   // devolucionesEfectivo(fechaXDia);
                     document.getElementById("total_salidas").innerHTML = totalDevolucion;
                     cuerpo = devolucionFila;
                     if (cuerpo === "") {
@@ -851,7 +857,7 @@ REPORTES
                     ventasRealizadas(fechaXDia);
                     //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
                     //tres
-                    devolucionesRealizadas(fechaXDia);
+                   // devolucionesEfectivo(fechaXDia);
                     document.getElementById("total_entradas").innerHTML = totalEntradas;
                     document.getElementById("total_salidas").innerHTML = totalVenta + totalDevolucion;
                     //BUSCAR TODOS
@@ -991,7 +997,7 @@ REPORTES
     };
 
     //imprimir
-
+/*
     document.addEventListener("DOMContentLoaded", () => {
         // Escuchamos el click del botón
         const $boton = document.querySelector("#btnCrearPdf");
@@ -1020,6 +1026,7 @@ REPORTES
                 .catch(err => console.log(err));
         });
     });
+    */
 </script>
 
 @endsection

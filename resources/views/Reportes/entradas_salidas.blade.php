@@ -14,6 +14,7 @@ REPORTES
     </form>
 </div>
 -->
+<!--
 <div class="col-0  p-1 ml-4">
     <form method="get" action="{{url('/puntoVenta/reporteVentas/')}}">
         <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
@@ -22,6 +23,7 @@ REPORTES
         </button>
     </form>
 </div>
+-->
 <div class="col-7 "></div>
 <div class=" my-auto">
     <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
@@ -41,35 +43,44 @@ REPORTES
     </h4>
     <br />
     <div class="row w-100 mx-auto my-auto ">
-
+        <!--
         <div id="" class="col-3 mx-auto text-center">
-            <h6 class=" text-primary"> TOTAL INVENTARIO </h6>
+        
+            <h6 class=" text-primary"> </h6>
             <div class=" input-group text-center mx-auto px-auto">
                 <h3 class="text-center ml-auto">$</h3>
                 <p class="h3 mr-auto" id="total_inventario">0.00</p>
             </div>
+           
         </div>
+         -->
         <div class="col-3 mx-auto text-center">
-            <h6 class=" text-primary"> TOTAL COMPRAS: </h6>
+            <h6 class=" text-primary"> COSTO DEL INVENTARIO ACTUAL</h6>
             <div class=" input-group text-center mx-auto px-auto">
                 <h3 class="text-center ml-auto">$</h3>
                 <p class="h3 mr-auto" id="total_entradas">0.00</p>
             </div>
         </div>
         <div class="col-3 mx-auto text-center">
-            <h6 class=" text-primary"> TOTAL VENTAS: </h6>
+
+            <h6 class=" text-primary"> PRECIO DEL INVENTARIO ACTUAL: </h6>
             <div class=" input-group text-center mx-auto px-auto">
                 <h3 class="text-center ml-auto">$</h3>
                 <p class="h3 mr-auto" id="total_salidas">0.00</p>
             </div>
+
         </div>
+        <!--
         <div class="col-3  text-center mx-auto">
+       
             <h6 class=" text-primary"> INVENTARIO FINAL: </h6>
             <div class=" input-group text-center mx-auto px-auto">
                 <h3 class="text-center ml-auto">$</h3>
                 <p class="h3 mr-auto" id="inven_final">0.00</p>
             </div>
+            
         </div>
+        -->
     </div>
     <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
     <div class="row w-100   mr-2 ml-5">
@@ -116,7 +127,7 @@ REPORTES
             
         </div>
         -->
-        <h5 class="text-primary ml-3">FECHA:</h5>
+        <h6 class="text-primary ml-3">FECHA:</h6>
 
         <div class="form-group input-group  ">
             <div class="col-2 form-group input-group">
@@ -125,7 +136,7 @@ REPORTES
                 </h6>
                 <input class="my-auto" type="radio" value="dia" name="fecha" id="fechaDia" onchange="habilitarFecha()" checked>
             </div>
-<!--
+            <!--
             <div class="col-1 form-group input-group">
                 <h6 class="text-primary ml-1 my-auto mr-1">
                     MES
@@ -149,7 +160,7 @@ REPORTES
 
         <div class="  form-group input-group ml-3 ">
             <input type="date" min="" onchange="" id="fechaXDia" class="form-control my-0 col-2 mr-2" />
-           <!--
+            <!--
             <select class="form-control col-1 my-0 ml-2 mr-2" name="meses" id="fechaXmeses" required disabled>
                 <option value="0" selected>MES</option>
                 <option value="1">ENERO</option>
@@ -175,7 +186,7 @@ REPORTES
             -->
             <input type="date" min="" onchange="" id="fechaPInicio" class="form-control my-0 col-2 mr-2" disabled />
             <input type="date" min="" onchange="" id="fechaPFinal" class="form-control my-0 col-2 mr-2" disabled />
-            <button class="btn btn-outline-secondary  p-1 mx-3 text-dark" onclick="generaReportes()">
+            <button class="btn btn-outline-secondary  p-1 mx-3 text-dark" onclick="generaReporte2()">
                 <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                 GENERAR</button>
             <button id="imp" name="imp" class="btn btn-outline-secondary  p-1 text-dark">
@@ -185,7 +196,7 @@ REPORTES
         </div>
 
         <!-- TABLA -->
-
+        <!--
         <div id="tablaR" class="row col-12 mb-3">
             <div id="tabla2" class="row col-12 " style="height:400px;overflow-y:auto;">
                 <table class="table table-bordered border-primary  ml-3  w-100">
@@ -205,7 +216,10 @@ REPORTES
                 </table>
             </div>
         </div>
+        -->
+        <div id="tablaR" class="row col-12 mb-3">
 
+        </div>
 
     </div>
 
@@ -228,6 +242,8 @@ REPORTES
     let tabla2 = document.querySelector('#tablaR').outerHTML;
     let contador = 0;
     let proveedores = @json($proveedores);
+    let totalCompras = 0;
+    let totalVentas = 0;
 
     function validarCamposFechas() {
 
@@ -376,6 +392,139 @@ REPORTES
     };
 
 
+    function ventas_compras2(fechaXDia) {
+        salidaVP = "";
+        cant_anterior = 0;
+        cant_actual = 0;
+        empleado = "";
+        let prov = "";
+        total_ventas = 0;
+        let fechaCol = "";
+        let proveedor = "";
+        let col_compras = "";
+        let col_venta = "";
+        let fila_compra_venta = "";
+        let totalVenta
+        //VENTA DE PRODUCTOS
+
+        for (let v in ventas) {
+            totalVenta = 0;
+            let fechaVenta = new Date(ventas[v].created_at);
+            //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
+            if (comparacionFecha(fechaXDia, fechaVenta)) {
+                fechaCol = fechaVenta.toLocaleDateString();
+                //empleado
+                for (let z in detalle_ventas) {
+                    if (detalle_ventas[z].idVenta == ventas[v].id) {
+                        for (let e in productos) {
+                            if (productos[e].id == detalle_ventas[z].idProducto) {
+                                //totalventas
+                                let total_venta = detalle_ventas[z].precioIndividual * detalle_ventas[z].cantidad;
+                                totalVenta = totalVenta + total_venta;
+                            }
+                        }
+                    }
+                }
+                col_venta = col_venta + `
+                <div class="row w-100 ">
+            <div class="col-2">-$`+totalVenta + `</div>
+            <div class="col-2"> VENTA</div>
+            </tr>
+            `;
+                contador = contador + 1;
+                total_ventas = total_ventas + totalVenta;
+            }
+        }
+
+        //COMPRAS
+        entradaCompraProduct = "";
+        totalEntradas = 0;
+        //let emple = "";
+        // let existencia = 0;
+        // let prov = "";
+        total_compras = 0;
+        //COMPRA DE PRODUCTOS AGREGADAS EN ESA FECHA
+        for (let c in compras) {
+            let fechaCompra = new Date(compras[c].created_at);
+            console.log(fechaCompra);
+            if (comparacionFecha(fechaXDia, fechaCompra)) {
+                fechaCol = fechaCompra.toLocaleDateString();
+                for (let x in detalle_compras) {
+                    if (detalle_compras[x].idCompra == compras[c].id) {
+                        for (let i in productos) {
+                            if (productos[i].id == detalle_compras[x].idProducto) {
+                                let totalCompra = detalle_compras[x].costo_unitario * detalle_compras[x].cantidad;
+                                totalEntradas = totalEntradas + totalCompra;
+                            }
+                        }
+                    }
+                }
+                // contador = contador + 1;
+                let proveedors = proveedores.find(p => p.id == compras[c].idProveedor);
+                if (proveedors != null) {
+                    proveedor = proveedors.nombre;
+                }
+
+                //Por cada compra
+                col_compras = col_compras + `
+                <div class="row  w-100">
+            <div class= "col-2">+$`+totalEntradas + `</div>
+            <div class= "col-2"> ` + proveedor + `</div>
+            </div>
+            `;
+                total_compras = total_compras  + totalEntradas  ;
+
+            }
+        }
+        /*
+                entradaCompraProduct = entradaCompraProduct + `
+                                                    <tr>
+                                                            <th scope="row">` + contador + `</th>
+                                                            <td>` + fechaCol + `</td>
+                                                            <td>` + 0 + `</td>
+                                                            <td>` + total_compras + `</td>
+                                                            <td>` + +`</td>
+                                                            <td>` + "inv final" + `</td> 
+                                                    </tr>
+                                                    `;
+
+        */
+
+
+        //TOTAL VENTAS X DIA
+        /*
+        salidaVP = salidaVP + `
+                 <tr>
+                <th scope="row">` + contador + `</th>
+                <td>` + fechaCol + `</td>
+                <td>` + "tonInv" + `</td>
+                <td>` + total_compras + `</td>
+                <td>` + total_ventas + `</td> 
+                <td>` + 0 + `</td>
+                 </tr>
+                  `;
+                  */
+
+        fila_compra_venta = col_compras + col_venta;
+
+        if (fila_compra_venta === "") {
+            let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
+            document.getElementById("tablaR").innerHTML = sin;
+            document.getElementById("imp").disabled = true;
+        } else {
+            // console.log(tabla2);
+            //document.getElementById("tablaR").innerHTML = tabla2;
+            //document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+            document.getElementById("imp").disabled = false;
+            document.getElementById("tablaR").innerHTML = fila_compra_venta;
+        }
+        //  totalCompras = total_compras;
+        //s totalVentas = total_ventas;
+
+        //HASTA AQUI
+        //  console.log(salidaVP);
+    };
+
     function ventas_compras(fechaXDia) {
         salidaVP = "";
         cant_anterior = 0;
@@ -384,6 +533,7 @@ REPORTES
         let prov = "";
         total_ventas = 0;
         let fechaCol = "";
+        let proveedor = "";
         //VENTA DE PRODUCTOS
 
         for (let v in ventas) {
@@ -408,6 +558,7 @@ REPORTES
                 total_ventas = total_ventas + totalVenta;
             }
         }
+
         //COMPRAS
         entradaCompraProduct = "";
         totalEntradas = 0;
@@ -431,7 +582,7 @@ REPORTES
                         }
                     }
                 }
-               // contador = contador + 1;
+                // contador = contador + 1;
                 total_compras = total_compras + totalEntradas;
             }
 
@@ -458,12 +609,34 @@ REPORTES
                 <td>` + "tonInv" + `</td>
                 <td>` + total_compras + `</td>
                 <td>` + total_ventas + `</td> 
-                <td>` +0 +`</td>
+                <td>` + 0 + `</td>
                  </tr>
                   `;
+
+        //  totalCompras = total_compras;
+        //s totalVentas = total_ventas;
+
         //HASTA AQUI
         //  console.log(salidaVP);
     };
+
+    function generaReporte2() {
+        document.getElementById("imp").disabled = false;
+
+        let filaprod_caducados = "";
+        let cant_actual = 0;
+        let fechaXDia = "";
+        let cuerpo = "";
+        if (validarCamposFechas()) {
+            fechaXDia = new Date(fechaDia.value);
+            fechaXDia.setDate(fechaXDia.getDate() + 1);
+
+            // compraProductos(fechaXDia);
+            ventas_compras2(fechaXDia);
+
+        }
+
+    }
 
     function generaReportes() {
         document.getElementById("imp").disabled = false;
@@ -476,7 +649,7 @@ REPORTES
             fechaXDia = new Date(fechaDia.value);
             fechaXDia.setDate(fechaXDia.getDate() + 1);
 
-           // compraProductos(fechaXDia);
+            // compraProductos(fechaXDia);
             ventas_compras(fechaXDia);
             document.getElementById("total_salidas").innerHTML = total_ventas;
             document.getElementById("total_entradas").innerHTML = total_compras;

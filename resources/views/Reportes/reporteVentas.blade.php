@@ -653,11 +653,11 @@ REPORTES
     };
 
     // imprimir
-    
+    /*
     document.addEventListener("DOMContentLoaded", () => {
         // Escuchamos el click del botón
-        const $boton = document.querySelector("#imp");
-        $boton.addEventListener("click", () => {
+       // const $boton = document.querySelector("#imp");
+       // $boton.addEventListener("click", () => {
             const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
             html2pdf()
                 .set({
@@ -681,6 +681,7 @@ REPORTES
                 .save()
                 .catch(err => console.log(err));
         });
+        */
     });
 </script>
 @endsection
