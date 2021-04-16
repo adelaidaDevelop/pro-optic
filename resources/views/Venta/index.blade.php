@@ -58,7 +58,7 @@
                     <div class="col-5">
                         <input type="text" class="form-control  mx-auto @error('codigoBarras') is-invalid @enderror" name="codigoBarras" 
                         id="codigoBarras" value="{{ old('codigoBarras') }}" placeholder="Ingresar codigo de barras" 
-                        required autocomplete="codigoBarras" autofocus onclick="agregarPorCodigo()">
+                        required autocomplete="codigoBarras" autofocus>
                         @error('codigoBarras')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -780,6 +780,9 @@
         //}
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         palabraBusqueda.value = "";
+        document.querySelector('#exampleModal').modal('hide');
+        document.querySelector('#exampleModal2').modal('hide');
+        document.querySelector('#ofertasModal').modal('hide');
         //venta();
     };
     /*function agregarSubproducto(id) {
@@ -851,7 +854,7 @@
                             cuerpo = cuerpo + `
                             <tr onclick="agregarProducto(`+ productosSucursal[x].id + `,'`+productosSucursal[x].codigoBarras+`','`+
                             productosSucursal[x].nombre + `',` + 0 + `,` + productosSucursal[x].existencia +
-                                `,` + productosSucursal[x].precio + `)" data-dismiss="modal">
+                                `,` + productosSucursal[x].precio + `)">
                                 <th scope="row">` + productosSucursal[x].id + `</th>
                                 <td>` + productosSucursal[x].codigoBarras + `</td>
                                 <td>` + productosSucursal[x].nombre + `</td>
@@ -907,7 +910,7 @@
                     cuerpo = cuerpo + `
                     <tr onclick="agregarProducto('${subproductosSucursal[i].id}','${subproductosSucursal[i].codigoBarras}',
                     '${subproductosSucursal[i].nombre}',` + 1 + `,` + subproductosSucursal[i].existencia +
-                        `,` + subproductosSucursal[i].precio + `)" data-dismiss="modal">
+                        `,` + subproductosSucursal[i].precio + `)">
                     <td>` + subproductosSucursal[i].codigoBarras + `</td>
                     <td>` + subproductosSucursal[i].nombre + `</td>
                     <td>` + subproductosSucursal[i].existencia + `</td>
@@ -982,7 +985,7 @@
                     cuerpo = cuerpo + `
                     <tr onclick="agregarProducto(` + ofertasSucursal[x].id + `,
                     '${ofertasSucursal[x].codigoBarras}','${ofertasSucursal[x].nombre}',` + 2 + `,` +
-                        ofertasSucursal[x].existencia + `,` + ofertasSucursal[x].precio + `)" data-dismiss="modal">
+                        ofertasSucursal[x].existencia + `,` + ofertasSucursal[x].precio + `)">
                     <td>` + ofertasSucursal[x].codigoBarras + `</td>
                     <td>` + ofertasSucursal[x].nombre + `</td>
                     <td>` + ofertasSucursal[x].existencia + `</td>

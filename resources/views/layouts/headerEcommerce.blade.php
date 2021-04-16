@@ -16,7 +16,7 @@
                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
                 <!--/button-->
 
-                <img src="{{ asset('img\search.svg') }}" for="buscar" class="btn btn-secondary p-1 position-relative" width="35px"
+                <img src="{{ asset('img\search.svg') }}" for="buscar" class="btn btn-secondary p-1" width="35px"
                     height="100%" alt="buscador">
                 <!--span class="input-group-text" id="basic-addon1"for="buscar">@</span-->
 
@@ -87,7 +87,7 @@
             <span class="badge badge-light position-absolute" id="cantidadCarrito">0</span>
             
         </button>
-        <div class="card card-body position-absolute">
+        <div class="card card-body position-fixed" style="z-index:1000">
             aSome placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
         </div>
         <!--form class="form-inline my-2 my-lg-0">

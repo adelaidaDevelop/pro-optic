@@ -90,8 +90,9 @@ class LoginController extends Controller
             Auth::loginUsingId($idUsuario);
             return redirect('/puntoVenta/home');
             
-        }     
-        return view('auth.login');
+        }
+        $sucursales = Sucursal::all(['id','direccion']);     
+        return view('auth.login',compact('sucursales'));
         //
         //return 'Si entra aqui';
     }
