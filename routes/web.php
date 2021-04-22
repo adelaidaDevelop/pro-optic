@@ -51,6 +51,7 @@ Route::get('/productosDestacados', [EcommerceController::class,'productosDestaca
 Route::get('/registerCliente', [LoginClienteController::class,'register'])->middleware('isCliente');
 Route::post('/registerPost', [LoginClienteController::class,'registerPost'])->middleware('isCliente');
 
+Route::get('/producto/{id}', [EcommerceController::class,'verProducto'])->middleware('isCliente');
 
 
 //Auth::routes();

@@ -15,8 +15,8 @@ class CreateSucursalProductosTable extends Migration
     {
         Schema::create('sucursal_productos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('costo');
-            $table->unsignedInteger('precio');
+            $table->float('costo',8,2);
+            $table->float('precio',8,2);
             $table->unsignedInteger('existencia');
             $table->unsignedInteger('minimoStock');
             $table->unsignedInteger('status');

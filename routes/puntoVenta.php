@@ -37,8 +37,6 @@ Route::prefix('/puntoVenta')->group(function()
 
     Route::middleware('isEmpleado')->group(function () {
         //Rutas ade
-    
-    
     Route::get('/datosDevoluciones', [DevolucionController::class,'datoDev']);
     Route::get('/datosVentas', [DevolucionController::class,'datosVenta']);
     Route::get('/datosdetalleVenta', [DevolucionController::class,'datosDetalleVenta']);
