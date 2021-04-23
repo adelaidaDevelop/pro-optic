@@ -1909,6 +1909,8 @@ async function subproductoExiste(id) {
     }
 };
 
+
+
 function redirect(id) {
     window.location = `/puntoVenta/subproducto/create/?id=${id}`;
 }

@@ -177,7 +177,7 @@ REPORTES
             <button class="btn btn-outline-secondary  p-1 mx-3 text-dark" onclick="generaReportes()">
                 <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                 GENERAR</button>
-<!--
+            <!--
             <button id="btnCrearPdf" class="btn btn-outline-secondary  p-1 text-dark">
                 <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px">
                 IMPRIMIR </button>
@@ -523,6 +523,8 @@ REPORTES
         if (cajero == 0) {
             for (let p in productos) {
                 let fechaNuevoProd = new Date(productos[p].created_at);
+                console.log(" hola5 ",fechaXDia2);
+                console.log(fechaNuevoProd);
                 if (comparacionFecha(fechaXDia2, fechaNuevoProd)) {
                     fechaCol = fechaNuevoProd.toLocaleDateString();
                     horaCol = fechaNuevoProd.toLocaleTimeString();
@@ -576,7 +578,7 @@ REPORTES
                 let fechaVenta = new Date(ventas[v].created_at);
 
                 //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
-               
+
                 if (comparacionFecha(fechaXDia, fechaVenta)) {
                     console.log("entra aqui 14_04_21");
                     fechaCol = fechaVenta.toLocaleDateString();
@@ -729,6 +731,7 @@ REPORTES
                 if (suc_emp != null) {
                     console.log("entra al for de devoluciones")
                     let fechaDevolucion = new Date(devoluciones[f].created_at);
+                    console.log(fechaDevolucion);
                     //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
                     if (comparacionFecha(fechaXDia, fechaDevolucion)) {
                         fechaCol = fechaDevolucion.toLocaleDateString();
@@ -780,10 +783,12 @@ REPORTES
     };
 
     function generaReportes() {
+        /*
         document.getElementById("total_entradas").innerHTML = 0.00;
         document.getElementById("total_salidas").innerHTML = 0.00;
 
         document.getElementById("btnCrearPdf").disabled = false;
+        */
         //let devolucionFila = "";
         //  let salidaVP = "";
         //let entradaNuevosProductos = "";
@@ -802,14 +807,15 @@ REPORTES
                 let moviName = movi.value;
                 if (moviName == "1") {
                     // OPCION UNO: ENTRADAS
+                   
                     nuevosProductos(fechaXDia);
                     compraProductos(fechaXDia);
-                    document.getElementById("total_entradas").innerHTML = totalEntradas;
+                   // document.getElementById("total_entradas").innerHTML = totalEntradas;
                     cuerpo = entradaCompraProduct + entradaNuevosProductos;
                     if (cuerpo === "") {
                         let sin = `<h4 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
-                        document.getElementById("btnCrearPdf").disabled = true;
+                       // document.getElementById("btnCrearPdf").disabled = true;
                     } else {
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
@@ -818,7 +824,7 @@ REPORTES
                     contador = 0;
                     //OPCION 2: SALIDAS
                     ventasRealizadas(fechaXDia);
-                    document.getElementById("total_salidas").innerHTML = totalVenta;
+                  //  document.getElementById("total_salidas").innerHTML = totalVenta;
                     //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
                     cuerpo = salidaVP;
                     if (cuerpo === "") {
@@ -831,7 +837,7 @@ REPORTES
                     }
                 } else if (moviName == "3") {
                     contador = 0;
-                   // devolucionesEfectivo(fechaXDia);
+                    // devolucionesEfectivo(fechaXDia);
                     document.getElementById("total_salidas").innerHTML = totalDevolucion;
                     cuerpo = devolucionFila;
                     if (cuerpo === "") {
@@ -857,9 +863,9 @@ REPORTES
                     ventasRealizadas(fechaXDia);
                     //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
                     //tres
-                   // devolucionesEfectivo(fechaXDia);
-                    document.getElementById("total_entradas").innerHTML = totalEntradas;
-                    document.getElementById("total_salidas").innerHTML = totalVenta + totalDevolucion;
+                    // devolucionesEfectivo(fechaXDia);
+                  //  document.getElementById("total_entradas").innerHTML = totalEntradas;
+                  //  document.getElementById("total_salidas").innerHTML = totalVenta + totalDevolucion;
                     //BUSCAR TODOS
                     cuerpo = entradaCompraProduct + entradaNuevosProductos + salidaVP + devolucionFila;
                     if (cuerpo === "") {
@@ -904,7 +910,7 @@ REPORTES
 
     function compararFechaDia(fecha1, fecha2) {
         console.log("si compara");
-      //  console.log(fecha1);
+        //  console.log(fecha1);
         console.log(fecha2);
         if (fecha1.getFullYear() == fecha2.getFullYear()) {
             if (fecha1.getMonth() == fecha2.getMonth()) {
@@ -997,36 +1003,36 @@ REPORTES
     };
 
     //imprimir
-/*
-    document.addEventListener("DOMContentLoaded", () => {
-        // Escuchamos el click del botón
-        const $boton = document.querySelector("#btnCrearPdf");
-        $boton.addEventListener("click", () => {
-            const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
-            html2pdf()
-                .set({
-                    margin: 1,
-                    filename: 'reporteInventario.pdf',
-                    image: {
-                        type: 'jpeg',
-                        quality: 0.98
-                    },
-                    html2canvas: {
-                        scale: 3, // A mayor escala, mejores gráficos, pero más peso
-                        letterRendering: true,
-                    },
-                    jsPDF: {
-                        unit: "in",
-                        format: "a2",
-                        orientation: 'portrait' // landscape o portrait
-                    }
-                })
-                .from($elementoParaConvertir)
-                .save()
-                .catch(err => console.log(err));
+    /*
+        document.addEventListener("DOMContentLoaded", () => {
+            // Escuchamos el click del botón
+            const $boton = document.querySelector("#btnCrearPdf");
+            $boton.addEventListener("click", () => {
+                const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+                html2pdf()
+                    .set({
+                        margin: 1,
+                        filename: 'reporteInventario.pdf',
+                        image: {
+                            type: 'jpeg',
+                            quality: 0.98
+                        },
+                        html2canvas: {
+                            scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                            letterRendering: true,
+                        },
+                        jsPDF: {
+                            unit: "in",
+                            format: "a2",
+                            orientation: 'portrait' // landscape o portrait
+                        }
+                    })
+                    .from($elementoParaConvertir)
+                    .save()
+                    .catch(err => console.log(err));
+            });
         });
-    });
-    */
+        */
 </script>
 
 @endsection

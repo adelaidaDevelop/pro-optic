@@ -56,9 +56,7 @@
                     </label>
                     <!--/div-->
                     <div class="col-5">
-                        <input type="text" class="form-control  mx-auto @error('codigoBarras') is-invalid @enderror" name="codigoBarras" 
-                        id="codigoBarras" value="{{ old('codigoBarras') }}" placeholder="Ingresar codigo de barras" 
-                        required autocomplete="codigoBarras" autofocus>
+                        <input type="text" class="form-control  mx-auto @error('codigoBarras') is-invalid @enderror" name="codigoBarras" id="codigoBarras" value="{{ old('codigoBarras') }}" placeholder="Ingresar codigo de barras" required autocomplete="codigoBarras" autofocus>
                         @error('codigoBarras')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -217,9 +215,9 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                
-                    <h6 class="mx-2 my-0 text-secondary"> <small>INGRESE EL NOMBRE DEL PRODUCTO A BUSCAR</small> </h6>
-                    <input type="text" class="form-control mx-2 my-3" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarProducto()">
+
+                    <h6 class="mx-2 my-0 text-secondary"> <small>BUSCAR PRODUCTO </small> </h6>
+                    <input type="text" class="form-control mx-2 my-3" placeholder="INGRESE EL NOMBRE DEL PRODUCTO A BUSCAR" id="busquedaProducto" onkeyup="buscarProducto()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
                     <table class="table table-hover table-bordered" id="productos">
@@ -244,8 +242,11 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="modal-footer">
+                <h6 class="text-primary col"> <small>CLIC SOBRE UN PRODUCTO PARA AGREGARLO </small> </h6>
+                <div class="modal-footer ">
+
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+
                     <!--button type="button" class="btn btn-primary">Agregar Producto</button-->
                 </div>
             </div>
@@ -494,13 +495,13 @@
     let productosVenta = [];
     //let subproductosVenta = [];
     //let productos = json($datosP);
-    let productosSucursal = [];//json($productosSucursal);
+    let productosSucursal = []; //json($productosSucursal);
     let departamentos = @json($departamentos);
 
     //subproducto
-    let subproductosSucursal = [];//json($subproductos);
+    let subproductosSucursal = []; //json($subproductos);
     //ofertas
-    let ofertasSucursal = [];//json($ofertas);
+    let ofertasSucursal = []; //json($ofertas);
 
     async function cargarProductos(palabra) {
         let response = "Sin respuesta";
@@ -525,7 +526,7 @@
     async function cargarProductosSucursal(palabra) {
         let response = "Sin respuesta";
         try {
-            response = await fetch(`/puntoVenta/sucursalProducto/${palabra}`);//{{session('sucursal')}}`);
+            response = await fetch(`/puntoVenta/sucursalProducto/${palabra}`); //{{session('sucursal')}}`);
             if (response.ok) {
                 productosSucursal = await response.json();
                 console.log('los productos para la sucursal son', productosSucursal);
@@ -543,7 +544,7 @@
     async function cargarSubproductosSucursal(palabra) {
         let response = "Sin respuesta";
         try {
-            response = await fetch(`/puntoVenta/subproducto/${palabra}`);//{{session('sucursal')}}`);
+            response = await fetch(`/puntoVenta/subproducto/${palabra}`); //{{session('sucursal')}}`);
             if (response.ok) {
                 subproductosSucursal = await response.json();
                 console.log('los productos para la sucursal son', subproductosSucursal);
@@ -563,7 +564,7 @@
     async function cargarOfertasSucursal(palabra) {
         let response = "Sin respuesta";
         try {
-            response = await fetch(`/puntoVenta/oferta/${palabra}`);//{{session('sucursal')}}`);
+            response = await fetch(`/puntoVenta/oferta/${palabra}`); //{{session('sucursal')}}`);
             if (response.ok) {
                 ofertasSucursal = await response.json();
 
@@ -665,20 +666,20 @@
         }
         for (let i in productosVenta) {
             $("input[id='valor" + productosVenta[i].id + "']").inputSpinner(props);
-            
+
         }
         $("input[name='number']").bind('keypress', function(tecla) {
-                //if (this.value.length >= 10) return false;
-                let code = tecla.charCode;
-                if (code == 8) { // backspace.
-                    return true;
-                } else if (code >= 48 && code <= 57) { // is a number.
-                    return true;
-                } else { // other keys.
-                    return false;
-                }
-            });
-        
+            //if (this.value.length >= 10) return false;
+            let code = tecla.charCode;
+            if (code == 8) { // backspace.
+                return true;
+            } else if (code >= 48 && code <= 57) { // is a number.
+                return true;
+            } else { // other keys.
+                return false;
+            }
+        });
+
         console.log(productosVenta);
         calcularTotal();
         //min="1" max="` + productosVenta[count].existencia+`"
@@ -717,66 +718,63 @@
     };
 
     async function agregarPorCodigo() {
-        try
-        {
+        try {
             const codigo = document.querySelector('#codigoBarras');
-        //location.href= location.href+'?codigo='+codigo.value;
-        //for (let x in productosSucursal) {
-          //  for (count3 in productos) {
+            //location.href= location.href+'?codigo='+codigo.value;
+            //for (let x in productosSucursal) {
+            //  for (count3 in productos) {
             //    if (productos[count3].id === productosSucursal[x].idProducto) {
-              //      if (productos[count3].codigoBarras === codigo.value) {
+            //      if (productos[count3].codigoBarras === codigo.value) {
 
-                        //agregarProductoAVenta(id,codigoBarras,nombre,existencia,precio,cantidad,subtotal)
-                        /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
-                        productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
-                        //    if (!buscarProductoEnVenta(productos[count3].id)) {
-                        //        if (productosSucursal[x].existencia > 0) {
-                        let response = await fetch(`/puntoVenta/sucursalProducto/buscarPorCodigo/${codigo.value}`);
-                        let producto =  await response.json();
-                        console.log(producto);
-                        if(producto != false)
-                        {
-                            //alert('Entra aqui');
-                            agregarProducto(producto.id,producto.codigoBarras, producto.nombre, 0, producto.existencia, 
-                            producto.precio); //, productos[count3].codigoBarras, productos[count3]
-                            codigo.value = "";
-                            //return;
-                        }
-                        else
-                            alert('EL PRODUCTO NO EXISTE EN EL INVENTARIO');
-                        //    .nombre,
-                        //    productos[count3].existencia, productos[count3].precio, 1, productos[count3].precio);
-                        //            mostrarProductos();
-                        //        } else
-                        //            alert('PRODUCTO SIN EXISTENCIA');
-                        //    }
-              //      }
+            //agregarProductoAVenta(id,codigoBarras,nombre,existencia,precio,cantidad,subtotal)
+            /*agregarProductoAVenta(productos[count].id,productos[count].codigoBarras,productos[count].nombre,
+            productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
+            //    if (!buscarProductoEnVenta(productos[count3].id)) {
+            //        if (productosSucursal[x].existencia > 0) {
+            let response = await fetch(`/puntoVenta/sucursalProducto/buscarPorCodigo/${codigo.value}`);
+            let producto = await response.json();
+            console.log(producto);
+            if (producto != false) {
+                //alert('Entra aqui');
+                agregarProducto(producto.id, producto.codigoBarras, producto.nombre, 0, producto.existencia,
+                    producto.precio); //, productos[count3].codigoBarras, productos[count3]
+                codigo.value = "";
+                //return;
+            } else
+                alert('EL PRODUCTO NO EXISTE EN EL INVENTARIO');
+            //    .nombre,
+            //    productos[count3].existencia, productos[count3].precio, 1, productos[count3].precio);
+            //            mostrarProductos();
+            //        } else
+            //            alert('PRODUCTO SIN EXISTENCIA');
             //    }
-          //  }
-        //}
-        }catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
+            //      }
+            //    }
+            //  }
+            //}
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
         }
     };
 
-    function agregarProducto(id, codigoBarras ,nombre, tipo, existencia, precio) {
+    function agregarProducto(id, codigoBarras, nombre, tipo, existencia, precio) {
         //for (let x in productosSucursal) {
-          //  for (let count4 in productos) {
-            //    if (productos[count4].id === productosSucursal[x].idProducto) {
-              //      if (productos[count4].id === id) {
-                  //return alert('No hay problema');
-                        if (!buscarProductoEnVenta(id, tipo)) {
-                            if (existencia > 0) {
-                                agregarProductoAVenta(id,codigoBarras,
-                                    nombre,
-                                    existencia, precio, 1, tipo);
-                                mostrarProductos();
-                            } else
-                                alert('PRODUCTO SIN EXISTENCIA');
-                        }
-                    //}
-                //}
-            //}
+        //  for (let count4 in productos) {
+        //    if (productos[count4].id === productosSucursal[x].idProducto) {
+        //      if (productos[count4].id === id) {
+        //return alert('No hay problema');
+        if (!buscarProductoEnVenta(id, tipo)) {
+            if (existencia > 0) {
+                agregarProductoAVenta(id, codigoBarras,
+                    nombre,
+                    existencia, precio, 1, tipo);
+                mostrarProductos();
+            } else
+                alert('PRODUCTO SIN EXISTENCIA');
+        }
+        //}
+        //}
+        //}
         //}
         const palabraBusqueda = document.querySelector('#busquedaProducto');
         palabraBusqueda.value = "";
@@ -816,18 +814,17 @@
             let contador = 1;
             let departamento = "";
 
-            if(palabraBusqueda.value.length == 0)
-            {
+            if (palabraBusqueda.value.length == 0) {
                 document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                 return;
             }
-                
+
             //if (productosSucursal.length == 0) {
 
-                const contenidoProducto = document.querySelector('#consultaBusqueda');
-                const contenidoOriginal = contenidoProducto.innerHTML;
-                contenidoProducto.innerHTML =
-                    `<tr>
+            const contenidoProducto = document.querySelector('#consultaBusqueda');
+            const contenidoOriginal = contenidoProducto.innerHTML;
+            contenidoProducto.innerHTML =
+                `<tr>
             <td colspan="5"><div class="d-flex justify-content-center my-3">
                 <button class="btn btn-info" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -837,24 +834,24 @@
                 </td>
                 </tr>
                 `;
-                //if (productos.length == 0)
-                //    await cargarProductos();
-                await cargarProductosSucursal(palabraBusqueda.value);
-                contenidoProducto.innerHTML = contenidoOriginal;
+            //if (productos.length == 0)
+            //    await cargarProductos();
+            await cargarProductosSucursal(palabraBusqueda.value);
+            contenidoProducto.innerHTML = contenidoOriginal;
             //}
             console.log(productosSucursal);
             for (let x in productosSucursal) {
                 //for (let count5 in productos) {
-                    //if (productos[count5].id === productosSucursal[x].idProducto) {
-                      //  if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                            for (let d in departamentos) {
-                                if (productosSucursal[x].idDepartamento === departamentos[d].id)
-                                    departamento = departamentos[d].nombre;
-                            }
-                            cuerpo = cuerpo + `
-                            <tr onclick="agregarProducto(`+ productosSucursal[x].id + `,'`+productosSucursal[x].codigoBarras+`','`+
-                            productosSucursal[x].nombre + `',` + 0 + `,` + productosSucursal[x].existencia +
-                                `,` + productosSucursal[x].precio + `)">
+                //if (productos[count5].id === productosSucursal[x].idProducto) {
+                //  if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                for (let d in departamentos) {
+                    if (productosSucursal[x].idDepartamento === departamentos[d].id)
+                        departamento = departamentos[d].nombre;
+                }
+                cuerpo = cuerpo + `
+                            <tr onclick="agregarProducto(` + productosSucursal[x].id + `,'` + productosSucursal[x].codigoBarras + `','` +
+                    productosSucursal[x].nombre + `',` + 0 + `,` + productosSucursal[x].existencia +
+                    `,` + productosSucursal[x].precio + `)">
                                 <th scope="row">` + productosSucursal[x].id + `</th>
                                 <td>` + productosSucursal[x].codigoBarras + `</td>
                                 <td>` + productosSucursal[x].nombre + `</td>
@@ -862,8 +859,8 @@
                                 <td>` + departamento + `</td>
                             </tr>
                             `;
-                       // }
-                    //}
+                // }
+                //}
                 //}
 
             }
@@ -880,15 +877,14 @@
             let cuerpo = "";
             const palabraBusqueda = document.querySelector('#busquedaSubproducto');
             //if (subproductosSucursal.length == 0) {
-                if(palabraBusqueda.value.length == 0)
-            {
+            if (palabraBusqueda.value.length == 0) {
                 document.getElementById("consultaBusquedaSubproducto").innerHTML = cuerpo;
                 return;
             }
-                const contenidoProducto = document.querySelector('#consultaBusquedaSubproducto');
-                const contenidoOriginal = contenidoProducto.innerHTML;
-                contenidoProducto.innerHTML =
-                    `<tr>
+            const contenidoProducto = document.querySelector('#consultaBusquedaSubproducto');
+            const contenidoOriginal = contenidoProducto.innerHTML;
+            contenidoProducto.innerHTML =
+                `<tr>
                 <td colspan="5"><div class="d-flex justify-content-center my-3">
                 <button class="btn btn-info" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -897,20 +893,20 @@
                 </div>
                 </td></tr>
                 `;
-                //if (productos.length == 0)
-                    //await cargarProductos();
-                await cargarSubproductosSucursal(palabraBusqueda.value);
-                contenidoProducto.innerHTML = contenidoOriginal;
+            //if (productos.length == 0)
+            //await cargarProductos();
+            await cargarSubproductosSucursal(palabraBusqueda.value);
+            contenidoProducto.innerHTML = contenidoOriginal;
             //}
             for (let i in subproductosSucursal) {
                 //let sucursalP = productosSucursal.find(p => p.id == subproductosSucursal[count].idSucursalProducto);
                 //let producto = productos.find(p => p.id == sucursalP.idProducto);
                 let departamento = departamentos.find(p => p.id == subproductosSucursal[i].idDepartamento);
                 //if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                    cuerpo = cuerpo + `
+                cuerpo = cuerpo + `
                     <tr onclick="agregarProducto('${subproductosSucursal[i].id}','${subproductosSucursal[i].codigoBarras}',
                     '${subproductosSucursal[i].nombre}',` + 1 + `,` + subproductosSucursal[i].existencia +
-                        `,` + subproductosSucursal[i].precio + `)">
+                    `,` + subproductosSucursal[i].precio + `)">
                     <td>` + subproductosSucursal[i].codigoBarras + `</td>
                     <td>` + subproductosSucursal[i].nombre + `</td>
                     <td>` + subproductosSucursal[i].existencia + `</td>
@@ -932,15 +928,14 @@
             let contador = 1;
             let departamento = "";
             //if (ofertasSucursal.length == 0) {
-            if(palabraBusqueda.value.length == 0)
-            {
+            if (palabraBusqueda.value.length == 0) {
                 document.getElementById("consultaBusquedaSubproducto").innerHTML = cuerpo;
                 return;
             }
             const contenidoProducto = document.querySelector('#consultaBusquedaOferta');
             const contenidoOriginal = contenidoProducto.innerHTML;
             contenidoProducto.innerHTML =
-                    `<tr>
+                `<tr>
                 <td colspan="5"><div class="d-flex justify-content-center my-3">
                 <button class="btn btn-info" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -948,11 +943,11 @@
                 </button>
                 </div></td></tr>
                 `;
-                //if (productos.length == 0)
+            //if (productos.length == 0)
 
-                  //  await cargarProductos();
-                await cargarOfertasSucursal(palabraBusqueda.value);
-                contenidoProducto.innerHTML = contenidoOriginal;
+            //  await cargarProductos();
+            await cargarOfertasSucursal(palabraBusqueda.value);
+            contenidoProducto.innerHTML = contenidoOriginal;
             //}
             for (let x in ofertasSucursal) {
                 /*for (let count5 in productos) {
@@ -982,10 +977,10 @@
                 //let producto = productos.find(p => p.id == sucursalP.idProducto);
                 let departamento = departamentos.find(p => p.id == ofertasSucursal[x].idDepartamento);
                 //if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                    cuerpo = cuerpo + `
+                cuerpo = cuerpo + `
                     <tr onclick="agregarProducto(` + ofertasSucursal[x].id + `,
                     '${ofertasSucursal[x].codigoBarras}','${ofertasSucursal[x].nombre}',` + 2 + `,` +
-                        ofertasSucursal[x].existencia + `,` + ofertasSucursal[x].precio + `)">
+                    ofertasSucursal[x].existencia + `,` + ofertasSucursal[x].precio + `)">
                     <td>` + ofertasSucursal[x].codigoBarras + `</td>
                     <td>` + ofertasSucursal[x].nombre + `</td>
                     <td>` + ofertasSucursal[x].existencia + `</td>
@@ -1035,7 +1030,7 @@
 
     async function realizarVentaEfectivo(ticket) {
         try {
-            
+
             let clave = document.querySelector('#claveEmpleado').value;
             let idSucursalEmpleado = "";
             if (!clave.length > 0) {
@@ -1080,9 +1075,8 @@
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
             console.log(venta);
-            if(ticket)
-            {
-                let url = `{{url('/puntoVenta/venta/${venta}?productos=')}}`+json;
+            if (ticket) {
+                let url = `{{url('/puntoVenta/venta/${venta}?productos=')}}` + json;
                 window.open(url, "_blank");
             }
             productosVenta = [];
@@ -1099,7 +1093,7 @@
             document.querySelector('#claveEmpleado').value = "";
             //console.log(p);
             //console.log(funcion);
-            
+
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
@@ -1271,11 +1265,9 @@
         pieModal.innerHTML = cuerpo;
 
     }
-
-    
 </script>
 <!--script src="{{ asset('js\mayusculas.js') }}"></script-->
-<script >
+<script>
     //let valor = $("input[type='number']").inputSpinner();
     //console.log(valor);
 </script>

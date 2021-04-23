@@ -17,6 +17,7 @@ use App\Models\Proveedor;
 use App\Models\Sucursal;
 use App\Models\Sucursal_empleado;
 use App\Models\Sucursal_producto;
+use App\Models\venta_cliente;
 use Illuminate\Http\Request;
 //use PDF;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -39,10 +40,12 @@ class ReporteController extends Controller
         $usuarios = ['verCorte','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         //CORTE DE CAJA INDEX
-        $ventas = Venta::all();
-        $pagos = Pago_venta::all();
-        $devoluciones = Devolucion::all();
-        $pagoCompras= Pago_compra::all();
+        $ventas = Venta::all(['id','tipo','pago','status','idSucursalEmpleado','created_at','updated_at']);
+        $pagos = Pago_venta::all(['idVentaCliente','monto','created_at','updated_at']);
+        $pagoCompras = Pago_compra::all(['idCompra','monto','created_at','updated_at']);
+        $venta_cliente = venta_cliente::all(['id','estado','idCliente','idVenta','created_at','updated_at']);
+        $devoluciones = Devolucion::all(['idVenta','idProducto','precio','cantidad','observacion','created_at','updated_at']);
+       // $pagoCompras= Pago_compra::all();
         $compras = Compra::all();
         $empleados = Empleado::all();
         $productos = Producto::all();
@@ -55,7 +58,7 @@ class ReporteController extends Controller
         $suc_act = Sucursal::findOrFail($idSucursal)->get(['direccion','telefono','status']);
         $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
         //return $sucursalEmpleados;
-        return view('Reportes.corteCaja', compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados','suc_act','detalleV', 'productos', 'suc_prod'));
+        return view('Reportes.corteCaja', compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados','suc_act','detalleV', 'productos', 'suc_prod','venta_cliente'));
     }
     public function corte_cajaView(){
         $idSucursal = session('sucursal');
@@ -76,7 +79,7 @@ class ReporteController extends Controller
 
         $compras= Compra::all();
         $detalleCompra= Detalle_compra::all();
-        $productos= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento']);
+        $productos= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento','created_at','updated_at']);
         $devoluciones= Devolucion::all();
         $departamentos= Departamento::all(['id','nombre']);
         $ventas = Venta::all(['id','tipo','pago','status','idSucursalEmpleado','created_at','updated_at']);
