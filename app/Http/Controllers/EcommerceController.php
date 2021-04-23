@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\Producto;
 use App\Models\Venta;
+use App\Models\Sucursal;
+use App\Models\Sucursal_producto;
+use App\Models\Departamento;
 use App\Models\Detalle_venta;
 use Illuminate\Http\Request;
 use DateInterval;
@@ -12,23 +15,50 @@ class EcommerceController extends Controller
 {
     public function __construct()
     {
+        
+        if(!session()->has('sucursalEcommerce'))
+        {
+            $id = Sucursal::all()->first()->id; 
+            session(['sucursalEcommerce' => $id]);
+        }
+        /*else
+        {
+            session()->forget('sucursalEcommerce');
+            session(['sucursalEcommerce' => 1]);
+        }**/
         //return 'Entra aqui';
         //$this->middleware('isEmpleado');
         
     }
     public function index()
     {
+        //return $id = Sucursal::all()->first()->id; 
         //$this->middleware('isCliente');
         //return 'Esta entrando x2';
         //return Producto::all()[0];
         $productos = [];//Producto::all();
         $productosNuevos = $this->productosNuevos();
         $productosDestacados = $this->productosDestacados();
-        return view('Ecommerce.index',compact('productos','productosNuevos','productosDestacados'));
+        $sucursales = Sucursal::all();
+        $departamentos = Departamento::where('ecommerce', '=',1)->get(['id','nombre']);
+        return view('Ecommerce.index',compact('productos','productosNuevos','productosDestacados',
+        'sucursales','departamentos'));
+
         //return session('idCliente');
         //return session('idEmpleado');
     }
 
+    public function verProducto($id)
+    {
+        $sucursales = Sucursal::all();
+        $departamentos = Departamento::where('ecommerce', '=',1)->get(['id','nombre']);
+        $producto = Producto::findOrFail($id)->first();
+        $productoSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursalEcommerce'))
+        ->where('idProducto','=',$id)->first();
+        $producto->precio = $productoSucursal->precio;
+        $producto->existencia = $productoSucursal->existencia;
+        return view('Ecommerce.producto',compact('sucursales','departamentos','producto'));
+    }
     public function productosNuevos()
     {
         //Producto::where('id','=',1)->update(['created_at' => now()]);
@@ -112,13 +142,26 @@ class EcommerceController extends Controller
         if(isset($carrito))
         {
             $producto = Producto::findOrFail($id);
-            array_push($carrito,$producto);
-            session(['carrito' => $carrito]);
-            return $carrito;//'Si existe el carrito';
+            $ids = array_column($carrito, 'id');
+            $pos = array_search($producto->id, $ids);
+            //return json_encode($pos);
+            if($pos === false)
+            {
+                $producto['cantidad'] = 1;
+                array_push($carrito,$producto);
+                session(['carrito' => $carrito]);
+            }
+            else{
+                $carrito[$pos]['cantidad'] = $carrito[$pos]['cantidad'] + 1;
+                session(['carrito' => $carrito]);
+                //return 'Si existe el carrito';
+            }
+            return $carrito;
         }
         else{
             $carrito = [];
             $producto = Producto::findOrFail($id);
+            $producto['cantidad'] = 1;
             array_push($carrito,$producto);
             session(['carrito' => $carrito]);
             return $carrito;//'No existe el carrito';

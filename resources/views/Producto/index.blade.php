@@ -164,15 +164,14 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         <div class="mt-2 mx-2"> </div>
                         <h6 class="mx-3 mt-2"> BUSCAR POR:</h6>
                         <div class=" input-group-text my-auto">
-                            <input type="radio" value="folio" name="checkbox2" onchange="buscar()"
-                                id="codigoBusq">
+                            <input type="radio" value="folio" name="checkbox2" onchange="buscar()" id="codigoBusq">
                             <label class="ml-1 my-0" for="codigoBusq">
                                 CODIGO
                             </label>
                         </div>
                         <div class=" input-group-text  ml-1 my-auto ">
-                            <input type="radio" value="nombre" name="checkbox2" onchange="buscar()"
-                                id="nombreBusq" checked>
+                            <input type="radio" value="nombre" name="checkbox2" onchange="buscar()" id="nombreBusq"
+                                checked>
                             <label class="ml-1 my-0" for="nombreBusq">
                                 NOMBRE
                             </label>
@@ -242,7 +241,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 <div>
                 </div>
                 <div class="col modal-footer input-group">
-                    <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal" onclick="">Close</button>
+                    <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal" onclick="">CERRAR</button>
                 </div>
             </div>
         </div>
@@ -459,10 +458,10 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" >
-                <div class="row" style="height:400px;overflow-y:auto;" id="cuerpoInventarioRapido" >
-                <!-- TABLA -->
-                AQUI VA EL INVENTARIO RAPIDO
+            <div class="modal-body">
+                <div class="row" style="height:400px;overflow-y:auto;" id="cuerpoInventarioRapido">
+                    <!-- TABLA -->
+                    AQUI VA EL INVENTARIO RAPIDO
                 </div>
             </div>
             <div class="modal-footer">
@@ -585,52 +584,78 @@ function buscarFiltroNombre2() {
         if (producto != null) {
 
             //if (opcFolioNombre === 'nombre') {
-                //$("#idDepartamento").prop('disabled', false);
-                //$("#bajosExistencia").prop('disabled', false);
-                //
-                let comparar = "";
-                if (opcFolioNombre === 'nombre')
-                    comparar = producto.nombre.toUpperCase();
-                if (opcFolioNombre === 'folio')
-                    comparar = producto.codigoBarras.toUpperCase();
-                
-                //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
-                if (comparar.includes(palabraBusqueda.value.toUpperCase())) {
-                    //BUSCAR POR DEPARTAMENTO
-                    //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
-                    let depa = document.querySelector('#idDepartamento');
-                    if (depa.value != "") {
-                        if (producto.idDepartamento === parseInt(depa.value)) {
-                            //Cargar datos encontrados filtrado depto, nombre
-                            //BUSCAR PRODUCTOS BAJOS DE EXISTENCIA
-                            let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
-                            if (seleccion != null) {
-                                opcBajosE = seleccion.value; //VARIABLE opcBajosE?
-                                if (opcBajosE === 'existencia') {
-                                    if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
-                                        //PRODUCTOS POR NOMBRE, DEPTO Y BAJOS EXISTENCIA
-                                        let departamento = "";
-                                        for (count21 in d) {
-                                            if (producto.idDepartamento === d[count21].id) {
-                                                departamento = d[count21].nombre;
-                                            }
+            //$("#idDepartamento").prop('disabled', false);
+            //$("#bajosExistencia").prop('disabled', false);
+            //
+            let comparar = "";
+            if (opcFolioNombre === 'nombre')
+                comparar = producto.nombre.toUpperCase();
+            if (opcFolioNombre === 'folio')
+                comparar = producto.codigoBarras.toUpperCase();
+
+            //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
+            if (comparar.includes(palabraBusqueda.value.toUpperCase())) {
+                //BUSCAR POR DEPARTAMENTO
+                //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
+                let depa = document.querySelector('#idDepartamento');
+                if (depa.value != "") {
+                    if (producto.idDepartamento === parseInt(depa.value)) {
+                        //Cargar datos encontrados filtrado depto, nombre
+                        //BUSCAR PRODUCTOS BAJOS DE EXISTENCIA
+                        let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
+                        if (seleccion != null) {
+                            opcBajosE = seleccion.value; //VARIABLE opcBajosE?
+                            if (opcBajosE === 'existencia') {
+                                if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
+                                    //PRODUCTOS POR NOMBRE, DEPTO Y BAJOS EXISTENCIA
+                                    let departamento = "";
+                                    for (count21 in d) {
+                                        if (producto.idDepartamento === d[count21].id) {
+                                            departamento = d[count21].nombre;
                                         }
-                                        let id = producto.id;
-                                        let productosAdd = {
-                                            id: id,
-                                            codigoBarras: producto.codigoBarras,
-                                            nombre: producto.nombre,
-                                            existencia: productosSucursal[x].existencia,
-                                            idDepartamento: producto.idDepartamento
-                                        };
-                                        productosList.push(productosAdd);
-
-
                                     }
+                                    let id = producto.id;
+                                    let productosAdd = {
+                                        id: id,
+                                        codigoBarras: producto.codigoBarras,
+                                        nombre: producto.nombre,
+                                        existencia: productosSucursal[x].existencia,
+                                        idDepartamento: producto.idDepartamento
+                                    };
+                                    productosList.push(productosAdd);
+
+
                                 }
-                            } else {
-                                //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE, DEPTO
-                                // buscarFiltroNombre();
+                            }
+                        } else {
+                            //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE, DEPTO
+                            // buscarFiltroNombre();
+                            let departamento = "";
+                            for (count21 in d) {
+                                if (producto.idDepartamento === d[count21].id) {
+                                    departamento = d[count21].nombre;
+                                }
+                            }
+                            let id = producto.id;
+                            let productosAdd = {
+                                id: id,
+                                codigoBarras: producto.codigoBarras,
+                                nombre: producto.nombre,
+                                existencia: productosSucursal[x].existencia,
+                                idDepartamento: producto.idDepartamento
+                            };
+                            productosList.push(productosAdd);
+                        }
+                    }
+                } else {
+                    //VERIFICAR BAJOS EXISTENCIA 
+                    //BUSCAR PRODUCTOS POR NOMBRE, BAJOS DE EXISTENCIA
+                    let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
+                    if (seleccion != null) {
+                        opcBajosE = seleccion.value; //VARIABLE opcBajosE?
+                        if (opcBajosE === 'existencia') {
+                            if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
+                                //PRODUCTOS POR NOMBRE Y BAJOS EXISTENCIA
                                 let departamento = "";
                                 for (count21 in d) {
                                     if (producto.idDepartamento === d[count21].id) {
@@ -649,54 +674,28 @@ function buscarFiltroNombre2() {
                             }
                         }
                     } else {
-                        //VERIFICAR BAJOS EXISTENCIA 
-                        //BUSCAR PRODUCTOS POR NOMBRE, BAJOS DE EXISTENCIA
-                        let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
-                        if (seleccion != null) {
-                            opcBajosE = seleccion.value; //VARIABLE opcBajosE?
-                            if (opcBajosE === 'existencia') {
-                                if (productosSucursal[x].existencia <= productosSucursal[x].minimoStock) {
-                                    //PRODUCTOS POR NOMBRE Y BAJOS EXISTENCIA
-                                    let departamento = "";
-                                    for (count21 in d) {
-                                        if (producto.idDepartamento === d[count21].id) {
-                                            departamento = d[count21].nombre;
-                                        }
-                                    }
-                                    let id = producto.id;
-                                    let productosAdd = {
-                                        id: id,
-                                        codigoBarras: producto.codigoBarras,
-                                        nombre: producto.nombre,
-                                        existencia: productosSucursal[x].existencia,
-                                        idDepartamento: producto.idDepartamento
-                                    };
-                                    productosList.push(productosAdd);
-                                }
+                        //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE
+                        let departamento = "";
+                        for (count21 in d) {
+                            if (producto.idDepartamento === d[count21].id) {
+                                departamento = d[count21].nombre;
                             }
-                        } else {
-                            //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRE
-                            let departamento = "";
-                            for (count21 in d) {
-                                if (producto.idDepartamento === d[count21].id) {
-                                    departamento = d[count21].nombre;
-                                }
-                            }
-                            let id = producto.id;
-                            let productosAdd = {
-                                id: id,
-                                codigoBarras: producto.codigoBarras,
-                                nombre: producto.nombre,
-                                existencia: productosSucursal[x].existencia,
-                                idDepartamento: producto.idDepartamento
-                            };
-                            productosList.push(productosAdd);
                         }
+                        let id = producto.id;
+                        let productosAdd = {
+                            id: id,
+                            codigoBarras: producto.codigoBarras,
+                            nombre: producto.nombre,
+                            existencia: productosSucursal[x].existencia,
+                            idDepartamento: producto.idDepartamento
+                        };
+                        productosList.push(productosAdd);
                     }
-                    //  }
-                } else {
-                    // MENSAJE PRODUCTOS NO ENCONTRADOS
                 }
+                //  }
+            } else {
+                // MENSAJE PRODUCTOS NO ENCONTRADOS
+            }
             /*} else if (opcFolioNombre === 'folio') {
                 $("#idDepartamento").prop('disabled', true);
                 $("#bajosExistencia").prop('disabled', true);
@@ -720,18 +719,18 @@ function buscarFiltroNombre2() {
             }*/
         } else {
             productoNoEncontrado.push(productosSucursal[x]);
-            
+
         }
         //}
     }
-    console.log("Productos no encontrados",productoNoEncontrado);
+    console.log("Productos no encontrados", productoNoEncontrado);
     grupos = parseInt(productosList.length / numPorGrupo);
     pagina = 0;
     actualizarCabecera();
     rellenar();
 };
-function actualizarCabecera()
-{
+
+function actualizarCabecera() {
     let contador = 0;
     let costo_inventario = 0;
     let precio_inventario = 0;
@@ -773,7 +772,7 @@ function actualizarCabecera()
     document.getElementById("cantProdInv").innerHTML = cantProdInventario;
     document.getElementById("cantProdSub").innerHTML = cantSubproductos;
     document.getElementById("cantProdOferta").innerHTML = cantOfertas;
-    
+
 }
 /*
 
@@ -1145,7 +1144,23 @@ function rellenar() {
     document.getElementById("cantProdSub").innerHTML = cantSubproductos;
     document.getElementById("cantProdOferta").innerHTML = cantOfertas;*/
 };
-
+let imagenUrlAuxiliar = "";
+function previsualizarImagen(id) {
+    const seleccionImagen = document.querySelector('#' + id);
+    const imagen = document.querySelector('#imagenPrevisualizacion');
+    const archivos = seleccionImagen.files;
+    if (!archivos || !archivos.length) {
+        imagen.src = "";
+        return;
+    }
+    // Ahora tomamos el primer archivo, el cual vamos a previsualizar
+    const primerArchivo = archivos[0];
+    // Lo convertimos a un objeto de tipo objectURL
+    const objectURL = URL.createObjectURL(primerArchivo);
+    // Y a la fuente de la imagen le ponemos el objectURL
+    imagen.src = objectURL;
+    imagenUrlAuxiliar= objectURL;
+}
 function info4(id) {
     //Modal
     //let x1= 0;
@@ -1159,81 +1174,98 @@ function info4(id) {
     let producto = productos.find(p => p.id == id);
     let productoSucursal = productosSucursal.find(p => p.idProducto == producto.id);
     //for (let j in productosSucursal) {
-        //for (count10 in productos) {
-            //if (productos[count10].id === productosSucursal[j].idProducto) {
-                //if (productos[count10].id === id) {
-                    let departamentos = "";
-                    for (count11 in d) {
-                        if (producto.idDepartamento === d[count11].id) {
-                            departamentos = departamentos +
-                                `<option value="${d[count11].id}" selected>${d[count11].nombre}</option>`;
-                            //departamento = d[count11].nombre;
-                        } else {
-                            departamentos = departamentos +
-                                `<option value="${d[count11].id}">${d[count11].nombre}</option>`;
-                        }
-                    }
-                    let receta = "";
-                    if (producto.receta == "NO") {
-                        receta = `<option value="NO" selected>${producto.receta}</option>
+    //for (count10 in productos) {
+    //if (productos[count10].id === productosSucursal[j].idProducto) {
+    //if (productos[count10].id === id) {
+    let departamentos = "";
+    for (count11 in d) {
+        if (producto.idDepartamento === d[count11].id) {
+            departamentos = departamentos +
+                `<option value="${d[count11].id}" selected>${d[count11].nombre}</option>`;
+            //departamento = d[count11].nombre;
+        } else {
+            departamentos = departamentos +
+                `<option value="${d[count11].id}">${d[count11].nombre}</option>`;
+        }
+    }
+    let receta = "";
+    if (producto.receta == "NO") {
+        receta = `<option value="NO" selected>${producto.receta}</option>
                                       <option value="SI">SI</option>`
-                    } else {
-                        receta = `<option value="SI" selected>${producto.receta}</option>
+    } else {
+        receta = `<option value="SI" selected>${producto.receta}</option>
                                       <option value="NO">NO</option>`
-                    }
+    }
 
-                    x1 = producto.id;
-                    x = producto.id;
-                    idProdSuc = productoSucursal.id;
-                    ms = productoSucursal.minimoStock;
-                    let urlImagen = "";
-                    if (producto.imagen != null)
-                        urlImagen = "{{asset('storage')}}" + "/" + producto.imagen;
-                    //console.log(urlImagen);
-                    btnAgregarSubprod =
-                        ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
+    x1 = producto.id;
+    x = producto.id;
+    idProdSuc = productoSucursal.id;
+    ms = productoSucursal.minimoStock;
+    let urlImagen = "";
+    let cuerpoImagen = `
+    <img width="200" class="mx-auto" src="${urlImagen}" alt="EL PRODUCTO NO CONTIENE IMAGEN"  id="imagenPrevisualizacion">
+    <input type="file" name="imagen" id="imagen" class="form-control mx-auto"
+    onchange="previsualizarImagen('imagen')">
+                                            
+                                            <br/>`;
+    if (producto.imagen != null)
+    if (producto.imagen.length > 0)
+    {
+        urlImagen = "{{asset('storage')}}" + "/" + producto.imagen;
+        cuerpoImagen = `
+        <img width="200" class="mx-auto" src="${urlImagen}" alt="${urlImagen}"  id="imagenPrevisualizacion">
+        <input type="file" name="imagen" id="imagen" class="form-control mx-auto"
+        onchange="previsualizarImagen('imagen')">
+                                            
+                                            <br/>
+                                            `
+    }
+        
+    //console.log(urlImagen);
+    btnAgregarSubprod =
+        ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
                                              <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                                              AGREGAR A SUBPRODUCTO </a>`;
-                    let botonesProducto =
-                        `<button class="btn btn-outline-primary mb-2" id="btnEditar" onclick="habilitarEditar(${x})" value=true> 
+    let botonesProducto =
+        `<button class="btn btn-outline-primary mb-2" id="btnEditar" onclick="habilitarEditar(${x})" value=true> 
                                             <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
                                             EDITAR</button>
                                             <br/> 
                                             <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_precio2"  onclick=" return modificarPrecio( ` +
-                        idProdSuc + `)" value="` + idProdSuc +
-                        `">
+        idProdSuc + `)" value="` + idProdSuc +
+        `">
                                            EDITAR PRECIO
                                             </button>
                                             <button type="button" class="btn btn-outline-primary mb-2 " data-toggle="modal" href=".modal_costo"  onclick=" return modificarCosto( ` +
-                        idProdSuc + `)" value="` + idProdSuc +
-                        `">
+        idProdSuc + `)" value="` + idProdSuc +
+        `">
                                            EDITAR COSTO
                                             </button>
                                             <br/>
                                             <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta3"  onclick=" return agregarProducto( ` +
-                        idProdSuc + `)" value="` + idProdSuc + `">
+        idProdSuc + `)" value="` + idProdSuc + `">
                                             MODIFICAR EXISTENCIA
                                             </button>
                                             <br/>
                                     `;
-                    let btnDarBaja =
-                        `<a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/${x}')}}>` +
-                        //x + `', [` + x + `])}}"> 
-                        `<img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
+    let btnDarBaja =
+        `<a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/${x}')}}">` +
+        
+        `<img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              DAR DE BAJA </a> 
                                         </div>
 
                                         <br/>
                                     `;
-                    if (!eliminarProducto)
-                        btnDarBaja = `<a class="btn btn-outline-danger mb-2 mt-4" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
+    if (!eliminarProducto)
+        btnDarBaja = `<a class="btn btn-outline-danger mb-2 mt-4" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              DAR DE BAJA </a></div>
                                         <br/>
                                     `;
-                    botonesProducto = botonesProducto + btnDarBaja;
-                    if (!modificarProducto) {
-                        botonesProducto = `<button class="btn btn-outline-primary mb-2 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
+    botonesProducto = botonesProducto + btnDarBaja;
+    if (!modificarProducto) {
+        botonesProducto = `<button class="btn btn-outline-primary mb-2 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
                                             <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
                                             EDITAR  </button>
                                             <br/> 
@@ -1248,15 +1280,15 @@ function info4(id) {
                                             MODIFICAR EXISTENCIA
                                             </button>
                                             <br/>`;
-                        botonesProducto = botonesProducto + btnDarBaja;
-                        btnAgregarSubprod =
-                            ` <button class="btn btn-outline-primary " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
+        botonesProducto = botonesProducto + btnDarBaja;
+        btnAgregarSubprod =
+            ` <button class="btn btn-outline-primary " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
                                              <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                                              AGREGAR A SUBPRODUCTO </button>`;
-                    }
+    }
 
-                    datosProduct =
-                        `
+    datosProduct =
+        `
                                     <div class="col-3">
                                             
                                             <label for="codigoBarras">
@@ -1282,52 +1314,57 @@ function info4(id) {
                                             <label for="idDepartamento">
                                                 <h6  class="ml-4"> {{'DEPARTAMENTO'}}</h6>
                                             </label>
-                                            <br />
+                                            <br /><br />
+                                            <label for="Imagen">
+                                                <h6 class="ml-4"> <strong>{{'FOTO '}}</strong></h6>
+                                            </label>
                                         </div>
                                         <div class="col-5">
+                                        
                                         <fieldset disabled id="formEditar">
+                                        <form id="editarProducto">
                                             <!--El name debe ser igual al de la base de datos-->
                                             <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase " placeholder="Ingresar codigo de barras" value="` +
-                        producto.codigoBarras +
-                        `" required autocomplete="codigoBarras" autofocus>
+        producto.codigoBarras +
+        `" required autocomplete="codigoBarras" autofocus>
                                             <br />
                                             <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="Nombre productos" value="` +
-                        producto.nombre +
-                        ` " autofocus required>
+        producto.nombre +
+        ` " autofocus required>
                                             <br />
                                             <textarea name="descripcion" id="descripcion" class="form-control text-uppercase" placeholder="Descripcion del producto" rows="3" cols="23" required>` +
-                        producto.descripcion +
-                        `</textarea>
+        producto.descripcion +
+        `</textarea>
                                             <br />
                                             <input type="number" name="minimoStock" id="minimoStock" class="form-control text-uppercase" placeholder="Ingrese el minimo de productos permitidos" value="` +
-                        ms + `" autofocus required>
+        ms + `" autofocus required>
                                             <br />
                                             <select class="form-control text-uppercase" name="receta" id="receta">` +
-                        receta +
-                        `</select>
+        receta +
+        `</select>
                                             <br />
                                             <select class="form-control text-uppercase" name="departamento" id="departamento">` +
-                        departamentos +
-                        `</select>
+        departamentos +
+        `</select>
+        
+                                            <br/>`
+                                            
+                                            +cuerpoImagen+`
+                                            </form>
                                             </fieldset>
                                         </div>
-                                        <div class="col-4 text-center">
-                                            <label for="Imagen">
-                                                <h5 class="mb-1"> <strong>{{'FOTO '}}</strong></h5>
-                                            </label>
-                                            <br/>
-                                            <img class="mb-2" src="${urlImagen}" alt="" width="200"> 
+                                        <div class="col-4 text-center"> 
                                              ` + botonesProducto;
 
 
-                    btnAgregarSubprod =
-                        ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
+    btnAgregarSubprod =
+        ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
                                              <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                                              AGREGAR A SUBPRODUCTO </a> 
                                              `
-                //}
-            //}
-        //}
+    //}
+    //}
+    //}
     //}
     document.getElementById("subAgregar").innerHTML = btnAgregarSubprod;
     document.getElementById("resultados").innerHTML = datosProduct;
@@ -1366,33 +1403,33 @@ function modificarPrecio(idSP) {
         }
 
     }
-        /*
-        $("#volverInfo4").click(function() {
-            info4(idProd);
-        });
-        */
-        let btnGuardar = document.getElementById("actPrecio2");
-        btnGuardar.value = idSucPro;
-        // $("#actPrecioCosto").removeAttr('onclick');
-        /*
-        $("#actPrecioCosto").click(function() {
-            
-        });
-        */
-        document.getElementById("titulo").innerHTML = nombreProd;
-        document.getElementById("modiPrecio").innerHTML = cambiarPrecio;
-        /*
-        $("input[name='precio_nuevo']").bind('keypress', function(tecla) {
-            let code = tecla.charCode;
-          //  let tam = document.getElementById("precio_nuevo");
-            //let tam2= tam.value.length;
-            if (code == '.') { // backspace.
-                return true;
-            } else {
-                return false;
-            }
-        });
-        */
+    /*
+    $("#volverInfo4").click(function() {
+        info4(idProd);
+    });
+    */
+    let btnGuardar = document.getElementById("actPrecio2");
+    btnGuardar.value = idSucPro;
+    // $("#actPrecioCosto").removeAttr('onclick');
+    /*
+    $("#actPrecioCosto").click(function() {
+        
+    });
+    */
+    document.getElementById("titulo").innerHTML = nombreProd;
+    document.getElementById("modiPrecio").innerHTML = cambiarPrecio;
+    /*
+    $("input[name='precio_nuevo']").bind('keypress', function(tecla) {
+        let code = tecla.charCode;
+      //  let tam = document.getElementById("precio_nuevo");
+        //let tam2= tam.value.length;
+        if (code == '.') { // backspace.
+            return true;
+        } else {
+            return false;
+        }
+    });
+    */
 
 
 
@@ -1445,21 +1482,21 @@ function modificarCosto(idSP) {
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
         document.getElementById("titulo2").innerHTML = nombreProd;
         document.getElementById("modiCosto").innerHTML = cambiarCosto;
-    /*
-        $("input[name='costo']").bind('keypress', function(tecla) {
-            if (this.value.length >= 10) return false;
-            let code = tecla.charCode;
-            if (code == 8) { // backspace.
-                return true;
-            } else if (code >= 48 && code <= 57) { // is a number.
-                return true;
-            } else { // other keys.
-                return false;
-            }
-        });
-        */
+        /*
+            $("input[name='costo']").bind('keypress', function(tecla) {
+                if (this.value.length >= 10) return false;
+                let code = tecla.charCode;
+                if (code == 8) { // backspace.
+                    return true;
+                } else if (code >= 48 && code <= 57) { // is a number.
+                    return true;
+                } else { // other keys.
+                    return false;
+                }
+            });
+            */
     }
-   }
+}
 
 function agregarProducto(idSP) {
 
@@ -1563,65 +1600,65 @@ function agregarSubproducto(idSP) {
 }
 
 
-    async function actPrecio() {
-        let btnGuardar = document.getElementById("actPrecio2");
-        let idSucProd = btnGuardar.value;
-        try {
-            //return alert(idSucProd);
-            //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
-            const precio = document.querySelector('#precio_nuevo');
-            /*
+async function actPrecio() {
+    let btnGuardar = document.getElementById("actPrecio2");
+    let idSucProd = btnGuardar.value;
+    try {
+        //return alert(idSucProd);
+        //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
+        const precio = document.querySelector('#precio_nuevo');
+        /*
             if (pago.value.length === 0)
                 return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
             if (parseFloat(pago.value) < parseFloat(total))
                 return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
            */
-            let funcion = $.ajax({
-                // metodo: puede ser POST, GET, etc
-                method: "POST",
-                // la URL de donde voy a hacer la petición
-                url: `/puntoVenta/productoSuc/actPrecio/${idSucProd}`,
-                // los datos que voy a enviar para la relación
-                data: {
-                    precio: parseFloat(precio.value),
-                    _token: "{{ csrf_token() }}"
-                    //  id: idSucProd
-                }
-                // si tuvo éxito la petición
-            }).done(function(respuesta) {
-                $('#modal_precio2').modal('hide');
-               // $('#detalleProducto').modal('hide'); //cerrar?
+        let funcion = $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `/puntoVenta/productoSuc/actPrecio/${idSucProd}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                precio: parseFloat(precio.value),
+                _token: "{{ csrf_token() }}"
+                //  id: idSucProd
+            }
+            // si tuvo éxito la petición
+        }).done(function(respuesta) {
+            $('#modal_precio2').modal('hide');
+            // $('#detalleProducto').modal('hide'); //cerrar?
 
-                //alert(respuesta);
-                console.log(respuesta); //JSON.stringify(respuesta));
-            });
-            alert("PRECIO ACTUALIZADO CORRECTAMENTE");
-            //await act_datos();
-            //await buscarFiltroNombre2();
-            
-            document.getElementById(`precio${idSucProd}`).textContent = precio.value;
-            productosSucursal.find(p => p.id == idSucProd).precio = precio.value;
-            actualizarCabecera();
-            // refrescar();
-            // await cargarProductosSucursal();
-        } catch (err) {
-            console.log("Error al realizar la petición AJAX: " + err.message);
+            //alert(respuesta);
+            console.log(respuesta); //JSON.stringify(respuesta));
+        });
+        alert("PRECIO ACTUALIZADO CORRECTAMENTE");
+        //await act_datos();
+        //await buscarFiltroNombre2();
+
+        document.getElementById(`precio${idSucProd}`).textContent = precio.value;
+        productosSucursal.find(p => p.id == idSucProd).precio = precio.value;
+        actualizarCabecera();
+        // refrescar();
+        // await cargarProductosSucursal();
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+};
+async function act_datos() {
+    let response = "Sin respuesta";
+    try {
+        response = await fetch(`/puntoVenta/act_inventario`);
+        if (response.ok) {
+            //productosSucursal = await response.json();
+            let datos = await response.json();
+            productosSucursal = datos['productosSucursal'];
+            subproductos = datos['subproducto']
+        } else {
+            console.log("No responde :v");
+            console.log(response);
+            throw new Error(response.statusText);
         }
-    };
-    async function act_datos() {
-        let response = "Sin respuesta";
-        try {
-            response = await fetch(`/puntoVenta/act_inventario`);
-            if (response.ok) {
-                //productosSucursal = await response.json();
-                let datos = await response.json();
-                productosSucursal = datos['productosSucursal'];
-                subproductos = datos['subproducto']
-            } else {
-                console.log("No responde :v");
-                console.log(response);
-                throw new Error(response.statusText);
-                    }
     } catch (err) {
         console.log("Error al realizar la petición AJAX: X " + err.message);
     }
@@ -1639,36 +1676,36 @@ async function actCosto() {
             if (parseFloat(pago.value) < parseFloat(total))
                 return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
            */
-            let funcion = $.ajax({
-                // metodo: puede ser POST, GET, etc
-                method: "POST",
-                // la URL de donde voy a hacer la petición
-                url: `/puntoVenta/productoSuc/actCosto/${idSucProd}`,
-                // los datos que voy a enviar para la relación
-                data: {
-                    costo: parseFloat(costo.value),
-                    _token: "{{ csrf_token() }}"
-                    //  id: idSucProd
-                }
-                // si tuvo éxito la petición
-            }).done(function(respuesta) {
-                //alert(respuesta);
-                console.log(respuesta); //JSON.stringify(respuesta));
-            });
-            $('#modal_costo').modal('hide');
-           // $('#detalleProducto').modal('hide');
-            alert("COSTO ACTUALIZADO CORRECTAMENTE");
-            // refrescar();
-            //await act_datos();
-            //await buscarFiltroNombre2();
-            
-            document.getElementById(`costo${idSucProd}`).textContent = costo.value;
-            productosSucursal.find(p => p.id == idSucProd).costo = costo.value;
-            actualizarCabecera();
-        } catch (err) {
-            console.log("Error al realizar la petición AJAX: " + err.message);
-        }
-    
+        let funcion = $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `/puntoVenta/productoSuc/actCosto/${idSucProd}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                costo: parseFloat(costo.value),
+                _token: "{{ csrf_token() }}"
+                //  id: idSucProd
+            }
+            // si tuvo éxito la petición
+        }).done(function(respuesta) {
+            //alert(respuesta);
+            console.log(respuesta); //JSON.stringify(respuesta));
+        });
+        $('#modal_costo').modal('hide');
+        // $('#detalleProducto').modal('hide');
+        alert("COSTO ACTUALIZADO CORRECTAMENTE");
+        // refrescar();
+        //await act_datos();
+        //await buscarFiltroNombre2();
+
+        document.getElementById(`costo${idSucProd}`).textContent = costo.value;
+        productosSucursal.find(p => p.id == idSucProd).costo = costo.value;
+        actualizarCabecera();
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+
 }
 
 async function actExistencia() {
@@ -1706,7 +1743,7 @@ async function actExistencia() {
         //  refrescar();
         //await act_datos();
         //await buscarFiltroNombre2();
-        
+
         console.log(document.getElementById(`existenciaP${idSucProd}`));
         document.getElementById(`existenciaP${idSucProd}`).textContent = parseInt(existencia.value);
         productosSucursal.find(p => p.id == idSucProd).existencia = parseInt(existencia.value);
@@ -1752,7 +1789,7 @@ async function agregarSubprod() {
         //refrescar();
         //await act_datos();
         //await buscarFiltroNombre2();
-        
+
         document.getElementById(`subpExistencia${idSucProd}`).textContent = cantidad.value;
         subproductos.find(p => p.id == idSucProd).existencia = cantidad.value;
         actualizarCabecera();
@@ -1814,10 +1851,12 @@ function infoSubproducto(id) {
                                 ` </option>
                                             </select>
                                             <br />
-                                            <input type="text" name="piezas" id="piezas" class="form-control text-uppercase" placeholder="PIEZAS" value="` + subproductos[h].piezas +
+                                            <input type="text" name="piezas" id="piezas" class="form-control text-uppercase" placeholder="PIEZAS" value="` +
+                                subproductos[h].piezas +
                                 ` " autofocus required disabled>
                                             <br />
-                                            <input type="text" name="observacion" id="observacion" class="form-control text-uppercase" placeholder="OBSERVACION" value="` + subproductos[h]
+                                            <input type="text" name="observacion" id="observacion" class="form-control text-uppercase" placeholder="OBSERVACION" value="` +
+                                subproductos[h]
                                 .observacion +
                                 ` " autofocus required disabled>
                                             <br />
@@ -1925,14 +1964,15 @@ async function productosEnBajaSucursal() {
     for (let t in prod_baja) {
         let producto = productos.find(p => p.id == prod_baja[t].idProducto);
         if (producto != null) {
-       // for (let x in productos) {
+            // for (let x in productos) {
             //if (productos[x].id === prod_baja[t].idProducto) {
-                cont = cont + 1;
-                let btnAlta = `<a class="btn btn-primary" href="{{ url('/puntoVenta/altaProducto/` + producto.id + `')}}"> ALTA </a>`;
-                if (!modificarProducto)
-                    btnAlta =
-                    `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" > ALTA </button>`;
-                cuerpo = cuerpo + `
+            cont = cont + 1;
+            let btnAlta = `<a class="btn btn-primary" href="{{ url('/puntoVenta/altaProducto/` + producto.id +
+                `')}}"> ALTA </a>`;
+            if (!modificarProducto)
+                btnAlta =
+                `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" > ALTA </button>`;
+            cuerpo = cuerpo + `
                     <tr>
                     <th >` + cont + `</th>
                     <td>` + producto.codigoBarras + `</td>
@@ -1941,7 +1981,7 @@ async function productosEnBajaSucursal() {
                     <td>` + producto.idDepartamento + `</td>
                     <td>` + producto.receta + `</td>
                     <td>` + btnAlta +
-                    ` 
+                ` 
                     </td>        
                     </tr>
                      `;
@@ -2069,7 +2109,7 @@ async function actualizar(i) {
         alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
         //  refrescar();
         ignorar(i);
-        
+
         document.getElementById(`existenciaP${idSucProd}`).textContent = existencia;
         productosSucursal.find(p => p.id == idSucProd).existencia = existencia;
         actualizarCabecera();
@@ -2105,6 +2145,11 @@ async function editarProducto(x) {
         const minimoStock = parseInt(document.getElementById("minimoStock").value);
         const receta = document.getElementById("receta").value;
         const departamento = parseInt(document.getElementById("departamento").value);
+        const imagen = document.getElementById("imagen");
+        const formProducto = document.getElementById("editarProducto");
+        var data = new FormData(formProducto);
+        data.append('_token', "{{ csrf_token() }}");
+        data.append('ajax', true);
         if (codigoBarras.length == 0 || nombre.length == 0 || minimoStock.length == 0) {
             return alert('EXISTE UN ERROR CON SUS DATOS, REVISELOS POR FAVOR');
         }
@@ -2119,25 +2164,29 @@ async function editarProducto(x) {
             url: `/puntoVenta/producto/editar/${x}`,
             // los datos que voy a enviar para la relación
             //dataType: 'json',
-            mode: 'no-cors',
-            data: {
-                codigoBarras: codigoBarras,
+            cache: false,
+            contentType: false,
+            processData: false,
+            //mode: 'no-cors',
+            data: data//{
+                /*codigoBarras: codigoBarras,
                 nombre: nombre,
                 descripcion: descripcion,
                 minimoStock: minimoStock,
                 receta: receta,
                 idDepartamento: departamento,
+                imagen: imagen,
                 '_token': "{{ csrf_token() }}",
                 ajax: true
 
-            },
+            }*/,
             //_token: $("meta[name='csrf-token']").attr("content")
             //_token: "{{ csrf_token() }}",
             //processData: false,  // tell jQuery not to process the data
             //contentType: false
         });
         console.log(spp);
-        if (spp == 1)
+        if (spp.length> 0)
             alert("DATOS ACTUALIZADOS CORRECTAMENTE");
         else
             return;
@@ -2145,6 +2194,7 @@ async function editarProducto(x) {
         document.getElementById(`codigo${x}`).textContent = codigoBarras;
         document.getElementById(`nombre${x}`).textContent = nombre;
         document.getElementById(`departamento${x}`).textContent = d.find(p => p.id == departamento).nombre;
+        
         let productoSucursal = productosSucursal.find(p => p.idProducto == x)
         if (productoSucursal != null) {
             let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
@@ -2168,6 +2218,8 @@ async function editarProducto(x) {
         productos.find(p => p.id == x).receta = receta;
         productos.find(p => p.id == x).minimoStock = minimoStock;
         productos.find(p => p.id == x).receta = receta;
+        productos.find(p => p.id == x).imagen = spp;
+
 
         productosList.find(p => p.id == x).nombre = nombre;
         productosList.find(p => p.id == x).codigoBarras = codigoBarras;
@@ -2175,6 +2227,7 @@ async function editarProducto(x) {
         productosList.find(p => p.id == x).receta = receta;
         productosList.find(p => p.id == x).minimoStock = minimoStock;
         productosList.find(p => p.id == x).receta = receta;
+        productosList.find(p => p.id == x).imagen = spp;
         console.log('nombre', productos.find(p => p.id == x).nombre);
         //console.log('nombreIndice',productos[indice].nombre);
         document.getElementById("formEditar").disabled = true;
@@ -2267,10 +2320,8 @@ function filter(__val__) {
 // Objeto Worker
 let worker = new Worker("{{ asset('js/worker.js') }}"); // Ruta del archivo JS
 
-function buscar()
-{
-    if(window.Worker)
-    {
+function buscar() {
+    if (window.Worker) {
         //src="{{ asset('js\bootstrap-input-spinner.js') }}"
         //var message = {mensaje:"Hola Worker"};
         worker.terminate();
@@ -2280,21 +2331,26 @@ function buscar()
         let palabraBusqueda = document.querySelector('#busquedaProducto');
         let depa = document.querySelector('#idDepartamento');
         let bajosExis = document.querySelector('input[name="bajosExistencia"]:checked');
-        if(bajosExis != null)
+        if (bajosExis != null)
             bajosExis = bajosExis.value;
         else
             bajosExis = null;
         /*var message = {productos:productos,productosSucursal:productosSucursal,
         palabra:palabraBusqueda,seleccion:seleccion,depa:depa,bajosExis:bajosExis};*/
         //palabraBusqueda = JSON.stringify(palabraBusqueda);
-        var message = {productos:productos,productosSucursal:productosSucursal,
-        palabra:palabraBusqueda.value,seleccion:seleccion.value,depa:depa.value,bajosExis:bajosExis};
-        
+        var message = {
+            productos: productos,
+            productosSucursal: productosSucursal,
+            palabra: palabraBusqueda.value,
+            seleccion: seleccion.value,
+            depa: depa.value,
+            bajosExis: bajosExis
+        };
+
         worker.postMessage(message);
-        worker.onmessage = function(e){
-            
-            if(document.querySelector('#busquedaProducto').value == e.data.pal)
-            {
+        worker.onmessage = function(e) {
+
+            if (document.querySelector('#busquedaProducto').value == e.data.pal) {
                 console.log("Iguales");
                 //buscarFiltroNombre2();
                 productosList = e.data.respuesta;
@@ -2302,9 +2358,7 @@ function buscar()
                 pagina = 0;
                 //actualizarCabecera();
                 rellenar();
-            }
-            else
-            {
+            } else {
                 console.log(document.querySelector('#busquedaProducto').value);
                 console.log(e.data.pal);
             }

@@ -28,9 +28,9 @@ class ProductoController extends Controller
         ->get(['id','costo','precio','existencia','minimoStock','idProducto','status']);
        
         $depas['d']= Departamento::paginate();
-        $datosP= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento']);
+        $datosP= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento','imagen']);
         $depa= Departamento::all(['id','nombre']);
-        $producto = Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento']);
+        $producto = Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento','imagen']);
         $subproducto = Subproducto::all();
         $ofertas = Oferta::all();
      //   return $idSucursal;
@@ -219,6 +219,7 @@ class ProductoController extends Controller
         $datosProducto = request()->except('_token', 'minimoStock','ajax');
         
         if($request->hasFile('imagen')){
+            
             $producto=Producto::findOrFail($id);
             Storage::delete('public/'.$producto->imagen);
             $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
@@ -242,7 +243,7 @@ class ProductoController extends Controller
        //   Sucursal_producto::create($datosSP);
         
         if($request['ajax'])
-            return true;
+            return $request->file('imagen')->store('uploads','public');
         return redirect('puntoVenta/producto');
     }
 

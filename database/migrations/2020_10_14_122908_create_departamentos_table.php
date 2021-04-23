@@ -17,6 +17,7 @@ class CreateDepartamentosTable extends Migration
             $table->id();
             $table->string('nombre')->unique();
             //$table->unsignedInteger('status');
+            $table->boolean('ecommerce')->default(0);
             $table->timestamps();
         });
     }
