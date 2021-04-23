@@ -241,7 +241,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 <div>
                 </div>
                 <div class="col modal-footer input-group">
-                    <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal" onclick="">Close</button>
+                    <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal" onclick="">CERRAR</button>
                 </div>
             </div>
         </div>
@@ -462,44 +462,6 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 <div class="row" style="height:400px;overflow-y:auto;" id="cuerpoInventarioRapido">
                     <!-- TABLA -->
                     AQUI VA EL INVENTARIO RAPIDO
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">CERRAR</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
-    id="modalImagenProducto">
-    <div class="modal-dialog modal-lg " role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <!--ENCABEZADO -->
-                <h5 class="modal-title" id="exampleModalLabel">INVENTARIO RAPIDO</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="col-3 text-center mt-3">
-                    <label for="imagen">
-                        <h5> <strong>{{'FOTO'}}</strong></h5>
-                    </label required>
-                    @if(isset($producto->imagen))
-                    <br />
-                    <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" width="200">
-                    @endif
-                    @if(isset($producto->imagen))
-                    <input type="file" name="imagen" id="imagen" class="form-control" value="">
-                    @else <input class="form-control mb-4" type="file" name="imagen" id="imagen" value="" autofocus>
-                    @endif
-
-                    @error('mensajeError')
-                    <div class="alert alert-danger my-auto" role="alert">
-                        {{$message}}
-                    </div>
-                    @enderror
                 </div>
             </div>
             <div class="modal-footer">
@@ -1182,7 +1144,23 @@ function rellenar() {
     document.getElementById("cantProdSub").innerHTML = cantSubproductos;
     document.getElementById("cantProdOferta").innerHTML = cantOfertas;*/
 };
-
+let imagenUrlAuxiliar = "";
+function previsualizarImagen(id) {
+    const seleccionImagen = document.querySelector('#' + id);
+    const imagen = document.querySelector('#imagenPrevisualizacion');
+    const archivos = seleccionImagen.files;
+    if (!archivos || !archivos.length) {
+        imagen.src = "";
+        return;
+    }
+    // Ahora tomamos el primer archivo, el cual vamos a previsualizar
+    const primerArchivo = archivos[0];
+    // Lo convertimos a un objeto de tipo objectURL
+    const objectURL = URL.createObjectURL(primerArchivo);
+    // Y a la fuente de la imagen le ponemos el objectURL
+    imagen.src = objectURL;
+    imagenUrlAuxiliar= objectURL;
+}
 function info4(id) {
     //Modal
     //let x1= 0;
@@ -1224,8 +1202,25 @@ function info4(id) {
     idProdSuc = productoSucursal.id;
     ms = productoSucursal.minimoStock;
     let urlImagen = "";
+    let cuerpoImagen = `
+    <img width="200" class="mx-auto" src="${urlImagen}" alt="EL PRODUCTO NO CONTIENE IMAGEN"  id="imagenPrevisualizacion">
+    <input type="file" name="imagen" id="imagen" class="form-control mx-auto"
+    onchange="previsualizarImagen('imagen')">
+                                            
+                                            <br/>`;
     if (producto.imagen != null)
+    if (producto.imagen.length > 0)
+    {
         urlImagen = "{{asset('storage')}}" + "/" + producto.imagen;
+        cuerpoImagen = `
+        <img width="200" class="mx-auto" src="${urlImagen}" alt="${urlImagen}"  id="imagenPrevisualizacion">
+        <input type="file" name="imagen" id="imagen" class="form-control mx-auto"
+        onchange="previsualizarImagen('imagen')">
+                                            
+                                            <br/>
+                                            `
+    }
+        
     //console.log(urlImagen);
     btnAgregarSubprod =
         ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
@@ -1257,7 +1252,7 @@ function info4(id) {
         `<a class="btn btn-outline-danger mb-2 mt-4" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/${x}')}}">` +
         
         `<img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
-                                             DAR DE BAJAaa </a> 
+                                             DAR DE BAJA </a> 
                                         </div>
 
                                         <br/>
@@ -1319,10 +1314,15 @@ function info4(id) {
                                             <label for="idDepartamento">
                                                 <h6  class="ml-4"> {{'DEPARTAMENTO'}}</h6>
                                             </label>
-                                            <br />
+                                            <br /><br />
+                                            <label for="Imagen">
+                                                <h6 class="ml-4"> <strong>{{'FOTO '}}</strong></h6>
+                                            </label>
                                         </div>
                                         <div class="col-5">
+                                        
                                         <fieldset disabled id="formEditar">
+                                        <form id="editarProducto">
                                             <!--El name debe ser igual al de la base de datos-->
                                             <input type="text" name="codigoBarras" id="codigoBarras" class="form-control text-uppercase " placeholder="Ingresar codigo de barras" value="` +
         producto.codigoBarras +
@@ -1346,14 +1346,14 @@ function info4(id) {
                                             <select class="form-control text-uppercase" name="departamento" id="departamento">` +
         departamentos +
         `</select>
+        
+                                            <br/>`
+                                            
+                                            +cuerpoImagen+`
+                                            </form>
                                             </fieldset>
                                         </div>
-                                        <div class="col-4 text-center">
-                                            <label for="Imagen">
-                                                <h5 class="mb-1"> <strong>{{'FOTO '}}</strong></h5>
-                                            </label>
-                                            <br/>
-                                            <img class="mb-2" src="${urlImagen}" alt="" width="200"> 
+                                        <div class="col-4 text-center"> 
                                              ` + botonesProducto;
 
 
@@ -2143,6 +2143,11 @@ async function editarProducto(x) {
         const minimoStock = parseInt(document.getElementById("minimoStock").value);
         const receta = document.getElementById("receta").value;
         const departamento = parseInt(document.getElementById("departamento").value);
+        const imagen = document.getElementById("imagen");
+        const formProducto = document.getElementById("editarProducto");
+        var data = new FormData(formProducto);
+        data.append('_token', "{{ csrf_token() }}");
+        data.append('ajax', true);
         if (codigoBarras.length == 0 || nombre.length == 0 || minimoStock.length == 0) {
             return alert('EXISTE UN ERROR CON SUS DATOS, REVISELOS POR FAVOR');
         }
@@ -2157,25 +2162,29 @@ async function editarProducto(x) {
             url: `/puntoVenta/producto/editar/${x}`,
             // los datos que voy a enviar para la relación
             //dataType: 'json',
-            mode: 'no-cors',
-            data: {
-                codigoBarras: codigoBarras,
+            cache: false,
+            contentType: false,
+            processData: false,
+            //mode: 'no-cors',
+            data: data//{
+                /*codigoBarras: codigoBarras,
                 nombre: nombre,
                 descripcion: descripcion,
                 minimoStock: minimoStock,
                 receta: receta,
                 idDepartamento: departamento,
+                imagen: imagen,
                 '_token': "{{ csrf_token() }}",
                 ajax: true
 
-            },
+            }*/,
             //_token: $("meta[name='csrf-token']").attr("content")
             //_token: "{{ csrf_token() }}",
             //processData: false,  // tell jQuery not to process the data
             //contentType: false
         });
         console.log(spp);
-        if (spp == 1)
+        if (spp.length> 0)
             alert("DATOS ACTUALIZADOS CORRECTAMENTE");
         else
             return;
@@ -2183,6 +2192,7 @@ async function editarProducto(x) {
         document.getElementById(`codigo${x}`).textContent = codigoBarras;
         document.getElementById(`nombre${x}`).textContent = nombre;
         document.getElementById(`departamento${x}`).textContent = d.find(p => p.id == departamento).nombre;
+        
         let productoSucursal = productosSucursal.find(p => p.idProducto == x)
         if (productoSucursal != null) {
             let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
@@ -2206,6 +2216,8 @@ async function editarProducto(x) {
         productos.find(p => p.id == x).receta = receta;
         productos.find(p => p.id == x).minimoStock = minimoStock;
         productos.find(p => p.id == x).receta = receta;
+        productos.find(p => p.id == x).imagen = spp;
+
 
         productosList.find(p => p.id == x).nombre = nombre;
         productosList.find(p => p.id == x).codigoBarras = codigoBarras;
@@ -2213,6 +2225,7 @@ async function editarProducto(x) {
         productosList.find(p => p.id == x).receta = receta;
         productosList.find(p => p.id == x).minimoStock = minimoStock;
         productosList.find(p => p.id == x).receta = receta;
+        productosList.find(p => p.id == x).imagen = spp;
         console.log('nombre', productos.find(p => p.id == x).nombre);
         //console.log('nombreIndice',productos[indice].nombre);
         document.getElementById("formEditar").disabled = true;
