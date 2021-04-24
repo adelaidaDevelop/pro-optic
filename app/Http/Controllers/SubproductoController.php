@@ -111,7 +111,8 @@ class SubproductoController extends Controller
        
     }
 
-    public function subProdExisStock($id){
+    public function subProdExisStock($id)
+    {
      //   $datosSubproducto = $request->except('_token');
        // $idSP = $datosSubproducto['idSucursalProducto'];
         $sucProd = Sucursal_producto::findOrFail($id);
@@ -122,19 +123,16 @@ class SubproductoController extends Controller
         if ($exisAct > 1) {
         $subproducto = Subproducto::where('idSucursalProducto', '=', $id);//->first();
        // $piezas['existencia'] = $subproducto->first()->piezas;
-       
         $piezas['existencia'] = $subproducto->first()->existencia + $subproducto->first()->piezas;
        // return 'si entra';
         $subproducto->update($piezas);
-        
         $existenciaNuevo['existencia'] = $sucProd->existencia - 1;
-         $sucProd->update($existenciaNuevo);
-        return redirect('/puntoVenta/producto');
-    }
-    else {
+        $sucProd->update($existenciaNuevo);
+        //return redirect('/puntoVenta/producto');
+        return redirect()->back();
+        } else {
          return redirect()->back()->withErrors(['mensajeError' => 'EL PRODUCTO NO TIENE EXISTENCIA EN INVENTARIO']);  
     }
-    
     //else return redirect()->back()->withErrors(['mensajeError' => '']);  
     }
     /**
