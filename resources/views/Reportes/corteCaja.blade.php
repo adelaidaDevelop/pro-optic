@@ -132,17 +132,23 @@ CORTE DE CAJA
             </div>
             <div class="col-4  ">
                 <h6 class="text-primary">PAGOS DE CREDITOS A PROV</h6>
-                <h6 class="ml-3 " id="pagoProv">-</h6>
+
+
+                <div class=" mt-0 my-0 input-group">
+                    <h6 class="ml-3">-PAGOS A PROVEEDORES:</h6>
+                    <h6>$</h6><input type="number" id="pagoProv" style="width:130px;height:23px;" disabled />
+                </div>
+
+                <div class="form-group input-group text-primary mt-4 mb-2">
+                    <h5>TOTAL:</h5>
+                    <h5 class="ml-2">$</h5><input type="number" id="total" style="height:23px" disabled />
+                </div>
                 <div class="row form-group input-group">
                     <h6 class="mt-3 ml-3 text-primary">GANANCIA DEL DIA:</h6>
                     <input type="number" id="gananciaId" class="ml-2 mt-3 my-0" style="height:23px" />
                 </div>
                 <h6 class="text-primary  ">GANANCIA POR DEPARTAMENTOS </h6>
                 <h6 class="ml-3" id="ganDeptos">+</h6>
-                <div class="form-group input-group text-primary mt-4 mb-2">
-                    <h5>TOTAL:</h5>
-                    <h5 class="ml-2">$</h5><input type="number" id="total" style="height:23px" disabled />
-                </div>
                 <!--
                 <button id="btnCrearPdf" class="btn btn-secondary ml-4 mb-5 mx-auto mt-5">IMPRIMIR CORTE
                 </button>-->
@@ -306,6 +312,7 @@ CORTE DE CAJA
         let abonos = 0;
         let entradas = 0;
         let totalDev = 0;
+        let totalPagoComp = 0;
         let abonoProveedores = 0;
         let comprasContado = 0;
         let salidas = 0;
@@ -336,7 +343,6 @@ CORTE DE CAJA
                             //  if (sucursalEmpleado[h].id == idSucEmp) {
                             let suc_emp = sucursalEmpleado.find(s => s.id == idSucEmp);
                             if (suc_emp != null) {
-
                                 if (suc_emp.idEmpleado == idCajeroOK) {
                                     cantVentas = cantVentas + 1;
                                     efectivoV = efectivoV + ventas[j].pago;
@@ -383,8 +389,8 @@ CORTE DE CAJA
                                                 //  cantProd = cantProd + detalleV[d].cantidad;
                                                 totCosto = detalleV[d].cantidad * suc_product.costo;
                                                 totPrecio = detalleV[d].cantidad * suc_product.precio;
-                                                let gananciaTemp = totPrecio - totCosto;
-                                                ganancia = ganancia + gananciaTemp;
+                                                // let gananciaTemp = totPrecio - totCosto;
+                                                //  ganancia = ganancia + gananciaTemp;
 
                                             }
                                         }
@@ -417,8 +423,8 @@ CORTE DE CAJA
                                                 //  cantProd = cantProd + detalleV[d].cantidad;
                                                 totCosto = detalleV[d].cantidad * suc_product.costo;
                                                 totPrecio = detalleV[d].cantidad * suc_product.precio;
-                                                let gananciaTemp = totPrecio - totCosto;
-                                                ganancia = ganancia + gananciaTemp;
+                                                // let gananciaTemp = totPrecio - totCosto;
+                                                // ganancia = ganancia + gananciaTemp;
 
                                             }
                                         }
@@ -438,55 +444,65 @@ CORTE DE CAJA
                     let fechaP = new Date(pagos[z].created_at);
                     let ventaCliente = venta_cliente.find(v => v.id == pagos[z].idVentaCliente);
                     if (ventaCliente != null) {
-                        let venta = ventas.find(v => v.id == ventaCliente.idVenta);
-                        if (venta != null) {
-                            //  if (ventas[j].id == pagos[z].idVenta) {
-                            if (comparacionFecha(fechaCorte, fechaP)) {
-                                // let idSucEmp = ventas[j].idSucursalEmpleado;
-                                // if (idSucEmp != null) {
-                                let sucEmp = sucursalEmpleado.find(s => s.id == venta.idSucursalEmpleado);
-                                if (sucEmp != null) {
-                                    //    for (let h in sucursalEmpleado) {
-                                    //  if (sucursalEmpleado[h].id == idSucEmp) {
-                                    if (sucEmp.idEmpleado == idCajeroOK) {
-                                        abonos = abonos + pagos[z].monto;
-                                    }
-                                    //  }
-                                    // }
+                        //  let venta = ventas.find(v => v.id == ventaCliente.idVenta);
+
+                        // if (sucEmp != null) {
+                        //  if (ventas[j].id == pagos[z].idVenta) {
+                        if (comparacionFecha(fechaCorte, fechaP)) {
+                            // let idSucEmp = ventas[j].idSucursalEmpleado;
+                            // if (idSucEmp != null) {
+                            //  let sucEmp = sucursalEmpleado.find(s => s.id == venta.idSucursalEmpleado);
+                            let sucEmp = sucursalEmpleado.find(s => s.id == pagos[z].idEmpSuc)
+                            if (sucEmp != null) {
+                                //    for (let h in sucursalEmpleado) {
+                                //  if (sucursalEmpleado[h].id == idSucEmp) {
+                                if (sucEmp.idEmpleado == idCajeroOK) {
+                                    abonos = abonos + pagos[z].monto;
                                 }
+                                //  }
                                 // }
                             }
+                            // }
                         }
+                        //  }
                     }
                 }
                 //DEVOLUCIONES
                 for (let x in devoluciones) {
                     let fechaD = new Date(devoluciones[x].created_at);
                     //  if (devoluciones[x].idVenta === ventas[j].id) {
-                    let venta = ventas.find(v => v.id === devoluciones[x].idVenta);
-                    if (venta != null) {
-                        if (comparacionFecha(fechaCorte, fechaD)) {
-                            let idSucEmp = ventas[j].idSucursalEmpleado;
-                            //  for (let h in sucursalEmpleado) {
-                            //  if (sucursalEmpleado[h].id == idSucEmp) {
-                            let suc_emp = sucursalEmpleado.find(s => s.id === idSucEmp);
-                            if (suc_emp != null) {
-                                if (suc_emp.idEmpleado == idCajeroOK) {
-                                    {
-                                        let temp = devoluciones[x].precio * devoluciones[x].cantidad;
-                                        totalDev = totalDev + temp;
-                                    }
+                    // let venta = ventas.find(v => v.id === devoluciones[x].idVenta);
+                    //  if (venta != null) {
+                    if (comparacionFecha(fechaCorte, fechaD)) {
+                        // let idSucEmp = ventas[j].idSucursalEmpleado;
+                        //  for (let h in sucursalEmpleado) {
+                        //  if (sucursalEmpleado[h].id == idSucEmp) {
+                        let suc_emp = sucursalEmpleado.find(s => s.id === devoluciones[x].idEmpSuc);
+                        if (suc_emp != null) {
+                            if (suc_emp.idEmpleado == idCajeroOK) {
+                                {
+                                    let temp = devoluciones[x].precio * devoluciones[x].cantidad;
+                                    totalDev = totalDev + temp;
                                 }
                             }
-                            // }
                         }
+                        // }
                     }
+                    //  }
                 }
                 //
                 for (let p in pagoCompras) {
                     let fechaPC = new Date(pagoCompras[p].created_at);
                     if (comparacionFecha(fechaCorte, fechaPC)) {
-                        
+                        let suc_emp = sucursalEmpleado.find(s => s.id === pagoCompras[p].idEmpSuc);
+                        if (suc_emp != null) {
+                            if (suc_emp.idEmpleado == idCajeroOK) {
+                                {
+                                    // let temp = devoluciones[x].precio * devoluciones[x].cantidad;
+                                    totalPagoComp = totalPagoComp + monto;
+                                }
+                            }
+                        }
                     }
                 }
                 //}
@@ -599,10 +615,24 @@ CORTE DE CAJA
                         }
                     }
                 }
+                for (let p in pagoCompras) {
+                    let fechaPC = new Date(pagoCompras[p].created_at);
+                    if (comparacionFecha(fechaCorte, fechaPC)) {
+                        let suc_emp = sucursalEmpleado.find(s => s.id === pagoCompras[p].idEmpSuc);
+                        if (suc_emp != null) {
+                            // if (suc_emp.idEmpleado == idCajeroOK) {
+                            // let temp = devoluciones[x].precio * devoluciones[x].cantidad;
+                            totalPagoComp = totalPagoComp + monto;
+
+                            // }
+                        }
+                    }
+                }
                 // }
                 //  }
                 // }
                 // }
+                totalPagoComp
                 entradas = totalVentas + abonos;
                 // salidas = totalDev + abonoProveedores + comprasContado;
                 salidas = totalDev;

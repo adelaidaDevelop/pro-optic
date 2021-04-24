@@ -16,6 +16,7 @@ class CreateDevolucionsTable extends Migration
         Schema::create('devolucions', function (Blueprint $table) {
             $table->foreignId('idVenta')->constrained('ventas');
             $table->foreignId('idProducto')->constrained('productos');
+            $table->foreignId('idEmpSuc')->constrained('sucursal_empleados');
             $table->double('precio', 6, 2);
             $table->unsignedInteger('cantidad');
             $table->string('observacion');

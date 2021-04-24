@@ -41,12 +41,20 @@ $crear = $sE->hasAnyRole($crearProducto);
 @endsection
 <div class="row p-1 ">
     <div class="row col-12  ml-1 w-100">
-            <strong class="  h5 mx-auto text-center">
-                TODOS LOS PRODUCTOS SE HAN AGREGADO ESTA SUCURSAL
-            </strong>
+        <strong class="  h5 mx-auto text-center">
+            PRODUCTOS SIN AGREGAR A ESTA SUCURSAL
+        </strong>
+
+    </div>
+    <div class="row col-12  ml-1 w-100">
+        @error('mensaje')
+        <div class="alert alert-success my-auto mx-auto text-center" >
+            {{$message}}
+        </div>
+        @enderror
     </div>
     <div class="row border border-primary m-2 ml-4 mr-4 col ">
-    <!--
+        <!--
         <div class="col-12 row my-0 mx-0 mt-3 ml-2">
             <input class="form-control text-uppercase  col-4" type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="cargarProductos()">
             <a title="buscar" href="" class="text-dark ">
@@ -55,6 +63,7 @@ $crear = $sE->hasAnyRole($crearProducto);
 
         </div>
         -->
+
         <div class="col mt-1 mb-4 ml-4 mr-4">
             <!-- TABLA -->
             <div id="vacio" class="text-center my-auto">
@@ -93,46 +102,46 @@ $crear = $sE->hasAnyRole($crearProducto);
         let contador = 0;
         let departamento = "";
         const palabraBusqueda = document.querySelector('#busquedaProducto');
-        //  let cont = 1;
+        let cont = 1;
         for (let t in productos) {
             let prodNoAgreg = prod_suc.find(sp => sp.idProducto == productos[t].id);
             if (prodNoAgreg == null) {
                 // if (palabraBusqueda.value.length > 0) {
                 if (cont <= 30) {
-                    if (productos[t].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                        //  cont++;
+                    //  if (productos[t].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
+                    cont++;
 
-                        for (count in deptos) {
-                            if (productos[t].idDepartamento === deptos[count].id) {
-                                departamento = deptos[count].nombre;
-                            }
+                    for (count in deptos) {
+                        if (productos[t].idDepartamento === deptos[count].id) {
+                            departamento = deptos[count].nombre;
                         }
-                        contador = contador + 1;
-                        let agregar = @json($agregar);
+                    }
+                    contador = contador + 1;
+                    let agregar = @json($agregar);
 
-                        let btnAgregar = `<a class="btn btn-primary" href="{{ url('/puntoVenta/agregarProdStock/` +
-                            productos[t].id + `')}}"> AGREGAR </a>`;
-                        if (!agregar) {
-                            btnAgregar = `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA AGREGAR')"> AGREGAR </button>`
-                        }
-                        cuerpo = cuerpo + `
+                    let btnAgregar = `<a class="btn btn-primary" href="{{ url('/puntoVenta/agregarProdStock/` +
+                        productos[t].id + `')}}"> AGREGAR </a>`;
+                    if (!agregar) {
+                        btnAgregar = `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA AGREGAR')"> AGREGAR </button>`
+                    }
+                    cuerpo = cuerpo + `
                             <tr onclick="" data-dismiss="modal">
                             <th scope="row">` + contador + `</th>
                             <td>` + productos[t].codigoBarras + `</td>
                             <td>` + productos[t].nombre + `</td>
                             <td>` + departamento + `</td>
                                 <td>` + btnAgregar +
-                            ` 
+                        ` 
                             </td>            
                                         </tr>
                                         `;
-                    }
+                    // }
                 }
             }
         }
         if (cuerpo == "") {
             // tabla2 = document.querySelector('#tablaR');
-            let sin = ` <h4 class= "text-dark my-auto  mt-4 "> NO HAY PRODUCTO </h4>`;
+            let sin = ` <h5 class= "text-dark my-auto  mt-4 "> TODOS LOS PRODUCTOS SE HAN AGREGADO ESTA SUCURSAL</h5>`;
             document.getElementById("vacio").innerHTML = sin;
         } else {
             document.getElementById("vacio").innerHTML = tabla2;

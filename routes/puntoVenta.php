@@ -49,7 +49,6 @@ Route::prefix('/puntoVenta')->group(function()
     //cargar vista imp corte caja
     Route::get('/corte_cajaView', [ReporteController::class,'corte_cajaView']);
     
-    
     Route::resource('credito', CreditoController::class);
     Route::get('/datosNuevos', [CreditoController::class,'datosNuevos']);
     Route::resource('pago', PagoController::class);
@@ -104,7 +103,6 @@ Route::prefix('/puntoVenta')->group(function()
       Route::get('/cliente/destroy2/{id}', [ClienteController::class,'destroy2']);
       Route::get('/cliente/baja/{id}', [ClienteController::class,'baja']);
       
-      
       Route::get('actualizar/{id}', [SucursalController::class,'bajaSucursal']);
       //MODIFICAR COSTO Y PRECIO EN SUCURSAL PRODUCTO
       Route::post('productoSuc/actPrecio/{id}', [SucursalProductoController::class,'actPrecio']);
@@ -134,13 +132,10 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('subprodExisNueva/{id}', [SubproductoController::class,'subprodExisNueva']);
     Route::get('subProdExisStock/{id}', [SubproductoController::class,'subProdExisStock']);
     Route::post('subProdExisNuevo/{id}', [SubproductoController::class,'subProdExisNuevo']);
-    
 
     //ELIMINAR PRODUCTOS DE SUCURSAL
     Route::get('productoEli3/{id}', [ProductoController::class,'eliminar3']);
-    
     Route::resource('cliente', ClienteController::class);
-    
     Route::resource('corteCaja', ReporteController::class);
     Route::get('reporteInventario', [ReporteController::class,'index2']);
     Route::get('reporteVentas', [ReporteController::class,'index3']);
@@ -153,7 +148,6 @@ Route::prefix('/puntoVenta')->group(function()
 
     //Route::get('eliminar/{id}', [ProductoController::class,'eliminar']);
     Route::resource('sucursal', SucursalController::class);
-    
 
        // Route::middleware('verified')->group(function () {
         Route::post('/oferta/editar/{id}', [OfertaController::class,'update']);
