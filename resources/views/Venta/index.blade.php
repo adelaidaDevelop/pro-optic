@@ -769,18 +769,24 @@
                     nombre,
                     existencia, precio, 1, tipo);
                 mostrarProductos();
+                const palabraBusqueda = document.querySelector('#busquedaProducto');
+                palabraBusqueda.value = "";
+                $('#exampleModal').modal('hide');
+                $('#exampleModal2').modal('hide');
+                $('#ofertasModal').modal('hide');
             } else
                 alert('PRODUCTO SIN EXISTENCIA');
+                return;
         }
         //}
         //}
         //}
         //}
-        const palabraBusqueda = document.querySelector('#busquedaProducto');
+        /*const palabraBusqueda = document.querySelector('#busquedaProducto');
         palabraBusqueda.value = "";
-        document.querySelector('#exampleModal').modal('hide');
-        document.querySelector('#exampleModal2').modal('hide');
-        document.querySelector('#ofertasModal').modal('hide');
+        $('#exampleModal').modal('hide');
+        $('#exampleModal2').modal('hide');
+        $('#ofertasModal').modal('hide');*/
         //venta();
     };
     /*function agregarSubproducto(id) {
