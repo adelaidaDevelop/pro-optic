@@ -86,7 +86,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalVerMas"></h5>
+                <h5 class="modal-title text-primary" id="modalVerMas"> CONSULTAR VENTAS</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -115,7 +115,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                 </div>
                 <div class="row mx-1 mt-4" style="height:200px;overflow:auto;">
                     <table class="table table-hover table-bordered" id="productos">
-                        <thead class="table-secondary text-primary">
+                        <thead class="table-secondary text-dark">
                             <tr class="text-center">
                                 <th scope="col">#</th>
                                 <th scope="col">FOLIO</th>

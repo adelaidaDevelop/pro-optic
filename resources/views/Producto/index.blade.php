@@ -1738,7 +1738,7 @@ async function actExistencia() {
             console.log(respuesta); //JSON.stringify(respuesta));
         });
         $('#modal_precio_venta3').modal('hide');
-        $('#detalleProducto').modal('hide');
+       // $('#detalleProducto').modal('hide');
         alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
         //  refrescar();
         //await act_datos();
@@ -1947,6 +1947,8 @@ async function subproductoExiste(id) {
         }
     }
 };
+
+
 
 function redirect(id) {
     window.location = `/puntoVenta/subproducto/create/?id=${id}`;

@@ -222,8 +222,7 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-info" role="alert">
-                    ¿ESTA SEGURO DE GUARDAR LA COMPRA?
-                    SI PROCEDE YA NO SE MODIFICARÁ NI BORRARA EN EL FUTURO
+                   ANTES DE GUARDAR VERIFIQUE LA INFORMACION INGRESADA. ¿DESEA GUARDAR LA COMPRA?
                 </div>
             </div>
             <div class="modal-footer">
@@ -530,6 +529,8 @@ function mostrarProductos() {
     $("input[name='ganancia']").inputSpinner(props);
     $("input[name='precio']").inputSpinner(props);
     //activarIva();
+
+    
 
 }
 //mostrarProductos();
@@ -1077,6 +1078,17 @@ async function guardarCompra() {
     }
 }
 
+$("input[name='cantidad']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    });
 function setFechaCaducidad(id) {
     let seleccion = $(`#checked${id}`).is(":checked");
     productosCompra.find(p => p.id == id).fechaCaducidad = seleccion;

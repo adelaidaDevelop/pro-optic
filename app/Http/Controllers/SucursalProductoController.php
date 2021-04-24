@@ -176,8 +176,8 @@ class SucursalProductoController extends Controller
         $datosSP['idSucursal'] = $idSucursal;
         $datosSP['idProducto'] = $producto->id;
         Sucursal_producto::create($datosSP);
-
-         return redirect('/puntoVenta/producto');
+        return redirect()->back()->withErrors(['mensaje' => 'PRODUCTO AGREGADO A ESTA SUCURSAL']);
+        // return redirect('/puntoVenta/producto');
     }
 
     //ENVIAR DATOS: PRODUCTOS DADOS DE BAJA ESTA SUCURSAL

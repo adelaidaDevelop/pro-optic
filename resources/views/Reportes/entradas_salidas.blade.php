@@ -505,6 +505,7 @@ REPORTES
                   `;
                   */
 
+                  // 
         fila_compra_venta = col_compras + col_venta;
 
         if (fila_compra_venta === "") {

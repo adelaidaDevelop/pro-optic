@@ -84,8 +84,7 @@ $verS = $sE->hasAnyRole($vS);
                     <h4 style="color:#4388CC">SUCURSALES</h4>
 
                     <div>
-                        <input type="text" class="form-control my-1"
-                            placeholder="BUSCAR SUCURSALES" id="texto">
+                        <input type="text" class="form-control my-1" placeholder="BUSCAR SUCURSALES" id="texto">
                         <h6 class="text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION ADICIONAL, EDITAR O
                                 ELIMINAR SUCURSAL </small> </h6>
                         <!--div class="input-group-append">
@@ -140,11 +139,9 @@ $verS = $sE->hasAnyRole($vS);
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="form-control" name="direccion"
-                                            id="direccion" value="{{$d->direccion}}" required>
+                                        <input type="text" class="form-control" name="direccion" id="direccion" value="{{$d->direccion}}" required>
                                         <label for="">TELEFONO</label>
-                                        <input type="number" class="form-control" name="telefono"
-                                            id="telefono" value="{{$d->telefono}}" required>
+                                        <input type="number" class="form-control" name="telefono" id="telefono" value="{{$d->telefono}}" required>
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -225,8 +222,7 @@ $verS = $sE->hasAnyRole($vS);
                                     <label for="nombre">
                                         DIRECCION
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="direccion" id="direccion" required>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="direccion" id="direccion" required>
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -742,6 +738,15 @@ $verS = $sE->hasAnyRole($vS);
         }
     });
 
+    function confirmarAltaSuc(idSuc) {
+        let preguntar = confirm("¿DAR DE ALTA LA SUCURSAL??");
+        if (preguntar) {
+            console.log("20-04-21");
+         //   window.location = `/puntoVenta/altaSucursal/${idSuc}`;
+           // location.href =` {{ url('/puntoVenta/altaSucursal/${idSuc}')}}`;
+        }
+    }
+
     async function datosTablaSuc() {
         let cuerpo = "";
         let cont = 0;
@@ -757,24 +762,18 @@ $verS = $sE->hasAnyRole($vS);
                     <td>` + Suc_Inac[t].telefono + `</td>
                     <td>` +
                 ` 
-                    <a class="btn btn-primary" href="{{ url('/puntoVenta/altaSucursal/` + Suc_Inac[t].id + `')}}"> ALTA </a>
-                                           
-
-                    </td>        
+                    <a class="btn btn-primary" href="{{ url('/puntoVenta/altaSucursal')}}/${Suc_Inac[t].id}" onclick = "return confirm('¿DAR DE ALTA LA SUCURSAL??');">ALTA</a>`+//<!--confirmarAltaSuc(` + Suc_Inac[t].id + `)"> ALTA </a>                             
+                `    </td>        
                     </tr>
                      `;
         }
-
         if (cuerpo === "") {
-            let sin = ` <h3 class= "text-danger my-auto"> NO HAY SUCURSALES DADAS DE BAJA </h3>`;
+            let sin = ` <h5 class= "text-dark my-auto"> NO HAY SUCURSALES DADAS DE BAJA </h5>`;
             document.getElementById("vacio").innerHTML = sin;
         } else {
             document.getElementById("filaTablas").innerHTML = cuerpo;
         }
-
-
-
-    }
+    };
     //reucperar sucursales inactivas
     async function sucursales0() {
         let response = "Sin respuesta";
