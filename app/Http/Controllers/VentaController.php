@@ -118,6 +118,13 @@ class VentaController extends Controller
             $producto->cantidad = $datosProducto['cantidad'];
             $producto->idProducto = $datosProducto['idProducto'];
             $producto->precioIndividual= $datosProducto['precio'];
+            if($datosProducto['tipo'] == 0)
+                $tipo = 'NORMAL';
+            if($datosProducto['tipo'] == 1)
+                $tipo = 'SUBPRODUCTO';
+            if($datosProducto['tipo'] == 2)
+                $tipo = 'OFERTA';
+            $producto->tipo= $tipo;
             //$producto->subtotal = $datosProducto['subtotal'];
             $producto->idVenta = $venta->id;
             $producto->save();
