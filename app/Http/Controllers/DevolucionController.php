@@ -35,7 +35,7 @@ class DevolucionController extends Controller
         ->get(['id','idSucursal','idEmpleado','status','created_at','updated_at']);
 
         $productX_Sucursal = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
-
+/*
         $ventasFiltro = [];
         foreach($ventas as $v)
         {
@@ -47,7 +47,8 @@ class DevolucionController extends Controller
                 }
             }
         }
-        return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions', 'sucursalEmpleado',  'productX_Sucursal', 'ventasFiltro'));
+        */
+        return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions', 'sucursalEmpleado',  'productX_Sucursal', 'ventas'));
     
     }
 

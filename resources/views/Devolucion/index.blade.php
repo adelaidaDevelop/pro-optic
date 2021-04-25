@@ -183,7 +183,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
 
 <!-- SCRIPT-->
 <script>
-    let ventas = @json($ventasFiltro);
+    let ventas = @json($ventas);
     let detalleVenta = @json($detalleVenta);
     let productos = @json($productos);
     let empleados = @json($empleados);
@@ -218,12 +218,14 @@ $devolver = $sE->hasAnyRole($userDevolucion);
             // if (ventas[count].id === folio) {
             let venta = ventas.find(v => v.id === folio);
             if (venta != null) {
+                
                 //console.log(detalleVenta);
                 //console.log(ventas);
                 //  for (count2 in detalleVenta) {
                 //  if (detalleVenta[count2].idVenta == ventas[count].id) {
                 let detalleV = detalleVenta.find(p => p.idVenta == venta.id);
                 if (detalleV != null) {
+                    console.log("encontrado asd");
                     //console.log("Entra a la funcion de buscar folio");
                     // for (count3 in productos) {
                     //  if (productos[count3].id == detalleVenta[count2].idProducto) {

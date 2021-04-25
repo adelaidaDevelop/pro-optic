@@ -48,9 +48,10 @@ class ReporteController extends Controller
        // $pagoCompras= Pago_compra::all();
         $compras = Compra::all();
         $empleados = Empleado::all();
-        $productos = Producto::all();
+        $productos = Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento','imagen']);
         $detalleV = Detalle_venta::all();
         $idSucursal = session('sucursal');
+        $departamento = Departamento::all(['id','nombre']);
         $suc_prod = Sucursal_producto::where('idSucursal', '=', $idSucursal)
         ->get(['id','costo','precio','existencia','minimoStock','idProducto','status']);
         //Seleccionar empleados que son cajeros
@@ -58,7 +59,7 @@ class ReporteController extends Controller
         $suc_act = Sucursal::findOrFail($idSucursal)->get(['direccion','telefono','status']);
         $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
         //return $sucursalEmpleados;
-        return view('Reportes.corteCaja', compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados','suc_act','detalleV', 'productos', 'suc_prod','venta_cliente'));
+        return view('Reportes.corteCaja', compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados','suc_act','detalleV', 'productos', 'suc_prod','venta_cliente','departamento'));
     }
     public function corte_cajaView(){
         $idSucursal = session('sucursal');
@@ -139,9 +140,6 @@ class ReporteController extends Controller
                 }
             }
         }
-
-
-
         $proveedores = Proveedor::where('status','=', 1)->get(['id','nombre']);
         $detalle_ventas = Detalle_venta::all();
         $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();

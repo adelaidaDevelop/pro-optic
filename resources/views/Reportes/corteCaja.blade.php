@@ -131,13 +131,13 @@ CORTE DE CAJA
                 </div>
             </div>
             <div class="col-4  ">
+                <!--
                 <h6 class="text-primary">PAGOS DE CREDITOS A PROV</h6>
-
-
                 <div class=" mt-0 my-0 input-group">
                     <h6 class="ml-3">-PAGOS A PROVEEDORES:</h6>
                     <h6>$</h6><input type="number" id="pagoProv" style="width:130px;height:23px;" disabled />
                 </div>
+                -->
 
                 <div class="form-group input-group text-primary mt-4 mb-2">
                     <h5>TOTAL:</h5>
@@ -149,6 +149,14 @@ CORTE DE CAJA
                 </div>
                 <h6 class="text-primary  ">GANANCIA POR DEPARTAMENTOS </h6>
                 <h6 class="ml-3" id="ganDeptos">+</h6>
+
+                <br />
+                <br />
+                <h6 class="text-primary">PAGOS DE CREDITOS A PROV</h6>
+                <div class=" mt-0 my-0 input-group">
+                    <h6 class="ml-3">-PAGOS A PROVEEDORES:</h6>
+                    <h6>$</h6><input type="number" id="pagoProv" style="width:130px;height:23px;" disabled />
+                </div>
                 <!--
                 <button id="btnCrearPdf" class="btn btn-secondary ml-4 mb-5 mx-auto mt-5">IMPRIMIR CORTE
                 </button>-->
@@ -287,6 +295,7 @@ CORTE DE CAJA
     let suc_prod = @json($suc_prod);
     let venta_cliente = @json($venta_cliente);
     let cant_ventas = 0;
+    let departamentos = @json($departamento);
 
     function validarCamposFechas() {
         // let selectFecha = document.querySelector('input[name="fechaCorte"]:checked');
@@ -345,13 +354,37 @@ CORTE DE CAJA
                             if (suc_emp != null) {
                                 if (suc_emp.idEmpleado == idCajeroOK) {
                                     cantVentas = cantVentas + 1;
-                                    efectivoV = efectivoV + ventas[j].pago;
-                                    totalVentas = totalVentas + ventas[j].pago;
+                                    //   efectivoV = efectivoV + ventas[j].pago;
+                                    //  totalVentas = totalVentas + ventas[j].pago;
 
                                     for (let d in detalleV) {
                                         if (detalleV[d].idVenta == ventas[j].id) {
+                                            let totTemp = detalleV[d].cantidad * detalleV[d].precioIndividual;
+                                            efectivoV = efectivoV + totTemp;
+                                            totalVentas = totalVentas + totTemp;
                                             let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
                                             if (suc_product != null) {
+                                              //  let product = productos.find(p => p.id == detalleV[d].idProducto);
+                                               // if (product != null) {
+                                                    /*
+                                                    let depto = departamentos.find(d => d.id == product.idDepartamento);
+                                                    let nombre = depto.nombre;
+                                                    let temp = detalleV[d].cantidad * suc_product.precio;
+
+                                                    let 
+                                                    if (product.idDepartamento == 1) {
+                                                        let temp = detalleV[d].cantidad * suc_product.precio;
+                                                        
+                                                        sinDepto = sinDepto + temp;
+                                                    }
+                                                    else if (product.idDepartamento == 2) {
+                                                        let temp = detalleV[d].cantidad * suc_product.precio;
+                                                        sinDepto = sinDepto + temp;
+                                                    }
+                                                    */
+                                                    // let depto = departamentos.find(d => d.id == product.idDepartamento);
+
+                                              //  }
                                                 //  cantProd = cantProd + detalleV[d].cantidad;
                                                 totCosto = detalleV[d].cantidad * suc_product.costo;
                                                 totPrecio = detalleV[d].cantidad * suc_product.precio;
@@ -542,26 +575,29 @@ CORTE DE CAJA
                         } else if (ventas[j].tipo.toUpperCase().includes('CREDITO')) {
                             let fechaVC = new Date(ventas[j].created_at);
                             if (comparacionFecha(fechaCorte, fechaVC)) {
-                                cantVentas = cantVentas + 1;
-                                creditoV = creditoV + ventas[j].pago;
-                                totalVentas = totalVentas + ventas[j].pago;
-                                for (let d in detalleV) {
-                                    if (detalleV[d].idVenta == ventas[j].id) {
-                                        let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
-                                        if (suc_product != null) {
-                                            //  cantProd = cantProd + detalleV[d].cantidad;
-                                            console.log(suc_product.costo);
-                                            console.log(suc_product.precio);
-                                            totCosto = detalleV[d].cantidad * suc_product.costo;
-                                            totPrecio = detalleV[d].cantidad * suc_product.precio;
-                                            let gananciaTemp = totPrecio - totCosto;
-                                            console.log("ganancia: " + gananciaTemp);
-                                            ganancia = ganancia + gananciaTemp;
-                                            console.log("ganancia: " + ganancia);
 
-                                        }
-                                    }
-                                }
+                                cantVentas = cantVentas + 1;
+                                // creditoV = creditoV + ventas[j].pago;
+                                // totalVentas = totalVentas + ventas[j].pago;
+                                /*
+                                 for (let d in detalleV) {
+                                     if (detalleV[d].idVenta == ventas[j].id) {
+                                         let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
+                                         if (suc_product != null) {
+                                             //  cantProd = cantProd + detalleV[d].cantidad;
+                                             console.log(suc_product.costo);
+                                             console.log(suc_product.precio);
+                                             totCosto = detalleV[d].cantidad * suc_product.costo;
+                                             totPrecio = detalleV[d].cantidad * suc_product.precio;
+                                             let gananciaTemp = totPrecio - totCosto;
+                                             console.log("ganancia: " + gananciaTemp);
+                                             ganancia = ganancia + gananciaTemp;
+                                             console.log("ganancia: " + ganancia);
+
+                                         }
+                                     }
+                                 }
+                                 */
                             }
 
                         } else if (ventas[j].tipo.toUpperCase().includes('ECOMMERCE')) {

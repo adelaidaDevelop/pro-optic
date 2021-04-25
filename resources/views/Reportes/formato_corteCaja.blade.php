@@ -59,33 +59,40 @@
             </div>
 
             <br />
-            <h1 class="font-weight-bold"> === ENTRADAS DEL DIA === </h1>
+            <h1 class="font-weight-bold"> === DINERO EN CAJA === </h1>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
-                    <h2 class="row">TOTAL VENTAS: </h2>
-                    <h2 class="row">ABONO DEUDORES: </h2>
-                    <h2 class="row">SUBTOTAL ENTRADAS: </h2>
+                    <h2 class="row">+VENTAS EFECTIVO: </h2>
+                    <h2 class="row">+ABONOS EFECTIVO: </h2>
+                    <h2 class="row">-DEVOLUCION EFECTIVO: </h2>
+                    <h2 class="row text-dark">TOTAL CAJA: </h2>
+
                 </div>
 
                 <div class="col-4 mx-auto px-auto">
                 <h2> ${{ $totalVentas }} </h2>
                 <h2> ${{ $abonoD }} </h2>
+                <h2> ${{ $abonoD }} </h2>
                 <h2> ${{$subtotalE }}</h2>
                 </div>
             </div>
             <br /> <br />
-            <h1 class="font-weight-bold"> === SALIDAS DEL DIA === </h1>
+            <h1 class="font-weight-bold"> === VENTAS DEL DIA === </h1>
             
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
-                <h2 class="row">TOTAL DEVOLUCIONES: </h2>
-                <h2 class="row">SUBTOTAL SALIDAS: </h2>
+                <h2 class="row">EFECTIVO: </h2>
+                <h2 class="row">CREDITO: </h2>
+                <h2 class="row">ECOMMERCE: </h2>
+                <h2 class="row">DEV VENTAS: </h2>
+                <h2 class="row">VENTAS TOTALES: </h2>
                 </div>
                 <div class="col-4 mx-auto px-auto">
                 <h2> ${{ $devolucionT}} </h2>
                 <h2> ${{ $subtotalS}}</h2>
                 </div>
             </div>
+
             <br /> <br />
             <h1 class="font-weight-bold"> === TOTAL === </h1>
             <div class="row col-8  mx-auto px-auto ">
@@ -96,7 +103,18 @@
                 <h2> ${{ $total }}  </h2>
                 </div>
             </div>
+
+            <h1 class="font-weight-bold"> === PAGO A PROVEEDORES === </h1>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                <h2 class="row">PAGOS A PROVEEDORES: </h2>
+                </div>
+                <div class="col-4 mx-auto px-auto">
+                <h2> ${{ $total }}  </h2>
+                </div>
+            </div>
             <br /><br />
+
             <h1 class="font-weight-bold"> === GANANCIAS DEL DIA === </h1>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">

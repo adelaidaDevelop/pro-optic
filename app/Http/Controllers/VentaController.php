@@ -98,6 +98,7 @@ class VentaController extends Controller
             if($pago > 0){
             $pagoCredito = new Pago_venta;
             $pagoCredito->idVentaCliente = $credito->id;
+            $pagoCredito->idEmpSuc = $idSucursalEmpleado;
             $pagoCredito->monto = $pago;
             $pagoCredito->save();
             }
@@ -113,14 +114,12 @@ class VentaController extends Controller
             ]);
         }
         foreach ($datosCodificados as $datosProducto) {
-            
             $producto = new Detalle_venta;
             $producto->cantidad = $datosProducto['cantidad'];
             $producto->idProducto = $datosProducto['idProducto'];
             $producto->precioIndividual= $datosProducto['precio'];
             //$producto->subtotal = $datosProducto['subtotal'];
             $producto->idVenta = $venta->id;
-            
             $producto->save();
             //return 'Si llega hasta aqui';
             $tipo =  $datosProducto['tipo'];
