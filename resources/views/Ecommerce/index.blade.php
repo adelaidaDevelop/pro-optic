@@ -57,7 +57,7 @@
                     <h5 class="card-title">{{$producto->nombre}}</h5>
                     <p class="card-text">{{$producto->descripcion}}</p>
                 </div>
-                <div class="card-footer mx-auto bg-transparent">
+                <div class="card-footer mx-auto">
                     <!--small class="text-muted">Last updated 3 mins ago</small-->
                     <a href="#" class="btn btn-primary">Agregar al carrito</a>
                 </div>
@@ -71,24 +71,25 @@
 <div class="row mx-1">
     @if(count($productosDestacados)>0)
     <div class="row col-12">
-        <h4 class="text-primary mx-auto mt-1"><strong>Productos Nuevos</strong></h4>
+        <h4 class="text-primary mx-auto mt-1"><strong>Productos Destacados</strong></h4>
     </div>
     <div class="row mx-auto">
         @foreach($productosDestacados as $producto)
         <div class="card-group mx-2">
             <!--div class="col my-2"-->
             <div class="card my-3" style="width: 18rem;">
-                <a class="btn btn-outline-light" location="www.google.com">
+                <a class="btn btn-outline-light" href="{{url('/producto/'.$producto['id'])}}">
                 <img src="{{ asset('img\carusel.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body mx-auto">
                     <h5 class="card-title text-dark">{{$producto['nombre']}}</h5>
                     <p class="card-text text-dark">{{$producto['descripcion']}}</p>
                 </div>
-                </a>
+                
                 <div class="card-footer mx-auto bg-transparent">
                     <!--small class="text-muted">Last updated 3 mins ago</small-->
                     <button class="btn btn-primary" id="agregarAlCarrito" onclick="addCarrito({{$producto['id']}})">Agregar al carrito</button>
                 </div>
+                </a>
             </div>
         </div>
         <!--div class="col my-2"-->

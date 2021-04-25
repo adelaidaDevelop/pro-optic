@@ -52,9 +52,10 @@ class EcommerceController extends Controller
     {
         $sucursales = Sucursal::all();
         $departamentos = Departamento::where('ecommerce', '=',1)->get(['id','nombre']);
-        $producto = Producto::findOrFail($id)->first();
+        $producto = Producto::findOrFail($id);
         $productoSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursalEcommerce'))
         ->where('idProducto','=',$id)->first();
+        
         $producto->precio = $productoSucursal->precio;
         $producto->existencia = $productoSucursal->existencia;
         return view('Ecommerce.producto',compact('sucursales','departamentos','producto'));
@@ -99,7 +100,7 @@ class EcommerceController extends Controller
                 $pos = array_search($dv->idProducto, $ids);
                 if($pos != NULL)
                 {
-                    $productos[$pos]->cantidad = $productos[$pos]->cantidad + $dv->cantidad;
+                    $productos[$pos]['cantidad'] = $productos[$pos]['cantidad'] + $dv->cantidad;
                     //array_search($dv->cantidad, $productos);
                 }else
                 {
@@ -133,6 +134,11 @@ class EcommerceController extends Controller
     public function addCarrito(Request $request, $id)
     {
         //return $id;//'Si existe el carrito';
+        $cantidad = 1;
+        if($request->has('cantidad'))
+        {
+            $cantidad = $request['cantidad'];
+        }
         if(Auth::check())
         {
             
@@ -147,13 +153,23 @@ class EcommerceController extends Controller
             //return json_encode($pos);
             if($pos === false)
             {
-                $producto['cantidad'] = 1;
+                $producto['cantidad'] = $cantidad;
                 array_push($carrito,$producto);
                 session(['carrito' => $carrito]);
             }
             else{
-                $carrito[$pos]['cantidad'] = $carrito[$pos]['cantidad'] + 1;
-                session(['carrito' => $carrito]);
+                $productoSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursalEcommerce'))
+                ->where('idProducto','=',$producto->id)->first();
+                $nuevaCantidad = $carrito[$pos]['cantidad'] + $cantidad;
+                if($nuevaCantidad <= $productoSucursal->existencia)
+                {
+                    $carrito[$pos]['cantidad'] = $nuevaCantidad;
+                    session(['carrito' => $carrito]);
+                }
+                else 
+                {
+                    return 1;
+                }
                 //return 'Si existe el carrito';
             }
             return $carrito;
@@ -161,7 +177,7 @@ class EcommerceController extends Controller
         else{
             $carrito = [];
             $producto = Producto::findOrFail($id);
-            $producto['cantidad'] = 1;
+            $producto['cantidad'] = $cantidad;
             array_push($carrito,$producto);
             session(['carrito' => $carrito]);
             return $carrito;//'No existe el carrito';
