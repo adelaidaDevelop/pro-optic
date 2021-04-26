@@ -85,12 +85,6 @@ class EcommerceController extends Controller
         $fecha = now()->sub(new DateInterval('P1M'));//->toDateString();
         $ventas = Venta::where('created_at','>=',$fecha)->paginate(30,['id','tipo','created_at'])->all();
         $productos = [];
-        //$cantidades = [];
-        //$pos = array_column($ventas, 'id');
-        //$p = array_search(11, $pos);
-        //if($p == NULL)
-          //  return 'No econtrado';
-        
         foreach($ventas as $venta)
         {
             $detalle_ventas = Detalle_venta::where('idVenta','=',$venta->id)->get(['idProducto','cantidad']);
@@ -104,10 +98,17 @@ class EcommerceController extends Controller
                     //array_search($dv->cantidad, $productos);
                 }else
                 {
-                    $producto = [];
+                    $productoSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursalEcommerce'))
+                    ->where('idProducto','=',$dv->idProducto)->first();
+                    if($productoSucursal->existencia>0)
+                    {
+                        $producto = [];
+
                     $producto['id'] = $dv->idProducto;
                     $producto['cantidad'] = $dv->cantidad;
                     array_push($productos,$producto);
+                    }
+                    
                     //array_push($productos,$dv->idProducto);
                     //array_push($cantidades,$dv->cantidad);
                 }
@@ -124,6 +125,7 @@ class EcommerceController extends Controller
         for($i=0;$i<count($productos);$i++)
         {
             $producto = Producto::findOrFail($productos[$i]['id']);
+            
             $productos[$i]['nombre'] = $producto->nombre;
             $productos[$i]['descripcion'] = $producto->descripcion;
         }
