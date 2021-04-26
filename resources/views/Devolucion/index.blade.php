@@ -163,7 +163,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     </div>
                     <div class="col-8 mt-4 ">
                         <input type="number" class="form-control mb-2" oninput="calcularTotalD()" name="cantidad" id="cantidad" placeholder="CANTIDAD DE PRODUCTOS DEVUELTOS" value=0 autofocus required>
-                        <textarea name="detalleD" class=" mb-3" id="detalleD" placeholder="ESPECIFICAR DETALLE" rows="3" cols="23" required></textarea>
+                        <textarea name="detalleD" class=" mb-3" id="detalleD" placeholder="ESPECIFICAR EL MOTIVO DE LA DEVOLUCION" rows="3" cols="35" required></textarea>
                         <div class="input-group">
                             <h5>$</h5>
                             <p class="h5 mb-2" id="totalD">0.00</p>
@@ -218,66 +218,66 @@ $devolver = $sE->hasAnyRole($userDevolucion);
             // if (ventas[count].id === folio) {
             let venta = ventas.find(v => v.id === folio);
             if (venta != null) {
-                
+                console.log("encontrado asd");
                 //console.log(detalleVenta);
                 //console.log(ventas);
-                //  for (count2 in detalleVenta) {
-                //  if (detalleVenta[count2].idVenta == ventas[count].id) {
-                let detalleV = detalleVenta.find(p => p.idVenta == venta.id);
-                if (detalleV != null) {
-                    console.log("encontrado asd");
-                    //console.log("Entra a la funcion de buscar folio");
-                    // for (count3 in productos) {
-                    //  if (productos[count3].id == detalleVenta[count2].idProducto) {
-                    let product = productos.find(p => p.id == detalleV.idProducto);
-                    if (product != null) {
-                        cont = cont + 1;
-                        document.getElementById("sinResult").innerHTML = "";
-                        // idProductoD = productos[count3].id;
-                        //idVentaD = ventas[count].id;
-                        // cantTotal = detalleVenta[count2].cantidad;
-                        console.log("De esta venta por cada producto que se vendi en esta venta entra");
-                        let cantPD = 0; //CHECAR
-                        console.log("dev");
-                        console.log(devolucions);
-                        // if (devolucions.length > 0) {
-                        if (devolucions !== null) {
-                            for (count51 in devolucions) {
-                                console.log("devoluNo");
-                                //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
-                                if (venta.id == devolucions[count51].idVenta) {
+                for (count2 in detalleVenta) {
+                    if (detalleVenta[count2].idVenta == folio) {
+                        // let detalleV = detalleVenta.find(p => p.idVenta == folio);
+                        //  if (detalleV != null) {
 
-                                    if (devolucions[count51].idProducto == product.id) {
-                                        cantPD = cantPD + devolucions[count51].cantidad;
-                                        console.log("Si entra en esta parte");
+                        //console.log("Entra a la funcion de buscar folio");
+                        // for (count3 in productos) {
+                        //  if (productos[count3].id == detalleVenta[count2].idProducto) {
+                        let product = productos.find(p => p.id == detalleVenta[count2].idProducto);
+                        if (product != null) {
+                            cont = cont + 1;
+                            document.getElementById("sinResult").innerHTML = "";
+                            // idProductoD = productos[count3].id;
+                            //idVentaD = ventas[count].id;
+                            // cantTotal = detalleVenta[count2].cantidad;
+                            console.log("De esta venta por cada producto que se vendi en esta venta entra");
+                            let cantPD = 0; //CHECAR
+                            console.log("dev");
+                            console.log(devolucions);
+                            // if (devolucions.length > 0) {
+                            if (devolucions !== null) {
+                                for (count51 in devolucions) {
+                                    console.log("devoluNo");
+                                    //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
+                                    if (venta.id == devolucions[count51].idVenta) {
+
+                                        if (devolucions[count51].idProducto == product.id) {
+                                            cantPD = cantPD + devolucions[count51].cantidad;
+                                            console.log("Si entra en esta parte");
+                                        }
                                     }
                                 }
                             }
-                        }
-                        if (cantPD < detalleV.cantidad) {
-                            botonDev = `<button class="btn btn-light" onclick="idProdDV(` + product.id + `,` + venta.id + `,` + detalleV.cantidad + `,` + cantPD + `)"
+                            if (cantPD < detalleVenta[count2].cantidad) {
+                                botonDev = `<button class="btn btn-light" onclick="idProdDV(` + product.id + `,` + venta.id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)"
                                             type="button">DEVOLVER</button>`;
-                        } else {
-                            botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
+                            } else {
+                                botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
                                             type="button" disabled >DEVOLVER</button>`;
-                        }
-                        subtotalV = detalleV.cantidad * detalleV.precioIndividual;
-                        console.log("sisisi");
-                        cuerpo = cuerpo + `
+                            }
+                            subtotalV = detalleVenta[count2].cantidad * detalleVenta[count2].precioIndividual;
+                            console.log("sisisi");
+                            cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
                                             <td>` + product.codigoBarras + `</td>
                                             <td>` + product.nombre + `</td>
-                                            <td>` + detalleV.cantidad + `</td>
-                                            <td>` + detalleV.precioIndividual + `</td>
+                                            <td>` + detalleVenta[count2].cantidad + `</td>
+                                            <td>` + detalleVenta[count2].precioIndividual + `</td>
                                             <td>` + subtotalV + `</td> 
                                             <td>` + cantPD + `</td> 
                                             <td>` + botonDev + `
                                             </td>        
                                                 </tr>
                                                 `;
+                        }
                     }
-
                 }
 
                 // }
@@ -376,6 +376,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                             }).done(function(respuesta) {
 
                                 $('#devolucion').modal('hide');
+                                let confirmar = alert("DEVOLUCION REALIZADO CORRECTAMENTE");
                                 // location.reload();
                                 console.log(respuesta); //JSON.stringify(respuesta));
                             });
@@ -400,7 +401,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     }
                 }
             } else {
-                return alert('El máximo de productos a devolver es: ' + diferencia + ', ingrese una cantidad menor');
+                return alert('El máximo de productos a devolver es: ' + diferencia + ', ingrese una cantidad válida.');
             }
         } else {
             return alert('DEBE INGRESAR UNA CANTIDAD VALIDA DE PRODUCTOS A DEVOLVER');
@@ -550,12 +551,12 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     }
                 }
             }
-            let pago2= 0;
+            let pago2 = 0;
             console.log("total", total);
-            if (ventas[count5].pago  == null) {
+            if (ventas[count5].pago == null) {
                 pago2 = 0;
-            }else {
-                pago2 = ventas[count5].pago ;
+            } else {
+                pago2 = ventas[count5].pago;
             }
             //}
             cuerpo = cuerpo + `

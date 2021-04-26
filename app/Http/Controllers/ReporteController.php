@@ -41,7 +41,7 @@ class ReporteController extends Controller
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         //CORTE DE CAJA INDEX
         $ventas = Venta::all(['id','tipo','pago','status','idSucursalEmpleado','created_at','updated_at']);
-        $pagos = Pago_venta::all(['idVentaCliente','monto','created_at','updated_at']);
+        $pagos = Pago_venta::all(['idVentaCliente','idEmpSuc', 'monto','created_at','updated_at']);
         $pagoCompras = Pago_compra::all(['idCompra','monto','created_at','updated_at']);
         $venta_cliente = venta_cliente::all(['id','estado','idCliente','idVenta','created_at','updated_at']);
         $devoluciones = Devolucion::all(['idVenta','idProducto','precio','cantidad','observacion','created_at','updated_at']);
@@ -57,7 +57,7 @@ class ReporteController extends Controller
         //Seleccionar empleados que son cajeros
         
         $suc_act = Sucursal::findOrFail($idSucursal)->get(['direccion','telefono','status']);
-        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
+        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get(['id','idSucursal','idEmpleado','status','created_at','updated_at']);
         //return $sucursalEmpleados;
         return view('Reportes.corteCaja', compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados','suc_act','detalleV', 'productos', 'suc_prod','venta_cliente','departamento'));
     }

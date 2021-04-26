@@ -79,8 +79,13 @@ class DevolucionController extends Controller
         $precio= $request->input('precio');
         $idProducto= $request->input('idProducto');
         $idVenta= $request->input('idVenta');
+        
+        $idSucEmp = session('idSucursalEmpleado');
+
+
             $devolucion = new Devolucion;
             $devolucion->idProducto = $idProducto;
+            $devolucion->idEmpSuc = $idSucEmp;
             $devolucion->idVenta = $idVenta;
             $devolucion->cantidad = $cantProducto;
             $devolucion->observacion= $detalle;

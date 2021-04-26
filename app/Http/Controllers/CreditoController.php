@@ -27,17 +27,17 @@ class CreditoController extends Controller
         $usuarios = ['verDeudor','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         $idSucursal = session('sucursal');
-        $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)
-        ->get(['id','idSucursal','idEmpleado','status','created_at','updated_at']);
-
-        $venta_clientes= Venta_cliente::all();
+       // $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)
+       // ->get(['id','idSucursal','idEmpleado','status','created_at','updated_at']);
+       $estado2= "incompleto";
+        $venta_clientes= Venta_cliente::where('estado','=', $estado2)->get();
         $cliente= Cliente::all(['id', 'nombre','telefono','domicilio' ,'tipo','idUsuario','created_at','updated_at']);
         $ventas= Venta::all(['id', 'tipo','pago','status' ,'idSucursalEmpleado','created_at','updated_at']);
         $detalleVentas= Detalle_venta::all();
         $productos = Producto::all();
         $pagos_ventas= Pago_venta::all();
         
-          return view('ListaDeudor.index', compact( 'venta_clientes', 'cliente','ventas','detalleVentas', 'productos','pagos_ventas','sucursalEmpleados'));
+          return view('ListaDeudor.index', compact( 'venta_clientes', 'cliente','ventas','detalleVentas', 'productos','pagos_ventas'));
     }
 
     /**

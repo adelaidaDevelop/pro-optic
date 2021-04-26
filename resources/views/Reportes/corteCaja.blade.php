@@ -92,10 +92,10 @@ CORTE DE CAJA
             </div>
             <div class="col-3 ml-3">
                 <div class=" mt-4 my-0 input-group">
-                    <h6>$</h6><input type="number" style="height:23px" id="ventasEfectivo" disabled />
+                    <h6>+$</h6><input type="number" style="height:23px" id="ventasEfectivo" disabled />
                 </div>
                 <div class=" mt-1 my-0  input-group">
-                    <h6>$</h6><input type="number" id="abonoEfectivo" style="height:23px" disabled />
+                    <h6>+$</h6><input type="number" id="abonoEfectivo" style="height:23px" disabled />
                 </div>
                 <!--
                 <div class="mt-0 my-0  input-group">
@@ -106,28 +106,28 @@ CORTE DE CAJA
                 </div>
                 -->
                 <div class="mt-0 my-0  input-group">
-                    <h6>$</h6><input type="number" id="devEfectivo" style="height:23px" disabled />
+                    <h6>-$</h6><input type="number" id="devEfectivo" style="height:23px" disabled />
                 </div>
                 <div class="mt-0  input-group">
-                    <h6>$</h6><input type="number" id="totalCaja" style="height:23px" disabled />
+                    <h6 class="text-primary">=$</h6><input type="number" class="text-primary" id="totalCaja" style="height:23px" disabled />
                 </div>
                 <div class=" mt-5 my-0 input-group">
-                    <h6>$</h6><input type="number" id="efectivoV" class="" style="height:23px" disabled />
+                    <h6>+$</h6><input type="number" id="efectivoV" class="" style="height:23px" disabled />
                 </div>
                 <!--<input type="number" onchange="filtrarCompras()" id="fechaFinal" class=" mt-1 my-0" style="height:23px" />
                 <input type="number" onchange="filtrarCompras()" id="fechaFinal" class=" mt-1 my-0" style="height:23px" />
                 -->
                 <div class=" mt-0 my-0 input-group">
-                    <h6>$</h6><input type="number" id="creditoV" style="height:23px" disabled />
+                    <h6>+$</h6><input type="number" id="creditoV" style="height:23px" disabled />
                 </div>
                 <div class=" mt-0 my-0 input-group">
-                    <h6>$</h6><input type="number" id="ecommerceV" style="height:23px" disabled />
+                    <h6>+$</h6><input type="number" id="ecommerceV" style="height:23px" disabled />
                 </div>
                 <div class=" mt-0 my-0 input-group">
-                    <h6>$</h6><input type="number" id="devolucionV" style="height:23px" disabled />
+                    <h6>-$</h6><input type="number" id="devolucionV" style="height:23px" disabled />
                 </div>
                 <div class=" mt-0 my-0 input-group">
-                    <h6>$</h6><input type="number" id="totalV" style="height:23px" disabled />
+                    <h6 class="text-primary">=$</h6><input type="number" id="totalV" class="text-primary" style="height:23px" disabled />
                 </div>
             </div>
             <div class="col-4  ">
@@ -141,7 +141,7 @@ CORTE DE CAJA
 
                 <div class="form-group input-group text-primary mt-4 mb-2">
                     <h5>TOTAL:</h5>
-                    <h5 class="ml-2">$</h5><input type="number" id="total" style="height:23px" disabled />
+                    <h5 class="ml-2">$</h5><input type="number" class="text-primary" id="total" style="height:23px" disabled />
                 </div>
                 <div class="row form-group input-group">
                     <h6 class="mt-3 ml-3 text-primary">GANANCIA DEL DIA:</h6>
@@ -343,20 +343,19 @@ CORTE DE CAJA
             if (idCajer.value != "0") {
                 idCajeroOK = parseInt(idCajer.value);
                 for (let j in ventas) {
-                    //TOTAL VENDIDO
-                    if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
-                        let fechaVC = new Date(ventas[j].created_at);
-                        if (comparacionFecha(fechaCorte, fechaVC)) {
-                            let idSucEmp = ventas[j].idSucursalEmpleado;
-                            //   for (let h in sucursalEmpleado) {
-                            //  if (sucursalEmpleado[h].id == idSucEmp) {
-                            let suc_emp = sucursalEmpleado.find(s => s.id == idSucEmp);
-                            if (suc_emp != null) {
+                    let idSucEmp = ventas[j].idSucursalEmpleado;
+                    //   for (let h in sucursalEmpleado) {
+                    //  if (sucursalEmpleado[h].id == idSucEmp) {
+                    let suc_emp = sucursalEmpleado.find(s => s.id == idSucEmp);
+                    if (suc_emp != null) {
+                        //TOTAL VENDIDO
+                        if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
+                            let fechaVC = new Date(ventas[j].created_at);
+                            if (comparacionFecha(fechaCorte, fechaVC)) {
                                 if (suc_emp.idEmpleado == idCajeroOK) {
                                     cantVentas = cantVentas + 1;
-                                    //   efectivoV = efectivoV + ventas[j].pago;
-                                    //  totalVentas = totalVentas + ventas[j].pago;
-
+                                    // efectivoV = efectivoV + ventas[j].pago;
+                                    //totalVentas = totalVentas + ventas[j].pago;
                                     for (let d in detalleV) {
                                         if (detalleV[d].idVenta == ventas[j].id) {
                                             let totTemp = detalleV[d].cantidad * detalleV[d].precioIndividual;
@@ -364,27 +363,27 @@ CORTE DE CAJA
                                             totalVentas = totalVentas + totTemp;
                                             let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
                                             if (suc_product != null) {
-                                              //  let product = productos.find(p => p.id == detalleV[d].idProducto);
-                                               // if (product != null) {
-                                                    /*
-                                                    let depto = departamentos.find(d => d.id == product.idDepartamento);
-                                                    let nombre = depto.nombre;
+                                                //  let product = productos.find(p => p.id == detalleV[d].idProducto);
+                                                // if (product != null) {
+                                                /*
+                                                let depto = departamentos.find(d => d.id == product.idDepartamento);
+                                                let nombre = depto.nombre;
+                                                let temp = detalleV[d].cantidad * suc_product.precio;
+
+                                                let 
+                                                if (product.idDepartamento == 1) {
                                                     let temp = detalleV[d].cantidad * suc_product.precio;
+                                                    
+                                                    sinDepto = sinDepto + temp;
+                                                }
+                                                else if (product.idDepartamento == 2) {
+                                                    let temp = detalleV[d].cantidad * suc_product.precio;
+                                                    sinDepto = sinDepto + temp;
+                                                }
+                                                */
+                                                // let depto = departamentos.find(d => d.id == product.idDepartamento);
 
-                                                    let 
-                                                    if (product.idDepartamento == 1) {
-                                                        let temp = detalleV[d].cantidad * suc_product.precio;
-                                                        
-                                                        sinDepto = sinDepto + temp;
-                                                    }
-                                                    else if (product.idDepartamento == 2) {
-                                                        let temp = detalleV[d].cantidad * suc_product.precio;
-                                                        sinDepto = sinDepto + temp;
-                                                    }
-                                                    */
-                                                    // let depto = departamentos.find(d => d.id == product.idDepartamento);
-
-                                              //  }
+                                                //  }
                                                 //  cantProd = cantProd + detalleV[d].cantidad;
                                                 totCosto = detalleV[d].cantidad * suc_product.costo;
                                                 totPrecio = detalleV[d].cantidad * suc_product.precio;
@@ -397,86 +396,104 @@ CORTE DE CAJA
 
                                 }
 
+                                // }
+                                //  }
+
                             }
-                            //  }
+                        } else if (ventas[j].tipo.toUpperCase().includes('CREDITO')) {
+                            let fechaVC = new Date(ventas[j].created_at);
+                            if (comparacionFecha(fechaCorte, fechaVC)) {
+                                //  cantVentas = cantVentas +1;
+                                let idSucEmp = ventas[j].idSucursalEmpleado;
+                                //   for (let h in sucursalEmpleado) {
+                                //  if (sucursalEmpleado[h].id == idSucEmp) {
+                                let suc_emp = sucursalEmpleado.find(s => s.id == idSucEmp);
+                                if (suc_emp != null) {
 
-                        }
-                    } else if (ventas[j].tipo.toUpperCase().includes('CREDITO')) {
-                        let fechaVC = new Date(ventas[j].created_at);
-                        if (comparacionFecha(fechaCorte, fechaVC)) {
-                            let idSucEmp = ventas[j].idSucursalEmpleado;
-                            //   for (let h in sucursalEmpleado) {
-                            //  if (sucursalEmpleado[h].id == idSucEmp) {
-                            let suc_emp = sucursalEmpleado.find(s => s.id == idSucEmp);
-                            if (suc_emp != null) {
+                                    if (suc_emp.idEmpleado == idCajeroOK) {
+                                        cantVentas = cantVentas + 1;
+                                        // creditoV = creditoV + ventas[j].pago;
+                                        // totalVentas = totalVentas + ventas[j].pago;
 
-                                if (suc_emp.idEmpleado == idCajeroOK) {
-                                    cantVentas = cantVentas + 1;
-                                    creditoV = creditoV + ventas[j].pago;
-                                    totalVentas = totalVentas + ventas[j].pago;
+                                        for (let d in detalleV) {
+                                            if (detalleV[d].idVenta == ventas[j].id) {
+                                                let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
+                                                if (suc_product != null) {
+                                                    //  cantProd = cantProd + detalleV[d].cantidad;
+                                                    let totCosto2 = detalleV[d].cantidad * suc_product.costo;
+                                                    let totPrecio2 = detalleV[d].cantidad * suc_product.precio;
+                                                    // let gananciaTemp = totPrecio - totCosto;
+                                                    //  ganancia = ganancia + gananciaTemp;
+                                                    let gananciaTemp = totPrecio2 - totCosto2;
+                                                    console.log("ganancia: " + gananciaTemp);
+                                                    ganancia = ganancia + gananciaTemp;
+                                                    console.log("ganancia: " + ganancia);
 
-                                    for (let d in detalleV) {
-                                        if (detalleV[d].idVenta == ventas[j].id) {
-                                            let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
-                                            if (suc_product != null) {
-                                                //  cantProd = cantProd + detalleV[d].cantidad;
-                                                totCosto = detalleV[d].cantidad * suc_product.costo;
-                                                totPrecio = detalleV[d].cantidad * suc_product.precio;
-                                                // let gananciaTemp = totPrecio - totCosto;
-                                                //  ganancia = ganancia + gananciaTemp;
+                                                    let tempTotal = detalleV[d].cantidad * detalleV[d].precioIndividual;
+                                                    creditoV = creditoV + tempTotal;
+                                                    // totalVentas = totalVentas + tempTotal;
 
+                                                }
                                             }
                                         }
+
                                     }
 
                                 }
+                                //  }
 
                             }
-                            //  }
+                        } else if (ventas[j].tipo.toUpperCase().includes('ECOMMERCE')) {
+                            let fechaVC = new Date(ventas[j].created_at);
+                            if (comparacionFecha(fechaCorte, fechaVC)) {
+                                let idSucEmp = ventas[j].idSucursalEmpleado;
+                                //   for (let h in sucursalEmpleado) {
+                                //  if (sucursalEmpleado[h].id == idSucEmp) {
+                                let suc_emp = sucursalEmpleado.find(s => s.id == idSucEmp);
+                                if (suc_emp != null) {
 
-                        }
-                    } else if (ventas[j].tipo.toUpperCase().includes('ECOMMERCE')) {
-                        let fechaVC = new Date(ventas[j].created_at);
-                        if (comparacionFecha(fechaCorte, fechaVC)) {
-                            let idSucEmp = ventas[j].idSucursalEmpleado;
-                            //   for (let h in sucursalEmpleado) {
-                            //  if (sucursalEmpleado[h].id == idSucEmp) {
-                            let suc_emp = sucursalEmpleado.find(s => s.id == idSucEmp);
-                            if (suc_emp != null) {
+                                    if (suc_emp.idEmpleado == idCajeroOK) {
+                                        cantVentas = cantVentas + 1;
+                                        //  totalVentas = totalVentas + ventas[j].pago;
+                                        for (let d in detalleV) {
+                                            if (detalleV[d].idVenta == ventas[j].id) {
+                                                let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
+                                                if (suc_product != null) {
+                                                    //  cantProd = cantProd + detalleV[d].cantidad;
+                                                    totCosto = detalleV[d].cantidad * suc_product.costo;
+                                                    totPrecio = detalleV[d].cantidad * suc_product.precio;
+                                                    // let gananciaTemp = totPrecio - totCosto;
+                                                    // ganancia = ganancia + gananciaTemp;
+                                                    let gananciaTemp = totPrecio - totCosto;
+                                                    console.log("ganancia: " + gananciaTemp);
+                                                    ganancia = ganancia + gananciaTemp;
+                                                    console.log("ganancia: " + ganancia);
 
-                                if (suc_emp.idEmpleado == idCajeroOK) {
-                                    cantVentas = cantVentas + 1;
-                                    ecommerceV = ecommerceV + ventas[j].pago;
-                                    totalVentas = totalVentas + ventas[j].pago;
+                                                    let tempTotal = detalleV[d].cantidad * detalleV[d].precioIndividual;
+                                                    ecommerceV = ecommerceV + tempTotal;
 
-                                    for (let d in detalleV) {
-                                        if (detalleV[d].idVenta == ventas[j].id) {
-                                            let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
-                                            if (suc_product != null) {
-                                                //  cantProd = cantProd + detalleV[d].cantidad;
-                                                totCosto = detalleV[d].cantidad * suc_product.costo;
-                                                totPrecio = detalleV[d].cantidad * suc_product.precio;
-                                                // let gananciaTemp = totPrecio - totCosto;
-                                                // ganancia = ganancia + gananciaTemp;
-
+                                                }
                                             }
                                         }
+
                                     }
 
                                 }
+                                //  }
 
                             }
-                            //  }
 
                         }
-
                     }
                 }
                 //ABONO realizados
                 for (let z in pagos) {
+
                     let fechaP = new Date(pagos[z].created_at);
-                    let ventaCliente = venta_cliente.find(v => v.id == pagos[z].idVentaCliente);
-                    if (ventaCliente != null) {
+                    // let ventaCliente = venta_cliente.find(v => v.id == pagos[z].idVentaCliente);
+                    let empSucursal = sucursalEmpleado.find(s => s.id == pagos[z].idEmpSuc);
+                    console.log("hola");
+                    if (empSucursal != null) {
                         //  let venta = ventas.find(v => v.id == ventaCliente.idVenta);
 
                         // if (sucEmp != null) {
@@ -485,16 +502,16 @@ CORTE DE CAJA
                             // let idSucEmp = ventas[j].idSucursalEmpleado;
                             // if (idSucEmp != null) {
                             //  let sucEmp = sucursalEmpleado.find(s => s.id == venta.idSucursalEmpleado);
-                            let sucEmp = sucursalEmpleado.find(s => s.id == pagos[z].idEmpSuc)
-                            if (sucEmp != null) {
-                                //    for (let h in sucursalEmpleado) {
-                                //  if (sucursalEmpleado[h].id == idSucEmp) {
-                                if (sucEmp.idEmpleado == idCajeroOK) {
-                                    abonos = abonos + pagos[z].monto;
-                                }
-                                //  }
-                                // }
+                            // let sucEmp = sucursalEmpleado.find(s => s.id == pagos[z].idEmpSuc)
+                            // if (sucEmp != null) {
+                            //    for (let h in sucursalEmpleado) {
+                            //  if (sucursalEmpleado[h].id == idSucEmp) {
+                            if (empSucursal.idEmpleado == idCajeroOK) {
+                                abonos = abonos + pagos[z].monto;
                             }
+                            //  }
+                            // }
+                            // }
                             // }
                         }
                         //  }
@@ -506,6 +523,7 @@ CORTE DE CAJA
                     //  if (devoluciones[x].idVenta === ventas[j].id) {
                     // let venta = ventas.find(v => v.id === devoluciones[x].idVenta);
                     //  if (venta != null) {
+
                     if (comparacionFecha(fechaCorte, fechaD)) {
                         // let idSucEmp = ventas[j].idSucursalEmpleado;
                         //  for (let h in sucursalEmpleado) {
@@ -532,7 +550,7 @@ CORTE DE CAJA
                             if (suc_emp.idEmpleado == idCajeroOK) {
                                 {
                                     // let temp = devoluciones[x].precio * devoluciones[x].cantidad;
-                                    totalPagoComp = totalPagoComp + monto;
+                                    totalPagoComp = totalPagoComp + pagoCompras[p].monto;
                                 }
                             }
                         }
@@ -545,16 +563,19 @@ CORTE DE CAJA
                     let idSucEmp = ventas[j].idSucursalEmpleado;
                     // for (let h in sucursalEmpleado) {
                     //  if (sucursalEmpleado[h].id == idSucEmp) {
-                    let suc_emp = sucursalEmpleado.find(s => s.id == idSucEmp);
+                    let suc_emp = sucursalEmpleado.find(s => s.id === idSucEmp);
                     if (suc_emp != null) {
                         if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
                             let fechaVC = new Date(ventas[j].created_at);
                             if (comparacionFecha(fechaCorte, fechaVC)) {
                                 cantVentas = cantVentas + 1;
-                                efectivoV = efectivoV + ventas[j].pago;
-                                totalVentas = totalVentas + ventas[j].pago;
+                                //  efectivoV = efectivoV + ventas[j].pago;
+                                // totalVentas = totalVentas + ventas[j].pago;
                                 for (let d in detalleV) {
                                     if (detalleV[d].idVenta == ventas[j].id) {
+                                        let totTemp = detalleV[d].cantidad * detalleV[d].precioIndividual;
+                                        efectivoV = efectivoV + totTemp;
+                                        totalVentas = totalVentas + totTemp;
                                         let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
                                         if (suc_product != null) {
                                             //  cantProd = cantProd + detalleV[d].cantidad;
@@ -577,40 +598,15 @@ CORTE DE CAJA
                             if (comparacionFecha(fechaCorte, fechaVC)) {
 
                                 cantVentas = cantVentas + 1;
+
                                 // creditoV = creditoV + ventas[j].pago;
                                 // totalVentas = totalVentas + ventas[j].pago;
-                                /*
-                                 for (let d in detalleV) {
-                                     if (detalleV[d].idVenta == ventas[j].id) {
-                                         let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
-                                         if (suc_product != null) {
-                                             //  cantProd = cantProd + detalleV[d].cantidad;
-                                             console.log(suc_product.costo);
-                                             console.log(suc_product.precio);
-                                             totCosto = detalleV[d].cantidad * suc_product.costo;
-                                             totPrecio = detalleV[d].cantidad * suc_product.precio;
-                                             let gananciaTemp = totPrecio - totCosto;
-                                             console.log("ganancia: " + gananciaTemp);
-                                             ganancia = ganancia + gananciaTemp;
-                                             console.log("ganancia: " + ganancia);
-
-                                         }
-                                     }
-                                 }
-                                 */
-                            }
-
-                        } else if (ventas[j].tipo.toUpperCase().includes('ECOMMERCE')) {
-                            let fechaVC = new Date(ventas[j].created_at);
-                            if (comparacionFecha(fechaCorte, fechaVC)) {
-                                cantVentas = cantVentas + 1;
-                                ecommerceV = ecommerceV + ventas[j].pago;
-                                totalVentas = totalVentas + ventas[j].pago;
                                 for (let d in detalleV) {
                                     if (detalleV[d].idVenta == ventas[j].id) {
                                         let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
                                         if (suc_product != null) {
                                             //  cantProd = cantProd + detalleV[d].cantidad;
+                                            /*
                                             console.log(suc_product.costo);
                                             console.log(suc_product.precio);
                                             totCosto = detalleV[d].cantidad * suc_product.costo;
@@ -619,6 +615,37 @@ CORTE DE CAJA
                                             console.log("ganancia: " + gananciaTemp);
                                             ganancia = ganancia + gananciaTemp;
                                             console.log("ganancia: " + ganancia);
+                                            */
+                                            let tempTotal = detalleV[d].cantidad * detalleV[d].precioIndividual;
+                                            creditoV = creditoV + tempTotal;
+                                        }
+                                    }
+                                }
+
+                            }
+
+                        } else if (ventas[j].tipo.toUpperCase().includes('ECOMMERCE')) {
+                            let fechaVC = new Date(ventas[j].created_at);
+                            if (comparacionFecha(fechaCorte, fechaVC)) {
+                                cantVentas = cantVentas + 1;
+                                //  totalVentas = totalVentas + ventas[j].pago;
+                                for (let d in detalleV) {
+                                    if (detalleV[d].idVenta == ventas[j].id) {
+                                        let suc_product = suc_prod.find(s => s.idProducto == detalleV[d].idProducto);
+                                        if (suc_product != null) {
+                                            //  cantProd = cantProd + detalleV[d].cantidad;
+                                            /*
+                                            console.log(suc_product.costo);
+                                            console.log(suc_product.precio);
+                                            totCosto = detalleV[d].cantidad * suc_product.costo;
+                                            totPrecio = detalleV[d].cantidad * suc_product.precio;
+                                            let gananciaTemp = totPrecio - totCosto;
+                                            console.log("ganancia: " + gananciaTemp);
+                                            ganancia = ganancia + gananciaTemp;
+                                            console.log("ganancia: " + ganancia);
+                                            */
+                                            let tempTotal = detalleV[d].cantidad * detalleV[d].precioIndividual;
+                                            ecommerceV = ecommerceV + tempTotal;
 
                                         }
                                     }
@@ -629,12 +656,14 @@ CORTE DE CAJA
                 }
                 //ABONO COMPLETADOS
                 for (let z in pagos) {
+
                     let fechaP = new Date(pagos[z].created_at);
                     // if (ventas[j].id == pagos[z].idVenta) {
-                    let venta = ventas.find(v => v.id == pagos[z].idVenta);
-                    if (venta != null) {
-                        if (comparacionFecha(fechaCorte, fechaP)) {
+                    let empSucursal = sucursalEmpleado.find(s => s.id == pagos[z].idEmpSuc);
+                    console.log("hola");
+                    if (empSucursal != null) {
 
+                        if (comparacionFecha(fechaCorte, fechaP)) {
                             abonos = abonos + pagos[z].monto;
                         }
                     }
@@ -658,7 +687,7 @@ CORTE DE CAJA
                         if (suc_emp != null) {
                             // if (suc_emp.idEmpleado == idCajeroOK) {
                             // let temp = devoluciones[x].precio * devoluciones[x].cantidad;
-                            totalPagoComp = totalPagoComp + monto;
+                            totalPagoComp = totalPagoComp + pagoCompras[p].monto;
 
                             // }
                         }
@@ -668,7 +697,7 @@ CORTE DE CAJA
                 //  }
                 // }
                 // }
-                totalPagoComp
+
                 entradas = totalVentas + abonos;
                 // salidas = totalDev + abonoProveedores + comprasContado;
                 salidas = totalDev;
@@ -678,25 +707,23 @@ CORTE DE CAJA
                 totalCaja2 = efectivoV + abonos - totalDev;
                 // let tv= Number(totalVentas.toFixed(2));
                 $("input[id='ventasEfectivo']").val(Number(efectivoV.toFixed(2)));
-                $("input[id='efectivoV']").val(Number(efectivoV.toFixed(2)));
-                $("input[id='creditoV']").val(Number(creditoV.toFixed(2)));
-                $("input[id='ecommerceV']").val(Number(ecommerceV.toFixed(2)));
-
                 $("input[id='abonoEfectivo']").val(Number(abonos.toFixed(2)));
                 $("input[id='devEfectivo']").val(Number(totalDev.toFixed(2)));
-                $("input[id='devolucionV']").val(Number(totalDev.toFixed(2)));
-                $("input[id='totalV']").val(Number(ventas_totales.toFixed(2)));
                 $("input[id='totalCaja']").val(Number(totalCaja2.toFixed(2)));
 
 
-
-
-
-                $("input[id='subtotalE']").val(Number(entradas.toFixed(2)));
-
-                $("input[id='subtotalS']").val(Number(salidas.toFixed(2)));
+                $("input[id='efectivoV']").val(Number(efectivoV.toFixed(2)));
+                $("input[id='creditoV']").val(Number(creditoV.toFixed(2)));
+                $("input[id='ecommerceV']").val(Number(ecommerceV.toFixed(2)));
+                $("input[id='devolucionV']").val(Number(totalDev.toFixed(2)));
+                $("input[id='totalV']").val(Number(ventas_totales.toFixed(2)));
+                
+                // $("input[id='subtotalE']").val(Number(entradas.toFixed(2)));
+                // $("input[id='subtotalS']").val(Number(salidas.toFixed(2)));
                 $("input[id='total']").val(Number(total.toFixed(2)));
                 $("input[id='gananciaId']").val(Number(ganancia.toFixed(2)));
+                $("input[id='pagoProv']").val(Number(totalPagoComp.toFixed(2)));
+
                 cant_ventas = cantVentas;
                 console.log(totalVentas);
 
@@ -762,6 +789,7 @@ CORTE DE CAJA
                 $("div.PrintArea").printArea([options]);
             }
             */
+    /*
     jQuery.downloadReporte = function(url, data) {
 
         url = "reportes/" + url;
@@ -797,8 +825,6 @@ CORTE DE CAJA
 
 
     document.addEventListener("DOMContentLoaded", () => {
-
-        // Escuchamos el click del botón
         const $boton = document.querySelector("#btnCrearPdf");
         $boton.addEventListener("click", () => {
             const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
@@ -825,6 +851,7 @@ CORTE DE CAJA
                 .catch(err => console.log(err));
         });
     });
+    */
     /*
         function formatoCorteCaja(totalV, abonoD, subtotalE, totalD, subtotalS, total) {
             var formato =
@@ -875,13 +902,20 @@ CORTE DE CAJA
     // imprimir automa
     $(document).ready(function() {
         $('#getUser').on('click', function() {
-            let totalVentas = $('#totalVentas').val();
-            let abonoD = $('#abonoD').val();
-            let subtotalE = $('#subtotalE').val();
-            let devolucionT = $('#devolucionT').val();
-            let subtotalS = $('#subtotalS').val();
+            let ventasEfectivo = $('#ventasEfectivo').val();
+            let abonoEfectivo = $('#abonoEfectivo').val();
+            let devEfectivo = $('#devEfectivo').val();
+            let totalCaja = $('#totalCaja').val();
+
+            let efectivoV = $('#efectivoV').val();
+            let creditoV = $('#creditoV').val();
+            let ecommerceV = $('#ecommerceV').val();
+            let devolucionV = $('#devolucionV').val();
+            let totalV = $('#totalV').val();
+
             let total = $('#total').val();
-            let gananciaT = $('#gananciaId').val();
+            let gananciaId = $('#gananciaId').val();
+            let pagoProv = $('#pagoProv').val();
 
             //  let cantVenta = 5;
             // let fecha = $('#fechaCorte').val();
@@ -889,14 +923,10 @@ CORTE DE CAJA
             let fecha2 = new Date(fecha.value);
             fecha2.setDate(fecha2.getDate() + 1);
             fechaF = fecha2.getDate() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getFullYear();
-
             //  impFinal(formatoCorteCaja(totalVentas, abonoD, subtotalE, devolucionT, subtotalS, total));
-
-            let url = `{{url('/puntoVenta/corte_cajaView')}}?totalVentas=${totalVentas}&abonoD=${abonoD}&subtotalE=${subtotalE}&devolucionT=${devolucionT}&subtotalS=${subtotalS}&total=${total}&cantVenta=${cant_ventas}&fecha=${fechaF}&ganancia=${gananciaT}`;
+            let url = `{{url('/puntoVenta/corte_cajaView')}}?ventasEfectivo=${ventasEfectivo}&abonoEfectivo=${abonoEfectivo}&devEfectivo=${devEfectivo}&totalCaja=${totalCaja}&efectivoV=${efectivoV}&creditoV=${creditoV}&ecommerceV=${ecommerceV}&devolucionV=${devolucionV}&totalV=${totalV}&total=${total}&pagoProv=${pagoProv}&fecha=${fechaF}&gananciaId=${gananciaId}&cantVenta=${cant_ventas}`;
             window.open(url, "_blank");
         });
-
-
     });
 
     function impFinal(printContent) {
