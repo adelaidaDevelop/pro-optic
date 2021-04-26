@@ -13,17 +13,22 @@
 
 <body>
     @php
-    $totalVentas= json_decode($_GET['totalVentas']);
-    $abonoD= $_GET['abonoD'];
-    $subtotalE= json_decode($_GET['subtotalE']);
-    $devolucionT= json_decode($_GET['devolucionT']);
-    $subtotalS= json_decode($_GET['subtotalS']);
-    $total= json_decode($_GET['total']);
-    $cantVenta= $_GET['cantVenta'];
+    $ventaEfectivo= $_GET['ventasEfectivo'];
+    $abonosEfectivo= json_decode($_GET['abonoEfectivo']);
+    $dev_efectivo= json_decode($_GET['devEfectivo']);
+    $totalCaja= json_decode($_GET['totalCaja']);
+    $efectivoV= json_decode($_GET['efectivoV']);
+    $creditoV= $_GET['creditoV'];
+    $ecommerceV= $_GET['ecommerceV'];
+    $devolucionV= $_GET['devolucionV'];
+    $totalVentas= $_GET['totalV'];
+    $total= $_GET['total'];
+    $pagoProv= $_GET['pagoProv'];
     $fecha= $_GET['fecha'];
     $hoy = date('d/m/Y H:i:s');
-    $ganancia= $_GET['ganancia'];
-  
+    $ganancia= $_GET['gananciaId'];
+    $cantVenta= $_GET['cantVenta'];
+
     @endphp
     <div class="row w-100 " id="impDiv">
 
@@ -36,10 +41,10 @@
             <h1 class="font-weight-bold"> CORTE DEL DIA</h1>
             <div class="row col-3  mx-auto px-auto ">
                 <div class="col-6 mx-auto px-auto text-left">
-                <h2 class="row">DEL: </h2>
+                    <h2 class="row">DEL: </h2>
                 </div>
                 <div class="col-6 mx-auto px-auto">
-                <h2> {{ $fecha}} </h2>
+                    <h2> {{ $fecha}} </h2>
                 </div>
             </div>
 
@@ -51,10 +56,10 @@
             <h1 class="font-weight-bold" class="font-weight-bold"> === CANT. VENTAS DEL DIA === </h1>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
-                <h2 class="row">VENTAS EN EL DIA: </h2>
+                    <h2 class="row">VENTAS EN EL DIA: </h2>
                 </div>
                 <div class="col-4 mx-auto px-auto">
-                <h2> {{ $cantVenta}} </h2>
+                    <h2> {{ $cantVenta}} </h2>
                 </div>
             </div>
 
@@ -70,26 +75,29 @@
                 </div>
 
                 <div class="col-4 mx-auto px-auto">
-                <h2> ${{ $totalVentas }} </h2>
-                <h2> ${{ $abonoD }} </h2>
-                <h2> ${{ $abonoD }} </h2>
-                <h2> ${{$subtotalE }}</h2>
+                    <h2> +${{ $ventaEfectivo }} </h2>
+                    <h2> +${{ $abonosEfectivo}} </h2>
+                    <h2> -${{ $dev_efectivo }} </h2>
+                    <h2> ${{$totalCaja }}</h2>
                 </div>
             </div>
             <br /> <br />
             <h1 class="font-weight-bold"> === VENTAS DEL DIA === </h1>
-            
+
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
-                <h2 class="row">EFECTIVO: </h2>
-                <h2 class="row">CREDITO: </h2>
-                <h2 class="row">ECOMMERCE: </h2>
-                <h2 class="row">DEV VENTAS: </h2>
-                <h2 class="row">VENTAS TOTALES: </h2>
+                    <h2 class="row">EFECTIVO: </h2>
+                    <h2 class="row">CREDITO: </h2>
+                    <h2 class="row">ECOMMERCE: </h2>
+                    <h2 class="row">DEV VENTAS: </h2>
+                    <h2 class="row">VENTAS TOTALES: </h2>
                 </div>
                 <div class="col-4 mx-auto px-auto">
-                <h2> ${{ $devolucionT}} </h2>
-                <h2> ${{ $subtotalS}}</h2>
+                    <h2> ${{ +$efectivoV}} </h2>
+                    <h2> ${{ +$creditoV}} </h2>
+                    <h2> ${{ +$ecommerceV}} </h2>
+                    <h2> ${{ -$devolucionV}} </h2>
+                    <h2> ${{ $totalVentas}}</h2>
                 </div>
             </div>
 
@@ -97,20 +105,20 @@
             <h1 class="font-weight-bold"> === TOTAL === </h1>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
-                <h2 class="row">TOTAL: </h2>
+                    <h2 class="row">TOTAL: </h2>
                 </div>
                 <div class="col-4 mx-auto px-auto">
-                <h2> ${{ $total }}  </h2>
+                    <h2> ${{ $total }} </h2>
                 </div>
             </div>
 
             <h1 class="font-weight-bold"> === PAGO A PROVEEDORES === </h1>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
-                <h2 class="row">PAGOS A PROVEEDORES: </h2>
+                    <h2 class="row">PAGOS A PROVEEDORES: </h2>
                 </div>
                 <div class="col-4 mx-auto px-auto">
-                <h2> ${{ $total }}  </h2>
+                    <h2> ${{ $pagoProv }} </h2>
                 </div>
             </div>
             <br /><br />
@@ -118,14 +126,14 @@
             <h1 class="font-weight-bold"> === GANANCIAS DEL DIA === </h1>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
-                <h2 class="row">GANANCIA: </h2>
+                    <h2 class="row">GANANCIA: </h2>
                 </div>
                 <div class="col-4 mx-auto px-auto">
-                <h2> ${{ $ganancia}} </h2>
+                    <h2> ${{ $ganancia}} </h2>
                 </div>
             </div>
             <br /><br />
-<!--
+            <!--
             <h1 class="font-weight-bold"> === VENTAS POR DEPTOS === </h1>
             <div class="col-6 mx-auto px-auto  ">
                 <h2 class="row">TOTAL :</h2>

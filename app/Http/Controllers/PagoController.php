@@ -42,12 +42,14 @@ class PagoController extends Controller
         $folio= $request->input('folio');
         $totalResta= $request->input('totalResta');
         $totalCompra = $request->input('totalCompra');
+        $idSucEmp = session('idSucursalEmpleado');
         
         if ($monto == $totalResta) {
             if($monto > 0)
             {
             $pago = new Pago_venta;
             $pago->monto = $monto;
+            $pago->idEmpSuc = $idSucEmp;
             $pago->idVentaCliente = $idVentaCliente;
             $pago->save();
            // $datosProducto=request()->except(['_token', '_method']);
@@ -67,6 +69,7 @@ class PagoController extends Controller
             {
             $pago = new Pago_venta;
             $pago->monto = $monto;
+            $pago->idEmpSuc = $idSucEmp;
             $pago->idVentaCliente = $idVentaCliente;
             $pago->save();
             }

@@ -1,7 +1,7 @@
 @extends('header2')
 @section('contenido')
 @section('subtitulo')
-REPORTES
+INVENTARIO
 @endsection
 @section('opciones')
 <!--
@@ -14,6 +14,7 @@ REPORTES
     </form>
 </div>
 -->
+<!--
 <div class="col-0  p-1 ml-4">
     <form method="get" action="{{url('/puntoVenta/reporteCompraVenta/')}}">
         <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
@@ -22,21 +23,22 @@ REPORTES
         </button>
     </form>
 </div>
-<div class="col-5 "></div>
+-->
+<div class="col"></div>
 <div class=" my-auto">
     <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
     </a>
 </div>
 @endsection
-
+ 
 
 <!--CONSULTAR PRODUCTO -->
 
 <div class="row  border border-dark ml-0 mr-0  mt-2 ">
     <h4 class=" row ml-1 mt-2 mb-2 mx-auto text-dark ">
         <strong>
-            INVENTARIO
+            REPORTE INVENTARIO
         </strong>
     </h4>
     <br />
