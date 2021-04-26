@@ -178,8 +178,12 @@ class EcommerceController extends Controller
         }
         else{
             $carrito = [];
-            $producto = Producto::findOrFail($id);
+            $producto = [];
+            $p = Producto::findOrFail($id);
+
             $producto['cantidad'] = $cantidad;
+            $producto['id'] = $p->id;
+            $producto['i'] = $p->id;
             array_push($carrito,$producto);
             session(['carrito' => $carrito]);
             return $carrito;//'No existe el carrito';
