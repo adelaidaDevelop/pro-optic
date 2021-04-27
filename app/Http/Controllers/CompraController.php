@@ -89,11 +89,14 @@ class CompraController extends Controller
             $pagoCompra = $request->input('pago');
             if($pagoCompra>0)
             {
+                $idSucEmp = session('idSucursalEmpleado');
                 $pago = new Pago_compra;
                 $pago->monto = $pagoCompra;
+                $pago->	idEmpSuc = $idSucEmp;
                 $pago->idCompra = $compra->id;
                 $pago->save();
             }
+            
             
         }
         

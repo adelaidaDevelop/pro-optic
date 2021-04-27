@@ -28,6 +28,7 @@
     $hoy = date('d/m/Y H:i:s');
     $ganancia= $_GET['gananciaId'];
     $cantVenta= $_GET['cantVenta'];
+    $cajero= $_GET['cajero'];
 
     @endphp
     <div class="row w-100 " id="impDiv">
@@ -51,7 +52,7 @@
             <br />
 
             <h2 class="mb-1"> REALIZADO: {{ $hoy}}</h2>
-            <h2>CAJERO: TODOS</h2>
+            <h2>CAJERO: {{$cajero}}</h2>
             <br /><br />
             <h1 class="font-weight-bold" class="font-weight-bold"> === CANT. VENTAS DEL DIA === </h1>
             <div class="row col-8  mx-auto px-auto ">
@@ -147,6 +148,8 @@
     function imprimir() {
 
         window.print();
+        myWindow.blur(); //
+        myWindow.close();//
         // document.getElementById("totalV").innerHTML = 
     }
     imprimir();
