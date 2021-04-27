@@ -55,9 +55,15 @@ class EcommerceController extends Controller
         $producto = Producto::findOrFail($id);
         $productoSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursalEcommerce'))
         ->where('idProducto','=',$id)->first();
-        
-        $producto->precio = $productoSucursal->precio;
-        $producto->existencia = $productoSucursal->existencia;
+        if(isset($productoSucursal))
+        {
+            $producto->precio = $productoSucursal->precio;
+            $producto->existencia = $productoSucursal->existencia;
+        }
+        else
+        {
+            $producto = false;
+        }
         return view('Ecommerce.producto',compact('sucursales','departamentos','producto'));
     }
     public function productosNuevos()
@@ -98,9 +104,11 @@ class EcommerceController extends Controller
                     //array_search($dv->cantidad, $productos);
                 }else
                 {
+                    $p = Producto::findOrFail($dv->idProducto);
+                    $departamento = Departamento::findOrFail($p->idDepartamento);
                     $productoSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursalEcommerce'))
                     ->where('idProducto','=',$dv->idProducto)->first();
-                    if($productoSucursal->existencia>0)
+                    if(isset($productoSucursal) && $productoSucursal->existencia>0 && $departamento->ecommerce)
                     {
                         $producto = [];
 
@@ -135,6 +143,7 @@ class EcommerceController extends Controller
 
     public function addCarrito(Request $request, $id)
     {
+        
         //return $id;//'Si existe el carrito';
         $cantidad = 1;
         if($request->has('cantidad'))
@@ -149,10 +158,34 @@ class EcommerceController extends Controller
         $carrito =  session('carrito');
         if(isset($carrito))
         {
-            $producto = Producto::findOrFail($id);
-            $ids = array_column($carrito, 'id');
-            $pos = array_search($producto->id, $ids);
-            //return json_encode($pos);
+            
+            //$producto = Producto::findOrFail($id);
+            $producto = [];
+            $p = Producto::findOrFail($id);
+            $sp = Sucursal_producto::where('idSucursal', '=',session('sucursalEcommerce'))
+            ->where('idProducto','=',$id)->first();
+            //$producto['cantidad'] = $cantidad;
+            $producto['id'] = $p->id;
+            $producto['imagen'] = $p->imagen;
+            $producto['nombre'] = $p->nombre;
+            $producto['precio'] = $sp->precio;
+            $producto['sucursal'] = session('sucursalEcommerce');
+            //array_push($carrito,$producto);
+            //session(['carrito' => $carrito]);
+            //$ids = array_column($carrito, 'id');
+            //$pos = array_search($producto['id'], $ids);
+            $pos = false;
+            
+            for($i=0 ;$i<count($carrito);$i++)
+            {
+                
+                if($producto['id'] == $carrito[$i]['id'] && $producto['sucursal'] == $carrito[$i]['sucursal'])
+                {
+                    $pos = $i;
+                }
+                
+            }
+            //return 'Aqui esta bien';
             if($pos === false)
             {
                 $producto['cantidad'] = $cantidad;
@@ -160,8 +193,10 @@ class EcommerceController extends Controller
                 session(['carrito' => $carrito]);
             }
             else{
+                
                 $productoSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursalEcommerce'))
-                ->where('idProducto','=',$producto->id)->first();
+                ->where('idProducto','=',$producto['id'])->first();
+                
                 $nuevaCantidad = $carrito[$pos]['cantidad'] + $cantidad;
                 if($nuevaCantidad <= $productoSucursal->existencia)
                 {
@@ -180,15 +215,35 @@ class EcommerceController extends Controller
             $carrito = [];
             $producto = [];
             $p = Producto::findOrFail($id);
-
+            $sp = Sucursal_producto::where('idSucursal', '=',session('sucursalEcommerce'))
+            ->where('idProducto','=',$id)->first();
             $producto['cantidad'] = $cantidad;
             $producto['id'] = $p->id;
-            $producto['i'] = $p->id;
+            $producto['imagen'] = $p->imagen;
+            $producto['nombre'] = $p->nombre;
+            $producto['precio'] = $sp->precio;
+            $producto['sucursal'] = session('sucursalEcommerce');
             array_push($carrito,$producto);
             session(['carrito' => $carrito]);
             return $carrito;//'No existe el carrito';
         }
         
-
+    }
+    public function cambiarSucursal($sucursal)
+    {
+        session(['sucursalEcommerce'=>$sucursal]);
+        return json_encode(true);//session('sucursalEcommerces');
+    }
+    public function carrito()
+    {
+        $sucursales = Sucursal::all();
+        $departamentos = Departamento::where('ecommerce', '=',1)->get(['id','nombre']);
+        //$producto = Producto::findOrFail($id);
+        //$productoSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursalEcommerce'))
+        //->where('idProducto','=',$id)->first();
+        
+        return view('Ecommerce.carrito',compact('sucursales','departamentos'));
+        //session(['sucursalEcommerce'=>$sucursal]);
+        //return json_encode(true);//session('sucursalEcommerces');
     }
 }

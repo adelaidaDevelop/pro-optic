@@ -44,7 +44,9 @@ Route::post('/loginCliente', [LoginClienteController::class,'loginPost'])->name(
 Route::post('/logoutCliente', [LoginClienteController::class,'logout'])->name('Login');
 
 Route::post('/agregarAlCarrito/{id}', [EcommerceController::class,'addCarrito'])->middleware('isCliente');
-Route::resource('/', EcommerceController::class)->middleware('isCliente');
+//Route::resource('/', EcommerceController::class)->middleware('isCliente');
+Route::get('/', [EcommerceController::class,'index'])->middleware('isCliente');
+
 Route::get('/productosNuevos', [EcommerceController::class,'productosNuevos'])->middleware('isCliente');
 Route::get('/productosDestacados', [EcommerceController::class,'productosDestacados'])->middleware('isCliente');
 
@@ -52,7 +54,8 @@ Route::get('/registerCliente', [LoginClienteController::class,'register'])->midd
 Route::post('/registerPost', [LoginClienteController::class,'registerPost'])->middleware('isCliente');
 
 Route::get('/producto/{id}', [EcommerceController::class,'verProducto'])->middleware('isCliente');
-
+Route::post('/sucursal/{sucursal}', [EcommerceController::class,'cambiarSucursal'])->middleware('isCliente');
+Route::get('/carrito', [EcommerceController::class,'carrito'])->middleware('isCliente');
 
 //Auth::routes();
 
