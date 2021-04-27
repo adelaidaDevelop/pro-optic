@@ -1,5 +1,10 @@
 @extends('layouts.headerEcommerce')
 @section('contenido')
+@if($producto === false)
+<div class="row col-12 mx-auto my-5">
+  <h2 class="text-center mx-auto "><strong>El producto que busca no se encuentra en esta sucursal o no tiene existencia</strong></h2>
+</div>
+@else
 <div class="row col-12 my-5">
     <div class="row col-md-7 p-2 mx-auto" >
     @if(!empty($producto->imagen))
@@ -40,6 +45,7 @@
   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">perfiles</div>
   <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">contactoos</div>
 </div>
+@endif
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
 $("input[type='number']").inputSpinner();
@@ -65,6 +71,7 @@ async function addCarrito(id) {
             }
         });
         console.log(respuesta);
+        
         if(respuesta == 1)
         {
           return alert('Por el momento esta es la existencia que tenemos a la venta');
@@ -78,7 +85,7 @@ async function addCarrito(id) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
 }
-mostrarCarrito();
+/*mostrarCarrito();
 function mostrarCarrito()
 {
     if(carrito == null)
@@ -90,11 +97,11 @@ function mostrarCarrito()
         totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
         if(!carrito[i].imagen.length > 0)
         {
-            carrito[i].imagen = "{{ asset('img/imagenNoDisponible.jpg') }}";
+            carrito[i].imagen = "{ asset('img/imagenNoDisponible.jpg') }}";
             console.log('imagen',"No hay imagen");
         }
         else{
-            carrito[i].imagen = `{{ asset('storage')}}/${carrito[i].imagen}`;
+            carrito[i].imagen = `{ asset('storage')}}/${carrito[i].imagen}`;
             console.log('imagen',carrito[i].imagen);
         }
         cuerpoCarrito = cuerpoCarrito +
@@ -122,6 +129,6 @@ function mostrarCarrito()
     cuerpoCarrito = cuerpoCarrito + `<div class="row mx-auto ><p class="text-center mx-auto border border-dark">Total $ ${totalCompra}</p></div>`
     cuerpoCarrito = cuerpoCarrito + `<button class="btn btn-success">Pagar</button>`
     elementoCarrito.innerHTML = cuerpoCarrito;"Aqui se agregará el contenido de carrito";
-}
+}*/
 </script>
 @endsection

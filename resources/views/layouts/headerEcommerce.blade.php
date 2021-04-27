@@ -122,7 +122,7 @@
         <div class="row col-auto my-auto mx-0 p-0   ">
             <!--p class="my-0 p-0"><small>Ubicacion</small></p-->
             <img src="{{ asset('img\ubicacion.png') }}" alt="UBICACION" class="col-1 p-1 img-fluid">
-            <select class="custom-select col-10" required>
+            <select class="custom-select col-10" onchange="cambiarSucursal()" id="sucursalActiva">
                 @foreach($sucursales as $sucursal)
                     @if($sucursal->id == session('sucursalEcommerce'))
                         <option value="{{ $sucursal->id}}" selected>
@@ -135,6 +135,7 @@
                     @endif
                 @endforeach
             </select>
+            
         </div>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -170,5 +171,85 @@
         <!--/div-->
     </nav>
 </div>
+<script>
+let carrito = @json(session('carrito'));
+let sucursal = @json(session('sucursalEcommerce'));
+let elementoCarrito = document.querySelector('#collapseCarrito');//"{count(session('carrito'))}}";
+
+async function cambiarSucursal()
+{
+    try{
+        let sucursal = document.querySelector('#sucursalActiva').value;
+        let url =`{{url('/sucursal')}}/${sucursal}`;
+        let respuesta = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: url,
+            // los datos que voy a enviar para la relación
+            data: {
+                //_token: $("meta[name='csrf-token']").attr("content")
+                //cantidad:cantidad,
+                _token: "{{ csrf_token() }}",
+            }
+        });
+        location.href = location.href;//"{url('/')}}";
+        //console.log('sucursal',);
+        //let url =`{{url('/sucursal')}}/${sucursal}`;
+    }catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+   
+}
+function mostrarCarrito()
+{
+    if(carrito == null)
+        return;
+    let totalCompra = 0;
+    let cuerpoCarrito = "";
+    let contador = 0;
+    for(let i in carrito)
+    {
+        if(carrito[i].sucursal == sucursal)
+        {
+            contador++;
+            totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+            if(!carrito[i].imagen.length > 0)
+            {
+                carrito[i].imagen = "{{ asset('img/imagenNoDisponible.jpg') }}";
+                console.log('imagen',"No hay imagen");
+            }
+            else{
+                carrito[i].imagen = `{{ asset('storage')}}/${carrito[i].imagen}`;
+                console.log('imagen',carrito[i].imagen);
+            }
+            cuerpoCarrito = cuerpoCarrito +
+            `<div class="row col-12 mx-auto border-bottom">
+                <div class="col-4">
+                    <img src="${carrito[i].imagen}" alt="imagen" class="img-fluid">
+                </div>
+                <div class="col-7">
+                    <div class="row"><small>${carrito[i].nombre}</small></div>
+                    <div class="row"><small><strong>Precio: $ ${carrito[i].precio}</strong></small></div>
+                    <div class="row"><small>Cantidad: ${carrito[i].cantidad}</small></div>
+                </div>
+                <div class="col-1 m-0 p-0">
+                    <button type="button m-0 p-0" class="close" aria-label="Close">
+                        <span class="m-0 p-0" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>`;
+            //console.log('longitud imagen', carrito[i].imagen.length);
+        }
+    }
+    if(contador==0)
+        return;
+    cuerpoCarrito = cuerpoCarrito + `<div class="row mx-auto ><p class="text-center mx-auto border border-dark">Total $ ${totalCompra}</p></div>`
+    cuerpoCarrito = cuerpoCarrito + `<button class="btn btn-success">Pagar</button>`
+    elementoCarrito.innerHTML = cuerpoCarrito;"Aqui se agregará el contenido de carrito";
+    document.querySelector('#cantidadCarrito').textContent = contador;//respuesta.length;
+}
+mostrarCarrito();
+</script>
 @yield('contenido')
 @endsection

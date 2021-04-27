@@ -84,12 +84,13 @@
                     <h5 class="card-title text-dark">{{$producto['nombre']}}</h5>
                     <p class="card-text text-dark">{{$producto['descripcion']}}</p>
                 </div>
-                
-                <div class="card-footer mx-auto bg-transparent">
-                    <!--small class="text-muted">Last updated 3 mins ago</small-->
-                    <button class="btn btn-primary" id="agregarAlCarrito" onclick="addCarrito({{$producto['id']}})">Agregar al carrito</button>
-                </div>
                 </a>
+                <div class="card-footer mx-auto mt-auto bg-transparent">
+                    <!--small class="text-muted">Last updated 3 mins ago</small-->
+                    <button class="btn btn-primary mx-auto" id="agregarAlCarrito" onclick="addCarrito({{$producto['id']}})">Agregar al carrito</button>
+                    
+                </div>
+                
             </div>
         </div>
         <!--div class="col my-2"-->
@@ -113,13 +114,12 @@
   </div>
 </div-->
 <script>
-//let sucursal = "{$carrito}}";
+//let sucursal = json(session('sucursalEcommerce'))
 //console.log('sucursal',sucursal);
-let carrito = @json(session('carrito'));
+//let carrito = json(session('carrito'));
 console.log('carrito',carrito);
-if(carrito!=null)
-    document.querySelector('#cantidadCarrito').textContent = carrito.length;
-let elementoCarrito = document.querySelector('#collapseCarrito');//"{count(session('carrito'))}}";
+//if(carrito!=null)
+   // document.querySelector('#cantidadCarrito').textContent = carrito.length;
 async function addCarrito(id) {
     try{
         //return alert('Listo'+id);
@@ -134,8 +134,14 @@ async function addCarrito(id) {
                 _token: "{{ csrf_token() }}",
             }
         });
+        console.log(respuesta);
+        //return;
+        if(respuesta == 1)
+        {
+          return alert('Por el momento esta es la existencia que tenemos a la venta');
+        }
         carrito = respuesta;
-        document.querySelector('#cantidadCarrito').textContent = respuesta.length;
+        
         mostrarCarrito();
         //console.log('carrito',respuesta);
         //return alert("Listo"+ respuesta);
@@ -143,46 +149,54 @@ async function addCarrito(id) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
 }
-mostrarCarrito();
+/*mostrarCarrito();
 function mostrarCarrito()
 {
     if(carrito == null)
         return;
     let totalCompra = 0;
     let cuerpoCarrito = "";
+    let contador = 0;
     for(let i in carrito)
     {
-        totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
-        if(!carrito[i].imagen.length > 0)
+        if(carrito[i].sucursal == sucursal)
         {
-            carrito[i].imagen = "{{ asset('img/imagenNoDisponible.jpg') }}";
-            console.log('imagen',"No hay imagen");
+            contador++;
+            totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+            if(!carrito[i].imagen.length > 0)
+            {
+                carrito[i].imagen = "{ asset('img/imagenNoDisponible.jpg') }}";
+                console.log('imagen',"No hay imagen");
+            }
+            else{
+                carrito[i].imagen = `{ asset('storage')}}/${carrito[i].imagen}`;
+                console.log('imagen',carrito[i].imagen);
+            }
+            cuerpoCarrito = cuerpoCarrito +
+            `<div class="row col-12 mx-auto border-bottom">
+                <div class="col-4">
+                    <img src="${carrito[i].imagen}" alt="imagen" class="img-fluid">
+                </div>
+                <div class="col-7">
+                    <div class="row"><small>${carrito[i].nombre}</small></div>
+                    <div class="row"><small><strong>Precio: $ ${carrito[i].precio}</strong></small></div>
+                    <div class="row"><small>Cantidad: ${carrito[i].cantidad}</small></div>
+                </div>
+                <div class="col-1 m-0 p-0">
+                    <button type="button m-0 p-0" class="close" aria-label="Close">
+                        <span class="m-0 p-0" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>`;
+            //console.log('longitud imagen', carrito[i].imagen.length);
         }
-        else{
-            carrito[i].imagen = `{{ asset('storage')}}/${carrito[i].imagen}`;
-            console.log('imagen',carrito[i].imagen);
-        }
-        cuerpoCarrito = cuerpoCarrito +
-        `<div class="row col-12 mx-auto border-bottom">
-            <div class="col-4">
-                <img src="${carrito[i].imagen}" alt="imagen" class="img-fluid">
-            </div>
-            <div class="col-7">
-                <div class="row"><small>${carrito[i].nombre}</small></div>
-                <div class="row"><small><strong>Precio: $ ${carrito[i].precio}</strong></small></div>
-                <div class="row"><small>Cantidad: ${carrito[i].cantidad}</small></div>
-            </div>
-            <div class="col-1 m-0 p-0">
-                <button type="button m-0 p-0" class="close" aria-label="Close">
-                    <span class="m-0 p-0" aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>`;
-        //console.log('longitud imagen', carrito[i].imagen.length);
     }
+    if(contador==0)
+        return;
     cuerpoCarrito = cuerpoCarrito + `<div class="row mx-auto ><p class="text-center mx-auto border border-dark">Total $ ${totalCompra}</p></div>`
     cuerpoCarrito = cuerpoCarrito + `<button class="btn btn-success">Pagar</button>`
     elementoCarrito.innerHTML = cuerpoCarrito;"Aqui se agregará el contenido de carrito";
-}
+    document.querySelector('#cantidadCarrito').textContent = contador;//respuesta.length;
+}*/
 </script>
 @endsection
