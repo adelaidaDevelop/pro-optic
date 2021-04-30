@@ -31,7 +31,7 @@
     $cajero= $_GET['cajero'];
 
     @endphp
-    <div class="row w-100 " id="impDiv">
+    <div class="row w-100 " id="main1">
 
         <div class="col-8 text-center">
             <br /><br /> <br />
@@ -144,29 +144,38 @@
 
     </div>
 </body>
+
+<script src="Scripts/jquery-1.10.2.min.js"></script>
 <script>
-    function imprimir() {
+/*
+    $(document).ready(function() {
+        $("input#imprime").on('click', function(ev) {
+            CallPrint();
+            //clickimprime();
+        });
+    });
+    */
 
-        window.print();
-        myWindow.blur(); //
-        myWindow.close(); //
-        // document.getElementById("totalV").innerHTML = 
+    CallPrint();
+    function CallPrint() {
+        var divToPrint = document.getElementById('main1');
+        var newWin = window.open('width=100,height=100', '_blank');
+        newWin.focus();
+        newWin.document.open();
+        newWin.document.write(divToPrint.innerHTML);
+        newWin.document.close();
+        setTimeout(function() {
+            newWin.close();
+        }, 10);
     }
-    imprimir();
-    //let productos =json($productos);
-    //alert(productos);
-    //let fecha = new Date();
-    //alert(fecha.toLocaleDateString();
+/*
+    function clickimprime() {
+        $("button.print").click();
+    }
+    */
 
-    // impFinal();
-    function impFinal() {
-        var WinPrint = window.open('', '', 'width=900,height=650 ');
-        WinPrint.document.write(document.getElementById('impDiv').outerHTML); //printContent.outerHTML);
-        WinPrint.document.close();
-        WinPrint.focus();
-        WinPrint.print();
-        WinPrint.close();
-    }
+    //////////////////////////
+   // $('button.print').click();
 </script>
 
 </html>

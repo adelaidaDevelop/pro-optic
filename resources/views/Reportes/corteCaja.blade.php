@@ -512,7 +512,7 @@ CORTE DE CAJA
                 }
                 //DEVOLUCIONES
 
-                
+
                 for (let x in devoluciones) {
                     let fechaD = new Date(devoluciones[x].created_at);
                     // if (devoluciones[x].idVenta === ventas[j].id) {
@@ -521,10 +521,10 @@ CORTE DE CAJA
                     let empSucursal = sucursalEmpleado.find(s => s.id == devoluciones[x].idEmpSuc);
                     console.log("idCajero", idCajeroOK);
                     console.log("idES", devoluciones[x].idEmpSuc);
-                    
+
                     if (empSucursal != null) {
-                        let idE = empSucursal.idEmpleado ;
-                    console.log("idEmpSuc", idE);
+                        let idE = empSucursal.idEmpleado;
+                        console.log("idEmpSuc", idE);
                         if (comparacionFecha(fechaCorte, fechaD)) {
                             console.log("holaade10");
                             //   let suc_emp = sucursalEmpleado.find(s => s.id === devoluciones[x].idEmpSuc);
@@ -897,6 +897,155 @@ CORTE DE CAJA
         };
     */
     // imprimir automa
+
+    $('#getUser').on('click', function() {
+        let ventasEfectivo = $('#ventasEfectivo').val();
+        let abonoEfectivo = $('#abonoEfectivo').val();
+        let devEfectivo = $('#devEfectivo').val();
+        let totalCaja = $('#totalCaja').val();
+
+        let efectivoV = $('#efectivoV').val();
+        let creditoV = $('#creditoV').val();
+        let ecommerceV = $('#ecommerceV').val();
+        let devolucionV = $('#devolucionV').val();
+        let totalV = $('#totalV').val();
+
+        let total = $('#total').val();
+        let gananciaId = $('#gananciaId').val();
+        let pagoProv = $('#pagoProv').val();
+        let cajero = $('select[id="idCajero"] option:selected').text();
+        let fecha = document.querySelector('#fechaCorte');
+        let fecha2 = new Date(fecha.value);
+        fecha2.setDate(fecha2.getDate() + 1);
+        fechaF = fecha2.getDate() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getFullYear();
+        //  impFinal(formatoCorteCaja(totalVentas, abonoD, subtotalE, devolucionT, subtotalS, total));
+        //let url = `{{url('/puntoVenta/corte_cajaView')}}?ventasEfectivo=${ventasEfectivo}&abonoEfectivo=${abonoEfectivo}&devEfectivo=${devEfectivo}&totalCaja=${totalCaja}&efectivoV=${efectivoV}&creditoV=${creditoV}&ecommerceV=${ecommerceV}&devolucionV=${devolucionV}&totalV=${totalV}&total=${total}&pagoProv=${pagoProv}&fecha=${fechaF}&cajero=${cajero}&gananciaId=${gananciaId}&cantVenta=${cant_ventas}`;
+        //window.open(url, "_blank");
+        //  window.open(url, "_parent");
+        //  window.open(url, "myWindow");
+        // myWindow.focus();
+        //<div class="row w-100 " id="main1">
+        let texto = `
+           
+        <div class="col-8 text-center">
+            <br /><br /> <br />
+            <h1 class="font-weight-bold"> FARMACIAS GI ZIMATLAN</h1>
+            <h2> {{session('sucursalNombre')}} </h2>
+            <br /> <br />
+            <h1 class="font-weight-bold"> CORTE DEL DIA</h1>
+            <div class="row col-3  mx-auto px-auto ">
+                <div class="col-6 mx-auto px-auto text-left">
+                    <h2 class="row">DEL: </h2>
+                </div>
+                <div class="col-6 mx-auto px-auto">
+                    <h2>` + fechaF + `</h2>
+                </div>
+            </div>
+            <br />
+            
+            <h2 class="mb-1"> REALIZADO:` + +`</h2>
+            <h2>CAJERO: ` + cajero + `</h2>
+            <br /><br />
+            <h1 class="font-weight-bold" class="font-weight-bold"> === CANT. VENTAS DEL DIA === </h1>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">VENTAS EN EL DIA: </h2>
+                </div>
+                <div class="col-4 mx-auto px-auto">
+                    <h2> ` + cant_ventas + ` </h2>
+                </div>
+            </div>
+
+            <br />
+            <h1 class="font-weight-bold"> === DINERO EN CAJA === </h1>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">+VENTAS EFECTIVO: </h2>
+                    <h2 class="row">+ABONOS EFECTIVO: </h2>
+                    <h2 class="row">-DEVOLUCION EFECTIVO: </h2>
+                    <h2 class="row text-dark">TOTAL CAJA: </h2>
+
+                </div>
+
+                <div class="col-4 mx-auto px-auto">
+                    <h2> +$` + ventasEfectivo + ` </h2>
+                    <h2> +$ ` + abonoEfectivo + ` </h2>
+                    <h2> -$` + devEfectivo + ` </h2>
+                    <h2> $ ` + totalCaja + `</h2>
+                </div>
+            </div>
+            <br /> <br />
+            <h1 class="font-weight-bold"> === VENTAS DEL DIA === </h1>
+
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">EFECTIVO: </h2>
+                    <h2 class="row">CREDITO: </h2>
+                    <h2 class="row">ECOMMERCE: </h2>
+                    <h2 class="row">DEV VENTAS: </h2>
+                    <h2 class="row">VENTAS TOTALES: </h2>
+                </div>
+                <div class="col-4 mx-auto px-auto">
+                    <h2> $+` + efectivoV + ` </h2>
+                    <h2> $+` + creditoV + ` </h2>
+                    <h2> $+` + ecommerceV + ` </h2>
+                    <h2> $-` + devolucionV + `</h2>
+                    <h2> $=` + totalV + `</h2>
+                </div>
+            </div>
+
+            <br /> <br />
+            <h1 class="font-weight-bold"> === TOTAL === </h1>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">TOTAL: </h2>
+                </div>
+                <div class="col-4 mx-auto px-auto">
+                    <h2> $` + total + `</h2>
+                </div>
+            </div>
+
+            <h1 class="font-weight-bold"> === PAGO A PROVEEDORES === </h1>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">PAGOS A PROVEEDORES: </h2>
+                </div>
+                <div class="col-4 mx-auto px-auto">
+                    <h2> $` + pagoProv + ` </h2>
+                </div>
+            </div>
+            <br /><br />
+
+            <h1 class="font-weight-bold"> === GANANCIAS DEL DIA === </h1>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">GANANCIA: </h2>
+                </div>
+                <div class="col-4 mx-auto px-auto">
+                    <h2> $` + gananciaId + ` </h2>
+                </div>
+            </div>
+            <br /><br />
+            <!--
+            <h1 class="font-weight-bold"> === VENTAS POR DEPTOS === </h1>
+            <div class="col-6 mx-auto px-auto  ">
+                <h2 class="row">TOTAL :</h2>
+            </div>
+            -->
+        </div>
+           `;
+        //   </div>
+        //<div class="row w-100 " id="main1">
+        const div = document.createElement("div");
+        div.innerHTML = texto;
+        div.class = "row w-100";
+        div.id = "main1";
+        //document.body.appendChild(div);
+        CallPrint(div);
+    });
+
+
+    /*
     $(document).ready(function() {
         $('#getUser').on('click', function() {
             let ventasEfectivo = $('#ventasEfectivo').val();
@@ -927,13 +1076,14 @@ CORTE DE CAJA
             fechaF = fecha2.getDate() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getFullYear();
             //  impFinal(formatoCorteCaja(totalVentas, abonoD, subtotalE, devolucionT, subtotalS, total));
             let url = `{{url('/puntoVenta/corte_cajaView')}}?ventasEfectivo=${ventasEfectivo}&abonoEfectivo=${abonoEfectivo}&devEfectivo=${devEfectivo}&totalCaja=${totalCaja}&efectivoV=${efectivoV}&creditoV=${creditoV}&ecommerceV=${ecommerceV}&devolucionV=${devolucionV}&totalV=${totalV}&total=${total}&pagoProv=${pagoProv}&fecha=${fechaF}&cajero=${cajero}&gananciaId=${gananciaId}&cantVenta=${cant_ventas}`;
-            // window.open(url, "_blank");
-            window.open(url, "_parent");
+            window.open(url, "_blank");
+            //  window.open(url, "_parent");
             //  window.open(url, "myWindow");
             myWindow.focus();
         });
     });
 
+*/
     function impFinal(printContent) {
         var WinPrint = window.open('', '', 'width=900,height=650 ');
         WinPrint.document.write(printContent.outerHTML);
@@ -943,6 +1093,30 @@ CORTE DE CAJA
         WinPrint.print();
         WinPrint.close();
     }
+
+
+    function CallPrint(div) {
+        // divImprimirOpc2();
+        //var divToPrint = document.getElementById('main1');
+        var newWin = window.open('width=100,height=100', '_parent');
+        newWin.focus();
+        newWin.document.open();
+        //newWin.document.write(divToPrint.innerHTML);
+        newWin.document.write(div.innerHTML);
+        // newWin.print();
+        newWin.document.close();
+        setTimeout(function() {
+            newWin.close();
+        }, 6000);
+        newWin.print();
+        window.addEventListener("afterprint", function(event) { 
+            console.log("Entro a imp auto")
+            $('#action-link').click();
+        });
+
+    };
+
+    // getUser
 </script>
 
 @endsection
