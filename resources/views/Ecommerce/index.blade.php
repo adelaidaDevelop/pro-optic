@@ -21,10 +21,10 @@
                 <img class="d-block w-100" src="{{ asset('img\carusel.jpg') }}" alt="First slide"
                 class="img-fluid">
             </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="{{ asset('img\carusel2.jpg') }}" alt="Second slide"
+            <!--div class="carousel-item">
+                <img class="d-block w-100" src="{ asset('img\carusel2.jpg') }}" alt="Second slide"
                 class="img-fluid">
-            </div>
+            </div-->
             <div class="carousel-item">
                 <img class="d-block w-100" src="{{ asset('img\carusel.jpg') }}" alt="Third slide"
                 class="img-fluid">
@@ -98,6 +98,51 @@
     </div>
     @endif
 </div>
+@if(count($categorias)>0)
+@foreach($departamentos as $d)
+@if(isset($categorias[$d->nombre]))
+@php
+    $deptos = $categorias[$d->nombre];
+@endphp
+<div class="row mx-1">
+    
+    <div class="row mx-auto mt-3">
+        <h4 class="text-capitalize text-primary mx-auto mt-1"><strong>{{$d->nombre}}</strong></h4>
+    </div>
+    <div class="row mx-auto">
+        @foreach($deptos as $producto)
+        <div class="card-group mx-1">
+            <!--div class="col my-2"-->
+            <div class="card my-3" style="width: 15rem;">
+                <a class="btn btn-outline-light h-100 " href="{{url('/producto/'.$producto['id'])}}">
+                @if(!empty($producto->imagen))
+                <img src="{{ asset('storage').'/'.$producto->imagen}}" alt=""
+                class="card-img-top">
+                @else
+                <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" 
+                class="card-img-top">
+                @endif
+                <!--img src="{{ asset('img\carusel.jpg') }}" class="card-img-top" alt="..."-->
+                <div class="card-body mx-auto mb-0">
+                    <h5 class="card-title text-dark">{{$producto['nombre']}}</h5>
+                    <!--p class="card-text text-dark">{$producto['descripcion']}}</p-->
+                </div>
+                </a>
+                <div class="card-footer mx-auto mt-auto bg-transparent">
+                    <!--small class="text-muted">Last updated 3 mins ago</small-->
+                    <button class="btn btn-primary mx-auto" id="agregarAlCarrito" onclick="addCarrito({{$producto['id']}})">Agregar al carrito</button>
+                    
+                </div>
+                
+            </div>
+        </div>
+        <!--div class="col my-2"-->
+        @endforeach
+    </div>
+</div>
+@endif
+@endforeach
+@endif
 <!--div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
   <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
     <div class="toast-header">

@@ -7,6 +7,7 @@ use App\Models\Sucursal;
 use App\Models\Sucursal_producto;
 use App\Models\Departamento;
 use App\Models\Detalle_venta;
+use App\Models\Favorito;
 use Illuminate\Http\Request;
 use DateInterval;
 
@@ -32,17 +33,20 @@ class EcommerceController extends Controller
     }
     public function index()
     {
+        //return $this->departamentosFavoritos();
         //return $id = Sucursal::all()->first()->id; 
         //$this->middleware('isCliente');
         //return 'Esta entrando x2';
         //return Producto::all()[0];
-        $productos = [];//Producto::all();
+        //$productos = [];//Producto::all();
         $productosNuevos = $this->productosNuevos();
         $productosDestacados = $this->productosDestacados();
         $sucursales = Sucursal::all();
         $departamentos = Departamento::where('ecommerce', '=',1)->get(['id','nombre']);
-        return view('Ecommerce.index',compact('productos','productosNuevos','productosDestacados',
-        'sucursales','departamentos'));
+        //if(isset($this->departamentosFavoritos()))
+            $categorias = $this->departamentosFavoritos();
+        return view('Ecommerce.index',compact('productosNuevos','productosDestacados',
+        'sucursales','departamentos','categorias'));
 
         //return session('idCliente');
         //return session('idEmpleado');
@@ -66,6 +70,55 @@ class EcommerceController extends Controller
         }
         return view('Ecommerce.producto',compact('sucursales','departamentos','producto'));
     }
+
+    public function departamentosFavoritos()
+    {
+        $departamentos = Departamento::where('ecommerce','=',true);
+        /*$favoritos = Favorito::with([
+            'idDepartamento',
+            'cantidad',
+        ])->orderBy('cantidad','=');*/
+        $productoDepartamentos  =[];
+        if(isset($departamentos))
+        {
+            foreach($departamentos->get() as $departamento)
+            {
+                
+                $productos = Producto::where('idDepartamento', '=',$departamento->id)
+                ->get(['id','nombre','descripcion','idDepartamento','codigoBarras', 'imagen','receta']);
+                if(isset($productos))
+                {
+                    
+                    $i = 0;
+                    $total = 0;
+                    while($total<5 && $i<count($productos))
+                    {
+                        //return "Todo bien hasta ahora";
+                        $productoSucursal = Sucursal_producto::where('idProducto','=',$productos[$i]->id)
+                        ->where('idSucursal','=',session('sucursalEcommerce'))->first();
+                        if(isset($productoSucursal) && $productoSucursal->existencia>0)
+                        {
+                            if(!isset($productoDepartamentos[$departamento->nombre]))
+                            $productoDepartamentos[$departamento->nombre] = [];
+                            array_push($productoDepartamentos[$departamento->nombre],$productos[$i]);
+                            $total++;
+                        }
+                        $i++;
+                        //$productoDepartamentos[$departamento->nombre] = $productos->take(10)->get(['id','nombre','descripcion','idDepartamento','codigoBarras', 'imagen','receta']);
+                    }
+                    //$productosSucursal = Sucursal_producto::where('idProducto','=',$datosProducto['idProducto']);
+                    //array_push($productoDepartamentos,$productos->take(10)->get(['id','nombre','descripcion','idDepartamento','codigoBarras', 'imagen','receta']));
+                    //$productoDepartamentos[$departamento->nombre] = $productos->take(10)->get(['id','nombre','descripcion','idDepartamento','codigoBarras', 'imagen','receta']);
+                }
+            }
+            return $productoDepartamentos;
+            //return 'No hay nada en este departamento';
+        }
+        else{
+            return NULL;//'No hay nada en esta tabla';
+        }
+    }
+
     public function productosNuevos()
     {
         //Producto::where('id','=',1)->update(['created_at' => now()]);
@@ -245,5 +298,33 @@ class EcommerceController extends Controller
         return view('Ecommerce.carrito',compact('sucursales','departamentos'));
         //session(['sucursalEcommerce'=>$sucursal]);
         //return json_encode(true);//session('sucursalEcommerces');
+    }
+    public function actualizarCantidadCarrito(Request $request, $id)
+    {
+        //return 'Todo bien';
+        $carrito =  session('carrito');
+        
+        //for($i=0 ;$i<count($carrito);$i++)
+        $i=0;
+        $pos = true;
+        while($i<count($carrito) && $pos)
+        {
+            
+            if($id == $carrito[$i]['id'] && session('sucursalEcommerce') == $carrito[$i]['sucursal'])
+            {
+                $productoSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursalEcommerce'))
+                ->where('idProducto','=',$id)->first();
+                //$nuevaCantidad = $carrito[$i]['cantidad'] + $request['cantidad'];
+                if($request['cantidad'] <= $productoSucursal->existencia)
+                    $carrito[$i]['cantidad'] = $request['cantidad'];
+                else
+                    return $carrito[$i]['cantidad'];
+                
+                $pos = true;
+            }
+            $i++;
+        }
+        session(['carrito' => $carrito]);
+        return $carrito;
     }
 }

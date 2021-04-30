@@ -56,6 +56,7 @@ Route::post('/registerPost', [LoginClienteController::class,'registerPost'])->mi
 Route::get('/producto/{id}', [EcommerceController::class,'verProducto'])->middleware('isCliente');
 Route::post('/sucursal/{sucursal}', [EcommerceController::class,'cambiarSucursal'])->middleware('isCliente');
 Route::get('/carrito', [EcommerceController::class,'carrito'])->middleware('isCliente');
+Route::post('/actualizarCantidadCarrito/{id}', [EcommerceController::class,'actualizarCantidadCarrito'])->middleware('isCliente');
 
 //Auth::routes();
 

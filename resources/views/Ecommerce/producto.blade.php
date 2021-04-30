@@ -49,11 +49,8 @@
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
 $("input[type='number']").inputSpinner();
-let carrito = @json(session('carrito'));
+//let carrito = json(session('carrito'));
 console.log('carrito',carrito);
-if(carrito!=null)
-    document.querySelector('#cantidadCarrito').textContent = carrito.length;
-let elementoCarrito = document.querySelector('#collapseCarrito');
 async function addCarrito(id) {
   let cantidad = $('#cantidad').val();
     try{
@@ -77,7 +74,7 @@ async function addCarrito(id) {
           return alert('Por el momento esta es la existencia que tenemos a la venta');
         }
         carrito = respuesta;
-        document.querySelector('#cantidadCarrito').textContent = respuesta.length;
+        //document.querySelector('#cantidadCarrito').textContent = respuesta.length;
         mostrarCarrito();
         //console.log('carrito',respuesta);
         //return alert("Listo"+ respuesta);
