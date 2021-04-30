@@ -44,7 +44,7 @@ class ReporteController extends Controller
         $pagos = Pago_venta::all(['idVentaCliente','idEmpSuc', 'monto','created_at','updated_at']);
         $pagoCompras = Pago_compra::all(['idCompra','monto','created_at','updated_at']);
         $venta_cliente = venta_cliente::all(['id','estado','idCliente','idVenta','created_at','updated_at']);
-        $devoluciones = Devolucion::all(['idVenta','idProducto','precio','cantidad','observacion','created_at','updated_at']);
+        $devoluciones = Devolucion::all(['idEmpSuc','idVenta','idProducto','precio','cantidad','observacion','created_at','updated_at']);
        // $pagoCompras= Pago_compra::all();
         $compras = Compra::all();
         $empleados = Empleado::all();

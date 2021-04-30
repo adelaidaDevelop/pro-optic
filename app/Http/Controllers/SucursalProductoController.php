@@ -101,10 +101,19 @@ class SucursalProductoController extends Controller
         $suc_prod->update($costo);
         return  true;
     }
+    //reemplazar existencia
     public function actExistencia(Request $request,$id){
         $suc_prod = Sucursal_producto::findOrFail($id);
        // $existencia['existencia'] = $suc_prod->existencia + $request->input('cantidad');
         $existencia['existencia'] = $request->input('cantidad');
+        $suc_prod->update($existencia);
+        return  true;
+    }
+//agregar existencia lo que hay mas nueva existencia
+    public function agregarExistencia(Request $request,$id){
+        $suc_prod = Sucursal_producto::findOrFail($id);
+        $existencia['existencia'] = $suc_prod->existencia + $request->input('cantidad');
+      //  $existencia['existencia'] = $request->input('cantidad');
         $suc_prod->update($existencia);
         return  true;
     }

@@ -107,7 +107,10 @@ Route::prefix('/puntoVenta')->group(function()
       //MODIFICAR COSTO Y PRECIO EN SUCURSAL PRODUCTO
       Route::post('productoSuc/actPrecio/{id}', [SucursalProductoController::class,'actPrecio']);
       Route::post('productoSuc/actCosto/{id}', [SucursalProductoController::class,'actCosto']);
+      //reemplazar existencia
       Route::post('productoSuc/actExistencia/{id}', [SucursalProductoController::class,'actExistencia']);
+      //actualizar existencia
+      Route::post('productoSuc/agregarExistencia/{id}', [SucursalProductoController::class,'agregarExistencia']);
       
 
    Route::get('productoEli/{id}', function($id){

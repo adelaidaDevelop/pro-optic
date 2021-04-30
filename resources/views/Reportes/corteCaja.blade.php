@@ -488,14 +488,12 @@ CORTE DE CAJA
                 }
                 //ABONO realizados
                 for (let z in pagos) {
-
                     let fechaP = new Date(pagos[z].created_at);
                     // let ventaCliente = venta_cliente.find(v => v.id == pagos[z].idVentaCliente);
                     let empSucursal = sucursalEmpleado.find(s => s.id == pagos[z].idEmpSuc);
                     console.log("hola");
                     if (empSucursal != null) {
                         //  let venta = ventas.find(v => v.id == ventaCliente.idVenta);
-
                         // if (sucEmp != null) {
                         //  if (ventas[j].id == pagos[z].idVenta) {
                         if (comparacionFecha(fechaCorte, fechaP)) {
@@ -509,37 +507,36 @@ CORTE DE CAJA
                             if (empSucursal.idEmpleado == idCajeroOK) {
                                 abonos = abonos + pagos[z].monto;
                             }
-                            //  }
-                            // }
-                            // }
-                            // }
                         }
-                        //  }
                     }
                 }
                 //DEVOLUCIONES
+
+
                 for (let x in devoluciones) {
                     let fechaD = new Date(devoluciones[x].created_at);
-                    //  if (devoluciones[x].idVenta === ventas[j].id) {
-                    // let venta = ventas.find(v => v.id === devoluciones[x].idVenta);
-                    //  if (venta != null) {
+                    // if (devoluciones[x].idVenta === ventas[j].id) {
+                    // let venta = ventas.find(v => v.id == devoluciones[x].idVenta);
+                    // if (venta != null) {
+                    let empSucursal = sucursalEmpleado.find(s => s.id == devoluciones[x].idEmpSuc);
+                    console.log("idCajero", idCajeroOK);
+                    console.log("idES", devoluciones[x].idEmpSuc);
 
-                    if (comparacionFecha(fechaCorte, fechaD)) {
-                        // let idSucEmp = ventas[j].idSucursalEmpleado;
-                        //  for (let h in sucursalEmpleado) {
-                        //  if (sucursalEmpleado[h].id == idSucEmp) {
-                        let suc_emp = sucursalEmpleado.find(s => s.id === devoluciones[x].idEmpSuc);
-                        if (suc_emp != null) {
-                            if (suc_emp.idEmpleado == idCajeroOK) {
-                                {
-                                    let temp = devoluciones[x].precio * devoluciones[x].cantidad;
-                                    totalDev = totalDev + temp;
-                                }
+                    if (empSucursal != null) {
+                        let idE = empSucursal.idEmpleado;
+                        console.log("idEmpSuc", idE);
+                        if (comparacionFecha(fechaCorte, fechaD)) {
+                            console.log("holaade10");
+                            //   let suc_emp = sucursalEmpleado.find(s => s.id === devoluciones[x].idEmpSuc);
+                            //   if (suc_emp != null) {
+                            if (empSucursal.idEmpleado == idCajeroOK) {
+                                let total2 = devoluciones[x].precio * devoluciones[x].cantidad;
+                                totalDev = totalDev + total2;
+                                // }
                             }
+
                         }
-                        // }
                     }
-                    //  }
                 }
                 //
                 for (let p in pagoCompras) {
@@ -674,7 +671,7 @@ CORTE DE CAJA
                     let venta = ventas.find(v => v.id == devoluciones[x].idVenta);
                     if (venta != null) {
                         if (comparacionFecha(fechaCorte, fechaD)) {
-
+                            console.log("holaHener");
                             let total2 = devoluciones[x].precio * devoluciones[x].cantidad;
                             totalDev = totalDev + total2;
                         }
@@ -693,48 +690,48 @@ CORTE DE CAJA
                         }
                     }
                 }
-                // }
-                //  }
-                // }
-                // }
-
-                entradas = totalVentas + abonos;
-                // salidas = totalDev + abonoProveedores + comprasContado;
-                salidas = totalDev;
-                total = entradas - salidas;
-                console.log("Llega aqui");
-                ventas_totales = efectivoV + creditoV + ecommerceV - totalDev;
-                totalCaja2 = efectivoV + abonos - totalDev;
-                // let tv= Number(totalVentas.toFixed(2));
-                $("input[id='ventasEfectivo']").val(Number(efectivoV.toFixed(2)));
-                $("input[id='abonoEfectivo']").val(Number(abonos.toFixed(2)));
-                $("input[id='devEfectivo']").val(Number(totalDev.toFixed(2)));
-                $("input[id='totalCaja']").val(Number(totalCaja2.toFixed(2)));
-
-
-                $("input[id='efectivoV']").val(Number(efectivoV.toFixed(2)));
-                $("input[id='creditoV']").val(Number(creditoV.toFixed(2)));
-                $("input[id='ecommerceV']").val(Number(ecommerceV.toFixed(2)));
-                $("input[id='devolucionV']").val(Number(totalDev.toFixed(2)));
-                $("input[id='totalV']").val(Number(ventas_totales.toFixed(2)));
-                
-                // $("input[id='subtotalE']").val(Number(entradas.toFixed(2)));
-                // $("input[id='subtotalS']").val(Number(salidas.toFixed(2)));
-                $("input[id='total']").val(Number(total.toFixed(2)));
-                $("input[id='gananciaId']").val(Number(ganancia.toFixed(2)));
-                $("input[id='pagoProv']").val(Number(totalPagoComp.toFixed(2)));
-
-                cant_ventas = cantVentas;
-                console.log(totalVentas);
-
-                if (totalVentas == 0 && abonos == 0 && entradas == 0 && totalDev == 0 && salidas == 0) {
-                    let sin = `<h5 class= "text-dark text-center mx-auto"> NO SE ENCONTRARON REGISTROS </h5>`;
-                    document.getElementById("sinRegistros").innerHTML = sin;
-
-                }
-
-                //document.getElementById("totalVentas").innerHTML = cuerpo;
             }
+            //  }
+            // }
+            // }
+
+            entradas = totalVentas + abonos;
+            // salidas = totalDev + abonoProveedores + comprasContado;
+            salidas = totalDev;
+            total = entradas - salidas;
+            console.log("Llega aqui");
+            ventas_totales = efectivoV + creditoV + ecommerceV - totalDev;
+            totalCaja2 = efectivoV + abonos - totalDev;
+            // let tv= Number(totalVentas.toFixed(2));
+            $("input[id='ventasEfectivo']").val(Number(efectivoV.toFixed(2)));
+            $("input[id='abonoEfectivo']").val(Number(abonos.toFixed(2)));
+            $("input[id='devEfectivo']").val(Number(totalDev.toFixed(2)));
+            $("input[id='totalCaja']").val(Number(totalCaja2.toFixed(2)));
+
+
+            $("input[id='efectivoV']").val(Number(efectivoV.toFixed(2)));
+            $("input[id='creditoV']").val(Number(creditoV.toFixed(2)));
+            $("input[id='ecommerceV']").val(Number(ecommerceV.toFixed(2)));
+            $("input[id='devolucionV']").val(Number(totalDev.toFixed(2)));
+            $("input[id='totalV']").val(Number(ventas_totales.toFixed(2)));
+
+            // $("input[id='subtotalE']").val(Number(entradas.toFixed(2)));
+            // $("input[id='subtotalS']").val(Number(salidas.toFixed(2)));
+            $("input[id='total']").val(Number(total.toFixed(2)));
+            $("input[id='gananciaId']").val(Number(ganancia.toFixed(2)));
+            $("input[id='pagoProv']").val(Number(totalPagoComp.toFixed(2)));
+
+            cant_ventas = cantVentas;
+            console.log(totalVentas);
+
+            if (totalVentas == 0 && abonos == 0 && entradas == 0 && totalDev == 0 && salidas == 0) {
+                let sin = `<h5 class= "text-dark text-center mx-auto"> NO SE ENCONTRARON REGISTROS </h5>`;
+                document.getElementById("sinRegistros").innerHTML = sin;
+
+            }
+
+            //document.getElementById("totalVentas").innerHTML = cuerpo;
+
         } else {
             return alert("ELEGIR UNA FECHA");
         }
@@ -900,6 +897,155 @@ CORTE DE CAJA
         };
     */
     // imprimir automa
+
+    $('#getUser').on('click', function() {
+        let ventasEfectivo = $('#ventasEfectivo').val();
+        let abonoEfectivo = $('#abonoEfectivo').val();
+        let devEfectivo = $('#devEfectivo').val();
+        let totalCaja = $('#totalCaja').val();
+
+        let efectivoV = $('#efectivoV').val();
+        let creditoV = $('#creditoV').val();
+        let ecommerceV = $('#ecommerceV').val();
+        let devolucionV = $('#devolucionV').val();
+        let totalV = $('#totalV').val();
+
+        let total = $('#total').val();
+        let gananciaId = $('#gananciaId').val();
+        let pagoProv = $('#pagoProv').val();
+        let cajero = $('select[id="idCajero"] option:selected').text();
+        let fecha = document.querySelector('#fechaCorte');
+        let fecha2 = new Date(fecha.value);
+        fecha2.setDate(fecha2.getDate() + 1);
+        fechaF = fecha2.getDate() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getFullYear();
+        //  impFinal(formatoCorteCaja(totalVentas, abonoD, subtotalE, devolucionT, subtotalS, total));
+        //let url = `{{url('/puntoVenta/corte_cajaView')}}?ventasEfectivo=${ventasEfectivo}&abonoEfectivo=${abonoEfectivo}&devEfectivo=${devEfectivo}&totalCaja=${totalCaja}&efectivoV=${efectivoV}&creditoV=${creditoV}&ecommerceV=${ecommerceV}&devolucionV=${devolucionV}&totalV=${totalV}&total=${total}&pagoProv=${pagoProv}&fecha=${fechaF}&cajero=${cajero}&gananciaId=${gananciaId}&cantVenta=${cant_ventas}`;
+        //window.open(url, "_blank");
+        //  window.open(url, "_parent");
+        //  window.open(url, "myWindow");
+        // myWindow.focus();
+        //<div class="row w-100 " id="main1">
+        let texto = `
+           
+        <div class="col-8 text-center">
+            <br /><br /> <br />
+            <h1 class="font-weight-bold"> FARMACIAS GI ZIMATLAN</h1>
+            <h2> {{session('sucursalNombre')}} </h2>
+            <br /> <br />
+            <h1 class="font-weight-bold"> CORTE DEL DIA</h1>
+            <div class="row col-3  mx-auto px-auto ">
+                <div class="col-6 mx-auto px-auto text-left">
+                    <h2 class="row">DEL: </h2>
+                </div>
+                <div class="col-6 mx-auto px-auto">
+                    <h2>` + fechaF + `</h2>
+                </div>
+            </div>
+            <br />
+            
+            <h2 class="mb-1"> REALIZADO:` + +`</h2>
+            <h2>CAJERO: ` + cajero + `</h2>
+            <br /><br />
+            <h1 class="font-weight-bold" class="font-weight-bold"> === CANT. VENTAS DEL DIA === </h1>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">VENTAS EN EL DIA: </h2>
+                </div>
+                <div class="col-4 mx-auto px-auto">
+                    <h2> ` + cant_ventas + ` </h2>
+                </div>
+            </div>
+
+            <br />
+            <h1 class="font-weight-bold"> === DINERO EN CAJA === </h1>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">+VENTAS EFECTIVO: </h2>
+                    <h2 class="row">+ABONOS EFECTIVO: </h2>
+                    <h2 class="row">-DEVOLUCION EFECTIVO: </h2>
+                    <h2 class="row text-dark">TOTAL CAJA: </h2>
+
+                </div>
+
+                <div class="col-4 mx-auto px-auto">
+                    <h2> +$` + ventasEfectivo + ` </h2>
+                    <h2> +$ ` + abonoEfectivo + ` </h2>
+                    <h2> -$` + devEfectivo + ` </h2>
+                    <h2> $ ` + totalCaja + `</h2>
+                </div>
+            </div>
+            <br /> <br />
+            <h1 class="font-weight-bold"> === VENTAS DEL DIA === </h1>
+
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">EFECTIVO: </h2>
+                    <h2 class="row">CREDITO: </h2>
+                    <h2 class="row">ECOMMERCE: </h2>
+                    <h2 class="row">DEV VENTAS: </h2>
+                    <h2 class="row">VENTAS TOTALES: </h2>
+                </div>
+                <div class="col-4 mx-auto px-auto">
+                    <h2> $+` + efectivoV + ` </h2>
+                    <h2> $+` + creditoV + ` </h2>
+                    <h2> $+` + ecommerceV + ` </h2>
+                    <h2> $-` + devolucionV + `</h2>
+                    <h2> $=` + totalV + `</h2>
+                </div>
+            </div>
+
+            <br /> <br />
+            <h1 class="font-weight-bold"> === TOTAL === </h1>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">TOTAL: </h2>
+                </div>
+                <div class="col-4 mx-auto px-auto">
+                    <h2> $` + total + `</h2>
+                </div>
+            </div>
+
+            <h1 class="font-weight-bold"> === PAGO A PROVEEDORES === </h1>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">PAGOS A PROVEEDORES: </h2>
+                </div>
+                <div class="col-4 mx-auto px-auto">
+                    <h2> $` + pagoProv + ` </h2>
+                </div>
+            </div>
+            <br /><br />
+
+            <h1 class="font-weight-bold"> === GANANCIAS DEL DIA === </h1>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h2 class="row">GANANCIA: </h2>
+                </div>
+                <div class="col-4 mx-auto px-auto">
+                    <h2> $` + gananciaId + ` </h2>
+                </div>
+            </div>
+            <br /><br />
+            <!--
+            <h1 class="font-weight-bold"> === VENTAS POR DEPTOS === </h1>
+            <div class="col-6 mx-auto px-auto  ">
+                <h2 class="row">TOTAL :</h2>
+            </div>
+            -->
+        </div>
+           `;
+        //   </div>
+        //<div class="row w-100 " id="main1">
+        const div = document.createElement("div");
+        div.innerHTML = texto;
+        div.class = "row w-100";
+        div.id = "main1";
+        //document.body.appendChild(div);
+        CallPrint(div);
+    });
+
+
+    /*
     $(document).ready(function() {
         $('#getUser').on('click', function() {
             let ventasEfectivo = $('#ventasEfectivo').val();
@@ -917,6 +1063,11 @@ CORTE DE CAJA
             let gananciaId = $('#gananciaId').val();
             let pagoProv = $('#pagoProv').val();
 
+
+            //let cajero = document.getElementById('idCajero');
+            //let cajero = caj.value;
+            let cajero = $('select[id="idCajero"] option:selected').text();
+            // console.log("El cajero es", cajero);
             //  let cantVenta = 5;
             // let fecha = $('#fechaCorte').val();
             let fecha = document.querySelector('#fechaCorte');
@@ -924,11 +1075,15 @@ CORTE DE CAJA
             fecha2.setDate(fecha2.getDate() + 1);
             fechaF = fecha2.getDate() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getFullYear();
             //  impFinal(formatoCorteCaja(totalVentas, abonoD, subtotalE, devolucionT, subtotalS, total));
-            let url = `{{url('/puntoVenta/corte_cajaView')}}?ventasEfectivo=${ventasEfectivo}&abonoEfectivo=${abonoEfectivo}&devEfectivo=${devEfectivo}&totalCaja=${totalCaja}&efectivoV=${efectivoV}&creditoV=${creditoV}&ecommerceV=${ecommerceV}&devolucionV=${devolucionV}&totalV=${totalV}&total=${total}&pagoProv=${pagoProv}&fecha=${fechaF}&gananciaId=${gananciaId}&cantVenta=${cant_ventas}`;
+            let url = `{{url('/puntoVenta/corte_cajaView')}}?ventasEfectivo=${ventasEfectivo}&abonoEfectivo=${abonoEfectivo}&devEfectivo=${devEfectivo}&totalCaja=${totalCaja}&efectivoV=${efectivoV}&creditoV=${creditoV}&ecommerceV=${ecommerceV}&devolucionV=${devolucionV}&totalV=${totalV}&total=${total}&pagoProv=${pagoProv}&fecha=${fechaF}&cajero=${cajero}&gananciaId=${gananciaId}&cantVenta=${cant_ventas}`;
             window.open(url, "_blank");
+            //  window.open(url, "_parent");
+            //  window.open(url, "myWindow");
+            myWindow.focus();
         });
     });
 
+*/
     function impFinal(printContent) {
         var WinPrint = window.open('', '', 'width=900,height=650 ');
         WinPrint.document.write(printContent.outerHTML);
@@ -938,6 +1093,30 @@ CORTE DE CAJA
         WinPrint.print();
         WinPrint.close();
     }
+
+
+    function CallPrint(div) {
+        // divImprimirOpc2();
+        //var divToPrint = document.getElementById('main1');
+        var newWin = window.open('width=100,height=100', '_parent');
+        newWin.focus();
+        newWin.document.open();
+        //newWin.document.write(divToPrint.innerHTML);
+        newWin.document.write(div.innerHTML);
+        // newWin.print();
+        newWin.document.close();
+        setTimeout(function() {
+            newWin.close();
+        }, 6000);
+        newWin.print();
+        window.addEventListener("afterprint", function(event) { 
+            console.log("Entro a imp auto")
+            $('#action-link').click();
+        });
+
+    };
+
+    // getUser
 </script>
 
 @endsection

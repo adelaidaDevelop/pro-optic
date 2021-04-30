@@ -65,7 +65,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 
 <div class="col-0  ml-3 p-1 ">
     <a class="btn btn-outline-secondary  p-1 border-0" href="/puntoVenta/reporteInventario">
-        <img src="{{ asset('img/stock.svg') }}" alt="Editar" width="32px" height="32px">
+        <img src="{{ asset('img/rep_inv.png') }}" alt="Editar" width="32px" height="32px">
         <p class="h6 my-auto text-dark"><small>REPORTE INVENTARIO</small></p>
     </a>
 </div>
@@ -88,7 +88,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     </button>
 </div>
 -->
-<div class="col-1 "></div>
+<div class=""></div>
 <div class="mx-3 my-auto">
     <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
@@ -304,7 +304,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     </div>
 </div>
 <!--MODAL CAMBIAR EXISTENCIA-->
-<div class="modal fade modal_precio_venta3" id="modal_precio_venta3" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade modal_existencia" id="modal_existencia" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-small " role="document">
         <div class="modal-content" style="width:500px;">
             <div class="modal-header  ">
@@ -330,9 +330,36 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         </div>
     </div>
 </div>
+<!--MODAL CAMBIAR EXISTENCIA-->
+<div class="modal fade modal_existenciaAgregar" id="modal_existenciaAgregar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-small " role="document">
+        <div class="modal-content" style="width:500px;">
+            <div class="modal-header  ">
+                <!--ENCABEZADO -->
+                <div class="container-fluid">
+                    <div class="row" style="background:#3366FF">
+                        <h6 class="font-weight-bold my-2 ml-4 px-1 mx-auto text-center" id="tituloExistAgregar" style="color:#FFFFFF">
+
+                        </h6>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body col-8 mx-4 text-center mx-auto" id="">
+                <div class="row  " id="modiExistAgregar">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="modificarExisAgregar" onclick="agregarExistencia();">GUARDAR</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--MODAL SUBPRODUCTO-->
-<div class="modal fade modal_precio_venta5" id="modal_precio_venta5" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade modal_subproducto" id="modal_subproducto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-small " role="document">
         <div class="modal-content" style="width:500px;">
             <div class="modal-header  ">
@@ -1232,9 +1259,14 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                             </button>
                                             
                                             <br/>
-                                            <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta3"  onclick=" return agregarProducto( ` +
+                                            <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_existenciaAgregar"  onclick=" return agregarEProducto( ` +
             idProdSuc + `)" value="` + idProdSuc + `">
-                                            MODIFICAR EXISTENCIA
+                                            AGREGAR EXISTENCIA
+                                            </button>
+                                           <br/> 
+                                            <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_existencia"  onclick=" return cambiarEProducto( ` +
+            idProdSuc + `)" value="` + idProdSuc + `">
+                                            CAMBIAR EXISTENCIA
                                             </button>
                                             <br/>
                                     `;
@@ -1489,7 +1521,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         }
     }
 
-    function agregarProducto(idSP) {
+    function cambiarEProducto(idSP) {
 
         let cambiarCantidad = "";
         let idProd = 0;
@@ -1508,7 +1540,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <h6>EXISTENCIA ACTUAL DEL PRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` +
                     productosSucursal[j].existencia + `" autofocus required disabled>
-                                <h6>CANTIDAD DE PRODUCTO A AGREGAR</h6>        
+                                <h6>CANTIDAD DE PRODUCTO TOTAL</h6>        
                                 <input type="number" name="cantidad" id="cantidad" class="form-control text-center" placeholder="CANTIDAD DE PRODUCTO" value="" min="0" autofocus required>
                                     `;
             }
@@ -1535,7 +1567,55 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 return false;
             }
         });
-    }
+    };
+
+    function agregarEProducto(idSP) {
+
+        let agregarCantidad = "";
+        let idProd = 0;
+        let idSucPro = 0;
+        let nombreProd = "";
+        for (let j in productosSucursal) {
+            if (productosSucursal[j].id === idSP) {
+                idProd = productosSucursal[j].idProducto;
+                idSucPro = productosSucursal[j].id;
+                for (let x in productos) {
+                    if (productos[x].id == idProd)
+                        nombreProd = productos[x].nombre;
+                }
+                agregarCantidad =
+                    `
+                        <h6>EXISTENCIA ACTUAL DEL PRODUCTO</h6>
+                        <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` +
+                    productosSucursal[j].existencia + `" autofocus required disabled>
+                        <h6>CANTIDAD DE PRODUCTO A AGREGAR</h6>        
+                        <input type="number" name="cantidad" id="cantidad" class="form-control text-center" placeholder="CANTIDAD DE PRODUCTO" value="" min="0" autofocus required>
+                            `;
+            }
+        }
+        /*
+        $("#volverInfo43").click(function() {
+            info4(idProd);
+        });
+        */
+        let btnGuardar3 = document.getElementById("modificarExisAgregar");
+        btnGuardar3.value = idSucPro;
+
+        // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
+        document.getElementById("tituloExistAgregar").innerHTML = nombreProd;
+        document.getElementById("modiExistAgregar").innerHTML = agregarCantidad;
+        $("input[name='cantidad']").bind('keypress', function(tecla) {
+            if (this.value.length >= 10) return false;
+            let code = tecla.charCode;
+            if (code == 8) { // backspace.
+                return true;
+            } else if (code >= 48 && code <= 57) { // is a number.
+                return true;
+            } else { // other keys.
+                return false;
+            }
+        });
+    };
 
     function agregarSubproducto(idSP) {
         let cambiarCantidad = "";
@@ -1728,7 +1808,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-            $('#modal_precio_venta3').modal('hide');
+            $('#modal_existencia').modal('hide');
             // $('#detalleProducto').modal('hide');
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
             //  refrescar();
@@ -1743,7 +1823,57 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-    }
+    };
+    
+
+    async function agregarExistencia() {
+
+        let btnGuardar = document.getElementById("modificarExisAgregar");
+        let idSucProd = btnGuardar.value;
+        try {
+            //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
+            const existencia = document.querySelector('#cantidad');
+            /*
+                if (pago.value.length === 0)
+                    return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
+                if (parseFloat(pago.value) < parseFloat(total))
+                    return alert('EL PAGO EN EFECTIVO NO DEBE SER MENOR AL TOTAL A COBRAR');
+               */
+            let funcion = $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "post",
+                // la URL de donde voy a hacer la petición
+              //  url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
+                url: `/puntoVenta/productoSuc/agregarExistencia/${idSucProd}`,
+                
+                // los datos que voy a enviar para la relación
+                data: {
+                    cantidad: parseInt(existencia.value),
+                    _token: "{{ csrf_token() }}"
+                    //  id: idSucProd
+                }
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                //alert(respuesta);
+                console.log(respuesta); //JSON.stringify(respuesta));
+            });
+            $('#modal_existenciaAgregar').modal('hide');
+            // $('#detalleProducto').modal('hide');
+            alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
+            //  refrescar();
+            //await act_datos();
+            //await buscarFiltroNombre2();
+
+            console.log(document.getElementById(`existenciaP${idSucProd}`));
+            let existenciaActual = productosSucursal.find(p => p.id == idSucProd).existencia;
+            document.getElementById(`existenciaP${idSucProd}`).textContent = parseInt(existenciaActual) + parseInt(existencia.value);
+            productosSucursal.find(p => p.id == idSucProd).existencia = parseInt(existenciaActual) + parseInt(existencia.value);
+            actualizarCabecera();
+            //productosList.find(p => p.id == idSucProd).existencia = parseInt(existencia.value);
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    };
 
     async function agregarSubprod() {
 
@@ -1774,7 +1904,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 //alert(respuesta);
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
-            $('#modal_precio_venta5').modal('hide');
+            $('#modal_subproducto').modal('hide');
             $('#detalleProducto').modal('hide');
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
             //refrescar();
@@ -1867,7 +1997,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                               EXISTENCIA STOCK </a> 
                                             <br/><br/>  
                                             
-                                              <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_precio_venta5"  onclick=" return agregarSubproducto( ` +
+                                              <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_subproducto"  onclick=" return agregarSubproducto( ` +
                                     x + `)" value="` + x + `">
                                               <img src="{{ asset('img/nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
                                               EXISTENCIA NUEVO
