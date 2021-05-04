@@ -846,6 +846,12 @@
             contenidoProducto.innerHTML = contenidoOriginal;
             //}
             console.log(productosSucursal);
+            if(productosSucursal.length == 0)
+            {
+                cuerpo = `<tr><td colspan="5" class="text-uppercase">No se encontró ningún producto con ese nombre</td></tr>`;
+                document.getElementById("consultaBusqueda").innerHTML = cuerpo;
+                return;
+            }
             for (let x in productosSucursal) {
                 //for (let count5 in productos) {
                 //if (productos[count5].id === productosSucursal[x].idProducto) {
@@ -904,6 +910,12 @@
             await cargarSubproductosSucursal(palabraBusqueda.value);
             contenidoProducto.innerHTML = contenidoOriginal;
             //}
+            if(subproductosSucursal.length == 0)
+            {
+                cuerpo = `<tr><td colspan="5" class="text-uppercase">No se encontró ningún producto con ese nombre</td></tr>`;
+                document.getElementById("consultaBusquedaSubproducto").innerHTML = cuerpo;
+                return;
+            }
             for (let i in subproductosSucursal) {
                 //let sucursalP = productosSucursal.find(p => p.id == subproductosSucursal[count].idSucursalProducto);
                 //let producto = productos.find(p => p.id == sucursalP.idProducto);
@@ -934,10 +946,10 @@
             let contador = 1;
             let departamento = "";
             //if (ofertasSucursal.length == 0) {
-            if (palabraBusqueda.value.length == 0) {
-                document.getElementById("consultaBusquedaSubproducto").innerHTML = cuerpo;
+            /*if (palabraBusqueda.value.length == 0) {
+                document.getElementById("consultaBusquedaOferta").innerHTML = cuerpo;
                 return;
-            }
+            }*/
             const contenidoProducto = document.querySelector('#consultaBusquedaOferta');
             const contenidoOriginal = contenidoProducto.innerHTML;
             contenidoProducto.innerHTML =
@@ -955,6 +967,12 @@
             await cargarOfertasSucursal(palabraBusqueda.value);
             contenidoProducto.innerHTML = contenidoOriginal;
             //}
+            if(ofertasSucursal.length == 0)
+            {
+                cuerpo = `<tr><td colspan="5" class="text-uppercase">No se encontró ningún producto con ese nombre</td></tr>`;
+                document.getElementById("consultaBusquedaOferta").innerHTML = cuerpo;
+                return;
+            }
             for (let x in ofertasSucursal) {
                 /*for (let count5 in productos) {
                     if (productos[count5].id === productosSucursal[x].idProducto) {
