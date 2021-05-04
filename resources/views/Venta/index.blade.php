@@ -220,7 +220,7 @@
                     <input type="text" class="form-control mx-2 my-3" placeholder="INGRESE EL NOMBRE DEL PRODUCTO A BUSCAR" id="busquedaProducto" onkeyup="buscarProducto()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;">
-                    <table class="table table-hover table-bordered" id="productos">
+                    <table class="table table-hover table-bordered text-center" id="productos">
                         <thead class="thead-light">
                             <tr class="text-center">
                                 <th scope="col">#</th>
@@ -912,7 +912,7 @@
             //}
             if(subproductosSucursal.length == 0)
             {
-                cuerpo = `<tr><td colspan="5" class="text-uppercase">No se encontró ningún producto con ese nombre</td></tr>`;
+                cuerpo = `<tr><td colspan="5" class="text-uppercase">No se encontró ningún subproducto con ese nombre</td></tr>`;
                 document.getElementById("consultaBusquedaSubproducto").innerHTML = cuerpo;
                 return;
             }
@@ -969,7 +969,7 @@
             //}
             if(ofertasSucursal.length == 0)
             {
-                cuerpo = `<tr><td colspan="5" class="text-uppercase">No se encontró ningún producto con ese nombre</td></tr>`;
+                cuerpo = `<tr><td colspan="5" class="text-uppercase">No hay ofertas</td></tr>`;
                 document.getElementById("consultaBusquedaOferta").innerHTML = cuerpo;
                 return;
             }
