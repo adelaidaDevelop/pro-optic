@@ -59,4 +59,4 @@ Route::get('/carrito', [EcommerceController::class,'carrito'])->middleware('isCl
 Route::post('/actualizarCantidadCarrito/{id}', [EcommerceController::class,'actualizarCantidadCarrito'])->middleware('isCliente');
 
 //Auth::routes();
-
+Route::get('/pagoPaypal', [EcommerceController::class,'pagoPaypal']);
