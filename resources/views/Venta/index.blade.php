@@ -889,10 +889,10 @@
             let cuerpo = "";
             const palabraBusqueda = document.querySelector('#busquedaSubproducto');
             //if (subproductosSucursal.length == 0) {
-            if (palabraBusqueda.value.length == 0) {
+            /*if (palabraBusqueda.value.length == 0) {
                 document.getElementById("consultaBusquedaSubproducto").innerHTML = cuerpo;
                 return;
-            }
+            }*/
             const contenidoProducto = document.querySelector('#consultaBusquedaSubproducto');
             const contenidoOriginal = contenidoProducto.innerHTML;
             contenidoProducto.innerHTML =
