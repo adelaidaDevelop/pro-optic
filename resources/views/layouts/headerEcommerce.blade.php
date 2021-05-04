@@ -245,7 +245,7 @@ function mostrarCarrito()
     if(contador==0)
         return;
     cuerpoCarrito = cuerpoCarrito + `<div class="row mx-auto ><p class="text-center mx-auto border border-dark">Total $ ${totalCompra}</p></div>`
-    cuerpoCarrito = cuerpoCarrito + `<button class="btn btn-success">Pagar</button>`
+    cuerpoCarrito = cuerpoCarrito + `<a class="btn btn-success" href="{{url('/carrito')}}">Ver carrito</a>`
     elementoCarrito.innerHTML = cuerpoCarrito;"Aqui se agregará el contenido de carrito";
     document.querySelector('#cantidadCarrito').textContent = contador;//respuesta.length;
 }
