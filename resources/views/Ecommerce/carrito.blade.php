@@ -69,7 +69,7 @@
             </div>
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
                 <h5 class="mr-auto my-1 text-center">Subtotal</h5>
-                <h5 class="ml-auto my-1 text-center" id="subtotal">$0.00</h5>
+                <h5 class="ml-auto my-1 text-center" id="subtotal">$ 0.00</h5>
             </div>
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
                 <h5 class="mr-auto my-1 text-center">Costo del envío</h5>
@@ -146,5 +146,28 @@ async function setCantidad(id) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
 }
+async function calcularTotal()
+{
+    if(carrito == null)
+        return;
+    let totalCompra = 0;
+    let cuerpoCarrito = "";
+    let contador = 0;
+    for(let i in carrito)
+    {
+        if(carrito[i].sucursal == sucursal)
+        {
+            contador++;
+            totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+        }
+    }
+    if(contador!=0)
+    {
+        $('#subtotal').html(`$ ${totalCompra}`);
+        $('#total').html(`$ ${totalCompra}`);
+        return;
+    }
+}
+calcularTotal();
 </script>
 @endsection
