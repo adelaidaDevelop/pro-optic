@@ -46,7 +46,7 @@
                 min="1" 
                 value="{{$p['cantidad']}}" onchange="setCantidad({{$p['id']}})" id="cantidad{{$p['id']}}" /></div>
             <div class="row col-2 mx-0 border">
-                <p class="my-auto mx-auto text-center"><strong>${{$p['precio'] * $p['cantidad']}}</strong></p>
+                <p class="my-auto mx-auto text-center"><strong id="subtotal{{$p['id']}}">${{$p['precio'] * $p['cantidad']}}</strong></p>
             </div>
             <div class="row col-1 mx-0  border">
                 <button class="btn btn-outline-warning my-auto mx-auto border-0">
@@ -79,7 +79,11 @@
                 <h5 class="mr-auto my-1 text-center">Total</h5>
                 <h5 class="ml-auto my-1 text-center" id="total">$0.00</h5>
             </div>
-            <button class="btn btn-outline-success my-auto btn-lg btn-block" type="button">Pagar</button>
+            @if(session()->has('idCliente'))
+            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="http:/google.com">Pagar</a>
+            @else
+            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="{{url('/loginCliente')}}">Pagar</a>
+            @endif
         </div>
     </div>
     @endif
@@ -134,12 +138,28 @@ async function setCantidad(id) {
         //return;
         if (typeof respuesta === 'string') {
             $(`#cantidad${id}`).val(parseInt(respuesta));
+            
             return alert('La cantidad es mayor a la existencia que tenemos a la venta');
             
         }
         carrito = respuesta;
+        //let productos = productosCompra.filter(p => p.id == id);
+        //productos.find(p => p.sucursal =="{{session('sucursalEcommerce')}}");
+        //let subtotal = carrito
+        let i = 0;
+        encontrado = false;
+        while(i<carrito.length && !encontrado)
+        {
+            if(carrito[i].id == id && carrito[i].sucursal == "{{session('sucursalEcommerce')}}")
+            {
+                let subtotal = parseFloat(carrito[i].precio) * parseInt(carrito[i].cantidad);
+                $(`#subtotal${id}`).html(`$${subtotal}`);
+                encontrado = true;
+            }
+        }        //$('#subtotalProducto').html(`$${})
         //document.querySelector('#cantidadCarrito').textContent = respuesta.length;
         mostrarCarrito();
+        calcularTotal();
         //console.log('carrito',respuesta);
         //return alert("Listo"+ respuesta);
     } catch (err) {
