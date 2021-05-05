@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\Sucursal;
+use App\Models\Departamento;
 use App\Models\Cliente;
 use Illuminate\Support\Arr;
 use Validator, Hash, Auth;
@@ -23,8 +25,11 @@ class LoginClienteController extends Controller
     public function loginCliente()
     {
         //$this->middleware('isCliente');
+        $sucursales = Sucursal::all();
+        $departamentos = Departamento::where('ecommerce', '=',1)->get(['id','nombre']);
+        
         if(!Auth::check())
-            return view('auth.loginCliente');
+            return view('auth.loginCliente',compact('sucursales','departamentos'));
         return redirect('/');
     }
 
@@ -85,8 +90,10 @@ class LoginClienteController extends Controller
     }
     public function register()
     {
+        $sucursales = Sucursal::all();
+        $departamentos = Departamento::where('ecommerce', '=',1)->get(['id','nombre']);
         if(!Auth::check())
-            return view('auth.registerCliente');
+            return view('auth.registerCliente',compact('sucursales','departamentos'));
         return redirect('/');
         
     }
