@@ -2,7 +2,7 @@
 @section('headerEcommerce')
 <div class="row" id="header">
     <nav class="navbar navbar-expand-lg navbar-dark col-12 py-auto" style="background:#3366FF">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{url('/')}}">
             <img src="{{ asset('img\farmaciagilogo.png') }}" alt="LOGO" height="50px">
         </a>
         <div class="input-group my-auto">
