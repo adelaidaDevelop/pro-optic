@@ -327,4 +327,8 @@ class EcommerceController extends Controller
         session(['carrito' => $carrito]);
         return $carrito;
     }
+
+    public function pagoPaypal(){
+        return view('Ecommerce.pruebaPago');
+    }
 }
