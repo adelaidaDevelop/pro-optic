@@ -5,11 +5,12 @@ PRODUCTOS
 @endsection
 
 @section('opciones')
-<div class="col-0 my-2 p-1">
+<div class="col-0  p-1">
     <form method="get" action="{{url('/puntoVenta/departamento/')}}">
-        <button class="btn btn-secondary ml-4 p-1" type="submit">
-            <img src="{{ asset('img\departamento.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
-            DEPARTAMENTOS
+        <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit">
+            <img src="{{ asset('img\depto.svg') }}" alt="Editar" width="33px" height="33px">
+            <br />
+            <p class="h6 my-auto text-dark"><small>DEPARTAMENTOS</small></p>
         </button>
     </form>
 </div>
@@ -36,7 +37,7 @@ PRODUCTOS
         <div class="col-2"></div>
         <div class="col-2 ">
             <h6 class="mb-2 mt-3"> {{'CODIGO DE BARRAS'}}</h6>
-            <br/>
+            <br />
             <h6 class="mb-3 ">{{'NOMBRE'}}</h6>
             <br />
             <h6 class="mb-3"> {{'DESCRIPCION'}} </h6>
@@ -44,7 +45,7 @@ PRODUCTOS
             <h6 class="mb-4"> {{'MINIMO STOCK'}}</h6>
 
             <h6 class="mb-2"> {{'RECETA MEDICA'}} </h6>
-            <br/>
+            <br />
             <h6 class="mb-4"> {{'DEPARTAMENTO'}}</h6>
 
             <h6 class="mb-4"> {{'EXISTENCIA'}}</h6>
@@ -127,7 +128,7 @@ PRODUCTOS
             </div>
             @enderror
 
-            <br/><br/><br/><br/><br/><br/>
+            <br /><br /><br /><br /><br /><br />
             <button class="btn btn-outline-secondary mt-4" onclick="return confirm('¿AGREGAR NUEVO PRODUCTO?')" type="submit" value="  AGREGAR">
                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px"> GUARDAR PRODUCTO
             </button>

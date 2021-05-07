@@ -17,6 +17,7 @@
 
     <!-- Add the checkout buttons, set up the order and approve the order -->
     <script>
+        let total = $('#total').val();
         paypal.Buttons({
             style: {
                 layout: 'vertical',
@@ -28,14 +29,19 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '0.01'
-                        }
+                            total: '<?php echo $total; ?>',
+                            currency: 'MXN' //value: '0.01' 
+                        },
+                        description: "Compra de medicamentos a Franquicia de Farmacias Gi:$<?php echo number_format($total,2);?>",
+                     
+
                     }]
                 });
             },
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
-                    alert('Transaction completed by ' + details.payer.name.given_name);
+                    console.log(data);
+                   // alert('Transaction completed by ' + details.payer.name.given_name);
                 });
             }
         }).render('#paypal-button-container'); // Display payment options on your web page
