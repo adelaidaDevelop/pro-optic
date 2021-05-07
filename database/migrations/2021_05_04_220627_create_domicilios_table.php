@@ -14,7 +14,8 @@ class CreateDomiciliosTable extends Migration
     public function up()
     {
         Schema::create('domicilios', function (Blueprint $table) {
-            $table->id();
+            //$table->id();
+            $table->foreignId('idCliente')->constrained('clientes')->unique();
             $table->string('calle');
             $table->string('numeroExterior');
             $table->string('numeroInterior')->nullable();

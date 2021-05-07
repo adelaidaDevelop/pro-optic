@@ -331,4 +331,9 @@ class EcommerceController extends Controller
     public function pagoPaypal(){
         return view('Ecommerce.pruebaPago');
     }
+
+    public function direccionEnvio()
+    {
+        return view('Ecommerce.domicilio');
+    }
 }
