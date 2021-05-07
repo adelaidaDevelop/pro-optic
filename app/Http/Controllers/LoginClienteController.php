@@ -100,6 +100,7 @@ class LoginClienteController extends Controller
     public function registerPost(Request $request)
     {
         $this->validator($request->all())->validate();
+        //return 'ok';
         $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
         $usuario = User::create([
             'username' => $request['username'],
@@ -111,13 +112,13 @@ class LoginClienteController extends Controller
         $datosEmpleado = Arr::add($datosEmpleado,'tipo',2);
         //$empleado = new Empleado;
         $cliente = Cliente::create($datosEmpleado);
-        return $datosEmpleado;//view('auth.registerCliente');
+        return redirect('/');// $datosEmpleado;//view('auth.registerCliente');
     }
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'nombre' => ['required', 'string', 'max:50'],
-            'domicilio' => ['required', 'string', 'max:50'],
+            //'domicilio' => ['required', 'string', 'max:50'],
             'telefono' => ['required', 'string', 'max:10'],
             'username' => ['required', 'string', 'max:255','unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

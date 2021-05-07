@@ -40,20 +40,20 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label for="domicilio" class="col-md-4 col-form-label text-md-left">{{ __('Domicilio') }}</label>
+                <!--div class="form-group row">
+                    <label for="domicilio" class="col-md-4 col-form-label text-md-left">{ __('Domicilio') }}</label>
 
                     <div class="col-md-6">
-                        <input id="domicilio" type="text" class="form-control @error('domicilio') is-invalid @enderror"
-                            name="domicilio" value="{{ old('domicilio') }}" required autocomplete="domicilio" autofocus>
+                        <input id="domicilio" type="text" class="form-control error('domicilio') is-invalid enderror"
+                            name="domicilio" value="{ old('domicilio') }}" required autocomplete="domicilio" autofocus>
 
-                        @error('domicilio')
+                        error('domicilio')
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong>{ $message }}</strong>
                         </span>
-                        @enderror
+                        enderror
                     </div>
-                </div>
+                </div-->
 
                 <div class="form-group row">
                     <label for="username" class="col-md-4 col-form-label text-md-left">{{ __('Nombre de Usuario') }}</label>
