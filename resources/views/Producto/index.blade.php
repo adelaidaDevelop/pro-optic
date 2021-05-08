@@ -737,6 +737,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             }
             //}
         }
+
         console.log("Productos no encontrados", productoNoEncontrado);
         grupos = parseInt(productosList.length / numPorGrupo);
         pagina = 0;
@@ -917,8 +918,12 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let consulta = document.getElementById("consultaBusqueda");
         if (pagina == 0)
             consulta.innerHTML = "";
+            console.log("AQUI IMPRIME PROD VACIOS");
         let cuerpo = ""; //document.getElementById("consultaBusqueda").innerHTML;
 
+        let oferta = null;
+        let subproducto = null;
+        let productoSucursal = null;
         let contador = 0;
         /* let costo_inventario = 0;
          let precio_inventario = 0;
@@ -947,7 +952,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         if (pagina == grupos)
             totalProductos = productosList.length;
         for (let t = parseInt(pagina * numPorGrupo); t < totalProductos; t++) {
-            let productoSucursal = productosSucursal.find(p => p.idProducto == productosList[t].id);
+            productoSucursal =  null;
+            productoSucursal = productosSucursal.find(p => p.idProducto == productosList[t].id);
             //for (let z in productosSucursal) {
             //  if (productosList[t].id === productosSucursal[z].idProducto) {
             //  if (productosSucursal[z].status === 1) {
@@ -965,6 +971,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             //contador = contador + 1;
 
             if (productoSucursal.status == 1) {
+                //console.log('productos',productoSucursal.status);
                 cuerpo = //`
                     //<tr onclick="" data-dismiss="modal">
 
@@ -989,8 +996,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 tr.id = "producto" + productosList[t].id;
                 consulta.appendChild(tr);
             }
-
-            let subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
+            subproducto =  null;
+            subproducto = subproductos.find(p => p.idSucursalProducto == productoSucursal.id);
             if (subproducto != null) {
                 let costoSubp = productoSucursal.costo / subproducto.piezas;
                 cuerpo =
@@ -1013,8 +1020,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 const tr = document.createElement("tr");
                 tr.innerHTML = cuerpo;
                 consulta.appendChild(tr);
+            }else {
+                subproducto = "";
             }
-            let oferta = ofertas.find(p => p.idSucursalProducto == productoSucursal.id);
+            oferta = null;
+             oferta = ofertas.find(p => p.idSucursalProducto == productoSucursal.id);
             if (oferta != null) {
                 //contador = contador + 1;
                 cuerpo =
@@ -1031,12 +1041,17 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 const tr = document.createElement("tr");
                 tr.innerHTML = cuerpo;
                 consulta.appendChild(tr);
+            }else { 
+                oferta = "";
+               // console.log(" ofertis", oferta);
             }
+            
             //}
 
             //  }
             //}
         }
+        
         let cargando = document.querySelector('#cargandoProductos');
         if (cargando != null)
             cargando.remove();
@@ -1056,6 +1071,15 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 
             //let consulta = document.getElementById("consultaBusqueda");
             consulta.appendChild(cargando);
+        }
+        console.log("productosSucursal",productoSucursal);
+        console.log("oferta",oferta);
+        console.log("subproducto",subproducto);
+        if(productoSucursal == null && oferta == null && subproducto == null){
+            console.log("06-05-21");
+            const tr = document.createElement("tr");
+            tr.innerHTML = "<tr><td colspan='7'><h4 class='text-center'>No se encontraron productos </h4></td></tr>";
+            consulta.appendChild(tr);
         }
         //let cargando1 = document.createElement("tr");
         //cargando1.id= "cargandoProductos1";
@@ -1157,6 +1181,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         document.getElementById("cantProdInv").innerHTML = cantProdInventario;
         document.getElementById("cantProdSub").innerHTML = cantSubproductos;
         document.getElementById("cantProdOferta").innerHTML = cantOfertas;*/
+        
     };
     let imagenUrlAuxiliar = "";
 
