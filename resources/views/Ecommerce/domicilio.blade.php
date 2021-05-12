@@ -5,11 +5,11 @@
 </div>
 <div class="row col-12 mx-auto">
     <div class="col-9">
-        <div class="row col-12 mx-0 mb-auto border-bottom border-dark">
-            <div class="col-1 my-1 mx-0 p-0">
-                <img class="row col-10 img-fluid ml-auto" src="{{ asset('img\ubicacion.png') }}" alt="UBICACION" />
+        <div class="row col-12 mr-auto px-0 mb-auto border-bottom border-dark">
+            <div class="col-1 my-1 mx-0 px-0">
+                <img class="col-10 mx-0 img-fluid" src="{{ asset('img\ubicacion.png') }}" alt="UBICACION" />
             </div>
-            <h5 class="col-auto my-auto text-left">Dirección De Envío</h5>
+            <h5 class="row col-auto my-auto px-0 text-left">Dirección De Envío</h5>
         </div>
         <div class="row col-12 mt-0 mx-auto  mb-auto">
             <p class="col-auto mr-auto">Indica la dirección donde quieres recibir tu compra</p>

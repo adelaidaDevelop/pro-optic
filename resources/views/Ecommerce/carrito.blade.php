@@ -13,43 +13,43 @@
     @else
     <div class="col-9">
         <div class="row col-12 border-bottom">
-            <div class="row col-5 mx-0 border">
-                <p class="text-center mx-auto my-0">Producto</p>
+            <div class="row col-5 mx-0">
+                <p class="h5 text-center mx-auto my-0">Producto</p>
             </div>
-            <div class="row col-2 mx-0 border">
-                <p class="text-center mx-auto my-0">Precio</p>
+            <div class="row col-2 mx-0">
+                <p class="h5 text-center mx-auto my-0">Precio</p>
             </div>
-            <div class="row col-2 mx-0 border">
-                <p class="text-center mx-auto my-0">Cantidad</p>
+            <div class="row col-2 mx-0">
+                <p class="h5 text-center mx-auto my-0">Cantidad</p>
             </div>
-            <div class="row col-2 mx-0 border">
-                <p class="text-center mx-auto my-0">Subtotal</p>
+            <div class="row col-2 mx-0">
+                <p class="h5 text-center mx-auto my-0">Subtotal</p>
             </div>
-            <div class="row col-1 mx-0 border"></div>
+            <div class="row col-1 mx-0"></div>
         </div>
         @foreach($carrito as $p)
         <div class="row col-12 border-bottom">
-            <div class="row col-2 mx-0 border">
+            <div class="row col-2 mx-0">
                 @if(!empty($p['imagen']))
                 <img src="{{ asset('storage').'/'.$p['imagen']}}" alt="" class="img-fluid">
                 @else
                 <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" class="img-fluid">
                 @endif
             </div>
-            <div class="row col-3 mx-0 border">
+            <div class="row col-3 mx-0">
                 <p class="my-auto mx-auto text-center">{{$p['nombre']}}</p>
             </div>
-            <div class="row col-2 mx-0 border">
+            <div class="row col-2 mx-0">
                 <p class="my-auto mx-auto text-center"><strong>${{$p['precio']}}</strong></p>
             </div>
-            <div class="row col-2 mx-0 border"><input type="number" class="form-control my-auto"
+            <div class="row col-2 mx-0"><input type="number" class="form-control my-auto"
                 min="1" 
                 value="{{$p['cantidad']}}" onchange="setCantidad({{$p['id']}})" id="cantidad{{$p['id']}}" /></div>
-            <div class="row col-2 mx-0 border">
+            <div class="row col-2 mx-0">
                 <p class="my-auto mx-auto text-center"><strong id="subtotal{{$p['id']}}">${{$p['precio'] * $p['cantidad']}}</strong></p>
             </div>
-            <div class="row col-1 mx-0  border">
-                <button class="btn btn-outline-warning my-auto mx-auto border-0">
+            <div class="row col-1 mx-0">
+                <button class="btn btn-outline-danger my-auto mx-0 p-0 border-0 ">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">
                         <path
@@ -80,9 +80,9 @@
                 <h5 class="ml-auto my-1 text-center" id="total">$0.00</h5>
             </div>
             @if(session()->has('idCliente'))
-            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="http:/google.com">Pagar</a>
+            <a class="btn btn-success my-auto btn-lg btn-block" href="http:/google.com">Pagar</a>
             @else
-            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="{{url('/loginCliente')}}">Pagar</a>
+            <a class="btn btn-success my-auto btn-lg btn-block" href="{{url('/loginCliente?compra=1')}}">Pagar</a>
             @endif
         </div>
     </div>

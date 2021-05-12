@@ -334,6 +334,20 @@ class EcommerceController extends Controller
 
     public function direccionEnvio()
     {
-        return view('Ecommerce.domicilio');
+        if(session()->has('carrito'))
+        {
+            $carrito = session('carrito');
+            $ss = array_column($carrito, 'sucursal');
+            $pos = array_search(session('sucursalEcommerce'), $ss);
+            if(!$pos===false)
+            {
+                return redirect('/loginCliente');
+            }
+            else{
+                return view('Ecommerce.detalleCompra',compact('carrito'));
+            }
+            
+        }
+        return redirect('/loginCliente');
     }
 }
