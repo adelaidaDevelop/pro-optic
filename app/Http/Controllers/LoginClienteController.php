@@ -25,16 +25,20 @@ class LoginClienteController extends Controller
     public function loginCliente()
     {
         //$this->middleware('isCliente');
+        $compra = "";
+        if(isset($_GET['compra']))
+            $compra = $_GET['compra'];//return "Recibi tu párametro";
         $sucursales = Sucursal::all();
         $departamentos = Departamento::where('ecommerce', '=',1)->get(['id','nombre']);
         
         if(!Auth::check())
-            return view('auth.loginCliente',compact('sucursales','departamentos'));
+            return view('auth.loginCliente',compact('sucursales','departamentos','compra'));
         return redirect('/');
     }
 
     public function loginPost(Request $request)
     {
+        
         /*$rules = [
             'email' =>'required|email',
             'password' => 'required|min:8'
@@ -57,6 +61,8 @@ class LoginClienteController extends Controller
             {
                 $request->session()->regenerate();
                 session(['idCliente' => Auth::user()->id]);
+                if(isset($_GET['compra']))
+                    return redirect('/direccionEnvio');
                 return redirect('/');//->intended('/');
             }
             Auth::logout();

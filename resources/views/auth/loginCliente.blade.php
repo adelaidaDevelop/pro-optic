@@ -4,7 +4,11 @@
     <h4 class="text-primary mx-auto"><strong> INICIO DE SESION</strong></h4>
 </div>
 <div class="row col-7 mx-auto p-3 border">
+    @if(isset($compra))
+    <form method="POST" class="col-10 mx-auto" action="{{ url('loginCliente') }}?compra=1">
+    @else
     <form method="POST" class="col-10 mx-auto" action="{{ url('loginCliente') }}">
+    @endif
         @csrf
         <div class="form-group">
             <label for="email"><strong>Correo Electronico</strong></label>
