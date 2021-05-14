@@ -13,7 +13,7 @@
         </div>
         <div class="row col-12 mt-0 mx-auto mb-auto">
             <div class="row col-12">
-                <p><strong class="">Nombre de la persona</strong></p>
+                <p><strong class="">{{$nombre}}</strong></p>
             </div>
             <div class="row col-12">
                 <p class="">Valerio Trujano #318, San Juan, zimatlan de alvarez</p>

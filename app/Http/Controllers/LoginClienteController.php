@@ -25,7 +25,7 @@ class LoginClienteController extends Controller
     public function loginCliente()
     {
         //$this->middleware('isCliente');
-        $compra = "";
+        $compra = NULL;
         if(isset($_GET['compra']))
             $compra = $_GET['compra'];//return "Recibi tu párametro";
         $sucursales = Sucursal::all();

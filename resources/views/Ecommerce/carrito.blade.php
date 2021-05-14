@@ -79,11 +79,7 @@
                 <h5 class="mr-auto my-1 text-center">Total</h5>
                 <h5 class="ml-auto my-1 text-center" id="total">$0.00</h5>
             </div>
-            @if(session()->has('idCliente'))
-            <a class="btn btn-success my-auto btn-lg btn-block" href="http:/google.com">Pagar</a>
-            @else
-            <a class="btn btn-success my-auto btn-lg btn-block" href="{{url('/loginCliente?compra=1')}}">Pagar</a>
-            @endif
+            <a class="btn btn-success my-auto btn-lg btn-block" href="{{url('/direccionEnvio')}}">Pagar</a>
         </div>
     </div>
     @endif

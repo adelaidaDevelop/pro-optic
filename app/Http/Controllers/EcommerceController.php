@@ -8,6 +8,8 @@ use App\Models\Sucursal_producto;
 use App\Models\Departamento;
 use App\Models\Detalle_venta;
 use App\Models\Favorito;
+use App\Models\Cliente;
+use App\Models\Domicilio;
 use Illuminate\Http\Request;
 use DateInterval;
 
@@ -332,22 +334,49 @@ class EcommerceController extends Controller
         return view('Ecommerce.pruebaPago');
     }
 
+    public function postDireccion(Request $request)
+    {
+        //return $request->all();
+        $datosDomicilio = $request->except('_token');
+        $domicilio = new Domicilio;
+        $domicilio->idCliente = Cliente::where('idUsuario','=',session('idCliente'))->first()->id;
+        $domicilio->calle = $request['calle'];
+        $domicilio->numeroExterior = $request['numeroExterior'];
+        $domicilio->numeroInterior = $request['numeroInterior'];
+        $domicilio->codigoPostal = $request['codigoPostal'];
+        $domicilio->colonia = $request['colonia'];
+        $domicilio->save();
+        session(['domicilio' => true]);
+        return redirect('/direccionEnvio');
+    }
+
     public function direccionEnvio()
     {
         if(session()->has('carrito'))
         {
+            if(!session()->has('idCliente'))
+                return redirect('/loginCliente?compra=1');
             $carrito = session('carrito');
             $ss = array_column($carrito, 'sucursal');
             $pos = array_search(session('sucursalEcommerce'), $ss);
-            if(!$pos===false)
+            if($pos!==false)
             {
-                return redirect('/loginCliente');
+                $id =  Auth::user()->id;
+                $cliente = Cliente::where('idUsuario','=',$id)->first();
+                $domicilio = Domicilio::where('idCliente','=',$cliente->id)->first();
+                $nombre = $cliente->nombre;
+                if(isset($domicilio))
+                {
+                    /*if(session()->has('domicilio') && session('domicilio'))
+                    {
+                        return view('Ecommerce.detalleCompra',compact('carrito','nombre'));
+                    }
+                    session(['domicilio' => false]);*/
+                    return view('Ecommerce.domicilio',compact('domicilio'));
+                }
+                return view('Ecommerce.domicilio');
             }
-            else{
-                return view('Ecommerce.detalleCompra',compact('carrito'));
-            }
-            
         }
-        return redirect('/loginCliente');
+        return redirect('/carrito');
     }
 }
