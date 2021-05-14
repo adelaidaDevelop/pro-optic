@@ -393,6 +393,7 @@ REPORTES
 
 
     function ventas_compras2(fechaXDia) {
+        //AQUI GENERAR TABLA PARA MOSTRAR FILTRADOS. 
         salidaVP = "";
         cant_anterior = 0;
         cant_actual = 0;
@@ -406,7 +407,6 @@ REPORTES
         let fila_compra_venta = "";
         let totalVenta
         //VENTA DE PRODUCTOS
-
         for (let v in ventas) {
             totalVenta = 0;
             let fechaVenta = new Date(ventas[v].created_at);
@@ -435,7 +435,6 @@ REPORTES
                 total_ventas = total_ventas + totalVenta;
             }
         }
-
         //COMPRAS
         entradaCompraProduct = "";
         totalEntradas = 0;
@@ -464,7 +463,6 @@ REPORTES
                 if (proveedors != null) {
                     proveedor = proveedors.nombre;
                 }
-
                 //Por cada compra
                 col_compras = col_compras + `
                 <div class="row  w-100">
@@ -473,7 +471,6 @@ REPORTES
             </div>
             `;
                 total_compras = total_compras  + totalEntradas  ;
-
             }
         }
         /*
@@ -489,8 +486,6 @@ REPORTES
                                                     `;
 
         */
-
-
         //TOTAL VENTAS X DIA
         /*
         salidaVP = salidaVP + `
@@ -504,10 +499,8 @@ REPORTES
                  </tr>
                   `;
                   */
-
                   // 
         fila_compra_venta = col_compras + col_venta;
-
         if (fila_compra_venta === "") {
             let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
             document.getElementById("tablaR").innerHTML = sin;
@@ -631,12 +624,9 @@ REPORTES
         if (validarCamposFechas()) {
             fechaXDia = new Date(fechaDia.value);
             fechaXDia.setDate(fechaXDia.getDate() + 1);
-
             // compraProductos(fechaXDia);
             ventas_compras2(fechaXDia);
-
         }
-
     }
 
     function generaReportes() {
