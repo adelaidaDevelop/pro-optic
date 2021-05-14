@@ -44,7 +44,8 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '88.44'
+                            currency: 'MXN',
+                            value: '10.5'
                         }
                     }]
                 });
