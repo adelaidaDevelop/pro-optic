@@ -105,6 +105,13 @@
 
                 <!--/div-->
             </div>
+            <!--PRUE IMP DIRECTO-->
+            <div class="">
+                <button class="btn btn-outline-primary p-1" type="button" onclick="impDirecto()" value="" id="botonImpDirecto">
+                    <img src="{{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                    IMP DIRECTO
+                </button>
+            </div>
             <!--div class="btn-toolbar" role="toolbar">
                 <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
                     onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion"
@@ -776,7 +783,7 @@
                 $('#ofertasModal').modal('hide');
             } else
                 alert('PRODUCTO SIN EXISTENCIA');
-                return;
+            return;
         }
         //}
         //}
@@ -846,8 +853,7 @@
             contenidoProducto.innerHTML = contenidoOriginal;
             //}
             console.log(productosSucursal);
-            if(productosSucursal.length == 0)
-            {
+            if (productosSucursal.length == 0) {
                 cuerpo = `<tr><td colspan="5" class="text-uppercase">No se encontró ningún producto con ese nombre</td></tr>`;
                 document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                 return;
@@ -910,8 +916,7 @@
             await cargarSubproductosSucursal(palabraBusqueda.value);
             contenidoProducto.innerHTML = contenidoOriginal;
             //}
-            if(subproductosSucursal.length == 0)
-            {
+            if (subproductosSucursal.length == 0) {
                 cuerpo = `<tr><td colspan="5" class="text-uppercase">No se encontró ningún subproducto con ese nombre</td></tr>`;
                 document.getElementById("consultaBusquedaSubproducto").innerHTML = cuerpo;
                 return;
@@ -967,8 +972,7 @@
             await cargarOfertasSucursal(palabraBusqueda.value);
             contenidoProducto.innerHTML = contenidoOriginal;
             //}
-            if(ofertasSucursal.length == 0)
-            {
+            if (ofertasSucursal.length == 0) {
                 cuerpo = `<tr><td colspan="5" class="text-uppercase">No hay ofertas</td></tr>`;
                 document.getElementById("consultaBusquedaOferta").innerHTML = cuerpo;
                 return;
@@ -1239,7 +1243,18 @@
         //if(pago.value.length===0)
         //  $("input[id='pagoEfectivo']").val(total);
     }
-
+    //IMP DIRECTO
+    async function impDirecto() {
+        let response = "Sin respuesta";
+        try {
+            response = await fetch(`/puntoVenta/impDirecto`);
+            let resp = await response.json();
+            console.log('respuesta: ',resp);
+        } catch (err) {
+            console.log("Error al realizar la petición de productos AJAX: " + err.message);
+        }
+        //return response;
+    }
 
     function verificarVenta() {
         if (productosVenta.length === 0) {

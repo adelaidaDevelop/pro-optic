@@ -343,7 +343,6 @@ $devolver = $sE->hasAnyRole($userDevolucion);
     };
     //CREAR DEVOLUCION
     async function devolver() {
-
         let cantidad = document.querySelector('#cantidad');
         let detalle = document.querySelector('#detalleD');
         let total = document.querySelector('#totalD');
@@ -406,7 +405,6 @@ $devolver = $sE->hasAnyRole($userDevolucion);
         } else {
             return alert('DEBE INGRESAR UNA CANTIDAD VALIDA DE PRODUCTOS A DEVOLVER');
         }
-
     };
 
     async function cargarDevolucion() {
