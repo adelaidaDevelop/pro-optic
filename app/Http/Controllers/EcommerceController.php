@@ -350,6 +350,14 @@ class EcommerceController extends Controller
         return redirect('/direccionEnvio');
     }
 
+    public function eliminarDireccion(Request $request)
+    {
+        $id =  Auth::user()->id;
+        $cliente = Cliente::where('idUsuario','=',$id)->first();
+        Domicilio::where('idCliente','=',$cliente->id)->delete();
+        return back();
+    }
+
     public function direccionEnvio()
     {
         if(session()->has('carrito'))
@@ -365,18 +373,33 @@ class EcommerceController extends Controller
                 $cliente = Cliente::where('idUsuario','=',$id)->first();
                 $domicilio = Domicilio::where('idCliente','=',$cliente->id)->first();
                 $nombre = $cliente->nombre;
+                $telefono = $cliente->telefono;
                 if(isset($domicilio))
                 {
-                    /*if(session()->has('domicilio') && session('domicilio'))
+                    if(isset($_GET['domicilio']) && $_GET['domicilio'] == 'false')
                     {
-                        return view('Ecommerce.detalleCompra',compact('carrito','nombre'));
+                        session(['domicilio' => false]);
+                        return view('Ecommerce.domicilio',compact('domicilio'));
                     }
-                    session(['domicilio' => false]);*/
-                    return view('Ecommerce.domicilio',compact('domicilio'));
+                    if(session()->has('domicilio') && session('domicilio'))
+                    {
+                        return view('Ecommerce.detalleCompra',compact('carrito','nombre','domicilio','telefono'));
+                    }
+                    
                 }
                 return view('Ecommerce.domicilio');
             }
         }
         return redirect('/carrito');
+    }
+
+    public function formaPago()
+    {
+        return view('Ecommerce.formaPago');
+    }
+    
+    public function revisionPedido()
+    {
+        return view('Ecommerce.revisionPedido');
     }
 }
