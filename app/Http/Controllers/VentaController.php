@@ -17,7 +17,13 @@ use App\Models\Empleado;
 use App\Models\venta_cliente;
 use App\Models\Subproducto;
 use App\Models\Oferta;
+//imp directo
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+use CapabilityProfile;
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
+use Exception;
 
 class VentaController extends Controller
 {
@@ -217,6 +223,27 @@ class VentaController extends Controller
     public function destroy(Venta $venta)
     {
         //
+    }
+    //metodo imprimir directo 
+    public function printVenta(){
+        try{
+            
+    $profile = CapabilityProfile::load("simple");
+    return true;
+    //$conector = new WindowsPrintConnector("smb://user:pass@maquina1/epson_tm34");
+    $conector = new WindowsPrintConnector("smb://adela:1997@LAPTOPADE/Brother_DCP-T510W1");
+    //adelaida.molinar1997@gmail.com:Adelaida_97
+    $print = new Printer($conector, $profile);
+    $connector = new FilePrintConnector("php://stdout");
+    $printer = new Printer($connector);
+    $printer -> text("Hello World!\n");
+    $printer -> cut();
+    $printer->close();
+    return true;
+        }catch(Exception $e){
+           // return $e->getMessage();
+            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        }
     }
 
     /*public function productos(Request $request)
