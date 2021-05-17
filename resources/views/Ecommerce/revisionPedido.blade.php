@@ -8,19 +8,19 @@
     aqui va el proceso de compra
 </div>
 <div class="row col-12">
-    <div class="col-8 border">
-        <div class="col-12 mb-auto border-bottom border-dark">
-            <h5 class="col-auto my-auto px-0 text-left">Revisión de pedido</h5>
-        </div>
-        <div class="col-12">
-            <p>Revisa que los datos de envío, método de pago y monto de tu compra sean correctos</p>
-        </div>
-        <div class="row col-12">
-            <div class="col-6 border">Direccion de envio</div>
-            <div class="col-6 border">Forma de pago</div>
-        </div>
+    <div class="col-12 mb-auto border-bottom border-dark">
+        <h5 class="col-auto my-auto px-0 text-left">Revisión de pedido</h5>
+    </div>
+    <div class="col-12">
+        <p>Revisa que los datos de envío, método de pago y monto de tu compra sean correctos</p>
+    </div>
+    <div class="row col-8 mx-0 border">
+        <div class="col-6  border">Direccion de envio</div>
+        <p></p>
+        <div class="col-6 border">Forma de pago</div>
     </div>
     <div class="col-4 border">
+        <div class="col-12 border">Resumen de compra</div>
         <div class="col-12" id="paypal-button-container"></div>
     </div>
 </div>

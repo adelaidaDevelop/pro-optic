@@ -2299,6 +2299,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             if (codigoBarras.length == 0 || nombre.length == 0 || minimoStock.length == 0) {
                 return alert('EXISTE UN ERROR CON SUS DATOS, REVISELOS POR FAVOR');
             }
+            console.log('datos',data);
             let spp = await $.ajax({
                 //headers: {
                 //'X-CSRF-TOKEN': "{{ csrf_token() }}",
@@ -2365,7 +2366,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             productos.find(p => p.id == x).receta = receta;
             productos.find(p => p.id == x).minimoStock = minimoStock;
             productos.find(p => p.id == x).receta = receta;
-            productos.find(p => p.id == x).imagen = spp;
+            if(spp.length>1)
+                productos.find(p => p.id == x).imagen = spp;
 
 
             productosList.find(p => p.id == x).nombre = nombre;
@@ -2374,7 +2376,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             productosList.find(p => p.id == x).receta = receta;
             productosList.find(p => p.id == x).minimoStock = minimoStock;
             productosList.find(p => p.id == x).receta = receta;
-            productosList.find(p => p.id == x).imagen = spp;
+            if(spp.length>1)
+                productosList.find(p => p.id == x).imagen = spp;
             console.log('nombre', productos.find(p => p.id == x).nombre);
             //console.log('nombreIndice',productos[indice].nombre);
             document.getElementById("formEditar").disabled = true;

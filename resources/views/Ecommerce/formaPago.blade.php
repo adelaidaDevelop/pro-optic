@@ -13,10 +13,12 @@
         </div>
         <div class="row col-12 mr-auto px-0 ">
             <div class="col-11 mb-auto">
-                <img class="col-2 img-fluid my-2 btn btn-light border border-secondary rounded" src="{{ asset('img\PayPal-logo.png') }}" alt="FORMA DE PAGO" />
+                <img class="col-2 img-fluid my-2 btn btn-light border border-secondary rounded"
+                    src="{{ asset('img\PayPal-logo.png') }}" alt="FORMA DE PAGO" />
             </div>
             <div class="col-12 mb-auto">
-                <p class="">Paga de manera sencilla con tus tarjetas de débito o crédito registradas en tu cuenta PayPal.</p>
+                <p class="">Paga de manera sencilla con tus tarjetas de débito o crédito registradas en tu cuenta
+                    PayPal.</p>
             </div>
             <div class="col-9 mb-auto px-0">
                 <img class="col-2 img-fluid my-2 mx-0" src="{{ asset('img\paypal.png') }}" alt="FORMA DE PAGO" />
@@ -52,9 +54,8 @@
     </div>
 </div>
 <script>
-    $('#editarDireccion').click(function()
-    {
-        location.href= "{{url('/direccionEnvio?domicilio=false')}}";
-    });
+$('#editarDireccion').click(function() {
+    location.href = "{{url('/direccionEnvio?domicilio=false')}}";
+});
 </script>
 @endsection

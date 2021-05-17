@@ -60,6 +60,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+        //return 'Todo bien';
         $usuarios = ['crearProducto','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
@@ -213,6 +214,7 @@ class ProductoController extends Controller
     public function update(Request $request, $id)
     {
         //return 'Recibo tu solicitud';
+        
         $usuarios = ['modificarProducto','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
@@ -235,6 +237,7 @@ class ProductoController extends Controller
         // $datosSP['precio']= 0;
         // $datosSP['existencia']= 0;
          $datosSP['minimoStock']= $request->input('minimoStock');
+         
          //return $request->input('descripcion');
          $sp = Sucursal_producto::where('idProducto', '=', $id);
          //return $request->input('descripcion');//$datosSP['minimoStock'];
@@ -243,7 +246,13 @@ class ProductoController extends Controller
        //   Sucursal_producto::create($datosSP);
         
         if($request['ajax'])
-            return $request->file('imagen')->store('uploads','public');
+        {
+            if(isset($datosProducto['imagen']))
+                return $datosProducto['imagen'];
+            else
+                return 1;
+        }
+            //$request->file('imagen')->store('uploads','public');
         return redirect('puntoVenta/producto');
     }
 

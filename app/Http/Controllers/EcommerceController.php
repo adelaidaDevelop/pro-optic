@@ -35,18 +35,15 @@ class EcommerceController extends Controller
     }
     public function index()
     {
-        //return $this->departamentosFavoritos();
-        //return $id = Sucursal::all()->first()->id; 
-        //$this->middleware('isCliente');
-        //return 'Esta entrando x2';
-        //return Producto::all()[0];
-        //$productos = [];//Producto::all();
+        
         $productosNuevos = $this->productosNuevos();
         $productosDestacados = $this->productosDestacados();
         $sucursales = Sucursal::all();
         $departamentos = Departamento::where('ecommerce', '=',1)->get(['id','nombre']);
         //if(isset($this->departamentosFavoritos()))
-            $categorias = $this->departamentosFavoritos();
+        $categorias = $this->departamentosFavoritos();
+        //return view('Ecommerce.pruebas',compact('productosNuevos','productosDestacados',
+        //'sucursales','departamentos','categorias'));
         return view('Ecommerce.index',compact('productosNuevos','productosDestacados',
         'sucursales','departamentos','categorias'));
 
