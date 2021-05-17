@@ -231,7 +231,8 @@ class VentaController extends Controller
     $profile = CapabilityProfile::load("simple");
     return true;
     //$conector = new WindowsPrintConnector("smb://user:pass@maquina1/epson_tm34");
-    $conector = new WindowsPrintConnector("smb://adela:1997@LAPTOPADE/Brother_DCP-T510W1");
+    $conector = new WindowsPrintConnector("smb://hzhm1:1997@DESKTOP-PNF6KCF/Brother_DCP2");
+    //$conector = new WindowsPrintConnector("smb://hzhm1:1997@LAPTOPADE/Brother_DCP-T510W1");
     //adelaida.molinar1997@gmail.com:Adelaida_97
     $print = new Printer($conector, $profile);
     $connector = new FilePrintConnector("php://stdout");

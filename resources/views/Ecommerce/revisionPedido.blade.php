@@ -15,7 +15,7 @@
         <div class="col-12">
             <p>Revisa que los datos de envío, método de pago y monto de tu compra sean correctos</p>
         </div>
-        <div class="row">
+        <div class="row col-12">
             <div class="col-6 border">Direccion de envio</div>
             <div class="col-6 border">Forma de pago</div>
         </div>
