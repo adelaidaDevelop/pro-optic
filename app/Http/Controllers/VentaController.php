@@ -18,10 +18,10 @@ use App\Models\venta_cliente;
 use App\Models\Subproducto;
 use App\Models\Oferta;
 //imp directo
-use Mike42\Escpos\PrintConnectors\FilePrintConnector;
-use CapabilityProfile;
-use Mike42\Escpos\Printer;
-use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+//use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+//use CapabilityProfile;
+//use Mike42\Escpos\Printer;
+//use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
 use Exception;
 
@@ -225,7 +225,7 @@ class VentaController extends Controller
         //
     }
     //metodo imprimir directo 
-    public function printVenta(){
+    /*public function printVenta(){
         try{
             
     $profile = CapabilityProfile::load("simple");
@@ -245,7 +245,7 @@ class VentaController extends Controller
            // return $e->getMessage();
             echo 'Excepción capturada: ',  $e->getMessage(), "\n";
         }
-    }
+    }*/
 
     /*public function productos(Request $request)
     {
