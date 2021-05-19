@@ -1614,7 +1614,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                         <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` +
                     productosSucursal[j].existencia + `" autofocus required disabled>
                         <h6>CANTIDAD DE PRODUCTO A AGREGAR</h6>        
-                        <input type="number" name="cantidad" id="cantidad" class="form-control text-center" placeholder="CANTIDAD DE PRODUCTO" value="" min="0" autofocus required>
+                        <input type="number" name="cantidadA" id="cantidadA" class="form-control text-center" placeholder="CANTIDAD DE PRODUCTO" value="0" min="0" autofocus required>
                             `;
             }
         }
@@ -1629,7 +1629,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
         document.getElementById("tituloExistAgregar").innerHTML = nombreProd;
         document.getElementById("modiExistAgregar").innerHTML = agregarCantidad;
-        $("input[name='cantidad']").bind('keypress', function(tecla) {
+        $("input[name='cantidadA']").bind('keypress', function(tecla) {
             if (this.value.length >= 10) return false;
             let code = tecla.charCode;
             if (code == 8) { // backspace.
@@ -1835,7 +1835,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             });
             $('#modal_existencia').modal('hide');
             // $('#detalleProducto').modal('hide');
-            alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
+            alert("EXISTENCIA MODIFICADO CORRECTAMENTE");
             //  refrescar();
             //await act_datos();
             //await buscarFiltroNombre2();
@@ -1857,7 +1857,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let idSucProd = btnGuardar.value;
         try {
             //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
-            const existencia = document.querySelector('#cantidad');
+            const existencia = document.querySelector('#cantidadA');
             /*
                 if (pago.value.length === 0)
                     return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
@@ -1884,7 +1884,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             });
             $('#modal_existenciaAgregar').modal('hide');
             // $('#detalleProducto').modal('hide');
-            alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
+            alert("EXISTENCIA AGREGADO CORRECTAMENTE");
             //  refrescar();
             //await act_datos();
             //await buscarFiltroNombre2();

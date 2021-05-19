@@ -839,8 +839,8 @@ INVENTARIO
                     }
                 } else if (moviName == "3") {
                     contador = 0;
-                    // devolucionesEfectivo(fechaXDia);
-                    document.getElementById("total_salidas").innerHTML = totalDevolucion;
+                    devolucionesEfectivo(fechaXDia);
+                   // document.getElementById("total_salidas").innerHTML = totalDevolucion;
                     cuerpo = devolucionFila;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
