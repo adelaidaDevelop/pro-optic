@@ -1145,11 +1145,12 @@
         } else {
             return alert('HUBO UN ERROR');
         }
+        
         let json = JSON.stringify(productosVenta);
         const pago = document.querySelector('#pagoCredito');
         const cliente = document.querySelector('#clientes');
         console.log(parseFloat(pago.value));
-
+        
         if (pago.value.length === 0)
             return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
         if (parseFloat(pago.value) >= parseFloat(total))

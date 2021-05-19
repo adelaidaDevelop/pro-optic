@@ -945,6 +945,8 @@ async function guardarCompra() {
         let json = JSON.stringify(productosCompra);
         let productos0 = [];
         let productos1 = [];
+        //console.log('productosCompra',productosCompra);
+        //return;
         for (let i in productosCompra) {
             if (productosCompra[i].idSucursal)
                 productos1.push((productosCompra[i]));
@@ -980,6 +982,9 @@ async function guardarCompra() {
                 </button>
             </div>
             `;
+        //console.log('productos0',productos0);
+        //console.log('productos1',productos1);
+        
         let spp = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
@@ -1096,5 +1101,5 @@ function setFechaCaducidad(id) {
     $(`#caducidad${id}`).prop('disabled', !seleccion);
 }
 </script>
-<script src="{{ asset('js\app.js') }}"></script>
+<script src="{{ asset('js\mayusculas.js') }}"></script>
 @endsection

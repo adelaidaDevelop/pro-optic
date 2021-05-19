@@ -17,7 +17,7 @@ class CreateClientesTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('telefono');
-            //$table->string('domicilio')->nullable();
+            $table->string('domicilio')->nullable();
             $table->unsignedInteger('tipo'); //cliente ecommerce o deudor
             $table->foreignId('idUsuario')->constrained('users');
             $table->timestamps();
