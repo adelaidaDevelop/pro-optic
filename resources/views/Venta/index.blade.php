@@ -569,6 +569,8 @@
         //return response;
     }
     async function cargarOfertasSucursal(palabra) {
+        if(palabra.length==0)
+            palabra = "%";
         let response = "Sin respuesta";
         try {
             response = await fetch(`/puntoVenta/oferta/${palabra}`); //{{session('sucursal')}}`);
@@ -970,6 +972,8 @@
 
             //  await cargarProductos();
             await cargarOfertasSucursal(palabraBusqueda.value);
+            console.log('ofertasSucursal',ofertasSucursal);
+            
             contenidoProducto.innerHTML = contenidoOriginal;
             //}
             if (ofertasSucursal.length == 0) {
