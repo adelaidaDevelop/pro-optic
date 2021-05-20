@@ -967,5 +967,5 @@ $verS = $sE->hasAnyRole($vS);
         //alert('Ya guardo lo cambios '+ id);
     }
 </script>
-<script src="{{ asset('js\app.js') }}"></script>
+<!--script src="{ asset('js\app.js') }}"></script-->
 @endsection

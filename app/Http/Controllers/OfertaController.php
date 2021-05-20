@@ -126,6 +126,8 @@ class OfertaController extends Controller
                 $producto = Producto::where("nombre",'like',$producto."%")
                 ->where('id','=',$sucursalProducto->idProducto)->get(['id', 'codigoBarras', 'nombre', 'idDepartamento'])->first();
                 //return $producto->nombre;
+                $pO->precio = $sucursalProducto->costo;
+                //$pO->cantidad = $sucursalProducto->cantidad
                 $pO->nombre = $producto->nombre;
                 $pO->codigoBarras = $producto->codigoBarras;
                 $pO->idDepartamento = $producto->idDepartamento;

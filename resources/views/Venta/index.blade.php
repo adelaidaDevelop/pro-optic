@@ -1072,6 +1072,7 @@
             }
             let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
             let valido = await respuesta.text();
+            
             if (respuesta.ok) {
                 if (valido.length > 0) {
                     idSucursalEmpleado = valido;
@@ -1082,7 +1083,9 @@
             } else {
                 return alert('HUBO UN ERROR');
             }
+            
             let json = JSON.stringify(productosVenta);
+            return console.log('Todo bien',productosVenta);
             const pago = document.querySelector('#pagoEfectivo');
             if (pago.value.length === 0)
                 return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
@@ -1108,6 +1111,7 @@
 
                 console.log(respuesta); //JSON.stringify(respuesta));
             });
+            
             console.log(venta);
             if (ticket) {
                 let url = `{{url('/puntoVenta/venta/${venta}?productos=')}}` + json;

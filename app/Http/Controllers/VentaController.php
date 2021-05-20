@@ -125,10 +125,12 @@ class VentaController extends Controller
             ]);
         }
         foreach ($datosCodificados as $datosProducto) {
+            
             $producto = new Detalle_venta;
             $producto->cantidad = $datosProducto['cantidad'];
             $producto->idProducto = $datosProducto['idProducto'];
             $producto->precioIndividual= $datosProducto['precio'];
+            
             if($datosProducto['tipo'] == 0)
                 $tipo = 'NORMAL';
             if($datosProducto['tipo'] == 1)

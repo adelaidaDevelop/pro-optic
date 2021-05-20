@@ -160,6 +160,7 @@ Route::prefix('/puntoVenta')->group(function()
 
         Route::get('empleado/validarClave/{clave}', [EmpleadoController::class,'validarClave']);
         Route::get('empleado/claveEmpleado/{clave}', [EmpleadoController::class,'validarEmpleado']);
+        //Route::get('administracion', [AdministracionController::class,'index']);
         Route::resource('administracion', AdministracionController::class);
         Route::resource('perdida', PerdidaController::class);
         Route::resource('producto', ProductoController::class);
