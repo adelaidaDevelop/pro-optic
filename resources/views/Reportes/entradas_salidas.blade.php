@@ -217,7 +217,28 @@ REPORTES
             </div>
         </div>
         -->
+        
+        <!-- TABLA -->
         <div id="tablaR" class="row col-12 mb-3">
+            <div id="tabla2" class="row col-12 " style="height:400px;overflow-y:auto;">
+                <table class="table table-bordered border-primary  ml-3  w-100">
+                    <thead class="table-secondary text-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>MOVIMIENTO</th>
+                            <th>+ -</th>
+                            <th>TOTAL</th>
+                            <th>DESCRIPCION</th>
+                            <th>FECHA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="consultaBusqueda">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="invTotal" class="row col-12 mb-3">
 
         </div>
 
@@ -394,7 +415,8 @@ REPORTES
 
     function ventas_compras2(fechaXDia) {
         //AQUI GENERAR TABLA PARA MOSTRAR FILTRADOS. 
-        salidaVP = "";
+        let filas = "";
+        let signos = "";
         cant_anterior = 0;
         cant_actual = 0;
         empleado = "";
@@ -405,7 +427,10 @@ REPORTES
         let col_compras = "";
         let col_venta = "";
         let fila_compra_venta = "";
-        let totalVenta
+        let movimiento = "";
+        let total = 0.0;
+        let descripcion ="";
+        let totalVenta;
         //VENTA DE PRODUCTOS
         for (let v in ventas) {
             totalVenta = 0;
@@ -425,22 +450,15 @@ REPORTES
                         }
                     }
                 }
-                col_venta = col_venta + `
-                <div class="row w-100 ">
-            <div class="col-2">-$`+totalVenta + `</div>
-            <div class="col-2"> VENTA</div>
-            </tr>
-            `;
-                contador = contador + 1;
-                total_ventas = total_ventas + totalVenta;
+                movimiento = "VENTAS";
+                total = totalVenta;
+                descripcion = "VENTAS";
+                signos = "-";
             }
         }
         //COMPRAS
         entradaCompraProduct = "";
         totalEntradas = 0;
-        //let emple = "";
-        // let existencia = 0;
-        // let prov = "";
         total_compras = 0;
         //COMPRA DE PRODUCTOS AGREGADAS EN ESA FECHA
         for (let c in compras) {
@@ -459,64 +477,54 @@ REPORTES
                     }
                 }
                 // contador = contador + 1;
+
                 let proveedors = proveedores.find(p => p.id == compras[c].idProveedor);
                 if (proveedors != null) {
                     proveedor = proveedors.nombre;
                 }
                 //Por cada compra
+                /*
                 col_compras = col_compras + `
                 <div class="row  w-100">
             <div class= "col-2">+$`+totalEntradas + `</div>
             <div class= "col-2"> ` + proveedor + `</div>
             </div>
             `;
+            */
                 total_compras = total_compras  + totalEntradas  ;
+                movimiento = "COMPRA";
+                total = totalEntradas;
+                descripcion = proveedor;
+                signos = "+";
             }
         }
-        /*
-                entradaCompraProduct = entradaCompraProduct + `
-                                                    <tr>
-                                                            <th scope="row">` + contador + `</th>
-                                                            <td>` + fechaCol + `</td>
-                                                            <td>` + 0 + `</td>
-                                                            <td>` + total_compras + `</td>
-                                                            <td>` + +`</td>
-                                                            <td>` + "inv final" + `</td> 
-                                                    </tr>
-                                                    `;
-
-        */
-        //TOTAL VENTAS X DIA
-        /*
-        salidaVP = salidaVP + `
+        
+        filas  = filas  + `
                  <tr>
                 <th scope="row">` + contador + `</th>
+                <td>` + movimiento + `</td>
+                <td>` + signos + `</td>
+                <td>` + total + `</td>
+                <td>` + descripcion + `</td>
                 <td>` + fechaCol + `</td>
-                <td>` + "tonInv" + `</td>
-                <td>` + total_compras + `</td>
-                <td>` + total_ventas + `</td> 
-                <td>` + 0 + `</td>
                  </tr>
                   `;
-                  */
-                  // 
+        
+                  document.getElementById("consultaBusqueda").innerHTML = filas ;
+
+
+        /*
         fila_compra_venta = col_compras + col_venta;
         if (fila_compra_venta === "") {
             let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
             document.getElementById("tablaR").innerHTML = sin;
             document.getElementById("imp").disabled = true;
         } else {
-            // console.log(tabla2);
-            //document.getElementById("tablaR").innerHTML = tabla2;
-            //document.getElementById("consultaBusqueda").innerHTML = cuerpo;
             document.getElementById("imp").disabled = false;
             document.getElementById("tablaR").innerHTML = fila_compra_venta;
         }
-        //  totalCompras = total_compras;
-        //s totalVentas = total_ventas;
-
-        //HASTA AQUI
-        //  console.log(salidaVP);
+        */
+       
     };
 
     function ventas_compras(fechaXDia) {
