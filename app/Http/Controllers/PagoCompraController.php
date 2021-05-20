@@ -51,6 +51,7 @@ class PagoCompraController extends Controller
         $pagoCompra = new Pago_compra;
         $pagoCompra->monto = $pago;
         $pagoCompra->idCompra = $id;
+        $pagoCompra->idEmpSuc = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->id;
         $pagoCompra->save();
 
         return $request;

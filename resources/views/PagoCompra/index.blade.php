@@ -99,6 +99,8 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
         for (let i in pagosActuales) {
             let fecha = new Date(pagosActuales[i].created_at);
             const compraPago = compras.find(compra => compra.id === pagosActuales[i].idCompra);
+            //console.log('compraPago',pagosActuales);
+            
             const proveedorPago = proveedores.find(proveedor => proveedor.id === compraPago.idProveedor);
             console.log(proveedorPago);
             cuerpo = cuerpo +

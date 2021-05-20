@@ -16,7 +16,7 @@ class CreatePagoVentasTable extends Migration
         Schema::create('pago_ventas', function (Blueprint $table) {
             $table->foreignId('idVentaCliente')->constrained('venta_clientes');
             $table->foreignId('idEmpSuc')->constrained('sucursal_empleados');
-            $table->double('monto', 6, 2);
+            $table->double('monto', 6, 2)->nullable();
             $table->timestamps();
         });
     }

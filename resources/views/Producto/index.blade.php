@@ -782,8 +782,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             }
 
         }
-        document.getElementById("costoInv").innerHTML = costo_inventario;
-        document.getElementById("precioInv").innerHTML = precio_inventario;
+        document.getElementById("costoInv").innerHTML = costo_inventario.toFixed(2);
+        document.getElementById("precioInv").innerHTML = precio_inventario.toFixed(2);
         document.getElementById("cantProdInv").innerHTML = cantProdInventario;
         document.getElementById("cantProdSub").innerHTML = cantSubproductos;
         document.getElementById("cantProdOferta").innerHTML = cantOfertas;
@@ -2188,8 +2188,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 <tr>
                     <td>` + productosRapidos[i].nombre + `</td>
                     <td>` + productosRapidos[i].existencia + `</td>
-                    <td><input type="number" class="form-control" placeholder="CANTIDAD" 
-                    id="nuevaExistencia${i}" aria-describedby="basic-addon1"></td>
+                    <td><input type="number" class="form-control" placeholder="CANTIDAD" onchange="validarCantidad(${i})"
+                    id="nuevaExistencia${i}" aria-describedby="basic-addon1" min="1" pattern="^[0-9]+"></td>
                     <td><button type="button" class="btn btn-primary " onclick="actualizar(${i})">ACTUALIZAR</button></td>
                     <td><button type="button" class="btn btn-warning" onclick="ignorar(` + i + `)">IGNORAR</button></td>
                 </tr>
@@ -2211,9 +2211,28 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             mostrarInventarioRapido();
     }
 
+    function validarCantidad(i)
+    {
+        let valor = document.getElementById(`nuevaExistencia${i}`).value;
+        if(valor<0)
+        {
+            document.getElementById(`nuevaExistencia${i}`).value = 0;
+            return;
+        }
+        if(valor.indexOf(".")!=-1)
+            document.getElementById(`nuevaExistencia${i}`).value = valor.substring(0,valor.indexOf("."))
+    }
+
     async function actualizar(i) {
+        
         try {
             let existencia = document.getElementById(`nuevaExistencia${i}`).value;
+            existencia = parseInt(existencia);
+            //console.log('lgExistencia',existencia.length);
+            //console.log('nuevaExistencia',existencia);
+
+            if(existencia != undefined)
+                return alert('INGRESE UNA CANTIDAD VALIDA');
             let idSucProd = productosRapidos[i].id;
             if (productosRapidos[i].producto) {
                 let funcion = $.ajax({

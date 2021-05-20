@@ -85,7 +85,7 @@ Route::prefix('/puntoVenta')->group(function()
     //Sucursal producto
     Route::get('/inventarioRapido/{total}', [SucursalProductoController::class,'inventarioRapido']);
     Route::get('/sucursalProducto/buscarPorCodigo/{codigo}', [SucursalProductoController::class,'buscarPorCodigo']);
-     Route::resource('sucursalProducto', SucursalProductoController::class);
+    Route::resource('sucursalProducto', SucursalProductoController::class);
      //RUTA SUCURSALES INACTIVAS
      Route::get('/sucursalesInactivos', [SucursalController::class,'sucu_inactivas']);
     // dar alta sucursal
@@ -155,7 +155,7 @@ Route::prefix('/puntoVenta')->group(function()
 
        // Route::middleware('verified')->group(function () {
         Route::post('/oferta/editar/{id}', [OfertaController::class,'update']);
-        Route::post('/sucursalProducto/editar/{id}', [ProductosCaducidadController::class,'update']);
+        Route::post('/sucursalProducto/editar/{id}', [SucursalProductoController::class,'update']);
         Route::post('/producto/editar/{id}', [ProductoController::class,'update']);
 
         Route::get('empleado/validarClave/{clave}', [EmpleadoController::class,'validarClave']);

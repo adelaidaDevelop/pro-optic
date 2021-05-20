@@ -118,10 +118,6 @@ class SucursalProductoController extends Controller
         return  true;
     }
 
-    
-    
-
-
     /**
      * Display the specified resource.
      *
