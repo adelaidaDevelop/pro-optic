@@ -84,7 +84,8 @@ class OfertaController extends Controller
         //$sucursalProducto = Sucursal_producto::where('idSucursal', '=',$idS)->get();
     //    $usuarios = ['verProducto','crearProducto','modificarProducto','crearVenta','admin'];
     //    Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        $productos = Producto::where("nombre",'like',$producto."%")->get(['id', 'codigoBarras', 'nombre', 'idDepartamento']);//paginate(30,
+    /*    
+    $productos = Producto::where("nombre",'like',$producto."%")->get(['id', 'codigoBarras', 'nombre', 'idDepartamento']);//paginate(30,
         //['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
         $productosBusqueda = [];
         //return $productos;
@@ -110,21 +111,21 @@ class OfertaController extends Controller
             return $productosBusqueda;
         }
         return $productosBusqueda;
-        /*    $productosOferta = Oferta::all();//where('idSucursalProducto','=',$sP->id)->get();
-        
+        */
+        $productosOferta = Oferta::all();//where('idSucursalProducto','=',$sP->id)->get();
         $productosO = [];
-        
         foreach($productosOferta as $pO)
         {
             $idSP = $pO->idSucursalProducto;
             
             $sucursalProducto = Sucursal_producto::findOrFail($idSP);// where('idSucursal', '=',$idS)->get();
             
-            if($sucursalProducto->idSucursal == $idS)
+            if($sucursalProducto->idSucursal == session('sucursal'))//$idS)
             {
-                
-                $producto = Producto::findOrFail($sucursalProducto->idProducto);
-                
+                //$producto = Producto::findOrFail($sucursalProducto->idProducto);
+                $producto = Producto::where("nombre",'like',$producto."%")
+                ->where('id','=',$sucursalProducto->idProducto)->get(['id', 'codigoBarras', 'nombre', 'idDepartamento'])->first();
+                //return $producto->nombre;
                 $pO->nombre = $producto->nombre;
                 $pO->codigoBarras = $producto->codigoBarras;
                 $pO->idDepartamento = $producto->idDepartamento;
@@ -132,7 +133,7 @@ class OfertaController extends Controller
             }
         }
         return $productosO;//ProductosCaducidad::where('idSucursalProducto', '=',$id)->get();
-        */
+        
     }
 
     /**
