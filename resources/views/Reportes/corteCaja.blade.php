@@ -897,7 +897,7 @@ CORTE DE CAJA
         };
     */
     // imprimir automa
-
+/*
     $('#getUser').on('click', function() {
         let ventasEfectivo = $('#ventasEfectivo').val();
         let abonoEfectivo = $('#abonoEfectivo').val();
@@ -925,49 +925,44 @@ CORTE DE CAJA
         //  window.open(url, "myWindow");
         // myWindow.focus();
         //<div class="row w-100 " id="main1">
+        let fechaAct = new Date();
+        fechaAct = fechaAct.getDate() + "/" + (fechaAct.getMonth() + 1) + "/" + fechaAct.getFullYear();
         let texto = `
            
         <div class="col-8 text-center">
-            <br /><br /> <br />
-            <h1 class="font-weight-bold"> FARMACIAS GI ZIMATLAN</h1>
-            <h2> {{session('sucursalNombre')}} </h2>
-            <br /> <br />
-            <h1 class="font-weight-bold"> CORTE DEL DIA</h1>
-            <div class="row col-3  mx-auto px-auto ">
-                <div class="col-6 mx-auto px-auto text-left">
-                    <h2 class="row">DEL: </h2>
+            <br />
+            <h2 class="font-weight-bold"> FARMACIAS GI ZIMATLAN</h2>
+            <h3> {{session('sucursalNombre')}} </h3>
+            
+            <h2 class="font-weight-bold"> CORTE DEL DIA</h2>
+               <div class="input-group row  mx-auto px-auto text-left">
+                    <h3 >DEL: ` + fechaF + ` </h3>
                 </div>
-                <div class="col-6 mx-auto px-auto">
-                    <h2>` + fechaF + `</h2>
-                </div>
-            </div>
             <br />
             
-            <h2 class="mb-1"> REALIZADO:` + +`</h2>
-            <h2>CAJERO: ` + cajero + `</h2>
+            <h3 class="mb-1"> REALIZADO:` + fechaAct + `</h3>
+            <h3>CAJERO: ` + cajero + `</h3>
             <br /><br />
-            <h1 class="font-weight-bold" class="font-weight-bold"> === CANT. VENTAS DEL DIA === </h1>
+            <h2 class="font-weight-bold" class="font-weight-bold"> === CANT. VENTAS DEL DIA === </h2>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
-                    <h2 class="row">VENTAS EN EL DIA: </h2>
+                    <h3 class="row">VENTAS EN EL DIA: </h3>
                 </div>
                 <div class="col-4 mx-auto px-auto">
-                    <h2> ` + cant_ventas + ` </h2>
+                    <h3> ` + cant_ventas + ` </h3>
                 </div>
             </div>
 
-            <br />
             <h1 class="font-weight-bold"> === DINERO EN CAJA === </h1>
             <div class="row col-8  mx-auto px-auto ">
-                <div class="col-8 mx-auto px-auto text-left">
-                    <h2 class="row">+VENTAS EFECTIVO: </h2>
+                <div class="col-12 mx-auto px-auto text-left">
+                        <div class="col-7"><h2>+VENTAS EFECTIVO: </h2></div>
+                        <div class="col-4"><h2 class="text-primary"> +$` + ventasEfectivo + ` </h2></div>
                     <h2 class="row">+ABONOS EFECTIVO: </h2>
                     <h2 class="row">-DEVOLUCION EFECTIVO: </h2>
                     <h2 class="row text-dark">TOTAL CAJA: </h2>
-
                 </div>
-
-                <div class="col-4 mx-auto px-auto">
+                <div class="col-3 mx-auto px-auto">
                     <h2> +$` + ventasEfectivo + ` </h2>
                     <h2> +$ ` + abonoEfectivo + ` </h2>
                     <h2> -$` + devEfectivo + ` </h2>
@@ -1027,7 +1022,7 @@ CORTE DE CAJA
             </div>
             <br /><br />
             <!--
-            <h1 class="font-weight-bold"> === VENTAS POR DEPTOS === </h1>
+            <h1 class="font-weight-bold text-primary"> === VENTAS POR DEPTOS === </h1>
             <div class="col-6 mx-auto px-auto  ">
                 <h2 class="row">TOTAL :</h2>
             </div>
@@ -1044,8 +1039,8 @@ CORTE DE CAJA
         CallPrint(div);
     });
 
+    */
 
-    /*
     $(document).ready(function() {
         $('#getUser').on('click', function() {
             let ventasEfectivo = $('#ventasEfectivo').val();
@@ -1083,40 +1078,43 @@ CORTE DE CAJA
         });
     });
 
-*/
     function impFinal(printContent) {
         var WinPrint = window.open('', '', 'width=900,height=650 ');
         WinPrint.document.write(printContent.outerHTML);
-
         WinPrint.document.close();
         WinPrint.focus();
         WinPrint.print();
         WinPrint.close();
     }
 
-
+/*
     function CallPrint(div) {
         // divImprimirOpc2();
         //var divToPrint = document.getElementById('main1');
         var newWin = window.open('width=100,height=100', '_parent');
         newWin.focus();
         newWin.document.open();
-        //newWin.document.write(divToPrint.innerHTML);
-        newWin.document.write(div.innerHTML);
-        // newWin.print();
-        newWin.document.close();
-        setTimeout(function() {
-            newWin.close();
-        }, 6000);
-        newWin.print();
-        window.addEventListener("afterprint", function(event) { 
-            console.log("Entro a imp auto")
-            $('#action-link').click();
-        });
+        newWin.document.write(`
+      `);
+// newWin.document.write(div.innerHTML);
+// newWin.document.write(`</body>
 
-    };
 
-    // getUser
+
+// newWin.print();
+newWin.document.close();
+setTimeout(function() {
+newWin.close();
+}, 6000);
+newWin.print();
+window.addEventListener("afterprint", function(event) {
+console.log("Entro a imp auto")
+$('#action-link').click();
+});
+};
+*/
+
+// getUser
 </script>
 
 @endsection

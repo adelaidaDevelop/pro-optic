@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{{ asset('css\bootstrap.min.css') }}">
     <script src="{{ asset('js\bootstrap.min.js') }}"></script>
 </head>
-
 <body>
     @php
     $ventaEfectivo= $_GET['ventasEfectivo'];
@@ -35,84 +34,81 @@
 
         <div class="col-8 text-center">
             <br /><br /> <br />
-            <h1 class="font-weight-bold"> FARMACIAS GI ZIMATLAN</h1>
-            <h2> {{session('sucursalNombre')}} </h2>
-            <h2> {{$suc_act->telefono}}</h2>
+            <h2 class="font-weight-bold"> FARMACIAS GI ZIMATLAN</h2>
+            <h3> {{session('sucursalNombre')}} </h3>
+            <h3> {{$suc_act->telefono}}</h3>
             <br /> <br />
-            <h1 class="font-weight-bold"> CORTE DEL DIA</h1>
-            <div class="row col-3  mx-auto px-auto ">
-                <div class="col-6 mx-auto px-auto text-left">
-                    <h2 class="row">DEL: </h2>
+            <h2 class="font-weight-bold"> CORTE DEL DIA</h2>
+           
+            <h2>DEL: {{ $fecha }}</h2>
+            <h3 class="mb-1"> REALIZADO: {{ $hoy}}</h3>
+            <br/>  
+            <h2>CAJERO: {{ $cajero }}</h2>
+            <br/>
+            <h2 class="font-weight-bold" class="font-weight-bold"> === CANT. VENTAS DEL DIA === </h2>
+            <div class="row col-8  mx-auto px-auto ">
+                <div class="col-8 mx-auto px-auto text-left">
+                    <h3 class="row">VENTAS EN EL DIA: </h3>
                 </div>
-                <div class="col-6 mx-auto px-auto">
-                    <h2> {{ $fecha}} </h2>
+                <div class="col-4 mx-auto px-auto">
+                    <h3> {{ $cantVenta}} </h3>
                 </div>
             </div>
 
             <br />
-
-            <h2 class="mb-1"> REALIZADO: {{ $hoy}}</h2>
-            <h2>CAJERO: {{$cajero}}</h2>
-            <br /><br />
-            <h1 class="font-weight-bold" class="font-weight-bold"> === CANT. VENTAS DEL DIA === </h1>
+            <h2 class="font-weight-bold"> === DINERO EN CAJA === </h2>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
-                    <h2 class="row">VENTAS EN EL DIA: </h2>
+                    <h3 class="row">+VENTAS EFECTIVO: </h3>
+                    <h3 class="row">+ABONOS EFECTIVO: </h3>
+                    <h3 class="row">-DEVOLUCION EFECTIVO: </h3>
+                    <h3 class="row">TOTAL CAJA: </h3>
                 </div>
                 <div class="col-4 mx-auto px-auto">
-                    <h2> {{ $cantVenta}} </h2>
+                    <h3> +${{ $ventaEfectivo }}  </h3>
+                    <h3> +${{ $abonosEfectivo}} </h3>
+                    <h3> -${{ $dev_efectivo }}</h3>
+                    <h3> ${{$totalCaja }} </h3>
                 </div>
             </div>
-
-            <br />
-            <h1 class="font-weight-bold"> === DINERO EN CAJA === </h1>
-            <div class="row col-8  mx-auto px-auto ">
-                <div class="col-8 mx-auto px-auto text-left">
-                    <h2 class="row">+VENTAS EFECTIVO: </h2>
-                    <h2 class="row">+ABONOS EFECTIVO: </h2>
-                    <h2 class="row">-DEVOLUCION EFECTIVO: </h2>
-                    <h2 class="row text-dark">TOTAL CAJA: </h2>
-
-                </div>
-
-                <div class="col-4 mx-auto px-auto">
-                    <h2> +${{ $ventaEfectivo }} </h2>
-                    <h2> +${{ $abonosEfectivo}} </h2>
-                    <h2> -${{ $dev_efectivo }} </h2>
-                    <h2> ${{$totalCaja }}</h2>
-                </div>
-            </div>
+            
             <br /> <br />
-            <h1 class="font-weight-bold"> === VENTAS DEL DIA === </h1>
-
+            <h2 class="font-weight-bold"> === VENTAS DEL DIA === </h2>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
-                    <h2 class="row">EFECTIVO: </h2>
-                    <h2 class="row">CREDITO: </h2>
-                    <h2 class="row">ECOMMERCE: </h2>
-                    <h2 class="row">DEV VENTAS: </h2>
-                    <h2 class="row">VENTAS TOTALES: </h2>
+                    <h3 class="row">EFECTIVO: </h3>
+                    <h3 class="row">CREDITO: </h3>
+                    <h3 class="row">ECOMMERCE: </h3>
+                    <h3 class="row">DEV VENTAS: </h3>
+                    <h3 class="row">VENTAS TOTALES: </h3>
                 </div>
                 <div class="col-4 mx-auto px-auto">
-                    <h2> ${{ +$efectivoV}} </h2>
-                    <h2> ${{ +$creditoV}} </h2>
-                    <h2> ${{ +$ecommerceV}} </h2>
-                    <h2> ${{ -$devolucionV}} </h2>
-                    <h2> ${{ $totalVentas}}</h2>
+                    <h3> ${{ +$efectivoV}} </h3>
+                    <h3> ${{ +$creditoV}} </h3>
+                    <h3> ${{ +$ecommerceV}} </h3>
+                    <h3> ${{ -$devolucionV}} </h3>
+                    <h3> ${{ $totalVentas}}</h3>
                 </div>
             </div>
 
             <br /> <br />
-            <h1 class="font-weight-bold"> === TOTAL === </h1>
+            <h2 class="font-weight-bold"> === TOTAL === </h2>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
-                    <h2 class="row">TOTAL: </h2>
+                    <h3 class="row">TOTAL: </h3>
                 </div>
                 <div class="col-4 mx-auto px-auto">
-                    <h2> ${{ $total }} </h2>
+                    <h3> ${{ $total }} </h3>
                 </div>
             </div>
-
+ <!--AQUI-->
+            <!--
+            <h1 class="font-weight-bold"> === VENTAS POR DEPTOS === </h1>
+            <div class="col-6 mx-auto px-auto  ">
+                <h2 class="row">TOTAL :</h2>
+            </div>
+            -->
+            
             <h1 class="font-weight-bold"> === PAGO A PROVEEDORES === </h1>
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
@@ -134,12 +130,6 @@
                 </div>
             </div>
             <br /><br />
-            <!--
-            <h1 class="font-weight-bold"> === VENTAS POR DEPTOS === </h1>
-            <div class="col-6 mx-auto px-auto  ">
-                <h2 class="row">TOTAL :</h2>
-            </div>
-            -->
         </div>
 
     </div>
