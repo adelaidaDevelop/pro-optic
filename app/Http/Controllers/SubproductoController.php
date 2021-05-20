@@ -196,7 +196,7 @@ class SubproductoController extends Controller
                 $producto = Producto::where("nombre",'like',$producto."%")
                 ->where('id','=',$sucursalProducto->idProducto)->get(['id', 'codigoBarras', 'nombre', 'idDepartamento'])->first();
                 
-
+                //$pO->precio = $sucursalProducto->precio;
                 $pO->nombre = $producto->nombre;
                 $pO->codigoBarras = $producto->codigoBarras;
                 $pO->idDepartamento = $producto->idDepartamento;

@@ -102,7 +102,7 @@ class EmpleadoController extends Controller
             'genero' => ['required', 'string',],
             'fechaNacimiento' => ['required','date'],
             'entidadFederativa' => ['required','string'],
-                'domicilio' => ['required', 'string', 'max:50'],
+                'domicilio' => ['required', 'string', 'max:191'],
                 'curp' => ['required', 'string', 'max:18','unique:empleados'],
                 'telefono' => ['required', 'string', 'max:10'],
                 'claveE' => ['required', 'string', 'max:5','unique:empleados'],
@@ -268,7 +268,7 @@ class EmpleadoController extends Controller
             $validacion =  Validator::make($datos, [
                 'nombre' => ['string', 'max:30','min:3'],
                 'apellidos' => ['string', 'max:30','min:3'],
-                'domicilio' => ['string', 'max:50','min:3'],
+                'domicilio' => ['string', 'max:191','min:3'],
                 'curp' => ['string','min:18' ,'max:18','unique:empleados'],
                 'telefono' => ['string', 'max:10','min:7'],
                 'claveE' => ['string', 'max:5','unique:empleados','min:5'],
