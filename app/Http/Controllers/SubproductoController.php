@@ -150,6 +150,7 @@ class SubproductoController extends Controller
     }
     public function show($producto)//Subproducto $subproducto)
     {
+        /*
         $productos = Producto::where("nombre",'like',$producto."%")->get(['id', 'codigoBarras', 'nombre', 'idDepartamento']);//paginate(30,
             //['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
         $productosBusqueda = [];
@@ -177,8 +178,8 @@ class SubproductoController extends Controller
         }
         return $productosBusqueda;
 
-
-        /*$subproductos = Subproducto::all();
+*/
+        $subproductos = Subproducto::all();
         $productosS = [];
         
         foreach($subproductos as $pO)
@@ -190,8 +191,12 @@ class SubproductoController extends Controller
             if($sucursalProducto->idSucursal == $idS )
             {
                 
-                $producto = Producto::findOrFail($sucursalProducto->idProducto);
+                //$producto = Producto::findOrFail($sucursalProducto->idProducto);
                 
+                $producto = Producto::where("nombre",'like',$producto."%")
+                ->where('id','=',$sucursalProducto->idProducto)->get(['id', 'codigoBarras', 'nombre', 'idDepartamento'])->first();
+                
+
                 $pO->nombre = $producto->nombre;
                 $pO->codigoBarras = $producto->codigoBarras;
                 $pO->idDepartamento = $producto->idDepartamento;
@@ -199,7 +204,7 @@ class SubproductoController extends Controller
             }
         }
         return $productosS;//ProductosCaducidad::where('idSucursalProducto', '=',$id)->get();
-        */
+        
     }
 
     /**

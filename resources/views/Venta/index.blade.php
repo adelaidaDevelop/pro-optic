@@ -550,6 +550,8 @@
     }
     async function cargarSubproductosSucursal(palabra) {
         let response = "Sin respuesta";
+        if(palabra.length==0)
+            palabra = "%";
         try {
             response = await fetch(`/puntoVenta/subproducto/${palabra}`); //{{session('sucursal')}}`);
             if (response.ok) {
