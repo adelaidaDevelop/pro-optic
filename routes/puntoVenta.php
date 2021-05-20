@@ -145,7 +145,7 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('reporteCompraVenta', [ReporteController::class,'index4']);
     Route::get('act_inventario', [SucursalProductoController::class,'act_inventario']);
     //imprimir directo
-    Route::get('impDirecto', [VentaController::class,'printVenta']);
+    Route::get('impDirecto', [VentaController::class,'imprimirPrueba']);
     
     //RUTA IMPRIMIR CORTE CAJA
     Route::get('imp_corteCaja', [ReporteController::class,'pdf']);
