@@ -91,13 +91,7 @@
                     @endguest
                 </ul>
             </div>
-            <!--  </div>-->
-
         </nav>
-
-    <!--/div-->
-
-    
     @yield('content')
     <script src="{{ asset('js\mayusculas.js') }}"></script>
 </body>
