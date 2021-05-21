@@ -54,7 +54,7 @@ REPORTES
            
         </div>
          -->
-         <!--
+        <!--
         <div class="col-3 mx-auto text-center">
             <h6 class=" text-primary"> COSTO DEL INVENTARIO ACTUAL</h6>
             <div class=" input-group text-center mx-auto px-auto">
@@ -221,7 +221,7 @@ REPORTES
         -->
 
         <!-- TABLA -->
-        <div id="tablaR" class="row col-12 mb-3">
+        <div id="tablaR" class="row col-12 mb-1">
             <div id="tabla2" class="row col-12 " style="height:200px;overflow-y:auto;">
                 <table class="table table-bordered border-primary  ml-3  w-100">
                     <thead class="table-secondary text-dark">
@@ -240,8 +240,17 @@ REPORTES
                 </table>
             </div>
         </div>
-        <div id="invTotal" class="row col-12 mb-3">
 
+        <div id="" class="row col-12 mb-3">
+            <div class="col-4"> </div>
+            <div class=" col-4">
+                <div id="invTotal" class="row col-12 mb-1 text-primary">
+                </div>
+                <div id="invTotal2" class="row col-12 mb-1">
+                </div>
+                <div id="invTotal3" class="row col-12 mb-1">
+                </div>
+            </div>
         </div>
 
     </div>
@@ -537,12 +546,13 @@ REPORTES
         }
         let invAnterior = 5;
         let invNuevo = totalInvent_Filtro + invAnterior;
-        let inventario = `<h3> INVENTARIO: ` + totalInvent_Filtro + ` </h3> <br/>
-        <br/>
-        <h3> INVENTARIO ANTERIOR: ` + invAnterior  + ` </h3>
-        <br/><br/><br/>
-        <h3> INVENTARIO NUEVO: ` + invNuevo + ` </h3>`;
-        document.getElementById("invTotal").innerHTML = inventario;
+        let inventario1 = `<h5> INVENTARIO: -------------$` + totalInvent_Filtro + ` </h5>`;
+        let inventario2 = `<h5> INVENTARIO ANTERIOR:          $` + invAnterior + ` </h5>`;
+        let inventario3 = `<h5> INVENTARIO NUEVO:----$` + invNuevo + ` </h5>`;
+
+        document.getElementById("invTotal").innerHTML = inventario1;
+        document.getElementById("invTotal2").innerHTML = inventario2;
+        document.getElementById("invTotal3").innerHTML = inventario3;
         document.getElementById("consultaBusqueda").innerHTML = filas;
 
 
