@@ -1114,6 +1114,7 @@
             });
             
             console.log(venta);
+            //return;
             if (ticket) {
                 let url = `{{url('/puntoVenta/venta/${venta}?productos=')}}` + json;
                 window.open(url, "_blank");

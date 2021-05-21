@@ -24,6 +24,7 @@ use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
 use Exception;
+use Illuminate\Support\Facades\Date;
 
 class VentaController extends Controller
 {
@@ -89,10 +90,11 @@ class VentaController extends Controller
         $datosCodificados = json_decode($datos, true);
         
         if ($request->has('cliente')) {
-            
+            $hoy = now()->toDateString();
             $cliente = $request->input('cliente');
             $venta = Venta::create([
                 'tipo' => $estado,
+                'fecha' => $hoy,
                 'status' => true,
                 'idSucursalEmpleado' => $idSucursalEmpleado,//session('idSucursalEmpleado'),
             ]);
@@ -116,11 +118,14 @@ class VentaController extends Controller
 
         } else {
             // session('idSucursalEmpleado');
+            $hoy = now()->toDateString();
+            //return $hoy;
             $venta = Venta::create([
                // 'estado' => $estado,
                 'tipo' => $estado,
                 'idSucursalEmpleado' => $idSucursalEmpleado,//session('idSucursalEmpleado'),
                 'pago' => $pago,
+                'fecha' => $hoy,
                 'status' => true,
             ]);
         }
