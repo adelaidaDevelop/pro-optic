@@ -1162,7 +1162,7 @@
         const cliente = document.querySelector('#clientes');
         console.log(parseFloat(pago.value));
         
-        if (pago.value.length === 0)
+        if (pago.value.length === 0 || pago.value<0)
             return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
         if (parseFloat(pago.value) >= parseFloat(total))
             return alert('SI EL PAGO ES MAYOR O IGUAL A LA COMPRA MEJOR USE EL PAGO CON EFECTIVO');

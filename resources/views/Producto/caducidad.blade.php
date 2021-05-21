@@ -200,14 +200,14 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 alert('POR FAVOR INGRESE UNA CANTIDAD');
                 return;
             }
-            if (cantidad > productoActualizar.cantidad) {
-                alert('LA CANTIDAD NO PUEDE SER MAYOR A LA ANTERIOR');
+            if (cantidad > productoActualizar.cantidad || cantidad<1) {
+                alert('LA CANTIDAD NO PUEDE SER MAYOR A LA ANTERIOR NI MENOR QUE 1');
                 return;
             }
             let confirmacion = confirm('CONFIRME LA ACCION');
             if (confirmacion) {
 
-                const url = `{{url('/')}}/puntoVenta/productosCaducidad/editar/${id}`;
+                const url = `{{url('/puntoVenta/productosCaducidad/editar')}}/${id}`;
                 let respuesta = await $.ajax({
                     url: url,
                     type: 'POST',

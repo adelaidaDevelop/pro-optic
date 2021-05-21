@@ -1035,7 +1035,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                             <td id="onombre${productosList[t].id}">` + productosList[t].nombre + `</td>
                             <td id="odepartamento${productosList[t].id}">` + departamento + `</td>
                             <td>` + productoSucursal.costo + `</td>
-                            <td class="text-success">` + productosSucursal.costo + `</td>
+                            <td class="text-success">` + productoSucursal.costo + `</td>
                             <td>` + oferta.existencia + `</td>
                             `;
                 const tr = document.createElement("tr");

@@ -168,17 +168,19 @@
             </div>
         </div>
     </div>
-    <script>
+    <!--script>
     $("input[type='email']").on('input', function(evt) {
         //console.log('doc',document.selection);
         var input = $(this);
         
         var oldInput = input[0].type;
-        input[0].type = 'text';
+        input.type = 'text';
+        var start = input.selectionStart;
+        console.log(start); 
         //console.log('input',input[0].type);
-        var start = input[0].selectionStart;
+        
         //var end = input[0].selectionEnd;
-        console.log(start);
+        
         
         $(this).val(function(_, val) {
             return val.toUpperCase();
@@ -188,7 +190,7 @@
                 
         input[0].type = oldInput;
     });
-    </script>
+    </script-->
     <script>
     function mostrarPasswordClave() {
         var cambio = document.getElementById("password");
