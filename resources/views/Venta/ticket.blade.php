@@ -78,6 +78,7 @@ $cambio = $pago - $total;
                 <br>farmaciasgizimatlan.epizy.com</p>
         </div>
 
+
     <script>
     function imprimir() {
         window.print();
@@ -88,6 +89,7 @@ $cambio = $pago - $total;
     //let fecha = new Date();
     //alert(fecha.toLocaleDateString();
     </script>
+    
 </body>
 
 </html>

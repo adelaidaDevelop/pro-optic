@@ -54,6 +54,7 @@ REPORTES
            
         </div>
          -->
+        <!--
         <div class="col-3 mx-auto text-center">
             <h6 class=" text-primary"> COSTO DEL INVENTARIO ACTUAL</h6>
             <div class=" input-group text-center mx-auto px-auto">
@@ -70,6 +71,7 @@ REPORTES
             </div>
 
         </div>
+        -->
         <!--
         <div class="col-3  text-center mx-auto">
        
@@ -217,10 +219,10 @@ REPORTES
             </div>
         </div>
         -->
-        
+
         <!-- TABLA -->
-        <div id="tablaR" class="row col-12 mb-3">
-            <div id="tabla2" class="row col-12 " style="height:400px;overflow-y:auto;">
+        <div id="tablaR" class="row col-12 mb-1">
+            <div id="tabla2" class="row col-12 " style="height:200px;overflow-y:auto;">
                 <table class="table table-bordered border-primary  ml-3  w-100">
                     <thead class="table-secondary text-dark">
                         <tr>
@@ -238,8 +240,17 @@ REPORTES
                 </table>
             </div>
         </div>
-        <div id="invTotal" class="row col-12 mb-3">
 
+        <div id="" class="row col-12 mb-3">
+            <div class="col-4"> </div>
+            <div class=" col-4">
+                <div id="invTotal" class="row col-12 mb-1 text-primary">
+                </div>
+                <div id="invTotal2" class="row col-12 mb-1">
+                </div>
+                <div id="invTotal3" class="row col-12 mb-1">
+                </div>
+            </div>
         </div>
 
     </div>
@@ -308,8 +319,8 @@ REPORTES
     function habilitarFecha() {
         //Desabilitar los inputs y no los radios butons
         let dia = document.getElementById('fechaXDia');
-        let mes = document.getElementById('fechaXmeses');
-        let anio = document.getElementById('fechaXanio');
+        //let mes = document.getElementById('fechaXmeses');
+        // let anio = document.getElementById('fechaXanio');
         let periodoIni = document.getElementById('fechaPInicio');
         let periodoFin = document.getElementById('fechaPFinal');
         let selectFecha = document.querySelector('input[name="fecha"]:checked');
@@ -318,36 +329,43 @@ REPORTES
             dia.disabled = false;
             $("#fechaXmeses").val('0')
             $("#fechaXanio").val('0')
+            $("#fechaPInicio").val('0')
+            $("#fechaPFinal").val('0')
             document.getElementById("tablaR").innerHTML = tabla2;
             document.getElementById("consultaBusqueda").innerHTML = "";
-            mes.disabled = true;
-            anio.disabled = true;
+            //mes.disabled = true;
+            // anio.disabled = true;
             periodoIni.disabled = true;
             periodoFin.disabled = true;
-        } else if (opcFecha === 'mes') {
+        }
+        /* else if (opcFecha === 'mes') {
+                    dia.disabled = true;
+                    mes.disabled = false;
+                    $("#fechaXDia").val('')
+                    $("#fechaXanio").val('0')
+                    document.getElementById("tablaR").innerHTML = tabla2;
+                    document.getElementById("consultaBusqueda").innerHTML = "";
+                    anio.disabled = true;
+                    periodoIni.disabled = true;
+                    periodoFin.disabled = true;
+                } else if (opcFecha === 'anio') {
+                    dia.disabled = true;
+                    mes.disabled = true;
+                    anio.disabled = false;
+                    $("#fechaXDia").val('')
+                    $("#fechaXmeses").val('0')
+                    document.getElementById("tablaR").innerHTML = tabla2;
+                    document.getElementById("consultaBusqueda").innerHTML = "";
+                    periodoIni.disabled = true;
+                    periodoFin.disabled = true;
+                }*/
+        else if (opcFecha === 'periodo') {
             dia.disabled = true;
-            mes.disabled = false;
-            $("#fechaXDia").val('')
-            $("#fechaXanio").val('0')
+            $("#fechaXDia").val('0')
             document.getElementById("tablaR").innerHTML = tabla2;
             document.getElementById("consultaBusqueda").innerHTML = "";
-            anio.disabled = true;
-            periodoIni.disabled = true;
-            periodoFin.disabled = true;
-        } else if (opcFecha === 'anio') {
-            dia.disabled = true;
-            mes.disabled = true;
-            anio.disabled = false;
-            $("#fechaXDia").val('')
-            $("#fechaXmeses").val('0')
-            document.getElementById("tablaR").innerHTML = tabla2;
-            document.getElementById("consultaBusqueda").innerHTML = "";
-            periodoIni.disabled = true;
-            periodoFin.disabled = true;
-        } else if (opcFecha === 'periodo') {
-            dia.disabled = true;
-            mes.disabled = true;
-            anio.disabled = true;
+            //mes.disabled = true;
+            // anio.disabled = true;
             periodoIni.disabled = false;
             periodoFin.disabled = false;
         }
@@ -417,9 +435,6 @@ REPORTES
         //AQUI GENERAR TABLA PARA MOSTRAR FILTRADOS. 
         let filas = "";
         let signos = "";
-        cant_anterior = 0;
-        cant_actual = 0;
-        empleado = "";
         let prov = "";
         total_ventas = 0;
         let fechaCol = "";
@@ -429,11 +444,13 @@ REPORTES
         let fila_compra_venta = "";
         let movimiento = "";
         let total = 0.0;
-        let descripcion ="";
+        let descripcion = "";
         let totalVenta;
+        let contador = 0;
+        let totalInvent_Filtro = 0;
         //VENTA DE PRODUCTOS
+        totalVenta = 0;
         for (let v in ventas) {
-            totalVenta = 0;
             let fechaVenta = new Date(ventas[v].created_at);
             //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
             if (comparacionFecha(fechaXDia, fechaVenta)) {
@@ -452,16 +469,32 @@ REPORTES
                 }
                 movimiento = "VENTAS";
                 total = totalVenta;
+
                 descripcion = "VENTAS";
                 signos = "-";
+
             }
         }
+        contador = contador + 1;
+        filas = filas + `
+                 <tr>
+                <th scope="row">` + contador + `</th>
+                <td>` + movimiento + `</td>
+                <td>` + signos + `</td>
+                <td>` + total + `</td>
+                <td>` + descripcion + `</td>
+                <td>` + fechaCol + `</td>
+                 </tr>
+                  `;
+        totalInvent_Filtro = totalInvent_Filtro + total;
+
         //COMPRAS
-        entradaCompraProduct = "";
-        totalEntradas = 0;
-        total_compras = 0;
+        //  entradaCompraProduct = "";
+
+        //  total_compras = 0;
         //COMPRA DE PRODUCTOS AGREGADAS EN ESA FECHA
         for (let c in compras) {
+            totalEntradas = 0;
             let fechaCompra = new Date(compras[c].created_at);
             console.log(fechaCompra);
             if (comparacionFecha(fechaXDia, fechaCompra)) {
@@ -491,15 +524,13 @@ REPORTES
             </div>
             `;
             */
-                total_compras = total_compras  + totalEntradas  ;
+                // total_compras = total_compras  + totalEntradas  ;
                 movimiento = "COMPRA";
                 total = totalEntradas;
                 descripcion = proveedor;
                 signos = "+";
-            }
-        }
-        
-        filas  = filas  + `
+                contador = contador + 1;
+                filas = filas + `
                  <tr>
                 <th scope="row">` + contador + `</th>
                 <td>` + movimiento + `</td>
@@ -509,8 +540,20 @@ REPORTES
                 <td>` + fechaCol + `</td>
                  </tr>
                   `;
-        
-                  document.getElementById("consultaBusqueda").innerHTML = filas ;
+                totalInvent_Filtro = totalInvent_Filtro + total;
+
+            }
+        }
+        let invAnterior = 5;
+        let invNuevo = totalInvent_Filtro + invAnterior;
+        let inventario1 = `<h5> INVENTARIO: -------------$` + totalInvent_Filtro + ` </h5>`;
+        let inventario2 = `<h5> INVENTARIO ANTERIOR:          $` + invAnterior + ` </h5>`;
+        let inventario3 = `<h5> INVENTARIO NUEVO:----$` + invNuevo + ` </h5>`;
+
+        document.getElementById("invTotal").innerHTML = inventario1;
+        document.getElementById("invTotal2").innerHTML = inventario2;
+        document.getElementById("invTotal3").innerHTML = inventario3;
+        document.getElementById("consultaBusqueda").innerHTML = filas;
 
 
         /*
@@ -524,7 +567,7 @@ REPORTES
             document.getElementById("tablaR").innerHTML = fila_compra_venta;
         }
         */
-       
+
     };
 
     function ventas_compras(fechaXDia) {

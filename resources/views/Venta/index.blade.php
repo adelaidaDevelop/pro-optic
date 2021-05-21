@@ -1259,8 +1259,9 @@
     async function impDirecto() {
         let response = "Sin respuesta";
         try {
+            let contenidoT= "";
             response = await fetch(`/puntoVenta/impDirecto`);
-            let resp = await response.json();
+            let resp = await response.text();//json();
             console.log('respuesta: ',resp);
         } catch (err) {
             console.log("Error al realizar la petición de productos AJAX: " + err.message);

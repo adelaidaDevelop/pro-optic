@@ -18,10 +18,10 @@ use App\Models\venta_cliente;
 use App\Models\Subproducto;
 use App\Models\Oferta;
 //imp directo
-//use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 //use CapabilityProfile;
-//use Mike42\Escpos\Printer;
-//use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
 use Exception;
 
@@ -232,27 +232,49 @@ class VentaController extends Controller
         //
     }
     //metodo imprimir directo 
-    /*public function printVenta(){
+    public function printVenta(){
         try{
             
-    $profile = CapabilityProfile::load("simple");
-    return true;
+   // $profile = CapabilityProfile::load("simple");
+    
     //$conector = new WindowsPrintConnector("smb://user:pass@maquina1/epson_tm34");
-    $conector = new WindowsPrintConnector("smb://hzhm1:1997@DESKTOP-PNF6KCF/Brother_DCP2");
+    $conector = new WindowsPrintConnector("smb://hzhm1:1997@DESKTOP-PNF6KCF/EC-PM-5890X");
     //$conector = new WindowsPrintConnector("smb://hzhm1:1997@LAPTOPADE/Brother_DCP-T510W1");
     //adelaida.molinar1997@gmail.com:Adelaida_97
     $print = new Printer($conector, $profile);
-    $connector = new FilePrintConnector("php://stdout");
-    $printer = new Printer($connector);
-    $printer -> text("Hello World!\n");
-    $printer -> cut();
-    $printer->close();
+   // $connector = new FilePrintConnector("php://stdout");
+    //$printer = new Printer($connector);
+    $print -> text("Hello World!\n");
+    $print -> cut();
+    $print->close();
+
+   // $printer -> text("Hello World!\n");
+    //$printer -> cut();
+   // $printer->close();
     return true;
         }catch(Exception $e){
            // return $e->getMessage();
             echo 'Excepción capturada: ',  $e->getMessage(), "\n";
         }
-    }*/
+    }
+    public function imprimirPrueba(){
+        //
+        $nombreImpresora = "EC-PM-5890X";
+$connector = new WindowsPrintConnector($nombreImpresora);
+//return 'Aqui todo bien';
+$impresora = new Printer($connector);
+$impresora->setJustification(Printer::JUSTIFY_CENTER);
+$impresora->setTextSize(2, 2);
+$impresora->text("Imprimiendo\n");
+$impresora->text("ticket\n");
+$impresora->text("desde\n");
+$impresora->text("Laravel\n");
+$impresora->setTextSize(1, 1);
+$impresora->text("https://parzibyte.me");
+$impresora->feed(5);
+$impresora->close();
+return true;
+    }
 
     /*public function productos(Request $request)
     {
