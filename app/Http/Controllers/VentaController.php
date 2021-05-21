@@ -125,7 +125,7 @@ class VentaController extends Controller
             ]);
         }
         foreach ($datosCodificados as $datosProducto) {
-            
+            //return $datosProducto;
             $producto = new Detalle_venta;
             $producto->cantidad = $datosProducto['cantidad'];
             $producto->idProducto = $datosProducto['idProducto'];

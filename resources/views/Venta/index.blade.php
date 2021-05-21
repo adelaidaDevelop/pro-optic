@@ -609,6 +609,7 @@
         };
         //if(tipo==0)
         productosVenta.push(producto);
+        console.log('productosVenta',productosVenta);
     };
 
     let total = 0;
@@ -856,7 +857,7 @@
             await cargarProductosSucursal(palabraBusqueda.value);
             contenidoProducto.innerHTML = contenidoOriginal;
             //}
-            console.log(productosSucursal);
+            //console.log(productosSucursal);
             if (productosSucursal.length == 0) {
                 cuerpo = `<tr><td colspan="5" class="text-uppercase">No se encontró ningún producto con ese nombre</td></tr>`;
                 document.getElementById("consultaBusqueda").innerHTML = cuerpo;
@@ -887,7 +888,7 @@
 
             }
             document.getElementById("consultaBusqueda").innerHTML = cuerpo;
-            console.log(cuerpo);
+            //console.log(cuerpo);
         } catch (err) {
             console.log("Error al realizar la petición de productos AJAX: " + err.message);
         }
@@ -931,7 +932,7 @@
                 let departamento = departamentos.find(p => p.id == subproductosSucursal[i].idDepartamento);
                 //if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
                 cuerpo = cuerpo + `
-                    <tr onclick="agregarProducto('${subproductosSucursal[i].id}','${subproductosSucursal[i].codigoBarras}',
+                    <tr onclick="agregarProducto(${subproductosSucursal[i].id},'${subproductosSucursal[i].codigoBarras}',
                     '${subproductosSucursal[i].nombre}',` + 1 + `,` + subproductosSucursal[i].existencia +
                     `,` + subproductosSucursal[i].precio + `)">
                     <td>` + subproductosSucursal[i].codigoBarras + `</td>
@@ -1085,7 +1086,7 @@
             }
             
             let json = JSON.stringify(productosVenta);
-            return console.log('Todo bien',productosVenta);
+            //return console.log('Todo bien',productosVenta);
             const pago = document.querySelector('#pagoEfectivo');
             if (pago.value.length === 0)
                 return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
