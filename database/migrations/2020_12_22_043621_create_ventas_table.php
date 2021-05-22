@@ -17,6 +17,7 @@ class CreateVentasTable extends Migration
             $table->id();
             $table->string('tipo')->nullable();
             $table->double('pago')->nullable();
+            $table->double('totalV')->nullable();
             $table->boolean('status');
             $table->foreignId('idSucursalEmpleado')->constrained('sucursal_empleados');
             $table->date('fecha');
