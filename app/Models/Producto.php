@@ -15,9 +15,9 @@ class Producto extends Model
         'receta',
         'descripcion',
         'imagen',
-        'minimo_stock',
+        //'minimo_stock',
         //'existencia',
-        'costo',
-        'precio',
+        //'costo',
+        //'precio',
     ];
 }

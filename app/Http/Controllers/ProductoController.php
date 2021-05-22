@@ -66,8 +66,8 @@ class ProductoController extends Controller
         
         try{
 
-        $datosProducto = request()->except('_token', 'minimoStock','existencia','costo','precio');
-
+        $datosProducto = request()->except('_token', 'minimoStock','existencia','costo','precio','ajax');
+        
       //  $datosProducto['existencia']=0;
      //   $datosProducto['costo']=0;
      //   $datosProducto['precio']=0;
@@ -75,17 +75,34 @@ class ProductoController extends Controller
         if($request->hasFile('imagen')){
             $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
         }
+        else{
+            $datosProducto['imagen'] = NULL;
+        }
+        
         $producto = Producto::create($datosProducto);
         
-        $datosSP['costo']= $request->input('costo');;
-       $datosSP['precio']= $request->input('precio');;
-       $datosSP['existencia']= $request->input('existencia');;
+        if($request->has('ajax'))
+        {
+            $datosSP['costo']= 0;
+            $datosSP['precio']= 0;
+            $datosSP['existencia']= 0;
+            $datosSP['minimoStock']= $request->input('minimoStock');//$datosProducto['minimoStock'];
+            $datosSP['status']= 1;
+            $datosSP['idSucursal'] = $idSucursal;
+            $datosSP['idProducto'] = $producto->id;
+            Sucursal_producto::create($datosSP);
+            return $producto;
+        }
+        
+        $datosSP['costo']= $request->input('costo');
+       $datosSP['precio']= $request->input('precio');
+       $datosSP['existencia']= $request->input('existencia');
        $datosSP['minimoStock']= $request->input('minimoStock');//$datosProducto['minimoStock'];
        $datosSP['status']= 1;
        $datosSP['idSucursal'] = $idSucursal;
        $datosSP['idProducto'] = $producto->id;
        Sucursal_producto::create($datosSP);
-
+       
        // return response()->json($datosProducto);
       // TempData["success"] = "registro grabado";
      //::success('this is a test message');
@@ -93,6 +110,8 @@ class ProductoController extends Controller
        // return redirect('/puntoVenta/producto');
         return redirect()->back()->withErrors(['mensajeConf' => 'PRODUCTO CREADO CORRECTAMENTE']);
     }catch (\Illuminate\Database\QueryException $e){
+        if($request->has('ajax'))
+            return false;
         return redirect()->back()->withInput()->withErrors(['mensajeError' => 'El CODIGO DE BARRAS Y/O NOMBRE YA EXISTE, AGREGUE UNO DIFERENTE']);
     }
     }

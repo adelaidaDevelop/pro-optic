@@ -750,7 +750,7 @@ function crearProducto() {
             </div>
         </div>
         <div class="form-group">
-            <label for="Nombre" class="col col-form-label">
+            <label for="nombre" class="col col-form-label">
                 <h6>NOMBRE</h6>
             </label>
             <div class="col">
@@ -805,7 +805,7 @@ function crearProducto() {
             <div class="col">
                 <img id="imagenPrevisualizacion" class="img-fluid img-thumbnail mx-auto d-block">
                 <input class="form-control-file" type="file" name="Imagen"
-                    onchange="previsualizarImagen('formImagenProducto')" id="formImagenProducto" value="" autofocus required>
+                    onchange="previsualizarImagen('formImagenProducto')" id="formImagenProducto" value="" autofocus>
             </div>
         </div>
         
@@ -860,6 +860,7 @@ function nuevoProducto() {
     });
     if (bol === 1)
         return false;
+    
     const formulario = document.querySelector('#formularioProducto');
     /*const codigoBarras = document.querySelector('#formCodigoBarras');
     const nombre = document.querySelector('#formNombre');
@@ -871,6 +872,7 @@ function nuevoProducto() {
 
     let datosProducto = new FormData(formulario);
     datosProducto.append('_token', "{{ csrf_token() }}");
+    datosProducto.append('ajax', true);
     //alert(datosProducto);
 
     (async () => {
@@ -886,13 +888,16 @@ function nuevoProducto() {
             //console.log('Aun llega aquí');
             let respuesta = await fetch('/puntoVenta/producto/', init);
             if (respuesta.ok) {
-                console.log(respuesta);
+                //return console.log('Todo va bien');
+                let resp = await respuesta.json();
+                console.log(resp.nombre);
+                
                 const cuerpoModal = document.querySelector('#cuerpoModal');
                 const tituloModal = document.querySelector('#exampleModalLabel');
                 cuerpoModal.innerHTML = ingresarProducto;
                 tituloModal.innerHTML = ingresarProductoTitulo;
-                //await cargarProductos();
-                agregarProducto(productos[productos.length - 1].id);
+                await cargarProductos(resp.nombre);
+                agregarProducto(resp.id);
                 $('#exampleModal').modal('hide');
             }
 
