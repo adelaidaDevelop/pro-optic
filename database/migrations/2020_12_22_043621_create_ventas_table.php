@@ -19,6 +19,7 @@ class CreateVentasTable extends Migration
             $table->double('pago')->nullable();
             $table->boolean('status');
             $table->foreignId('idSucursalEmpleado')->constrained('sucursal_empleados');
+            $table->date('fecha');
             $table->timestamps();
         });
     }
