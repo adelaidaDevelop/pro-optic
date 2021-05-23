@@ -747,7 +747,7 @@
                         </label>
                         <br />
                         <label for="Nombre">
-                            <h5>NUEVO EMPLEADO</h5>
+                            <h5>NUEVO </h5>
                         </label>
                         <div class="form-col w-100">
                             <div class="form-row">
@@ -1051,7 +1051,7 @@
                                 onclick="return confirm('DESEA AGREGAR ESTE EMPLEADO');">
                                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
                                         width="25px" height="25px">
-                                    GUARDAR EMPLEADO
+                                    AGREGAR EMPLEADO
                                 </button>
                             </div>
                         </div>
