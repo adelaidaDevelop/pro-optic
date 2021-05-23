@@ -37,8 +37,8 @@ $vS = ['veriSucursal','modificarSucursal','eliminarSucursal','admin'];
     @endif
     @endforeach
     @else
-    <div class="row">
-        <h5>NO HAY SUCURSALES</h5>
+    <div class="col-12 text-center">
+        <h5 class="mx-auto">NO ENCONTRADO</h5>
     </div>
     @endif
 </body>

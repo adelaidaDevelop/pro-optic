@@ -136,12 +136,24 @@ $verS = $sE->hasAnyRole($vS);
                             <div class="form-row w-100">
                                 <div class="col-7">
                                     <div class="form-group">
-                                        <label for="nombre">
-                                            NOMBRE
+                                        <label for="direccion">
+                                            DIRECCIÓN
                                         </label>
-                                        <input type="text" class="form-control" name="direccion" id="direccion" value="{{$d->direccion}}" required>
+                                        <input type="text" class="form-control @error('direccion') is-invalid @enderror"
+                                         name="direccion" id="direccion" value="{{$d->direccion}}" required>
+                                        @error('direccion')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                         <label for="">TELEFONO</label>
-                                        <input type="number" class="form-control" name="telefono" id="telefono" value="{{$d->telefono}}" required>
+                                        <input type="number" class="form-control @error('telefono') is-invalid @enderror" 
+                                        name="telefono" id="telefono" value="{{$d->telefono}}" required>
+                                        @error('telefono')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -222,8 +234,9 @@ $verS = $sE->hasAnyRole($vS);
                                     <label for="nombre">
                                         DIRECCION
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="direccion" id="direccion" required>
-                                    @error('nombre')
+                                    <input type="text" class="form-control @error('direccion') is-invalid @enderror" 
+                                    value="{{ old('direccion') }}" name="direccion" id="direccion" required >
+                                    @error('direccion')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -231,8 +244,13 @@ $verS = $sE->hasAnyRole($vS);
                                     <label for="nombre">
                                         TELEFONO
                                     </label>
-                                    <input type="number" class=" form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" required>
-
+                                    <input type="number" class=" form-control @error('telefono') is-invalid @enderror" 
+                                    value="{{ old('telefono') }}" name="telefono" id="telefono" required>
+                                    @error('telefono')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-4">
