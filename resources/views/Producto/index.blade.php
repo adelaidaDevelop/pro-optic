@@ -527,11 +527,15 @@ let ofertas = @json($ofertas);
 let prod_baja = "";
 
 // nombreOpc();
-const numPorGrupo = 1000;
+const numPorGrupo = 100;
 let grupos = 1;
 let paginas = 1;
 let palabraAux = "";
 let productoNoEncontrado = [];
+
+let modificarProducto = @json($modificar);
+let eliminarProducto = @json($eliminar);
+let productosRapidos = [];
 buscarFiltroNombre2();
 
 /*
@@ -1205,7 +1209,7 @@ function rellenar() {
     document.getElementById("cantProdOferta").innerHTML = cantOfertas;*/
 
 };
-let imagenUrlAuxiliar = "";
+//let imagenUrlAuxiliar = "";
 
 function previsualizarImagen(id) {
     const seleccionImagen = document.querySelector('#' + id);
@@ -1221,7 +1225,7 @@ function previsualizarImagen(id) {
     const objectURL = URL.createObjectURL(primerArchivo);
     // Y a la fuente de la imagen le ponemos el objectURL
     imagen.src = objectURL;
-    imagenUrlAuxiliar = objectURL;
+    //imagenUrlAuxiliar = objectURL;
 }
 
 function info4(id) {
@@ -2099,8 +2103,7 @@ function redirect(id) {
     window.location = `/puntoVenta/subproducto/create/?id=${id}`;
 }
 
-let modificarProducto = @json($modificar);
-let eliminarProducto = @json($eliminar);
+
 async function productosEnBajaSucursal() {
     let cuerpo = "";
     let cont = 0;
@@ -2155,7 +2158,7 @@ async function productos0() {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
 };
-let productosRapidos = [];
+
 async function getInventarioRapido() {
 
     try {
@@ -2407,30 +2410,11 @@ async function editarProducto(x,idSucProd) {
             `<img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
               EDITAR`;
         btnEditar.value = true;
-        //actualizarCabecera();
-        //await act_datos();
-        //await buscarFiltroNombre2();
-        /*var init = {
-                // el método de envío de la información será POST
-                method: "PUT",
-                // el cuerpo de la petición es una cadena de texto 
-                // con los datos en formato JSON
-                body: datosProducto // convertimos el objeto a texto
-            };
-            
-            let respuesta = await fetch(`/puntoVenta/producto/${x}`, init);
-            if (respuesta.ok) {
-                let res = await respuesta.text();
-                //const cuerpoModal = document.querySelector('#cuerpoModal');
-                //const tituloModal = document.querySelector('#exampleModalLabel');
-                //cuerpoModal.innerHTML = ingresarProducto;
-                //tituloModal.innerHTML = ingresarProductoTitulo;
-            }*/
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
 
-}
+};
 //$('#tablaBusqueda').scrollTop() == $('#consultaBusqueda').height() - $('#tablaBusqueda').height()
 $('#tablaBusqueda').scroll(function() {
     const comparacion = ($('#consultaBusqueda').height() - $('#tablaBusqueda').height() + $(

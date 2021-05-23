@@ -620,8 +620,8 @@
             total = parseFloat(total + productosVenta[count0].subtotal);
 
         }
-        document.getElementById("total").innerHTML = "$ " + total;
-        document.getElementById("totalCobrar").textContent = "$ " + total;
+        document.getElementById("total").innerHTML = "$ " + total.toFixed(2);
+        document.getElementById("totalCobrar").textContent = "$ " + total.toFixed(2);
 
     }
 
@@ -719,6 +719,11 @@
                     productosVenta[count2].cantidad++;
                     productosVenta[count2].subtotal = productosVenta[count2].cantidad * productosVenta[count2].precio;
                     mostrarProductos();
+                    const palabraBusqueda = document.querySelector('#busquedaProducto');
+                    palabraBusqueda.value = "";
+                    $('#exampleModal').modal('hide');
+                    $('#exampleModal2').modal('hide');
+                    $('#ofertasModal').modal('hide');
                     //console.log(idProducto);
                 }
                 return true;
