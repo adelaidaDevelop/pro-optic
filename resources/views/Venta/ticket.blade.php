@@ -77,18 +77,6 @@ $cambio = $pago - $total;
             <p class="centrado">¡GRACIAS POR SU COMPRA!
                 <br>farmaciasgizimatlan.epizy.com</p>
         </div>
-
-
-    <script>
-    function imprimir() {
-        window.print();
-    }
-    imprimir();
-    //let productos =json($productos);
-    //alert(productos);
-    //let fecha = new Date();
-    //alert(fecha.toLocaleDateString();
-    </script>
     
 </body>
 

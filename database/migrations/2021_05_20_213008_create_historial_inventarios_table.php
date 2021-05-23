@@ -17,6 +17,7 @@ class CreateHistorialInventariosTable extends Migration
             $table->id();
             $table->double('totalInv')->nullable();
             $table->date('fecha');
+            $table->foreignId('idSucursal')->constrained('sucursals');
             $table->timestamps();
 
         });
