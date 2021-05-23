@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sucursal;
+use App\Models\Sucursal_empleado;
 use Illuminate\Http\Request;
 
 class SucursalController extends Controller
@@ -121,15 +122,31 @@ class SucursalController extends Controller
     public function destroy2($id)//Sucursal $sucursal)
     {
         $sucursales = Sucursal::where('status','=', 1)->get();
-    
+        
+        
         if(count($sucursales)>1) {
+            $sucursalAux = new Sucursal;
+        $sucursalAux->direccion = 'a12s3d5f6g5d4s5dde89';
+        $sucursalAux->telefono = '1234567891';
+        $sucursalAux->status = 1;
+        $sucursalAux->save();
             try{
                 
+                Sucursal_empleado::where('idSucursal','=',$id)->where('idEmpleado','=',1)
+                ->update(['idSucursal' => $sucursalAux->id]);
                 Sucursal::destroy($id);
+                Sucursal_empleado::where('idSucursal','=',$sucursalAux->id)
+                ->where('idEmpleado','=',1)->delete();
+                Sucursal::destroy($sucursalAux->id);
                 return true;
              }
             catch (\Illuminate\Database\QueryException $e)
                 { 
+                    $sE = Sucursal_empleado::where('idSucursal','=',$sucursalAux->id)->where('idEmpleado','=',1)
+                    ->update(['idSucursal' => $id]);
+                    Sucursal::destroy($sucursalAux->id);
+                    
+                    //where('idSucursal','=',$id)->where('idEmpleado','=',1);
                     return false;
                  }
            } 
