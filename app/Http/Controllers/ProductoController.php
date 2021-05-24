@@ -200,9 +200,9 @@ class ProductoController extends Controller
      */
     public function stock(){
         
-        $productos= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento']);
-        $idSucursal = session('sucursal');
-        $productosSucursal= Sucursal_producto::where('idSucursal', '=', $idSucursal)->get(['id','costo','precio','existencia','minimoStock','idProducto','status']);
+        //$productos= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento']);
+        //$idSucursal = session('sucursal');
+        //$productosSucursal= Sucursal_producto::where('idSucursal', '=', $idSucursal)->get(['id','costo','precio','existencia','minimoStock','idProducto','status']);
         //$noAgregado = $productos::where('id','!=' )
         $depa= Departamento::all();
         //$noAgregado = [];
@@ -225,11 +225,33 @@ class ProductoController extends Controller
 
         }
         */
-        return view('Producto.stockV', compact('productos', 'depa', 'productosSucursal'));
+        return view('Producto.stockV',compact('depa'));//, compact('productos', 'depa', 'productosSucursal'));
        // return view('Producto.stockV', compact('depa', 'noAgregado'));
         
     }
     
+    public function buscarStock($producto)
+    {
+        $productosStock = [];
+        $productos = Producto::where("nombre",'like',"%".$producto."%")
+        ->orWhere("codigoBarras",'like',"%".$producto."%")->get();
+        //return $productos;
+        foreach($productos as $p)
+        {
+            if(count($productosStock)>=30)
+                return $productosStock;//$productosStock;
+            $sP = Sucursal_producto::where('idProducto', '=', $p->id)->first();//$p->id);
+            //return $sP->get();
+            if(!isset($sP))
+            {
+                //return 'El producto no existe en sucursal';
+                array_push($productosStock,$p);
+            }
+            //return 'producto bueno';
+        }
+        return $productosStock;//$productosStock;
+    }
+
     public function update(Request $request, $id)
     {
         //return 'Recibo tu solicitud';

@@ -34,7 +34,8 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('/login', [LoginController::class,'login'])->name('Login');//->middleware('isEmpleado');
     Route::post('/login', [LoginController::class,'loginPost'])->name('Login');
     Route::post('/logout', [LoginController::class,'logout'])->name('Login');
-
+    //Route::get('/producto/stock', [ProductoController::class,'stock']);
+    
     Route::middleware('isEmpleado')->group(function () {
         //Rutas ade
     Route::get('/datosDevoluciones', [DevolucionController::class,'datoDev']);
@@ -75,6 +76,7 @@ Route::prefix('/puntoVenta')->group(function()
     
     //AGREGAR PRODUCTOS A SUCURSAL DESDE STOCK
     Route::get('/producto/stock', [ProductoController::class,'stock']);
+    Route::get('/producto/stock/{producto}', [ProductoController::class,'buscarStock']);
     Route::get('/sucursalProducto/crear/{id}', [SucursalProductoController::class,'crear']);
     //PRODUCTO
     //ADMINISTRADOR ELIMINA UN PRODUCTO DEL STOCK

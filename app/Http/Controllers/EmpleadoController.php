@@ -324,7 +324,10 @@ class EmpleadoController extends Controller
         $usuarios = ['verEmpleado','crearEmpleado','eliminarEmpleado','modificarEmpleado','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
-        $datosConsulta['empleados'] = Empleado::where("primerNombre",'like',$request->texto."%")->orderBy('primerNombre')->get();
+        $datosConsulta['empleados'] = Empleado::where("primerNombre",'like',"%".$request->texto."%")
+        ->orWhere("segundoNombre",'like',"%".$request->texto."%")
+        ->orWhere("apellidoPaterno",'like',"%".$request->texto."%")
+        ->orWhere("apellidoMaterno",'like',"%".$request->texto."%")->orderBy('primerNombre')->get();
         $admin = User::findOrFail(1);
         //where("status",'=','alta')->orderBy('nombre')->get();
         return view('Empleado.empleados',$datosConsulta,compact('admin'));

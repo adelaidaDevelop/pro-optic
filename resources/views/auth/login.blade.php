@@ -98,7 +98,7 @@
                                                 </div>
                                                 <!--<input type="text" size="35" placeholder="USUARIO" aria-label="Username" aria-describedby="basic-addon1">-->
                                                 <input id="email" type="email" size="35"
-                                                    class="form-control @error('email') is-invalid @enderror"
+                                                    class="form-control text-uppercase @error('email') is-invalid @enderror"
                                                     name="email" value="{{ old('email') }}" placeholder="USUARIO"
                                                     required autocomplete="email" autofocus>
                                                 @error('email')

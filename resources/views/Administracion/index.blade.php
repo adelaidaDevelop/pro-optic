@@ -566,18 +566,18 @@ $verS = $sE->hasAnyRole($vS);
                             if (SucursalEmpleados[i].idEmpleado == empleados[e].id && i != 0) {
                                 let status = "";
                                 let botonAltaBaja = "";
-                                let permisos = `<button class="btn btn-primary" onclick="cargarPermisosEmpleado(${SucursalEmpleados[i].id})"
+                                let permisos = `<button class="btn btn-primary mx-auto" onclick="cargarPermisosEmpleado(${SucursalEmpleados[i].id})"
                                 type="button" data-toggle="modal" data-target="#permisosModal">PERMISOS</button>`;
                                 if (SucursalEmpleados[i].status == 'alta') {
                                     status = `<span class="badge badge-success badge-pill my-auto">ACTIVO</span>`;
                                     botonAltaBaja =
-                                        `<button class="btn btn-danger" onclick="cambiarStatusEmpleado('baja',` +
+                                        `<button class="btn btn-danger mx-auto" onclick="cambiarStatusEmpleado('baja',` +
                                         SucursalEmpleados[i].id +
                                         `)">DAR DE BAJA</button>`;
                                 } else {
                                     status = `<span class="badge badge-danger badge-pill my-auto">INACTIVO</span>`;
                                     botonAltaBaja =
-                                        `<button class="btn btn-success" onclick="cambiarStatusEmpleado('alta',` +
+                                        `<button class="btn btn-success mx-auto" onclick="cambiarStatusEmpleado('alta',` +
                                         SucursalEmpleados[i].id +
                                         `)">DAR DE ALTA</button>`;
                                 }
@@ -589,11 +589,11 @@ $verS = $sE->hasAnyRole($vS);
                                     empleados[e].primerNombre + ` ` + segundoNombre + ` ` + empleados[e]
                                     .apellidoPaterno + ` ` + empleados[e].apellidoMaterno +
                                     `</li>
-    <li class="list-group-item text-uppercase mx-0 px-1">` +
+    <li class="list-group-item text-uppercase mx-auto col-2 text-center">` +
                                     status + `</li>
-                                    <li class="list-group-item text-uppercase mx-auto">` +
+    <li class="list-group-item text-uppercase mx-auto col-2 text-center">` +
                                     permisos + `</li>
-    <li class="list-group-item text-uppercase mx-auto">` + botonAltaBaja +
+    <li class="list-group-item text-uppercase mx-auto col-2 px-0 text-center">` + botonAltaBaja +
                                     `</li>
 </ul>`;
                                 //<li class="list-group-item">`+
@@ -624,6 +624,11 @@ $verS = $sE->hasAnyRole($vS);
 
     async function cambiarStatusEmpleado(status, idSucursalEmpleado) {
         try {
+            let body = document.querySelector('#cuerpoEmpleadosModal');
+            body.innerHTML = `<div class="row col-12 mx-auto text-center"><button class="btn btn-info text-center" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    ESPERE POR FAVOR
+                </button></div>`;
             const url = "{{url('/')}}/puntoVenta/sucursalEmpleado/editar/" + idSucursalEmpleado;
             let respuesta = await $.ajax({
                 url: url,
@@ -662,6 +667,10 @@ $verS = $sE->hasAnyRole($vS);
     <button type="button" class="btn btn-primary" onclick="empleadosSucursal()">REGRESAR</button>`;
         let cuerpo =
             `<div class="row mx-auto my-auto p-1"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
+        body.innerHTML = `<div class="row col-12 mx-auto text-center"><button class="btn btn-info text-center" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    CARGANDO EMPLEADOS
+                </button></div>`;
         try {
             await cargarEmpleados();
             let existeEmpleado = false;
@@ -690,17 +699,17 @@ $verS = $sE->hasAnyRole($vS);
 
             }
         } catch (err) {
+            body.innerHTML = "HUBO UN ERROR";
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     }
 
     async function agregarEmpleado(idEmpleado) {
         let body = document.querySelector('#cuerpoEmpleadosModal');
-        /*body.innerHTML = `
-        <div class="alert alert-primary" role="alert">
-            OK YA LO AGREGO
-        </div>
-        `;*/
+        body.innerHTML = `<div class="row col-12 mx-auto text-center"><button class="btn btn-info text-center" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    AGREGANDO EMPLEADO
+                </button></div>`;
         try {
             let datos = new FormData();
             datos.append('_token', "{{ csrf_token() }}");
