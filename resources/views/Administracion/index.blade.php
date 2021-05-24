@@ -134,7 +134,7 @@ $verS = $sE->hasAnyRole($vS);
                                 <h4>{{$d->direccion}}</h4>
                             </label>
                             <div class="form-row w-100">
-                                <div class="col-7">
+                                <div class="col-10">
                                     <div class="form-group">
                                         <label for="direccion">
                                             DIRECCIÓN
@@ -147,7 +147,7 @@ $verS = $sE->hasAnyRole($vS);
                                         </span>
                                         @enderror
                                         <label for="">TELEFONO</label>
-                                        <input type="number" class="form-control @error('telefono') is-invalid @enderror" 
+                                        <input type="number" class="col-6 form-control @error('telefono') is-invalid @enderror" 
                                         name="telefono" id="telefono" value="{{$d->telefono}}" required>
                                         @error('telefono')
                                         <span class="invalid-feedback" role="alert">
@@ -226,10 +226,10 @@ $verS = $sE->hasAnyRole($vS);
                         </label>
                         <br />
                         <label for="Nombre">
-                            <h5>NUEVA</h5>
+                            <h5>NUEVO</h5>
                         </label>
                         <div class="form-row w-100">
-                            <div class="col-7">
+                            <div class="col-10">
                                 <div class="form-group">
                                     <label for="nombre">
                                         DIRECCION
@@ -244,7 +244,7 @@ $verS = $sE->hasAnyRole($vS);
                                     <label for="nombre">
                                         TELEFONO
                                     </label>
-                                    <input type="number" class=" form-control @error('telefono') is-invalid @enderror" 
+                                    <input type="number" class="col-6 form-control @error('telefono') is-invalid @enderror" 
                                     value="{{ old('telefono') }}" name="telefono" id="telefono" required>
                                     @error('telefono')
                                     <span class="invalid-feedback" role="alert">

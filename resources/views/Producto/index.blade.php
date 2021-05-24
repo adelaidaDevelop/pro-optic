@@ -375,7 +375,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 </div>
 
 <!--MODAL SUBPRODUCTO-->
-<div class="modal fade modal_subproducto" id="modal_subproducto" tabindex="-1" role="dialog"
+<div class="modal fade modal_Exis_Nuevo" id="modal_Exis_Nuevo" tabindex="-1" role="dialog"
     aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-small " role="document">
         <div class="modal-content" style="width:500px;">
@@ -393,11 +393,11 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 </button>
             </div>
             <div class="modal-body col-8 mx-4 text-center mx-auto" id="">
-                <div class="row  " id="modiPrecioCosto5">
+                <div class="row  " id="exis_Nuevo_Subprod">
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="actPrecioCosto5"
+                <button type="button" class="btn btn-primary" id="btnNueva_Exis_Sub"
                     onclick="agregarSubprod();">GUARDAR</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
             </div>
@@ -1034,7 +1034,7 @@ function rellenar() {
                             <td id="sdepartamento${productosList[t].id}">` + departamento + `</td>
                             <td>` + Number(costoSubp.toFixed(2)) + `</td>
                             <td class="text-success">` + subproducto.precio + `</td>
-                            <td id="SubpExistencia${productoSucursal.id}">` + subproducto.existencia + `</td>
+                            <td id="subpExistencia${productoSucursal.id}">` + subproducto.existencia + `</td>
                             <td>` +
                 ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` +
                 productosList[t].id + `)" value="` + productosList[t].id + `">
@@ -1663,7 +1663,7 @@ function agregarSubproducto(idSP) {
                                 <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` +
                         subproductos[t].existencia + `" autofocus required disabled>
                                 <h6>CANTIDAD DE PIEZAS A AGREGAR</h6>        
-                                <input type="number" name="cantidad" id="cantidad" class="form-control text-center" placeholder="PIEZAS DEL SUBPRODUCTO" value="" min="0" autofocus required>
+                                <input type="number" name="cantPiezasSub" id="cantPiezasSub" class="form-control text-center" placeholder="PIEZAS DEL SUBPRODUCTO" value="" min="0" autofocus required>
                                     `;
                 }
             }
@@ -1676,13 +1676,13 @@ function agregarSubproducto(idSP) {
     */
 
 
-    let btnGuardar3 = document.getElementById("actPrecioCosto5");
+    let btnGuardar3 = document.getElementById("btnNueva_Exis_Sub");
     btnGuardar3.value = idSucPro;
 
     // document.getElementById("modiPrecioCosto").innerHTML = cambiarCostoPrecio;
     document.getElementById("titulo5").innerHTML = nombreProd;
-    document.getElementById("modiPrecioCosto5").innerHTML = cambiarCantidad;
-    $("input[name='cantidad']").bind('keypress', function(tecla) {
+    document.getElementById("exis_Nuevo_Subprod").innerHTML = cambiarCantidad;
+    $("input[name='cantPiezasSub']").bind('keypress', function(tecla) {
         if (this.value.length >= 10) return false;
         let code = tecla.charCode;
         if (code == 8) { // backspace.
@@ -1902,11 +1902,12 @@ async function agregarExistencia() {
 
 async function agregarSubprod() {
 
-    let btnGuardar = document.getElementById("actPrecioCosto5");
+    let btnGuardar = document.getElementById("btnNueva_Exis_Sub");
     let idSucProd = btnGuardar.value;
+    console.log('idprodS',idSucProd);
     try {
         //  let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
-        const costo = document.querySelector('#cantidad');
+        const costo = document.querySelector('#cantPiezasSub');
         /*
             if (pago.value.length === 0)
                 return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
@@ -1920,7 +1921,7 @@ async function agregarSubprod() {
             url: `/puntoVenta/subProdExisNuevo/${idSucProd}`,
             // los datos que voy a enviar para la relación
             data: {
-                cantidad: parseInt(cantidad.value),
+                cantidad: parseFloat(costo.value),
                 _token: "{{ csrf_token() }}"
                 //  id: idSucProd
             }
@@ -1929,15 +1930,15 @@ async function agregarSubprod() {
             //alert(respuesta);
             console.log(respuesta); //JSON.stringify(respuesta));
         });
-        $('#modal_subproducto').modal('hide');
-        $('#detalleProducto').modal('hide');
-        alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
+        $('#modal_Exis_Nuevo').modal('hide');
+       // $('#detalleProducto').modal('hide');
+        alert("EXISTENCIA AGREGADO EN SUBPRODUCTO CORRECTAMENTE");
         //refrescar();
         //await act_datos();
         //await buscarFiltroNombre2();
 
-        document.getElementById(`subpExistencia${idSucProd}`).textContent = cantidad.value;
-        subproductos.find(p => p.id == idSucProd).existencia = cantidad.value;
+        document.getElementById(`subpExistencia${idSucProd}`).textContent = costo.value;
+        subproductos.find(p => p.id == idSucProd).existencia = costo.value;
         actualizarCabecera();
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
@@ -1963,7 +1964,7 @@ function infoSubproducto(id) {
 
 
                             //  x1 = productos[count10].id;
-                            x = productosSucursal[j].id;
+                            let x = productosSucursal[j].id;
                             datosProduct =
                                 `
                                     <div class="col-3">
@@ -2015,14 +2016,14 @@ function infoSubproducto(id) {
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              ELIMINAR </a> 
                                              <div class="mt-4 mb-4"> </div>
-                                             <a class="btn btn-outline-primary " data-method="delete" onclick="return confirm('¿MODIFICAR EXISTENCIA DE STOCK?')"  href="{{ url('/puntoVenta/subProdExisStock/` +
+                                             <a class="btn btn-outline-primary "  onclick="return confirm('¿MODIFICAR EXISTENCIA DE STOCK?')"  href="{{ url('/puntoVenta/subProdExisStock/` +
                                 x +
                                 `')}}"> 
                                             <img src="{{ asset('img/nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
                                               EXISTENCIA STOCK </a> 
                                             <br/><br/>  
                                             
-                                              <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_subproducto"  onclick=" return agregarSubproducto( ` +
+                                              <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_Exis_Nuevo"  onclick=" return agregarSubproducto( ` +
                                 x + `)" value="` + x + `">
                                               <img src="{{ asset('img/nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
                                               EXISTENCIA NUEVO
