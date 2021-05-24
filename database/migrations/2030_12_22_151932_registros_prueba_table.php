@@ -106,6 +106,31 @@ class RegistrosPruebaTable extends Migration
         $empleadoAdmin->idUsuario = $admin->id;
         $empleadoAdmin->save();
 
+        $usrEmp = User::create([
+            'username' => 'MARIA GUADALUPE',
+            'email' => 'inchurrumina@gmail.com',
+            'password' => Hash::make('yehis12345'),
+            'tipo' => 0,
+        ]);
+
+
+        $empleado1 = new Empleado;
+        $empleado1->primerNombre = 'MARIA';
+        $empleado1->segundoNombre = 'GUADALUPE';
+        $empleado1->apellidoPaterno = 'MOLINA';
+        $empleado1->apellidoMaterno = 'REYES';
+        $empleado1->genero = 'M';
+        $empleado1->fechaNacimiento = '1991-01-10';
+        $empleado1->entidadFederativa = 'OC';
+        $empleado1->curp = 'MRG';
+        $empleado1->telefono = '9514119419';
+        $empleado1->domicilio = 'LIBERTAD 134, SAN MARTIN MEXICAPA, OAX.';
+        $empleado1->claveE = '54321';
+        //$empleadoAdmin->status = 'alta';
+        $empleado1->idUsuario = $usrEmp->id;
+        $empleado1->save();
+
+
         $sucursalEmpleado = new Sucursal_empleado;
         $sucursalEmpleado->idSucursal = $sucursal->id;
         $sucursalEmpleado->idEmpleado = $empleadoAdmin->id;
