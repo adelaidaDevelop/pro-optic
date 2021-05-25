@@ -57,7 +57,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     <div class="row border">
         <h4 class="mx-auto text-center">CADUCIDAD DE LOS PRODUCTOS</h4>
     </div>
-    <div class="row border border-dark" style="height:300px;overflow-y:auto;">
+    <div class="row border border-dark" style="height:400px;overflow-y:auto;">
         <table class="table table-bordered border-primary text-center">
             <thead class="table-secondary text-primary">
                 <tr>
