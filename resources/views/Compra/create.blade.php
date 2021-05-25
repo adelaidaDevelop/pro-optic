@@ -202,7 +202,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="cerrarModal()"
-                        data-dismiss="modal">Close</button>
+                        data-dismiss="modal">CERRAR</button>
                     <button type="button" class="btn btn-primary" onclick="crearProducto()">NUEVO PRODUCTO</button>
                 </div>
             </div>
@@ -823,7 +823,7 @@ function crearProducto() {
     <div class="modal-footer">
         <button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar" >CREAR PRODUCTO</button>
         <button type="button" class="btn btn-primary" onclick="cancelarProducto()">CANCELAR</button>
-        <button type="button" class="btn btn-secondary" onclick="cerrarModal()" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" onclick="cerrarModal()" data-dismiss="modal">CERRAR</button>
         
     </div>
     `;

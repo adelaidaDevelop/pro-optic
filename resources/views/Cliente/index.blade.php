@@ -105,9 +105,13 @@ $verC = $sE->hasAnyRole($vC);
                                     <label for="telefono" class="mt-2">
                                         DOMICILIO
                                     </label>
+                                    <textarea name="domicilio" id="domicilio"
+                                                class="form-control @error('nombre') is-invalid @enderror"
+                                                value="" required>{{$d->domicilio}}</textarea>
+                                    <!--
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror"
                                         name="domicilio" id="domicilio" value="{{$d->domicilio}}" required>
-
+                                    -->
                                 </div>
                             </div>
                             <div class="col-4">
@@ -167,7 +171,7 @@ $verC = $sE->hasAnyRole($vC);
                                 </label>
                                 <input type="text"
                                     class="text-uppercase  form-control @error('nombre') is-invalid @enderror"
-                                    name="nombre" id="nombre" required>
+                                    name="nombre" id="nombre" placeholder="NOMBRE COMPLETO" required>
                                 @error('nombre')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -178,13 +182,20 @@ $verC = $sE->hasAnyRole($vC);
                                 </label>
                                 <input type="number"
                                     class="text-uppercase  form-control @error('nombre') is-invalid @enderror"
-                                    name="telefono" id="telefono" required>
+                                    name="telefono" id="telefono" placeholder="10 DIGITOS" required>
                                 <label for="domicilio">
                                     DOMICILIO
                                 </label>
+                                <!--
                                 <input type="text"
                                     class="text-uppercase  form-control @error('nombre') is-invalid @enderror"
                                     name="domicilio" id="domicilio" required>
+                                    -->
+                                    <textarea name="domicilio" id="domicilio"
+                                                class="form-control @error('nombre') is-invalid @enderror"
+                                                placeholder="INGRESAR DOMICILIO COMPLETO" required
+                                                ></textarea>
+                                   
                                 </select>
                             </div>
                         </div>

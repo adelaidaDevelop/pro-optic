@@ -35,7 +35,7 @@
     @endforeach
     @else
     <div class=" row m-0 px-0">
-        <h5 class=" h-100">NO HAY CLIENTES</h5>
+        <h5 class=" h-100">NO ENCONTRADO</h5>
     </div>
     @endif
 </body>
