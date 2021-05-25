@@ -9,7 +9,7 @@ use App\Models\Departamento;
 use App\Models\Role;
 use App\Models\Modulo;
 
-
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 class AdministracionController extends Controller
 {
@@ -80,9 +80,16 @@ class AdministracionController extends Controller
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
             $datosCliente = request()->except(['_token','_method']);
-            $validator =  Validator::make($datosCliente, [
-                'direccion' => ['required', 'string', 'max:191','unique:sucursals'],
-                'telefono' => ['required', 'string', 'max:10'],
+            $datos = [];
+            $sucursal = Sucursal::findOrFail($id);
+            if($request->input('direccion') != $sucursal->direccion)
+                $datos = Arr::add($datos,'direccion',$request->input('direccion'));
+            if($request->input('telefono') != $sucursal->telefono)
+                $datos = Arr::add($datos,'telefono',$request->input('telefono'));
+            //return $request->input('direccion') == $sucursal->direccion;
+            $validator =  Validator::make($datos, [
+                'direccion' => ['string', 'min:5', 'max:191','unique:sucursals'],
+                'telefono' => ['string', 'min:7','max:10'],
             ]);
             $validator->validate();
             $dir = $request['direccion'];

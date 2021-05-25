@@ -122,7 +122,7 @@ class RegistrosPruebaTable extends Migration
         $empleado1->genero = 'M';
         $empleado1->fechaNacimiento = '1991-01-10';
         $empleado1->entidadFederativa = 'OC';
-        $empleado1->curp = 'MRG';
+        $empleado1->curp = 'MORG911001MOCLYD04';
         $empleado1->telefono = '9514119419';
         $empleado1->domicilio = 'LIBERTAD 134, SAN MARTIN MEXICAPA, OAX.';
         $empleado1->claveE = '54321';
