@@ -102,8 +102,14 @@ PRODUCTOS
             <input type="number" name="existencia" id="existencia" class=" form-control mb-2 " placeholder="INGRESAR EXISTENCIA" value="{{ old('existencia')}}" autofocus required>
             <input type="number" name="costo" id="costo" class=" form-control mb-2 " placeholder="INGRESAR COSTO" value="{{ old('costo')}}" autofocus required>
             <input type="number" name="precio" id="precio" class=" form-control mb-4 " placeholder="INGRESAR PRECIO" value="{{old('precio')}}" autofocus required>
+            <!--
+            <button class="btn btn-outline-secondary my-0 mb-1" onclick="return confirm('¿AGREGAR NUEVO PRODUCTO?')" type="submit" value="  AGREGAR">
+                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px"> GUARDAR PRODUCTO
+            </button>
+            -->
+            
         </div>
-        <div class="col-1"></div>
+        
         <div class="col-3 text-center mt-3">
             <label for="imagen">
                 <h5> <strong>{{'FOTO'}}</strong></h5>
