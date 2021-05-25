@@ -12,8 +12,6 @@ CORTE DE CAJA
     </a>
 </div>
 @endsection
-
-
 <!--CONSULTAR PRODUCTO -->
 
 <div class="PrintArea" id="PrintArea" name="PrintArea">
@@ -146,10 +144,12 @@ CORTE DE CAJA
                 </div>
                 <div class="row form-group input-group">
                     <h6 class="mt-3 ml-3 text-primary">GANANCIA DEL DIA:</h6>
-                    <input type="number" id="gananciaId" class="ml-2 mt-3 my-0" style="height:23px" />
+                    <input type="number" id="gananciaId" class="ml-2 mt-3 my-0" style="height:23px" disabled />
                 </div>
+                <!--
                 <h6 class="text-primary  ">GANANCIA POR DEPARTAMENTOS </h6>
                 <h6 class="ml-3" id="ganDeptos">+</h6>
+                -->
 
                 <br />
                 <br />
