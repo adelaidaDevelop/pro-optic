@@ -601,7 +601,7 @@ function comparar(palabra) {
 */
 function buscarFiltroNombre2() {
     productosList = [];
-    const palabraBusqueda = document.querySelector('#busquedaProducto');
+//const palabraBusqueda = document.querySelector('#busquedaProducto');
     /*if (!comparar(palabraBusqueda.value)) {
         console.log("No es igual");
         console.log(palabraAux);
@@ -627,14 +627,14 @@ function buscarFiltroNombre2() {
             //$("#idDepartamento").prop('disabled', false);
             //$("#bajosExistencia").prop('disabled', false);
             //
-            let comparar = "";
+/*            let comparar = "";
             if (opcFolioNombre === 'nombre')
                 comparar = producto.nombre.toUpperCase();
             if (opcFolioNombre === 'folio')
                 comparar = producto.codigoBarras.toUpperCase();
-
+*/
             //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
-            if (comparar.includes(palabraBusqueda.value.toUpperCase())) {
+            //if (comparar.includes(palabraBusqueda.value.toUpperCase())) {
                 //BUSCAR POR DEPARTAMENTO
                 //     if (depaBandera == true) { // SI LA OPCION DEPARTAMENTO SE HABILITO 
                 let depa = document.querySelector('#idDepartamento');
@@ -733,9 +733,9 @@ function buscarFiltroNombre2() {
                     }
                 }
                 //  }
-            } else {
+            //} else {
                 // MENSAJE PRODUCTOS NO ENCONTRADOS
-            }
+            //}
             /*} else if (opcFolioNombre === 'folio') {
                 $("#idDepartamento").prop('disabled', true);
                 $("#bajosExistencia").prop('disabled', true);
@@ -769,6 +769,9 @@ function buscarFiltroNombre2() {
     pagina = 0;
     actualizarCabecera();
     rellenar();
+    const palabraBusqueda = document.querySelector('#busquedaProducto');
+    if(palabraBusqueda.value.length > 0)
+        buscar();
 };
 
 function actualizarCabecera() {
