@@ -37,7 +37,7 @@ INVENTARIO
 </div>
 
 @endsection
- 
+
 
 <!--CONSULTAR PRODUCTO -->
 
@@ -185,6 +185,10 @@ INVENTARIO
             <button class="btn btn-outline-secondary  p-1 mx-3 text-dark" onclick="generaReportes()">
                 <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                 GENERAR</button>
+            <button id="getUser" name="getUser" class="btn btn-outline-secondary  p-1 text-dark">
+                <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px" disabled>
+                IMPRIMIR </button>
+
             <!--
             <button id="btnCrearPdf" class="btn btn-outline-secondary  p-1 text-dark">
                 <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px">
@@ -206,9 +210,6 @@ INVENTARIO
                             <th>CAJERO</th>
                             <th>PRODUCTO</th>
                             <th>DEPTO</th>
-                            <th>CANT</th>
-                            <th>CANT. ANTES</th>
-                            <th>CANT. ACTUAL</th>
                         </tr>
                     </thead>
                     <tbody id="consultaBusqueda">
@@ -437,8 +438,6 @@ INVENTARIO
                                                     <td>` + emple + `</td>
                                                     <td>` + productoCol + `</td>
                                                     <td>` + depto + `</td> 
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
                                             </tr>
                                             `;
                                     //  }
@@ -505,8 +504,6 @@ INVENTARIO
                                                     <td>` + emple + `</td>
                                                     <td>` + productoCol + `</td>
                                                     <td>` + depto + `</td> 
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
                                             </tr>
                                             `;
                                         //  }
@@ -531,7 +528,7 @@ INVENTARIO
         if (cajero == 0) {
             for (let p in productos) {
                 let fechaNuevoProd = new Date(productos[p].created_at);
-                console.log(" hola5 ",fechaXDia2);
+                console.log(" hola5 ", fechaXDia2);
                 console.log(fechaNuevoProd);
                 if (comparacionFecha(fechaXDia2, fechaNuevoProd)) {
                     fechaCol = fechaNuevoProd.toLocaleDateString();
@@ -559,8 +556,7 @@ INVENTARIO
                                                     <td>` + "NO ESPECIFICADO" + `</td>
                                                     <td>` + productoCol + `</td>
                                                     <td>` + depto + `</td> 
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
+                                                   
                                             </tr>
                                             `;
 
@@ -597,7 +593,6 @@ INVENTARIO
                         //empleado
                         for (let z in detalle_ventas) {
                             if (detalle_ventas[z].idVenta == ventas[v].id) {
-
                                 //   for (let e in productos) {
                                 //   if (productos[e].id == detalle_ventas[z].idProducto) {
 
@@ -641,8 +636,6 @@ INVENTARIO
                                                     <td>` + empleado + `</td>
                                                     <td>` + productoCol + `</td>
                                                     <td>` + depto + `</td>  
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
                                             </tr>
                                             `;
                                 }
@@ -699,8 +692,6 @@ INVENTARIO
                                                                 <td>` + empleado + `</td>
                                                                 <td>` + productoCol + `</td>
                                                                 <td>` + depto + `</td>  
-                                                                <td>` + cant_anterior + `</td>
-                                                                <td>` + cant_actual + `</td>
                                                         </tr>
                                                         `;
                                     }
@@ -765,6 +756,8 @@ INVENTARIO
 
                             contador = contador + 1;
                             movimientoTxt = "DEVOLUCIONES";
+                            // cant_anterior 
+                            // cant_actual 
                             devolucionFila = devolucionFila + `
                                             <tr>
                                                     <th scope="row">` + contador + `</th>
@@ -774,10 +767,6 @@ INVENTARIO
                                                     <td>` + "NO ESPECIFICADO" + `</td>
                                                     <td>` + productoCol + `</td>
                                                     <td>` + depto + `</td>
-                                                    <td>` + cant_anterior + `</td>
-                                                    <td>` + cant_actual + `</td>
-                                                    
-                                                            
                                             </tr>
                                             `;
                         }
@@ -797,7 +786,7 @@ INVENTARIO
 
         document.getElementById("btnCrearPdf").disabled = false;
         */
-        //let devolucionFila = "";
+        let devolucionFila = "";
         //  let salidaVP = "";
         //let entradaNuevosProductos = "";
         // let entradaCompraProduct = "";
@@ -815,15 +804,15 @@ INVENTARIO
                 let moviName = movi.value;
                 if (moviName == "1") {
                     // OPCION UNO: ENTRADAS
-                   
+
                     nuevosProductos(fechaXDia);
                     compraProductos(fechaXDia);
-                   // document.getElementById("total_entradas").innerHTML = totalEntradas;
+                    // document.getElementById("total_entradas").innerHTML = totalEntradas;
                     cuerpo = entradaCompraProduct + entradaNuevosProductos;
                     if (cuerpo === "") {
                         let sin = `<h4 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
-                       // document.getElementById("btnCrearPdf").disabled = true;
+                        // document.getElementById("btnCrearPdf").disabled = true;
                     } else {
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
@@ -832,7 +821,7 @@ INVENTARIO
                     contador = 0;
                     //OPCION 2: SALIDAS
                     ventasRealizadas(fechaXDia);
-                  //  document.getElementById("total_salidas").innerHTML = totalVenta;
+                    //  document.getElementById("total_salidas").innerHTML = totalVenta;
                     //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
                     cuerpo = salidaVP;
                     if (cuerpo === "") {
@@ -846,7 +835,7 @@ INVENTARIO
                 } else if (moviName == "3") {
                     contador = 0;
                     devolucionesEfectivo(fechaXDia);
-                   // document.getElementById("total_salidas").innerHTML = totalDevolucion;
+                    // document.getElementById("total_salidas").innerHTML = totalDevolucion;
                     cuerpo = devolucionFila;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
@@ -872,8 +861,8 @@ INVENTARIO
                     //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
                     //tres
                     // devolucionesEfectivo(fechaXDia);
-                  //  document.getElementById("total_entradas").innerHTML = totalEntradas;
-                  //  document.getElementById("total_salidas").innerHTML = totalVenta + totalDevolucion;
+                    //  document.getElementById("total_entradas").innerHTML = totalEntradas;
+                    //  document.getElementById("total_salidas").innerHTML = totalVenta + totalDevolucion;
                     //BUSCAR TODOS
                     cuerpo = entradaCompraProduct + entradaNuevosProductos + salidaVP + devolucionFila;
                     if (cuerpo === "") {
@@ -1041,6 +1030,27 @@ INVENTARIO
             });
         });
         */
+
+    function impFinal(printContent) {
+        var WinPrint = window.open('', '', 'width=900,height=650 ');
+        WinPrint.document.write(printContent.outerHTML);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+    }
+
+    $(document).ready(function() {
+        $('#getUser').on('click', function() {
+            var WinPrint = window.open('', '', 'width=900,height=650 ');
+            let  impriDiv = document.getElementById("tabla2");
+            WinPrint.document.write(impriDiv.innerHTML);
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+            WinPrint.close();
+        });
+    });
 </script>
 
 @endsection
