@@ -341,7 +341,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
                     <!--button type="button" class="btn btn-primary">Agregar Producto</button-->
                 </div>
             </div>
@@ -490,7 +490,7 @@
                 <button type="button" onclick="realizarVentaEfectivo(true)" class="btn btn-primary">COBRAR E IMPRIMIR
                     TICKET</button>
                 <button type="button" onclick="realizarVentaEfectivo(false)" class="btn btn-primary">SOLO COBRAR</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
             </div>
         </div>
     </div>
@@ -1296,7 +1296,7 @@
             cuerpo = `
         <button type="button" onclick="realizarVentaEfectivo(true)" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button>
         <button type="button" onclick="realizarVentaEfectivo(false)" class="btn btn-primary">SOLO COBRAR</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
     `;
             calcularCambioEfectivo();
 
@@ -1305,7 +1305,7 @@
             cuerpo = `
         <!--button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">COBRAR E IMPRIMIR TICKET</button-->
         <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">SOLO COBRAR</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
     `;
             let clientes = document.querySelector('#clientes');;
             let opcionesCliente = "";

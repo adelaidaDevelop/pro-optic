@@ -218,6 +218,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
             // if (ventas[count].id === folio) {
             let venta = ventas.find(v => v.id === folio);
             if (venta != null) {
+                if(venta.tipo == "efectivo"){
                 console.log("encontrado asd");
                 //console.log(detalleVenta);
                 //console.log(ventas);
@@ -280,9 +281,10 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     }
                 }
 
-                // }
+                 }
                 //document.getElementById("sinResult").innerHTML = "Folio no encontrado";
             }
+
             if (cuerpo === "") {
                 let sin = ` <h5 class= "text-dark  mx-0 px-0"> VENTA NO ENCONTRADA</h5>`;
                 document.getElementById("sinResult").innerHTML = sin;

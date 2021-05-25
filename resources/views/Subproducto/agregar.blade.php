@@ -102,7 +102,7 @@ SUBPRODUCTOS
 
 
             <button class="btn btn-outline-secondary" type="submit" value="Agregar" onclick="return confirm('¿AGREGAR SUBPRODUCTO?')">
-                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">GUARDAR PRODUCTO
+                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">GUARDAR SUBPRODUCTO
             </button>
             <a title="Regresar" href="{{url('puntoVenta/producto')}}" class="text-dark">
                 <img src="{{ asset('img\regresar2.png') }}" class="img-thumbnail" alt="Regresar" width="50px" height="50px" />CANCELAR</a>
@@ -139,7 +139,7 @@ SUBPRODUCTOS
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
                         <button type="button" class="btn btn-primary">Agregar Producto</button>
                     </div>
                 </div>

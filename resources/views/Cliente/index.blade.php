@@ -23,7 +23,6 @@ $verC = $sE->hasAnyRole($vC);
         <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>NUEVO CLIENTE</small></p>
     </a>
-    </a>
 </div>
 
 <div class="col-7 ml-4"></div>
@@ -60,7 +59,7 @@ $verC = $sE->hasAnyRole($vC);
                 <div>
                     <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto">
                     <h6 class=" text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION
-                            ADICIONAL </small> </h6>
+                            ADICIONAL, EDITAR O ELIMINAR </small> </h6>
                     <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -77,8 +76,7 @@ $verC = $sE->hasAnyRole($vC);
             <!--EDIT-->
             @if(isset($d))
             <div class="row px-3 py-3 m-0">
-                <form class="w-100" method="post" action="{{url('/puntoVenta/cliente/'.$d->id)}}"
-                    enctype="multipart/form-data">
+                <form class="w-100" method="post" action="{{url('/puntoVenta/cliente/'.$d->id)}}" enctype="multipart/form-data">
                     <div class="form-group">
                         {{ csrf_field() }}
                         {{ method_field('PATCH')}}
@@ -95,19 +93,15 @@ $verC = $sE->hasAnyRole($vC);
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre"
-                                        value="{{$d->nombre}}" required>
+                                    <input type="text" class="form-control" name="nombre" id="nombre" value="{{$d->nombre}}" required>
                                     <label for="telefono" class="mt-2">
                                         TELEFONO
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="telefono" id="telefono" value="{{$d->telefono}}" required>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" value="{{$d->telefono}}" required>
                                     <label for="telefono" class="mt-2">
                                         DOMICILIO
                                     </label>
-                                    <textarea name="domicilio" id="domicilio"
-                                                class="form-control @error('nombre') is-invalid @enderror"
-                                                value="" required>{{$d->domicilio}}</textarea>
+                                    <textarea name="domicilio" id="domicilio" class="form-control @error('nombre') is-invalid @enderror" value="" required>{{$d->domicilio}}</textarea>
                                     <!--
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror"
                                         name="domicilio" id="domicilio" value="{{$d->domicilio}}" required>
@@ -123,12 +117,14 @@ $verC = $sE->hasAnyRole($vC);
 
                             </div>
                             @if($modificarC)
-                            <button class="btn btn-outline-secondary  ml-1" type="submit"
-                                onclick="return confirm('¿DESEA EDITAR ESTE CLIENTE?');">
-                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                                    width="30px" height="30px">
+                            <button class="btn btn-outline-secondary  ml-1" type="submit" onclick="return confirm('¿DESEA EDITAR ESTE CLIENTE?');">
+                                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                                 GUARDAR CAMBIOS
                             </button>
+                            <a class="btn btn-outline-secondary  ml-3 " href="{{ url('/puntoVenta/cliente')}}">
+                                <img src="{{ asset('img\darBaja.png') }}" alt="Editar" width="30px" height="30px">
+                                CANCELAR
+                            </a>
                             @endif
                         </div>
                     </div>
@@ -169,9 +165,7 @@ $verC = $sE->hasAnyRole($vC);
                                 <label for="nombre">
                                     NOMBRE
                                 </label>
-                                <input type="text"
-                                    class="text-uppercase  form-control @error('nombre') is-invalid @enderror"
-                                    name="nombre" id="nombre" placeholder="NOMBRE COMPLETO" required>
+                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" placeholder="NOMBRE COMPLETO" required>
                                 @error('nombre')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -180,9 +174,7 @@ $verC = $sE->hasAnyRole($vC);
                                 <label for="telefono">
                                     TELEFONO
                                 </label>
-                                <input type="number"
-                                    class="text-uppercase  form-control @error('nombre') is-invalid @enderror"
-                                    name="telefono" id="telefono" placeholder="10 DIGITOS" required>
+                                <input type="number" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" placeholder="10 DIGITOS" required>
                                 <label for="domicilio">
                                     DOMICILIO
                                 </label>
@@ -191,11 +183,8 @@ $verC = $sE->hasAnyRole($vC);
                                     class="text-uppercase  form-control @error('nombre') is-invalid @enderror"
                                     name="domicilio" id="domicilio" required>
                                     -->
-                                    <textarea name="domicilio" id="domicilio"
-                                                class="form-control @error('nombre') is-invalid @enderror"
-                                                placeholder="INGRESAR DOMICILIO COMPLETO" required
-                                                ></textarea>
-                                   
+                                <textarea name="domicilio" id="domicilio" class="form-control @error('nombre') is-invalid @enderror" placeholder="INGRESAR DOMICILIO COMPLETO" required></textarea>
+
                                 </select>
                             </div>
                         </div>
@@ -210,17 +199,13 @@ $verC = $sE->hasAnyRole($vC);
 
                     </div>
                     @if($crearC)
-                    <button class="btn btn-outline-secondary" type="submit"
-                        onclick="return confirm('¿AGREGAR NUEVO CLIENTE?');">
-                        <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px"
-                            height="30px">
+                    <button class="btn btn-outline-secondary" type="submit" onclick="return confirm('¿AGREGAR NUEVO CLIENTE?');">
+                        <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                         AGREGAR
                     </button>
                     @else
-                    <button class="btn btn-outline-secondary" type="button"
-                        onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
-                        <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px"
-                            height="30px">
+                    <button class="btn btn-outline-secondary" type="button" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
+                        <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="30px" height="30px">
                         AGREGAR
                     </button>
                     @endif
@@ -232,62 +217,62 @@ $verC = $sE->hasAnyRole($vC);
 </div>
 
 <script>
-const texto = document.querySelector('#texto');
+    const texto = document.querySelector('#texto');
 
-function filtrar() {
-    document.getElementById("resultados").innerHTML = "";
-    fetch(`/puntoVenta/cliente/buscador?texto=${texto.value}`, {
-            method: 'get'
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById("resultados").innerHTML = html
-        })
-};
-$("input[name='telefono']").bind('keypress', function(tecla) {
-    if (this.value.length >= 10) return false;
-    let code = tecla.charCode;
-    if (code == 8) { // backspace.
-        return true;
-    } else if (code >= 48 && code <= 57) { // is a number.
-        return true;
-    } else { // other keys.
-        return false;
-    }
-});
-
-async function veriEliminar(id) {
-    let conf_Eli = confirm('¿DESEA ELIMINAR ESTE CLIENTE?');
-    if (conf_Eli) {
-        let response = "Sin respuesta";
-        try {
-            response = await fetch(`/puntoVenta/cliente/destroy2/${id}`);
-
-            if (response.ok) {
-                let respuesta = await response.text();
-                if (respuesta.length == 1) {
-                    //recargar la pag
-                    alert("El cliente se elimino correctamente");
-                    location.href = "{{url('/puntoVenta/cliente')}}";
-                } else {
-                    clienOcup = alert("ESTE CLIENTE ESTÁ ACTIVO EN EL SISTEMA Y NO SE PUEDE ELIMINAR");
-                    // if (clienOcup) {
-                    // location.href = `{{url('/puntoVenta/cliente/baja/${id}')}}`;
-
-                    // }
-                }
-            }
-        } catch (err) {
-            console.log("Error al realizar la petición AJAX: " + err.message);
+    function filtrar() {
+        document.getElementById("resultados").innerHTML = "";
+        fetch(`/puntoVenta/cliente/buscador?texto=${texto.value}`, {
+                method: 'get'
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("resultados").innerHTML = html
+            })
+    };
+    $("input[name='telefono']").bind('keypress', function(tecla) {
+        if (this.value.length >= 10) return false;
+        let code = tecla.charCode;
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
         }
+    });
+
+    async function veriEliminar(id) {
+        let conf_Eli = confirm('¿DESEA ELIMINAR ESTE CLIENTE?');
+        if (conf_Eli) {
+            let response = "Sin respuesta";
+            try {
+                response = await fetch(`/puntoVenta/cliente/destroy2/${id}`);
+
+                if (response.ok) {
+                    let respuesta = await response.text();
+                    if (respuesta.length == 1) {
+                        //recargar la pag
+                        alert("El cliente se elimino correctamente");
+                        location.href = "{{url('/puntoVenta/cliente')}}";
+                    } else {
+                        clienOcup = alert("ESTE CLIENTE ESTÁ ACTIVO EN EL SISTEMA Y NO SE PUEDE ELIMINAR");
+                        // if (clienOcup) {
+                        // location.href = `{{url('/puntoVenta/cliente/baja/${id}')}}`;
+
+                        // }
+                    }
+                }
+            } catch (err) {
+                console.log("Error al realizar la petición AJAX: " + err.message);
+            }
+        }
+    };
+
+    function mayus(e) {
+        e.value = e.value.toUpperCase();
     }
-};
 
-function mayus(e) {
-    e.value = e.value.toUpperCase();
-}
-
-texto.addEventListener('keyup', filtrar);
-filtrar();
+    texto.addEventListener('keyup', filtrar);
+    filtrar();
 </script>
 @endsection

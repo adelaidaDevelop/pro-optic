@@ -1436,8 +1436,8 @@ function info4(id) {
                             </div>`;
     let btnCerrar = `<button type="button" class="btn btn-secondary ml-4" 
     data-dismiss="modal" onclick="">CERRAR</button>`;
-    document.getElementById("subAgregar").innerHTML = btnAgregarSubprod;
-    document.getElementById("pieInformacion").innerHTML = btnEditar + btnDarBaja + btnCerrar;
+    //document.getElementById("subAgregar").innerHTML = btnAgregarSubprod;
+    document.getElementById("pieInformacion").innerHTML = btnAgregarSubprod + btnEditar + btnDarBaja + btnCerrar;
     document.getElementById("resultados").innerHTML = datosProduct;
 };
 
