@@ -557,6 +557,7 @@
             if (response.ok) {
                 subproductosSucursal = await response.json();
                 console.log('los productos para la sucursal son', subproductosSucursal);
+                //return;
                 return subproductosSucursal;
                 //console.log(response);
 

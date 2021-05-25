@@ -1662,7 +1662,7 @@ function agregarSubproducto(idSP) {
                                 <h6>EXISTENCIA ACTUAL DEL SUBPRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` +
                         subproductos[t].existencia + `" autofocus required disabled>
-                                <h6>CANTIDAD DE PIEZAS A AGREGAR</h6>        
+                                <h6 class="mx-auto text-center">NUEVA EXISTENCIA</h6>        
                                 <input type="number" name="cantPiezasSub" id="cantPiezasSub" class="form-control text-center" placeholder="PIEZAS DEL SUBPRODUCTO" value="" min="0" autofocus required>
                                     `;
                 }
@@ -2016,17 +2016,17 @@ function infoSubproducto(id) {
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              ELIMINAR </a> 
                                              <div class="mt-4 mb-4"> </div>
-                                             <a class="btn btn-outline-primary "  onclick="return confirm('¿MODIFICAR EXISTENCIA DE STOCK?')"  href="{{ url('/puntoVenta/subProdExisStock/` +
+                                             <a class="btn btn-outline-primary "  onclick="return confirm('¿AGREGAR EXISTENCIAS DESCONTANDO DE INVENTARIO?')"  href="{{ url('/puntoVenta/subProdExisStock/` +
                                 x +
                                 `')}}"> 
                                             <img src="{{ asset('img/nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
-                                              EXISTENCIA STOCK </a> 
+                                              EXISTENCIA INVENTARIO </a> 
                                             <br/><br/>  
                                             
                                               <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_Exis_Nuevo"  onclick=" return agregarSubproducto( ` +
                                 x + `)" value="` + x + `">
                                               <img src="{{ asset('img/nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
-                                              EXISTENCIA NUEVO
+                                              ACTUALIZAR EXISTENCIA
                                             </button>
                                               @error('mensajeError')
                                                 <div class="alert alert-danger my-auto" role="alert">

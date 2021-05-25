@@ -150,6 +150,7 @@ class SubproductoController extends Controller
     }
     public function show($producto)//Subproducto $subproducto)
     {
+        //return 'raro';
         /*
         $productos = Producto::where("nombre",'like',$producto."%")->get(['id', 'codigoBarras', 'nombre', 'idDepartamento']);//paginate(30,
             //['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
@@ -199,11 +200,16 @@ class SubproductoController extends Controller
                 //$pO->precio = $sucursalProducto->precio;
                 $pO->id = $sucursalProducto->idProducto;
                 $pO->nombre = $producto->nombre;
+                
                 $pO->codigoBarras = $producto->codigoBarras;
+                
                 $pO->idDepartamento = $producto->idDepartamento;
                 array_push($productosS, $pO);
+                
             }
+            
         }
+        
         return $productosS;//ProductosCaducidad::where('idSucursalProducto', '=',$id)->get();
         
     }
