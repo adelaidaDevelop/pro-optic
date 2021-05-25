@@ -60,7 +60,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 <div class="col-0  ml-3 p-1 ">
     <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal"
         data-target="#modalPeticionInventario" onclick="restaurarPeticionInventario()" value="">
-        <img src="{{ asset('img\alta2.png') }}" alt="Editar" width="30px" height="30px">
+        <img src="{{ asset('img\inventarioRapido.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>INVENTARIO RÁPIDO</small></p>
     </button>
 </div>

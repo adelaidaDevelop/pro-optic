@@ -150,7 +150,7 @@ class SubproductoController extends Controller
     }
     public function show($producto)//Subproducto $subproducto)
     {
-        //return 'raro';
+        
         /*
         $productos = Producto::where("nombre",'like',$producto."%")->get(['id', 'codigoBarras', 'nombre', 'idDepartamento']);//paginate(30,
             //['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
@@ -182,7 +182,7 @@ class SubproductoController extends Controller
 */
         $subproductos = Subproducto::all();
         $productosS = [];
-        
+        //return $subproductos;
         foreach($subproductos as $pO)
         {
             $idSP = $pO->idSucursalProducto;
@@ -194,16 +194,16 @@ class SubproductoController extends Controller
                 
                 //$producto = Producto::findOrFail($sucursalProducto->idProducto);
                 
-                $producto = Producto::where("nombre",'like',$producto."%")
+                $producto1 = Producto::where("nombre",'like',$producto."%")
                 ->where('id','=',$sucursalProducto->idProducto)->get(['id', 'codigoBarras', 'nombre', 'idDepartamento'])->first();
                 
                 //$pO->precio = $sucursalProducto->precio;
                 $pO->id = $sucursalProducto->idProducto;
-                $pO->nombre = $producto->nombre;
+                $pO->nombre = $producto1->nombre;
                 
-                $pO->codigoBarras = $producto->codigoBarras;
+                $pO->codigoBarras = $producto1->codigoBarras;
                 
-                $pO->idDepartamento = $producto->idDepartamento;
+                $pO->idDepartamento = $producto1->idDepartamento;
                 array_push($productosS, $pO);
                 
             }

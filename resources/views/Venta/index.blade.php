@@ -556,7 +556,7 @@
             response = await fetch(`/puntoVenta/subproducto/${palabra}`); //{{session('sucursal')}}`);
             if (response.ok) {
                 subproductosSucursal = await response.json();
-                console.log('los productos para la sucursal son', subproductosSucursal);
+                console.log('subproductos', subproductosSucursal);
                 //return;
                 return subproductosSucursal;
                 //console.log(response);
@@ -925,6 +925,7 @@
             //if (productos.length == 0)
             //await cargarProductos();
             await cargarSubproductosSucursal(palabraBusqueda.value);
+            //return;
             contenidoProducto.innerHTML = contenidoOriginal;
             //}
             if (subproductosSucursal.length == 0) {
