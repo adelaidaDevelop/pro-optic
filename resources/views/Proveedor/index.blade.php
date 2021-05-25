@@ -23,12 +23,18 @@
             </button>
         </div>
 
-        <div class="col-6 "></div>
+        <div class="col-5 "></div>
         <div class=" my-auto">
             <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/compra">
-                <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
+                <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="35px" height="35px">
             </a>
         </div>
+        <div class=" ml-3 my-auto">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+                <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
+            </a>
+        </div>
+        
         <!--
         <div class=" ml-3 my-auto">
             <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
@@ -93,11 +99,8 @@
                                         <label for="direccion">
                                             DIRECCION
                                         </label>
-                                        <textarea name="direccion" id="direccion"
-                                                class="form-control @error('direccion') is-invalid @enderror"
-                                                placeholder="Ingresar domicilio completo" value="" required
-                                                autocomplete="domicilio">{{$d->direccion}}</textarea>
-                                            
+                                        <textarea name="direccion" id="direccion" class="form-control @error('direccion') is-invalid @enderror" placeholder="Ingresar domicilio completo" value="" required autocomplete="domicilio">{{$d->direccion}}</textarea>
+
                                         <!--input type="text" class="text-uppercase form-control @error('nombre') is-invalid @enderror" 
                                         name="direccion" id="direccion" value="{$d->direccion}}" required-->
 
@@ -123,7 +126,7 @@
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
                             <button class="btn btn-outline-danger my-3" type="submit" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PROVEEDOR?');">
-                                <img src="{{ asset('img\eliReg.png') }}"  alt="Editar" width="28px" height="28px">
+                                <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="28px" height="28px">
                                 DAR DE BAJA
                             </button>
                         </form>
@@ -165,10 +168,7 @@
                                     <label for="direccion">
                                         DIRECCION
                                     </label>
-                                    <textarea name="direccion" id="direccion"
-                                                class="form-control @error('direccion') is-invalid @enderror"
-                                                placeholder="Ingresar domicilio completo" value="" required
-                                                autocomplete="domicilio" onkeyup="mayus(this);">{{ old('direccion') }}</textarea>
+                                    <textarea name="direccion" id="direccion" class="form-control @error('direccion') is-invalid @enderror" placeholder="Ingresar domicilio completo" value="" required autocomplete="domicilio" onkeyup="mayus(this);">{{ old('direccion') }}</textarea>
                                     <!--input type="text" class="upper-case form-control @error('nombre') is-invalid @enderror" 
                                     name="direccion" onkeyup="mayus(this);" id="direccion" value="{{ old('direccion') }}" required-->
                                 </div>
