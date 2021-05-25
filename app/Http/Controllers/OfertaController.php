@@ -123,15 +123,15 @@ class OfertaController extends Controller
             if($sucursalProducto->idSucursal == session('sucursal'))//$idS)
             {
                 //$producto = Producto::findOrFail($sucursalProducto->idProducto);
-                $producto = Producto::where("nombre",'like',$producto."%")
+                $producto1 = Producto::where("nombre",'like',$producto."%")
                 ->where('id','=',$sucursalProducto->idProducto)->get(['id', 'codigoBarras', 'nombre', 'idDepartamento'])->first();
                 //return $producto->nombre;
                 $pO->id = $sucursalProducto->idProducto;
                 $pO->precio = $sucursalProducto->costo;
                 //$pO->cantidad = $sucursalProducto->cantidad
-                $pO->nombre = $producto->nombre;
-                $pO->codigoBarras = $producto->codigoBarras;
-                $pO->idDepartamento = $producto->idDepartamento;
+                $pO->nombre = $producto1->nombre;
+                $pO->codigoBarras = $producto1->codigoBarras;
+                $pO->idDepartamento = $producto1->idDepartamento;
                 array_push($productosO, $pO);
             }
         }
