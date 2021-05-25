@@ -113,7 +113,7 @@
                         </button>
                     </div>
                     <!-- TABLA -->
-                    <div class="row m-1 border border-dark" style="height:300px;overflow-y:auto;">
+                    <div class="row m-1 border border-dark" style="height:390px;overflow-y:auto;">
                         <table class="table table-bordered border-primary col-12">
                             <thead class="table-secondary text-primary">
                                 <tr class="text-center">
@@ -553,13 +553,16 @@ function costo(id) {
             //console.log(productosCompra[i]);
             let ganancia = ((productosCompra[i].costo * productosCompra[i].ganancia) / 100)
             let costo = productosCompra[i].costo;
-            productosCompra[i].precio = costo + ganancia;
+            let precio = parseFloat(costo + ganancia);
+            productosCompra[i].precio = precio.toFixed(2);
             let btnIva = document.querySelector('input[name="iva"]:checked');
             if (btnIva != null) {
                 let iva = document.querySelector('input[name="inputIva"]');
                 //console.log(iva)
                 let costoIva = ((parseFloat(productosCompra[i].costo) * parseFloat(iva.value)) / 100);
-                productosCompra[i].precio = parseFloat(productosCompra[i].precio) + parseFloat(costoIva);
+                costoIva = costoIva.toFixed(2);
+                precio = parseFloat(productosCompra[i].precio) + parseFloat(costoIva);
+                productosCompra[i].precio = precio.toFixed(2);
             }
             console.log(productosCompra[i].precio)
             mostrarProductos();
@@ -577,13 +580,15 @@ function ganancia(id) {
             console.log(productosCompra[i]);
             let ganancia = ((productosCompra[i].costo * productosCompra[i].ganancia) / 100)
             let costo = productosCompra[i].costo;
-            productosCompra[i].precio = costo + ganancia;
-
+            let precio = parseFloat(costo + ganancia);
+            productosCompra[i].precio = precio.toFixed(2);
+            //productosCompra[i].precio = productosCompra[i].precio.toFixed(2);
             let btnIva = document.querySelector('input[name="iva"]:checked');
             if (btnIva != null) {
                 let iva = document.querySelector('input[name="inputIva"]');
                 let costoIva = ((parseFloat(productosCompra[i].costo) * parseFloat(iva.value)) / 100);
-                productosCompra[i].precio = parseFloat(productosCompra[i].precio) + parseFloat(costoIva);
+                precio = parseFloat(productosCompra[i].precio) + parseFloat(costoIva);
+                productosCompra[i].precio = precio.toFixed(2);
             }
             console.log(productosCompra[i].precio)
             mostrarProductos();
@@ -596,12 +601,14 @@ function precio(id) {
     const precioProducto = document.querySelector('#precio' + id);
     for (let i in productosCompra) {
         if (productosCompra[i].id === id) {
-            productosCompra[i].precio = parseFloat(precioProducto.value);
+            let precio1 = parseFloat(precioProducto.value);
+            productosCompra[i].precio = precio1.toFixed(2);
             //console.log(productosCompra[i]);
             let costo = productosCompra[i].costo;
-            let precio = productosCompra[i].precio; // ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
-            console.log(precio);
-            let mult = precio * 100;
+            let precio2 = parseFloat(productosCompra[i].precio); // ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
+            precio2 = precio2.toFixed(2);
+            console.log(precio2);
+            let mult = precio2 * 100;
             mult = mult.toFixed(2);
             console.log(mult);
             let div = parseInt(mult / costo);

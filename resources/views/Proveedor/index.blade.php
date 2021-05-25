@@ -93,7 +93,13 @@
                                         <label for="direccion">
                                             DIRECCION
                                         </label>
-                                        <input type="text" class="text-uppercase form-control @error('nombre') is-invalid @enderror" name="direccion" id="direccion" value="{{$d->direccion}}" required>
+                                        <textarea name="direccion" id="direccion"
+                                                class="form-control @error('direccion') is-invalid @enderror"
+                                                placeholder="Ingresar domicilio completo" value="" required
+                                                autocomplete="domicilio">{{$d->direccion}}</textarea>
+                                            
+                                        <!--input type="text" class="text-uppercase form-control @error('nombre') is-invalid @enderror" 
+                                        name="direccion" id="direccion" value="{$d->direccion}}" required-->
 
                                     </div>
                                 </div>
@@ -159,7 +165,12 @@
                                     <label for="direccion">
                                         DIRECCION
                                     </label>
-                                    <input type="text" class="upper-case form-control @error('nombre') is-invalid @enderror" name="direccion" onkeyup="mayus(this);" id="direccion" value="{{ old('direccion') }}" required>
+                                    <textarea name="direccion" id="direccion"
+                                                class="form-control @error('direccion') is-invalid @enderror"
+                                                placeholder="Ingresar domicilio completo" value="" required
+                                                autocomplete="domicilio" onkeyup="mayus(this);">{{ old('direccion') }}</textarea>
+                                    <!--input type="text" class="upper-case form-control @error('nombre') is-invalid @enderror" 
+                                    name="direccion" onkeyup="mayus(this);" id="direccion" value="{{ old('direccion') }}" required-->
                                 </div>
                             </div>
                             <div class=" col-4">

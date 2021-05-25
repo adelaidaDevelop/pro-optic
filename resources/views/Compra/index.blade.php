@@ -236,7 +236,7 @@ $abonar = $sE->hasAnyRole($modificar);
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
 
                 </div>
             </div>
@@ -322,10 +322,10 @@ $abonar = $sE->hasAnyRole($modificar);
             if (compras.length == 0) {
                 let response = await fetch(`/puntoVenta/compra/{{session('sucursal')}}`);
                 if (response.ok) {
-                    console.log(compras);
+                    //console.log(compras);
                     console.log("Si me responde");
                     compras = await response.json();
-                    console.log(compras);
+                    console.log('compras',compras);
                     //return productos;
                 } else {
                     console.log("No responde :'v");
@@ -361,6 +361,7 @@ $abonar = $sE->hasAnyRole($modificar);
                     fechaCompra: fechaCompra, //.toLocaleDateString(),
                     fechaRegistro: fechaCreacion, //.toLocaleDateString(),
                     estado: compras[i].estado,
+                    iva: compras[i].IVA,
                     costoTotal: costoTotal
                 };
 
@@ -376,6 +377,7 @@ $abonar = $sE->hasAnyRole($modificar);
     let comprasAuxiliar = []
 
     function mostrarCompras() {
+        console.log('compras',compras);
         const busquedaCompra = document.querySelector('#busquedaCompra');
 
         comprasAuxiliar = []; //comprasActuales;
@@ -624,7 +626,7 @@ $abonar = $sE->hasAnyRole($modificar);
                 <td>` + comprasAuxiliar[i].estado + `</td>
                 <td>` + comprasAuxiliar[i].costoTotal + `</td>
                 <td><button class="btn btn-light" onclick="verDetalleCompra(` +
-                comprasAuxiliar[i].id + `,'` + comprasAuxiliar[i].estado + `'` + `)" data-toggle="modal" data-target="#detalleCompraModal"
+                comprasAuxiliar[i].id + `,'` + comprasAuxiliar[i].estado + `'` + `,${comprasAuxiliar[i].iva})" data-toggle="modal" data-target="#detalleCompraModal"
                 type="button">VER MAS</button>` + btnVerCredito + `</td>
             </tr>
         `;
@@ -635,7 +637,9 @@ $abonar = $sE->hasAnyRole($modificar);
         //console.log(opcionProveedor.value);
     }
 
-    function verDetalleCompra(id, estado) {
+    function verDetalleCompra(id, estado,iva) {
+        //return console.log('comprasAux',comprasAuxiliar);
+        //return console.log('iva',iva);
         let cuerpo = "";
         let contador = 1;
         let costoTotal = 0;
@@ -655,9 +659,11 @@ $abonar = $sE->hasAnyRole($modificar);
                         };
                     }
                 }
-
+                let ganancia = compra_producto[c].porcentaje_ganancia;
+                if(iva!= null)
+                    ganancia = ganancia + iva;
                 let precio = parseFloat(compra_producto[c].costo_unitario) *
-                    parseFloat(compra_producto[c].porcentaje_ganancia);
+                    parseFloat(ganancia);
                 precio = (precio / 100) + compra_producto[c].costo_unitario;
                 cuerpo = cuerpo +
                     `
@@ -667,7 +673,7 @@ $abonar = $sE->hasAnyRole($modificar);
                 <td>` + producto.nombre + `</td>
                 <td>` + compra_producto[c].cantidad + `</td>
                 <td>` + compra_producto[c].costo_unitario + `</td>
-                <td>` + compra_producto[c].porcentaje_ganancia + `</td>
+                <td>` + ganancia + `</td>
                 <td>` + precio + `</td>
             </tr>
             `;

@@ -13,5 +13,6 @@ class Compra extends Model
         'estado',
         'fecha_compra',
         'idSucursalEmpleado',
+        'IVA'
     ];
 }
