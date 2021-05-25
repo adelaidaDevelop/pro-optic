@@ -1289,7 +1289,7 @@ function info4(id) {
         }
 
         btnAgregarSubprod =
-        ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(` + x + `);">
+        ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(${productoSucursal.id},${x});">
                                              <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                                              AGREGAR A SUBPRODUCTO </a> 
                                              `;
@@ -2057,13 +2057,18 @@ function refrescar() {
     location.reload();
 };
 
-async function subproductoExiste(id) {
+async function subproductoExiste(idSucProd,id) {
 
     let preguntar = confirm("¿AGREGAR SUBPRODUCTO?");
     if (preguntar) {
         let response = "Sin respuesta";
         let response2 = "Sin respuesta";
-        try {
+        let subproducto = subproductos.find(p => p.idSucursalProducto == idSucProd);
+        if(subproducto!= null)
+            return alert("Este producto ya está activo en subproducto y no se puede volver a agregar");
+        window.location = `/puntoVenta/subproducto/create/?id=${id}`;
+                    
+        /*try {
             response = await fetch(`/puntoVenta/veriUniqueSubproducto/?id=${id}`);
             if (response.ok) {
                 Suc_Inac = await response.json();
@@ -2072,6 +2077,10 @@ async function subproductoExiste(id) {
                 let producto_sucursal = Suc_Inac['productosSucursal']; //retornar 1 dato
                 let subproductos = Suc_Inac['subproducto'];
                 let bandera = true;
+                //producto = producto_sucursal.find(p => p.id == sucursalP.idProducto);
+                console.log('producto_sucursal',producto_sucursal);
+                console.log('subproductos',subproductos);
+                return;
                 for (let y in producto_sucursal) {
                     for (let x in subproductos) {
                         if (subproductos[x].idSucursalProducto == producto_sucursal[y].id) {
@@ -2097,7 +2106,7 @@ async function subproductoExiste(id) {
             }
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
-        }
+        }*/
     }
 };
 
