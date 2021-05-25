@@ -627,7 +627,7 @@ $abonar = $sE->hasAnyRole($modificar);
                 <td>` + comprasAuxiliar[i].costoTotal + `</td>
                 <td><button class="btn btn-light" onclick="verDetalleCompra(` +
                 comprasAuxiliar[i].id + `,'` + comprasAuxiliar[i].estado + `'` + `,${comprasAuxiliar[i].iva})" data-toggle="modal" data-target="#detalleCompraModal"
-                type="button">VER MAS</button>` + btnVerCredito + `</td>
+                type="button"><img src="{{ asset('img/vermas2.png') }}" alt="verMas" width="30px" height="30px"></button>` + btnVerCredito + `</td>
             </tr>
         `;
         }
