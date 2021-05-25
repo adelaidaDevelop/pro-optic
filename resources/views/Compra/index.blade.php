@@ -40,7 +40,7 @@ $abonar = $sE->hasAnyRole($modificar);
         </button>
     </form>
 </div>
-<div class="col-5 "></div>
+<div class="col-5"></div>
 <!--
 <div class=" ml-3 my-auto">
     <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
@@ -48,11 +48,11 @@ $abonar = $sE->hasAnyRole($modificar);
     </a>
 </div>
 -->
-<div class=" my-auto">
+
     <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
-        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="32px" height="32px">
+        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
     </a>
-</div>
+
 @endsection
 <!--div class="row p-1 "-->
 <!--CONSULTAR PRODUCTO -->

@@ -40,7 +40,6 @@ $verS = $sE->hasAnyRole($vS);
     <button type="button" class="btn btn-outline-secondary  p-1 border-0" data-toggle="modal" href=".modal_sucursales_inactivas" id="ver" onclick=" return datosTablaSuc()" value="">
         <img src="{{ asset('img\alta2.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto mx-2 text-dark"><small>ALTA SUCURSALES</small></p>
-
     </button>
 </div>
 @endif
@@ -50,7 +49,6 @@ $verS = $sE->hasAnyRole($vS);
         <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
             <img src="{{ asset('img\empleado.png') }}" alt="Editar" width="30px" height="30px">
             <p class="h6 my-auto mx-2 text-dark"><small>EMPLEADOS GRAL</small></p>
-
         </button>
     </form>
 </div>
@@ -64,10 +62,10 @@ $verS = $sE->hasAnyRole($vS);
     </button>
 </div>
 -->
-<div class="col-5 "></div>
-<div class="ml-2 my-auto">
+<div class="col-4 "></div>
+<div class=" ml-3 my-auto">
     <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
-        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
+        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 </div>
 

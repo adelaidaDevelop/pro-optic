@@ -60,12 +60,17 @@
                 </button>
             </form>
         </div-->
-        <div class="col-5 ml-4"></div>
+        <div class="col-6 ml-4"></div>
         <div class=" ml-3 my-auto">
             <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/administracion">
-                <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
+                <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="35px" height="35px">
             </a>
         </div>
+        <div class=" ml-3 my-auto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
+    </a>
+</div>
         
         @endsection
     </div>

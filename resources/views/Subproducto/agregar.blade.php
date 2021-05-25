@@ -77,7 +77,7 @@ SUBPRODUCTOS
                     </div>
                     <div class="col-3 ">
                         <!--  <input type="number" name="ganancia" id="ganancia" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>-->
-                        <input class="form-control " type="number" name="existencia" id="existencia" placeholder="EXISTENCIA DEL PRODUCTO" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
+                        <input class="form-control " type="number" onkeypress="return filterFloat(event,this);" name="existencia" id="existencia" placeholder="EXISTENCIA DEL PRODUCTO" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
                         <textarea class="form-control mt-4" name="observacion" id="observacion" class="form-control" placeholder="OBSERVACIONES" rows="3" onkeyup="mayus(this);" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
                         <br />
 
