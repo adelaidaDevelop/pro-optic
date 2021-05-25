@@ -640,7 +640,7 @@
         <tr class="text-center">
             <th scope="row">` + contador++ + `</th>
             <td>` + productosVenta[count1].codigoBarras + `</td>
-            <td>` + productosVenta[count1].nombre + `</td>
+            <td class="text-uppercase">` + productosVenta[count1].nombre + `</td>
             <td>` + tipo + `</td>
             <td>` + productosVenta[count1].existencia + `</td>
             <td>` + productosVenta[count1].precio + `</td>
@@ -883,7 +883,7 @@
                     `,` + productosSucursal[x].precio + `)">
                                 <th scope="row">` + productosSucursal[x].id + `</th>
                                 <td>` + productosSucursal[x].codigoBarras + `</td>
-                                <td>` + productosSucursal[x].nombre + `</td>
+                                <td class="text-uppercase">` + productosSucursal[x].nombre + `</td>
                                 <td>` + productosSucursal[x].existencia + `</td>
                                 <td>` + departamento + `</td>
                             </tr>
@@ -943,7 +943,7 @@
                     '${subproductosSucursal[i].nombre}',` + 1 + `,` + subproductosSucursal[i].existencia +
                     `,` + subproductosSucursal[i].precio + `)">
                     <td>` + subproductosSucursal[i].codigoBarras + `</td>
-                    <td>` + subproductosSucursal[i].nombre + `</td>
+                    <td class="text-uppercase">` + subproductosSucursal[i].nombre + `</td>
                     <td>` + subproductosSucursal[i].existencia + `</td>
                     <td>` + departamento.nombre + `</td>  
                     </tr>
@@ -1024,7 +1024,7 @@
                     '${ofertasSucursal[x].codigoBarras}','${ofertasSucursal[x].nombre}',` + 2 + `,` +
                     ofertasSucursal[x].existencia + `,` + ofertasSucursal[x].precio + `)">
                     <td>` + ofertasSucursal[x].codigoBarras + `</td>
-                    <td>` + ofertasSucursal[x].nombre + `</td>
+                    <td class="text-uppercase">` + ofertasSucursal[x].nombre + `</td>
                     <td>` + ofertasSucursal[x].existencia + `</td>
                     <td>` + departamento.nombre + `</td>
                     </tr>
