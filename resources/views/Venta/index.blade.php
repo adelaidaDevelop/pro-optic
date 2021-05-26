@@ -879,9 +879,9 @@ async function buscarProducto() {
                 </tr>
                 `;
         worker = new Worker("{{ asset('js/workerConsultarProducto.js')}}");
-        
+        let url = `/puntoVenta/sucursalProducto/${palabraBusqueda.value}`
         var message = {
-            palabra: palabraBusqueda.value,
+            url: url,
         };
 
         worker.postMessage(message);

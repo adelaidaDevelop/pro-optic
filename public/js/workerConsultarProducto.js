@@ -1,10 +1,10 @@
-let palabra = "";
+let url = "";
 let productosSucursal = [];
 this.onmessage = async function(e)
 {
     if(e.data !=undefined)
     {
-        palabra = e.data.palabra;
+        url = e.data.url;
         
         //buscarFiltroNombre2();
         setTimeout(await cargarProductosSucursal(),500);
@@ -15,7 +15,7 @@ this.onmessage = async function(e)
 async function cargarProductosSucursal() {
     let response = "Sin respuesta";
     try {
-        response = await fetch(`/puntoVenta/sucursalProducto/${palabra}`); //{{session('sucursal')}}`);
+        response = await fetch(url); //{{session('sucursal')}}`);
         if (response.ok) {
             productosSucursal = await response.json();
             console.log('los productos para la sucursal son', productosSucursal);
