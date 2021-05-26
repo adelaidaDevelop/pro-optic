@@ -786,6 +786,7 @@ INVENTARIO
 
         document.getElementById("btnCrearPdf").disabled = false;
         */
+       contador= 0;
         let devolucionFila = "";
         //  let salidaVP = "";
         //let entradaNuevosProductos = "";
@@ -808,7 +809,7 @@ INVENTARIO
                     nuevosProductos(fechaXDia);
                     compraProductos(fechaXDia);
                     // document.getElementById("total_entradas").innerHTML = totalEntradas;
-                    cuerpo = entradaCompraProduct + entradaNuevosProductos;
+                    cuerpo = entradaNuevosProductos + entradaCompraProduct;
                     if (cuerpo === "") {
                         let sin = `<h4 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
@@ -818,7 +819,7 @@ INVENTARIO
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (moviName == "2") {
-                    contador = 0;
+                   // contador = 0;
                     //OPCION 2: SALIDAS
                     ventasRealizadas(fechaXDia);
                     //  document.getElementById("total_salidas").innerHTML = totalVenta;
@@ -833,7 +834,7 @@ INVENTARIO
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (moviName == "3") {
-                    contador = 0;
+                  //  contador = 0;
                     devolucionesEfectivo(fechaXDia);
                     // document.getElementById("total_salidas").innerHTML = totalDevolucion;
                     cuerpo = devolucionFila;
@@ -847,24 +848,25 @@ INVENTARIO
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (moviName == "4") {
-                    contador = 0;
+                   
                     //uno
                     //BUSCAR ENTRADAS
                     //COMPRA DE PRODUCTOS
+                    nuevosProductos(fechaXDia);
                     compraProductos(fechaXDia);
                     //Entradas: nueevos productos: 
-                    nuevosProductos(fechaXDia);
+                    
                     //DOS
                     //BUSCAR SALIDAS
                     //VENTA DE PRODUCTOS
                     ventasRealizadas(fechaXDia);
                     //SALIDAS: PRODUCTOS CADUCADOS //AUN NO SE AGREGA
                     //tres
-                    // devolucionesEfectivo(fechaXDia);
+                    devolucionesEfectivo(fechaXDia);
                     //  document.getElementById("total_entradas").innerHTML = totalEntradas;
                     //  document.getElementById("total_salidas").innerHTML = totalVenta + totalDevolucion;
                     //BUSCAR TODOS
-                    cuerpo = entradaCompraProduct + entradaNuevosProductos + salidaVP + devolucionFila;
+                    cuerpo = entradaNuevosProductos + entradaCompraProduct + salidaVP + devolucionFila;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
                         let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;

@@ -56,13 +56,12 @@ SUBPRODUCTOS
 
                         <input class="form-control mt-4 mb-2" type="number" id="costo_indC" placeholder="" disabled>
 
-                        <input class="form-control mt-4 mb-2" type="number" onchange="calcularCostoInd()" 
-                        min="1" onkeypress="return filterFloat(event,this);"
-                        name="piezas" id="piezas" placeholder="INGRESE PIEZAS" value="{{ isset($subproducto->piezas)?$subproducto->piezas:''}}" required>
+                        <input class="form-control mt-4 mb-2" type="number" onchange="calcularCostoInd()" min="1" onkeypress="return filterFloat(event,this);" name="piezas" id="piezas" placeholder="INGRESE PIEZAS" value="{{ isset($subproducto->piezas)?$subproducto->piezas:''}}" required>
 
                         <input class="form-control mt-3 mb-1" type="number" id="costo_ind" placeholder="" value="{{ isset($subproducto->costo_ind)?$subproducto->costo_ind:''}}" required DISABLED>
 
-                        <input class="form-control mt-3" type="number" name="precio" id="precio" placeholder="PRECIO INDIVIDUAL" value="{{ isset($subproducto->precio)?$subproducto->precio_ind:''}}" required>
+                        <input class="form-control mt-3" type="number" id="precio" data-decimals="2" min="0" placeholder="PRECIO INDIVIDUAL4" value="" required>
+
                     </div>
                     <div class="col-3 ">
                         <label for="Existencia" class="mt-1 ">
@@ -77,7 +76,7 @@ SUBPRODUCTOS
                     </div>
                     <div class="col-3 ">
                         <!--  <input type="number" name="ganancia" id="ganancia" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>-->
-                        <input class="form-control " type="number" onkeypress="return filterFloat(event,this);" name="existencia" id="existencia" placeholder="EXISTENCIA DEL PRODUCTO" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
+                        <input class="form-control " type="number" min="1" onkeypress="return filterFloat(event,this);" name="existencia" id="existencia" placeholder="EXISTENCIA DEL PRODUCTO" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
                         <textarea class="form-control mt-4" name="observacion" id="observacion" class="form-control" placeholder="OBSERVACIONES" rows="3" onkeyup="mayus(this);" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
                         <br />
 
@@ -242,31 +241,44 @@ SUBPRODUCTOS
     function mayus(e) {
         e.value = e.value.toUpperCase();
     };
+
     function filterFloat(evt, input) {
-    // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
-    var key = window.Event ? evt.which : evt.keyCode;
-    var chark = String.fromCharCode(key);
-    var tempValue = input.value + chark;
-    if (key >= 48 && key <= 57) {
-        if (filter(tempValue) === false) {
-            return false;
-        } else {
-            return true;
-        }
-    } return false;/*else {
-        if (key == 8 || key == 13 || key == 0) {
-            return true;
-        } else if (key == 46) {
+        // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+        var key = window.Event ? evt.which : evt.keyCode;
+        var chark = String.fromCharCode(key);
+        var tempValue = input.value + chark;
+        if (key >= 48 && key <= 57) {
             if (filter(tempValue) === false) {
                 return false;
             } else {
                 return true;
             }
-        } else {
+        }
+        return false;
+    }
+    /*else {
+            if (key == 8 || key == 13 || key == 0) {
+                return true;
+            } else if (key == 46) {
+                if (filter(tempValue) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }*/
+    //VALIDAR CAMPO PRECIO DE CREAR SUBPRODUCTO
+
+
+    var number = document.getElementById('precio');
+    number.onkeypress = function(e) {
+        if (!((e.keyCode > 95 && e.keyCode < 106) ||
+                (e.keyCode > 47 && e.keyCode < 58) ||
+                e.keyCode == 8 || e.keyCode == 46)) {
             return false;
         }
-    }*/
-}
-
+    }
 </script>
 @endsection

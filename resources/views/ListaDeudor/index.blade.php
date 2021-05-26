@@ -78,8 +78,9 @@ CREDITOS
                                 <th scope="col">#</th>
                                 <th scope="col">PRODUCTO</th>
                                 <th scope="col">CANTIDAD</th>
-                                <th scope="col">SUBTOTAL</th>
                                 <th scope="col">PRECIO IND.</th>
+                                <th scope="col">SUBTOTAL</th>
+
                             </tr>
                         </thead>
                         <tbody class="text-center" id="cuerpoModal">
@@ -142,7 +143,7 @@ CREDITOS
                                         <p class="h5">ABONÓ:</p>
                                     </div>
                                     <div class="col-8">
-                                        <input type="number" oninput="calcularResto()" id="abono" data-decimals="2" value=0 class="form-control" />
+                                        <input type="number" oninput="calcularResto()" id="abono" min="0" pattern="^[0-9]+" data-decimals="2" value=0 class="form-control" />
                                     </div>
                                 </div>
                                 <div class="row my-1">
@@ -159,7 +160,7 @@ CREDITOS
                 </div>
 
                 <div id="pieModal" class="modal-footer">
-                <!--
+                    <!--
                     <button type="button" onclick="realizarVentaCredito()" class="btn btn-primary">COBRAR E IMPRIMIR
                         TICKET</button>
                         -->
@@ -302,17 +303,18 @@ CREDITOS
                     }
 
                 }
+                cont2 = cont2 + 1;
+                cuerpo2 = cuerpo2 + `
+                    <tr >
+                        <th scope="row">` + cont2 + `</th>
+                        <td>` + nombreP + `</td>    
+                        <td>` + cant + `</td>
+                        <td>` + precioUni + `</td>
+                        <td>` + subtotal + `</td>
+                    </tr>
+                    `;
             }
-            cont2 = cont2 + 1;
-            cuerpo2 = cuerpo2 + `
-        <tr >
-            <th scope="row">` + cont2 + `</th>
-            <td>` + nombreP + `</td>    
-            <td>` + cant + `</td>
-            <td>` + subtotal + `</td>
-            <td>` + precioUni + `</td>
-        </tr>
-        `;
+
         }
 
         document.getElementById("cuerpoModal").innerHTML = cuerpo2;
@@ -320,14 +322,14 @@ CREDITOS
 
     function calcularResto() {
         let abonoo = document.querySelector('#abono');
-        if (parseFloat(abono.value) > 0) {
-
+        if (parseFloat(abono.value) >= 0) {
             // let resto= document.getElementById("totalDebe");
             let resto2 = totalResta - parseFloat(abonoo.value);
             console.log("abono", abonoo.value);
             console.log(totalResta);
-            document.getElementById("restoDeuda").textContent = "$ " + resto2;
-        } 
+
+            document.getElementById("restoDeuda").textContent = "$ " + Number(resto2.toFixed(2));
+        }
     }
 
     function modalAbonar(id, idVenta) {
@@ -535,6 +537,28 @@ CREDITOS
             }
         }
     };
+    //validar entradas sin negativos
+    // Select your input element.
+
+
+    // Listen for input event on numInput.
+    var number = document.getElementById('abono');
+    number.onkeypress = function(e) {
+        if (!((e.keyCode > 95 && e.keyCode < 106) ||
+                (e.keyCode > 47 && e.keyCode < 58) ||
+                e.keyCode == 8 || e.keyCode == 46)) {
+            return false;
+        }
+    }
+
+    
+    /*
+    number.onkeypress = function(e) {
+        if(e.keyCode == 45 ) {
+            return false;
+        }
+    }
+    */
 </script>
 
 
