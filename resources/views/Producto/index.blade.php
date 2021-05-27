@@ -2283,12 +2283,13 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 
         try {
             let existencia = document.getElementById(`nuevaExistencia${i}`).value;
-            existencia = parseInt(existencia);
+            
             //console.log('lgExistencia',existencia.length);
-            //console.log('nuevaExistencia',existencia);
+            console.log('nuevaExistencia',existencia);
 
-            if (existencia != undefined)
+            if (existencia == undefined)
                 return alert('INGRESE UNA CANTIDAD VALIDA');
+            existencia = parseInt(existencia);
             let idSucProd = productosRapidos[i].id;
             if (productosRapidos[i].producto) {
                 let funcion = $.ajax({

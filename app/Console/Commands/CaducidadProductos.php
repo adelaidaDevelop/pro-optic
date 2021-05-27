@@ -55,7 +55,8 @@ class CaducidadProductos extends Command
         //Mail::to('hzhm1997@gmail.com')->send(new EnviarMail($titulo,'caducidad',$titulo,NULL));//return 0;
         if(count($productosCaducidad)>0)
         {
-            Mail::to('adhel1997@gmail.com')->send(new EnviarMailCaducidad($productosCaducidad));
+            //Mail::to('adhel1997@gmail.com')->send(new EnviarMailCaducidad($productosCaducidad));
+            Mail::to('hzhm1997@gmail.com')->send(new EnviarMailCaducidad($productosCaducidad));
         }
         
     }
