@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('caducidad:productos')->dailyAt('10:00');
         //$schedule->command('existencia:productos')->dailyAt('22:00');
         $schedule->command('existencia:productos')->everyMinute();
+        
     }
 
     /**

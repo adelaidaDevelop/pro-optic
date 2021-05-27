@@ -137,8 +137,11 @@ $verS = $sE->hasAnyRole($vS);
                                         <label for="direccion">
                                             DIRECCIÓN
                                         </label>
+                                        <!--
                                         <input type="text" class="form-control @error('direccion') is-invalid @enderror"
                                          name="direccion" id="direccion" value="{{$d->direccion}}" required>
+                                         -->
+                                         <textarea name="direccion" id="direccion" class="form-control @error('direccion') is-invalid @enderror" value="" required>{{$d->direccion}}</textarea>
                                         @error('direccion')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -232,8 +235,11 @@ $verS = $sE->hasAnyRole($vS);
                                     <label for="nombre">
                                         DIRECCION
                                     </label>
+                                    <!--
                                     <input type="text" class="form-control @error('direccion') is-invalid @enderror" 
                                     value="{{ old('direccion') }}" name="direccion" id="direccion" required >
+                                    -->
+                                    <textarea name="direccion" id="direccion" value="{{ old('direccion') }}" class="form-control @error('direccion') is-invalid @enderror" placeholder="INGRESAR DOMICILIO COMPLETO" required></textarea>
                                     @error('direccion')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
