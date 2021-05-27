@@ -126,8 +126,8 @@ class SucursalProductoController extends Controller
      */
     public function show($producto)//Sucursal_producto $sucursal_producto)
     {
-        $productos = Producto::where("nombre",'like',$producto."%")->get(['id', 'codigoBarras', 'nombre', 'idDepartamento']);//paginate(30,
-            //['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
+        $productos = Producto::where("nombre",'like',$producto."%")//->get(['id', 'codigoBarras', 'nombre', 'idDepartamento'])
+        ->paginate(30,['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
         $productosBusqueda = [];
         //return $productos;
         for($i=0;$i< count($productos);$i++)
@@ -280,9 +280,38 @@ class SucursalProductoController extends Controller
 
     public function inventarioRapido($total)
     {
+/*
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursal'))
+        ->get(['id','idProducto','existencia'])->random($total);
+        //$subproductosSucursal
+
+        for($i=0;$i<$total;$i++)
+        {
+            do {
+                $valor = mt_rand(1, $totalProductos);
+            } while (in_array($valor, $valores)); 
+            array_push($valores,$valor);
+            //if(in_array($valor, $valores))
+            if($valor>count($productosSucursal))
+            {
+                $valorAux = $valor - count($productosSucursal);
+                $producto = Producto::findOrFail($subproductosSucursal[$valorAux-1]->idProducto);
+                $subproductosSucursal[$valorAux-1]->nombre = $producto->nombre." (SUBPRODUCTO)";
+                $subproductosSucursal[$valorAux-1]->producto = false;
+                array_push($productosRapidos,$subproductosSucursal[$valorAux-1]);
+            }
+            else{
+                $producto = Producto::findOrFail($productosSucursal[$valor-1]->idProducto);
+                $productosSucursal[$valor-1]->nombre = $producto->nombre;
+                //$productosSucursal[$valor-1]->nombre = $producto->nombre;
+                $productosSucursal[$valor-1]->producto = true;
+                array_push($productosRapidos,$productosSucursal[$valor-1]);
+            }
+        }*/
         //return session()->all();
         $productosRapidos = [];
-        $productosSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursal'))->get(['id','idProducto','existencia']);
+        $productosSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursal'))
+        ->get(['id','idProducto','existencia'])->random($total);
         $subproductosSucursal = [];
         foreach($productosSucursal as $pS)
         {

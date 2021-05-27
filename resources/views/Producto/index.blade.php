@@ -762,8 +762,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
         let cantProdInventario = 0;
         let cantOfertas = 0;
         let cantSubproductos = 0;
-
+        console.log("Actualizando cabecera");
         for (let t in productosList) {
+            
             let productoSucursal = productosSucursal.find(p => p.idProducto == productosList[t].id);
 
             let costoTemporal = productoSucursal.costo * productoSucursal.existencia;
@@ -1021,7 +1022,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                 <td id="costo${productoSucursal.id}">` + productoSucursal.costo + `</td>
                                 <td id="precio${productoSucursal.id}" class="text-success">` + productoSucursal
                     .precio + `</td>
-                                <td id="existenciaP${productoSucursal.id}">` + productosList[t].existencia + `</td>
+                                <td id="existenciaP${productoSucursal.id}">` + productoSucursal.existencia + `</td>
                                 <td>` +
                     ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick=" return info4( ` +
                     productosList[t].id + `)" value="` + productosList[t].id + `">
@@ -2305,8 +2306,15 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                     }
                     // si tuvo éxito la petición
                 }).done(function(respuesta) {
-                    //alert(respuesta);
+                    
                     console.log(respuesta); //JSON.stringify(respuesta));
+                    console.log('Es producto, su id es: ',idSucProd);
+                    productosSucursal.find(p => p.id == idSucProd).existencia = existencia;
+                    let etiqueta = document.getElementById(`existenciaP${idSucProd}`);
+                    if(etiqueta!=null)
+                        etiqueta.textContent = existencia;
+                    actualizarCabecera();
+                    ignorar(i);
                 });
             } else {
                 let funcion = $.ajax({
@@ -2324,18 +2332,17 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 }).done(function(respuesta) {
                     //alert(respuesta);
                     console.log(respuesta); //JSON.stringify(respuesta));
-                });
+                    subproductos.find(p => p.idSucursalProducto == idSucProd).existencia = existencia;
+
+                    let etiqueta = document.getElementById(`subpExistencia${idSucProd}`);
+                    if(etiqueta!=null)
+                        etiqueta.textContent = existencia;
+                        actualizarCabecera();
+                    ignorar(i);
+                    });
             }
             //$('#modal_precio_venta3').modal('hide');
             alert("EXISTENCIA ACTUALIZADA CORRECTAMENTE");
-            //  refrescar();
-            ignorar(i);
-
-            document.getElementById(`existenciaP${idSucProd}`).textContent = existencia;
-            productosSucursal.find(p => p.id == idSucProd).existencia = existencia;
-            actualizarCabecera();
-            //await act_datos();
-            //await buscarFiltroNombre2();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }

@@ -902,7 +902,7 @@ async function buscarProducto() {
                 cuerpo = cuerpo + `<tr onclick="agregarProducto(` + productosSucursal[x].id +
                  `,'` + productosSucursal[x].codigoBarras + `','` + productosSucursal[x].nombre +
                   `',` + 0 + `,` + productosSucursal[x].existencia + `,` + productosSucursal[x].precio +
-                   `)"><th scope="row">` + productosSucursal[x].id + `</th>
+                   `)"><th scope="row">` + (parseInt(x)+1) + `</th>
                             <td>` + productosSucursal[x].codigoBarras + `</td>
                             <td class="text-uppercase">` + productosSucursal[x].nombre + `</td>
                             <td>` + productosSucursal[x].existencia + `</td>
