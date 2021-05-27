@@ -472,7 +472,7 @@
                                     </div>
                                     <div class="col-8">
                                         <select class="col form-control mr-3" name="clientes" id="clientes" required>
-                                            <option value="0">NO HAY CLIENTES</option>
+                                            <option value="">NO HAY CLIENTES</option>
                                         </select>
                                         <!--input type="text" class="form-control" /-->
                                     </div>
@@ -1250,11 +1250,13 @@ async function realizarVentaCredito() {
         return alert('HUBO UN ERROR');
     }
 
-    let json = JSON.stringify(productosVenta);
+    
     const pago = document.querySelector('#pagoCredito');
     const cliente = document.querySelector('#clientes');
+    if(cliente.value.length == 0)
+        return alert("SELECCIONE UN CLIENTE POR FAVOR");
     console.log(parseFloat(pago.value));
-
+    let json = JSON.stringify(productosVenta);
     if (pago.value.length === 0 || pago.value < 0)
         return alert('NO HA INGRESADO UNA CANTIDAD VALIDA');
     if (parseFloat(pago.value) >= parseFloat(total))
