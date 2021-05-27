@@ -20,6 +20,7 @@ use App\Models\Sucursal_producto;
 use App\Models\venta_cliente;
 use Illuminate\Http\Request;
 //use PDF;
+use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
 
 class ReporteController extends Controller
@@ -42,7 +43,13 @@ class ReporteController extends Controller
         //CORTE DE CAJA INDEX
         $ventas = Venta::all(['id','tipo','pago','status','idSucursalEmpleado','created_at','updated_at']);
         $pagos = Pago_venta::all(['idVentaCliente','idEmpSuc', 'monto','created_at','updated_at']);
-        $pagoCompras = Pago_compra::all(['idCompra','monto','created_at','updated_at']);
+        $pagoCompras = Pago_compra::all(['idCompra','monto','idEmpSuc','created_at','updated_at']);
+      //  $pagoCompras2 = DB::table('Pago_compra')
+       //     ->join('Sucursal_empleado', 'Pago_compra.idEmpSuc', '=', 'Sucursal_empleado.id')
+        //    ->where('Sucursal_empleado.idSucursal','=', $idSucursal)
+          //  ->get();
+            //return $pagoCompras2;
+      
         $venta_cliente = venta_cliente::all(['id','estado','idCliente','idVenta','created_at','updated_at']);
         $devoluciones = Devolucion::all(['idEmpSuc','idVenta','idProducto','precio','cantidad','observacion','created_at','updated_at']);
        // $pagoCompras= Pago_compra::all();
