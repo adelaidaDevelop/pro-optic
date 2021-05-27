@@ -1914,7 +1914,9 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             //await buscarFiltroNombre2();
 
             document.getElementById(`subpExistencia${idSucProd}`).textContent = costo.value;
-            subproductos.find(p => p.id == idSucProd).existencia = costo.value;
+            //document.getElementById(`cantProdSub`).textContent = costo.value;
+            
+            subproductos.find(p => p.idSucursalProducto == idSucProd).existencia = costo.value;
             actualizarCabecera();
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);

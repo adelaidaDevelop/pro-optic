@@ -60,7 +60,7 @@ SUBPRODUCTOS
 
                         <input class="form-control mt-3 mb-1" type="number" id="costo_ind" placeholder="" value="{{ isset($subproducto->costo_ind)?$subproducto->costo_ind:''}}" required DISABLED>
 
-                        <input class="form-control mt-3" type="number" id="precio" data-decimals="2" min="0" placeholder="PRECIO INDIVIDUAL4" value="" required>
+                        <input class="form-control mt-3" type="number" id="precio" name="precio" data-decimals="2" min="0" placeholder="PRECIO INDIVIDUAL4" value="{{ isset($subproducto->precio)?$subproducto->precio:''}}" required>
 
                     </div>
                     <div class="col-3 ">

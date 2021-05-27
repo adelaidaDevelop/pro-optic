@@ -252,7 +252,7 @@ $verC = $sE->hasAnyRole($vC);
                     let respuesta = await response.text();
                     if (respuesta.length == 1) {
                         //recargar la pag
-                        alert("El cliente se elimino correctamente");
+                        alert("EL CLIENTE SE HA ELIMINADO");
                         location.href = "{{url('/puntoVenta/cliente')}}";
                     } else {
                         clienOcup = alert("ESTE CLIENTE ESTÁ ACTIVO EN EL SISTEMA Y NO SE PUEDE ELIMINAR");
