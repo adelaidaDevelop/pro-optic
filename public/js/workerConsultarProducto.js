@@ -7,7 +7,8 @@ this.onmessage = async function(e)
         url = e.data.url;
         
         //buscarFiltroNombre2();
-        setTimeout(await cargarProductosSucursal(),500);
+        await cargarProductosSucursal()
+        //setTimeout(await cargarProductosSucursal(),500);
         this.postMessage({productos:productosSucursal});
         
     }

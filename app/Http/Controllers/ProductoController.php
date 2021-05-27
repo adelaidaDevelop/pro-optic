@@ -124,6 +124,7 @@ class ProductoController extends Controller
      */
     public function show($producto)//Producto $producto)
     {
+        //return NULL;
         
         if($producto=="productos")
         {
@@ -142,10 +143,7 @@ class ProductoController extends Controller
             ['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
             for($i=0;$i< count($productos);$i++)
             {
-                $productos[$i]->existencia = 0;
-                $productos[$i]->costo = 0;
-                $productos[$i]->precio = 0;
-                $productos[$i]->idSucursal = false;
+                
                 $sP = Sucursal_producto::where('idProducto', '=', $productos[$i]->id)->where('idSucursal','=',session('sucursal'))
                 ->first(['existencia','costo','precio']);
                 if(isset($sP))
@@ -154,12 +152,14 @@ class ProductoController extends Controller
                     $productos[$i]->costo = $sP->costo;
                     $productos[$i]->precio = $sP->precio;
                     $productos[$i]->idSucursal = true;
+                }else{
+                    $productos[$i]->existencia = 0;
+                    $productos[$i]->costo = 0;
+                    $productos[$i]->precio = 0;
+                    $productos[$i]->idSucursal = false;
                 }
             }
             return $productos;
-            //$existencia = Producto::where("")
-            //$id = Producto::whereColumn('minimo_stock','>=','existencia')->get();
-            //return $id;
         }
     }
     public function show2($id)
