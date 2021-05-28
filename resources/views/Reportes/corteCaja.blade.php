@@ -161,7 +161,7 @@ CORTE DE CAJA
                 <!--
                 <button id="btnCrearPdf" class="btn btn-secondary ml-4 mb-5 mx-auto mt-5">IMPRIMIR CORTE
                 </button>-->
-                <button id="getUser" class="btn btn-secondary ml-4 mb-5 mx-auto mt-1">IMPRIMIR CORTE
+                <button id="getUser" class="btn btn-secondary ml-4 mb-5 mx-auto mt-1" disabled>IMPRIMIR CORTE
                 </button>
                 <br />
                 <!--
@@ -693,13 +693,13 @@ CORTE DE CAJA
                 }
 
                 for (let p in pagoCompras) {
-                    
+
                     let idSucEmp = pagoCompras[p].idEmpSuc;
                     let fechaPC = new Date(pagoCompras[p].created_at);
                     let suc_emp = sucursalEmpleado.find(s => s.id == idSucEmp);
                     if (suc_emp != null) {
                         if (comparacionFecha(fechaCorte, fechaPC)) {
-                        
+
                             totalPagoComp = totalPagoComp + pagoCompras[p].monto;
                         }
                     }
@@ -740,7 +740,8 @@ CORTE DE CAJA
             if (totalVentas == 0 && abonos == 0 && entradas == 0 && totalDev == 0 && salidas == 0) {
                 let sin = `<h5 class= "text-dark text-center mx-auto"> NO SE ENCONTRARON REGISTROS </h5>`;
                 document.getElementById("sinRegistros").innerHTML = sin;
-
+            } else {
+                $('#getUser').prop('disabled', false);
             }
 
             //document.getElementById("totalVentas").innerHTML = cuerpo;
@@ -1128,6 +1129,7 @@ CORTE DE CAJA
     */
 
     // getUser
+    $('#getUser').prop('disabled', true);
 </script>
 
 @endsection

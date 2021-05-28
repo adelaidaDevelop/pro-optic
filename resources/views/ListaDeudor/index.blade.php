@@ -76,6 +76,7 @@ CREDITOS
                         <thead class="thead-light">
                             <tr class="text-center">
                                 <th scope="col">#</th>
+                                <th scope="col">CODIGO BARRAS</th>
                                 <th scope="col">PRODUCTO</th>
                                 <th scope="col">CANTIDAD</th>
                                 <th scope="col">PRECIO IND.</th>
@@ -290,6 +291,7 @@ CREDITOS
         let subtotal = 0;
         let precioUni = 0;
         let nombreP = "";
+        let codigoB = "";
         let cuerpo2 = "";
         let cont2 = 0;
         for (count6 in detalleVentas) {
@@ -300,6 +302,7 @@ CREDITOS
                 for (count7 in productos) {
                     if (productos[count7].id == detalleVentas[count6].idProducto) {
                         nombreP = productos[count7].nombre;
+                        codigoB = productos[count7].codigoBarras;
                     }
 
                 }
@@ -307,6 +310,7 @@ CREDITOS
                 cuerpo2 = cuerpo2 + `
                     <tr >
                         <th scope="row">` + cont2 + `</th>
+                        <td>` + codigoB + `</td>    
                         <td>` + nombreP + `</td>    
                         <td>` + cant + `</td>
                         <td>` + precioUni + `</td>

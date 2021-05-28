@@ -7,9 +7,11 @@ use App\Models\Venta;
 use App\Models\Detalle_venta;
 use App\Models\Producto;
 use App\Models\Empleado;
+use App\Models\Pago_venta;
 use App\Models\Sucursal;
 use App\Models\Sucursal_empleado;
 use App\Models\Sucursal_producto;
+use App\Models\venta_cliente;
 use Illuminate\Http\Request;
 
 class DevolucionController extends Controller
@@ -31,9 +33,10 @@ class DevolucionController extends Controller
         $empleados= Empleado::all();
         $devolucions = Devolucion::all();
         $idSucursal = session('sucursal');
+        $ventaCliente = venta_cliente::all(['id','estado','idCliente','idVenta','created_at','updated_at']);
         $sucursalEmpleado = Sucursal_empleado::where('idSucursal', '=', $idSucursal)
         ->get(['id','idSucursal','idEmpleado','status','created_at','updated_at']);
-
+        $pagosVenta = Pago_venta::all();
         $productX_Sucursal = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
 /*
         $ventasFiltro = [];
@@ -48,7 +51,7 @@ class DevolucionController extends Controller
             }
         }
         */
-        return view('Devolucion.index', compact('ventas', 'detalleVenta', 'productos', 'empleados', 'devolucions', 'sucursalEmpleado',  'productX_Sucursal', 'ventas'));
+        return view('Devolucion.index', compact('ventas','pagosVenta', 'ventaCliente','detalleVenta', 'productos', 'empleados', 'devolucions', 'sucursalEmpleado',  'productX_Sucursal', 'ventas'));
     
     }
 

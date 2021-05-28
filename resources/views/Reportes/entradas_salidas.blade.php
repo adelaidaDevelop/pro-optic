@@ -822,6 +822,7 @@ REPORTES
         }
         return false;
     };
+    $('#imp').prop('disabled', true);
 </script>
 
 @endsection

@@ -815,6 +815,7 @@ INVENTARIO
                         document.getElementById("tablaR").innerHTML = sin;
                         // document.getElementById("btnCrearPdf").disabled = true;
                     } else {
+                        $('#getUser').prop('disabled', false);
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
@@ -830,6 +831,7 @@ INVENTARIO
                         let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
                     } else {
+                        $('#getUser').prop('disabled', false);
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
@@ -844,6 +846,7 @@ INVENTARIO
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("btnCrearPdf").disabled = true;
                     } else {
+                        $('#getUser').prop('disabled', false);
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
@@ -873,6 +876,7 @@ INVENTARIO
                         document.getElementById("tablaR").innerHTML = sin;
                         document.getElementById("btnCrearPdf").disabled = true;
                     } else {
+                        $('#getUser').prop('disabled', false);
                         console.log(tabla2);
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
@@ -1053,6 +1057,7 @@ INVENTARIO
             WinPrint.close();
         });
     });
+    $('#getUser').prop('disabled', true);
 </script>
 
 @endsection

@@ -113,14 +113,14 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                         <input type="date" min="" onchange="filtrarCompras()" id="fechaFinal" class="form-control" disabled />
                     </div>
                 </div>
-                <div class="row mx-1 mt-4" style="height:200px;overflow:auto;">
+                <div class="row mx-1 mt-4" style="height:400px;overflow:auto;">
                     <table class="table table-hover table-bordered" id="productos">
                         <thead class="table-secondary text-dark">
                             <tr class="text-center">
                                 <th scope="col">#</th>
                                 <th scope="col">FOLIO</th>
                                 <th scope="col">EMPLEADO</th>
-                                <th scope="col">ESTADO</th>
+                                <th scope="col">TIPO</th>
                                 <th scope="col">PAGO</th>
                                 <th scope="col">TOTAL</th>
                                 <th scope="col">FECHA</th>
@@ -193,14 +193,13 @@ $devolver = $sE->hasAnyRole($userDevolucion);
     let cantTotal = 0;
     let productos_sucursal = @json($productX_Sucursal);
     let sucursalEmpleado = @json($sucursalEmpleado);
+    let venta_clientes = @json($ventaCliente);
     console.log("imp");
     console.log(productos_sucursal);
+    let pagosVenta = @json($pagosVenta);
     //let cantPD = 0;
     // let cantProd = 0;
     let diferencia = 0;
-
-
-
 
     function buscarFolio() {
         //return alert('entra a buscar folio');
@@ -209,52 +208,56 @@ $devolver = $sE->hasAnyRole($userDevolucion);
         let botonDev = "";
         let palabraBusqueda = document.querySelector('#busquedaFolio');
         let cuerpo = "";
+        let cuerpo2 = "";
         let contador = 1;
         let subtotalV = 0;
         let precioSP = 0;
         if (palabraBusqueda.value.length > 0) {
             let folio = parseInt(palabraBusqueda.value);
-            //  for (count in ventas) {
-            // if (ventas[count].id === folio) {
             let venta = ventas.find(v => v.id === folio);
             if (venta != null) {
-                if (venta.tipo == "efectivo") {
-                    console.log("encontrado asd");
-                    //console.log(detalleVenta);
-                    //console.log(ventas);
-                    for (count2 in detalleVenta) {
-                        if (detalleVenta[count2].idVenta == folio) {
-                            // let detalleV = detalleVenta.find(p => p.idVenta == folio);
-                            //  if (detalleV != null) {
+                // if (venta.tipo == "efectivo") {
+                console.log("encontrado asd");
+                //console.log(detalleVenta);
+                //console.log(ventas);
+                for (count2 in detalleVenta) {
+                    if (detalleVenta[count2].idVenta == folio) {
+                        // let detalleV = detalleVenta.find(p => p.idVenta == folio);
+                        //  if (detalleV != null) {
 
-                            //console.log("Entra a la funcion de buscar folio");
-                            // for (count3 in productos) {
-                            //  if (productos[count3].id == detalleVenta[count2].idProducto) {
-                            let product = productos.find(p => p.id == detalleVenta[count2].idProducto);
-                            if (product != null) {
-                                cont = cont + 1;
-                                document.getElementById("sinResult").innerHTML = "";
-                                // idProductoD = productos[count3].id;
-                                //idVentaD = ventas[count].id;
-                                // cantTotal = detalleVenta[count2].cantidad;
-                                console.log("De esta venta por cada producto que se vendi en esta venta entra");
-                                let cantPD = 0; //CHECAR
-                                console.log("dev");
-                                console.log(devolucions);
-                                // if (devolucions.length > 0) {
-                                if (devolucions !== null) {
-                                    for (count51 in devolucions) {
-                                        console.log("devoluNo");
-                                        //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
-                                        if (venta.id == devolucions[count51].idVenta) {
+                        //console.log("Entra a la funcion de buscar folio");
+                        // for (count3 in productos) {
+                        //  if (productos[count3].id == detalleVenta[count2].idProducto) {
+                        let product = productos.find(p => p.id == detalleVenta[count2].idProducto);
+                        if (product != null) {
 
-                                            if (devolucions[count51].idProducto == product.id) {
-                                                cantPD = cantPD + devolucions[count51].cantidad;
-                                                console.log("Si entra en esta parte");
-                                            }
+                            document.getElementById("sinResult").innerHTML = "";
+                            // idProductoD = productos[count3].id;
+                            //idVentaD = ventas[count].id;
+                            // cantTotal = detalleVenta[count2].cantidad;
+                            console.log("De esta venta por cada producto que se vendi en esta venta entra");
+                            let cantPD = 0; //CHECAR
+                            console.log("dev");
+                            console.log(devolucions);
+                            // if (devolucions.length > 0) {
+                            if (devolucions !== null) {
+                                for (count51 in devolucions) {
+                                    console.log("devoluNo");
+                                    //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
+                                    if (venta.id == devolucions[count51].idVenta) {
+
+                                        if (devolucions[count51].idProducto == product.id) {
+                                            cantPD = cantPD + devolucions[count51].cantidad;
+                                            console.log("Si entra en esta parte");
                                         }
                                     }
                                 }
+                            }
+                            if (venta.tipo == "credito") {
+                                cuerpo2 = "x";
+                                botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
+                                            type="button" disabled >DEVOLVER</button>`;
+                            } else {
                                 if (cantPD < detalleVenta[count2].cantidad) {
                                     botonDev = `<button class="btn btn-light" onclick="idProdDV(` + product.id + `,` + venta
                                         .id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)"
@@ -263,9 +266,11 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                                     botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
                                             type="button" disabled >DEVOLVER</button>`;
                                 }
-                                subtotalV = detalleVenta[count2].cantidad * detalleVenta[count2].precioIndividual;
-                                console.log("sisisi");
-                                cuerpo = cuerpo + `
+                            }
+                            subtotalV = detalleVenta[count2].cantidad * detalleVenta[count2].precioIndividual;
+                            console.log("sisisi");
+                            cont = cont + 1;
+                            cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
                                             <td>` + product.codigoBarras + `</td>
@@ -278,22 +283,30 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                                             </td>        
                                                 </tr>
                                                 `;
-                            }
                         }
                     }
-
                 }
+                // } 
+                /*
+                else {
+                    cuerpo2 = "x";
+                }
+                */
                 //document.getElementById("sinResult").innerHTML = "Folio no encontrado";
             }
-
-            if (cuerpo === "") {
-                let sin = ` <h5 class= "text-dark  mx-0 px-0"> VENTA NO ENCONTRADA</h5>`;
+            /////////////////7
+            if (cuerpo2 === "x") {
+                let sin = ` <h5 class= "text-danger  mx-0 px-0"> EL FOLIO PERTENECE A UNA VENTA A CREDITO Y NO SE PUEDEN HACER DEVOLUCIONES</h5>`;
                 document.getElementById("sinResult").innerHTML = sin;
+            }
+            if (cuerpo === "") {
+                let sin = ` <h5 class= "text-dark  mx-0 px-0"> EL FOLIO NO EXISTE</h5>`;
+                document.getElementById("sinResult").innerHTML = sin;
+
             }
         }
         //document.getElementById("filaTablas").innerHTML = cuerpo;
         document.getElementById("tablaProductos").innerHTML = cuerpo;
-
     };
 
     function idProdDV(idP, idV, cantDV, cPD) {
@@ -307,7 +320,6 @@ $devolver = $sE->hasAnyRole($userDevolucion);
         cantTotal = cantDV;
         // let cantPD2 = cPD;
         diferencia = cantTotal - cPD;
-
         $("input[id='cantidad']").val(0);
         document.getElementById("totalD").innerHTML = 0;
         document.getElementById("detalleD").value = "";
@@ -331,7 +343,6 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     //console.log("hasta aqui lleg");
                     //console.log(idProductoD);
                     //console.log(productos_sucursal[count9].idProducto);
-
                     if (productos_sucursal[count9].idProducto == idProductoD) {
                         console.log("si esta calculando");
                         totalDevolver = cant * productos_sucursal[count9].precio;
@@ -522,10 +533,13 @@ $devolver = $sE->hasAnyRole($userDevolucion);
         let cont = 0;
         let emple = "";
         let fecha = "";
+
         for (count5 in ventas) {
+
             let total = 0;
+            let pago = 0;
             fecha = new Date(ventas[count5].created_at);
-            cont = cont + 1;
+
             // for (count7 in detalleVenta) {
             // console.log("detalla V: ", detalleVenta);
             //k if (detalleVenta[count7].idVenta == ventas[count5].id) {
@@ -557,21 +571,54 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     }
                 }
             }
+            /*
             let pago2 = 0;
-            console.log("total", total);
+            //  console.log("total", total);
             if (ventas[count5].pago == null) {
                 pago2 = 0;
             } else {
                 pago2 = ventas[count5].pago;
             }
+            */
+            /*
+            let ventaCliente = venta_clientes.find(s => s.idVenta == ventas[count5].id);
+            pago = 0;
+            if (ventaCliente != null) {
+                for (let x in pagosVenta) {
+                    // console.log("xxxx",pagosVenta[x].idVentaCliente);
+                    if (pagosVenta[x].idVentaCliente == ventaCliente.id) {
+                        pago = pago + pagosVenta[x].monto;
+                    }
+                }
+            }
+*/
+            ////////////////
+            if (ventas[count5].tipo === "efectivo") {
+                pago = ventas[count5].pago;
+            } else {
+                if (ventas[count5].tipo === "credito") {
+                    let ventaCliente = venta_clientes.find(s => s.idVenta == ventas[count5].id);
+                    if (ventaCliente != null) {
+                        for (let x in pagosVenta) {
+                            // console.log("xxxx",pagosVenta[x].idVentaCliente);
+                            if (pagosVenta[x].idVentaCliente == ventaCliente.id) {
+                                pago = pago + pagosVenta[x].monto;
+                            }
+                        }
+                    }
+                }
+            }
+            /////////////
+
             //}
+            cont = cont + 1;
             cuerpo = cuerpo + `
                     <tr >
                     <th scope="row">` + cont + `</th>
                     <td>` + ventas[count5].id + `</td>
                     <td>` + emple + `</td>
                     <td>` + ventas[count5].tipo + `</td>
-                    <td>` + pago2 + `</td>
+                    <td>` + pago + `</td>
                     <td>` + total + `</td> 
                     <td>` + fecha.toLocaleDateString() + `</td> 
                     <td>` + fecha.toLocaleTimeString() + `</td>   
@@ -583,7 +630,6 @@ $devolver = $sE->hasAnyRole($userDevolucion);
 
 
     function filtrarCompras() {
-
         let cuerpo = "";
         let contador = 1;
         let cont = 0;
@@ -600,9 +646,9 @@ $devolver = $sE->hasAnyRole($userDevolucion);
             // fechaF.setDate(fechaF.getDate() + 1);
 
             for (let j in ventas) {
+                let pago = 0;
+                fecha5 = new Date(ventas[j].created_at);
 
-                fecha5 = new Date(ventas[count5].created_at);
-                cont = cont + 1;
                 let total = 0;
                 let fechaAux = new Date(ventas[j].created_at);
                 let mesAux = fechaAux.getMonth() + 1;
@@ -625,7 +671,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
 
                     for (let s in detalleVenta) {
                         // if (detalleV != null) {
-                        if (detalleVenta[s].idVenta == ventas[count5].id) {
+                        if (detalleVenta[s].idVenta == ventas[j].id) {
                             let subtotal = detalleVenta[s].cantidad * detalleVenta[s].precioIndividual;
                             total = total + subtotal;
                         }
@@ -634,7 +680,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
 
                     // for (let s in sucursalEmpleado) {
                     //  if (sucursalEmpleado[s].id == ventas[j].idSucursalEmpleado) {
-                        /*
+                    /*
                     let suc_emp = sucursalEmpleado.find(s => s.id == ventas[j].idSucursalEmpleado);
                     if (suc_emp != null) {
                         for (count6 in empleados) {
@@ -654,7 +700,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     }
 */
                     //////////////
-                    let suc_emp = sucursalEmpleado.find(s => s.id == ventas[count5].idSucursalEmpleado);
+                    let suc_emp = sucursalEmpleado.find(s => s.id == ventas[j].idSucursalEmpleado);
                     if (suc_emp != null) {
                         for (count6 in empleados) {
                             if (empleados[count6].id == suc_emp.idEmpleado) {
@@ -671,26 +717,45 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                             }
                         }
                     }
+                    /*
                     let pago2 = 0;
                     console.log("total", total);
-                    if (ventas[count5].pago == null) {
+                    if (ventas[j].pago == null) {
                         pago2 = 0;
                     } else {
-                        pago2 = ventas[count5].pago;
+                        pago2 = ventas[j].pago;
                     }
+                    */
+                    if (ventas[j].tipo === "efectivo") {
+                        pago = ventas[j].pago;
+                    } else {
+                        if (ventas[j].tipo === "credito") {
+                            let ventaCliente = venta_clientes.find(s => s.idVenta == ventas[j].id);
+                            if (ventaCliente != null) {
+                                for (let x in pagosVenta) {
+                                    // console.log("xxxx",pagosVenta[x].idVentaCliente);
+                                    if (pagosVenta[x].idVentaCliente == ventaCliente.id) {
+                                        pago = pago + pagosVenta[x].monto;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     //////////////
 
                     // console.log(ventas[j].tipo);
                     // console.log(emple);
                     // cont = cont + 1;
                     //  fecha.setDate(fecha.getDate() + 1);
+                    cont = cont + 1;
                     cuerpo = cuerpo + `
                         <tr >
                         <th >` + cont + `</th>
                         <td>` + ventas[j].id + `</td>
                         <td>` + emple + `</td>
                         <td>` + ventas[j].tipo + `</td>
-                        <td>` + pago2 + `</td>
+                        <td>` + pago + `</td>
                         <td>` + total + `</td> 
                         <td>` + fecha5.toLocaleDateString() + `</td> 
                         <td>` + fecha5.toLocaleTimeString() + `</td>   
