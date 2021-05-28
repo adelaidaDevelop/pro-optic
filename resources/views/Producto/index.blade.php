@@ -1075,12 +1075,11 @@ function rellenar() {
                             <td id="scodigo${productosList[t].id}">` + productosList[t].codigoBarras + `</td>
                             <td id="snombre${productosList[t].id}">` + productosList[t].nombre + `</td>
                             <td id="sdepartamento${productosList[t].id}">` + departamento + `</td>
-                            <td>` + Number(costoSubp.toFixed(2)) + `</td>
-                            <td class="text-success">` + subproducto.precio + `</td>
+                            <td id="subpCosto${productoSucursal.id}">` + Number(costoSubp.toFixed(2)) + `</td>
+                            <td id="subpPrecio${productoSucursal.id}"class="text-success">` + subproducto.precio + `</td>
                             <td id="subpExistencia${productoSucursal.id}">` + subproducto.existencia + `</td>
-                            <td>` +
-                    ` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` +
-                    productosList[t].id + `)" value="` + productosList[t].id + `">
+                            <td>`+` <button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg"  onclick=" return infoSubproducto( ` +
+                            productosList[t].id + `)" value="` + productosList[t].id + `">
                             <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
                             </button>
                             </td>            
@@ -2020,8 +2019,8 @@ async function agregarExistenciaDeProducto(idSucProd) {
             return;
         let respuesta = null;
         let aux = document.getElementById(`btnSubstraer`).outerHTML;
-        document.getElementById(`btnSubstraer`).outerHTML = 
-        `<button id="btnSubstraer" class="btn btn-info" type="button" disabled>
+        document.getElementById(`btnSubstraer`).outerHTML =
+            `<button id="btnSubstraer" class="btn btn-info" type="button" disabled>
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 ESPERE POR FAVOR
         </button>`;
@@ -2031,19 +2030,18 @@ async function agregarExistenciaDeProducto(idSucProd) {
             document.getElementById(`btnSubstraer`).outerHTML = aux;
             console.log('false: ', false);
             console.log('la respuesta si el producto confirmó es: ', respuesta);
-            if (respuesta)
-            {
+            if (respuesta) {
                 let sp = subproductos.find(p => p.idSucursalProducto == idSucProd);
                 let nuevaExistencia = sp.existencia + sp.piezas;
                 subproductos.find(p => p.idSucursalProducto == idSucProd).existencia = nuevaExistencia;
                 let etiqueta0 = document.getElementById(`subpExistencia${idSucProd}`);
-                if(etiqueta0!=null)
+                if (etiqueta0 != null)
                     etiqueta0.textContent = nuevaExistencia;
                 let pS = productosSucursal.find(p => p.id == idSucProd);
                 let nExistencia = pS.existencia - 1;
                 productosSucursal.find(p => p.id == idSucProd).existencia = nExistencia;
                 let etiqueta = document.getElementById(`existenciaP${idSucProd}`);
-                if(etiqueta!=null)
+                if (etiqueta != null)
                     etiqueta.textContent = nExistencia;
                 actualizarCabecera();
                 return alert('LAS PIEZAS DE UN PRODUCTO SE HA DESCONTADO PARA AGREGAR AL SUBPRODUCTO');
@@ -2067,10 +2065,92 @@ async function agregarExistenciaDeProducto(idSucProd) {
     });*/
 }
 
-/*function editarSubproducto()
-{
-    document.getElementById(`btnEditarSubp`);
-}*/
+async function editarSubproducto(idSucProd,editar) {
+    let btnEditar = document.getElementById(`btnEditarSubp`);
+    let btnCancelar = document.getElementById(`btnCancelarSubp`);
+    let piezas = document.getElementById(`piezas`);
+    let precio = document.getElementById(`precioSubp`);
+    let observacion = document.getElementById(`observacion`);
+    let botones = document.getElementById(`botonesEditarSubp`);
+    if (btnEditar == null || btnCancelar == null)
+        return;
+    console.log('valor boton antes ', btnEditar.value);
+    if (btnEditar.value == "true") {
+        btnEditar.value = false;
+        btnEditar.textContent = "GUARDAR CAMBIOS";
+        piezas.disabled = false;
+        precio.disabled = false;
+        observacion.disabled = false;
+        btnCancelar.hidden = false;
+
+        //botones.innerHTML = innerHTML +  
+    } else {
+        btnCancelar.hidden = true;
+        let subproducto = subproductos.find(p => p.idSucursalProducto == idSucProd);
+        if(!editar)
+        {
+            piezas.value = subproducto.piezas;
+            precio.value = subproducto.precio;
+            observacion.value = subproducto.observacion;
+            btnEditar.value = true;
+            btnEditar.textContent = "EDITAR SUBPRODUCTO";
+            piezas.disabled = true;
+            precio.disabled = true;
+            observacion.disabled = true;
+            return;
+        }
+        let confirmacion = confirm('¿DESEA CONFIRMAR ACTUALIZAR EL PRODUCTO?');
+        if(!confirmacion)
+            return;
+        try {
+            
+            btnEditar.textContent = "EDITAR SUBPRODUCTO";
+            let btnAux = botones.innerHTML;
+            btnEditar.outerHTML = 
+            `<button id="btnEditarSubp" class="btn btn-info mx-auto" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                ACTUALIZANDO SUBPRODUCTO
+            </button>`;
+            let solicitud = await $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `/puntoVenta/editarSubproducto/${idSucProd}`,
+                // los datos que voy a enviar para la relación
+                data: {
+                    piezas: piezas.value,
+                    precio: precio.value,
+                    observacion: observacion.value,
+                    _token: "{{ csrf_token() }}",
+                }
+            });
+            subproductos.find(p => p.idSucursalProducto == idSucProd).piezas = parseInt(piezas.value);
+            subproductos.find(p => p.idSucursalProducto == idSucProd).precio = parseInt(precio.value);
+            subproductos.find(p => p.idSucursalProducto == idSucProd).observacion = observacion.value;
+            let productoSucursal = productosSucursal.find(p => p.id == idSucProd);
+            let costoSubp = productoSucursal.costo / subproducto.piezas;
+            let etiCosto = document.getElementById(`subpCosto${idSucProd}`);
+            if(etiCosto!= null)
+                etiCosto.textContent = Number(costoSubp.toFixed(2));
+            let etiPrecio = document.getElementById(`subpPrecio${idSucProd}`);
+            if(etiPrecio!=null)
+                etiPrecio.textContent = precio.value;
+            actualizarCabecera();
+            botones.innerHTML = btnAux;
+            console.log('solicitud',solicitud);
+            btnEditar.value = true;
+            
+            piezas.disabled = true;
+            precio.disabled = true;
+            observacion.disabled = true;
+            
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+
+    }
+
+}
 
 function infoSubproducto(id) {
     //Modal
@@ -2141,7 +2221,7 @@ function infoSubproducto(id) {
                                                     <h6 class="ml-4">PIEZAS</h6>
                                                 </label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="piezas" id="piezas" class="form-control text-uppercase"
+                                                    <input type="number" name="piezas" id="piezas" class="form-control text-uppercase"
                                                      placeholder="PIEZAS" value="${subproductos[h].piezas}" required disabled>
                                                 </div>
                                             </div>
@@ -2163,8 +2243,13 @@ function infoSubproducto(id) {
                                                     placeholder="OBSERVACION" value="${subproductos[h].observacion}" required disabled>
                                                 </div>
                                             </div>
-                                            <div class="row col-auto mx-0 px-0">
-                                                <button type="button" id="btnEditarSubp"class="btn btn-secondary ml-auto">EDITAR SUBPRODUCTO</button>
+                                            <div class="row col-auto mx-0 px-0" id="botonesEditarSubp">
+                                                <button type="button" id="btnEditarSubp"class="btn btn-success ml-auto mr-1" 
+                                                onclick="editarSubproducto(${subproductos[h].idSucursalProducto},true)" value=true>
+                                                EDITAR SUBPRODUCTO</button>
+                                                <button type="button" id="btnCancelarSubp"class="btn btn-danger" 
+                                                onclick="editarSubproducto(${subproductos[h].idSucursalProducto},false)" value=true hidden>
+                                                CANCELAR</button>
                                             </div>
                                             <!--El name debe ser igual al de la base de datos-->
                                             <br />
