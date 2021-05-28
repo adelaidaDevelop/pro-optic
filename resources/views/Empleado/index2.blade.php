@@ -338,7 +338,7 @@ $verS = $sE->hasAnyRole($vS);
                                                 class="form-control @error('primerNombre') is-invalid @enderror "
                                                 name="primerNombre"
                                                 value="@if(session()->has('cambios')){{old('primerNombre')}}@else{{$datosEmpleado->primerNombre}}@endif"
-                                                placeholder="Ingresar nombre(s)" required autocomplete="primerNombre"
+                                                placeholder="INGRESAR PRIMER NOMBRE" required autocomplete="primerNombre"
                                                 autofocus>
                                             @error('primerNombre')
                                             <span class="invalid-feedback" role="alert">
@@ -372,7 +372,7 @@ $verS = $sE->hasAnyRole($vS);
                                                 class="form-control @error('apellidoPaterno') is-invalid @enderror "
                                                 name="apellidoPaterno" id="apellidoPaterno"
                                                 value="@if(session()->has('cambios')){{old('apellidoPaterno')}}@else{{$datosEmpleado->apellidoPaterno}}@endif"
-                                                placeholder="Ingresar apellido paterno" required
+                                                placeholder="INGRESAR APELLIDO PATERNO" required
                                                 autocomplete="apellidoPaterno" autofocus>
                                             @error('apellidoPaterno')
                                             <span class="invalid-feedback" role="alert">
@@ -388,7 +388,7 @@ $verS = $sE->hasAnyRole($vS);
                                                 class="form-control @error('apellidoMaterno') is-invalid @enderror "
                                                 name="apellidoMaterno" id="apellidoMaterno"
                                                 value="@if(session()->has('cambios')){{old('apellidoMaterno')}}@else{{$datosEmpleado->apellidoMaterno}}@endif"
-                                                placeholder="Ingresar apellido materno" required
+                                                placeholder="INGRESAR APELLIDO MATERNO" required
                                                 autocomplete="apellidoMaterno" autofocus>
                                             @error('apellidoPaterno')
                                             <span class="invalid-feedback" role="alert">
@@ -495,7 +495,7 @@ $verS = $sE->hasAnyRole($vS);
                                             <input type="text" class="form-control @error('curp') is-invalid @enderror "
                                                 name="curp" id="curp"
                                                 value="@if(session()->has('cambios')){{ old('curp') }}@else{{$datosEmpleado->curp}}@endif"
-                                                placeholder="Ingresar curp" required autocomplete="curp" autofocus
+                                                placeholder="INGRESAR CURP" required autocomplete="curp" autofocus
                                                 readonly>
                                             @error('curp')
                                             <span class="invalid-feedback" role="alert">
@@ -511,7 +511,7 @@ $verS = $sE->hasAnyRole($vS);
                                             </label>
                                             <textarea name="domicilio" id="domicilio"
                                                 class="text-uppercase  form-control @error('domicilio') is-invalid @enderror"
-                                                placeholder="Ingresar domicilio completo"
+                                                placeholder="INGRESAR DOMICILIO COMPLETO"
                                                 value="{{$datosEmpleado->domicilio}}" required autocomplete="domicilio"
                                                 autofocus>@if(session()->has('cambios')){{ old('domicilio')}}@else{{$datosEmpleado->domicilio}}@endif</textarea>
                                             @error('domicilio')
@@ -566,7 +566,7 @@ $verS = $sE->hasAnyRole($vS);
                                                 class="form-control @error('email') is-invalid @enderror " name="email"
                                                 id="email"
                                                 value="@if(session()->has('cambios')){{old('email')}}@else{{$users->email}}@endif"
-                                                placeholder="Ingresar correo electronico" required autocomplete="email"
+                                                placeholder="INGRESAR CORREO ELECTRONICO" required autocomplete="email"
                                                 autofocus>
                                             @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -578,11 +578,11 @@ $verS = $sE->hasAnyRole($vS);
                                             <label for="telefono">
                                                 TELEFONO
                                             </label>
-                                            <input type="text"
+                                            <input type="tel"
                                                 class="form-control @error('telefono') is-invalid @enderror "
                                                 name="telefono" id="telefono"
                                                 value="@if(session()->has('cambios')){{old('telefono')}}@else{{$datosEmpleado->telefono}}@endif"
-                                                placeholder="Ingresar telefono" required autocomplete="telefono"
+                                                placeholder="TEL 8-10 DIGITOS" pattern="[0-9]{8,10}" required autocomplete="telefono"
                                                 autofocus>
                                             @error('telefono')
                                             <span class="invalid-feedback" role="alert">
@@ -646,7 +646,7 @@ $verS = $sE->hasAnyRole($vS);
                                                 class="form-control @error('username') is-invalid @enderror "
                                                 name="username" id="username"
                                                 value="@if(session()->has('cambios')){{old('username')}}@else{{$users->username}}@endif"
-                                                placeholder="Ingresar usuario" required autocomplete="username"
+                                                placeholder="INGRESAR USUARIO" required autocomplete="username"
                                                 autofocus>
                                             @error('username')
                                             <span class="invalid-feedback" role="alert">
@@ -768,7 +768,7 @@ $verS = $sE->hasAnyRole($vS);
                                     <input type="text" id="primerNombre"
                                         class="form-control @error('primerNombre') is-invalid @enderror"
                                         name="primerNombre" id="primerNombre" value="{{ old('primerNombre') }}"
-                                        placeholder="Ingresar nombre(s)" required autocomplete="primerNombre" autofocus>
+                                        placeholder="INGRESAR PRIMER NOMBRE" required autocomplete="primerNombre" autofocus>
                                     @error('primerNombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -782,7 +782,7 @@ $verS = $sE->hasAnyRole($vS);
                                     <input type="text" id="segundoNombre"
                                         class="form-control @error('segundoNombre') is-invalid @enderror"
                                         name="segundoNombre" id="segundoNombre" value="{{ old('segundoNombre') }}"
-                                        placeholder="Ingresar nombre(s)" autocomplete="segundoNombre" autofocus>
+                                        placeholder="INGRESAR SEGUNDO NOMBRE" autocomplete="segundoNombre" autofocus>
                                     @error('segundoNombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -798,7 +798,7 @@ $verS = $sE->hasAnyRole($vS);
                                     <input type="text"
                                         class=" form-control @error('apellidoPaterno') is-invalid @enderror"
                                         name="apellidoPaterno" id="apellidoPaterno" value="{{ old('apellidoPaterno') }}"
-                                        placeholder="Ingresar apellido paterno" required autocomplete="apellidoPaterno"
+                                        placeholder="INGRESAR APELLIDO PATERNO" required autocomplete="apellidoPaterno"
                                         autofocus>
                                     @error('apellidoPaterno')
                                     <span class="invalid-feedback" role="alert">
@@ -813,7 +813,7 @@ $verS = $sE->hasAnyRole($vS);
                                     <input type="text"
                                         class=" form-control @error('apellidoMaterno') is-invalid @enderror"
                                         name="apellidoMaterno" id="apellidoMaterno" value="{{ old('apellidoMaterno') }}"
-                                        placeholder="Ingresar apellido materno" required autocomplete="apellidoMaterno"
+                                        placeholder="INGRESAR APELLIDO MATERNO" required autocomplete="apellidoMaterno"
                                         autofocus>
                                     @error('apellidoMaterno')
                                     <span class="invalid-feedback" role="alert">
@@ -916,7 +916,7 @@ $verS = $sE->hasAnyRole($vS);
                                         CURP
                                     </label>
                                     <input type="text" class=" form-control @error('curp') is-invalid @enderror"
-                                        name="curp" id="curp" value="{{ old('curp') }}" placeholder="Ingresar curp"
+                                        name="curp" id="curp" value="{{ old('curp') }}" placeholder="INGRESAR CURP"
                                         required autocomplete="curp" autofocus readonly>
                                     @error('curp')
                                     <span class="invalid-feedback" role="alert">
@@ -932,7 +932,7 @@ $verS = $sE->hasAnyRole($vS);
                                     </label>
                                     <textarea name="domicilio" id="domicilio"
                                         class="form-control @error('domicilio') is-invalid @enderror"
-                                        placeholder="Ingresar domicilio completo" value="{{ old('domicilio') }}"
+                                        placeholder="INGRESAR DOMICILIO COMPLETO" value="{{ old('domicilio') }}"
                                         required autocomplete="domicilio" autofocus>{{ old('domicilio') }}</textarea>
                                     @error('domicilio')
                                     <span class="invalid-feedback" role="alert">
@@ -949,7 +949,7 @@ $verS = $sE->hasAnyRole($vS);
                                     </label>
                                     <input type="text" class=" form-control @error('email') is-invalid @enderror"
                                         name="email" id="email" value="{{ old('email') }}"
-                                        placeholder="Ingresar correo electronico" required autocomplete="email"
+                                        placeholder="INGRESAR CORREO ELECTRONICO" required autocomplete="email"
                                         autofocus>
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -961,9 +961,9 @@ $verS = $sE->hasAnyRole($vS);
                                     <label for="telefono">
                                         TELEFONO
                                     </label>
-                                    <input type="text" class=" form-control @error('telefono') is-invalid @enderror"
+                                    <input type="tel" class=" form-control @error('telefono') is-invalid @enderror"
                                         name="telefono" id="telefono" value="{{ old('telefono') }}"
-                                        placeholder="Ingresar telefono" required autocomplete="telefono" autofocus>
+                                        placeholder="TEL 8-10 DIGITOS" pattern="[0-9]{8,10}" required autocomplete="telefono" autofocus>
                                     @error('telefono')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -980,7 +980,7 @@ $verS = $sE->hasAnyRole($vS);
                                         <input type="password"
                                             class=" form-control @error('claveE') is-invalid @enderror" name="claveE"
                                             id="claveE" value="{{ old('claveE') }}"
-                                            placeholder="Ingresar clave para operaciones" required autocomplete="claveE"
+                                            placeholder="INGRESAR CLAVE PARA OPERACIONES" required autocomplete="claveE"
                                             autofocus readonly>
                                         <div class="input-group-append">
                                             <button class="btn btn-dark" onclick="mostrarPasswordClave()" type="button">
@@ -1021,7 +1021,7 @@ $verS = $sE->hasAnyRole($vS);
                                     </label>
                                     <input type="text" class=" form-control @error('username') is-invalid @enderror"
                                         name="username" id="username" value="{{ old('username') }}"
-                                        placeholder="Ingresar usuario" required autocomplete="username" autofocus>
+                                        placeholder="INGRESAR USUARIO" required autocomplete="username" autofocus>
                                     @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

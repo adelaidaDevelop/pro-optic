@@ -97,7 +97,8 @@ $verC = $sE->hasAnyRole($vC);
                                     <label for="telefono" class="mt-2">
                                         TELEFONO
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" value="{{$d->telefono}}" required>
+                                    <input type="tel" class="form-control @error('nombre') is-invalid @enderror" placeholder="TEL 8-10 DIGITOS" name="telefono" id="telefono" value="{{$d->telefono}}" pattern="[0-9]{8,10}" required>
+                                    
                                     <label for="telefono" class="mt-2">
                                         DOMICILIO
                                     </label>
@@ -174,7 +175,7 @@ $verC = $sE->hasAnyRole($vC);
                                 <label for="telefono">
                                     TELEFONO
                                 </label>
-                                <input type="number" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" placeholder="10 DIGITOS" required>
+                                <input type="tel" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" placeholder="TEL 8-10 DIGITOS" pattern="[0-9]{8,10}" required>
                                 <label for="domicilio">
                                     DOMICILIO
                                 </label>
