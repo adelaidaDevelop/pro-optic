@@ -2067,6 +2067,11 @@ async function agregarExistenciaDeProducto(idSucProd) {
     });*/
 }
 
+/*function editarSubproducto()
+{
+    document.getElementById(`btnEditarSubp`);
+}*/
+
 function infoSubproducto(id) {
     //Modal
     //let x1= 0;
@@ -2087,32 +2092,85 @@ function infoSubproducto(id) {
                             let x = productosSucursal[j].id;
                             datosProduct =
                                 `
-                                    <div class="col-3">
+                                    <!--div class="col-3">
                                     <br/>
                                             <label for="Nombre">
                                                 <h6  class="ml-4 ">{{'NOMBRE'}}</h6>
                                             </label>
-                                            <br/><br/>
+                                            <br/>
                                             <label for="Receta">
                                                 <h6  class="ml-4"> {{'RECETA MEDICA'}} </h6>
                                             </label>
-                                            <br /> <br/>
+                                            <br/>
                                             <label for="Piezas">
                                                 <h6  class="ml-4 mt-1"> {{'PIEZAS'}} </h6>
                                             </label>
                                             <br/>
+                                            <label for="precioSubp">
+                                                <h6  class="ml-4 mt-1"> {{'PRECIO'}} </h6>
+                                            </label>
                                             <br />
                                             <label for="Receta">
                                                 <h6  class="ml-4 mt-1"> {{'OBSERVACION'}} </h6>
                                             </label>
                                             <br />
-                                        </div>
-                                        <div class="col-5">
+                                        </div-->
+                                        <div class="col-8">
+                                            <div class="form-group row">
+                                                <label for="nombre" class="col-sm-3 col-form-label">
+                                                    <h6 class="ml-4">NOMBRE</h6>
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="nombre" id="nombre" class="form-control text-uppercase"
+                                                    placeholder="NOMBRE PRODUCTOS" value="${productos[count10].nombre}" 
+                                                    required readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="receta" class="col-sm-3 col-form-label">
+                                                    <h6 class="ml-4">RECETA</h6>
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control text-uppercase" name="receta" id="receta" disabled>
+                                                        <option value="" selected>${productos[count10].receta}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="piezas" class="col-sm-3 col-form-label">
+                                                    <h6 class="ml-4">PIEZAS</h6>
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="piezas" id="piezas" class="form-control text-uppercase"
+                                                     placeholder="PIEZAS" value="${subproductos[h].piezas}" required disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="precioSubp" class="col-sm-3 col-form-label">
+                                                    <h6 class="ml-4">PRECIO</h6>
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input type="number" name="precioSubp" id="precioSubp" class="form-control text-uppercase"
+                                                     placeholder="PRECIO" value="${subproductos[h].precio}" required disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="observacion" class="col-sm-3 col-form-label">
+                                                    <h6 class="ml-4">OBSERVACION</h6>
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="observacion" id="observacion" class="form-control text-uppercase" 
+                                                    placeholder="OBSERVACION" value="${subproductos[h].observacion}" required disabled>
+                                                </div>
+                                            </div>
+                                            <div class="row col-auto mx-0 px-0">
+                                                <button type="button" id="btnEditarSubp"class="btn btn-secondary ml-auto">EDITAR SUBPRODUCTO</button>
+                                            </div>
                                             <!--El name debe ser igual al de la base de datos-->
                                             <br />
-                                            <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="NOMBRE PRODUCTOS" value="` +
-                                productos[count10].nombre + ` " autofocus required disabled>
-                                            <br />
+                                            <!--input type="text" name="nombre" id="nombre" class="form-control text-uppercase" placeholder="NOMBRE PRODUCTOS" value="` +
+                                productos[count10].nombre + ` " autofocus required disabled-->
+                                            <!--br />
                                              <select class="form-control text-uppercase" name="Receta" id="Receta"  disabled>
                                                 <option value="" selected>` + productos[count10].receta +
                                 ` </option>
@@ -2121,12 +2179,16 @@ function infoSubproducto(id) {
                                             <input type="text" name="piezas" id="piezas" class="form-control text-uppercase" placeholder="PIEZAS" value="` +
                                 subproductos[h].piezas +
                                 ` " autofocus required disabled>
-                                            <br />
+                                            <br/>
+                                            <input type="text" name="precioSubp" id="precioSubp" class="form-control text-uppercase" placeholder="PRECIO" value="` +
+                                subproductos[h].precio +
+                                ` " autofocus required disabled>
+                                            <br/>
                                             <input type="text" name="observacion" id="observacion" class="form-control text-uppercase" placeholder="OBSERVACION" value="` +
                                 subproductos[h]
                                 .observacion +
                                 ` " autofocus required disabled>
-                                            <br />
+                                            <br /-->
                                         </div>
                                         <div class="col-4 text-center">
                                             <br /><br />
