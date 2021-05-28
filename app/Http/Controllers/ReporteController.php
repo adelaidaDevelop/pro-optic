@@ -18,6 +18,7 @@ use App\Models\Sucursal;
 use App\Models\Sucursal_empleado;
 use App\Models\Sucursal_producto;
 use App\Models\venta_cliente;
+use App\Models\historialInventario;
 use Illuminate\Http\Request;
 //use PDF;
 use Illuminate\Support\Facades\DB;
@@ -218,6 +219,30 @@ class ReporteController extends Controller
     public function destroy(Reporte $reporte)
     {
         //
+    }
+
+    public function histoVenta(){
+        $hoy = now()->toDateString();
+        $datos = DB::table('detalle_ventas')
+            ->join('ventas', 'detalle_ventas.idVenta', '=', 'ventas.id')
+            ->join('sucursal_empleados', 'ventas.idSucursalEmpleado', '=', 'sucursal_empleados.id')
+            ->where('ventas.fecha', '=', $hoy)
+            ->select('sucursal_empleados.idSucursal as idSucu',  DB::raw('SUM(detalle_ventas.precioIndividual * detalle_ventas.cantidad) as sumaT'))
+            ->groupBy('sucursal_empleados.idSucursal')
+    ->get();
+        //return $datos;
+       // $array = (array) $datos;
+        $array = json_decode(json_encode($datos), true);
+    //return $array;
+    foreach ($array as $datosInsertar) {
+      //  return $datosInsertar;
+      $historialV = new historialInventario;
+      $historialV->totalInv = $datosInsertar['sumaT'];
+      $historialV->fecha = $hoy;
+      $historialV->idSucursal = $datosInsertar['idSucu'];
+      $historialV->save();
+        }
+        return true;
     }
 
     function pdf() {

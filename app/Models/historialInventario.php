@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class historialInventario extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'totalInv',
+        'fecha',
+        'idSucursal'
+        
+    ];
 }

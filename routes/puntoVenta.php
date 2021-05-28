@@ -152,6 +152,8 @@ Route::prefix('/puntoVenta')->group(function()
     //RUTA IMPRIMIR CORTE CAJA
     Route::get('imp_corteCaja', [ReporteController::class,'pdf']);
 
+    Route::get('histo_venta', [ReporteController::class,'histoVenta']);
+
     //Route::get('eliminar/{id}', [ProductoController::class,'eliminar']);
     Route::resource('sucursal', SucursalController::class);
 
