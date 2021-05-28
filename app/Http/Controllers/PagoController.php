@@ -43,11 +43,11 @@ class PagoController extends Controller
         $totalResta= $request->input('totalResta');
         $totalCompra = $request->input('totalCompra');
         $idSucEmp = session('idSucursalEmpleado');
-        
+        $pago = new Pago_venta;
         if ($monto == $totalResta) {
             if($monto > 0)
             {
-            $pago = new Pago_venta;
+            
             $pago->monto = $monto;
             $pago->idEmpSuc = $idSucEmp;
             $pago->idVentaCliente = $idVentaCliente;
@@ -67,14 +67,14 @@ class PagoController extends Controller
             }
         } else if($monto > 0)
             {
-            $pago = new Pago_venta;
+            //$pago = new Pago_venta;
             $pago->monto = $monto;
             $pago->idEmpSuc = $idSucEmp;
             $pago->idVentaCliente = $idVentaCliente;
             $pago->save();
             }
         
-        return true;
+        return json_encode($pago);
     }
 
     
