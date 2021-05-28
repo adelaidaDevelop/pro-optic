@@ -235,9 +235,13 @@ class SubproductoController extends Controller
      * @param  \App\Models\Subproducto  $subproducto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subproducto $subproducto)
+    public function update(Request $request, $idSucProd)
     {
-        //
+        $datos['piezas']      = $request->input('piezas');
+        $datos['precio']      = $request->input('precio');
+        $datos['observacion'] = $request->input('observacion');
+        Subproducto::where('idSucursalProducto', '=', $idSucProd)->update($datos);
+        return 'El producto ha sido actualizado';
     }
 
     /**

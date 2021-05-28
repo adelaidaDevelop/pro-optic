@@ -240,7 +240,7 @@ class ProductoController extends Controller
         {
             if(count($productosStock)>=30)
                 return $productosStock;//$productosStock;
-            $sP = Sucursal_producto::where('idProducto', '=', $p->id)->first();//$p->id);
+            $sP = Sucursal_producto::where('idProducto', '=', $p->id)->where('idSucursal','=',session('sucursal'))->first();//$p->id);
             //return $sP->get();
             if(!isset($sP))
             {

@@ -131,6 +131,7 @@ Route::prefix('/puntoVenta')->group(function()
     //SUBPRODUCTO
     Route::resource('subproducto', SubproductoController::class);
     Route::get('veriUniqueSubproducto', [SubproductoController::class,'existeEnSubproducto']);
+    Route::post('editarSubproducto/{id}', [SubproductoController::class,'update']);
 
     Route::get('subproducto/actExistencia', [SubproductoController::class,'actExistencia']);
     Route::get('subproductoEli/{id}', [SubproductoController::class,'eliminar']);
