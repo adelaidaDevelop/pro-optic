@@ -1,25 +1,25 @@
 @extends('header2')
 @php
-        use App\Models\Sucursal_empleado;
-        $vE = ['verEmpleado','modificarEmpleado','eliminarEmpleado','crearEmpleado','admin'];
-        $mE= ['modificarEmpleado','admin'];
-        $cE= ['crearEmpleado','admin'];
-        $eE= ['eliminarEmpleado','admin'];
-        $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));  
-        $modificarE = $sE->hasAnyRole($mE);
-        $crearE = $sE->hasAnyRole($cE);
-        $eliminarE = $sE->hasAnyRole($eE);
-        $verE = $sE->hasAnyRole($vE);
+use App\Models\Sucursal_empleado;
+$vE = ['verEmpleado','modificarEmpleado','eliminarEmpleado','crearEmpleado','admin'];
+$mE= ['modificarEmpleado','admin'];
+$cE= ['crearEmpleado','admin'];
+$eE= ['eliminarEmpleado','admin'];
+$sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+$modificarE = $sE->hasAnyRole($mE);
+$crearE = $sE->hasAnyRole($cE);
+$eliminarE = $sE->hasAnyRole($eE);
+$verE = $sE->hasAnyRole($vE);
 
-        $vS = ['veriSucursal','modificarSucursal','eliminarSucursal','crearSucursal','admin'];
-        $mS= ['modificarSucursal','admin'];
-        $cS= ['crearSucursal','admin'];
-        $eS= ['eliminarSucursal','admin'];
-        $modificarS = $sE->hasAnyRole($mS);
-        $crearS = $sE->hasAnyRole($cS);
-        $eliminarS = $sE->hasAnyRole($eS);
-        $verS = $sE->hasAnyRole($vS);
-        @endphp
+$vS = ['veriSucursal','modificarSucursal','eliminarSucursal','crearSucursal','admin'];
+$mS= ['modificarSucursal','admin'];
+$cS= ['crearSucursal','admin'];
+$eS= ['eliminarSucursal','admin'];
+$modificarS = $sE->hasAnyRole($mS);
+$crearS = $sE->hasAnyRole($cS);
+$eliminarS = $sE->hasAnyRole($eS);
+$verS = $sE->hasAnyRole($vS);
+@endphp
 @section('contenido')
 <div class="container-fluid">
     <div class="row" style="background:#ED4D46">
@@ -31,11 +31,10 @@
         @if($crearE)
         <div class="  ml-4">
             <form method="get" action="{{url('/puntoVenta/empleado')}}">
-                <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit" 
-                >
-                <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="30px" height="30px">
-                <p class="h6 my-auto text-dark"><small>AGREGAR EMPLEADO</small></p>
-                    
+                <button class="btn btn-outline-secondary  ml-4 p-1 border-0" type="submit">
+                    <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="30px" height="30px">
+                    <p class="h6 my-auto text-dark"><small>AGREGAR EMPLEADO</small></p>
+
                 </button>
             </form>
         </div>
@@ -44,13 +43,13 @@
         @if($verS)
         <div class=" ">
             <form method="get" action="{{url('/puntoVenta/administracion/')}}">
-                <button class="btn btn-outline-secondary  p-1 border-0" type="submit" >
-                <img src="{{ asset('img\sucursal2.png') }}" alt="Editar" width="30px" height="30px">
+                <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
+                    <img src="{{ asset('img\sucursal2.png') }}" alt="Editar" width="30px" height="30px">
                     <p class="h6 my-auto mx-2 text-dark"><small>SUCURSALES</small></p>
                 </button>
             </form>
         </div>
-        
+
         @endif
         <!--div class="">
             <form method="get" action="{url('/puntoVenta/empleado/')}}">
@@ -67,11 +66,11 @@
             </a>
         </div>
         <div class=" ml-3 my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
-        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
-    </a>
-</div>
-        
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+                <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
+            </a>
+        </div>
+
         @endsection
     </div>
     <div class="row p-1 ">
@@ -233,7 +232,7 @@
                                 </div>
                             </fieldset>
                             <div class="form-row d-flex flex-row-reverse px-1">
-                            @if($modificarE)
+                                @if($modificarE)
                                 <a class="btn btn-outline-secondary" type="button" id="btnFormCancelar"
                                     href="{{url('puntoVenta/empleado/0/edit/')}}">
                                     <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
@@ -245,7 +244,7 @@
                                         width="25px" height="25px">
                                     GUARDAR CAMBIOS
                                 </button>
-                                
+
                                 <button class="btn btn-outline-secondary mr-auto" type="button" id="btnEditar"
                                     onclick="habilitar()">
                                     <img src="{{ asset('img\edit.png') }}" class="img-thumbnail" alt="Editar"
@@ -264,10 +263,13 @@
                             data-target="#modalPassword" value="SI">
                             <!--img src="{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                                 height="25px"-->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-</svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+                                <path fill-rule="evenodd"
+                                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+                            </svg>
                             CAMBIAR CONTRASEÑA
                         </button>
                     </div>
@@ -320,7 +322,8 @@
                             </label>
                             <br />
                             <label for="Nombre">
-                                <h5 class="text-uppercase">{{$datosEmpleado->primerNombre}} {{$datosEmpleado->segundoNombre}}
+                                <h5 class="text-uppercase">{{$datosEmpleado->primerNombre}}
+                                    {{$datosEmpleado->segundoNombre}}
                                     {{$datosEmpleado->apellidoPaterno}} {{$datosEmpleado->apellidoMaterno}}</h5>
                             </label>
                             <fieldset disabled id="formEditar">
@@ -656,7 +659,7 @@
                                 </div>
                             </fieldset>
                             <div class="form-row d-flex flex-row-reverse px-1">
-                            @if($modificarE)
+                                @if($modificarE)
                                 <a class="btn btn-outline-secondary" type="button" id="btnFormCancelar"
                                     href="{{url('puntoVenta/empleado/'.$datosEmpleado->id.'/edit/')}}">
                                     <img src="{{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar"
@@ -674,19 +677,18 @@
                                         width="25px" height="25px">
                                     EDITAR DATOS
                                 </button>
-                            @endif
-                            
+                                @endif
+
                             </div>
                             @if($eliminarE)
                             <div class="col-4 px-1">
-                                    <button class=" btn btn-outline-danger ml-auto mt-4"
-                                        onclick="eliminarEmpleado({{$datosEmpleado->id}})" type="button">
-                                        <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px"
-                                            height="25px">
-                                        ELIMINAR
-                                    </button>
-                                </div>
-                                @endif
+                                <button class=" btn btn-outline-danger ml-auto mt-4"
+                                    onclick="eliminarEmpleado({{$datosEmpleado->id}})" type="button">
+                                    <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                                    ELIMINAR
+                                </button>
+                            </div>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -697,10 +699,13 @@
                             data-target="#modalPassword" value="SI">
                             <!--img src="{ asset('img\eliminar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
                                 height="25px"-->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-</svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+                                <path fill-rule="evenodd"
+                                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+                            </svg>
                             CAMBIAR CONTRASEÑA
                         </button>
                     </div>
@@ -1053,7 +1058,7 @@
                         <div class="form-row w-100 d-flex flex-row-reverse">
                             <div class="form-group">
                                 <button class="btn btn-outline-dark d-flex" type="submit"
-                                onclick="return confirm('DESEA AGREGAR ESTE EMPLEADO');">
+                                    onclick="return confirm('DESEA AGREGAR ESTE EMPLEADO');">
                                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
                                         width="25px" height="25px">
                                     AGREGAR EMPLEADO
@@ -1063,7 +1068,8 @@
                         @else
                         <div class="form-row w-100 d-flex flex-row-reverse">
                             <div class="form-group">
-                                <button class="btn btn-outline-dark d-flex" onclick="alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" type="button">
+                                <button class="btn btn-outline-dark d-flex"
+                                    onclick="alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" type="button">
                                     <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
                                         width="25px" height="25px">
                                     GUARDAR EMPLEADO
@@ -1208,8 +1214,12 @@ async function actualizarPassword() {
         }
         if (cambio.value.length > 0) {
             if (cambio.value.length >= 8) {
-                let usuario = @if(isset($datosEmpleado) || isset($admin)) @json($users)
-                @else null @endif;
+                @php
+                    if(!isset($users))
+                    $users = null;
+                @endphp
+                let usuario = @json($users);
+                console.log('usuario',usuario);
                 let id = usuario.id;
                 const url = "{{url('/')}}/puntoVenta/empleado/editar/" + id;
                 console.log(url);
@@ -1229,8 +1239,8 @@ async function actualizarPassword() {
                         //alert(data);
                     }
                 });
-                console.log(respuestaCompra);
-                if (respuestaCompra == "") {
+                console.log(respuestaCompra);   
+                if (respuestaCompra == 1) {
                     console.log('Todo esta bien');
                     document.getElementById("cuerpoModal").innerHTML =
                         `<div class="alert alert-success" role="alert">
@@ -1296,14 +1306,16 @@ $('#btnForm').hide();
 $('#btnFormCancelar').hide();
 
 function habilitar() {
-    document.getElementById("formEditar").disabled = false;
+    let editar = document.getElementById("formEditar");
+    if(editar!=null)
+        editar.disabled = false;
     $('#btnForm').show()
     $('#btnFormCancelar').show()
     $('#btnEditar').hide()
     //document.getElementById("btnForm").show();
     //alert('Entra');
 }
-let cambios = @json(session()->has('cambios'));
+let cambios = `@json(session()->has('cambios'))`;
 if (cambios.length > 0)
     habilitar();
 //if(session() - > has('cambios'))
@@ -1392,30 +1404,30 @@ async function eliminarEmpleado(id) {
     let revi = confirm("¿DESEA ELIMINAR ESTE EMPLEADO?");
     if (revi) {
         try {
-            let respuesta= await $.ajax({
-            // metodo: puede ser POST, GET, etc
-            method: "DELETE",
-            // la URL de donde voy a hacer la petición
-            url: `/puntoVenta/empleado/${id}`,
-            // los datos que voy a enviar para la relación
-            data: {
-                //_token: $("meta[name='csrf-token']").attr("content")
-                _token: "{{ csrf_token() }}",
-            }
+            let respuesta = await $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "DELETE",
+                // la URL de donde voy a hacer la petición
+                url: `/puntoVenta/empleado/${id}`,
+                // los datos que voy a enviar para la relación
+                data: {
+                    //_token: $("meta[name='csrf-token']").attr("content")
+                    _token: "{{ csrf_token() }}",
+                }
             });
             //response = await fetch(`/puntoVenta/destroy/${id}`);
             //if (response.ok) {
-              //  let respuesta = await response.text();
-                if (respuesta.length > 1) {
-                    return alert(respuesta)
-                } else if (respuesta.length == 1) {
-                    //recargar la pag
-                    alert("EL EMPLEADO HA SIDO ELIMINADO");
-                    location.href = "{{url('/puntoVenta/empleado')}}";
-                } else {
-                    return alert("NO SE PUEDE ELIMINAR, ESTE EMPLEADO YA ESTA SIENDO USADO");
-                    
-                }
+            //  let respuesta = await response.text();
+            if (respuesta.length > 1) {
+                return alert(respuesta)
+            } else if (respuesta.length == 1) {
+                //recargar la pag
+                alert("EL EMPLEADO HA SIDO ELIMINADO");
+                location.href = "{{url('/puntoVenta/empleado')}}";
+            } else {
+                return alert("NO SE PUEDE ELIMINAR, ESTE EMPLEADO YA ESTA SIENDO USADO");
+
+            }
             /*} else {
                 return confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA ELIMINARLO?");
                 console.log("No responde :'v");

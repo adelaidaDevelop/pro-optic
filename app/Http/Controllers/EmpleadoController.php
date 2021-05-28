@@ -367,6 +367,36 @@ class EmpleadoController extends Controller
         $usuarios = ['modificarEmpleado','admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
         
+        
+        if($request->has('status'))
+        {
+            Empleado::where('id','=',$id)->update(['status' => $request->input('status')]);
+            return redirect('puntoVenta/empleado/'.$id.'/edit');
+        }
+        if($request->has('passwordChange'))
+        {
+            $rules = [
+                'passwordChange' => ['required', 'string', 'min:8'],
+            ];
+            $mesages = [
+                'passwordChange.required' => 'Por favor escriba su contraseña',
+                'passwordChange.min' => 'La contraseña debe tener al menos 8 caracteres',
+                
+            ];
+            
+            $validator = Validator::make($request->all(), $rules, $mesages);
+            
+            if($validator->fails())
+                return $validator->errors()->first();
+            //return 'Si entra';
+            /*if($validator->fails()):
+                return back()->withErrors($validator)->with('message','Se ha producido un error')->with(
+                    'typealert','danger');
+            endif;*/
+            User::where('id','=',$id)->update(['password' => Hash::make($request->input('passwordChange'))]);
+            return true;
+            //return redirect('puntoVenta/empleado/'.$id.'/edit');
+        }
         if($id == 0)
         {
             /*$rules = [
@@ -401,35 +431,6 @@ class EmpleadoController extends Controller
             $adminEmpleado->update($datosEmpleado);
             return redirect('puntoVenta/empleado/'.$id.'/edit');
             //return 'NO TE PREOCUPES, AQUI CACHO EL ERROR';
-        }
-        if($request->has('status'))
-        {
-            Empleado::where('id','=',$id)->update(['status' => $request->input('status')]);
-            return redirect('puntoVenta/empleado/'.$id.'/edit');
-        }
-        if($request->has('passwordChange'))
-        {
-            $rules = [
-                'passwordChange' => ['required', 'string', 'min:8'],
-            ];
-            $mesages = [
-                'passwordChange.required' => 'Por favor escriba su contraseña',
-                'passwordChange.min' => 'La contraseña debe tener al menos 8 caracteres',
-                
-            ];
-            
-            $validator = Validator::make($request->all(), $rules, $mesages);
-            
-            if($validator->fails())
-                return $validator->errors()->first();
-            //return 'Si entra';
-            /*if($validator->fails()):
-                return back()->withErrors($validator)->with('message','Se ha producido un error')->with(
-                    'typealert','danger');
-            endif;*/
-            User::where('id','=',$id)->update(['password' => Hash::make($request->input('passwordChange'))]);
-            return;
-            //return redirect('puntoVenta/empleado/'.$id.'/edit');
         }
         else
         {
