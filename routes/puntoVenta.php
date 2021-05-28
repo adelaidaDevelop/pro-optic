@@ -57,7 +57,7 @@ Route::prefix('/puntoVenta')->group(function()
     Route::resource('devolucion', DevolucionController::class);
     
     Route::get('/empleado/buscadorEmpleado', [EmpleadoController::class,'buscadorEmpleado']);
-    Route::get('/empleado/editar/{id}', [EmpleadoController::class,'editarEmpleado']);
+    Route::post('/empleado/editar/{id}', [EmpleadoController::class,'editarEmpleado']);
 
     Route::get('/producto/buscarProducto', [ProductoController::class,'buscarProducto']);
 

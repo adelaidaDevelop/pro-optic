@@ -40,7 +40,7 @@ CREDITOS
                             <th>NOMBRE</th>
                             <th>FECHA VENTA</th>
                             <th>DEBE</th>
-                            <th> FOLIO</th>
+                            <th>FOLIO</th>
                             <th>DESCRIPCION</th>
                             <th> </th>
                         </tr>
@@ -439,7 +439,6 @@ CREDITOS
                                         <th >` + cont + `</th>
                                             <td>` + nombre + `</td>    
                                             <td>` + fechaVenta.toLocaleDateString() + `</td>
-
                                             <td id="d">` + debe + `</td>
                                             <td>` + folio + `</td>
                                             <td>` +
@@ -530,8 +529,11 @@ CREDITOS
                     //  buscarProducto();
                     $('#confirmarVentaModal').modal('hide');
                     $("input[id='abono']").val(0);
-                    let confirmar = alert("ABONO AGREGADO CORRECTAMENTE");
-                    location.reload();
+                    pagos_ventas.push(JSON.parse(respuesta))//.find(p => p.idVentaCliente == idVent2)
+                    buscarCliente();
+                    //let confirmar = 
+                    alert("ABONO AGREGADO CORRECTAMENTE");
+                    //location.reload();
                     //  console.log(respuesta); //JSON.stringify(respuesta));
                 });
                 console.log(funcion);

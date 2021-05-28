@@ -30,9 +30,11 @@ $vS = ['veriSucursal','modificarSucursal','eliminarSucursal','admin'];
     @foreach($sucursalB as $sucursal)
     @if($sucursal->status === 1)
         @if($verS)
-        <a href="{{url('/puntoVenta/administracion/'.$sucursal->id.'/edit/')}}" class="btn btn-light btn-block border border-dark  my-2 mx-1">{{$sucursal->direccion}}</a>
-        @else
-        <button onclick="alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" class="btn btn-light btn-block border border-dark  my-2 mx-1">{{$sucursal->direccion}}</button> 
+            @if(session('idUsuario') == 1 || $sucursal->id == session('sucursal'))
+            <a href="{{url('/puntoVenta/administracion/'.$sucursal->id.'/edit/')}}" class="btn btn-light btn-block border border-dark  my-2 mx-1">{{$sucursal->direccion}}</a>
+            @else
+            <button onclick="alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" class="btn btn-light btn-block border border-dark  my-2 mx-1">{{$sucursal->direccion}}</button> 
+            @endif
         @endif
     @endif
     @endforeach

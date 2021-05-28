@@ -40,7 +40,9 @@ class AdministracionController extends Controller
     {
         $usuarios = ['admin','verSucursal','modificarSucursal','eliminarSucursal'];//,'admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        if(session('idUsuario') != 1)
+            if($id != session('sucursal'))
+                return redirect('/puntoVenta/administracion');
         $depa = Departamento::all();
         $datosD['d'] = Sucursal::findOrFail($id);
         $sucursal = Sucursal::findOrFail($id);
