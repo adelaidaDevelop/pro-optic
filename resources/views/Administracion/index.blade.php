@@ -148,8 +148,8 @@ $verS = $sE->hasAnyRole($vS);
                                         </span>
                                         @enderror
                                         <label for="">TELEFONO</label>
-                                        <input type="number" class="col-6 form-control @error('telefono') is-invalid @enderror" 
-                                        name="telefono" id="telefono" value="{{$d->telefono}}" required>
+                                        <input type="tel" class="col-6 form-control @error('telefono') is-invalid @enderror" 
+                                        name="telefono" id="telefono" value="{{$d->telefono}}" placeholder="TEL 8-10 DIGITOS"  pattern="[0-9]{8,10}" required>
                                         @error('telefono')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -248,8 +248,8 @@ $verS = $sE->hasAnyRole($vS);
                                     <label for="nombre">
                                         TELEFONO
                                     </label>
-                                    <input type="number" class="col-6 form-control @error('telefono') is-invalid @enderror" 
-                                    value="{{ old('telefono') }}" name="telefono" id="telefono" required>
+                                    <input type="TEL" class="col-6 form-control @error('telefono') is-invalid @enderror" 
+                                    value="{{ old('telefono') }}" placeholder="INGRESAR TEL 8-10 DIGITOS" name="telefono" id="telefono" pattern="[0-9]{8,10}" required>
                                     @error('telefono')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

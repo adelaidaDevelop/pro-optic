@@ -88,18 +88,18 @@
                                         <label for="nombre">
                                             NOMBRE
                                         </label>
-                                        <input type="text" class="text-uppercase form-control " name="nombre" id="nombre" value="{{$d->nombre}}" required>
+                                        <input type="text" class="text-uppercase form-control " name="nombre" id="nombre" value="{{$d->nombre}}" placeholder="INGRESAR NOMBRE PROVEEDOR" required>
                                         RFC
                                         </label>
-                                        <input type="text" class="text-uppercase form-control  @error('nombre') is-invalid @enderror" name="rfc" id="rfc" onkeyup="mayus(this);" value="{{$d->rfc}}" required>
+                                        <input type="text" class="text-uppercase form-control  @error('nombre') is-invalid @enderror" name="rfc" id="rfc" placeholder="INGRESAR RFC" onkeyup="mayus(this);" value="{{$d->rfc}}" required>
                                         <label for="telefono">
                                             TELEFONO
                                         </label>
-                                        <input type="number" class="text-uppercase form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" value="{{$d->telefono}}" required>
+                                        <input type="tel" class="text-uppercase form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" placeholder="INGRESAR TEL 8-10 DIGITOS" value="{{$d->telefono}}" pattern="[0-9]{8,10}" required>
                                         <label for="direccion">
                                             DIRECCION
                                         </label>
-                                        <textarea name="direccion" id="direccion" class="form-control @error('direccion') is-invalid @enderror" placeholder="Ingresar domicilio completo" value="" required autocomplete="domicilio">{{$d->direccion}}</textarea>
+                                        <textarea name="direccion" id="direccion" class="form-control @error('direccion') is-invalid @enderror" placeholder="INGRESAR DOMICILIO COMPLETO" value="" required autocomplete="domicilio">{{$d->direccion}}</textarea>
 
                                         <!--input type="text" class="text-uppercase form-control @error('nombre') is-invalid @enderror" 
                                         name="direccion" id="direccion" value="{$d->direccion}}" required-->
@@ -151,7 +151,7 @@
                                     <label for="nombre">
                                         NOMBRE
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" onkeyup="mayus(this);" id="nombre" value="{{ old('nombre')}}" required>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" onkeyup="mayus(this);" id="nombre" placeholder="NOMBRE PROVEEDOR" value="{{ old('nombre')}}" required>
                                     @error('nombre')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -160,15 +160,15 @@
                                     <label for="rfc">
                                         RFC
                                     </label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="rfc" onkeyup="mayus(this);" id="rfc" value="{{old('rfc')}}" required>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="rfc" onkeyup="mayus(this);" id="rfc" placeholder="RFC PROVEEDOR" value="{{old('rfc')}}" required>
                                     <label for="telefono">
                                         TELEFONO
                                     </label>
-                                    <input type="text" class="upper-case form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" value="{{ old('telefono')}}" required>
+                                    <input type="tel" class="upper-case form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" placeholder="TEL 8-10 DIGITOS" value="{{ old('telefono')}}" pattern="[0-9]{8,10}" required>
                                     <label for="direccion">
                                         DIRECCION
                                     </label>
-                                    <textarea name="direccion" id="direccion" class="form-control @error('direccion') is-invalid @enderror" placeholder="Ingresar domicilio completo" value="" required autocomplete="domicilio" onkeyup="mayus(this);">{{ old('direccion') }}</textarea>
+                                    <textarea name="direccion" id="direccion" class="form-control @error('direccion') is-invalid @enderror" placeholder="DOMICILIO COMPLETO" value="" required autocomplete="domicilio" onkeyup="mayus(this);">{{ old('direccion') }}</textarea>
                                     <!--input type="text" class="upper-case form-control @error('nombre') is-invalid @enderror" 
                                     name="direccion" onkeyup="mayus(this);" id="direccion" value="{{ old('direccion') }}" required-->
                                 </div>
