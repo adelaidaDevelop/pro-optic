@@ -844,7 +844,7 @@ INVENTARIO
                         // tabla2 = document.querySelector('#tablaR');
                         let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
-                        document.getElementById("btnCrearPdf").disabled = true;
+                      //  document.getElementById("btnCrearPdf").disabled = true;
                     } else {
                         $('#getUser').prop('disabled', false);
                         document.getElementById("tablaR").innerHTML = tabla2;
@@ -874,7 +874,7 @@ INVENTARIO
                         // tabla2 = document.querySelector('#tablaR');
                         let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
-                        document.getElementById("btnCrearPdf").disabled = true;
+                      //  document.getElementById("btnCrearPdf").disabled = true;
                     } else {
                         $('#getUser').prop('disabled', false);
                         console.log(tabla2);

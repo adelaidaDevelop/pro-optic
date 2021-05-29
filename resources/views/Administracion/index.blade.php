@@ -915,14 +915,14 @@ $verS = $sE->hasAnyRole($vS);
                         return alert(respuesta)
                     } else if (respuesta.length == 1) {
                         //recargar la pag
-                        alert("La sucursal fue eliminada");
+                        alert("LA SUCURSAL FUE ELIMINADA");
                         location.href = "{{url('/puntoVenta/administracion')}}";
                     } else {
                         let sucUsada = confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA DARLO DE BAJA?");
                         if (sucUsada) {
                             let respuesta2 = await fetch(`/puntoVenta/actualizar/${id}`);
                             if (respuesta2.ok) {
-                                alert("La sucursal se ha dado de baja");
+                                alert("LA SUCURSAL SE HA DADO DE BAJA");
                                 location.href = "{{url('/puntoVenta/administracion')}}";
                             }
                         }
