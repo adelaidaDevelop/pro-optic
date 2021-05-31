@@ -6,23 +6,33 @@
             <img src="{{ asset('img\farmaciagilogo.png') }}" alt="LOGO" height="50px">
         </a>
         <div class="input-group my-auto">
-            <input class="form-control" type="search" placeholder="Buscar producto" name="buscar" id="buscar"
-                aria-label="Buscar producto">
+            <input class="form-control" type="search"  placeholder="Buscar producto" name="buscar" id="buscar"
+                aria-label="Buscar producto" >
             <!--input type="text" class="form-control" placeholder="Username" aria-label="Username"
                 aria-describedby="basic-addon1"-->
-            <div class="input-group-append ">
+            <div class="input-group-append">
                 <!--button class="btn btn-outline-secondary" type="button" value="informacion" id="boton" style="background-image: url(img/search.svg);
                             background-repeat:no-repeat;background-size:100%;"-->
                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
                 <!--/button-->
 
-                <img src="{{ asset('img\search.svg') }}" for="buscar" class="btn btn-secondary p-1" width="35px"
-                    height="100%" alt="buscador" href="google.com">
+                <img src="{{ asset('img\search.svg') }}" for="buscar" class="btn btn-success p-1" width="30px"
+                    height="100%" alt="buscador" onclick="buscarProducto()">
                 <!--span class="input-group-text" id="basic-addon1"for="buscar">@</span-->
 
             </div>
         </div>
-
+        <script>
+            function buscarProducto()
+            {
+                let producto = document.querySelector('#buscar').value;
+                if(producto.length == 0)
+                    return;
+                console.log('Si va redireccionar');
+                location.href = `{{url('/buscar')}}/${producto}`;
+                
+            }
+        </script>
         <!--input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Buscar producto">
         <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button-->
         <!--button class="btn my-auto ml-2  py-0">

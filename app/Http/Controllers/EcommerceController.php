@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use DateInterval;
 
 use Validator, Hash, Auth;
+use Illuminate\Support\Facades\DB;
 class EcommerceController extends Controller
 {
     public function __construct()
@@ -51,6 +52,29 @@ class EcommerceController extends Controller
         //return session('idEmpleado');
     }
 
+    public function buscarProducto($producto)
+    {
+        //return $producto;
+        $datos = DB::table('productos')
+            ->join('sucursal_productos', 'productos.id', '=', 'sucursal_productos.idProducto')
+            ->where([['productos.nombre','like','%'.$producto.'%'],
+                ['sucursal_productos.idSucursal','=',session('sucursalEcommerce')]])
+            ->orWhere([['sucursal_productos.idSucursal','=',session('sucursalEcommerce')],
+                ['productos.descripcion','like','%'.$producto.'%']])
+        ->select('*')->limit(30)->get();
+            //->groupBy('sucursal_empleados.idSucursal')
+        
+        $array = json_decode(json_encode($datos), true);
+        //$productosNuevos = $this->productosNuevos();
+        //$productosDestacados = $this->productosDestacados();
+        $sucursales = Sucursal::all();
+        $departamentos = Departamento::where('ecommerce', '=',1)->get(['id','nombre']);
+        $total = count($array);
+        return view('Ecommerce.busqueda',compact('array','total','producto','sucursales','departamentos'));
+        //return Producto::join(Producto::)where('nombre','like','%'.$producto.'%')->orWhere('descripcion','like','%'.$producto.'%')
+        //->get();
+
+    }
     public function verProducto($id)
     {
         $sucursales = Sucursal::all();

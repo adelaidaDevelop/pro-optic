@@ -38,10 +38,12 @@ use App\Http\Controllers\ProductoController;
 /*Route::get('/', function () {
     return view('welcome');
 });*/
-Auth::routes(['verify' => true]);
+//Auth::routes(['verify' => true]);
 Route::get('/loginCliente', [LoginClienteController::class,'loginCliente'])->name('Login')->middleware('isCliente');
 Route::post('/loginCliente', [LoginClienteController::class,'loginPost'])->name('Login');
 Route::post('/logoutCliente', [LoginClienteController::class,'logout'])->name('Login');
+
+Route::get('/buscar/{producto}', [EcommerceController::class,'buscarProducto'])->middleware('isCliente');
 
 Route::post('/agregarAlCarrito/{id}', [EcommerceController::class,'addCarrito'])->middleware('isCliente');
 //Route::resource('/', EcommerceController::class)->middleware('isCliente');
