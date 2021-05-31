@@ -22,6 +22,7 @@ use App\Http\Controllers\CreditoController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\PagoCompraController;
 use App\Http\Controllers\DevolucionController;
+use App\Http\Controllers\HistorialPedidoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ProductosCaducidadController;
 use App\Http\Controllers\SucursalProductoController;
@@ -139,6 +140,10 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('subProdExisStock/{id}', [SubproductoController::class,'subProdExisStock']);
     Route::post('subProdExisNuevo/{id}', [SubproductoController::class,'subProdExisNuevo']);
 
+    //RUTAS PARA SEGUIMIENTO DE PEDIDOS ECOMMERCE
+    Route::get('seguimiento/pedido', [HistorialPedidoController::class,'index']);
+    Route::get('historial/pedido', [HistorialPedidoController::class,'index2']);
+    Route::get('comprobante', [HistorialPedidoController::class,'index3']);
     //ELIMINAR PRODUCTOS DE SUCURSAL
     Route::get('productoEli3/{id}', [ProductoController::class,'eliminar3']);
     Route::resource('cliente', ClienteController::class);

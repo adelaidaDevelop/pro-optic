@@ -148,10 +148,15 @@ class ReporteController extends Controller
                 }
             }
         }
+        $hoy = now()->toDateString();
+        $ayer = date("d-m-Y",strtotime($hoy."- 1 days")); 
+       // return $ayer;
         $proveedores = Proveedor::where('status','=', 1)->get(['id','nombre']);
         $detalle_ventas = Detalle_venta::all();
         $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
-        return view('Reportes.entradas_salidas', compact('empleados', 'compras', 'detalleCompra', 'productos', 'devoluciones', 'departamentos', 'ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados','proveedores','comprasFiltro','ventasFiltro'));    
+        $totalInventario = historialInventario::where('idSucursal','=', $idSucursal)->where('fecha','=', $ayer)
+        ->select('totalInv')->get();
+        return view('Reportes.entradas_salidas', compact('empleados', 'compras', 'detalleCompra', 'productos', 'devoluciones', 'departamentos', 'ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados','proveedores','comprasFiltro','ventasFiltro','totalInventario'));    
     }
       
 

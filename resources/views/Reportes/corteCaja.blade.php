@@ -303,6 +303,7 @@ CORTE DE CAJA
         //  let opcFecha = selectFecha.value;
         let fechaDia = document.querySelector('#fechaCorte');
         if (fechaDia.value.length > 0) {
+            console.log("FECHA ESCOGIDA OK");
             return true;
         }
         return false;
@@ -340,20 +341,23 @@ CORTE DE CAJA
             let fechaC = document.querySelector('#fechaCorte');
             let fechaCorte = new Date(fechaC.value);
             fechaCorte.setDate(fechaCorte.getDate() + 1);
+            console.log("fechaCorte", fechaCorte);
             let idCajer = document.querySelector('#idCajero');
+            console.log("idcajero: ", idCajer.value)
             if (idCajer.value != "0") {
                 idCajeroOK = parseInt(idCajer.value);
+                //VENTAS POR CAJEROS
                 for (let j in ventas) {
                     let idSucEmp = ventas[j].idSucursalEmpleado;
                     //   for (let h in sucursalEmpleado) {
                     //  if (sucursalEmpleado[h].id == idSucEmp) {
-                    let suc_emp = sucursalEmpleado.find(s => s.id == idSucEmp);
+                    let suc_emp = sucursalEmpleado.find(s => s.id === idSucEmp);
                     if (suc_emp != null) {
                         //TOTAL VENDIDO
                         if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
                             let fechaVC = new Date(ventas[j].created_at);
                             if (comparacionFecha(fechaCorte, fechaVC)) {
-                                if (suc_emp.idEmpleado == idCajeroOK) {
+                                if (suc_emp.idEmpleado === idCajeroOK) {
                                     cantVentas = cantVentas + 1;
                                     // efectivoV = efectivoV + ventas[j].pago;
                                     //totalVentas = totalVentas + ventas[j].pago;
@@ -487,7 +491,8 @@ CORTE DE CAJA
                         }
                     }
                 }
-                //ABONO realizados
+                //BUSCAR ABONOS realizados
+                abonos = 0;
                 for (let z in pagos) {
                     let fechaP = new Date(pagos[z].created_at);
                     // let ventaCliente = venta_cliente.find(v => v.id == pagos[z].idVentaCliente);
@@ -505,7 +510,7 @@ CORTE DE CAJA
                             // if (sucEmp != null) {
                             //    for (let h in sucursalEmpleado) {
                             //  if (sucursalEmpleado[h].id == idSucEmp) {
-                            if (empSucursal.idEmpleado == idCajeroOK) {
+                            if (empSucursal.idEmpleado === idCajeroOK) {
                                 abonos = abonos + pagos[z].monto;
                             }
                         }
@@ -540,7 +545,6 @@ CORTE DE CAJA
                     }
                 }
                 //
-                //  totalPagoComp = 0;
                 for (let p in pagoCompras) {
 
                     let fechaPC = new Date(pagoCompras[p].created_at);
@@ -560,14 +564,22 @@ CORTE DE CAJA
                 //}
                 //  }
             } else {
+                //VENTAS REALIZADAS
+                console.log("TODOS  ");
                 for (let j in ventas) {
                     let idSucEmp = ventas[j].idSucursalEmpleado;
                     // for (let h in sucursalEmpleado) {
                     //  if (sucursalEmpleado[h].id == idSucEmp) {
+                    console.log("ventas test");
+                    console.log(sucursalEmpleado);
                     let suc_emp = sucursalEmpleado.find(s => s.id === idSucEmp);
                     if (suc_emp != null) {
+                        console.log("SSSSSSS");
+                        console.log(ventas[j].tipo.toUpperCase());
                         if (ventas[j].tipo.toUpperCase().includes('EFECTIVO')) {
                             let fechaVC = new Date(ventas[j].created_at);
+                            console.log("fechaCorte", fechaCorte);
+                            console.log("fechaVC", fechaVC);
                             if (comparacionFecha(fechaCorte, fechaVC)) {
                                 cantVentas = cantVentas + 1;
                                 //  efectivoV = efectivoV + ventas[j].pago;
@@ -656,6 +668,7 @@ CORTE DE CAJA
                     }
                 }
                 //ABONO COMPLETADOS
+                abonos = 0;
                 for (let z in pagos) {
                     let fechaP = new Date(pagos[z].created_at);
                     // if (ventas[j].id == pagos[z].idVenta) {
@@ -663,6 +676,7 @@ CORTE DE CAJA
                     console.log("hola");
                     if (empSucursal != null) {
                         if (comparacionFecha(fechaCorte, fechaP)) {
+                            console.log("abonos ", pagos[z].monto);
                             abonos = abonos + pagos[z].monto;
                         }
                     }
@@ -679,19 +693,20 @@ CORTE DE CAJA
                         }
                     }
                 }
+                /*
+                                for (let z in pagos) {
+                                    let fechaP = new Date(pagos[z].created_at);
+                                    // if (ventas[j].id == pagos[z].idVenta) {
+                                    let empSucursal = sucursalEmpleado.find(s => s.id == pagos[z].idEmpSuc);
+                                    console.log("hola");
+                                    if (empSucursal != null) {
+                                        if (comparacionFecha(fechaCorte, fechaP)) {
+                                            abonos = abonos + pagos[z].monto;
+                                        }
+                                    }
+                                }
 
-                for (let z in pagos) {
-                    let fechaP = new Date(pagos[z].created_at);
-                    // if (ventas[j].id == pagos[z].idVenta) {
-                    let empSucursal = sucursalEmpleado.find(s => s.id == pagos[z].idEmpSuc);
-                    console.log("hola");
-                    if (empSucursal != null) {
-                        if (comparacionFecha(fechaCorte, fechaP)) {
-                            abonos = abonos + pagos[z].monto;
-                        }
-                    }
-                }
-
+                                */
                 for (let p in pagoCompras) {
 
                     let idSucEmp = pagoCompras[p].idEmpSuc;

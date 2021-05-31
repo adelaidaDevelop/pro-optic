@@ -276,6 +276,8 @@ REPORTES
     let proveedores = @json($proveedores);
     let totalCompras = 0;
     let totalVentas = 0;
+    let totalVentasX = 0;
+    let totalComprasX = 0;
 
     function validarCamposFechas() {
 
@@ -389,6 +391,7 @@ REPORTES
     };
     */
 
+    //COMPRA DE PRODUCTOS
     function compraProductos(fechaXDia2) {
         entradaCompraProduct = "";
         totalEntradas = 0;
@@ -414,6 +417,7 @@ REPORTES
                 }
                 contador = contador + 1;
                 total_compras = total_compras + totalEntradas;
+                totalComprasX = totalComprasX + totalEntradas;
             }
 
         }
@@ -430,6 +434,7 @@ REPORTES
 
     };
 
+    //venta de productos
 
     function ventas_compras2(fechaXDia) {
         //AQUI GENERAR TABLA PARA MOSTRAR FILTRADOS. 
@@ -472,6 +477,8 @@ REPORTES
 
                 descripcion = "VENTAS";
                 signos = "-";
+
+                totalVentasX = totalVentasX + totalVenta;
 
             }
         }
@@ -517,13 +524,13 @@ REPORTES
                 }
                 //Por cada compra
                 /*
-                col_compras = col_compras + `
-                <div class="row  w-100">
-            <div class= "col-2">+$`+totalEntradas + `</div>
-            <div class= "col-2"> ` + proveedor + `</div>
-            </div>
-            `;
-            */
+                        col_compras = col_compras + `
+                        <div class="row  w-100">
+                    <div class= "col-2">+$`+totalEntradas + `</div>
+                    <div class= "col-2"> ` + proveedor + `</div>
+                    </div>
+                    `;
+                    */
                 // total_compras = total_compras  + totalEntradas  ;
                 movimiento = "COMPRA";
                 total = totalEntradas;
@@ -542,13 +549,31 @@ REPORTES
                   `;
                 totalInvent_Filtro = totalInvent_Filtro + total;
 
+                totalComprasX = totalComprasX + totalEntradas
             }
         }
-        let invAnterior = 5;
-        let invNuevo = totalInvent_Filtro + invAnterior;
-        let inventario1 = `<h5> INVENTARIO: -------------$` + totalInvent_Filtro + ` </h5>`;
+
+        //buscar inventario anterior 
+        
+        let invAnterior = @json($totalInventario);
+        /*
+        for (let h in historialInventarios) {
+            //////////////
+            let fecha = new Date(historialInventarios[h].created_at);
+            console.log(fechaCompra);
+            if (comparacionFecha(fechaXDia, fecha)) {}
+            ////////////
+            if (historialInventarios[h].idSucursal === idSuc) {
+            }
+        }*/
+        let totalHoy = totalComprasX - totalVentasX;
+       // let invAnterior = 5;
+        let invNuevo = invAnterior + totalHoy;
+        let inventario1 = `<h5> INVENTARIO : -------------$` + totalHoy + ` </h5>`;
         let inventario2 = `<h5> INVENTARIO ANTERIOR:          $` + invAnterior + ` </h5>`;
         let inventario3 = `<h5> INVENTARIO NUEVO:----$` + invNuevo + ` </h5>`;
+
+
 
         document.getElementById("invTotal").innerHTML = inventario1;
         document.getElementById("invTotal2").innerHTML = inventario2;
