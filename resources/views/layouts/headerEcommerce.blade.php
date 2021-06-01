@@ -138,7 +138,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     @foreach($departamentos as $departamento)
-                    <a class="dropdown-item" href="#">{{$departamento->nombre}}</a>
+                    <a class="dropdown-item" href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}</a>
                     @endforeach
                 </div>
             </div>
@@ -146,7 +146,7 @@
             @foreach($departamentos as $departamento)
             <ul class="navbar-nav mx-auto btn-outline-secondary d-none d-md-block">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="/venta">{{$departamento->nombre}}<span
+                    <a class="nav-link text-dark" href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}<span
                             class="sr-only">(current)</span></a>
                 </li>
             </ul>

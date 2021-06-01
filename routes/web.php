@@ -44,6 +44,7 @@ Route::post('/loginCliente', [LoginClienteController::class,'loginPost'])->name(
 Route::post('/logoutCliente', [LoginClienteController::class,'logout'])->name('Login');
 
 Route::get('/buscar/{producto}', [EcommerceController::class,'buscarProducto'])->middleware('isCliente');
+Route::get('/departamento/{departamento}', [EcommerceController::class,'categoria'])->middleware('isCliente');
 
 Route::post('/agregarAlCarrito/{id}', [EcommerceController::class,'addCarrito'])->middleware('isCliente');
 //Route::resource('/', EcommerceController::class)->middleware('isCliente');
