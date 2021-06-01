@@ -3,11 +3,11 @@
 <div class="row mx-auto my-3 p-1">
     <h4 class="text-primary mx-auto"><strong> INICIO DE SESION</strong></h4>
 </div>
-<div class="row col-7 mx-auto p-3 border">
+<div class="row col-sm-7 mx-auto p-3 border">
     @if(isset($compra))
-    <form method="POST" class="col-10 mx-auto" action="{{ url('loginCliente') }}?compra=1">
+    <form method="POST" class="col-sm-10 mx-auto" action="{{ url('loginCliente') }}?compra=1">
     @else
-    <form method="POST" class="col-10 mx-auto" action="{{ url('loginCliente') }}">
+    <form method="POST" class="col-sm-10 mx-auto" action="{{ url('loginCliente') }}">
     @endif
         @csrf
         <div class="form-group">
@@ -50,9 +50,9 @@
         </div>
         <button type="submit" class="btn btn-block btn-success my-2">INICIAR SESION</button>
     </form>
-    <div class="row col-10 mx-auto">
-        <a href="" class="mr-auto">¿Olvidaste tu contraseña?</a>
-        <a href="{{url('registerCliente')}}" class="ml-auto">Registrarse</a>
+    <div class="row col-sm-10 mx-auto">
+        <a href="" class="mx-auto mr-sm-auto ml-sm-0">¿Olvidaste tu contraseña?</a>
+        <a href="{{url('registerCliente')}}" class="mx-auto ml-sm-auto mr-sm-0">Registrarse</a>
     </div>
 </div>
 

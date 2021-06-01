@@ -4,12 +4,12 @@
 <div class="col-12 mt-3 border-bottom">
     <p class="h4">Encontramos {{$total}} resultados para "{{$producto}}"</p>
 </div>
-<div class="row col-12 mx-auto mt-3">
-    <div class="col-3">
+<div class="row mx-0 mt-3">
+    <div class="col-sm-3">
         <small>
             <p class="h6 font-weight-bolder">Filtrar búsqueda</p>
         </small>
-        <div class="accordion mb-2" id="accordionExample">
+        <div class="accordion mb-2" id="filtrarPorCategoria">
             <div class="card">
                 <div class="card-header p-0" id="headingOne">
                     <h2 class="mb-0">
@@ -22,7 +22,7 @@
                 </div>
 
                 <div id="collapseDepartamento" class="collapse show" aria-labelledby="headingOne"
-                    data-parent="#accordionExample">
+                    data-parent="#filtrarPorCategoria">
                     <div class="card-body">
                         @foreach($departamentos as $departamento)
                         <div class="form-check">
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="accordion" id="accordionExample">
+        <div class="accordion" id="filtrarPorPrecio">
             <div class="card">
                 <div class="card-header p-0" id="headingOne">
                     <h2 class="mb-0">
@@ -50,7 +50,7 @@
                 </div>
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                    data-parent="#accordionExample">
+                    data-parent="#filtrarPorPrecio">
                     <div class="card-body">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="250" id="rango1"
@@ -78,8 +78,8 @@
             </div>
         </div>
     </div>
-    <div class="col-9 ml-auto">
-        <div class="row col-4">
+    <div class="row col-12 col-sm-9 ml-sm-auto mx-0">
+        <div class="row col-sm-4">
             <label class="font-weight-bolder">Ordenar por</label>
             <select class="form-control" id="ordenProducto" onchange="ordenar()">
                 <option value="0" selected>Nombre (Ascendente)</option>
@@ -88,39 +88,47 @@
                 <option value="3">Precio (Descendente)</option>
             </select>
         </div>
-        <div id="contenidoProductos" class="row col-12 mx-0 my-1 p-2 border">
+        <div id="contenidoProductos" class="row col-12 mx-0 my-1 p-sm-2 border">
+            <div class="card-deck">
+                @foreach($array as $producto)
 
-            @foreach($array as $producto)
-            <div class="card-group mx-auto ">
                 <!--div class="col my-2"-->
-                <div id="tarjeta{{$producto['id']}}" class="card my-1" style="width: 15rem;"
+                <div id="tarjeta{{$producto['id']}}" class="card my-1" style="width: 15rem;max-width: 540px;"
                     onmouseout="seleccionProducto(false,`{{$producto['id']}}`)"
-                    onmouseover="seleccionProducto(true,`{{$producto['id']}}`)">
-                    <a class="btn btn-outline-light h-100 " href="{{url('/producto/'.$producto['id'])}}">
+                    onmouseover="seleccionProducto(true,`{{$producto['id']}}`)"
+                    href="{{url('/producto/'.$producto['id'])}}">
+
+                    <!--a class="btn btn-outline-light h-100 " href="{{url('/producto/'.$producto['id'])}}"-->
+                    <div class="card-header">
                         @if(!empty($producto['imagen']))
                         <img src="{{ asset('storage').'/'.$producto['imagen']}}" alt="" class="card-img-top">
                         @else
                         <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" class="card-img-top">
                         @endif
                         <!--img src="{{ asset('img\carusel.jpg') }}" class="card-img-top" alt="..."-->
-                        <div class="card-body mx-auto mb-0">
-                            <h5 class="card-title text-dark">{{$producto['nombre']}}</h5>
-                            <!--p class="card-text text-dark">{$producto['descripcion']}}</p-->
-                        </div>
-                    </a>
+                    </div>
+                    <div class="card-body mx-auto mb-0">
+                        <h5 class="card-title text-dark">{{$producto['nombre']}}</h5>
+                        <h5 class="card-title text-dark">{{$producto['precio']}}</h5>
+                        <!--p class="card-text text-dark">{$producto['descripcion']}}</p-->
+                    </div>
+                    <!--/a-->
                     <div class="card-footer mx-auto mt-auto bg-transparent">
                         <!--small class="text-muted">Last updated 3 mins ago</small-->
                         <button class="btn btn-primary mx-auto" id="agregarAlCarrito"
                             onclick="addCarrito(`{{$producto['id']}}`)">Agregar al carrito</button>
                     </div>
+
                 </div>
+
+                @endforeach
             </div>
-            @endforeach
         </div>
     </div>
 </div>
 <script>
 let productosFiltrados = [];
+
 function filtrar() {
     productosFiltrados = [];
     let productos = @json($array);
@@ -171,7 +179,7 @@ function filtrar() {
             }
         }
     }
-    ordenar();//productosFiltrados);
+    ordenar(); //productosFiltrados);
     //console.log('departamentos validados',dValidos);
 }
 
@@ -236,6 +244,7 @@ function ordenar() {
 }
 //let precargar = @json($array);
 filtrar();
+
 function mostrarProductos(lista) {
     let cuerpo = "";
     for (let i in lista) {
@@ -248,15 +257,19 @@ function mostrarProductos(lista) {
             onmouseout="seleccionProducto(false,${lista[i].id})"
             onmouseover="seleccionProducto(true,${lista[i].id})">
                 <a class="btn btn-outline-light h-100 " href="{{url('/producto')}}/${lista[i].id}">
+                <div class="card-header bg-transparent border-0">    
                     <img src="${urlImagen}" alt="" class="card-img-top">
-                    <div class="card-body mx-auto mb-0">
-                        <h5 class="card-title text-dark">${lista[i].nombre}</h5>
-                    </div>
+                </div>
+                <div class="card-body mx-auto mb-0">
+                    <h5 class="card-title text-dark">${lista[i].nombre}</h5>
+                    <h5 class="card-title text-success">$ ${lista[i].precio}</h5>
+                </div>
                 </a>
                 <div class="card-footer mx-auto mt-auto bg-transparent">
-                    <button class="btn btn-primary mx-auto" id="agregarAlCarrito"
+                    <button class="btn btn-primary mx-auto" type="button" id="agregarAlCarrito"
                     onclick="addCarrito('${lista[i].id}')">Agregar al carrito</button>
                 </div>
+                
             </div>
         </div>`;
 

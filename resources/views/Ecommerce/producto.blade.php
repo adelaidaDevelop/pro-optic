@@ -5,17 +5,17 @@
   <h2 class="text-center mx-auto "><strong>El producto que busca no se encuentra en esta sucursal o no tiene existencia</strong></h2>
 </div>
 @else
-<div class="row col-12 my-5">
-    <div class="row col-md-7 p-2 mx-auto" >
+<div class="row col-md-12 mx-auto my-5">
+    <div class="row col-12 col-md-7 p-2 mx-auto border" >
     @if(!empty($producto->imagen))
     <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" height="400" 
-            class="mx-auto mb-0 p-0">
+            class="img-fluid col-md-5 mx-auto mb-0 p-2">
     @else
       <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" height="400" 
-            class="mx-auto mb-0 p-0">
+            class="img-fluid col-md-7 mx-auto mb-0 p-2">
     @endif
     </div>
-    <div class="form-group col-md-5 ml-auto py-2">
+    <div class="form-group col-md-5 mx-auto ml-md-auto py-2">
         <h4 class="text-uppercase text-primary">{{$producto->nombre}}</h4>
         <h2>$ {{$producto->precio}}</h2>
         <div class="form-group">
@@ -23,10 +23,10 @@
           <p class="my-0"><small>* Producto sujeto a disponibilidad.</small></p>
           <p class="my-0"><small>* Descuento ya incluído en precios mostrados.</small></p>
         </div>
-        <div class="form-group col-5 pl-0 pr-4">
+        <div class="form-group col-10 col-md-5 mx-auto ml-md-0 mr-md-auto pl-md-0 pr-md-4">
           <input type="number" class="form-control border" id="cantidad" min="1" max="{{$producto->existencia}}" value="1"> 
         </div>
-        <button class="btn btn-success" onclick="addCarrito({{$producto->id}})"><strong><h4>Agregar al carrito</h4></strong></button>
+        <button class="btn btn-success col-12 col-auto mx-4 text-center ml-md-0 mr-md-auto" onclick="addCarrito(`{{$producto->id}}`)"><strong><h4>Agregar al carrito</h4></strong></button>
     </div>
 </div>
 <ul class="nav nav-tabs" id="myTab" role="tablist">

@@ -35,7 +35,7 @@ $verReporte = $sE->hasAnyRole($reporte);
                 <ul class="navbar-nav mr-auto">
                     
                     <li class="nav-item active">
-                        <a class="nav-link px-0 mx-2" href="/puntoVenta/venta">
+                        <a class="nav-link px-0 mx-2" href="{{ url('/puntoVenta/venta')}}">
                             <button class="btn btn-light input-group border" type="submit">
                                 <img src="{{ asset('img\venta2.png') }}" alt="Editar" width="30px" height="30px">
                                 <p class="h6 my-auto"><small>VENTAS</small></p>
@@ -45,7 +45,7 @@ $verReporte = $sE->hasAnyRole($reporte);
                     </li>
                     
                     <li class="nav-item active">
-                        <a class="nav-link px-0 mx-2 @if(!$verCompra) disabled @endif" href="/puntoVenta/compra">
+                        <a class="nav-link px-0 mx-2 @if(!$verCompra) disabled @endif" href="{{ url('/puntoVenta/compra')}}">
                             <button class="btn btn-light input-group" @if(!$verCompra) disabled @endif>
                                 <img src="{{ asset('img\compra.png') }}" alt="Editar" width="30px" height="30px">
                                 <p class="h6 my-auto"><small>COMPRAS</small></p>
@@ -62,7 +62,7 @@ $verReporte = $sE->hasAnyRole($reporte);
                     </li>
                     -->
                     <li class="nav-item active">
-                        <a class="nav-link px-0 mx-2 @if(!$verInventario) disabled @endif" href="/puntoVenta/producto">
+                        <a class="nav-link px-0 mx-2 @if(!$verInventario) disabled @endif" href="{{ url('/puntoVenta/producto')}}">
                             <button class="btn btn-light input-group"  @if(!$verInventario) disabled @endif>
                             <img src="{{ asset('img\inventario.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto ml-1"><small>INVENTARIO</small></p>
@@ -72,7 +72,7 @@ $verReporte = $sE->hasAnyRole($reporte);
                     <li class="nav-item active">
                         <!--if(session('idUsuario') == 1)-->
                         
-                        <a class="nav-link px-0 mx-2 @if(!$verAdministracion) disabled @endif" href="/puntoVenta/administracion">
+                        <a class="nav-link px-0 mx-2 @if(!$verAdministracion) disabled @endif" href="{{ url('/puntoVenta/administracion')}}">
                             <button class="btn btn-light input-group"  @if(!$verAdministracion) disabled @endif>
                             <img src="{{ asset('img\administracion.png') }}" alt="Editar" width="30px" height="30px">
                             
@@ -96,7 +96,7 @@ $verReporte = $sE->hasAnyRole($reporte);
                             </button>
                             <span class="sr-only">(current)</span></a>
                             -->
-                        <a class="nav-link px-0 mx-2 @if(!$verDeudor) disabled @endif" href="/puntoVenta/credito">
+                        <a class="nav-link px-0 mx-2 @if(!$verDeudor) disabled @endif" href="{{ url('/puntoVenta/credito')}}">
                             <button class="btn btn-light input-group" @if(!$verDeudor) disabled @endif>
                             <img src="{{ asset('img\deudores.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto ml-1"><small>LISTA DEUDORES</small></p>
@@ -106,7 +106,7 @@ $verReporte = $sE->hasAnyRole($reporte);
 
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link px-0 mx-2 @if(!$verCorte) disabled @endif" href="/puntoVenta/corteCaja">
+                        <a class="nav-link px-0 mx-2 @if(!$verCorte) disabled @endif" href="{{ url('/puntoVenta/corteCaja')}}">
                             <button class="btn btn-light input-group"  @if(!$verCorte) disabled @endif>
                                 <img src="{{ asset('img\corteC.png') }}" alt="Editar" width="30px" height="30px">
                                 <p class="h6 my-auto"><small>CORTE</small></p>
@@ -115,14 +115,14 @@ $verReporte = $sE->hasAnyRole($reporte);
                     </li>
                     <li class="nav-item active">
                         @if($verReporte)
-                        <a class="nav-link px-0 mx-2" href="/puntoVenta/reporteCompraVenta">
+                        <a class="nav-link px-0 mx-2" href="{{ url('/puntoVenta/reporteCompraVenta')}}">
                             <button class="btn btn-light input-group" >
                             <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto"><small>REPORTES</small></p>
                                 </button>
                             <span class="sr-only">(current)</span></a>
                         @else
-                        <a class="nav-link px-0 mx-2 disabled" href="/puntoVenta/reporteInventario">
+                        <a class="nav-link px-0 mx-2 disabled" href="{{ url('/puntoVenta/reporteInventario')}}">
                             <button class="btn btn-light input-group" @if(!$verCorte) disabled @endif>
                             <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto"><small>REPORTES</small></p>

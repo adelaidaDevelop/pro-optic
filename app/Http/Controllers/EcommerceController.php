@@ -121,6 +121,8 @@ class EcommerceController extends Controller
                         ->where('idSucursal','=',session('sucursalEcommerce'))->first();
                         if(isset($productoSucursal) && $productoSucursal->existencia>0)
                         {
+                            $productos[$i]['precio'] = $productoSucursal->precio;
+                            $productos[$i]['existencia'] = $productoSucursal->precio;
                             if(!isset($productoDepartamentos[$departamento->nombre]))
                             $productoDepartamentos[$departamento->nombre] = [];
                             array_push($productoDepartamentos[$departamento->nombre],$productos[$i]);
@@ -167,6 +169,7 @@ class EcommerceController extends Controller
         $fecha = now()->sub(new DateInterval('P1M'));//->toDateString();
         $ventas = Venta::where('created_at','>=',$fecha)->paginate(30,['id','tipo','created_at'])->all();
         $productos = [];
+        $banderas =  [];
         foreach($ventas as $venta)
         {
             $detalle_ventas = Detalle_venta::where('idVenta','=',$venta->id)->get(['idProducto','cantidad']);
@@ -174,8 +177,10 @@ class EcommerceController extends Controller
             {
                 $ids = array_column($productos, 'id');
                 $pos = array_search($dv->idProducto, $ids);
-                if($pos != NULL)
+                array_push($banderas,$pos);
+                if(is_numeric($pos))
                 {
+                    
                     $productos[$pos]['cantidad'] = $productos[$pos]['cantidad'] + $dv->cantidad;
                     //array_search($dv->cantidad, $productos);
                 }else
@@ -188,8 +193,10 @@ class EcommerceController extends Controller
                     {
                         $producto = [];
 
-                    $producto['id'] = $dv->idProducto;
-                    $producto['cantidad'] = $dv->cantidad;
+                        $producto['id'] = $dv->idProducto;
+                        $producto['cantidad'] = $dv->cantidad;
+                        $producto['precio'] = $productoSucursal->precio;
+                        $producto['imagen'] = $p->imagen;
                     array_push($productos,$producto);
                     }
                     
@@ -198,7 +205,7 @@ class EcommerceController extends Controller
                 }
             }
         }
-        
+        //return $productos;
         if(usort($productos,function($a,$b) {
             if ($a['cantidad'] == $b['cantidad']) {
                 return 0;
@@ -212,6 +219,7 @@ class EcommerceController extends Controller
             
             $productos[$i]['nombre'] = $producto->nombre;
             $productos[$i]['descripcion'] = $producto->descripcion;
+            $productos[$i]['imagen'] = $producto->imagen;
         }
         return $productos;
         

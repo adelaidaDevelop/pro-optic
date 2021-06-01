@@ -26,9 +26,10 @@
 </head>
 
 <body>
+
 <div class="container-fluid">
 
-        @yield('headerEcommerce')
+    @yield('headerEcommerce')
     @include('layouts.footerEcommerce')
 </div>
 </body>

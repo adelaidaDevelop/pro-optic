@@ -34,24 +34,24 @@
 
     <div class="container">
 
-        <div class="row mt-3">
-            <div class="col-1"></div>
+        <div class="row mt-sm-3 mx-0 mx-sm-auto">
+            <div class="col-sm-1"></div>
 
-            <div class="col-10 text-center" style="background:#4388CC">
+            <div class="col-sm-10 col-12 text-center" style="background:#4388CC">
                 <div class="row text-center">
                     @yield('content')
                     <img src="{{ asset('img\logo.png') }}" class="position-relative mx-auto my-2" alt="Inicio"
                         height="45px" />
                 </div>
                 <div class="row">
-                    <div class="col-1"></div>
+                    <div class="col-sm-1"></div>
 
-                    <div class="col-1" style="background:#4388CC"></div>
-                    <div class="col-8" style="background:#4388CC ">
+                    <div class="col-sm-1" style="background:#4388CC"></div>
+                    <div class="col-sm-8 col-12" style="background:#4388CC ">
 
                         <div class="row" style="background:#7FB3D5">
-                            <div class="col-1" style="background:#7FB3D5"></div>
-                            <div class="col-10 text-center" style="background:#7FB3D5">
+                            <div class="col-sm-1" style="background:#7FB3D5"></div>
+                            <div class="col-sm-10 col-12 text-center" style="background:#7FB3D5">
                                 <br />
                                 <img src="{{ asset('img\login.png') }}" class="position-relative" alt="Inicio"
                                     height="100px" />
@@ -154,13 +154,13 @@
                                 <br /><br />
 
                             </div>
-                            <div class="col-1" style="background:#7FB3D5"></div>
+                            <div class="col-sm-1" style="background:#7FB3D5"></div>
 
                         </div>
                         <br /><br />
                     </div>
-                    <div class="col-1" style="background:#4388CC"></div>
-                    <div class="col-1"></div>
+                    <div class="col-sm-1" style="background:#4388CC"></div>
+                    <div class="col-sm-1"></div>
 
                 </div>
 

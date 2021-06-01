@@ -10,49 +10,52 @@
     </nav>
 </div-->
 <div class="row ">
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselIndicators" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active position-relative">
-                <img class="d-block w-100" src="{{ asset('img\carusel.jpg') }}" alt="First slide"
-                class="img-fluid">
+                <img class="d-block w-100" src="{{ asset('img\carusel.jpg') }}" alt="First slide" class="img-fluid">
             </div>
             <!--div class="carousel-item">
                 <img class="d-block w-100" src="{ asset('img\carusel2.jpg') }}" alt="Second slide"
                 class="img-fluid">
             </div-->
             <div class="carousel-item">
-                <img class="d-block w-100" src="{{ asset('img\carusel.jpg') }}" alt="Third slide"
-                class="img-fluid">
+                <img class="d-block w-100" src="{{ asset('img\carusel.jpg') }}" alt="Third slide" class="img-fluid">
             </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
+            <span class="sr-only">{{'_Previous'}}</span>
         </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
+            <span class="sr-only">{{'_Next'}}</span>
         </a>
     </div>
 </div>
 <div class="row mx-1">
-<!--div class="collapse " id="collapseCarrito"-->
-<!--/div-->
+    <!--div class="collapse " id="collapseCarrito"-->
+    <!--/div-->
     @if(count($productosNuevos)>0)
-    <div class="row col-12">
-        <h4 class="text-primary mx-auto mt-1"><strong>Productos Nuevos</strong></h4>
-    </div>
+
     <div class="row mx-auto">
+        <div class="row col-12">
+            <h4 class="text-primary mx-auto mt-1"><strong>Productos Nuevos</strong></h4>
+        </div>
         @foreach($productosNuevos as $producto)
         <div class="card-group mx-auto">
             <!--div class="col my-2"-->
             <div class="card my-3" style="width: 18rem;">
-                <img src="{{ asset('img\carusel.jpg') }}" class="card-img-top" alt="...">
+                @if(!empty($producto->imagen))
+                <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" class="card-img-top">
+                @else
+                <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" class="card-img-top">
+                @endif
                 <div class="card-body mx-auto">
                     <h5 class="card-title">{{$producto->nombre}}</h5>
                     <p class="card-text">{{$producto->descripcion}}</p>
@@ -70,31 +73,53 @@
 </div>
 <div class="row mx-1">
     @if(count($productosDestacados)>0)
-    <div class="row col-12">
+    <div class="row mx-auto text-center">
         <h4 class="text-primary mx-auto mt-1"><strong>Productos Destacados</strong></h4>
     </div>
-    <div class="row mx-auto">
+    <div class="row mx-0 w-100">
+        <!--div class="card-deck"-->
         @foreach($productosDestacados as $producto)
-        <div class="card-group mx-2">
-            <!--div class="col my-2"-->
-            <div class="card my-3" style="width: 18rem;">
-                <a class="btn btn-outline-light" href="{{url('/producto/'.$producto['id'])}}">
-                <img src="{{ asset('img\carusel.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body mx-auto">
-                    <h5 class="card-title text-dark">{{$producto['nombre']}}</h5>
-                    <p class="card-text text-dark">{{$producto['descripcion']}}</p>
+        <!--div class="card-deck"-->
+        <div class="card col-12 col-sm-auto mx-0 mx-sm-auto my-2 px-0 py-auto border "
+            style="width: 15rem;max-width: 20rem;">
+            <div class="row my-0 mx-auto h-100 ">
+                <!--a class="btn btn-outline-light" href="{url('/producto/'.$producto['id'])}}"-->
+                <div class="col-5 col-sm-12 my-auto mt-md-0 mb-sm-auto p-0">
+                    <div class="card-header p-0 mx-0 bg-transparent border-0 border-md-bottom">
+                        <a class="btn btn-outline-light mx-0 p-0 p-sm-2 " href="{{url('/producto/'.$producto['id'])}}">
+
+                            @if(!empty($producto['imagen']))
+                            <img src="{{ asset('storage').'/'.$producto['imagen']}}" alt="" class="card-img-top m-0">
+                            @else
+                            <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" class="card-img-top m-0">
+                            @endif
+                        </a>
+                    </div>
                 </div>
-                </a>
-                <div class="card-footer mx-auto mt-auto bg-transparent">
-                    <!--small class="text-muted">Last updated 3 mins ago</small-->
-                    <button class="btn btn-primary mx-auto" id="agregarAlCarrito" onclick="addCarrito({{$producto['id']}})">Agregar al carrito</button>
-                    
+                <!--/a-->
+                <div class="col-7 col-sm-12 mx-0 mt-auto mb-0 px-0 px-sm-auto border-left">
+                    <a class="btn btn-outline-light col-12 mx-auto border-0"
+                        href="{{url('/producto/'.$producto['id'])}}">
+                        <div class="card-body my-0 mx-auto">
+
+                            <p class="h5 card-title text-center text-dark">{{$producto['nombre']}}</p>
+                            <!--p class="card-text text-center text-dark">{$producto['descripcion']}}</p-->
+                            <h4 class="card-text text-center text-success">$ {{$producto['precio']}}</h4>
+
+                        </div>
+                    </a>
+                    <div class="card-footer mx-auto mt-auto mb-0 text-center bg-transparent">
+                        <!--small class="text-muted">Last updated 3 mins ago</small-->
+                        <button class="btn btn-primary mx-0 mx-sm-auto mt-auto mb-0 px-1 px-md-2" id="agregarAlCarrito"
+                            onclick="addCarrito(`{{$producto['id']}}`)"><small><strong class="h6">Agregar al
+                                    carrito</strong></small></button>
+                    </div>
                 </div>
-                
             </div>
         </div>
-        <!--div class="col my-2"-->
+        <!--/div-->
         @endforeach
+        <!--/div-->
     </div>
     @endif
 </div>
@@ -102,41 +127,47 @@
 @foreach($departamentos as $d)
 @if(isset($categorias[$d->nombre]))
 @php
-    $deptos = $categorias[$d->nombre];
+$deptos = $categorias[$d->nombre];
 @endphp
 <div class="row mx-1">
-    
     <div class="row mx-auto mt-3">
         <h4 class="text-capitalize text-primary mx-auto mt-1"><strong>{{$d->nombre}}</strong></h4>
     </div>
-    <div class="row mx-auto">
+    <div class="row mx-0 w-100">
         @foreach($deptos as $producto)
-        <div class="card-group mx-1">
-            <!--div class="col my-2"-->
-            <div class="card my-3" style="width: 15rem;">
-                <a class="btn btn-outline-light h-100 " href="{{url('/producto/'.$producto['id'])}}">
-                @if(!empty($producto->imagen))
-                <img src="{{ asset('storage').'/'.$producto->imagen}}" alt=""
-                class="card-img-top">
-                @else
-                <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" 
-                class="card-img-top">
-                @endif
+        <!--div class="col my-2"-->
+        <div class="card col-12 col-sm-auto mx-0 mx-sm-auto my-2 px-0 py-auto border "
+            style="width:15rem;max-width: 20rem;">
+            <div class="row my-0 mx-auto h-100 ">
+                <!--a class="btn btn-outline-light" href="{url('/producto/'.$producto['id'])}}"-->
+                <div class="col-5 col-sm-12 my-auto mt-md-0 mb-sm-auto p-0">
+                    <a class="btn btn-outline-light mx-0 p-0 p-sm-2 " href="{{url('/producto/'.$producto['id'])}}">
+                        @if(!empty($producto->imagen))
+                        <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" class="card-img-top">
+                        @else
+                        <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" class="card-img-top">
+                        @endif
+                    </a>
+                </div>
                 <!--img src="{{ asset('img\carusel.jpg') }}" class="card-img-top" alt="..."-->
-                <div class="card-body mx-auto mb-0">
-                    <h5 class="card-title text-dark">{{$producto['nombre']}}</h5>
-                    <!--p class="card-text text-dark">{$producto['descripcion']}}</p-->
+                <div class="col-7 col-sm-12 my-auto mt-md-0 mb-sm-auto p-0">
+                    <a class="btn btn-outline-light col-12 mx-auto border-0"
+                        href="{{url('/producto/'.$producto['id'])}}">
+                        <div class="card-body mx-auto mb-0">
+                            <p class="h5 card-title text-center text-dark">{{$producto['nombre']}}</p>
+                            <!--p class="card-text text-center text-dark">{$producto['descripcion']}}</p-->
+                            <h4 class="card-text text-center text-success">$ {{$producto['precio']}}</h4>
+                        </div>
+                    </a>
+                    <div class="card-footer mx-auto mt-auto mb-0 text-center bg-transparent">
+                        <!--small class="text-muted">Last updated 3 mins ago</small-->
+                        <button class="btn btn-primary mx-0 mx-sm-auto mt-auto mb-0 px-1 px-md-2" id="agregarAlCarrito"
+                            onclick="addCarrito(`{{$producto['id']}}`)"><small><strong class="h6">Agregar al
+                                    carrito</strong></small></button>
+                    </div>
                 </div>
-                </a>
-                <div class="card-footer mx-auto mt-auto bg-transparent">
-                    <!--small class="text-muted">Last updated 3 mins ago</small-->
-                    <button class="btn btn-primary mx-auto" id="agregarAlCarrito" onclick="addCarrito({{$producto['id']}})">Agregar al carrito</button>
-                    
-                </div>
-                
             </div>
         </div>
-        <!--div class="col my-2"-->
         @endforeach
     </div>
 </div>
@@ -158,38 +189,40 @@
     </div>
   </div>
 </div-->
-<button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+<!--button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button-->
 
 <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
-  <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
-    <div class="toast-header">
-      <!--img src="..." class="rounded mr-2" alt="..."-->
-      <strong class="mr-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+        <div class="toast-header">
+            <!--img src="..." class="rounded mr-2" alt="..."-->
+            <strong class="mr-auto">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            Hello, world! This is a toast message.
+        </div>
     </div>
-    <div class="toast-body">
-      Hello, world! This is a toast message.
-    </div>
-  </div>
 </div>
 <script>
 //let sucursal = json(session('sucursalEcommerce'))
 //console.log('sucursal',sucursal);
 //let carrito = json(session('carrito'));
-console.log('carrito',carrito);
+console.log('carrito', carrito);
 //if(carrito!=null)
-   // document.querySelector('#cantidadCarrito').textContent = carrito.length;
+// document.querySelector('#cantidadCarrito').textContent = carrito.length;
 async function addCarrito(id) {
-    try{
+
+    try {
+        //return alert('todo bien');
         //return alert('Listo'+id);
         let respuesta = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: `/agregarAlCarrito/${id}`,
+            url: `{{url('/agregarAlCarrito')}}/${id}`,
             // los datos que voy a enviar para la relación
             data: {
                 //_token: $("meta[name='csrf-token']").attr("content")
@@ -198,12 +231,11 @@ async function addCarrito(id) {
         });
         console.log(respuesta);
         //return;
-        if(respuesta == 1)
-        {
-          return alert('Por el momento esta es la existencia que tenemos a la venta');
+        if (respuesta == 1) {
+            return alert('Por el momento esta es la existencia que tenemos a la venta');
         }
         carrito = respuesta;
-        
+
         mostrarCarrito();
         //console.log('carrito',respuesta);
         //return alert("Listo"+ respuesta);

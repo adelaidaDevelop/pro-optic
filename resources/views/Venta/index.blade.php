@@ -25,7 +25,7 @@
         @endif
         @if($sE->hasAnyRole($userCliente))
         <div class=" ml-4">
-            <a class="btn btn-outline-secondary  p-1 border-0" href="/puntoVenta/cliente">
+            <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/cliente')}}">
                 <img src="{{ asset('img\consumidor.png') }}" alt="Editar" width="30px" height="30px">
                 <p class="h6 my-auto mx-2 text-dark"><small>CLIENTES</small></p>
             </a>
