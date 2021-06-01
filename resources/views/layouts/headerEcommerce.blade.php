@@ -110,7 +110,7 @@
     }
     </script>
 
-    <nav class="navbar navbar-expand-lg navbar-dark col-12 mx-0 my-0 py-0 py-md-1 position-relative border" style="background:#BDC2C5">
+    <nav class="navbar navbar-expand-lg navbar-dark col-12 mx-0 my-0 py-0 py-md-1 position-relative" style="background:#BDC2C5">
         <div class="collapse navbar-collapse" id="collapseSubtitulo">
             <div class="row col-auto my-1 mx-auto mx-md-1 p-1 p-md-0 border border-light">
                 <img src="{{ asset('img\ubicacion.png') }}" alt="UBICACION"
@@ -131,7 +131,7 @@
 
             </div>
 
-            <div class="dropdown my-1">
+            <div class="dropdown my-1 mx-auto ">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     DEPARTAMENTOS
@@ -142,14 +142,18 @@
                     @endforeach
                 </div>
             </div>
-
+            @php $count = 0 @endphp
             @foreach($departamentos as $departamento)
+                @if($count < 3)
             <ul class="navbar-nav mx-auto btn-outline-secondary d-none d-md-block">
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}<span
                             class="sr-only">(current)</span></a>
                 </li>
             </ul>
+            @php $count++ @endphp
+            @else @php break; @endphp
+            @endif
             @endforeach
 
         </div>
