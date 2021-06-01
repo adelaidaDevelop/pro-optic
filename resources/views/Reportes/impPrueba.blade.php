@@ -29,12 +29,10 @@
     $ganancia= $_GET['gananciaId'];
     $cantVenta= $_GET['cantVenta'];
     $cajero= $_GET['cajero'];
-
     @endphp
     <div class="row w-100 " id="main1">
-
         <div class="col-8 text-center">
-            <br /><br /> <br />
+            <br/><br/> <br/>
             <h1 class="font-weight-bold"> FARMACIAS GI ZIMATLAN</h1>
             <h2> {{session('sucursalNombre')}} </h2>
             <h2> {{$suc_act->telefono}}</h2>
@@ -48,9 +46,7 @@
                     <h2> {{ $fecha}} </h2>
                 </div>
             </div>
-
             <br />
-
             <h2 class="mb-1"> REALIZADO: {{ $hoy}}</h2>
             <h2>CAJERO: {{$cajero}}</h2>
             <br /><br />
@@ -63,7 +59,6 @@
                     <h2> {{ $cantVenta}} </h2>
                 </div>
             </div>
-
             <br />
             <h1 class="font-weight-bold"> === DINERO EN CAJA === </h1>
             <div class="row col-8  mx-auto px-auto ">
@@ -84,7 +79,6 @@
             </div>
             <br /> <br />
             <h1 class="font-weight-bold"> === VENTAS DEL DIA === </h1>
-
             <div class="row col-8  mx-auto px-auto ">
                 <div class="col-8 mx-auto px-auto text-left">
                     <h2 class="row">EFECTIVO: </h2>

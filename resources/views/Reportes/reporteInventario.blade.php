@@ -777,6 +777,7 @@ INVENTARIO
                 // }
             }
         }
+       // console.log(devolucionFila);
     };
 
     function generaReportes() {
@@ -787,7 +788,7 @@ INVENTARIO
         document.getElementById("btnCrearPdf").disabled = false;
         */
        contador= 0;
-        let devolucionFila = "";
+       // let devolucionFila = "";
         //  let salidaVP = "";
         //let entradaNuevosProductos = "";
         // let entradaCompraProduct = "";
@@ -839,6 +840,7 @@ INVENTARIO
                   //  contador = 0;
                     devolucionesEfectivo(fechaXDia);
                     // document.getElementById("total_salidas").innerHTML = totalDevolucion;
+                    
                     cuerpo = devolucionFila;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');

@@ -1,0 +1,36 @@
+
+        @page {
+            margin: 0cm 0cm;
+            font-family: Arial;
+        }
+
+        body {
+            margin: 3cm 2cm 2cm;
+        }
+
+        header {
+          /*  position: fixed; */
+            top: 0cm;
+            left: 0cm;
+            right: 0cm;
+            height: 2cm;
+            background-color: #3366FF;
+            color: white;
+            
+           line-height: 0px;
+            margin: 1;
+        }
+        
+
+        footer {
+            
+            bottom: 0cm;
+            left: 0cm;
+            right: 0cm;
+            height: 1cm;
+            background-color:  #5D6D7E ;
+            color: white;
+            text-align: center;
+            line-height: 0px;
+        }
+   
