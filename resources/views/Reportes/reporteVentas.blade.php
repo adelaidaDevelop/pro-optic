@@ -103,7 +103,7 @@ REPORTES
                 </h6>
                 <input class="my-auto " type="radio" value="dia" name="fecha" id="fechaDia" onchange="habilitarFecha()" checked>
             </div>
-<!--
+            <!--
             <div class="col-1 form-group input-group">
                 <h6 class="text-primary  my-auto mx-1">
                     MES
@@ -126,7 +126,7 @@ REPORTES
         </div>
         <div class="  form-group input-group ml-3 border ">
             <input type="date" min="" onchange="" id="fechaXDia" class="form-control my-0 col-2 mr-2" />
-           <!--
+            <!--
             <select class="form-control col-1 my-0 mx-2" name="meses" id="fechaXmeses" required disabled>
                 <option value="0" selected>MES</option>
                 <option value="1">ENERO</option>
@@ -154,7 +154,7 @@ REPORTES
                 <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                 GENERAR </button>
             <button id="imp" name="imp" class="btn btn-outline-primary  p-1 text-dark" disabled>
-                <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px" > IMPRIMIR REPORTE</button>
+                <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px"> IMPRIMIR REPORTE</button>
         </div>
         <!-- TABLA -->
         <div id="tablaR" class="row col-12 mb-3">
@@ -477,7 +477,7 @@ REPORTES
     };
 
     function generaReportes() {
-        
+
         //let devolucionFila = "";
         let empleadoNombre = "";
         // let filaprod_caducados = "";
@@ -653,35 +653,34 @@ REPORTES
     };
 
     // imprimir
-    /*
+
     document.addEventListener("DOMContentLoaded", () => {
-        // Escuchamos el click del botón
-       // const $boton = document.querySelector("#imp");
-       // $boton.addEventListener("click", () => {
-            const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
-            html2pdf()
-                .set({
-                    margin: 1,
-                    filename: 'reporteVentas.pdf',
-                    image: {
-                        type: 'jpeg',
-                        quality: 0.98
-                    },
-                    html2canvas: {
-                        scale: 3, // A mayor escala, mejores gráficos, pero más peso
-                        letterRendering: true,
-                    },
-                    jsPDF: {
-                        unit: "in",
-                        format: "a2",
-                        orientation: 'portrait' // landscape o portrait
-                    }
-                })
-                .from($elementoParaConvertir)
-                .save()
-                .catch(err => console.log(err));
-        });
-        */
+    // Escuchamos el click del botón
+    // const $boton = document.querySelector("#imp");
+    // $boton.addEventListener("click", () => {
+    const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+    html2pdf()
+        .set({
+            margin: 1,
+            filename: 'reporteVentas.pdf',
+            image: {
+                type: 'jpeg',
+                quality: 0.98
+            },
+            html2canvas: {
+                scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                letterRendering: true,
+            },
+            jsPDF: {
+                unit: "in",
+                format: "a2",
+                orientation: 'portrait' // landscape o portrait
+            }
+        })
+        .from($elementoParaConvertir)
+        .save()
+        .catch(err => console.log(err));
     });
+
 </script>
 @endsection

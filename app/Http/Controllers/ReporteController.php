@@ -251,7 +251,6 @@ class ReporteController extends Controller
     }
 
     function pdf() {
-
         $ventas = Venta::all();
         $pagos = Pago_venta::all();
         $devoluciones = Devolucion::all();

@@ -144,6 +144,8 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('seguimiento/pedido', [HistorialPedidoController::class,'index']);
     Route::get('historial/pedido', [HistorialPedidoController::class,'index2']);
     Route::get('comprobante', [HistorialPedidoController::class,'index3']);
+    Route::get('descComprobante', [HistorialPedidoController::class,'download']);
+    
     //ELIMINAR PRODUCTOS DE SUCURSAL
     Route::get('productoEli3/{id}', [ProductoController::class,'eliminar3']);
     Route::resource('cliente', ClienteController::class);

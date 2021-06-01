@@ -26,7 +26,7 @@
     <br />
 </div>
 <div class="col-12 my-4 input-group text-center mx-auto " style="background:#D5DBDB">
-    <button class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit">
+    <button id="btnGenerarPed" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit">
         <img class="" src="{{ asset('img\pedidoGenerado.png') }}" alt="Editar" width="50px" height="50px">
         <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO GENERADO</small></p>
     </button>
@@ -108,8 +108,11 @@
 
                 <div id="subAgregar" class="col mx-auto mt-4 text-center"></div>
                 <div class="col modal-footer input-group" id="pieInformacion">
+                    <a class="" href="/puntoVenta/descComprobante">
+                        GENERAR COMPROBANTE2
+                    </a>
+
                     <button type="button" class="btn btn-primary" id="actPrecio2" onclick="generarComprobante();">GENERAR COMPROBANTE</button>
-                  
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
 
                 </div>
@@ -117,5 +120,34 @@
         </div>
     </div>
 </div>
+<script>
+    // imprimir
+    /*
+    document.addEventListener("btnGenerarPed", () => {
+        const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+        html2pdf()
+            .set({
+                margin: 1,
+                filename: 'reporteVentas.pdf',
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                html2canvas: {
+                    scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                    letterRendering: true,
+                },
+                jsPDF: {
+                    unit: "in",
+                    format: "a2",
+                    orientation: 'portrait' // landscape o portrait
+                }
+            })
+            .from($elementoParaConvertir)
+            .save()
+            .catch(err => console.log(err));
+    });
+    */
+</script>
 
 @endsection

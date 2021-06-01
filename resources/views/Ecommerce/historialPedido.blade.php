@@ -1,11 +1,8 @@
 @extends('layouts.headerProcesoCompra')
 @section('contenido')
-
-
 <div class="container-fluid">
     <div class="row my-0 py-0 align-self-center" style="background:#3366FF">
     </div>
-
 </div>
 <!---->
 <div class="col text-center mx-auto mt-4">
