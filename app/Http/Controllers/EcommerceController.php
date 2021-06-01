@@ -94,6 +94,25 @@ class EcommerceController extends Controller
         return view('Ecommerce.producto',compact('sucursales','departamentos','producto'));
     }
 
+    public function categoria($id)
+    {
+        $datos = DB::table('sucursal_productos')
+            ->join('productos', 'sucursal_productos.idProducto', '=', 'productos.id')
+            ->join('departamentos', 'productos.idDepartamento', '=', 'departamentos.id')
+            ->where([['sucursal_productos.idSucursal','=',session('sucursalEcommerce')],
+                ['productos.idDepartamento','=',$id],['departamentos.ecommerce','=',true]])
+        ->select('productos.*','sucursal_productos.*')->limit(30)->get();
+            //->groupBy('sucursal_empleados.idSucursal')
+        
+        $array = json_decode(json_encode($datos), true);
+        $sucursales = Sucursal::all();
+        $departamentos = Departamento::where('ecommerce', '=',1)->get(['id','nombre']);
+        $nombre = Departamento::where('ecommerce', '=',1)->where('id','=',$id)->first()->nombre;
+        
+        return view('Ecommerce.departamento',compact('array','nombre','sucursales','departamentos'));
+        
+        //return $array;
+    }
     public function departamentosFavoritos()
     {
         $departamentos = Departamento::where('ecommerce','=',true);
