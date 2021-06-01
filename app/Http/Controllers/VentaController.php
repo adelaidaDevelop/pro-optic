@@ -17,6 +17,7 @@ use App\Models\Empleado;
 use App\Models\venta_cliente;
 use App\Models\Subproducto;
 use App\Models\Oferta;
+
 //imp directo
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 //use CapabilityProfile;
@@ -177,7 +178,8 @@ class VentaController extends Controller
      * @param  \App\Models\Venta  $venta
      * @return \Illuminate\Http\Response
      */
-    public function show($folio) //Venta $venta)
+    /////SHOW2: ORIGINAL
+    public function show2($folio) //Venta $venta)
     {
         $venta = Venta::findOrFail($folio);
         $sE = Sucursal_empleado::findOrFail($venta->idSucursalEmpleado);
@@ -197,6 +199,124 @@ class VentaController extends Controller
         }*/
 
         return view('Venta.ticket', compact('cajero', 'folio', 'pago'));
+    }
+    ////
+    public function show($folio) //Venta $venta)
+    {
+        
+        $venta = Venta::findOrFail($folio);
+        $sE = Sucursal_empleado::findOrFail($venta->idSucursalEmpleado);
+        $e = Empleado::findOrFail($sE->idEmpleado);
+
+        if ($e->id == 1)
+            $cajero =  "ADMINISTRADOR DE LA TIENDA";
+        else
+            $cajero = $e->primerNombre . " " . $e->segundoNombre . " " . $e->apellidoPaterno . " " . $e->apellidoMaterno;
+        //return $nombre;
+        $detalleVenta = Detalle_venta::where('idVenta', '=', $folio)->get(['cantidad', 'precioIndividual']);
+        $pago = $venta->pago;
+
+        //
+        $productos= json_decode($_GET['productos']);
+        
+        $totalOk = 0;
+        foreach ($productos as $p) {
+            $subtotal = $p->precio * $p->cantidad;
+            $totalOk = $totalOk + $subtotal;
+        }
+        $cambio = $pago - $totalOk;
+
+        
+        //IMPRIRMIR
+        $nombreImpresora = "EC-PM-5890X";
+        $connector = new WindowsPrintConnector($nombreImpresora);
+        //return 'Aqui todo bien';
+        $printer = new Printer($connector);
+
+        //contenido imprimir
+        //productos de la venta
+        $arregloP = null;
+        $comprasFiltro = [];
+        foreach ($productos as $p) {
+            $subtotal2 = $p->precio * $p->cantidad;
+            $elemento = new ItemController($p->nombre, $subtotal2);
+            array_push($comprasFiltro,$elemento);
+        }
+
+        //total y subtotal
+        // $subtotal = new item('Subtotal', '12.95');
+        // $tax = new item('A local tax', '1.30');
+        $total = new ItemController('Total', $totalOk, true);
+
+        $date = now()->format('d-m-Y h:i:s A');
+
+        
+        //logo empresa
+        
+        $logo = EscposImage::load("img/farmaciagilogo.png", false);
+
+        
+        //CArgar logo
+        /* Print top logo */
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $printer->graphics($logo);
+        
+        /* Name of shop */
+        $nombreSuc = session("sucursalNombre");
+       // return $nombreSuc;
+        $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+        $printer->text("FARMACIAS GI S.A DE C.V.\n");
+        $printer->selectPrintMode();
+        $printer->text( $nombreSuc, ".\n");
+        $printer->feed();
+
+        
+
+        /* Title of receipt */
+        $printer->setEmphasis(true);
+        $printer->text("TICKET\n");
+        $printer->setEmphasis(false);
+        
+
+        /* Items */
+        $printer->setJustification(Printer::JUSTIFY_LEFT);
+        $printer->setEmphasis(true);
+        $printer->text(new ItemController('', '$'));
+        $printer->setEmphasis(false);
+        foreach ($comprasFiltro as $item) {
+            $printer->text($item);
+        }
+        
+
+        $printer->setEmphasis(true);
+        $printer->text($subtotal);
+        $printer->setEmphasis(false);
+        $printer->feed();
+
+        
+        /* Tax and total */
+      //  $printer->text($tax);
+        $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+        $printer->text($total);
+        $printer->selectPrintMode();
+
+        
+        /* Footer */
+        $printer->feed(2);
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $printer->text("FARMACIAS GI ZIMATLAN\n");
+        $printer->text("FARMACIAS GI ZIMATLAN, AGRADECE SU PREFERENCIA.\n");
+        $printer->feed(2);
+        $printer->text($date . "\n");
+        
+        /* Cut the receipt and open the cash drawer */
+        $printer->cut();
+      //  $printer->Pulse();
+        $printer->close();
+
+       // return $total;
+        return true;
+//        return true;
     }
 
     /**
@@ -379,6 +499,11 @@ class VentaController extends Controller
         return true;
     }
     //imprimirTicketAjustado
+
+    public function impAjustado($folio){
+    }
+
+
 
     
     //imprimir ticket desde un HTML ya generado

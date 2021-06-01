@@ -22,7 +22,6 @@ SUBPRODUCTOS
         </div>
         <div class="row col-12">
             <div class="col-2 border border-primary mt-2 mb-4 ml-4 mr-2">
-
                 <br />
                 <br /> <br />
                 <div class="form-check">
