@@ -66,26 +66,34 @@
 </html>
 <!--ACABA-->
 <script>
-    function imprimir() {
-
-        window.print();
-        myWindow.blur(); //
-        myWindow.close(); //
-        // document.getElementById("totalV").innerHTML = 
-    }
-    //let productos =json($productos);
-    //alert(productos);
-    //let fecha = new Date();
-    //alert(fecha.toLocaleDateString();
-    // impFinal();
-    function impFinal() {
-        var WinPrint = window.open('', '', 'width=900,height=650 ');
-        WinPrint.document.write(document.getElementById('impDiv').outerHTML); //printContent.outerHTML);
-        WinPrint.document.close();
-        WinPrint.focus();
-        WinPrint.print();
-        WinPrint.close();
-    }
+ 
+    document.addEventListener("DOMContentLoaded", () => {
+        // Escuchamos el click del botón
+        // const $boton = document.querySelector("#imp");
+        // $boton.addEventListener("click", () => {
+        const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+        html2pdf()
+            .set({
+                margin: 1,
+                filename: 'seguimiento.pdf',
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                html2canvas: {
+                    scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                    letterRendering: true,
+                },
+                jsPDF: {
+                    unit: "in",
+                    format: "a2",
+                    orientation: 'portrait' // landscape o portrait
+                }
+            })
+            .from($elementoParaConvertir)
+            .save()
+            .catch(err => console.log(err));
+    });
 </script>
 
 </html>

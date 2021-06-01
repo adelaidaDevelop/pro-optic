@@ -75,7 +75,7 @@ class HistorialPedidoController extends Controller
     public function download()
     {
         $data = [
-            'titulo' => 'Styde.net'
+            //'titulo' => 'Styde.net'
         ];
         //return 1;
       //  return PDF::loadHTML('Ecommerce\comprobante')
@@ -85,6 +85,17 @@ class HistorialPedidoController extends Controller
       //  return $pdf->download('archivo.pdf');
         $pdf->save('archivo.pdf');
         return back(); 
+    }
+
+    public function download2()
+    {
+        $data = [
+            'titulo' => 'Styde.net'
+        ];
+
+        $pdf = PDF::loadView('Ecommerce/comprobantePedido', $data);
+
+        return $pdf->download('archivo.pdf');
     }
 
 

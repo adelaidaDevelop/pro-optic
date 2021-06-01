@@ -108,7 +108,7 @@
 
                 <div id="subAgregar" class="col mx-auto mt-4 text-center"></div>
                 <div class="col modal-footer input-group" id="pieInformacion">
-                    <a class="" href="/puntoVenta/descComprobante">
+                    <a class="" href="/puntoVenta/comprobante">
                         GENERAR COMPROBANTE2
                     </a>
 
