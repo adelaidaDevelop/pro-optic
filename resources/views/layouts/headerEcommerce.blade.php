@@ -115,7 +115,7 @@
             <div class="row col-auto my-1 mx-auto mx-md-1 p-1 p-md-0 border border-light">
                 <img src="{{ asset('img\ubicacion.png') }}" alt="UBICACION"
                     class="col-2 col-md-1 my-auto p-2 p-md-1 img-fluid">
-                <select class="custom-select col-10 my-auto " onchange="cambiarSucursal()" id="sucursalActiva">
+                <select class="custom-select col-10 my-auto mx-auto" onchange="cambiarSucursal()" id="sucursalActiva">
                     @foreach($sucursales as $sucursal)
                     @if($sucursal->id == session('sucursalEcommerce'))
                     <option value="{{ $sucursal->id}}" selected>
