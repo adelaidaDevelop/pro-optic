@@ -1116,34 +1116,27 @@ CORTE DE CAJA
         WinPrint.close();
     }
 
-    /*
-        function CallPrint(div) {
-            // divImprimirOpc2();
-            //var divToPrint = document.getElementById('main1');
-            var newWin = window.open('width=100,height=100', '_parent');
-            newWin.focus();
-            newWin.document.open();
-            newWin.document.write(`
+/*
+    function CallPrint(div) {
+        var newWin = window.open('width=100,height=100', '_parent');
+        newWin.focus();
+        newWin.document.open();
+        newWin.document.write(`
           `);
-    // newWin.document.write(div.innerHTML);
-    // newWin.document.write(`</body>
 
-
-
-    // newWin.print();
-    newWin.document.close();
-    setTimeout(function() {
-    newWin.close();
-    }, 6000);
-    newWin.print();
-    window.addEventListener("afterprint", function(event) {
-    console.log("Entro a imp auto")
-    $('#action-link').click();
-    });
+        newWin.document.close();
+        setTimeout(function() {
+            newWin.close();
+        }, 6000);
+        newWin.print();
+        window.addEventListener("afterprint", function(event) {
+            console.log("Entro a imp auto")
+            $('#action-link').click();
+        });
     };
-    */
 
-    // getUser
+*/
+    //AQuicomentado
     $('#getUser').prop('disabled', true);
 </script>
 

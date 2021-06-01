@@ -1209,7 +1209,25 @@ async function realizarVentaEfectivo(ticket) {
         //return;
         if (ticket) {
             let url = `{{url('/puntoVenta/venta/${venta}?productos=')}}` + json;
-            window.open(url, "_blank");
+           // window.open(url, "_blank");
+            /////////
+        //var newWin = window.open('width=100,height=100', '_parent');
+        var newWin = window.open(url,'_blank');
+        newWin.focus();
+        newWin.document.open();
+        newWin.document.close();
+        setTimeout(function() {
+            newWin.close();
+        }, 2000);
+       // newWin.print();
+       /*
+        window.addEventListener("afterprint", function(event) {
+            console.log("Entro a imp auto")
+            $('#action-link').click();
+        });
+    */
+ 
+        /////////////
         }
         productosVenta = [];
         mostrarProductos();

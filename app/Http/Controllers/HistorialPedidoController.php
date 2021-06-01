@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\historialPedido;
 use Illuminate\Http\Request;
+
+//use  PDF;
 use Barryvdh\DomPDF\Facade as PDF;
+//use Barryvdh\DomPDF\Facade as PDF;
 
 class HistorialPedidoController extends Controller
 {
@@ -80,22 +83,34 @@ class HistorialPedidoController extends Controller
         //return 1;
       //  return PDF::loadHTML('Ecommerce\comprobante')
         //    ->stream('archivo.pdf');
-    $pdf = PDF::loadView('Ecommerce\comprobante', $data)
-    ->setPaper('a4', 'landscape');
+
+        
+       
+        
+   // $pdf = PDF::loadView('Ecommerce\comprobante', $data)
+    //->setPaper('a4', 'landscape');
       //  return $pdf->download('archivo.pdf');
-        $pdf->save('archivo.pdf');
+     //   $pdf->save('archivo.pdf');
         return back(); 
     }
 
+    public function imprimir(){
+        
+        $pdf = \PDF::loadView('imprimir');
+        return $pdf->download('imprimir.pdf');
+    }
+    
     public function download2()
     {
-        $data = [
-            'titulo' => 'Styde.net'
-        ];
-
-        $pdf = PDF::loadView('Ecommerce/comprobantePedido', $data);
-
-        return $pdf->download('archivo.pdf');
+       // $fecha = date("Y-m-d");
+      //  $data = compact('fecha');
+        
+       $pdf = PDF::loadView('header', [
+        "nombre" => "Luis Cabrera Benito"]);
+      //  return 1;
+       // return $pdf->download('archivo.pdf');
+      
+        return $pdf->download("mi_archivo.pdf");
     }
 
 
