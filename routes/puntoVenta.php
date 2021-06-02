@@ -197,15 +197,10 @@ Route::prefix('/puntoVenta')->group(function()
      Route::resource('oferta', OfertaController::class);  
         Route::post('/productosCaducidad/editar/{id}', [ProductosCaducidadController::class,'editarCaducidad']);
         Route::resource('productosCaducidad', ProductosCaducidadController::class);
-<<<<<<< HEAD
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
         Route::get('/ecommerce/administracion', [App\Http\Controllers\EcommerceController::class, 'administracion']);
         
         // });
-=======
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
-       // });
->>>>>>> 4a07e3348d7a2286c86e5b25284a87081e3a5ae8
     });
     
 });
