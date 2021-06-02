@@ -193,7 +193,9 @@ Route::prefix('/puntoVenta')->group(function()
         Route::post('/productosCaducidad/editar/{id}', [ProductosCaducidadController::class,'editarCaducidad']);
         Route::resource('productosCaducidad', ProductosCaducidadController::class);
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
-       // });
+        Route::get('/ecommerce/administracion', [App\Http\Controllers\EcommerceController::class, 'administracion']);
+        
+        // });
     });
     
 });

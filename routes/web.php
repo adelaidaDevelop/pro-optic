@@ -19,11 +19,11 @@ use App\Http\Controllers\DevolucionController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ProductosCaducidadController;
 
-
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\ProductoController;
+//use Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,7 +38,7 @@ use App\Http\Controllers\ProductoController;
 /*Route::get('/', function () {
     return view('welcome');
 });*/
-//Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true]);
 Route::get('/loginCliente', [LoginClienteController::class,'loginCliente'])->name('Login')->middleware('isCliente');
 Route::post('/loginCliente', [LoginClienteController::class,'loginPost'])->name('Login');
 Route::post('/logoutCliente', [LoginClienteController::class,'logout'])->name('Login');
