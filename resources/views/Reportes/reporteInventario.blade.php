@@ -777,7 +777,7 @@ INVENTARIO
                 // }
             }
         }
-       // console.log(devolucionFila);
+        // console.log(devolucionFila);
     };
 
     function generaReportes() {
@@ -787,8 +787,8 @@ INVENTARIO
 
         document.getElementById("btnCrearPdf").disabled = false;
         */
-       contador= 0;
-       // let devolucionFila = "";
+        contador = 0;
+        // let devolucionFila = "";
         //  let salidaVP = "";
         //let entradaNuevosProductos = "";
         // let entradaCompraProduct = "";
@@ -821,7 +821,7 @@ INVENTARIO
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (moviName == "2") {
-                   // contador = 0;
+                    // contador = 0;
                     //OPCION 2: SALIDAS
                     ventasRealizadas(fechaXDia);
                     //  document.getElementById("total_salidas").innerHTML = totalVenta;
@@ -837,30 +837,30 @@ INVENTARIO
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (moviName == "3") {
-                  //  contador = 0;
+                    //  contador = 0;
                     devolucionesEfectivo(fechaXDia);
                     // document.getElementById("total_salidas").innerHTML = totalDevolucion;
-                    
+
                     cuerpo = devolucionFila;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
                         let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
-                      //  document.getElementById("btnCrearPdf").disabled = true;
+                        //  document.getElementById("btnCrearPdf").disabled = true;
                     } else {
                         $('#getUser').prop('disabled', false);
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
                 } else if (moviName == "4") {
-                   
+
                     //uno
                     //BUSCAR ENTRADAS
                     //COMPRA DE PRODUCTOS
                     nuevosProductos(fechaXDia);
                     compraProductos(fechaXDia);
                     //Entradas: nueevos productos: 
-                    
+
                     //DOS
                     //BUSCAR SALIDAS
                     //VENTA DE PRODUCTOS
@@ -876,7 +876,7 @@ INVENTARIO
                         // tabla2 = document.querySelector('#tablaR');
                         let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
-                      //  document.getElementById("btnCrearPdf").disabled = true;
+                        //  document.getElementById("btnCrearPdf").disabled = true;
                     } else {
                         $('#getUser').prop('disabled', false);
                         console.log(tabla2);
@@ -1048,17 +1048,120 @@ INVENTARIO
         WinPrint.close();
     }
 
-    $(document).ready(function() {
-        $('#getUser').on('click', function() {
-            var WinPrint = window.open('', '', 'width=900,height=650 ');
-            let  impriDiv = document.getElementById("tabla2");
-            WinPrint.document.write(impriDiv.innerHTML);
-            WinPrint.document.close();
-            WinPrint.focus();
-            WinPrint.print();
-            WinPrint.close();
+    elemento();
+
+    function recuperar(){
+        
+    }
+    function elemento() {
+        console.log("pruebitA");
+        //console.log("HTML: ",  document.createDocumentFragment());
+        console.log("HTML: ", document.documentElement.outerHTML);
+        let d = document.createDocumentFragment.load(`{{ route('membrete') }}`);
+        
+        let html = load(`{{ route('membrete') }}`);
+       
+         let html2= ` {{ route('membrete') }}` ;
+        console.log(html2);
+    
+        return 1;
+        let impriDiv = document.getElementById("tabla2");
+        //  WinPrint.document.write(impriDiv.innerHTML);
+        // const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+        const $elementoParaConvertir = impriDiv.innerHTML; // <-- Aquí puedes elegir cualquier elemento del DOM
+        console.log("Si entra ssss");
+        html2pdf()
+            .set({
+                title: 'hola prueba',
+                margin: 2,
+                filename: 'reporteInventario.pdf',
+                //  FooterData: 'array(0,64,0), array(0,64,128)',
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                /*
+                SetHeaderData: {
+                    PDF_HEADER_LOGO: PDF_HEADER_STRING,
+                    PDF_HEADER_LOGO_WIDTH: array(0, 64, 255),
+                    PDF_HEADER_TITLE: array(0, 64, 128)
+                },
+                */
+                html2canvas: {
+                    scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                    letterRendering: true,
+                },
+                jsPDF: {
+                    unit: "in",
+                    format: "a2",
+                    orientation: 'portrait' // landscape o portrait
+                }
+            })
+            .from($elementoParaConvertir)
+            .save()
+            .catch(err => console.log(err));
+
+    }
+    /*
+    //imprimia ok
+        $(document).ready(function() {
+            $('#getUser').on('click', function() {
+                var WinPrint = window.open('', '', 'width=900,height=650 ');
+                let impriDiv = document.getElementById("tabla2");
+                WinPrint.document.write(impriDiv.innerHTML);
+                WinPrint.document.close();
+                WinPrint.focus();
+                WinPrint.print();
+                WinPrint.close();
+            });
         });
+
+        */
+    // document.addEventListener("DOMContentLoaded", () => {
+
+    $('#getUser').on('click', function() {
+        let impriDiv = document.getElementById("tabla2");
+
+
+        //  WinPrint.document.write(impriDiv.innerHTML);
+        // const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+        const $elementoParaConvertir = impriDiv.innerHTML; // <-- Aquí puedes elegir cualquier elemento del DOM
+        console.log("Si entra ssss");
+        html2pdf()
+            .set({
+                title: 'hola prueba',
+                margin: 2,
+                filename: 'reporteInventario.pdf',
+                //  FooterData: 'array(0,64,0), array(0,64,128)',
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                /*
+                SetHeaderData: {
+                    PDF_HEADER_LOGO: PDF_HEADER_STRING,
+                    PDF_HEADER_LOGO_WIDTH: array(0, 64, 255),
+                    PDF_HEADER_TITLE: array(0, 64, 128)
+                },
+                */
+                html2canvas: {
+                    scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                    letterRendering: true,
+                },
+                jsPDF: {
+                    unit: "in",
+                    format: "a2",
+                    orientation: 'portrait' // landscape o portrait
+                }
+            })
+            .from($elementoParaConvertir)
+            .save()
+            .catch(err => console.log(err));
     });
+
+    // });
+
+
     $('#getUser').prop('disabled', true);
 </script>
 

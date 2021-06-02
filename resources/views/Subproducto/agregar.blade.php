@@ -77,7 +77,7 @@ SUBPRODUCTOS
                     <div class="col-3 ">
                         <!--  <input type="number" name="ganancia" id="ganancia" placeholder="Ingrese el precio individual del producto" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>-->
                         <input class="form-control " type="number" min="1" onkeypress="return filterFloat(event,this);" name="existencia" id="existencia" placeholder="EXISTENCIA DEL PRODUCTO" value="{{ isset($subproducto->precio_ind)?$subproducto->precio_ind:''}}" required>
-                        <textarea class="form-control mt-4" name="observacion" id="observacion" class="form-control" placeholder="OBSERVACIONES" rows="3" onkeyup="mayus(this);" cols="23" required>{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
+                        <textarea class="form-control mt-4" name="observacion" id="observacion" class="form-control" placeholder="OBSERVACIONES" rows="3" onkeyup="mayus(this);" cols="23" >{{ isset($producto->descripcion)?$producto->descripcion:''}}</textarea>
                         <br />
 
                     </div>
@@ -235,7 +235,7 @@ SUBPRODUCTOS
         costoInd = parseFloat(costoG.value) / parseInt(piezas2.value);
         console.log(costoInd);
 
-        $("input[id='costo_ind']").val(costoInd);
+        $("input[id='costo_ind']").val(costoInd.toFixed(2));
     };
 
     function mayus(e) {

@@ -18,7 +18,7 @@ class CreateSubproductosTable extends Migration
             $table->integer('piezas');
             $table->double('precio');
             $table->unsignedInteger('existencia');
-            $table->string('observacion');
+            $table->string('observacion')->nullable();
             $table->timestamps();
         });
     }

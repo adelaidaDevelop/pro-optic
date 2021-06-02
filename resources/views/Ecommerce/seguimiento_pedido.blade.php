@@ -31,7 +31,7 @@
         <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO GENERADO</small></p>
     </button>
 
-    <div class="3 h1 my-auto text-dark">
+    <div class=" h1 my-auto text-dark">
         <p>..........</p>
     </div>
 
