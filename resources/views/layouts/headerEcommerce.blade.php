@@ -100,17 +100,26 @@
         </div>
     </div>
     <script>
+    $("input[type='search']").bind('keypress', function(e) {
+        if(this.value.length == 0 && e.key === ' ')
+            return false;
+        if (this.value.length > 0 &&  e.charCode == 13) {
+            location.href = `{{url('/buscar')}}?buscar=${this.value}`;
+    }
+    });
+
     function buscarProducto(etiqueta) {
         let producto = document.querySelector(`#${etiqueta}`).value;
         if (producto.length == 0)
             return;
         console.log('Si va redireccionar');
-        location.href = `{{url('/buscar')}}/${producto}`;
+        location.href = `{{url('/buscar')}}?buscar=${producto}`;
 
     }
     </script>
 
-    <nav class="navbar navbar-expand-lg navbar-dark col-12 mx-0 my-0 py-0 py-md-1 position-relative" style="background:#BDC2C5">
+    <nav class="navbar navbar-expand-lg navbar-dark col-12 mx-0 my-0 py-0 py-md-1 position-relative"
+        style="background:#BDC2C5">
         <div class="collapse navbar-collapse" id="collapseSubtitulo">
             <div class="row col-auto my-1 mx-auto mx-md-1 p-1 p-md-0 border border-light">
                 <img src="{{ asset('img\ubicacion.png') }}" alt="UBICACION"
@@ -138,23 +147,24 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     @foreach($departamentos as $departamento)
-                    <a class="dropdown-item" href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}</a>
+                    <a class="dropdown-item"
+                        href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}</a>
                     @endforeach
                 </div>
             </div>
             @php $count = 0 @endphp
             @foreach($departamentos as $departamento)
-                @if($count < 3)
-            <ul class="navbar-nav mx-auto btn-outline-secondary d-none d-md-block">
+            @if($count < 3) <ul class="navbar-nav mx-auto btn-outline-secondary d-none d-md-block">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}<span
+                    <a class="nav-link text-dark"
+                        href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}<span
                             class="sr-only">(current)</span></a>
                 </li>
-            </ul>
-            @php $count++ @endphp
-            @else @php break; @endphp
-            @endif
-            @endforeach
+                </ul>
+                @php $count++ @endphp
+                @else @php break; @endphp
+                @endif
+                @endforeach
 
         </div>
     </nav>

@@ -10,6 +10,7 @@ use App\Models\Detalle_venta;
 use App\Models\Favorito;
 use App\Models\Cliente;
 use App\Models\Domicilio;
+use App\Models\User;
 use Illuminate\Http\Request;
 use DateInterval;
 
@@ -52,9 +53,15 @@ class EcommerceController extends Controller
         //return session('idEmpleado');
     }
 
-    public function buscarProducto($producto)
+    public function buscarProducto()
     {
-        //return $producto;
+        //return isset($_GET['buscar']);
+        $array = [];
+        if(isset($_GET['buscar']))
+            $producto = $_GET['buscar'];
+        else{
+            return view('Ecommerce.busqueda',compact('array'));
+        }
         $datos = DB::table('productos')
             ->join('sucursal_productos', 'productos.id', '=', 'sucursal_productos.idProducto')
             ->where([['productos.nombre','like','%'.$producto.'%'],
@@ -65,6 +72,7 @@ class EcommerceController extends Controller
             //->groupBy('sucursal_empleados.idSucursal')
         
         $array = json_decode(json_encode($datos), true);
+        //return $array;
         //$productosNuevos = $this->productosNuevos();
         //$productosDestacados = $this->productosDestacados();
         $sucursales = Sucursal::all();
@@ -408,10 +416,19 @@ class EcommerceController extends Controller
 
     public function direccionEnvio()
     {
+        
         if(session()->has('carrito'))
         {
-            if(!session()->has('idCliente'))
+            
+            
+            if(!session()->has('idCliente') )
                 return redirect('/loginCliente?compra=1');
+            $user = User::find(session('idCliente'));
+            if(!isset($user))
+            {
+                session()->forget('idCliente');
+                return redirect('/loginCliente?compra=1');
+            }
             $carrito = session('carrito');
             $ss = array_column($carrito, 'sucursal');
             $pos = array_search(session('sucursalEcommerce'), $ss);
