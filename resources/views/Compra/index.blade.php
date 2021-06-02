@@ -665,6 +665,7 @@ $abonar = $sE->hasAnyRole($modificar);
                 let precio = parseFloat(compra_producto[c].costo_unitario) *
                     parseFloat(ganancia);
                 precio = (precio / 100) + compra_producto[c].costo_unitario;
+                precio = precio.toFixed(2);
                 cuerpo = cuerpo +
                     `
             <tr>

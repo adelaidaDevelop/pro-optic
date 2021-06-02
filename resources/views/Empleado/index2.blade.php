@@ -1316,7 +1316,7 @@ function habilitar() {
     //document.getElementById("btnForm").show();
     //alert('Entra');
 }
-let cambios = `@json(session()->has('cambios'))`;
+let cambios = `{{session()->has('cambios')}}`;
 if (cambios.length > 0)
     habilitar();
 //if(session() - > has('cambios'))

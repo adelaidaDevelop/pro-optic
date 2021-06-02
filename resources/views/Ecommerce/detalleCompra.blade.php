@@ -69,8 +69,8 @@
             <a class="btn btn-success btn-lg" href="">Continuar</a>
         </div>
     </div>
-    <div class="col-3 border border-warning">
-        <div class="row mb-auto p-1 border">
+    <div class="col-3">
+        <div class="row mb-auto p-1 border border-primary">
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
                 <h4 class="col-12 mx-auto my-1 py-0 text-center text-primary">Resumen de compra</h4>
             </div>
@@ -86,11 +86,6 @@
                 <h5 class="mr-auto my-1 text-center">Total</h5>
                 <h5 class="ml-auto my-1 text-center" id="total">$0.00</h5>
             </div>
-            @if(session()->has('idCliente'))
-            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="http:/google.com">Pagar</a>
-            @else
-            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="{{url('/loginCliente')}}">Pagar</a>
-            @endif
         </div>
     </div>
 </div>
@@ -99,5 +94,29 @@
     {
         location.href= "{{url('/direccionEnvio?domicilio=false')}}";
     });
+
+    async function calcularTotal()
+{
+    if(carrito == null)
+        return;
+    let totalCompra = 0;
+    let cuerpoCarrito = "";
+    let contador = 0;
+    for(let i in carrito)
+    {
+        if(carrito[i].sucursal == sucursal)
+        {
+            contador++;
+            totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+        }
+    }
+    if(contador!=0)
+    {
+        $('#subtotal').html(`$ ${totalCompra}`);
+        $('#total').html(`$ ${totalCompra}`);
+        return;
+    }
+}
+calcularTotal();
 </script>
 @endsection

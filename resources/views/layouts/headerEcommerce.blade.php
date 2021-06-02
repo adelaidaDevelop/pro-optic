@@ -100,22 +100,31 @@
         </div>
     </div>
     <script>
+    $("input[type='search']").bind('keypress', function(e) {
+        if(this.value.length == 0 && e.key === ' ')
+            return false;
+        if (this.value.length > 0 &&  e.charCode == 13) {
+            location.href = `{{url('/buscar')}}?buscar=${this.value}`;
+    }
+    });
+
     function buscarProducto(etiqueta) {
         let producto = document.querySelector(`#${etiqueta}`).value;
         if (producto.length == 0)
             return;
         console.log('Si va redireccionar');
-        location.href = `{{url('/buscar')}}/${producto}`;
+        location.href = `{{url('/buscar')}}?buscar=${producto}`;
 
     }
     </script>
 
-    <nav class="navbar navbar-expand-lg navbar-dark col-12 mx-0 my-0 py-0 py-md-1 position-relative border" style="background:#BDC2C5">
+    <nav class="navbar navbar-expand-lg navbar-dark col-12 mx-0 my-0 py-0 py-md-1 position-relative"
+        style="background:#BDC2C5">
         <div class="collapse navbar-collapse" id="collapseSubtitulo">
             <div class="row col-auto my-1 mx-auto mx-md-1 p-1 p-md-0 border border-light">
                 <img src="{{ asset('img\ubicacion.png') }}" alt="UBICACION"
                     class="col-2 col-md-1 my-auto p-2 p-md-1 img-fluid">
-                <select class="custom-select col-10 my-auto " onchange="cambiarSucursal()" id="sucursalActiva">
+                <select class="custom-select col-10 my-auto mx-auto" onchange="cambiarSucursal()" id="sucursalActiva">
                     @foreach($sucursales as $sucursal)
                     @if($sucursal->id == session('sucursalEcommerce'))
                     <option value="{{ $sucursal->id}}" selected>
@@ -131,26 +140,31 @@
 
             </div>
 
-            <div class="dropdown my-1">
+            <div class="dropdown my-1 mx-auto ">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     DEPARTAMENTOS
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     @foreach($departamentos as $departamento)
-                    <a class="dropdown-item" href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}</a>
+                    <a class="dropdown-item"
+                        href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}</a>
                     @endforeach
                 </div>
             </div>
-
+            @php $count = 0 @endphp
             @foreach($departamentos as $departamento)
-            <ul class="navbar-nav mx-auto btn-outline-secondary d-none d-md-block">
+            @if($count < 3) <ul class="navbar-nav mx-auto btn-outline-secondary d-none d-md-block">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}<span
+                    <a class="nav-link text-dark"
+                        href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}<span
                             class="sr-only">(current)</span></a>
                 </li>
-            </ul>
-            @endforeach
+                </ul>
+                @php $count++ @endphp
+                @else @php break; @endphp
+                @endif
+                @endforeach
 
         </div>
     </nav>

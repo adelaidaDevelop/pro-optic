@@ -298,7 +298,7 @@ async function addCarrito(id) {
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: `/agregarAlCarrito/${id}`,
+            url: `{{url('/agregarAlCarrito')}}/${id}`,
             // los datos que voy a enviar para la relación
             data: {
                 //_token: $("meta[name='csrf-token']").attr("content")

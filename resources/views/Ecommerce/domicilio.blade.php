@@ -97,11 +97,6 @@
                 <h5 class="mr-auto my-1 text-center">Total</h5>
                 <h5 class="ml-auto my-1 text-center" id="total">$0.00</h5>
             </div>
-            @if(session()->has('idCliente'))
-            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="http:/google.com">Pagar</a>
-            @else
-            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="{{url('/loginCliente')}}">Pagar</a>
-            @endif
         </div>
     </div>
 </div>
@@ -133,9 +128,47 @@ async function colonias() {
             throw new Error(response.statusText);
         }
     } catch (err) {
+        let colonias = ['San Lorenzo', 'San Juan','El pajarito','San Antonio','San José','El Centro','Expiración'];
+        
+            let cuerpo = "";
+            let colonia = "@if(isset($domicilio->colonia)){{$domicilio->colonia}}@else null @endif";
+            
+        for(let i in colonias)
+            {
+                if(colonia!=null && colonia == colonias[i])
+                    cuerpo = cuerpo + `<option value="${colonias[i]}" selected>${colonias[i]}</option>`;
+                else
+                cuerpo = cuerpo + `<option value="${colonias[i]}">${colonias[i]}</option>`;
+
+            }
+            //cuerpo = cuerpo + `<option value="ad" default>Mi colonia</option>`;
+            document.querySelector('#colonia').innerHTML = cuerpo;
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
 }
 colonias();
+async function calcularTotal()
+{
+    if(carrito == null)
+        return;
+    let totalCompra = 0;
+    let cuerpoCarrito = "";
+    let contador = 0;
+    for(let i in carrito)
+    {
+        if(carrito[i].sucursal == sucursal)
+        {
+            contador++;
+            totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+        }
+    }
+    if(contador!=0)
+    {
+        $('#subtotal').html(`$ ${totalCompra}`);
+        $('#total').html(`$ ${totalCompra}`);
+        return;
+    }
+}
+calcularTotal();
 </script>
 @endsection

@@ -152,6 +152,7 @@ async function setCantidad(id) {
                 $(`#subtotal${id}`).html(`$${subtotal}`);
                 encontrado = true;
             }
+            i++;
         }        //$('#subtotalProducto').html(`$${})
         //document.querySelector('#cantidadCarrito').textContent = respuesta.length;
         mostrarCarrito();
