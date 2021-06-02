@@ -115,7 +115,7 @@ $verReporte = $sE->hasAnyRole($reporte);
                     </li>
                     <li class="nav-item active">
                         @if($verReporte)
-                        <a class="nav-link px-0 mx-2" href="{{ url('/puntoVenta/reporteCompraVenta')}}">
+                        <a class="nav-link px-0 mx-2" href="{{ url('/puntoVenta/reporteInventario')}}">
                             <button class="btn btn-light input-group" >
                             <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                             <p class="h6 my-auto"><small>REPORTES</small></p>

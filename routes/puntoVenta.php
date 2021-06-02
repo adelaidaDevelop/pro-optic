@@ -147,6 +147,11 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('/descComprobante', [HistorialPedidoController::class,'download2']);
     Route::get('/pdf2', [ReporteController::class,'pdf']);
     
+    //ruta para cargar header_foter
+    Route::get('encabezado_pie',function(){
+        return view('encabezado_pie');
+        })->name('membrete');
+    
     //ELIMINAR PRODUCTOS DE SUCURSAL
     Route::get('productoEli3/{id}', [ProductoController::class,'eliminar3']);
     Route::resource('cliente', ClienteController::class);
@@ -192,7 +197,7 @@ Route::prefix('/puntoVenta')->group(function()
      Route::resource('oferta', OfertaController::class);  
         Route::post('/productosCaducidad/editar/{id}', [ProductosCaducidadController::class,'editarCaducidad']);
         Route::resource('productosCaducidad', ProductosCaducidadController::class);
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware('verified');
        // });
     });
     

@@ -438,8 +438,8 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                 <!-- TABLA -->
                 <div id="vacio" class="text-center my-auto">
                     <div class="row w-100 " style="height:300px;overflow-y:auto;">
-                        <table class="table table-bordered border-primary ml-5  ">
-                            <thead class="table-secondary text-primary">
+                        <table class="table table-bordered border-primary ml-5  uppercase ">
+                            <thead class="table-secondary text-primary uppercase">
                                 <tr>
                                     <th>#</th>
                                     <th>CODIGO BARRA</th>
@@ -450,7 +450,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
                                     <th> </th>
                                 </tr>
                             </thead>
-                            <tbody id="filaTablas">
+                            <tbody id="filaTablas" class="uppercase">
 
                             </tbody>
                         </table>
@@ -2382,6 +2382,7 @@ function redirect(id) {
 async function productosEnBajaSucursal() {
     let cuerpo = "";
     let cont = 0;
+    let nombreDepa = "";
     await productos0();
     //console.log(prod_baja);
     for (let t in prod_baja) {
@@ -2390,18 +2391,22 @@ async function productosEnBajaSucursal() {
             // for (let x in productos) {
             //if (productos[x].id === prod_baja[t].idProducto) {
             cont = cont + 1;
+            let depa = d.find(p => p.id == producto.idDepartamento);
+            if(depa != null){
+                nombreDepa = depa.nombre;
+            }
             let btnAlta = `<a class="btn btn-primary" href="{{ url('/puntoVenta/altaProducto/` + producto.id +
                 `')}}"> ALTA </a>`;
             if (!modificarProducto)
                 btnAlta =
                 `<button class="btn btn-primary" onclick="return alert('NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')" > ALTA </button>`;
             cuerpo = cuerpo + `
-                    <tr>
+                    <tr class="uppercase">
                     <th >` + cont + `</th>
-                    <td>` + producto.codigoBarras + `</td>
-                    <td>` + producto.nombre + `</td>
-                    <td>` + producto.descripcion + `</td>
-                    <td>` + producto.idDepartamento + `</td>
+                    <td class = "uppercase"> ` + producto.codigoBarras.toUpperCase()  + `</td>
+                    <td class = "uppercase">` + producto.nombre.toUpperCase()  + `</td>
+                    <td class = "uppercase"> ` + producto.descripcion.toUpperCase()  + `</td>
+                    <td>` + nombreDepa + `</td>
                     <td>` + producto.receta + `</td>
                     <td>` + btnAlta +
                 ` 
