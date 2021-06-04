@@ -22,12 +22,12 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
 @endif
 <div class="col-6 ml-4"></div>
 <div class=" ml-3 my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/compra">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/compra')}}">
         <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 </div>
 <div class=" ml-3 my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 </div>

@@ -14,7 +14,7 @@ REPORTES
 </div>
 <div class="col-7 "></div>
 <div class=" my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="30px" height="30px">
     </a>
 </div>

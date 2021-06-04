@@ -15,7 +15,7 @@ PRODUCTOS
 
 <div class="col-7 "></div>
 <div class="my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/producto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/producto')}}">
         <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
     </a>
 </div>

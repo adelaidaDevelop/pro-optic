@@ -16,12 +16,12 @@ PRODUCTOS
 </div>
 <div class="col-6 "></div>
 <div class="my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/producto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/producto')}}">
         <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 </div>
 <div class=" ml-3 my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 </div>
@@ -208,7 +208,7 @@ PRODUCTOS
                 method: "post",
                 // la URL de donde voy a hacer la petición
                 //url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
-                url: `/puntoVenta/producto`,
+                url: `{{url('/puntoVenta/producto')}}`,
 
                 // los datos que voy a enviar para la relación
                 data: {

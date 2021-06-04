@@ -66,7 +66,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 </div>
 
 <div class="col-0  ml-3 p-1 ">
-    <a class="btn btn-outline-secondary  p-1 border-0" href="/puntoVenta/reporteInventario">
+    <a class="btn btn-outline-secondary  p-1 border-0" href="{{url('/puntoVenta/reporteInventario')}}">
         <img src="{{ asset('img/rep_inv.png') }}" alt="Editar" width="32px" height="32px">
         <p class="h6 my-auto text-dark"><small>REPORTE INVENTARIO</small></p>
     </a>
@@ -76,7 +76,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 
 <!--
 <div class="col-2  ml-3 p-1 ">
-    <a class="btn btn-outline-secondary p-1 border-0" href="{{ url('/puntoVenta/oferta')}}">
+    <a class="btn btn-outline-secondary p-1 border-0" href="{ url('/puntoVenta/oferta')}}">
         <img src="{{ asset('img\ofertas.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto text-dark"><small>OFERTAS</small></p>
     </a>
@@ -84,14 +84,14 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 -->
 <!-- COMENTADO TEMPORAL
 <div class="col-1 my-2  p-1 ">
-    <button type="button" class="btn btn-secondary p-1" data-toggle="modal"  href="{{ url('/producto/create')}}" id="altaProd"  value="">
+    <button type="button" class="btn btn-secondary p-1" data-toggle="modal"  href="{ url('/producto/create')}}" id="altaProd"  value="">
         <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px">
         OFERTAS
     </button>
 </div>
 -->
 <div class="mx-auto my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 </div>
@@ -1779,7 +1779,7 @@ async function actPrecio(idSucProd) {
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: `/puntoVenta/productoSuc/actPrecio/${idSucProd}`,
+            url: `{{url('/puntoVenta/productoSuc/actPrecio')}}/${idSucProd}`,
             // los datos que voy a enviar para la relación
             data: {
                 precio: parseFloat(precio.value),
@@ -1809,7 +1809,7 @@ async function actPrecio(idSucProd) {
 async function act_datos() {
     let response = "Sin respuesta";
     try {
-        response = await fetch(`/puntoVenta/act_inventario`);
+        response = await fetch(`{{url('/puntoVenta/act_inventario')}}`);
         if (response.ok) {
             //productosSucursal = await response.json();
             let datos = await response.json();
@@ -1842,7 +1842,7 @@ async function actCosto(idSucProd) {
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: `/puntoVenta/productoSuc/actCosto/${idSucProd}`,
+            url: `{{url('/puntoVenta/productoSuc/actCosto')}}/${idSucProd}`,
             // los datos que voy a enviar para la relación
             data: {
                 costo: parseFloat(costo.value),
@@ -1886,7 +1886,7 @@ async function actExistencia(idSucProd) {
             // metodo: puede ser POST, GET, etc
             method: "post",
             // la URL de donde voy a hacer la petición
-            url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
+            url: `{{url('/puntoVenta/productoSuc/actExistencia')}}/${idSucProd}`,
             // los datos que voy a enviar para la relación
             data: {
                 cantidad: parseInt(existencia.value),
@@ -1933,7 +1933,7 @@ async function agregarExistencia() {
             method: "post",
             // la URL de donde voy a hacer la petición
             //  url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
-            url: `/puntoVenta/productoSuc/agregarExistencia/${idSucProd}`,
+            url: `{{url('/puntoVenta/productoSuc/agregarExistencia')}}/${idSucProd}`,
 
             // los datos que voy a enviar para la relación
             data: {
@@ -1983,7 +1983,7 @@ async function agregarSubprod() {
             // metodo: puede ssubProdExisNuevoer POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: `/puntoVenta/subProdExisNuevo/${idSucProd}`,
+            url: `{{url('/puntoVenta/subProdExisNuevo')}}/${idSucProd}`,
             // los datos que voy a enviar para la relación
             data: {
                 cantidad: parseFloat(costo.value),
@@ -2115,7 +2115,7 @@ async function editarSubproducto(idSucProd,editar) {
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
-                url: `/puntoVenta/editarSubproducto/${idSucProd}`,
+                url: `{{url('/puntoVenta/editarSubproducto')}}/${idSucProd}`,
                 // los datos que voy a enviar para la relación
                 data: {
                     piezas: piezas.value,
@@ -2328,7 +2328,7 @@ async function subproductoExiste(idSucProd, id) {
         let subproducto = subproductos.find(p => p.idSucursalProducto == idSucProd);
         if (subproducto != null)
             return alert("Este producto ya está activo en subproducto y no se puede volver a agregar");
-        window.location = `/puntoVenta/subproducto/create/?id=${id}`;
+        window.location = `{{url('/puntoVenta/subproducto/create')}}/?id=${id}`;
 
         /*try {
             response = await fetch(`/puntoVenta/veriUniqueSubproducto/?id=${id}`);
@@ -2375,7 +2375,7 @@ async function subproductoExiste(idSucProd, id) {
 
 
 function redirect(id) {
-    window.location = `/puntoVenta/subproducto/create/?id=${id}`;
+    window.location = `{{url('/puntoVenta/subproducto/create')}}/?id=${id}`;
 }
 
 
@@ -2426,7 +2426,7 @@ async function productosEnBajaSucursal() {
 async function productos0() {
     let response = "Sin respuesta";
     try {
-        response = await fetch(`/puntoVenta/productos_baja`);
+        response = await fetch(`{{url('/puntoVenta/productos_baja')}}`);
         if (response.ok) {
             prod_baja = await response.json();
         } else {
@@ -2448,7 +2448,7 @@ async function getInventarioRapido() {
             return alert('INGRESE UNA CANTIDAD VALIDA PARA CONTINUAR')
         if (cantidad <= 0)
             return alert('INGRESE UNA CANTIDAD VALIDA PARA CONTINUAR')
-        let respuesta = await fetch(`/puntoVenta/inventarioRapido/${cantidad}`);
+        let respuesta = await fetch(`{{url('/puntoVenta/inventarioRapido')}}/${cantidad}`);
         productosRapidos = await respuesta.json();
         mostrarInventarioRapido()
         $('#modalPeticionInventario').modal('hide');
@@ -2520,7 +2520,7 @@ async function actualizar(i) {
                 // metodo: puede ser POST, GET, etc
                 method: "post",
                 // la URL de donde voy a hacer la petición
-                url: `/puntoVenta/productoSuc/actExistencia/${idSucProd}`,
+                url: `{{url('/puntoVenta/productoSuc/actExistencia')}}/${idSucProd}`,
                 // los datos que voy a enviar para la relación
                 data: {
                     cantidad: existencia,
@@ -2544,7 +2544,7 @@ async function actualizar(i) {
                 // metodo: puede ssubProdExisNuevoer POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
-                url: `/puntoVenta/subProdExisNuevo/${idSucProd}`,
+                url: `{{url('/puntoVenta/subProdExisNuevo')}}/${idSucProd}`,
                 // los datos que voy a enviar para la relación
                 data: {
                     cantidad: existencia,
@@ -2617,7 +2617,7 @@ async function editarProducto(x, idSucProd) {
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: `/puntoVenta/producto/editar/${x}`,
+            url: `{{url('/puntoVenta/producto/editar')}}/${x}`,
             // los datos que voy a enviar para la relación
             //dataType: 'json',
             cache: false,

@@ -49,7 +49,7 @@ $abonar = $sE->hasAnyRole($modificar);
 </div>
 -->
 
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 
@@ -320,7 +320,7 @@ $abonar = $sE->hasAnyRole($modificar);
             comprasActuales = [];
             //let response = "";
             if (compras.length == 0) {
-                let response = await fetch(`/puntoVenta/compra/{{session('sucursal')}}`);
+                let response = await fetch(`{{url('/puntoVenta/compra')}}/{{session('sucursal')}}`);
                 if (response.ok) {
                     //console.log(compras);
                     console.log("Si me responde");
@@ -692,7 +692,7 @@ $abonar = $sE->hasAnyRole($modificar);
     }
     async function verCreditoCompra(id, costoTotal) {
         try {
-            response = await fetch(`/puntoVenta/pagoCompra/${id}`);
+            response = await fetch(`{{url('/puntoVenta/pagoCompra')}}/${id}`);
             let cuerpo = "";
             if (response.ok) {
                 pagosCompra = await response.json();

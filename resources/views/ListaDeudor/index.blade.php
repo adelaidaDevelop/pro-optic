@@ -6,7 +6,7 @@ CREDITOS
 @section('opciones')
 <div class="col-7 "></div>
 <div class=" ml-3 my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 </div>
@@ -511,7 +511,7 @@ CREDITOS
                     // metodo: puede ser POST, GET, etc
                     method: "POST",
                     // la URL de donde voy a hacer la petición
-                    url: '/puntoVenta/pago',
+                    url: `{{url('/puntoVenta/pago')}}`,
                     // los datos que voy a enviar para la relación
                     data: {
                         // datos: json,
