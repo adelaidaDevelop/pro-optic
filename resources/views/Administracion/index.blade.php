@@ -72,7 +72,7 @@ $verS = $sE->hasAnyRole($vS);
 -->
 <div class="col-4 "></div>
 <div class=" ml-3 my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{ url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 </div>
@@ -107,7 +107,7 @@ $verS = $sE->hasAnyRole($vS);
                 <!--BOTONES DE SUCURSAL-->
                 <!--
                  <div class="row mx-auto mb-3 ">
-                        <form method="get" action="{{url('/puntoVenta/administracion/')}}">
+                        <form method="get" action="{url('/puntoVenta/administracion/')}}">
                             <button class="btn btn-outline-secondary p-1" type="submit">
                                 <img src="{{ asset('img\agregar2.png') }}" alt="Editar" width="25px" height="25px">
                                 NUEVA SUCURSAL
@@ -210,7 +210,7 @@ $verS = $sE->hasAnyRole($vS);
                     </form>
                     <div class="row col px-3 my-0">
                         <!--
-                        <form method="get" class="ml-auto" action="{{url('/puntoVenta/destroy2/'.$d->id)}}">
+                        <form method="get" class="ml-auto" action="{url('/puntoVenta/destroy2/'.$d->id)}}">
                             {{csrf_field()}}
                             {{ method_field('DELETE')}}
                             <button class="btn btn-outline-secondary my-3 ml-auto " type="submit" onclick="return confirm('¿DESEA ELIMINAR ESTA SUCURSAL?')">
@@ -478,7 +478,7 @@ $verS = $sE->hasAnyRole($vS);
         //body.innerHTML = ""; //NO HAY NINGUN EMPLEADO EN LA EMPRESA";
         //let cuerpo = `<div class="row mx-auto my-auto p-5"><strong class="text-uppercase">Seleccione el empleado que desea agregar a la sucursal</strong></div>`;
         try {
-            let response = await fetch(`/puntoVenta/empleado/empleados`);
+            let response = await fetch(`{{url('/puntoVenta/empleado/empleados')}}`);
             if (response.ok) {
 
                 console.log("Los empleados son:");
@@ -510,7 +510,7 @@ $verS = $sE->hasAnyRole($vS);
     async function cargarPermisosEmpleado(id) {
         try {
             let permisosEmpleado = null;
-            let response = await fetch(`/puntoVenta/permisosEmpleado/${id}`);
+            let response = await fetch(`{{url('/puntoVenta/permisosEmpleado')}}/${id}`);
             if (response.ok) {
 
                 console.log("Los empleados son:");
@@ -565,7 +565,7 @@ $verS = $sE->hasAnyRole($vS);
         let cuerpo = "";
         try {
 
-            let response = await fetch(`/puntoVenta/sucursalEmpleado/${idSucursal}`);
+            let response = await fetch(`{{url('/puntoVenta/sucursalEmpleado')}}/${idSucursal}`);
             if (response.ok) {
                 console.log("Las sucursales son:");
                 SucursalEmpleados = await response.json();
@@ -734,7 +734,7 @@ $verS = $sE->hasAnyRole($vS);
                 // con los datos en formato JSON
                 body: datos // convertimos el objeto a texto
             };
-            let response = await fetch(`/puntoVenta/sucursalEmpleado/`, init);
+            let response = await fetch(`{{url('/puntoVenta/sucursalEmpleado')}}`, init);
             if (response.ok) {
                 await empleadosSucursal();
                 console.log(response.text());
@@ -782,7 +782,7 @@ $verS = $sE->hasAnyRole($vS);
         if (preguntar) {
             console.log("20-04-21");
          //   window.location = `/puntoVenta/altaSucursal/${idSuc}`;
-           // location.href =` {{ url('/puntoVenta/altaSucursal/${idSuc}')}}`;
+           // location.href =` { url('/puntoVenta/altaSucursal/${idSuc}')}}`;
         }
     }
 
@@ -817,7 +817,7 @@ $verS = $sE->hasAnyRole($vS);
     async function sucursales0() {
         let response = "Sin respuesta";
         try {
-            response = await fetch(`/puntoVenta/sucursalesInactivos`);
+            response = await fetch(`{{url('/puntoVenta/sucursalesInactivos')}}`);
             if (response.ok) {
                 Suc_Inac = await response.json();
             } else {
@@ -876,7 +876,7 @@ $verS = $sE->hasAnyRole($vS);
     async function productosAll() {
         let response = "Sin respuesta";
         try {
-            response = await fetch(`/puntoVenta/productosTodos`);
+            response = await fetch(`{{url('/puntoVenta/productosTodos')}}`);
             if (response.ok) {
                 productosT = await response.json();
             } else {
@@ -896,7 +896,7 @@ $verS = $sE->hasAnyRole($vS);
 
     function filtrar() {
         document.getElementById("resultados").innerHTML = "";
-        fetch(`/puntoVenta/administracion/buscador?texto=${texto.value}`, {
+        fetch(`{{url('/puntoVenta/administracion/buscador')}}?texto=${texto.value}`, {
                 method: 'get'
             })
             .then(response => response.text())
@@ -916,7 +916,7 @@ $verS = $sE->hasAnyRole($vS);
         if (revi) {
             let response = "Sin respuesta";
             try {
-                response = await fetch(`/puntoVenta/destroy2/${id}`);
+                response = await fetch(`{{url('/puntoVenta/destroy2')}}/${id}`);
                 if (response.ok) {
                     let respuesta = await response.text();
                     if (respuesta.length > 1) {
@@ -928,7 +928,7 @@ $verS = $sE->hasAnyRole($vS);
                     } else {
                         let sucUsada = confirm("ESTA SUCURSAL YA ES USADA EN OTRA PARTE. ¿DESEA DARLO DE BAJA?");
                         if (sucUsada) {
-                            let respuesta2 = await fetch(`/puntoVenta/actualizar/${id}`);
+                            let respuesta2 = await fetch(`{{url('/puntoVenta/actualizar')}}/${id}`);
                             if (respuesta2.ok) {
                                 alert("LA SUCURSAL SE HA DADO DE BAJA");
                                 location.href = "{{url('/puntoVenta/administracion')}}";

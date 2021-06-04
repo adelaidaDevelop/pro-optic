@@ -7,7 +7,7 @@ CORTE DE CAJA
 <div class="col-7"></div>
 
 <div class=" ml-3 my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 </div>
@@ -948,7 +948,7 @@ CORTE DE CAJA
             fecha2.setDate(fecha2.getDate() + 1);
             fechaF = fecha2.getDate() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getFullYear();
             //  impFinal(formatoCorteCaja(totalVentas, abonoD, subtotalE, devolucionT, subtotalS, total));
-            //let url = `{{url('/puntoVenta/corte_cajaView')}}?ventasEfectivo=${ventasEfectivo}&abonoEfectivo=${abonoEfectivo}&devEfectivo=${devEfectivo}&totalCaja=${totalCaja}&efectivoV=${efectivoV}&creditoV=${creditoV}&ecommerceV=${ecommerceV}&devolucionV=${devolucionV}&totalV=${totalV}&total=${total}&pagoProv=${pagoProv}&fecha=${fechaF}&cajero=${cajero}&gananciaId=${gananciaId}&cantVenta=${cant_ventas}`;
+            //let url = `{url('/puntoVenta/corte_cajaView')}}?ventasEfectivo=${ventasEfectivo}&abonoEfectivo=${abonoEfectivo}&devEfectivo=${devEfectivo}&totalCaja=${totalCaja}&efectivoV=${efectivoV}&creditoV=${creditoV}&ecommerceV=${ecommerceV}&devolucionV=${devolucionV}&totalV=${totalV}&total=${total}&pagoProv=${pagoProv}&fecha=${fechaF}&cajero=${cajero}&gananciaId=${gananciaId}&cantVenta=${cant_ventas}`;
             //window.open(url, "_blank");
             //  window.open(url, "_parent");
             //  window.open(url, "myWindow");

@@ -112,13 +112,13 @@
                 <!--/div-->
             </div>
             <!--PRUE IMP DIRECTO-->
-            <div class="">
+            <!--div class="">
                 <button class="btn btn-outline-primary p-1" type="button" onclick="impDirecto()" value=""
                     id="botonImpDirecto">
-                    <img src="{{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                    <img src="{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                     IMP DIRECTO
                 </button>
-            </div>
+            </div-->
             <!--div class="btn-toolbar" role="toolbar">
                 <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
                     onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion"
@@ -537,7 +537,7 @@ let ofertasSucursal = []; //json($ofertas);
 async function cargarProductos(palabra) {
     let response = "Sin respuesta";
     try {
-        response = await fetch(`/puntoVenta/producto/${palabra}`);
+        response = await fetch(`{{url('/puntoVenta/producto')}}/${palabra}`);
         if (response.ok) {
             productos = await response.json();
             //console.log(productos);
@@ -557,7 +557,7 @@ async function cargarProductos(palabra) {
 async function cargarProductosSucursal(palabra) {
     let response = "Sin respuesta";
     try {
-        response = await fetch(`/puntoVenta/sucursalProducto/${palabra}`); //{{session('sucursal')}}`);
+        response = await fetch(`{{url('/puntoVenta/sucursalProducto')}}/${palabra}`); //{{session('sucursal')}}`);
         if (response.ok) {
             productosSucursal = await response.json();
             console.log('los productos para la sucursal son', productosSucursal);
@@ -577,7 +577,7 @@ async function cargarSubproductosSucursal(palabra) {
     if (palabra.length == 0)
         palabra = "%";
     try {
-        response = await fetch(`/puntoVenta/subproducto/${palabra}`); //{{session('sucursal')}}`);
+        response = await fetch(`{{url('/puntoVenta/subproducto')}}/${palabra}`); //{{session('sucursal')}}`);
         if (response.ok) {
             subproductosSucursal = await response.json();
             console.log('subproductos', subproductosSucursal);
@@ -600,7 +600,7 @@ async function cargarOfertasSucursal(palabra) {
         palabra = "%";
     let response = "Sin respuesta";
     try {
-        response = await fetch(`/puntoVenta/oferta/${palabra}`); //{{session('sucursal')}}`);
+        response = await fetch(`{{url('/puntoVenta/oferta')}}/${palabra}`); //{{session('sucursal')}}`);
         if (response.ok) {
             ofertasSucursal = await response.json();
 
@@ -773,7 +773,7 @@ async function agregarPorCodigo() {
         productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
         //    if (!buscarProductoEnVenta(productos[count3].id)) {
         //        if (productosSucursal[x].existencia > 0) {
-        let response = await fetch(`/puntoVenta/sucursalProducto/buscarPorCodigo/${codigo.value}`);
+        let response = await fetch(`{{url('/puntoVenta/sucursalProducto/buscarPorCodigo')}}/${codigo.value}`);
         let producto = await response.json();
         console.log(producto);
         if (producto != false) {
@@ -879,7 +879,7 @@ async function buscarProducto() {
                 </tr>
                 `;
         worker = new Worker("{{ asset('js/workerConsultarProducto.js')}}");
-        let url = `/puntoVenta/sucursalProducto/${palabraBusqueda.value}`;
+        let url = `{{url('/puntoVenta/sucursalProducto')}}/${palabraBusqueda.value}`;
         var message = {
             url: url,
         };
@@ -1163,7 +1163,7 @@ async function realizarVentaEfectivo(ticket) {
         if (!clave.length > 0) {
             return alert('POR FAVOR INGRESE UNA CLAVE PARA CONFIRMAR LA VENTA');
         }
-        let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
+        let respuesta = await fetch(`{{url('/puntoVenta/empleado/claveEmpleado')}}/${clave}`);
         let valido = await respuesta.text();
 
         if (respuesta.ok) {
@@ -1188,7 +1188,7 @@ async function realizarVentaEfectivo(ticket) {
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: '/puntoVenta/venta',
+            url: `{{url('/puntoVenta/venta')}}`,
             // los datos que voy a enviar para la relación
             data: {
                 datos: json,
@@ -1255,7 +1255,7 @@ async function realizarVentaCredito() {
     if (!clave.length > 0) {
         return alert('POR FAVOR INGRESE UNA CLAVE PARA CONFIRMAR LA VENTA');
     }
-    let respuesta = await fetch(`/puntoVenta/empleado/claveEmpleado/${clave}`);
+    let respuesta = await fetch(`{{url('/puntoVenta/empleado/claveEmpleado')}}/${clave}`);
     let valido = await respuesta.text();
     if (respuesta.ok) {
         if (valido.length > 0) {
@@ -1284,7 +1284,7 @@ async function realizarVentaCredito() {
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: '/puntoVenta/venta',
+            url: `{{url('/puntoVenta/venta')}}`,
             // los datos que voy a enviar para la relación
             data: {
                 datos: json,
@@ -1373,7 +1373,7 @@ async function impDirecto() {
     let response = "Sin respuesta";
     try {
         let contenidoT = "";
-        response = await fetch(`/puntoVenta/impDirecto`);
+        response = await fetch(`{{url('/puntoVenta/impDirecto')}}`);
         let resp = await response.text(); //json();
         console.log('respuesta: ', resp);
     } catch (err) {

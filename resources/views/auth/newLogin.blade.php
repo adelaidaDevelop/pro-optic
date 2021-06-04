@@ -152,7 +152,7 @@
     let sucursales;
     async function cargarSucursales() {
         try {
-            let response = await fetch(`/puntoVenta/sucursal/sucursales`);
+            let response = await fetch(`{{url('/puntoVenta/sucursal/sucursales')}}`);
             if (response.ok) {
                 sucursales = await response.json();
 

@@ -113,7 +113,7 @@
         <br/>
         <br/>
 
-       <!-- <a title="Regresar" href="{{url('/puntoVenta/producto')}}" class="text-dark">
+       <!-- <a title="Regresar" href="{url('/puntoVenta/producto')}}" class="text-dark">
             <img src="{{ asset('img\regresar2.png') }}" class="img-thumbnail" alt="Regresar" width="50px" height="50px" />CANCELAR</a>
             -->
     </div>

@@ -38,9 +38,31 @@ class EcommerceController extends Controller
 
     public function administracion()
     {
-        return view('Ecommerce.administracion');
+        $departamentos = DB::table('departamentos')->orderBy('nombre')->get(['id','nombre','ecommerce']);
+        /*$departamentos = Departamento::with(['nombre' => function($query)
+        {
+            $query->orderBy('nombre');
+        }])->get()*/;//all(['nombre','id','ecommerce']);//where('ecommerce','=',true)
+        return view('Ecommerce.administracion',compact('departamentos'));
     }
 
+    public function actualizarDepartamentos(Request $request)
+    {
+        
+        $departamentos = $request->input('departamentos');
+       
+        $departamentos = json_decode($departamentos);
+        //return $departamentos;
+        foreach($departamentos as $d)
+        {
+            //return $d->ecommerce;
+            Departamento::where('id','=',$d->id)->update(['ecommerce' => $d->ecommerce]);
+            //return $d->ecommerce;
+        }
+        return true;
+        //return $departamentos;
+        //return $departamentos[0]['ecommerce'];
+    }
     public function index()
     {
         

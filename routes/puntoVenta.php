@@ -203,6 +203,7 @@ Route::prefix('/puntoVenta')->group(function()
         Route::resource('productosCaducidad', ProductosCaducidadController::class);
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
         Route::get('/ecommerce/administracion', [App\Http\Controllers\EcommerceController::class, 'administracion']);
+        Route::post('/ecommerce/departamentos', [App\Http\Controllers\EcommerceController::class, 'actualizarDepartamentos']);
         
         // });
     });

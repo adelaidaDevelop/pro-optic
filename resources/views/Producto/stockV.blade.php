@@ -129,7 +129,7 @@ $crear = $sE->hasAnyRole($crearProducto);
                 producto = "%";
                 console.log('se cambio producto');
             }
-            let resp = await fetch(`/puntoVenta/producto/stock/${producto}`);
+            let resp = await fetch(`{{url('/puntoVenta/producto/stock')}}/${producto}`);
             productos = await resp.json();
             console.log('productosStock', productos);
             return productos;
@@ -203,7 +203,7 @@ $crear = $sE->hasAnyRole($crearProducto);
                     contador = contador + 1;
                     let agregar = json($agregar);
 
-                    let btnAgregar = `<a class="btn btn-primary" href="{{ url('/puntoVenta/agregarProdStock/` +
+                    let btnAgregar = `<a class="btn btn-primary" href="{ url('/puntoVenta/agregarProdStock/` +
                         productos[t].id + `')}}"> AGREGAR </a>`;
                     if (!agregar) {
                         btnAgregar =

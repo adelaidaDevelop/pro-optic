@@ -118,7 +118,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
     let seleccion = "";
     async function productosPorCaducar() {
         try {
-            let respuesta = await fetch("/puntoVenta/productosCaducidad/{{session('sucursal')}}");
+            let respuesta = await fetch("{{url('/puntoVenta/productosCaducidad')}}/{{session('sucursal')}}");
             if (respuesta.ok) {
                 productosCaducidad = await respuesta.json();
                 console.log(productosCaducidad);
@@ -293,7 +293,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
             alert('LA CANTIDAD NO PUEDE SER MAYOR A LA ANTERIOR');
             return;
         }
-        /*const url = `{{url('/')}}/puntoVenta/sucursalProducto/${idSP}`;
+        /*const url = `{url('/')}}/puntoVenta/sucursalProducto/${idSP}`;
         let respuesta = await $.ajax({
             url: url,
             type: 'PUT',
@@ -312,7 +312,7 @@ $eliminar = $sE->hasAnyRole($eliminarProducto);
 
         //console.log(productoActualizar.oferta);
         if (productoActualizar.oferta) {
-            const url2 = `{{url('/')}}/puntoVenta/oferta/editar/${idSP}`;
+            const url2 = `{{url('/puntoVenta/oferta/editar')}}/${idSP}`;
             let respuesta2 = await $.ajax({
                 url: url2,
                 type: 'POST',

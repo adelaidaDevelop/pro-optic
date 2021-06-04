@@ -61,12 +61,12 @@ $verS = $sE->hasAnyRole($vS);
         </div-->
         <div class="col-4 ml-4"></div>
         <div class=" ml-3 my-auto">
-            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/administracion">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/administracion')}}">
                 <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="35px" height="35px">
             </a>
         </div>
         <div class=" ml-3 my-auto">
-            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
                 <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
             </a>
         </div>
@@ -712,7 +712,7 @@ $verS = $sE->hasAnyRole($vS);
                     </div>
                     @endif
                     <!--div class="col-auto ml-auto mr-0">
-                        <form method="post" action="{{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
+                        <form method="post" action="{url('/puntoVenta/empleado/'.$datosEmpleado->id)}}">
                             {{csrf_field()}}
                             {{ method_field('PUT')}}
                             <input id="status" name="status" value="baja" style="display:none">
@@ -1293,7 +1293,7 @@ function mostrarPassword() {
 
 function filtrar() {
     document.getElementById("resultados").innerHTML = "";
-    fetch(`/puntoVenta/empleado/buscadorEmpleado?texto=${texto.value}`, {
+    fetch(`{{url('/puntoVenta/empleado/buscadorEmpleado')}}?texto=${texto.value}`, {
             method: 'get'
         })
         .then(response => response.text())
@@ -1354,7 +1354,7 @@ async function generarClave() {
         let clave = getRandomInt(10000, 99999);
         //
         //clave = 12345;
-        let respuesta = await fetch(`/puntoVenta/empleado/validarClave/${clave}`);
+        let respuesta = await fetch(`{{url('/puntoVenta/empleado/validarClave')}}/${clave}`);
         let valido = await respuesta.text();
         if (respuesta.ok) {
             if (valido.length > 0) {
@@ -1409,7 +1409,7 @@ async function eliminarEmpleado(id) {
                 // metodo: puede ser POST, GET, etc
                 method: "DELETE",
                 // la URL de donde voy a hacer la petición
-                url: `/puntoVenta/empleado/${id}`,
+                url: `{{url('/puntoVenta/empleado')}}/${id}`,
                 // los datos que voy a enviar para la relación
                 data: {
                     //_token: $("meta[name='csrf-token']").attr("content")

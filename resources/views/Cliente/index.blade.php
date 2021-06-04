@@ -222,7 +222,7 @@ $verC = $sE->hasAnyRole($vC);
 
     function filtrar() {
         document.getElementById("resultados").innerHTML = "";
-        fetch(`/puntoVenta/cliente/buscador?texto=${texto.value}`, {
+        fetch(`{{url('/puntoVenta/cliente/buscador')}}?texto=${texto.value}`, {
                 method: 'get'
             })
             .then(response => response.text())
@@ -247,7 +247,8 @@ $verC = $sE->hasAnyRole($vC);
         if (conf_Eli) {
             let response = "Sin respuesta";
             try {
-                response = await fetch(`/puntoVenta/cliente/destroy2/${id}`);
+                response = await fetch(`{{url('/puntoVenta/cliente/destroy2')}}/${id}`);
+
                 if (response.ok) {
                     let respuesta = await response.text();
                     if (respuesta.length == 1) {
@@ -257,7 +258,7 @@ $verC = $sE->hasAnyRole($vC);
                     } else {
                         clienOcup = alert("ESTE CLIENTE ESTÁ ACTIVO EN EL SISTEMA Y NO SE PUEDE ELIMINAR");
                         // if (clienOcup) {
-                        // location.href = `{{url('/puntoVenta/cliente/baja/${id}')}}`;
+                        // location.href = `{url('/puntoVenta/cliente/baja/${id}')}}`;
 
                         // }
                     }

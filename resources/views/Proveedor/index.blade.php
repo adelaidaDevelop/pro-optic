@@ -25,12 +25,12 @@
 
         <div class="col-5 "></div>
         <div class=" my-auto">
-            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/compra">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/compra')}}">
                 <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="35px" height="35px">
             </a>
         </div>
         <div class=" ml-3 my-auto">
-            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
                 <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
             </a>
         </div>
@@ -229,7 +229,7 @@
     async function mostrarProveedoresInactivos() {
         try {
             let body = document.getElementById("cuerpoModalProveedoresInactivos");
-            let respuesta = await fetch(`/puntoVenta/proveedor/baja`);
+            let respuesta = await fetch(`{{url('/puntoVenta/proveedor/baja')}}`);
             let cuerpo = "";
             if (respuesta.ok) {
                 let proveedoresBaja = await respuesta.json();
@@ -286,7 +286,7 @@
     async function filtrar() {
         try {
             document.getElementById("resultados").innerHTML = "";
-            await fetch(`/puntoVenta/proveedor/buscador?texto=${texto.value}`, {
+            await fetch(`{{url('/puntoVenta/proveedor/buscador')}}?texto=${texto.value}`, {
                     method: 'get'
                 })
                 .then(response => response.text())

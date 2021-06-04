@@ -6,7 +6,7 @@ INVENTARIO
 @section('opciones')
 <!--
 <div class="col-0  p-1 ml-4">
-    <form method="get" action="{{url('/puntoVenta/reporteVentas/')}}">
+    <form method="get" action="{url('/puntoVenta/reporteVentas/')}}">
         <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
             <img src="{{ asset('img\ventas.png') }}" alt="Editar" width="30px" height="30px">
             <p class="h6 my-auto mx-2 text-dark"><small>REPORTE VENTAS</small></p>
@@ -16,7 +16,7 @@ INVENTARIO
 -->
 <!--
 <div class="col-0  p-1 ml-4">
-    <form method="get" action="{{url('/puntoVenta/reporteCompraVenta/')}}">
+    <form method="get" action="{url('/puntoVenta/reporteCompraVenta/')}}">
         <button class="btn btn-outline-secondary  p-1 border-0" type="submit">
             <img src="{{ asset('img\ventas.png') }}" alt="Editar" width="30px" height="30px">
             <p class="h6 my-auto mx-2 text-dark"><small>REPORTE COMPRAS-VENTAS</small></p>
@@ -26,12 +26,12 @@ INVENTARIO
 -->
 <div class="col-7"></div>
 <div class="my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/producto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/producto')}}">
         <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 </div>
 <div class=" ml-3 my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
     </a>
 </div>

@@ -729,7 +729,7 @@ PRODUCTOS
     async function productos0() {
         let response = "Sin respuesta";
         try {
-            response = await fetch(`/puntoVenta/productos_baja`);
+            response = await fetch(`{{url('/puntoVenta/productos_baja')}}`);
             if (response.ok) {
                 prod_baja = await response.json();
             } else {

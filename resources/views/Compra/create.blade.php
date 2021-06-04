@@ -356,7 +356,7 @@ async function buscarProducto() {
             return;
         }
         worker = new Worker("{{ asset('js/workerConsultarProducto.js')}}");
-        let url = `/puntoVenta/producto/${entrada.value}`;
+        let url = `{{url('/puntoVenta/producto')}}/${entrada.value}`;
         var message = {
             url: url,
         };
@@ -969,7 +969,7 @@ function nuevoProducto() {
                 body: datosProducto // convertimos el objeto a texto
             };
             //console.log('Aun llega aquí');
-            let respuesta = await fetch('/puntoVenta/producto/', init);
+            let respuesta = await fetch(`{{url('/puntoVenta/producto/')}}`, init);
             if (respuesta.ok) {
                 //return console.log('Todo va bien');
                 let resp = await respuesta.json();
@@ -1077,7 +1077,7 @@ async function guardarCompra() {
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: '/puntoVenta/sucursalProducto',
+            url: `{{url('/puntoVenta/sucursalProducto')}}`,
             // los datos que voy a enviar para la relación
             data: {
                 datos: JSON.stringify(productos0),
@@ -1090,7 +1090,7 @@ async function guardarCompra() {
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: '/puntoVenta/sucursalProducto/editar/productos',
+            url: `{{url('/puntoVenta/sucursalProducto/editar/productos')}}`,
             // los datos que voy a enviar para la relación
             data: {
                 datos: JSON.stringify(productos1),
@@ -1103,7 +1103,7 @@ async function guardarCompra() {
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: '/puntoVenta/compra',
+            url: `{{url('/puntoVenta/compra')}}`,
             // los datos que voy a enviar para la relación
             data: {
                 estado: estado,

@@ -6,12 +6,12 @@ DEVOLUCION
 @section('opciones')
 <div class="col-7 ml-4"></div>
 <div class=" ml-3 my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="33px" height="33px">
     </a>
 </div>
 <div class=" ml-3 my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="33px" height="33px">
     </a>
 </div>
@@ -377,7 +377,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                                 // metodo: puede ser POST, GET, etc
                                 method: "POST",
                                 // la URL de donde voy a hacer la petición
-                                url: '/puntoVenta/devolucion',
+                                url: `{{url('/puntoVenta/devolucion')}}`,
                                 // los datos que voy a enviar para la relación
                                 data: {
                                     cantidad: cant2,
@@ -425,7 +425,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
     async function cargarDevolucion() {
         let response = "Sin respuesta";
         try {
-            response = await fetch(`/puntoVenta/datosDevoluciones`);
+            response = await fetch(`{{url('/puntoVenta/datosDevoluciones')}}`);
             if (response.ok) {
                 devolucions = await response.json();
                 console.log(devolucions);

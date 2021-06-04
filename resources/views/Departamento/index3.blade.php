@@ -19,12 +19,12 @@
 
         <div class="col-7 ml-4"></div>
         <div class=" ml-3 my-auto">
-            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/producto">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/producto')}}">
                 <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="35px" height="35px">
             </a>
         </div>
         <div class=" ml-3 my-auto">
-            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/venta">
+            <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
                 <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
             </a>
         </div>
@@ -171,7 +171,7 @@
 
     function filtrar() {
         document.getElementById("resultados").innerHTML = "";
-        fetch(`/puntoVenta/departamento/buscador?texto=${texto.value}`, {
+        fetch(`{{url('/puntoVenta/departamento/buscador')}}?texto=${texto.value}`, {
                 method: 'get'
             })
             .then(response => response.text())

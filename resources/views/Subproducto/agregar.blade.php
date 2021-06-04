@@ -6,7 +6,7 @@ SUBPRODUCTOS
 @section('opciones')
 <div class="col-8 ml-4"></div>
 <div class=" ml-3 my-auto">
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="/puntoVenta/producto">
+    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/producto')}}">
         <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="30px" height="30px">
     </a>
 </div>
