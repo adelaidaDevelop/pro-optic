@@ -248,7 +248,6 @@ $verC = $sE->hasAnyRole($vC);
             let response = "Sin respuesta";
             try {
                 response = await fetch(`/puntoVenta/cliente/destroy2/${id}`);
-
                 if (response.ok) {
                     let respuesta = await response.text();
                     if (respuesta.length == 1) {

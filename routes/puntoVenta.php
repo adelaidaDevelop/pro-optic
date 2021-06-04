@@ -148,9 +148,13 @@ Route::prefix('/puntoVenta')->group(function()
     Route::get('/pdf2', [ReporteController::class,'pdf']);
     
     //ruta para cargar header_foter
+    Route::post('encabezado_pie', [ReporteController::class,'encabezadoPag']);
+    /*
     Route::get('encabezado_pie',function(){
-        return view('encabezado_pie');
+       // return 1;
+       
         })->name('membrete');
+        */
     
     //ELIMINAR PRODUCTOS DE SUCURSAL
     Route::get('productoEli3/{id}', [ProductoController::class,'eliminar3']);

@@ -37,6 +37,14 @@ class ReporteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function encabezadoPag(Request $request){
+        $datos = $request->input('datos');
+        $div = json_decode($datos, true);
+     //  return $datosCodificados;
+    return  compact('div');
+      //  return view('encabezado_pie', compact('div'));
+      //  return view('encabezado_pie', compact('div'));
+    }
     public function index()
     {
         $usuarios = ['verCorte','admin'];
