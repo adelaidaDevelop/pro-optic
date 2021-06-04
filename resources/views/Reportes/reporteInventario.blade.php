@@ -185,7 +185,7 @@ INVENTARIO
             <button class="btn btn-outline-secondary  p-1 mx-3 text-dark" onclick="generaReportes()">
                 <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                 GENERAR</button>
-            <button id="getUser" name="getUser" onclick="recuperar()" class="btn btn-outline-secondary  p-1 text-dark">
+            <button id="getUser" name="getUser" onclick="recuperar2()" class="btn btn-outline-secondary  p-1 text-dark">
                 <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px" disabled>
                 DESCARGAR </button>
 
@@ -1113,17 +1113,17 @@ INVENTARIO
                 url: `{{url('/puntoVenta/encabezado_pie/')}}`,
                 // los datos que voy a enviar para la relación
                 data: {
-                    datos:  json,
+                    datos: json,
                     _token: "{{ csrf_token() }}"
                 }
                 // si tuvo éxito la petición
             }).done(function(respuesta) {
                 //alert(respuesta);
                 //  alert("perfectisimo");
-                console.log('respuesta',respuesta); //JSON.stringify(respuesta));
+                console.log('respuesta', respuesta); //JSON.stringify(respuesta));
                 ////////////7
                 ///////////
-        
+
             });
 
         } catch (err) {
@@ -1131,41 +1131,34 @@ INVENTARIO
         }
     }
     async function recuperar2() {
-        console.log("si entra a descargar");
-
+        //  console.log("si entra a descargar");
         var divTabla = document.getElementById("tabla2");
-        let response = "Sin respuesta";
         try {
-            console.log("produ lous", productosList);
             // response = await fetch(`/puntoVenta/encabezado_pie/${productosList}`);
-            response = await fetch(`/puntoVenta/encabezado_pie/?div=${productosList}`);
-            if (response.ok) {
-                let respuesta = await response.text();
-                console.log(respuesta);
-                const $elementoParaConvertir = respuesta;
-                html2pdf()
-                    .set({
-                        margin: 1,
-                        filename: 'reporteVentas.pdf',
-                        image: {
-                            type: 'jpeg',
-                            quality: 0.98
-                        },
-                        html2canvas: {
-                            scale: 3, // A mayor escala, mejores gráficos, pero más peso
-                            letterRendering: true,
-                        },
-                        jsPDF: {
-                            unit: "in",
-                            format: "a2",
-                            orientation: 'portrait' // landscape o portrait
-                        }
-                    })
-                    .from($elementoParaConvertir)
-                    .save()
-                    .catch(err => console.log(err));
+            const $elementoParaConvertir = divTabla.innerHTML;
+            html2pdf()
+                .set({
+                    margin: 1,
+                    filename: 'reporteVentas.pdf',
+                    image: {
+                        type: 'jpeg',
+                        quality: 0.98
+                    },
+                    html2canvas: {
+                        scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                        letterRendering: true,
+                    },
+                    jsPDF: {
+                        unit: "in",
+                        format: "a2",
+                        orientation: 'portrait' // landscape o portrait
+                    }
+                })
+                .from($elementoParaConvertir)
+                .save()
+                .catch(err => console.log(err));
 
-            }
+
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }

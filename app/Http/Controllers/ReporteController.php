@@ -41,9 +41,9 @@ class ReporteController extends Controller
         $datos = $request->input('datos');
         $div = json_decode($datos, true);
      //  return $datosCodificados;
-    return  compact('div');
+        return  compact('div');
       //  return view('encabezado_pie', compact('div'));
-      //  return view('encabezado_pie', compact('div'));
+       return view('encabezado_pie', compact('datos'));
     }
     public function index()
     {

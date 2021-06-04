@@ -44,7 +44,7 @@
                         </tr>
                     </thead>
                     <tbody id="consultaBusqueda">
-                        @foreach($div as $ele)
+                        @foreach($datos as $ele)
                         <tr>
                             <th scope="row"> {{$ele['contador']}} </th>
                             <td> {{$ele['movimientoTxt']}}</td>
@@ -53,7 +53,6 @@
                             <td> {{$ele['empleado']}}</td>
                             <td> {{$ele['productoCol']}}</td>
                             <td> {{$ele['depto']}}</td>
-                           
                         </tr>
                         @endforeach
                     </tbody>
