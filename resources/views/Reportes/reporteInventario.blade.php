@@ -185,9 +185,9 @@ INVENTARIO
             <button class="btn btn-outline-secondary  p-1 mx-3 text-dark" onclick="generaReportes()">
                 <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
                 GENERAR</button>
-            <button id="getUser" name="getUser" class="btn btn-outline-secondary  p-1 text-dark">
+            <button id="getUser" name="getUser" onclick="recuperar()" class="btn btn-outline-secondary  p-1 text-dark">
                 <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px" disabled>
-                IMPRIMIR </button>
+                DESCARGAR </button>
 
             <!--
             <button id="btnCrearPdf" class="btn btn-outline-secondary  p-1 text-dark">
@@ -237,6 +237,7 @@ INVENTARIO
     let fechaDia = "";
     let tabla2 = document.querySelector('#tablaR').outerHTML;
     let contador = 0;
+    let productosList = [];
 
     function validarCamposFechas() {
 
@@ -427,6 +428,16 @@ INVENTARIO
                                     cant_actual = existencia;
                                     cant_anterior = existencia - cantidad;
                                     movimientoTxt = "ENTRADAS: COMPRA PRODUCTOS";
+                                    let productosAdd = {
+                                        contador: contador,
+                                        movimientoTxt: movimientoTxt,
+                                        fechaCol: fechaCol,
+                                        horaCol: horaCol,
+                                        empleado: emple,
+                                        productoCol: productoCol,
+                                        departamento: depto
+                                    };
+                                    productosList.push(productosAdd);
                                     // console.log("RELLENANDO");
                                     //AQUI HACER LAS FILAS PARA LA TABLA PASANDOLE LOS DATOS
                                     entradaCompraProduct = entradaCompraProduct + `
@@ -495,6 +506,17 @@ INVENTARIO
                                         movimientoTxt = "ENTRADAS: COMPRA PRODUCTOS";
                                         // console.log("RELLENANDO");
                                         //AQUI HACER LAS FILAS PARA LA TABLA PASANDOLE LOS DATOS
+                                        let productosAdd = {
+                                            contador: contador,
+                                            movimientoTxt: movimientoTxt,
+                                            fechaCol: fechaCol,
+                                            horaCol: horaCol,
+                                            empleado: emple,
+                                            productoCol: productoCol,
+                                            departamento: depto
+                                        };
+                                        productosList.push(productosAdd);
+
                                         entradaCompraProduct = entradaCompraProduct + `
                                             <tr>
                                                     <th scope="row">` + contador + `</th>
@@ -528,8 +550,6 @@ INVENTARIO
         if (cajero == 0) {
             for (let p in productos) {
                 let fechaNuevoProd = new Date(productos[p].created_at);
-                console.log(" hola5 ", fechaXDia2);
-                console.log(fechaNuevoProd);
                 if (comparacionFecha(fechaXDia2, fechaNuevoProd)) {
                     fechaCol = fechaNuevoProd.toLocaleDateString();
                     horaCol = fechaNuevoProd.toLocaleTimeString();
@@ -547,6 +567,17 @@ INVENTARIO
                     cant_actual = 0; // checar existencia si es x sucursal
                     movimientoTxt = "ENTRADA: NUEVOS PRODUCTOS";
                     //AGREGAR FILAS
+                    productosList = [];
+                    let productosAdd = {
+                        contador: contador,
+                        movimientoTxt: movimientoTxt,
+                        fechaCol: fechaCol,
+                        horaCol: horaCol,
+                        empleado: "NO ESPECIFICADO",
+                        productoCol: productoCol,
+                        departamento: depto
+                    };
+                    productosList.push(productosAdd);
                     entradaNuevosProductos = entradaNuevosProductos + `
                                             <tr>
                                                     <th scope="row">` + contador + `</th>
@@ -584,7 +615,6 @@ INVENTARIO
                 //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
 
                 if (comparacionFecha(fechaXDia, fechaVenta)) {
-                    console.log("entra aqui 14_04_21");
                     fechaCol = fechaVenta.toLocaleDateString();
                     horaCol = fechaVenta.toLocaleTimeString();
                     let movi = document.querySelector('#idCajero');
@@ -627,6 +657,18 @@ INVENTARIO
                                     cantidad = detalle_ventas[z].cantidad;
                                     cant_anterior = 0;
                                     cant_actual = 0;
+
+                                    let productosAdd = {
+                                        contador: contador,
+                                        movimientoTxt: movimientoTxt,
+                                        fechaCol: fechaCol,
+                                        horaCol: horaCol,
+                                        empleado: empleado,
+                                        productoCol: productoCol,
+                                        departamento: depto
+                                    };
+                                    productosList.push(productosAdd);
+
                                     salidaVP = salidaVP + `
                                             <tr>
                                                     <th scope="row">` + contador + `</th>
@@ -683,6 +725,19 @@ INVENTARIO
                                         cantidad = detalle_ventas[z].cantidad;
                                         cant_anterior = 0;
                                         cant_actual = 0;
+
+
+                                        let productosAdd = {
+                                            contador: contador,
+                                            movimientoTxt: movimientoTxt,
+                                            fechaCol: fechaCol,
+                                            horaCol: horaCol,
+                                            empleado: empleado,
+                                            productoCol: productoCol,
+                                            departamento: depto
+                                        };
+                                        productosList.push(productosAdd);
+
                                         salidaVP = salidaVP + `
                                                         <tr>
                                                                 <th scope="row">` + contador + `</th>
@@ -706,7 +761,6 @@ INVENTARIO
             }
             //}
         }
-        console.log(salidaVP);
     };
 
     function devolucionesEfectivo(fechaXDia) {
@@ -728,9 +782,7 @@ INVENTARIO
                 // if (sucursalEmpleados[h].id == idSucEmp) {
                 let suc_emp = sucursalEmpleados.find(s => s.id == idSucEmp);
                 if (suc_emp != null) {
-                    console.log("entra al for de devoluciones")
                     let fechaDevolucion = new Date(devoluciones[f].created_at);
-                    console.log(fechaDevolucion);
                     //FECHA POR DIA //PRODUCTOS QUE SE COMPRARON EN TAL FECHA
                     if (comparacionFecha(fechaXDia, fechaDevolucion)) {
                         fechaCol = fechaDevolucion.toLocaleDateString();
@@ -742,7 +794,6 @@ INVENTARIO
                         let product = productos.find(p => p.id == devoluciones[f].idProducto);
                         if (product != null) {
 
-                            console.log("encuentra un producto en devolucion");
                             productoCol = product.nombre;
                             let deptos = departamentos.find(d => d.id == product.idDepartamento);
                             if (deptos != null) {
@@ -758,6 +809,18 @@ INVENTARIO
                             movimientoTxt = "DEVOLUCIONES";
                             // cant_anterior 
                             // cant_actual 
+
+                            let productosAdd = {
+                                contador: contador,
+                                movimientoTxt: movimientoTxt,
+                                fechaCol: fechaCol,
+                                horaCol: horaCol,
+                                empleado: "NO ESPECIFICADO",
+                                productoCol: productoCol,
+                                departamento: depto
+                            };
+                            productosList.push(productosAdd);
+
                             devolucionFila = devolucionFila + `
                                             <tr>
                                                     <th scope="row">` + contador + `</th>
@@ -801,7 +864,6 @@ INVENTARIO
             fechaXDia = new Date(fechaDia.value);
             fechaXDia.setDate(fechaXDia.getDate() + 1);
             if (banderaMovimiento == true) { // == o ===
-                console.log("entro a movimiento");
                 let movi = document.querySelector('#movimientoID');
                 let moviName = movi.value;
                 if (moviName == "1") {
@@ -811,6 +873,7 @@ INVENTARIO
                     compraProductos(fechaXDia);
                     // document.getElementById("total_entradas").innerHTML = totalEntradas;
                     cuerpo = entradaNuevosProductos + entradaCompraProduct;
+
                     if (cuerpo === "") {
                         let sin = `<h4 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
@@ -879,7 +942,6 @@ INVENTARIO
                         //  document.getElementById("btnCrearPdf").disabled = true;
                     } else {
                         $('#getUser').prop('disabled', false);
-                        console.log(tabla2);
                         document.getElementById("tablaR").innerHTML = tabla2;
                         document.getElementById("consultaBusqueda").innerHTML = cuerpo;
                     }
@@ -894,9 +956,6 @@ INVENTARIO
     };
 
     function compararMes(fecha1, fecha2) {
-        console.log(fecha1);
-        console.log(fecha1.getMonth());
-        console.log(fecha2.getMonth());
         if (fecha1.getMonth() == fecha2.getMonth()) {
             return true;
         }
@@ -904,8 +963,6 @@ INVENTARIO
     };
 
     function compararAnio(fecha1, fecha2) {
-        console.log(fecha1.getFullYear());
-        console.log(fecha2.getFullYear());
         if (fecha1.getFullYear() == fecha2.getFullYear()) {
             return true;
         }
@@ -914,9 +971,6 @@ INVENTARIO
 
 
     function compararFechaDia(fecha1, fecha2) {
-        console.log("si compara");
-        //  console.log(fecha1);
-        console.log(fecha2);
         if (fecha1.getFullYear() == fecha2.getFullYear()) {
             if (fecha1.getMonth() == fecha2.getMonth()) {
                 if (fecha1.getDate() == fecha2.getDate()) {
@@ -1048,118 +1102,173 @@ INVENTARIO
         WinPrint.close();
     }
 
-    elemento();
+    async function recuperar() {
 
-    function recuperar(){
+        let json = JSON.stringify(productosList);
+        try {
+            let funcion = await $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `{{url('/puntoVenta/encabezado_pie/')}}`,
+                // los datos que voy a enviar para la relación
+                data: {
+                    datos:  json,
+                    _token: "{{ csrf_token() }}"
+                }
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                //alert(respuesta);
+                //  alert("perfectisimo");
+                console.log('respuesta',respuesta); //JSON.stringify(respuesta));
+                ////////////7
+                ///////////
         
+            });
+
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
     }
+    async function recuperar2() {
+        console.log("si entra a descargar");
+
+        var divTabla = document.getElementById("tabla2");
+        let response = "Sin respuesta";
+        try {
+            console.log("produ lous", productosList);
+            // response = await fetch(`/puntoVenta/encabezado_pie/${productosList}`);
+            response = await fetch(`/puntoVenta/encabezado_pie/?div=${productosList}`);
+            if (response.ok) {
+                let respuesta = await response.text();
+                console.log(respuesta);
+                const $elementoParaConvertir = respuesta;
+                html2pdf()
+                    .set({
+                        margin: 1,
+                        filename: 'reporteVentas.pdf',
+                        image: {
+                            type: 'jpeg',
+                            quality: 0.98
+                        },
+                        html2canvas: {
+                            scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                            letterRendering: true,
+                        },
+                        jsPDF: {
+                            unit: "in",
+                            format: "a2",
+                            orientation: 'portrait' // landscape o portrait
+                        }
+                    })
+                    .from($elementoParaConvertir)
+                    .save()
+                    .catch(err => console.log(err));
+
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+
+        //  const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+
+
+        /*
+                try {
+                    let respuesta = "";
+                    await fetch(`/puntoVenta/encabezado_pie/${productosList}`, {
+                            method: 'get'
+                        })
+                        .then(response => response.text())
+                        .then(html => {
+                            respuesta = html
+
+                        });
+                    console.log("res", respuesta);
+                    */
+        /*response = await fetch(`/puntoVenta/encabezado_pie/${divTabla.innerHTML}`);
+        if (response.ok) {
+            let respuesta = await response.text();
+            console.log("REs: ", respuesta);
+            return;
+            //  let respuesta = await response.blob();
+            // var  html = new HTMLOutputElement(respuesta);
+            //  respuesta.HTMLOutputElement;
+            //  var objectURL = URL.createObjectURL(blob);
+            //  var docum = Document.elemento
+            var newDoc = document.createDocumentFragment(respuesta);
+            var divTabla = document.getElementById("tabla2");
+            //  newDoc.documentElemen
+            //  newDoc.body.innerHTML = divTabla;
+            //  console.log("Complero", newDoc);
+            //   let frame = document.getElementById("theFrame");
+            let doc = document.implementation.createHTMLDocument("New Document");
+            // doc.innerHTML = respuesta;
+            //   let p = doc.createElement("div");
+            //   p.textContent = "This is a new paragraph.";
+            /*
+                            try {
+                                doc.body.appendChild(p);
+                            } catch (e) {
+                                console.log(e);
+                            }
+            *
+            //  let doc = respuesta.document.documentElement.outerHTML;
+            console.log("Respuesta: ", html);
+        }
+    }
+    }
+    catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+
+*/
+        /*
+        setTimeout(function() {
+        newWin.close();
+        }, 2000);
+        */
+
+        ////////otro
+    }
+
     function elemento() {
         console.log("pruebitA");
-        //console.log("HTML: ",  document.createDocumentFragment());
+        //console.log("HTML: ", document.createDocumentFragment());
         console.log("HTML: ", document.documentElement.outerHTML);
-        let d = document.createDocumentFragment.load(`{{ route('membrete') }}`);
-        
-        let html = load(`{{ route('membrete') }}`);
-       
-         let html2= ` {{ route('membrete') }}` ;
+        // let d = document.createDocumentFragment.load(`{ route('membrete') }}`);
+        //  let html = load(`{ route('membrete') }}`);
+        // let html2 = ` { route('membrete') }}`;
         console.log(html2);
-    
+
         return 1;
         let impriDiv = document.getElementById("tabla2");
-        //  WinPrint.document.write(impriDiv.innerHTML);
-        // const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
-        const $elementoParaConvertir = impriDiv.innerHTML; // <-- Aquí puedes elegir cualquier elemento del DOM
-        console.log("Si entra ssss");
-        html2pdf()
-            .set({
-                title: 'hola prueba',
-                margin: 2,
-                filename: 'reporteInventario.pdf',
-                //  FooterData: 'array(0,64,0), array(0,64,128)',
-                image: {
-                    type: 'jpeg',
-                    quality: 0.98
-                },
-                /*
-                SetHeaderData: {
-                    PDF_HEADER_LOGO: PDF_HEADER_STRING,
-                    PDF_HEADER_LOGO_WIDTH: array(0, 64, 255),
-                    PDF_HEADER_TITLE: array(0, 64, 128)
-                },
-                */
-                html2canvas: {
-                    scale: 3, // A mayor escala, mejores gráficos, pero más peso
-                    letterRendering: true,
-                },
-                jsPDF: {
-                    unit: "in",
-                    format: "a2",
-                    orientation: 'portrait' // landscape o portrait
-                }
-            })
-            .from($elementoParaConvertir)
-            .save()
-            .catch(err => console.log(err));
+        // WinPrint.document.write(impriDiv.innerHTML);
+        // const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM const $elementoParaConvertir=impriDiv.innerHTML; // <-- Aquí puedes elegir cualquier elemento del DOM console.log("Si entra ssss"); html2pdf() .set({ title: 'hola prueba' , margin: 2, filename: 'reporteInventario.pdf' , // FooterData: 'array(0,64,0), array(0,64,128)' , image: { type: 'jpeg' , quality: 0.98 }, /* SetHeaderData: { PDF_HEADER_LOGO: PDF_HEADER_STRING, PDF_HEADER_LOGO_WIDTH: array(0, 64, 255), PDF_HEADER_TITLE: array(0, 64, 128) }, */ html2canvas: { scale: 3, // A mayor escala, mejores gráficos, pero más peso letterRendering: true, }, jsPDF: { unit: "in" , format: "a2" , orientation: 'portrait' // landscape o portrait } }) .from($elementoParaConvertir) .save() .catch(err=> console.log(err));
 
     }
     /*
     //imprimia ok
-        $(document).ready(function() {
-            $('#getUser').on('click', function() {
-                var WinPrint = window.open('', '', 'width=900,height=650 ');
-                let impriDiv = document.getElementById("tabla2");
-                WinPrint.document.write(impriDiv.innerHTML);
-                WinPrint.document.close();
-                WinPrint.focus();
-                WinPrint.print();
-                WinPrint.close();
-            });
-        });
-
-        */
-    // document.addEventListener("DOMContentLoaded", () => {
-
+    $(document).ready(function() {
     $('#getUser').on('click', function() {
-        let impriDiv = document.getElementById("tabla2");
-
-
-        //  WinPrint.document.write(impriDiv.innerHTML);
-        // const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
-        const $elementoParaConvertir = impriDiv.innerHTML; // <-- Aquí puedes elegir cualquier elemento del DOM
-        console.log("Si entra ssss");
-        html2pdf()
-            .set({
-                title: 'hola prueba',
-                margin: 2,
-                filename: 'reporteInventario.pdf',
-                //  FooterData: 'array(0,64,0), array(0,64,128)',
-                image: {
-                    type: 'jpeg',
-                    quality: 0.98
-                },
-                /*
-                SetHeaderData: {
-                    PDF_HEADER_LOGO: PDF_HEADER_STRING,
-                    PDF_HEADER_LOGO_WIDTH: array(0, 64, 255),
-                    PDF_HEADER_TITLE: array(0, 64, 128)
-                },
-                */
-                html2canvas: {
-                    scale: 3, // A mayor escala, mejores gráficos, pero más peso
-                    letterRendering: true,
-                },
-                jsPDF: {
-                    unit: "in",
-                    format: "a2",
-                    orientation: 'portrait' // landscape o portrait
-                }
-            })
-            .from($elementoParaConvertir)
-            .save()
-            .catch(err => console.log(err));
+    var WinPrint = window.open('', '', 'width=900,height=650 ');
+    let impriDiv = document.getElementById("tabla2");
+    WinPrint.document.write(impriDiv.innerHTML);
+    WinPrint.document.close();
+    WinPrint.focus();
+    WinPrint.print();
+    WinPrint.close();
+    });
     });
 
-    // });
+    */
+    // document.addEventListener("DOMContentLoaded", () => {
+    /*
+    $('#getUser').on('click', function() {
+    let impriDiv = document.getElementById("tabla2");
+    // const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM const $elementoParaConvertir=impriDiv.innerHTML; // <-- Aquí puedes elegir cualquier elemento del DOM console.log("Si entra ssss"); html2pdf() .set({ title: 'hola prueba' , margin: 2, filename: 'reporteInventario.pdf' , // FooterData: 'array(0,64,0), array(0,64,128)' , image: { type: 'jpeg' , quality: 0.98 }, html2canvas: { scale: 3, // A mayor escala, mejores gráficos, pero más peso letterRendering: true, }, jsPDF: { unit: "in" , format: "a2" , orientation: 'portrait' // landscape o portrait } }) .from($elementoParaConvertir) .save() .catch(err=> console.log(err));
+        });
+        */
 
 
     $('#getUser').prop('disabled', true);

@@ -247,8 +247,12 @@ $verC = $sE->hasAnyRole($vC);
         if (conf_Eli) {
             let response = "Sin respuesta";
             try {
+<<<<<<< HEAD
                 response = await fetch(`{{url('/puntoVenta/cliente/destroy2')}}/${id}`);
 
+=======
+                response = await fetch(`/puntoVenta/cliente/destroy2/${id}`);
+>>>>>>> ad59455404a8e386d5b4472815d00448afaa506f
                 if (response.ok) {
                     let respuesta = await response.text();
                     if (respuesta.length == 1) {
