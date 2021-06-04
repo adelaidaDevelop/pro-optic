@@ -79,6 +79,7 @@ class RegistrosPruebaTable extends Migration
             'email' => 'farmaciasgizimatlan@gmail.com',
             'password' => Hash::make('admin12345'),
             'tipo' => 0,
+            'email_verified_at' =>'2021-06-02 11:17:15' 
         ]);
         
         //$admin->roles()->attach($role_admin);
@@ -88,6 +89,7 @@ class RegistrosPruebaTable extends Migration
             'email' => 'deudor@gmail.com',
             'password' => Hash::make('deudor12345'),
             'tipo' => 1,
+            'email_verified_at' =>'2021-06-02 11:17:15' 
         ]);
 
         $empleadoAdmin = new Empleado;

@@ -35,6 +35,12 @@ class EcommerceController extends Controller
         //$this->middleware('isEmpleado');
         
     }
+
+    public function administracion()
+    {
+        return view('Ecommerce.administracion');
+    }
+
     public function index()
     {
         
