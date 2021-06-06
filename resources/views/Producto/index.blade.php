@@ -1335,9 +1335,11 @@ function info4(id) {
     <input type="file" name="imagen" id="imagen" class="form-control mx-auto"
     onchange="previsualizarImagen('imagen')">
     <br/>`;
+    console.log('imagen',producto.imagen);
     if (producto.imagen != null)
         if (producto.imagen.length > 0) {
             urlImagen = "{{asset('storage')}}" + "/" + producto.imagen;
+            
             cuerpoImagen = `
         <img width="200" class="mx-auto" src="${urlImagen}" alt="${urlImagen}"  id="imagenPrevisualizacion">
         <input type="file" name="imagen" id="imagen" class="form-control mx-auto"

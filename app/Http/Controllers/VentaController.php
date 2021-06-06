@@ -203,7 +203,7 @@ class VentaController extends Controller
     ////
     public function show($folio) //Venta $venta)
     {
-        
+      //  return true;
         $venta = Venta::findOrFail($folio);
         $sE = Sucursal_empleado::findOrFail($venta->idSucursalEmpleado);
         $e = Empleado::findOrFail($sE->idEmpleado);
@@ -253,13 +253,13 @@ class VentaController extends Controller
         
         //logo empresa
         
-        $logo = EscposImage::load("img/farmaciagilogo.png", false);
+        //$logo = EscposImage::load("img/farmaciagilogo.png", false);
 
         
         //CArgar logo
         /* Print top logo */
         $printer->setJustification(Printer::JUSTIFY_CENTER);
-        $printer->graphics($logo);
+        //$printer->graphics($logo);
         
         /* Name of shop */
         $nombreSuc = session("sucursalNombre");
@@ -269,28 +269,28 @@ class VentaController extends Controller
         $printer->selectPrintMode();
         $printer->text( $nombreSuc, ".\n");
         $printer->feed();
-
-        
-
         /* Title of receipt */
         $printer->setEmphasis(true);
         $printer->text("TICKET\n");
+        $printer->text($date . "\n");
         $printer->setEmphasis(false);
+
         
 
         /* Items */
         $printer->setJustification(Printer::JUSTIFY_LEFT);
-        $printer->setEmphasis(true);
-        $printer->text(new ItemController('', '$'));
+        $printer->setEmphasis(false);
+        $printer->text(new ItemController('PRODUCTO', '$'));
         $printer->setEmphasis(false);
         foreach ($comprasFiltro as $item) {
             $printer->text($item);
         }
         
 
-        $printer->setEmphasis(true);
-        $printer->text($subtotal);
-        $printer->setEmphasis(false);
+       // $printer->setEmphasis(false);
+        //$printer->setEmphasis(true);
+      //  $printer->text($subtotal);
+      //  $printer->setEmphasis(false);
         $printer->feed();
 
         
@@ -304,10 +304,9 @@ class VentaController extends Controller
         /* Footer */
         $printer->feed(2);
         $printer->setJustification(Printer::JUSTIFY_CENTER);
-        $printer->text("FARMACIAS GI ZIMATLAN\n");
         $printer->text("FARMACIAS GI ZIMATLAN, AGRADECE SU PREFERENCIA.\n");
         $printer->feed(2);
-        $printer->text($date . "\n");
+        
         
         /* Cut the receipt and open the cash drawer */
         $printer->cut();
@@ -315,8 +314,8 @@ class VentaController extends Controller
         $printer->close();
 
        // return $total;
-        return true;
-//        return true;
+    return true;
+        //        return true;
     }
 
     /**
