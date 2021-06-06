@@ -2,78 +2,102 @@
 @section('contenido')
 @if($producto === false)
 <div class="row col-12 mx-auto my-5">
-  <h2 class="text-center mx-auto "><strong>El producto que busca no se encuentra en esta sucursal o no tiene existencia</strong></h2>
+    <h2 class="text-center mx-auto "><strong>El producto que busca no se encuentra en esta sucursal o no tiene
+            existencia</strong></h2>
 </div>
 @else
 <div class="row col-md-12 mx-auto my-5">
-    <div class="row col-12 col-md-7 p-2 mx-auto border" >
-    @if(!empty($producto->imagen))
-    <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" height="400" 
+    <div class="row col-12 col-md-7 p-2 mx-auto border">
+        @if(!empty($producto->imagen))
+        <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" height="400"
             class="img-fluid col-md-5 mx-auto mb-0 p-2">
-    @else
-      <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" height="400" 
+        @else
+        <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" height="400"
             class="img-fluid col-md-7 mx-auto mb-0 p-2">
-    @endif
+        @endif
     </div>
     <div class="form-group col-md-5 mx-auto ml-md-auto py-2">
         <h4 class="text-uppercase text-primary">{{$producto->nombre}}</h4>
         <h2>$ {{$producto->precio}}</h2>
         <div class="form-group">
-          <p class="my-0"><small>* Precio exclusivo de tienda en línea.</small></p>
-          <p class="my-0"><small>* Producto sujeto a disponibilidad.</small></p>
-          <p class="my-0"><small>* Descuento ya incluído en precios mostrados.</small></p>
+            <p class="my-0"><small>* Precio exclusivo de tienda en línea.</small></p>
+            <p class="my-0"><small>* Producto sujeto a disponibilidad.</small></p>
+            <p class="my-0"><small>* Descuento ya incluído en precios mostrados.</small></p>
         </div>
         <div class="form-group col-10 col-md-5 mx-auto ml-md-0 mr-md-auto pl-md-0 pr-md-4">
-          <input type="number" class="form-control border" id="cantidad" min="1" max="{{$producto->existencia}}" value="1"> 
+            <input type="number" class="form-control border" id="cantidad" min="1" max="{{$producto->existencia}}"
+                value="1">
         </div>
-        <button class="btn btn-success col-12 col-auto mx-4 text-center ml-md-0 mr-md-auto" onclick="addCarrito(`{{$producto->id}}`)"><strong><h4>Agregar al carrito</h4></strong></button>
+        <button class="btn btn-success col-12 col-auto mx-4 text-center ml-md-0 mr-md-auto"
+            onclick="addCarrito(`{{$producto->id}}`)"><strong>
+                <h4>Agregar al carrito</h4>
+            </strong></button>
     </div>
 </div>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Descripcion</a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-  </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+            aria-selected="true">Descripcion</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+            aria-selected="false">Profile</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+            aria-selected="false">Contact</a>
+    </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">{{$producto->descripcion}}</div>
-  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">perfiles</div>
-  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">contactoos</div>
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        {{$producto->descripcion}}</div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">perfiles</div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">contactoos</div>
+</div>
+<div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+    <div id="toastAgregarCarrito" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true"
+        data-delay="3500">
+        <div class="toast-header">
+            <strong class="mr-auto">Carrito</strong>
+            <!--small>11 mins ago</small-->
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body" id="toastCuerpoCarrito">
+        </div>
+    </div>
 </div>
 @endif
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
 $("input[type='number']").inputSpinner();
 //let carrito = json(session('carrito'));
-console.log('carrito',carrito);
+console.log('carrito', carrito);
 async function addCarrito(id) {
-  let cantidad = $('#cantidad').val();
-    try{
+    let cantidad = $('#cantidad').val();
+    try {
         //return alert('Listo'+id);
         let respuesta = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: `/agregarAlCarrito/${id}`,
+            url: `{{url('/agregarAlCarrito')}}/${id}`,
             // los datos que voy a enviar para la relación
             data: {
                 //_token: $("meta[name='csrf-token']").attr("content")
-                cantidad:cantidad,
+                cantidad: cantidad,
                 _token: "{{ csrf_token() }}",
             }
         });
         console.log(respuesta);
-        
-        if(respuesta == 1)
-        {
-          return alert('Por el momento esta es la existencia que tenemos a la venta');
+
+        if (respuesta == 1) {
+            return alert('Por el momento esta es la existencia que tenemos a la venta');
         }
         carrito = respuesta;
+        $('#toastAgregarCarrito').toast('show');
+        document.getElementById('toastCuerpoCarrito').textContent = "Producto agregado al carrito";
         //document.querySelector('#cantidadCarrito').textContent = respuesta.length;
         mostrarCarrito();
         //console.log('carrito',respuesta);

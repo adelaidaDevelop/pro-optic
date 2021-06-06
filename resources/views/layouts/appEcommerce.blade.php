@@ -11,7 +11,6 @@
     <title>{{ config('app.name', 'FarmaciasGI') }}?</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -22,7 +21,7 @@
     <script src="{{ asset('js\popper.min.js') }}"></script>
     <script src="{{ asset('js\bootstrap.min.js') }}"></script>
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!--link href="{ asset('css/app.css') }}" rel="stylesheet"-->
 </head>
 
 <body>
