@@ -1,4 +1,4 @@
-@extends('header2')
+f@extends('header2')
 @php
 use App\Models\Sucursal_empleado;
 $vE = ['verEmpleado','modificarEmpleado','eliminarEmpleado','crearEmpleado','admin'];
