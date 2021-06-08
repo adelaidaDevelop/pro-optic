@@ -9,26 +9,28 @@
     $pos = array_search(session('sucursalEcommerce'), $ss);
     @endphp
     @if($pos===false)
-    <h5 class=" col-12">Tu Carrito de Compras de esta sucursal esta vacío</h5>
+    <h5 class="col-12">Tu Carrito de Compras de esta sucursal esta vacío</h5>
     @else
-    <div class="col-9">
-        <div class="row col-12 border-bottom">
-            <div class="row col-5 mx-0">
-                <p class="h5 text-center mx-auto my-0">Producto</p>
+    <div class="col-md-9">
+        <div class="d-none d-md-block">
+            <div class="row col-md-12 border border-primary">
+                <div class="row col-md-5 mx-0 border">
+                    <p class="h5 text-center mx-auto my-0">Producto</p>
+                </div>
+                <div class="col-md-2 mx-0 border">
+                    <p class="h5 text-center mx-auto my-0">Precio</p>
+                </div>
+                <div class="row col-md-2 mx-0">
+                    <p class="h5 text-center mx-auto my-0">Cantidad</p>
+                </div>
+                <div class="row col-md-2 mx-0">
+                    <p class="h5 text-center mx-auto my-0">Subtotal</p>
+                </div>
+                <div class="row col-md-1 mx-0"></div>
             </div>
-            <div class="row col-2 mx-0">
-                <p class="h5 text-center mx-auto my-0">Precio</p>
-            </div>
-            <div class="row col-2 mx-0">
-                <p class="h5 text-center mx-auto my-0">Cantidad</p>
-            </div>
-            <div class="row col-2 mx-0">
-                <p class="h5 text-center mx-auto my-0">Subtotal</p>
-            </div>
-            <div class="row col-1 mx-0"></div>
         </div>
         @foreach($carrito as $p)
-        <div id="productoCarrito{{$p['id']}}" class="row col-12 border-bottom">
+        <div id="productoCarrito{{$p['id']}}" class="row col-12 border border-success">
             <div class="row col-2 mx-0">
                 @if(!empty($p['imagen']))
                 <img src="{{ asset('storage').'/'.$p['imagen']}}" alt="" class="img-fluid">
@@ -42,14 +44,20 @@
             <div class="row col-2 mx-0">
                 <p class="my-auto mx-auto text-center"><strong>${{$p['precio']}}</strong></p>
             </div>
-            <div class="row col-2 mx-0"><input type="number" class="form-control my-auto"
-                min="1" 
-                value="{{$p['cantidad']}}" onchange="setCantidad({{$p['id']}})" id="cantidad{{$p['id']}}" /></div>
+            <div class="row col-2 mx-0"><input type="number" class="form-control my-auto" min="1"
+                    value="{{$p['cantidad']}}" onchange="setCantidad({{$p['id']}})" id="cantidad{{$p['id']}}" /></div>
             <div class="row col-2 mx-0">
-                <p class="my-auto mx-auto text-center"><strong id="subtotal{{$p['id']}}">${{$p['precio'] * $p['cantidad']}}</strong></p>
+                <p class="my-auto mx-auto text-center"><strong
+                        id="subtotal{{$p['id']}}">${{$p['precio'] * $p['cantidad']}}</strong></p>
             </div>
+<<<<<<< HEAD
             <div class=" mx-0 my-auto">
                 <button class="btn btn-outline-danger my-auto mx-0 p-0 border-0" onclick="quitarProductoCarrito(`{{$p['id']}}`)">
+=======
+            <div class=" mx-0">
+                <button class="btn btn-outline-danger my-auto mx-0 p-0 border-0"
+                    onclick="quitarProductoCarrito(`{{$p['id']}}`)">
+>>>>>>> 4b56cdcb03a151d3ff801582ea2d73b5c70cd06a
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">
                         <path
@@ -62,7 +70,7 @@
         </div>
         @endforeach
     </div>
-    <div class="row col-3 pb-auto my-0">
+    <div class="row col-md-3 pb-auto my-0">
         <div class="row mb-auto p-1 border">
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
                 <h4 class="col-12 mx-auto my-1 py-0 text-center text-primary">Resumen de compra</h4>
@@ -89,7 +97,7 @@
 </div>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
-    var props = {
+var props = {
     decrementButton: "<strong>&minus;</strong>", // button text
     incrementButton: "<strong>&plus;</strong>", // ..
     groupClass: "my-auto", // css class of the resulting input-group
@@ -134,9 +142,9 @@ async function setCantidad(id) {
         //return;
         if (typeof respuesta === 'string') {
             $(`#cantidad${id}`).val(parseInt(respuesta));
-            
+
             return alert('La cantidad es mayor a la existencia que tenemos a la venta');
-            
+
         }
         carrito = respuesta;
         //let productos = productosCompra.filter(p => p.id == id);
@@ -144,16 +152,14 @@ async function setCantidad(id) {
         //let subtotal = carrito
         let i = 0;
         encontrado = false;
-        while(i<carrito.length && !encontrado)
-        {
-            if(carrito[i].id == id && carrito[i].sucursal == "{{session('sucursalEcommerce')}}")
-            {
+        while (i < carrito.length && !encontrado) {
+            if (carrito[i].id == id && carrito[i].sucursal == "{{session('sucursalEcommerce')}}") {
                 let subtotal = parseFloat(carrito[i].precio) * parseInt(carrito[i].cantidad);
                 $(`#subtotal${id}`).html(`$${subtotal}`);
                 encontrado = true;
             }
             i++;
-        }        //$('#subtotalProducto').html(`$${})
+        } //$('#subtotalProducto').html(`$${})
         //document.querySelector('#cantidadCarrito').textContent = respuesta.length;
         mostrarCarrito();
         calcularTotal();
@@ -164,32 +170,27 @@ async function setCantidad(id) {
     }
 }
 
-async function quitarProductoCarrito(id)
-{
+async function quitarProductoCarrito(id) {
     let confirmacion = confirm('¿Realmente desea quita este producto del carrito de compras?');
-    if(!confirmacion)
+    if (!confirmacion)
         return;
     await quitarProducto(id);
-    document.getElementById("productoCarrito"+id).remove();
+    document.getElementById("productoCarrito" + id).remove();
 }
 
-async function calcularTotal()
-{
-    if(carrito == null)
+async function calcularTotal() {
+    if (carrito == null)
         return;
     let totalCompra = 0;
     let cuerpoCarrito = "";
     let contador = 0;
-    for(let i in carrito)
-    {
-        if(carrito[i].sucursal == sucursal)
-        {
+    for (let i in carrito) {
+        if (carrito[i].sucursal == sucursal) {
             contador++;
             totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
         }
     }
-    if(contador!=0)
-    {
+    if (contador != 0) {
         $('#subtotal').html(`$ ${totalCompra}`);
         $('#total').html(`$ ${totalCompra}`);
         return;

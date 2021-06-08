@@ -209,6 +209,7 @@ function mostrarCarrito() {
     let totalCompra = 0;
     let cuerpoCarrito = "";
     let contador = 0;
+    let productosExtra = 0;
     for (let i in carrito) {
         if (carrito[i].sucursal == sucursal) {
             contador++;
@@ -220,9 +221,11 @@ function mostrarCarrito() {
                 carrito[i].imagen = `{{ asset('storage')}}/${carrito[i].imagen}`;
                 console.log('imagen', carrito[i].imagen);
             }
+            if(i<3)
+            {
             cuerpoCarrito = cuerpoCarrito +
                 `<div class="row col-12 mx-auto border-bottom">
-                <div class="col-4">
+                <div class="col-4 p-1 border">
                     <img src="${carrito[i].imagen}" alt="imagen" class="img-fluid">
                 </div>
                 <div class="col-7">
@@ -237,13 +240,27 @@ function mostrarCarrito() {
                     </button>
                 </div>
             </div>`;
-            //console.log('longitud imagen', carrito[i].imagen.length);
+            }
+            else{
+                console.log('Si entra');
+                productosExtra = productosExtra + 1;
+            }
+            console.log('productos extra', productosExtra);
         }
     }
+    if(productosExtra>0)
+    {
+        let p = 'productos';
+        if(productosExtra == 1)
+            p = 'producto';
+        cuerpoCarrito = cuerpoCarrito +
+        `<div class="row mx-auto ><p class="text-center mx-auto border border-dark"> + ${productosExtra} ${p}</p></div>`;
+    }
+
     if (contador == 0)
         return;
     cuerpoCarrito = cuerpoCarrito +
-        `<div class="row mx-auto ><p class="text-center mx-auto border border-dark">Total $ ${totalCompra}</p></div>`
+        `<div class="row mx-auto ><p class="text-center mx-auto border border-dark"><strong>Total</strong> $ ${totalCompra}</p></div>`
     cuerpoCarrito = cuerpoCarrito + `<a class="btn btn-success" href="{{url('/carrito')}}">Ver carrito</a>`
     elementoCarrito.innerHTML = cuerpoCarrito;
     //"Aqui se agregará el contenido de carrito";
