@@ -9,12 +9,14 @@
             <div class="col-1 my-1 mx-0 px-0">
                 <img class="col-10 mx-0 img-fluid" src="{{ asset('img\credit-card.svg') }}" alt="FORMA DE PAGO" />
             </div>
-            <h5 class="row col-auto my-auto px-0 text-left">Forma de pago</h5>
+            <h5 class="row col-auto my-auto px-0 text-left">Elija su forma de pago</h5>
         </div>
         <div class="row col-12 mr-auto px-0 ">
-            <div class="col-11 mb-auto">
-                <img class="col-2 img-fluid my-2 btn btn-light border border-secondary rounded"
-                    src="{{ asset('img\PayPal-logo.png') }}" alt="FORMA DE PAGO" />
+            <div class="col-6 mb-auto">
+                <img class="col-5 img-fluid my-2 btn btn-light border border-secondary rounded" src="{{ asset('img\PayPal-logo.png') }}" alt="FORMA DE PAGO" width="50px" height="50px" />
+            </div>
+            <div class="col-6 mb-auto">
+                <img class="col-5 img-fluid my-2 btn btn-light border border-secondary  rounded " src="{{ asset('img\contraentrega.png') }}" alt="FORMA DE PAGO" width="50px" height="50px" />
             </div>
             <div class="col-12 mb-auto">
                 <p class="">Paga de manera sencilla con tus tarjetas de débito o crédito registradas en tu cuenta
@@ -24,6 +26,10 @@
                 <img class="col-2 img-fluid my-2 mx-0" src="{{ asset('img\paypal.png') }}" alt="FORMA DE PAGO" />
             </div>
         </div>
+        <div>
+
+        </div>
+
         <div class="row col-12">
             <a class="btn btn-success btn-lg" href="">Continuar con PayPal</a>
         </div>
@@ -54,8 +60,8 @@
     </div>
 </div>
 <script>
-$('#editarDireccion').click(function() {
-    location.href = "{{url('/direccionEnvio?domicilio=false')}}";
-});
+    $('#editarDireccion').click(function() {
+        location.href = "{{url('/direccionEnvio?domicilio=false')}}";
+    });
 </script>
 @endsection

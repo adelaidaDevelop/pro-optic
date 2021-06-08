@@ -31,6 +31,27 @@
             </a>
         </div>
         @endif
+
+
+
+        <div class="col-0  ml-3 p-1 ">
+            <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" href=".listaSolicitudVentas" id="btnSolic_Ventas" onclick="" value="">
+                <img src="{{ asset('img\ventas.png') }}" alt="Editar" width="30px" height="30px">
+                <span class="badge badge-warning">2</span>
+                <p class="h6 my-auto mx-2 text-dark"><small>VENTAS ECOMMERCE</small></p>
+            </button>
+        </div>
+
+        <div class="col-0  ml-3 p-1 ">
+            <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" href=".listaSolicitudVentas" id="btnSolic_Ventas" onclick="" value="">
+                <img src="{{ asset('img\ventas.png') }}" alt="Editar" width="30px" height="30px">
+                <span class="badge badge-warning">2</span>
+                <p class="h6 my-auto mx-2 text-dark"><small>VENTAS ECOMMERCE</small></p>
+            </button>
+        </div>
+
+
+
         <!--
         <div class="col-6 ml-4"></div>
         <div class=" ml-4 my-auto">
@@ -107,8 +128,7 @@
             </div>
             <!--PRUE IMP DIRECTO-->
             <div class="">
-                <button class="btn btn-outline-primary p-1" type="button" onclick="impDirecto()" value=""
-                    id="botonImpDirecto">
+                <button class="btn btn-outline-primary p-1" type="button" onclick="impDirecto()" value="" id="botonImpDirecto">
                     <img src="{{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                     IMP DIRECTO
                 </button>
@@ -305,6 +325,58 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade listaSolicitudVentas" id="listaSolicitudVentas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" id="">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="exampleModalLabel">SOLICITUD DE NUEVAS VENTAS EN LINEA</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="row modal-body">
+                <div class=" col-4">
+                    <div class="col-12 border border-dark mt-4 mb-4 ml-4 mr-2">
+                        <div class="px-3 py-3 m-0">
+                            <!--input type="text" id="buscador" class="form-control my-2">
+                        <button class="btn btn-info mb-2" id="boton">Buscar</button-->
+
+                            <h4 class="row my-1 mx-1" style="color:#4388CC">ACTIVOS</h4>
+
+                            <div>
+                                <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto">
+                                <h6 class=" text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER INFORMACION
+                                        ADICIONAL, EDITAR O ELIMINAR </small> </h6>
+                                <!--div class="input-group-append">
+                        <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
+                        </div-->
+                            </div>
+
+                        </div>
+                        <div class="row m-0 px-0" style="height:200px;overflow-y:auto;">
+                            <div id="resultados" class="col btn-block h-100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-6">
+
+
+                </div>
+            </div>
+
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                <!--button type="button" class="btn btn-primary">Agregar Producto</button-->
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <div class="modal fade" id="ofertasModal" tabindex="-1" aria-labelledby="ofertasModalLabel" aria-hidden="true">
@@ -1193,7 +1265,7 @@
                 // window.open(url, "_blank");
                 /////////
                 //var newWin = window.open('width=100,height=100', '_parent');
-                
+
                 var newWin = window.open(url, '_blank');
                 newWin.focus();
                 newWin.document.open();
