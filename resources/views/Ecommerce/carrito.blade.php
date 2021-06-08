@@ -1,6 +1,6 @@
 @extends('layouts.headerEcommerce')
 @section('contenido')
-<div class="row col-12 mx-auto">
+<domiv class="row col-12 mx-auto">
     <h4 class="text-uppercase text-primary col-12">Carrito</h4>
     @if(session()->has('carrito'))
     @php
@@ -48,7 +48,7 @@
             <div class="row col-2 mx-0">
                 <p class="my-auto mx-auto text-center"><strong id="subtotal{{$p['id']}}">${{$p['precio'] * $p['cantidad']}}</strong></p>
             </div>
-            <div class=" mx-0">
+            <div class=" mx-0 my-auto">
                 <button class="btn btn-outline-danger my-auto mx-0 p-0 border-0" onclick="quitarProductoCarrito(`{{$p['id']}}`)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">

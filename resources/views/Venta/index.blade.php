@@ -364,6 +364,24 @@
                 </div>
                 <div class=" col-6">
 
+                    <div class="col-9">
+                        <div class="row col-12 border-bottom">
+                            <div class="row col-5 mx-0">
+                                <p class="h5 text-center mx-auto my-0">Producto</p>
+                            </div>
+                            <div class="row col-2 mx-0">
+                                <p class="h5 text-center mx-auto my-0">Precio</p>
+                            </div>
+                            <div class="row col-2 mx-0">
+                                <p class="h5 text-center mx-auto my-0">Cantidad</p>
+                            </div>
+                            <div class="row col-2 mx-0">
+                                <p class="h5 text-center mx-auto my-0">Subtotal</p>
+                            </div>
+                            <div class="row col-1 mx-0"></div>
+                        </div>
+                        
+                    </div>
 
                 </div>
             </div>
