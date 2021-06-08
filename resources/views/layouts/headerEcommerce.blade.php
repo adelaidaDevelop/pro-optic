@@ -173,7 +173,7 @@
 let carrito = @json(session('carrito'));
 let sucursal = @json(session('sucursalEcommerce'));
 let elementoCarrito = document.querySelector('#collapseCarrito'); //"{count(session('carrito'))}}";
-
+let cuerpoElementoCarrito = elementoCarrito.innerHTML;
 async function cambiarSucursal() {
     try {
         let sucursal = document.querySelector('#sucursalActiva').value;
@@ -200,8 +200,12 @@ async function cambiarSucursal() {
 }
 
 function mostrarCarrito() {
-    if (carrito == null)
+    if (carrito == null || carrito.length == 0)
+    {
+        elementoCarrito.innerHTML = cuerpoElementoCarrito;
         return;
+    }
+    
     let totalCompra = 0;
     let cuerpoCarrito = "";
     let contador = 0;
@@ -227,7 +231,8 @@ function mostrarCarrito() {
                     <div class="row"><small>Cantidad: ${carrito[i].cantidad}</small></div>
                 </div>
                 <div class="col-1 m-0 p-0">
-                    <button type="button m-0 p-0" class="close" aria-label="Close">
+                    <button type="button m-0 p-0" class="close" 
+                    onclick="quitarProducto(${carrito[i].id})" aria-label="Close">
                         <span class="m-0 p-0" aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -241,10 +246,35 @@ function mostrarCarrito() {
         `<div class="row mx-auto ><p class="text-center mx-auto border border-dark">Total $ ${totalCompra}</p></div>`
     cuerpoCarrito = cuerpoCarrito + `<a class="btn btn-success" href="{{url('/carrito')}}">Ver carrito</a>`
     elementoCarrito.innerHTML = cuerpoCarrito;
-    "Aqui se agregará el contenido de carrito";
+    //"Aqui se agregará el contenido de carrito";
     document.querySelector('#cantidadCarrito').textContent = contador; //respuesta.length;
 }
 mostrarCarrito();
+
+async function quitarProducto(id)
+{
+    
+    //let id = carrito[i]['id'];
+    let url = `{{url('/quitarProductoCarrito')}}/${id}`;
+    let respuesta = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: url,
+            // los datos que voy a enviar para la relación
+            data: {
+                //_token: $("meta[name='csrf-token']").attr("content")
+                //cantidad:cantidad,
+                _token: "{{ csrf_token() }}",
+            }
+        });
+    carrito = respuesta;
+    //console.log('Hecho',i);
+        
+    //carrito.splice(i,1);
+    console.log('carrito despues d eliminar',carrito);
+    mostrarCarrito();
+}
 </script>
 @yield('contenido')
 @endsection

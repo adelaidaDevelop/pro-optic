@@ -414,6 +414,26 @@ class EcommerceController extends Controller
         return $carrito;
     }
 
+    public function quitarProductoDeCarrito(Request $request, $id)
+    {
+        $i=0;
+        $pos = true;
+        $carrito =  session('carrito');
+        while($i<count($carrito) && $pos)
+        {
+            if($id == $carrito[$i]['id'] && session('sucursalEcommerce') == $carrito[$i]['sucursal'])
+            {
+                unset($carrito[$i]);
+                $carrito = array_values($carrito);
+                //$carrito = array_diff($carrito, array($carrito[$i]));
+                $pos = true;
+            }
+            $i++;
+        }
+        session(['carrito' => $carrito]);
+        return $carrito;
+    }
+
     public function pagoPaypal(){
         return view('Ecommerce.pruebaPago');
     }

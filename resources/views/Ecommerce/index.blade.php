@@ -50,7 +50,9 @@
         @foreach($productosNuevos as $producto)
         <div class="card-group mx-auto">
             <!--div class="col my-2"-->
-            <div class="card my-3" style="width: 18rem;">
+            <div id="productoNuevo{{$producto['id']}}" class="card my-3" style="width: 18rem;"
+                onmouseout="seleccionProducto(false,`productoNuevo{{$producto['id']}}`)"
+                onmouseover="seleccionProducto(true,`productoNuevo{{$producto['id']}}`)">
                 @if(!empty($producto->imagen))
                 <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" class="card-img-top">
                 @else
@@ -80,7 +82,10 @@
         <!--div class="card-deck"-->
         @foreach($productosDestacados as $producto)
         <!--div class="card-deck"-->
-        <div class="card col-12 col-sm-auto mx-0 mx-sm-auto my-2 px-0 py-auto border "
+        <div id="productoDestacado{{$producto['id']}}`"
+            class="card col-12 col-sm-auto mx-0 mx-sm-auto my-2 px-0 py-auto border"
+            onmouseout="seleccionProducto(false,`productoDestacado{{$producto['id']}}`)"
+            onmouseover="seleccionProducto(true,`productoDestacado{{$producto['id']}}`)"
             style="width: 15rem;max-width: 20rem;">
             <div class="row my-0 mx-auto h-100 ">
                 <!--a class="btn btn-outline-light" href="{url('/producto/'.$producto['id'])}}"-->
@@ -133,15 +138,18 @@ $deptos = $categorias[$d->nombre];
     <div class="row mx-auto mt-3">
         <h4 class="text-capitalize text-primary mx-auto mt-1"><strong>{{$d->nombre}}</strong></h4>
     </div>
-    <div class="row mx-0 w-100">
+    <div class="row mx-auto col-12">
         @foreach($deptos as $producto)
         <!--div class="col my-2"-->
-        <div class="card col-12 col-sm-auto mx-0 mx-sm-auto my-2 px-0 py-auto border "
-            style="width:15rem;max-width: 20rem;">
-            <div class="row my-0 mx-auto h-100 ">
+        <div id="productoDepartamento{{$producto['id']}}"
+            class="card col-12 col-md-auto mx-auto mx-md-1 my-2 px-0 py-auto border"
+            onmouseout="seleccionProducto(false,`productoDepartamento{{$producto['id']}}`)"
+            onmouseover="seleccionProducto(true,`productoDepartamento{{$producto['id']}}`)"
+            style="width:15rem;max-width: 30rem;">
+            <div class="row col-12 my-0 mx-auto px-0">
                 <!--a class="btn btn-outline-light" href="{url('/producto/'.$producto['id'])}}"-->
-                <div class="col-5 col-sm-12 my-auto mt-md-0 mb-sm-auto p-0">
-                    <a class="btn btn-outline-light mx-0 p-0 p-sm-2 " href="{{url('/producto/'.$producto['id'])}}">
+                <div class="card-header col-5 col-md-12 my-auto mt-md-0 mb-md-1 p-0 p-md-1 bg-transparent border-0">
+                    <a class="btn btn-outline-light mx-0 p-0 p-md-2 border-0" href="{{url('/producto/'.$producto['id'])}}">
                         @if(!empty($producto->imagen))
                         <img src="{{ asset('storage').'/'.$producto->imagen}}" alt="" class="card-img-top">
                         @else
@@ -150,16 +158,18 @@ $deptos = $categorias[$d->nombre];
                     </a>
                 </div>
                 <!--img src="{{ asset('img\carusel.jpg') }}" class="card-img-top" alt="..."-->
-                <div class="col-7 col-sm-12 my-auto mt-md-0 mb-sm-auto p-0">
-                    <a class="btn btn-outline-light col-12 mx-auto border-0"
-                        href="{{url('/producto/'.$producto['id'])}}">
-                        <div class="card-body mx-auto mb-0">
+                <div class="col-7 col-md-12 my-auto mb-md-0 mt-md-auto p-0 p-md-1">
+
+                    <div class="card-body mx-auto mb-0">
+                        <a class="btn btn-outline-light col-12 mx-auto border-0"
+                            href="{{url('/producto/'.$producto['id'])}}">
                             <p class="h5 card-title text-center text-dark">{{$producto['nombre']}}</p>
                             <!--p class="card-text text-center text-dark">{$producto['descripcion']}}</p-->
                             <h4 class="card-text text-center text-success">$ {{$producto['precio']}}</h4>
-                        </div>
-                    </a>
-                    <div class="card-footer mx-auto mt-auto mb-0 text-center bg-transparent">
+                        </a>
+                    </div>
+
+                    <div class="card-footer col-12 mx-auto mt-auto mb-0 text-center bg-transparent">
                         <!--small class="text-muted">Last updated 3 mins ago</small-->
                         <button class="btn btn-primary mx-0 mx-sm-auto mt-auto mb-0 px-1 px-md-2" id="agregarAlCarrito"
                             onclick="addCarrito(`{{$producto['id']}}`)"><small><strong class="h6">Agregar al
@@ -175,18 +185,18 @@ $deptos = $categorias[$d->nombre];
 @endforeach
 @endif
 <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
-  <div id="toastAgregarCarrito" class="toast hide" role="alert" aria-live="assertive" 
-   aria-atomic="true" data-delay="3500">
-    <div class="toast-header">
-      <strong class="mr-auto">Carrito</strong>
-      <!--small>11 mins ago</small-->
-      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    <div id="toastAgregarCarrito" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true"
+        data-delay="3500">
+        <div class="toast-header">
+            <strong class="mr-auto">Carrito</strong>
+            <!--small>11 mins ago</small-->
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body" id="toastCuerpoCarrito">
+        </div>
     </div>
-    <div class="toast-body" id="toastCuerpoCarrito">
-    </div>
-  </div>
 </div>
 <script>
 //let sucursal = json(session('sucursalEcommerce'))
@@ -217,7 +227,7 @@ async function addCarrito(id) {
             return alert('Por el momento esta es la existencia que tenemos a la venta');
         }
         carrito = respuesta;
-        
+
         $('#toastAgregarCarrito').toast('show');
         document.getElementById('toastCuerpoCarrito').textContent = "Producto agregado al carrito";
         mostrarCarrito();
@@ -225,6 +235,17 @@ async function addCarrito(id) {
         //return alert("Listo"+ respuesta);
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+}
+
+function seleccionProducto(bandera, id) {
+    if (bandera) {
+        //const tarjeta = document.getElementById('tarjeta'+id).focusable = true;
+        $('#' + id).addClass('shadow-lg border border-primary');
+        //console.log('class',$('#tarjeta'+id).toggleClass(' shadow'));
+    } else {
+        //const tarjeta = document.getElementById('tarjeta'+id).focusable = false;
+        $('#' + id).removeClass('shadow-lg border border-primary');
     }
 }
 /*mostrarCarrito();

@@ -60,6 +60,7 @@ Route::get('/producto/{id}', [EcommerceController::class,'verProducto'])->middle
 Route::post('/sucursal/{sucursal}', [EcommerceController::class,'cambiarSucursal'])->middleware('isCliente');
 Route::get('/carrito', [EcommerceController::class,'carrito'])->middleware('isCliente');
 Route::post('/actualizarCantidadCarrito/{id}', [EcommerceController::class,'actualizarCantidadCarrito'])->middleware('isCliente');
+Route::post('/quitarProductoCarrito/{id}', [EcommerceController::class,'quitarProductoDeCarrito'])->middleware('isCliente');
 
 Route::get('/direccionEnvio', [EcommerceController::class,'direccionEnvio'])->middleware('isCliente');
 Route::post('/domicilio', [EcommerceController::class,'postDireccion'])->middleware('isCliente');
