@@ -12,12 +12,12 @@
     <h5 class="col-12">Tu Carrito de Compras de esta sucursal esta vacío</h5>
     @else
     <div class="col-md-9">
-        <div class="d-none d-md-block">
-            <div class="row col-md-12 border border-primary">
-                <div class="row col-md-5 mx-0 border">
+        <div class="d-none d-md-block px-0">
+            <div class="row col-md-12 border-bottom">
+                <div class="row col-md-5 mx-0">
                     <p class="h5 text-center mx-auto my-0">Producto</p>
                 </div>
-                <div class="col-md-2 mx-0 border">
+                <div class="col-md-2 mx-0">
                     <p class="h5 text-center mx-auto my-0">Precio</p>
                 </div>
                 <div class="row col-md-2 mx-0">
@@ -30,34 +30,28 @@
             </div>
         </div>
         @foreach($carrito as $p)
-        <div id="productoCarrito{{$p['id']}}" class="row col-12 border border-success">
-            <div class="row col-2 mx-0">
+        <div id="productoCarrito{{$p['id']}}" class="row col-12 border-bottom">
+            <div class="row col-md-2 mx-0">
                 @if(!empty($p['imagen']))
                 <img src="{{ asset('storage').'/'.$p['imagen']}}" alt="" class="img-fluid">
                 @else
                 <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" class="img-fluid">
                 @endif
             </div>
-            <div class="row col-3 mx-0">
+            <div class="row col-md-3 mx-0">
                 <p class="my-auto mx-auto text-center">{{$p['nombre']}}</p>
             </div>
-            <div class="row col-2 mx-0">
+            <div class="row col-md-2 mx-0">
                 <p class="my-auto mx-auto text-center"><strong>${{$p['precio']}}</strong></p>
             </div>
-            <div class="row col-2 mx-0"><input type="number" class="form-control my-auto" min="1"
-                    value="{{$p['cantidad']}}" onchange="setCantidad({{$p['id']}})" id="cantidad{{$p['id']}}" /></div>
-            <div class="row col-2 mx-0">
+            <div class="row col-md-2 mx-0"><input type="number" class="form-control my-auto" min="1"
+                    value="{{$p['cantidad']}}" onchange="setCantidad(`{{$p['id']}}`)" id="cantidad{{$p['id']}}" /></div>
+            <div class="row col-md-2 mx-0">
                 <p class="my-auto mx-auto text-center"><strong
                         id="subtotal{{$p['id']}}">${{$p['precio'] * $p['cantidad']}}</strong></p>
             </div>
-<<<<<<< HEAD
-            <div class=" mx-0 my-auto">
+            <div class="mx-0 my-auto">
                 <button class="btn btn-outline-danger my-auto mx-0 p-0 border-0" onclick="quitarProductoCarrito(`{{$p['id']}}`)">
-=======
-            <div class=" mx-0">
-                <button class="btn btn-outline-danger my-auto mx-0 p-0 border-0"
-                    onclick="quitarProductoCarrito(`{{$p['id']}}`)">
->>>>>>> 4b56cdcb03a151d3ff801582ea2d73b5c70cd06a
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">
                         <path
