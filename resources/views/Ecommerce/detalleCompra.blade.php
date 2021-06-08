@@ -69,21 +69,21 @@
             <a class="btn btn-success btn-lg" href="">Continuar</a>
         </div>
     </div>
-    <div class="col-3">
-        <div class="row mb-auto p-1 border border-primary">
-            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
-                <h4 class="col-12 mx-auto my-1 py-0 text-center text-primary">Resumen de compra</h4>
+    <div class="col-3 .hidden-md-up border-primary">
+        <div class="row mb-auto p-1 border border-primary .hidden-md-up ">
+            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom  .hidden-md-up">
+                <h4 class="col-12 mx-auto my-1 py-0 text-center text-primary .hidden-md-up">Resumen de compra</h4>
             </div>
-            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
-                <h5 class="mr-auto my-1 text-center">Subtotal</h5>
-                <h5 class="ml-auto my-1 text-center" id="subtotal">$ 0.00</h5>
+            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom .hidden-md-up">
+                <h5 class="mr-auto my-1 text-center .hidden-md-up">Subtotal</h5>
+                <h5 class="ml-auto my-1 text-center .hidden-md-up" id="subtotal">$ 0.00</h5>
             </div>
-            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
+            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom .hidden-md-up">
                 <h5 class="mr-auto my-1 text-center">Costo del envío</h5>
                 <h5 class="ml-auto my-1 text-center" id="envio">*por calcular</h5>
             </div>
-            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
-                <h5 class="mr-auto my-1 text-center">Total</h5>
+            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom .hidden-md-up">
+                <h5 class="mr-auto my-1 text-center .hidden-md-up">Total</h5>
                 <h5 class="ml-auto my-1 text-center" id="total">$0.00</h5>
             </div>
         </div>
