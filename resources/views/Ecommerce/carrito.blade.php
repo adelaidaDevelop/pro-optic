@@ -28,7 +28,7 @@
             <div class="row col-1 mx-0"></div>
         </div>
         @foreach($carrito as $p)
-        <div class="row col-12 border-bottom">
+        <div id="productoCarrito{{$p['id']}}" class="row col-12 border-bottom">
             <div class="row col-2 mx-0">
                 @if(!empty($p['imagen']))
                 <img src="{{ asset('storage').'/'.$p['imagen']}}" alt="" class="img-fluid">
@@ -48,8 +48,8 @@
             <div class="row col-2 mx-0">
                 <p class="my-auto mx-auto text-center"><strong id="subtotal{{$p['id']}}">${{$p['precio'] * $p['cantidad']}}</strong></p>
             </div>
-            <div class="row col-1 mx-0">
-                <button class="btn btn-outline-danger my-auto mx-0 p-0 border-0 ">
+            <div class=" mx-0">
+                <button class="btn btn-outline-danger my-auto mx-0 p-0 border-0" onclick="quitarProductoCarrito(`{{$p['id']}}`)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">
                         <path
@@ -163,6 +163,16 @@ async function setCantidad(id) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
 }
+
+async function quitarProductoCarrito(id)
+{
+    let confirmacion = confirm('¿Realmente desea quita este producto del carrito de compras?');
+    if(!confirmacion)
+        return;
+    await quitarProducto(id);
+    document.getElementById("productoCarrito"+id).remove();
+}
+
 async function calcularTotal()
 {
     if(carrito == null)

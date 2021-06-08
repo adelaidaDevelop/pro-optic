@@ -252,7 +252,7 @@ function mostrarProductos(lista) {
         if (lista[i].imagen != null && lista[i].imagen.length > 0)
             urlImagen = `{{ asset('storage')}}/${lista[i].imagen}`;
         cuerpo = cuerpo +
-            `<div class="card-group mx-auto ">
+        `<div class="card-group mx-auto ">
             <div id="tarjeta${lista[i].id}" class="card my-1" style="width: 15rem;"
             onmouseout="seleccionProducto(false,${lista[i].id})"
             onmouseover="seleccionProducto(true,${lista[i].id})">
