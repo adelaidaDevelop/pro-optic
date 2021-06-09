@@ -9,7 +9,7 @@
     </nav>
 </div>
 <div class="row mx-md-2 mx-0">
-    <h3 class="text-uppercase text-primary col-md-9 my-2 mt-md-1 mb-md-3 mx-auto text-center">Carrito</h3>
+    <h3 class="text-uppercase text-primary col-md-9 my-2 mt-md-1 mb-md-5 mx-auto ml-md-4 mr-md-5 text-center">Carrito</h3>
     @if(session()->has('carrito'))
     @php
     $carrito = session('carrito');
@@ -97,7 +97,7 @@
                 <h5 class="mr-auto my-1 text-center">Total</h5>
                 <h5 class="ml-auto my-1 text-center" id="total">$0.00</h5>
             </div>
-            <a class="btn btn-success my-auto btn-lg btn-block" href="{{url('/direccionEnvio')}}">Pagar</a>
+            <a class="btn btn-primary my-auto btn-lg btn-block" href="{{url('/direccionEnvio')}}">Pagar</a>
         </div>
     </div>
     @endif
