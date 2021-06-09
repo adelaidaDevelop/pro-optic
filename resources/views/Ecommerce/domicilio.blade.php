@@ -1,7 +1,16 @@
 @extends('layouts.headerProcesoCompra')
 @section('contenido')
+<div class="row col-12">
+    <nav aria-label="breadcrumb ">
+        <ol class="breadcrumb bg-transparent h6">
+            <li class="breadcrumb-item"><a href="/">INICIO</a></li>
+            <li class="breadcrumb-item"><a href="/carrito">CARRITO-COMPRAS</a></li>
+            <li class="breadcrumb-item active" aria-current="page">DIRECCION</li>
+        </ol>
+    </nav>
+</div>
 <div class="row col-12 my-2 mx-auto text-center ">
-    <p class=" h5 text-center mx-auto"> <strong> AGREGAR DIRECCION DE ENVIO </strong> </p>
+    <p class="col-12 alert-info py-1 h5 text-center mx-auto"> <strong> AGREGAR DIRECCION DE ENVIO </strong> </p>
 </div>
 <div class=" row col-12 my-2 input-group text-center mx-auto " style="background:#D5DBDB">
     <button id="btnGenerarPed" class="btn btn-outline-secondary col  text-center  p-1 border-0" type="submit" disabled>

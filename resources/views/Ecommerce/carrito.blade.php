@@ -2,14 +2,14 @@
 @section('contenido')
 <div class="row col-12">
     <nav aria-label="breadcrumb ">
-        <ol class="breadcrumb bg-transparent h">
+        <ol class="breadcrumb bg-transparent h5">
             <li class="breadcrumb-item"><a href="/">INICIO</a></li>
             <li class="breadcrumb-item active" aria-current="page">CARRITO-COMPRAS</li>
         </ol>
     </nav>
 </div>
 <div class="row mx-md-2 mx-0">
-    <h3 class="text-uppercase text-primary col-md-9 my-2 mt-md-1 mb-md-5 mx-auto ml-md-4 mr-md-5 text-center">Carrito</h3>
+    <h4 class="col-10 text-uppercase text-dark col-md-9 my-2 mt-md-1 mb-md-5 mx-auto ml-md-4 mr-md-5 text-center border alert-primary">Carrito</h4>
     @if(session()->has('carrito'))
     @php
     $carrito = session('carrito');

@@ -22,7 +22,7 @@
                     <input class="form-control" type="search" placeholder="Buscar producto" name="buscar" id="buscar"
                         aria-label="Buscar producto" autocomplete>
                     <div class="input-group-append">
-                        <img src="{{ asset('img\search.svg') }}" for="buscar" class="btn btn-success p-1" width="30px"
+                        <img src="{{ asset('img\search.svg') }}" for="buscar" class="btn btn-secondary p-1" width="30px"
                             height="100%" alt="buscador" onclick="buscarProducto('buscar')">
                     </div>
                 </div>
@@ -261,7 +261,7 @@ function mostrarCarrito() {
         return;
     cuerpoCarrito = cuerpoCarrito +
         `<div class="row mx-auto ><p class="text-center mx-auto border border-dark"><strong>Total </strong>  $ ${totalCompra}</p></div>`
-    cuerpoCarrito = cuerpoCarrito + `<a class="btn btn-success" href="{{url('/carrito')}}">Ver carrito</a>`
+    cuerpoCarrito = cuerpoCarrito + `<a class="btn btn-secondary" href="{{url('/carrito')}}">Ver carrito</a>`
     elementoCarrito.innerHTML = cuerpoCarrito;
     //"Aqui se agregará el contenido de carrito";
     document.querySelector('#cantidadCarrito').textContent = contador; //respuesta.length;
