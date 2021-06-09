@@ -291,7 +291,10 @@ class EcommerceController extends Controller
         }
         if(Auth::check())
         {
-            
+            if(Auth::user()->tipo == 2)
+            {
+                
+            }
         }
         //return 'Si existe el carrito';
         $carrito =  session('carrito');
