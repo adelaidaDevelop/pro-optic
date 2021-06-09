@@ -29,8 +29,8 @@
             </div>
             <!-- Authentication Links -->
             @guest
-            <div class="dropdown col-3 col-sm-2 col-md-1 my-auto mx-0 mx-md-1 px-1 py-0 px-md-3 py-md-2 mx-md-auto">
-                <a id="invitadoDropdown" class="nav-link dropdown-toggle mx-0 m-md-0 py-0 text-white" href="#"
+            <div class="dropdown col-3 col-sm-2 col-md-1 my-auto">
+                <a id="invitadoDropdown" class="nav-link dropdown-toggle p-1 p-sm-3 p-md-0 p-lg-1 p-xl-3 text-white" href="#"
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="{{ asset('img\usuario.png') }}" alt="LOGO" class="img-fluid"
                         href="{{ url('/loginCliente') }}">
@@ -42,10 +42,10 @@
 
             </div>
             @else
-            <div class="dropdown col-3 col-sm-2 col-md-1 my-auto mx-0 mx-md-1 px-1 py-0 px-md-3 py-md-2 mx-md-auto">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle mx-0 m-md-0 text-white" href="#" role="button"
+            <div class="dropdown col-3">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{ asset('img\usuario.png') }}" class="p-1" alt="LOGO" height="40px">
+                    <img src="{{ asset('img\usuario.png') }}" class="img-fluid" alt="LOGO" height="40px">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" class="text-primary" href="#" onclick="">
@@ -225,7 +225,7 @@ function mostrarCarrito() {
             {
             cuerpoCarrito = cuerpoCarrito +
                 `<div class="row col-12 mx-auto border-bottom">
-                <div class="col-4 p-1 border">
+                <div class="col-4 p-1">
                     <img src="${carrito[i].imagen}" alt="imagen" class="img-fluid">
                 </div>
                 <div class="col-7">
@@ -260,7 +260,7 @@ function mostrarCarrito() {
     if (contador == 0)
         return;
     cuerpoCarrito = cuerpoCarrito +
-        `<div class="row mx-auto ><p class="text-center mx-auto border border-dark"><strong>Total</strong> $ ${totalCompra}</p></div>`
+        `<div class="row mx-auto ><p class="text-center mx-auto border border-dark"><strong>Total </strong>  $ ${totalCompra}</p></div>`
     cuerpoCarrito = cuerpoCarrito + `<a class="btn btn-success" href="{{url('/carrito')}}">Ver carrito</a>`
     elementoCarrito.innerHTML = cuerpoCarrito;
     //"Aqui se agregará el contenido de carrito";
