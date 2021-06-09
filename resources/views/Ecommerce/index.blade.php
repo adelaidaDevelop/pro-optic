@@ -9,13 +9,15 @@
         </ol>
     </nav>
 </div-->
+<!--
 <div class="row col-12">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">Home</li>
+            <li class="breadcrumb-item active" aria-current="page">Inicio</li>
         </ol>
     </nav>
 </div>
+-->
 <div class="row ">
     <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -23,16 +25,16 @@
             <li data-target="#carouselIndicators" data-slide-to="1"></li>
             <li data-target="#carouselIndicators" data-slide-to="2"></li>
         </ol>
-        <div class="carousel-inner">
+        <div class="carousel-inner h-75 px-4 my-1 mx-auto text-center">
             <div class="carousel-item active position-relative">
-                <img class="d-block w-100" src="{{ asset('img\carusel.jpg') }}" alt="First slide" class="img-fluid">
+                <img class="d-block w-100 " src="{{ asset('img\simi1.jpg') }}" alt="First slide" class="img-fluid">
             </div>
             <!--div class="carousel-item">
                 <img class="d-block w-100" src="{ asset('img\carusel2.jpg') }}" alt="Second slide"
                 class="img-fluid">
             </div-->
             <div class="carousel-item">
-                <img class="d-block w-100" src="{{ asset('img\carusel.jpg') }}" alt="Third slide" class="img-fluid">
+                <img class="d-block w-100" src="{{ asset('img\simi2.jpg') }}" alt="Third slide" class="img-fluid">
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
