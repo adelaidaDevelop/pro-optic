@@ -4,7 +4,7 @@
     <p class=" h5 text-center mx-auto"> <strong> AGREGAR DIRECCION DE ENVIO </strong> </p>
 </div>
 <div class=" row col-12 my-2 input-group text-center mx-auto " style="background:#D5DBDB">
-    <button id="btnGenerarPed" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit">
+    <button id="btnGenerarPed" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit">
         <img class="" src="{{ asset('img\pedidoGenerado.png') }}" alt="Editar" width="25px" height="25px">
         <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO GENERADO</small></p>
     </button>
@@ -123,7 +123,7 @@
             </form>
         </div>
     </div>
-    <div class="col-3 border border-warning">
+    <div class="col-3 border ">
         <div class="row  p-1 border">
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
                 <h4 class="col-12 mx-auto my-1 py-0 text-center ">Resumen de compra</h4>
