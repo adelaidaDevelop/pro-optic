@@ -1,7 +1,7 @@
 @extends('layouts.headerEcommerce')
 @section('contenido')
-<domiv class="row col-12 mx-auto">
-    <h4 class="text-uppercase text-primary col-12">Carrito</h4>
+<div class="row mx-md-2 mx-0">
+    <h3 class="text-uppercase text-primary col-md-9 my-2 mt-md-1 mb-md-3 mx-auto text-center">Carrito</h3>
     @if(session()->has('carrito'))
     @php
     $carrito = session('carrito');
@@ -11,9 +11,9 @@
     @if($pos===false)
     <h5 class="col-12">Tu Carrito de Compras de esta sucursal esta vacío</h5>
     @else
-    <div class="col-md-9">
-        <div class="d-none d-md-block px-0">
-            <div class="row col-md-12 border-bottom">
+    <div class="col-md-9 px-0 px-md-2 mx-md-0">
+        <div class="d-none d-md-block ">
+            <div class="row col-md-12 mx-auto border-bottom">
                 <div class="row col-md-5 mx-0">
                     <p class="h5 text-center mx-auto my-0">Producto</p>
                 </div>
@@ -30,30 +30,44 @@
             </div>
         </div>
         @foreach($carrito as $p)
-        <div id="productoCarrito{{$p['id']}}" class="row col-12 border-bottom">
-            <div class="row col-md-2 mx-0">
-                @if(!empty($p['imagen']))
-                <img src="{{ asset('storage').'/'.$p['imagen']}}" alt="" class="img-fluid">
-                @else
-                <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" class="img-fluid">
-                @endif
+        <div id="productoCarrito{{$p['id']}}" class="row col-12 mx-auto my-2 my-md-0 px-0 px-md-2 border-bottom">
+            <div class="row col-5 col-md-5 mx-0 px-0">
+                <div class="col-12 col-md-6 mx-0">
+                    @if(!empty($p['imagen']))
+                    <img src="{{ asset('storage').'/'.$p['imagen']}}" alt="" class="img-fluid">
+                    @else
+                    <img src="{{ asset('img/imagenNoDisponible.jpg') }}" alt="" class="img-fluid">
+                    @endif
+                </div>
+                <div class="col-12 col-md-6 mx-0 my-auto">
+                    <p class="my-auto mx-auto text-center">{{$p['nombre']}}</p>
+                </div>
             </div>
-            <div class="row col-md-3 mx-0">
-                <p class="my-auto mx-auto text-center">{{$p['nombre']}}</p>
+            <div class="row col-7 col-md-6 mx-0 px-0 py-4">
+                <div class="col-12 col-md-4 mx-auto mx-md-0 my-auto">
+                    <p class="my-auto mx-auto text-center"><strong>${{$p['precio']}}</strong></p>
+                </div>
+
+                <div class="row col-12 col-md-4 mx-0 my-auto px-md-1">
+                    <input type="number" class="form-control my-auto border" min="1" value="{{$p['cantidad']}}"
+                        onchange="setCantidad({{$p['id']}})" id="cantidad{{$p['id']}}" />
+                </div>
+                <div class="row col-12 col-md-4 mx-auto my-auto">
+                    <!--p class="my-auto mx-auto text-center"-->
+                    <strong class="col-6 d-md-none ml-auto mr-0">Total: </strong>
+                    <strong id="subtotal{{$p['id']}}"
+                        class="col-6 md-text-center ml-0 mr-auto mx-md-auto">${{$p['precio'] * $p['cantidad']}}</strong>
+                </div>
             </div>
-            <div class="row col-md-2 mx-0">
-                <p class="my-auto mx-auto text-center"><strong>${{$p['precio']}}</strong></p>
-            </div>
-            <div class="row col-md-2 mx-0"><input type="number" class="form-control my-auto" min="1"
-                    value="{{$p['cantidad']}}" onchange="setCantidad(`{{$p['id']}}`)" id="cantidad{{$p['id']}}" /></div>
-            <div class="row col-md-2 mx-0">
-                <p class="my-auto mx-auto text-center"><strong
-                        id="subtotal{{$p['id']}}">${{$p['precio'] * $p['cantidad']}}</strong></p>
-            </div>
-            <div class="mx-0 my-auto">
-                <button class="btn btn-outline-danger my-auto mx-0 p-0 border-0" onclick="quitarProductoCarrito(`{{$p['id']}}`)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-trash" viewBox="0 0 16 16">
+            <div class="row col-12 col-md-1 mx-auto mx-md-0 my-1 my-md-0 ">
+                <button class="btn btn-danger my-auto ml-auto mx-md-0 p-md-0 d-block d-md-none "
+                    onclick="quitarProductoCarrito(`{{$p['id']}}`)">
+                    Eliminar
+                </button>
+                <button class="btn btn-outline-danger my-auto mx-auto mx-md-0 p-0 d-none d-md-block border-0"
+                    onclick="quitarProductoCarrito(`{{$p['id']}}`)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
+                        class="bi bi-trash my-auto" viewBox="0 0 16 16">
                         <path
                             d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                         <path fill-rule="evenodd"
@@ -61,13 +75,14 @@
                     </svg>
                 </button>
             </div>
+            <!--/div-->
         </div>
         @endforeach
     </div>
-    <div class="row col-md-3 pb-auto my-0">
+    <div class="col-md-3 pb-auto mt-4 my-md-0">
         <div class="row mb-auto p-1 border">
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
-                <h4 class="col-12 mx-auto my-1 py-0 text-center text-primary">Resumen de compra</h4>
+                <h4 class="col-12 mx-auto my-1 py-0 text-center ">Resumen de compra</h4>
             </div>
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
                 <h5 class="mr-auto my-1 text-center">Subtotal</h5>
@@ -124,7 +139,7 @@ async function setCantidad(id) {
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: `/actualizarCantidadCarrito/${id}`,
+            url: `{{url('/actualizarCantidadCarrito')}}/${id}`,
             // los datos que voy a enviar para la relación
             data: {
                 //_token: $("meta[name='csrf-token']").attr("content")
@@ -165,11 +180,13 @@ async function setCantidad(id) {
 }
 
 async function quitarProductoCarrito(id) {
-    let confirmacion = confirm('¿Realmente desea quita este producto del carrito de compras?');
+    let confirmacion = confirm('¿Deseas quitar este producto de tu carrito de compras?');
     if (!confirmacion)
         return;
     await quitarProducto(id);
     document.getElementById("productoCarrito" + id).remove();
+    calcularTotal();
+
 }
 
 async function calcularTotal() {
