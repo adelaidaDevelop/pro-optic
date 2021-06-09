@@ -1,5 +1,13 @@
 @extends('layouts.headerEcommerce')
 @section('contenido')
+<div class="row col-12">
+    <nav aria-label="breadcrumb ">
+        <ol class="breadcrumb bg-transparent h">
+            <li class="breadcrumb-item"><a href="/">INICIO</a></li>
+            <li class="breadcrumb-item active" aria-current="page">CARRITO-COMPRAS</li>
+        </ol>
+    </nav>
+</div>
 <div class="row mx-md-2 mx-0">
     <h3 class="text-uppercase text-primary col-md-9 my-2 mt-md-1 mb-md-5 mx-auto ml-md-4 mr-md-5 text-center">Carrito</h3>
     @if(session()->has('carrito'))
@@ -49,29 +57,22 @@
                 </div>
 
                 <div class="row col-12 col-md-4 mx-0 my-auto px-md-1">
-                    <input type="number" class="form-control my-auto border" min="1" value="{{$p['cantidad']}}"
-                        onchange="setCantidad({{$p['id']}})" id="cantidad{{$p['id']}}" />
+                    <input type="number" class="form-control my-auto border" min="1" value="{{$p['cantidad']}}" onchange="setCantidad({{$p['id']}})" id="cantidad{{$p['id']}}" />
                 </div>
                 <div class="row col-12 col-md-4 mx-auto my-auto">
                     <!--p class="my-auto mx-auto text-center"-->
                     <strong class="col-6 d-md-none ml-auto mr-0">Total: </strong>
-                    <strong id="subtotal{{$p['id']}}"
-                        class="col-6 md-text-center ml-0 mr-auto mx-md-auto">${{$p['precio'] * $p['cantidad']}}</strong>
+                    <strong id="subtotal{{$p['id']}}" class="col-6 md-text-center ml-0 mr-auto mx-md-auto">${{$p['precio'] * $p['cantidad']}}</strong>
                 </div>
             </div>
             <div class="row col-12 col-md-1 mx-auto mx-md-0 my-1 my-md-0 ">
-                <button class="btn btn-danger my-auto ml-auto mx-md-0 p-md-0 d-block d-md-none "
-                    onclick="quitarProductoCarrito(`{{$p['id']}}`)">
+                <button class="btn btn-danger my-auto ml-auto mx-md-0 p-md-0 d-block d-md-none " onclick="quitarProductoCarrito(`{{$p['id']}}`)">
                     Eliminar
                 </button>
-                <button class="btn btn-outline-danger my-auto mx-auto mx-md-0 p-0 d-none d-md-block border-0"
-                    onclick="quitarProductoCarrito(`{{$p['id']}}`)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
-                        class="bi bi-trash my-auto" viewBox="0 0 16 16">
-                        <path
-                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                        <path fill-rule="evenodd"
-                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                <button class="btn btn-outline-danger my-auto mx-auto mx-md-0 p-0 d-none d-md-block border-0" onclick="quitarProductoCarrito(`{{$p['id']}}`)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-trash my-auto" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                     </svg>
                 </button>
             </div>
@@ -106,108 +107,108 @@
 </div>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
-var props = {
-    decrementButton: "<strong>&minus;</strong>", // button text
-    incrementButton: "<strong>&plus;</strong>", // ..
-    groupClass: "my-auto", // css class of the resulting input-group
-    buttonsClass: "btn-outline-secondary",
-    buttonsWidth: "1rem",
-    textAlign: "center", // alignment of the entered number
-    autoDelay: 500, // ms threshold before auto value change
-    autoInterval: 50, // speed of auto value change
-    buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
-    keyboardStepping: true, // set this to `false` to disallow the use of the up and down arrow keys to step
-    locale: navigator.language, // the locale, per default detected automatically from the browser
-    //editor: I18nEditor, // the editor (parsing and rendering of the input)
-    template: // the template of the input
-        '<div class="input-group ${groupClass}">' +
-        '<div class="input-group-prepend"><button style="min-width: ${buttonsWidth};" class="btn btn-decrement ${buttonsClass} btn-minus" type="button">${decrementButton}</button></div>' +
-        '<input type="text" inputmode="decimal" style="text-align: ${textAlign}" class="form-control form-control-text-input px-0 mx-0"/>' +
-        '<div class="input-group-append"><button style="min-width: ${buttonsWidth};" class="btn btn-increment ${buttonsClass} btn-plus" type="button">${incrementButton}</button></div>' +
-        '</div>'
-}
-$("input[type='number']").inputSpinner(props);
+    var props = {
+        decrementButton: "<strong>&minus;</strong>", // button text
+        incrementButton: "<strong>&plus;</strong>", // ..
+        groupClass: "my-auto", // css class of the resulting input-group
+        buttonsClass: "btn-outline-secondary",
+        buttonsWidth: "1rem",
+        textAlign: "center", // alignment of the entered number
+        autoDelay: 500, // ms threshold before auto value change
+        autoInterval: 50, // speed of auto value change
+        buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
+        keyboardStepping: true, // set this to `false` to disallow the use of the up and down arrow keys to step
+        locale: navigator.language, // the locale, per default detected automatically from the browser
+        //editor: I18nEditor, // the editor (parsing and rendering of the input)
+        template: // the template of the input
+            '<div class="input-group ${groupClass}">' +
+            '<div class="input-group-prepend"><button style="min-width: ${buttonsWidth};" class="btn btn-decrement ${buttonsClass} btn-minus" type="button">${decrementButton}</button></div>' +
+            '<input type="text" inputmode="decimal" style="text-align: ${textAlign}" class="form-control form-control-text-input px-0 mx-0"/>' +
+            '<div class="input-group-append"><button style="min-width: ${buttonsWidth};" class="btn btn-increment ${buttonsClass} btn-plus" type="button">${incrementButton}</button></div>' +
+            '</div>'
+    }
+    $("input[type='number']").inputSpinner(props);
 </script>
 <script>
-async function setCantidad(id) {
-    let cantidad = $(`#cantidad${id}`).val();
-    //console.log('El producto a cambiar es,' + id);
-    //console.log('La cantidad es,' + cantidad);
-    try {
-        //return alert('Listo'+id);
-        let respuesta = await $.ajax({
-            // metodo: puede ser POST, GET, etc
-            method: "POST",
-            // la URL de donde voy a hacer la petición
-            url: `{{url('/actualizarCantidadCarrito')}}/${id}`,
-            // los datos que voy a enviar para la relación
-            data: {
-                //_token: $("meta[name='csrf-token']").attr("content")
-                cantidad: cantidad,
-                _token: "{{ csrf_token() }}",
+    async function setCantidad(id) {
+        let cantidad = $(`#cantidad${id}`).val();
+        //console.log('El producto a cambiar es,' + id);
+        //console.log('La cantidad es,' + cantidad);
+        try {
+            //return alert('Listo'+id);
+            let respuesta = await $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `{{url('/actualizarCantidadCarrito')}}/${id}`,
+                // los datos que voy a enviar para la relación
+                data: {
+                    //_token: $("meta[name='csrf-token']").attr("content")
+                    cantidad: cantidad,
+                    _token: "{{ csrf_token() }}",
+                }
+            });
+            console.log(typeof respuesta);
+            //return;
+            if (typeof respuesta === 'string') {
+                $(`#cantidad${id}`).val(parseInt(respuesta));
+
+                return alert('La cantidad es mayor a la existencia que tenemos a la venta');
+
             }
-        });
-        console.log(typeof respuesta);
-        //return;
-        if (typeof respuesta === 'string') {
-            $(`#cantidad${id}`).val(parseInt(respuesta));
-
-            return alert('La cantidad es mayor a la existencia que tenemos a la venta');
-
+            carrito = respuesta;
+            //let productos = productosCompra.filter(p => p.id == id);
+            //productos.find(p => p.sucursal =="{{session('sucursalEcommerce')}}");
+            //let subtotal = carrito
+            let i = 0;
+            encontrado = false;
+            while (i < carrito.length && !encontrado) {
+                if (carrito[i].id == id && carrito[i].sucursal == "{{session('sucursalEcommerce')}}") {
+                    let subtotal = parseFloat(carrito[i].precio) * parseInt(carrito[i].cantidad);
+                    $(`#subtotal${id}`).html(`$${subtotal}`);
+                    encontrado = true;
+                }
+                i++;
+            } //$('#subtotalProducto').html(`$${})
+            //document.querySelector('#cantidadCarrito').textContent = respuesta.length;
+            mostrarCarrito();
+            calcularTotal();
+            //console.log('carrito',respuesta);
+            //return alert("Listo"+ respuesta);
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
         }
-        carrito = respuesta;
-        //let productos = productosCompra.filter(p => p.id == id);
-        //productos.find(p => p.sucursal =="{{session('sucursalEcommerce')}}");
-        //let subtotal = carrito
-        let i = 0;
-        encontrado = false;
-        while (i < carrito.length && !encontrado) {
-            if (carrito[i].id == id && carrito[i].sucursal == "{{session('sucursalEcommerce')}}") {
-                let subtotal = parseFloat(carrito[i].precio) * parseInt(carrito[i].cantidad);
-                $(`#subtotal${id}`).html(`$${subtotal}`);
-                encontrado = true;
-            }
-            i++;
-        } //$('#subtotalProducto').html(`$${})
-        //document.querySelector('#cantidadCarrito').textContent = respuesta.length;
-        mostrarCarrito();
+    }
+
+    async function quitarProductoCarrito(id) {
+        let confirmacion = confirm('¿Deseas quitar este producto de tu carrito de compras?');
+        if (!confirmacion)
+            return;
+        await quitarProducto(id);
+        document.getElementById("productoCarrito" + id).remove();
         calcularTotal();
-        //console.log('carrito',respuesta);
-        //return alert("Listo"+ respuesta);
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
+
     }
-}
 
-async function quitarProductoCarrito(id) {
-    let confirmacion = confirm('¿Deseas quitar este producto de tu carrito de compras?');
-    if (!confirmacion)
-        return;
-    await quitarProducto(id);
-    document.getElementById("productoCarrito" + id).remove();
-    calcularTotal();
-
-}
-
-async function calcularTotal() {
-    if (carrito == null)
-        return;
-    let totalCompra = 0;
-    let cuerpoCarrito = "";
-    let contador = 0;
-    for (let i in carrito) {
-        if (carrito[i].sucursal == sucursal) {
-            contador++;
-            totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+    async function calcularTotal() {
+        if (carrito == null)
+            return;
+        let totalCompra = 0;
+        let cuerpoCarrito = "";
+        let contador = 0;
+        for (let i in carrito) {
+            if (carrito[i].sucursal == sucursal) {
+                contador++;
+                totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+            }
+        }
+        if (contador != 0) {
+            $('#subtotal').html(`$ ${totalCompra}`);
+            $('#total').html(`$ ${totalCompra}`);
+            return;
         }
     }
-    if (contador != 0) {
-        $('#subtotal').html(`$ ${totalCompra}`);
-        $('#total').html(`$ ${totalCompra}`);
-        return;
-    }
-}
-calcularTotal();
+    calcularTotal();
 </script>
 
 @endsection

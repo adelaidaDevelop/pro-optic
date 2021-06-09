@@ -4,18 +4,15 @@
     <p class=" h5 text-center mx-auto"> <strong> AGREGAR DIRECCION DE ENVIO </strong> </p>
 </div>
 <div class=" row col-12 my-2 input-group text-center mx-auto " style="background:#D5DBDB">
-    <button id="btnGenerarPed" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit">
+    <button id="btnGenerarPed" class="btn btn-outline-secondary col  text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\pedidoGenerado.png') }}" alt="Editar" width="25px" height="25px">
         <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO GENERADO</small></p>
     </button>
-
     <div class=" h1 my-auto text-dark">
         <p>.....</p>
     </div>
-
     <!--PASO DOS -->
-
-    <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
+    <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\pedidoConfirmado.png') }}" alt="Editar" width="25px" height="25px">
         <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO CONFIRMADO</small></p>
     </button>
@@ -24,7 +21,7 @@
         <p>.....</p>
     </div>
     <!--PASO TRES-->
-    <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
+    <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\procesoEntrega.png') }}" alt="Editar" width="25px" height="25px">
         <p class="h6 my-auto mx-2 text-dark"><small>EN PROCESO DE ENTREGA A DOMICILIO</small></p>
     </button>
@@ -32,11 +29,13 @@
         <p>.....</p>
     </div>
     <!--PASO CUATRO-->
-    <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
+    <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\entregado.png') }}" alt="Editar" width="25px" height="25px">
         <p class="h6 my-auto mx-2 text-dark"><small>ENTREGADO</small></p>
     </button>
 </div>
+
+
 <div class="row col-12 mx-auto">
     <div class="col-9">
         <div class="row col-12 mr-auto px-0 mb-auto border-bottom border-dark">

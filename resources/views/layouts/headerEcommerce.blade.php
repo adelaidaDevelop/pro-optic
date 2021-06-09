@@ -141,11 +141,11 @@
             </div>
 
             <div class="dropdown my-1 mx-auto ">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     DEPARTAMENTOS
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="btn btn-info dropdown-menu " aria-labelledby="dropdownMenuButton">
                     @foreach($departamentos as $departamento)
                     <a class="dropdown-item"
                         href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}</a>
@@ -154,7 +154,7 @@
             </div>
             @php $count = 0 @endphp
             @foreach($departamentos as $departamento)
-            @if($count < 3) <ul class="navbar-nav mx-auto btn-outline-secondary d-none d-md-block">
+            @if($count < 3) <ul class="navbar-nav mx-auto btn-outline-info d-none d-md-block">
                 <li class="nav-item">
                     <a class="nav-link text-dark"
                         href="{{url('/departamento/'.$departamento->id)}}">{{$departamento->nombre}}<span
