@@ -42,8 +42,8 @@
 
             </div>
             @else
-            <div class="dropdown col-3">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
+            <div class="dropdown col-3 col-sm-2 col-md-1 my-auto">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle p-1 p-sm-3 p-md-0 p-lg-1 p-xl-3 text-white" href="#" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="{{ asset('img\usuario.png') }}" class="img-fluid" alt="LOGO" height="40px">
                 </a>
