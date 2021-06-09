@@ -331,7 +331,7 @@
         <div class="modal-content" id="">
             <div class="modal-header">
 
-                <h5 class="modal-title" id="exampleModalLabel">SOLICITUD DE NUEVAS VENTAS EN LINEA</h5>
+                <h5 class="modal-title" id="exampleModalLabel">NUEVAS SOLICITUDES DE VENTAS EN LINEA</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -401,7 +401,7 @@
         <div class="modal-content" id="">
             <div class="modal-header">
 
-                <h5 class="modal-title" id="exampleModalLabel">SOLICITUD DE NUEVAS VENTAS EN LINEA</h5>
+                <h5 class="modal-title" id="exampleModalLabel">SEGUIMIENTO DE PEDIDOS</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -466,7 +466,6 @@
                             <p class="h6 my-auto mx-2 text-dark"><small>ENTREGADO</small></p>
                         </button>
                     </div>
-
                 </div>
             </div>
 
