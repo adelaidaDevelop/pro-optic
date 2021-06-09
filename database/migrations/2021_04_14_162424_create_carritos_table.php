@@ -17,6 +17,7 @@ class CreateCarritosTable extends Migration
             $table->id();
             $table->foreignId('idUsuario')->constrained('users');
             $table->foreignId('idProducto')->constrained('productos');
+            $table->foreignId('idSucursal')->constrained('sucursals');
             $table->unsignedInteger('cantidad');
             $table->timestamps();
         });
