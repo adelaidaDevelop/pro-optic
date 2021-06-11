@@ -65,8 +65,9 @@ class LoginClienteController extends Controller
                 session(['idCliente' => Auth::user()->id]);
 
                 $carritoUsuario = Carrito::where('idUsuario', '=', Auth::user()->id)->get();
+                $carrito = [];
                 if (count($carritoUsuario) > 0) {
-                    $carrito = [];
+
                     foreach ($carritoUsuario as $c) {
                         $p = Producto::find($c->idProducto);
                         $sp = Sucursal_producto::where('idSucursal', '=', session('sucursalEcommerce'))
@@ -74,7 +75,7 @@ class LoginClienteController extends Controller
                         if (isset($p) && count($sp) > 0) {
                             if ($sp->first()->existencia == 0) {
                                 Carrito::where('idUsuario', '=', Auth::user()->id)
-                                ->where('idProducto', '=',$sp->first()->idProducto)->delete();
+                                    ->where('idProducto', '=', $sp->first()->idProducto)->delete();
                             } else {
                                 $producto = [];
                                 if ($c->cantidad <= $sp->first()->existencia)
@@ -85,42 +86,52 @@ class LoginClienteController extends Controller
                                 $producto['imagen'] = $p->imagen;
                                 $producto['nombre'] = $p->nombre;
                                 $producto['precio'] = $sp->first()->precio;
-                                $producto['sucursal'] = session('sucursalEcommerce');
+                                $producto['sucursal'] = $c->idSucursal; // session('sucursalEcommerce');
                                 array_push($carrito, $producto);
                             }
                         }
                     }
-                    $carritoInvitado = session('carrito');
-                    if(isset($carritoInvitado) && count($carritoInvitado)>0)
-                    {
-                        for($x=0;$x<count($carritoInvitado);$x++)
-                        {
-                            $encontrado = false;
-                            for($i=0;$i<count($carrito);$i++)
-                            {
-                                if($carrito[$i]['sucursal'] == $carritoInvitado[$x]['sucursal'] &&
-                                $carrito[$i]['id'] == $carritoInvitado[$x]['id'])
-                                {
-                                    $encontrado = true;
-                                    $cantidadCombinada = $carrito[$i]['cantidad'] + $carritoInvitado[$x]['cantidad'];
-                                    $sp = Sucursal_producto::where('idSucursal', '=', session('sucursalEcommerce'))
-                                        ->where('idProducto', '=', $carrito[$i]['id'])->first();
-                                    $carrito[$i]['cantidad'] = $cantidadCombinada;
-                                    if($cantidadCombinada > $sp->existencia)
-                                    {
-                                        $carrito[$i]['cantidad'] = $sp->existencia;
-                                    }
+                }
 
+                $carritoInvitado = session('carrito');
+                if (isset($carritoInvitado) && count($carritoInvitado) > 0) {
+
+                    for ($x = 0; $x < count($carritoInvitado); $x++) {
+                        $encontrado = false;
+                        for ($i = 0; $i < count($carrito); $i++) {
+                            if (
+                                $carrito[$i]['sucursal'] == $carritoInvitado[$x]['sucursal'] &&
+                                $carrito[$i]['id'] == $carritoInvitado[$x]['id']
+                            ) {
+                                $encontrado = true;
+                                $cantidadCombinada = $carrito[$i]['cantidad'] + $carritoInvitado[$x]['cantidad'];
+                                $sp = Sucursal_producto::where('idSucursal', '=', $carrito[$i]['sucursal']) //session('sucursalEcommerce'))
+                                    ->where('idProducto', '=', $carrito[$i]['id'])->first();
+                                $pCarrito = Carrito::where('idUsuario', '=', Auth::user()->id)
+                                    ->where('idProducto', '=', $carrito[$i]['id'])
+                                    ->where('idSucursal', '=', $carrito[$i]['sucursal']);
+                                $pCarrito->update(['cantidad' => $cantidadCombinada]);
+                                $carrito[$i]['cantidad'] = $cantidadCombinada;
+                                if ($cantidadCombinada > $sp->existencia) {
+                                    $pCarrito->update(['cantidad' => $sp->existencia]);
+                                    $carrito[$i]['cantidad'] = $sp->existencia;
                                 }
                             }
-                            if($encontrado === false)
-                            {
-                                array_push($carrito,$carritoInvitado[$x]);
-                            }
+                        }
+                        if ($encontrado === false) {
+                            $agregarProductoCarrito = new Carrito;
+                            $agregarProductoCarrito->idUsuario = Auth::user()->id;
+                            $agregarProductoCarrito->idProducto = $carritoInvitado[$x]['id'];
+                            $agregarProductoCarrito->idSucursal = $carritoInvitado[$x]['sucursal'];
+                            $agregarProductoCarrito->cantidad = $carritoInvitado[$x]['cantidad'];
+                            $agregarProductoCarrito->save();
+
+
+                            array_push($carrito, $carritoInvitado[$x]);
                         }
                     }
-                    session(['carrito' => $carrito]);
                 }
+                session(['carrito' => $carrito]);
 
                 if (isset($_GET['compra']))
                     return redirect('/direccionEnvio');

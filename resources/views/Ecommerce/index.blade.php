@@ -117,7 +117,7 @@
                     </a>
                     <div class="card-footer mx-auto mt-auto mb-0 text-center bg-transparent">
                         <!--small class="text-muted">Last updated 3 mins ago</small-->
-                        <button class="btn btn-primary mx-0 mx-sm-auto mt-auto mb-0 px-1 px-md-2" id="agregarAlCarrito" onclick="addCarrito(`{{$producto['id']}}`)"><small><strong class="h6">Agregar al
+                        <button class="btn btn-primary mx-0 mx-sm-auto mt-auto mb-0 px-1 px-md-2" id="agregarAlCarrito" onclick="addCarrito({{$producto['id']}})"><small><strong class="h6">Agregar al
                                     carrito</strong></small></button>
                     </div>
                 </div>
@@ -167,7 +167,7 @@ $deptos = $categorias[$d->nombre];
 
                     <div class="card-footer col-12 mx-auto mt-auto mb-0 text-center bg-transparent">
                         <!--small class="text-muted">Last updated 3 mins ago</small-->
-                        <button class="btn btn-primary mx-0 mx-sm-auto mt-auto mb-0 px-1 px-md-2" id="agregarAlCarrito" onclick="addCarrito(`{{$producto['id']}}`)"><small><strong class="h6">Agregar al
+                        <button class="btn btn-primary mx-0 mx-sm-auto mt-auto mb-0 px-1 px-md-2" id="agregarAlCarrito" onclick="addCarrito({{$producto['id']}})"><small><strong class="h6">Agregar al
                                     carrito</strong></small></button>
                     </div>
                 </div>
