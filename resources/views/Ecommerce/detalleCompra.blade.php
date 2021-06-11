@@ -147,9 +147,12 @@
                 totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
             }
         }
+        let envioCosto = 15;
         if (contador != 0) {
             $('#subtotal').html(`$ ${totalCompra}`);
-            $('#total').html(`$ ${totalCompra}`);
+            $('#envio').html(`$ ${envioCosto}`);
+            let suma = totalCompra + envioCosto;
+            $('#total').html(`$ ${suma}`);
             return;
         }
     }

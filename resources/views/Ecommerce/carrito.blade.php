@@ -97,8 +97,8 @@
                 <h5 class="mr-auto my-1 text-center">Total</h5>
                 <h5 class="ml-auto my-1 text-center" id="total">$0.00</h5>
             </div>
-            <!-- <a class="btn btn-primary my-auto btn-lg btn-block" href="{{url('/direccionEnvio')}}">Pagar</a>-->
-            <button id="btnPagar" class="btn btn-primary my-auto btn-lg btn-block"> Pagar</button>
+            <a class="btn btn-primary my-auto btn-lg btn-block" href="{{url('/direccionEnvio')}}">Pagar</a>
+            <!-- <button id="btnPagar" class="btn btn-primary my-auto btn-lg btn-block"> Pagar</button>-->
         </div>
     </div>
     @endif
@@ -213,12 +213,14 @@
     calcularTotal();
     $("#btnPagar").on("click", pagar)
 
+    /*
     function pagar() {
       //  let tot = document.getElementById("total");
         //let total = parseFloat(tot.va);
         console.log("El total es:",totalCompra);
         location.href = `{{url('/direccionEnvio')}}?totalC=${totalCompra}`;
     }
+    */
     btnPagar
 </script>
 
