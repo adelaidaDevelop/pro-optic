@@ -24,6 +24,34 @@
                         @enderror
                     </div>
                 </div>
+                <div class="form-group row px-auto">
+                    <label for="apellidoPaterno" class="col-md-4 col-form-label text-md-left">{{ __('Apellido Paterno') }}</label>
+
+                    <div class="col-md-6">
+                        <input id="apellidoPaterno" type="text" class="form-control @error('apellidoPaterno') is-invalid @enderror"
+                            name="apellidoPaterno" value="{{ old('apellidoPaterno') }}" required autocomplete="apellidoMaterno" autofocus>
+
+                        @error('apellidoPaterno')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row px-auto">
+                    <label for="apellidoMaterno" class="col-md-4 col-form-label text-md-left">{{ __('Apellido Materno') }}</label>
+
+                    <div class="col-md-6">
+                        <input id="apellidoMaterno" type="text" class="form-control @error('apellidoMaterno') is-invalid @enderror"
+                            name="apellidoMaterno" value="{{ old('apellidoMaterno') }}" required autocomplete="apellidoMaterno" autofocus>
+
+                        @error('apellidoMaterno')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
                 
                 <div class="form-group row">
                     <label for="telefono" class="col-md-4 col-form-label text-md-left">{{ __('Telefono') }}</label>

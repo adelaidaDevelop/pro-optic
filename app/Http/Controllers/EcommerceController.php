@@ -278,9 +278,9 @@ class EcommerceController extends Controller
 
     public function addCarrito(Request $request, $id)
     {
-
+        
         $cantidad = 1;
-        $p = Producto::findOrFail($id);
+        $p = Producto::find($id);
         $sp = Sucursal_producto::where('idSucursal', '=', session('sucursalEcommerce'))
             ->where('idProducto', '=', $id)->first();
         //Revisa si recibe una cantidad de la solicitud
@@ -289,14 +289,16 @@ class EcommerceController extends Controller
         }
         if (Auth::check()) {
             if (Auth::user()->tipo == 2) {
-
+                
                 $producto = [];
                 $producto['id'] = $p->id;
                 $producto['imagen'] = $p->imagen;
                 $producto['nombre'] = $p->nombre;
                 $producto['precio'] = $sp->precio;
                 $producto['sucursal'] = session('sucursalEcommerce');
-                $carrito = Carrito::where('idUsuario', '=', Auth::user()->id)->where('idProducto', '=', $id);//->get();
+                $carrito = Carrito::where('idUsuario', '=', Auth::user()->id)->where('idProducto', '=', $id)
+                ->where('idSucursal', '=', session('sucursalEcommerce'));//->get();
+                
                 if (count($carrito->get()) > 0) {
                     $nuevaCantidad = $cantidad + $carrito->first()->cantidad;
                     if($nuevaCantidad<=$sp->existencia)
@@ -315,14 +317,17 @@ class EcommerceController extends Controller
                     }
                     //return 'carrito tiene algo';
                 } else {
+                    
                     $carrito = session('carrito');
                     $producto['cantidad'] = $cantidad;
-
+                    if($carrito===NULL)
+                        $carrito = [];
                     array_push($carrito, $producto);
                     session(['carrito' => $carrito]);
                     $newProducto = new Carrito;
                     $newProducto->idUsuario = Auth::user()->id;
                     $newProducto->idProducto = $id;
+                    $newProducto->idSucursal = session('sucursalEcommerce');
                     $newProducto->cantidad = $cantidad;
                     $newProducto->save();
                     return $carrito;
@@ -415,7 +420,13 @@ class EcommerceController extends Controller
                     ->where('idProducto', '=', $id)->first();
                 //$nuevaCantidad = $carrito[$i]['cantidad'] + $request['cantidad'];
                 if ($request['cantidad'] <= $productoSucursal->existencia)
+                {
                     $carrito[$i]['cantidad'] = $request['cantidad'];
+                    Carrito::where('idUsuario', '=', Auth::user()->id)->where('idProducto', '=',$id)
+                    ->where('idSucursal', '=', session('sucursalEcommerce'))
+                    ->update(['cantidad' => $request['cantidad'] ]);
+
+                }
                 else
                     return $carrito[$i]['cantidad'];
 
@@ -444,7 +455,8 @@ class EcommerceController extends Controller
         if(Auth::check())
         {
             if (Auth::user()->tipo == 2) {
-                Carrito::where('idUsuario', '=', Auth::user()->id)->where('idProducto', '=', $id)->delete();
+                Carrito::where('idUsuario', '=', Auth::user()->id)->where('idProducto', '=', $id)
+                ->where('idSucursal', '=', session('sucursalEcommerce'))->delete();
             }
         }
         session(['carrito' => $carrito]);
@@ -458,6 +470,7 @@ class EcommerceController extends Controller
 
     public function postDireccion(Request $request)
     {
+        
         //return $request->all();
         $datosDomicilio = $request->except('_token');
         $domicilio = new Domicilio;
@@ -467,8 +480,11 @@ class EcommerceController extends Controller
         $domicilio->numeroInterior = $request['numeroInterior'];
         $domicilio->codigoPostal = $request['codigoPostal'];
         $domicilio->colonia = $request['colonia'];
+        //return 'todo bien';
         $domicilio->save();
         session(['domicilio' => true]);
+        if($request->has('ajax'))
+            return true;
         return redirect('/direccionEnvio');
     }
 
@@ -525,5 +541,16 @@ class EcommerceController extends Controller
     public function revisionPedido()
     {
         return view('Ecommerce.revisionPedido');
+    }
+
+    public function menu()
+    {
+        if(!Auth::check())
+            return redirect('/loginCliente');
+        $sucursales = Sucursal::all();
+        $departamentos = Departamento::where('ecommerce', '=', 1)->get(['id', 'nombre']);
+        $idCliente = Cliente::where('idUsuario','=',session('idCliente'))->first()->id;
+        $domicilios = Domicilio::where('idCliente', '=', $idCliente)->get();
+        return view('Ecommerce.vistaCliente', compact('sucursales','departamentos','domicilios'));
     }
 }

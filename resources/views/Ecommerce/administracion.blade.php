@@ -1,4 +1,4 @@
-f@extends('header2')
+@extends('header2')
 @php
 use App\Models\Sucursal_empleado;
 $vE = ['verEmpleado','modificarEmpleado','eliminarEmpleado','crearEmpleado','admin'];
@@ -50,6 +50,11 @@ ECOMMERCE
                 @endforeach
             </fieldset>
         </div>
+        <button class="btn btn-info d-none my-2 ml-auto"
+                    id="btnActualizar" type="button"  disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                     ACTUALIZANDO
+                </button>
         <button id="btnEditar" class="btn btn-outline-secondary d-md-flex my-2 ml-auto" type="button">EDITAR</button>
     </div>
     <!--div class="col-auto mt-3 ml-3  mr-auto border border-secondary">
@@ -97,12 +102,9 @@ $('#btnEditar').bind('click', async function() {
         if (!cambio)
             return;
         try {
-            let btnAux = this.outerHTML;
-            this.outerHTML =`<button class="btn btn-info d-md-flex my-2 ml-auto"
-                    id="btnEditar" type="button" disabled>
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                     ACTUALIZANDO
-                </button>`;
+            //let btnAux = this.outerHTML;
+            $('#btnActualizar').removeClass('d-none').addClass('d-md-flex');
+            $('#btnEditar').removeClass('d-md-flex').addClass('d-none');
             let respuesta = await $.ajax({
                 url: `{{url('/puntoVenta/ecommerce/departamentos')}}`,
                 type: 'POST',
@@ -117,7 +119,9 @@ $('#btnEditar').bind('click', async function() {
                 }
             });
             console.log('actualizacion',respuesta);
-            document.getElementById('btnEditar').outerHTML = btnAux;
+            //document.getElementById('btnEditar').outerHTML = btnAux;
+            $('#btnEditar').removeClass('d-none').addClass('d-md-flex');
+            $('#btnActualizar').removeClass('d-md-flex').addClass('d-none');
             alert('LOS CAMBIOS HAN SIDO GUARDADOS');
             //return;
             cambio = false;
