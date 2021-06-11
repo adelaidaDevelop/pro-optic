@@ -64,6 +64,7 @@ Route::post('/quitarProductoCarrito/{id}', [EcommerceController::class,'quitarPr
 
 Route::get('/direccionEnvio', [EcommerceController::class,'direccionEnvio'])->middleware('isCliente');
 Route::post('/domicilio', [EcommerceController::class,'postDireccion'])->middleware('isCliente');
+Route::post('/actualizarDireccion', [EcommerceController::class,'actualizarDireccion'])->middleware('isCliente');
 
 Route::post('/eliminarDireccion', [EcommerceController::class,'eliminarDireccion'])->middleware('isCliente');
 Route::get('/metodoPago', [EcommerceController::class,'formaPago'])->middleware('isCliente');

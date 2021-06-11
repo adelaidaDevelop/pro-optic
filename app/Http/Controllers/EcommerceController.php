@@ -487,11 +487,32 @@ class EcommerceController extends Controller
         return redirect('/direccionEnvio');
     }
 
+    public function actualizarDireccion(Request $request)
+    {
+        $id =  Auth::user()->id;
+        $cliente = Cliente::where('idUsuario', '=', $id)->first();
+        $domicilio = request()->except(['_token','ajax','idDomicilio','ciudad','estado']);
+        //return $domicilio;
+        //Domicilio::find($request['idDomicilio']);
+        Domicilio::where('id', '=',$request['idDomicilio'])->update($domicilio);
+        //return 'Todo bien';
+        if($request->has('ajax'))
+        {
+            return Domicilio::where('idCliente', '=', $cliente->id)->get();
+        }
+        //Domicilio::where('idCliente', '=', $cliente->id)->delete();
+        return back();
+    }
     public function eliminarDireccion(Request $request)
     {
         $id =  Auth::user()->id;
         $cliente = Cliente::where('idUsuario', '=', $id)->first();
-        Domicilio::where('idCliente', '=', $cliente->id)->delete();
+        Domicilio::destroy($request['idDomicilio']);
+        if($request->has('ajax'))
+        {
+            return Domicilio::where('idCliente', '=', $cliente->id)->get();
+        }
+        //Domicilio::where('idCliente', '=', $cliente->id)->delete();
         return back();
     }
 

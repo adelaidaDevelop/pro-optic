@@ -155,13 +155,13 @@
                         <p id="colonia{{$domicilio->id}}" class="text-muted">Colonia: {{$domicilio->colonia}}</p>
                         <div class="row col-12 mx-auto d-md-flex">
                             <button class="btn btn-success my-auto ml-md-auto mr-md-1"
-                                onclick="editarDomicilio('{{$domicilio->id}}')">Editar</button>
+                                onclick="fomrEditarDomicilio('{{$domicilio->id}}')">Editar</button>
                         </div>
 
                     </div>
                     @endforeach
                     <div class="col mt-auto">
-                        <button class="btn btn-success my-auto ">Agregar nueva dirección</button>
+                        <button class="btn btn-success my-auto" onclick="">Agregar nueva dirección</button>
                     </div>
                 </div>
                 <div id="formularioDomicilio" class="row col-12 mx-auto d-none">
@@ -279,6 +279,7 @@ function getDomicilios() {
     $('#tituloAgregarDomicilio').addClass('d-none');
     $('#domicilios').removeClass('d-none');
     $('#formularioDomicilio').addClass('d-none');
+    mostrarDomicilios();
 }
 $('#btnAgregarDomicilio').bind('click', async function() {
     //var forms = document.getElementsByClassName('needs-validation');
@@ -325,12 +326,85 @@ $('#btnAgregarDomicilio').bind('click', async function() {
         });
         console.log('respuesta', respuesta);
         domicilios = respuesta;
+        mostrarDomicilios();
+        $('#tituloDomicilio').removeClass('d-none');
+        $('#tituloAgregarDomicilio').addClass('d-none');
+        $('#domicilios').removeClass('d-none');
+        $('#formularioDomicilio').addClass('d-none');
+        $('#btnAgregarDomicilio').addClass('d-none');
+        $('#btnEditarDomicilio').removeClass('d-none');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+        form.classList.remove('was-validated');
+    });
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
 });
 
-function editarDomicilio(id) {
+$('#btnEditarDomicilio').bind('click', async function() {
+    //var forms = document.getElementsByClassName('needs-validation');
+    //document.getElements
+    let forms = document.getElementsByClassName(
+        'validacion-formulario');
+    let formulario = document.getElementById('formDomicilio');
+    // Loop over them and prevent submission
+    var bol = 0;
+    var validation = Array.prototype.filter.call(forms, function(form) {
+        //form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+            //event.preventDefault();
+            //event.stopPropagation();
+            //console.log('Entra aqui');
+            bol = 1;
+            //return false;
+        }
+        form.classList.add('was-validated');
+        //}, false);
+    });
+    console.log('pasó por todo');
+    if (bol === 1)
+        return false;
+
+    let datosFormulario = new FormData(formulario);
+    datosFormulario.append('ajax', true);
+    datosFormulario.append('idDomicilio', this.value);
+    console.log('formulario', datosFormulario);
+    try {
+        let respuesta = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `{{url('/actualizarDireccion')}}`,
+            contentType: false,
+            processData: false,
+            cache: false,
+            // los datos que voy a enviar para la relación
+            data: datosFormulario
+            /*{
+                                //_token: $("meta[name='csrf-token']").attr("content")
+                                _token: "{{ csrf_token() }}",
+                            }*/
+        });
+        console.log('respuesta', respuesta);
+        //return;
+        domicilios = respuesta;
+
+        mostrarDomicilios();
+        $('#tituloDomicilio').removeClass('d-none');
+        $('#tituloAgregarDomicilio').addClass('d-none');
+        $('#domicilios').removeClass('d-none');
+        $('#formularioDomicilio').addClass('d-none');
+        $('#btnAgregarDomicilio').addClass('d-none');
+        $('#btnEditarDomicilio').removeClass('d-none');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+        form.classList.remove('was-validated');
+    });
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+});
+
+function formEditarDomicilio(id) {
     $('#tituloDomicilio').addClass('d-none');
     $('#tituloAgregarDomicilio').removeClass('d-none');
     $('#domicilios').addClass('d-none');
@@ -339,11 +413,58 @@ function editarDomicilio(id) {
     $('#btnEditarDomicilio').removeClass('d-none');
 
     let domicilio = domicilios.find(p => p.id == id);
+    $('#btnEditarDomicilio').val(id);
     document.getElementById('calle').value = domicilio.calle;
     document.getElementById('numeroExterior').value = domicilio.numeroExterior;
     document.getElementById('numeroInterior').value = domicilio.numeroInterior;
     document.getElementById('colonia').value = domicilio.colonia;
     //document.getElementById('calle').value = domicilio.calle;
+}
+
+async function editarDomicilio(id) {
+    try {
+        let respuesta = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `{{url('/eliminarDireccion')}}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                //_token: $("meta[name='csrf-token']").attr("content")
+                ajax:true,
+                idDomicilio: id,
+                _token: "{{ csrf_token() }}",
+            }
+        });
+        console.log('respuesta', respuesta);
+        domicilios = respuesta;
+        mostrarDomicilios();
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
+}
+
+async function eliminarDomicilio(id) {
+    try {
+        let respuesta = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `{{url('/eliminarDireccion')}}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                //_token: $("meta[name='csrf-token']").attr("content")
+                ajax:true,
+                idDomicilio: id,
+                _token: "{{ csrf_token() }}",
+            }
+        });
+        console.log('respuesta', respuesta);
+        domicilios = respuesta;
+        mostrarDomicilios();
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
 }
 async function colonias() {
     let response = "Sin respuesta";
@@ -397,10 +518,15 @@ colonias();
 function mostrarDomicilios() {
     let cuerpo = "";
     for (let i in domicilios) {
-        if(domicilios[i].numeroInterior!=null})
-        {
-            let numeroInterior = `<p id="numeroInterior${domicilios[i].id}" class="text-muted">Numero exterior:
+        let numeroInterior = "";
+        if (domicilios[i].numeroInterior != null) {
+            numeroInterior = `<p id="numeroInterior${domicilios[i].id}" class="text-muted">Numero exterior:
                 ${domicilios[i].numeroInterior} </p>`;
+        }
+        let btnEliminar = "";
+        if (domicilios.length > 1) {
+            btnEliminar =
+                `<button class="btn btn-danger my-auto mx-md-1" onclick="eliminarDomicilio('${domicilios[i].id}')">Eliminar</button>`;
         }
         cuerpo = cuerpo + `<div class="col-md-4 p-md-2 border">
                         <p id="codigoPostal${domicilios[i].id}"class="text-muted">Codigo postal: ${domicilios[i].codigoPostal}</p>
@@ -408,15 +534,34 @@ function mostrarDomicilios() {
                         <!--p class="text-muted"></p-->
                         ${numeroInterior}
                         <p id="colonia${domicilios[i].id}" class="text-muted">Colonia: ${domicilios[i].colonia}</p>
-                        <div class="row col-12 mx-auto d-md-flex">
-                            <button class="btn btn-success my-auto ml-md-auto mr-md-1" onclick="editarDomicilio('${domicilios[i].id}')">Editar</button>
+                        <div class="row col-12 mx-auto d-md-flex flex-row-reverse">
+                        ${btnEliminar}
+                            <button class="btn btn-success my-auto mx-md-1" onclick="formEditarDomicilio('${domicilios[i].id}')">Editar</button>
                         </div>
 
                     </div>`;
     }
-    cuerpo = cuerpo + `<div class="col mt-auto">
-                        <button class="btn btn-success my-auto ">Agregar nueva dirección</button>
+    if (domicilios.length < 5) {
+        cuerpo = cuerpo + `<div class="col mt-auto">
+                        <button class="btn btn-success my-auto" onclick="nuevoDomicilio()">Agregar nueva dirección</button>
                     </div>`;
+    }
+    document.getElementById('domicilios').innerHTML = cuerpo;
+}
+
+function nuevoDomicilio() {
+    $('#tituloDomicilio').addClass('d-none');
+    $('#tituloAgregarDomicilio').removeClass('d-none');
+    $('#domicilios').addClass('d-none');
+    $('#formularioDomicilio').removeClass('d-none');
+    $('#btnAgregarDomicilio').removeClass('d-none');
+    $('#btnEditarDomicilio').addClass('d-none');
+
+    //let domicilio = domicilios.find(p => p.id == id);
+    document.getElementById('calle').value = ""; //domicilio.calle;
+    document.getElementById('numeroExterior').value = ""; //domicilio.numeroExterior;
+    document.getElementById('numeroInterior').value = ""; //domicilio.numeroInterior;
+    document.getElementById('colonia').value = "San Lorenzo"; //domicilio.colonia;
 }
 </script>
 @endsection
