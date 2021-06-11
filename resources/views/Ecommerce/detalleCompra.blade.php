@@ -162,6 +162,7 @@ $('#editarDireccion').click(function() {
     location.href = "{{url('/direccionEnvio?domicilio=false')}}";
 });
 
+<<<<<<< HEAD
 async function calcularTotal() {
     if (carrito == null)
         return;
@@ -173,6 +174,28 @@ async function calcularTotal() {
         if (carrito[i].sucursal == sucursal) {
             contador++;
             totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+=======
+    async function calcularTotal() {
+        if (carrito == null)
+            return;
+        //let totalCompra = 0;
+        totalCompra = 0;
+        let cuerpoCarrito = "";
+        let contador = 0;
+        for (let i in carrito) {
+            if (carrito[i].sucursal == sucursal) {
+                contador++;
+                totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+            }
+        }
+        let envioCosto = 15;
+        if (contador != 0) {
+            $('#subtotal').html(`$ ${totalCompra}`);
+            $('#envio').html(`$ ${envioCosto}`);
+            let suma = totalCompra + envioCosto;
+            $('#total').html(`$ ${suma}`);
+            return;
+>>>>>>> c8dc5985c5334effeff1505b053de33166c76ee6
         }
     }
     if (contador != 0) {

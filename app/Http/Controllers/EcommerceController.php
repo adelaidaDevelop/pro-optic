@@ -563,6 +563,18 @@ class EcommerceController extends Controller
         return view('Ecommerce.revisionPedido');
     }
 
+    public function revisionCompra(Request $request){
+        $pagaCon = $request->input('pago');
+        $formaPago = 'Contra Entrega';
+        $carrito = session('carrito');
+        $id =  Auth::user()->id;
+        $cliente = Cliente::where('idUsuario', '=', $id)->first();
+        $domicilio = Domicilio::where('idCliente', '=', $cliente->id)->first();
+        $nombre = $cliente->nombre;
+        $telefono = $cliente->telefono;
+        return view('Ecommerce.revisionCompra', compact('nombre', 'domicilio', 'telefono', 'carrito','pagaCon','formaPago'));
+    }
+
     public function menu()
     {
         if (!Auth::check())

@@ -1,6 +1,4 @@
-@php
-$total= $_GET['totalC'];
-@endphp
+
 
 @extends('layouts.headerProcesoCompra')
 @section('contenido')
@@ -9,20 +7,11 @@ $total= $_GET['totalC'];
         <ol class="breadcrumb bg-transparent h5">
             <li class="breadcrumb-item"><a href="{{url('/')}}">INICIO</a></li>
             <li class="breadcrumb-item"><a href="{{url('/carrito')}}">CARRITO-COMPRAS</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Direccion</li>
-        </ol>
-    </nav>
-</div>
-<div class="row col-12">
-    <nav aria-label="breadcrumb ">
-        <ol class="breadcrumb bg-transparent h6">
-            <li class="breadcrumb-item"><a href="{{url('/')}}">INICIO</a></li>
-            <li class="breadcrumb-item"><a href="{{url('/carrito')}}">CARRITO-COMPRAS</a></li>
             <li class="breadcrumb-item active" aria-current="page">DIRECCION</li>
         </ol>
     </nav>
 </div>
-<div class="row col-12 my-2 mx-auto text-center ">
+<div class="row col-12  mx-auto text-center ">
     <p class="col-12 alert-info py-1 h5 text-center mx-auto"> <strong> AGREGAR DIRECCION DE ENVIO </strong> </p>
 </div>
 
@@ -151,16 +140,16 @@ $total= $_GET['totalC'];
                 <h4 class="col-12 mx-auto my-1 py-0 text-center ">Resumen de compra</h4>
             </div>
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
-                <h5 class="mr-auto my-1 text-center text-secondary">Subtotal:</h5>
-                <h5 class="ml-auto my-1 text-center" id="subtotal">$ 0.0</h5>
+                <h5 class="mr-auto my-1 text-center ">Subtotal:</h5>
+                <h5 class="ml-auto my-1 text-center " id="subtotal">$ 0.0</h5>
             </div>
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
-                <h5 class="mr-auto my-1 text-center text-secondary">Costo del envío:</h5>
-                <h5 class="ml-auto my-1 text-center" id="envio">*por calcular</h5>
+                <h5 class="mr-auto my-1 text-center ">Costo del envío:</h5>
+                <h5 class="ml-auto my-1 text-center " id="envio">*por calcular</h5>
             </div>
             <div class="row col-12 mx-auto mt-1  py-0 border-bottom">
                 <h5 class="mr-auto my-1 text-center">Total <small class="text-secondary">(Sin el costo de envio)</small>:</h5>
-                <h5 class="ml-auto my-1 text-center" id="total">$ </h5>
+                <h4 class="ml-auto my-1 text-center" id="total">$ </h4>
             </div>
         </div>
     </div>

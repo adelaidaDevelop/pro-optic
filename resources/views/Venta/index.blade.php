@@ -1350,8 +1350,6 @@
                 // si tuvo éxito la petición
             }).done(function(respuesta) {
                 //alert(respuesta);
-
-
                 console.log("Llego hasta aqui y fallando");
                 console.log('respuesta', respuesta); //JSON.stringify(respuesta));
             });
