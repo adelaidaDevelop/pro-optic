@@ -4,7 +4,7 @@
 <div class="row col-12">
     <nav aria-label="breadcrumb ">
         <ol class="breadcrumb bg-transparent h5">
-            <li class="breadcrumb-item"><a href="/">INICIO</a></li>
+            <li class="breadcrumb-item"><a href="{{url('/')}}">INICIO</a></li>
             <li class="breadcrumb-item active" aria-current="page">
                 {{$nombre}}
             </li>

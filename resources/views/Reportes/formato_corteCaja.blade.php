@@ -28,7 +28,6 @@
     $ganancia= $_GET['gananciaId'];
     $cantVenta= $_GET['cantVenta'];
     $cajero= $_GET['cajero'];
-
     @endphp
     <div class="row w-100 " id="impDiv">
 

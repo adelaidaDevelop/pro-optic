@@ -37,5 +37,10 @@
         </ul>
     </nav>
 </div>
+<script>
+let carrito = @json(session('carrito'));
+
+let sucursal = @json(session('sucursalEcommerce')); 
+</script>
 @yield('contenido')
 @endsection

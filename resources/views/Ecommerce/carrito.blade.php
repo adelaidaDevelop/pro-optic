@@ -3,7 +3,7 @@
 <div class="row col-12">
     <nav aria-label="breadcrumb ">
         <ol class="breadcrumb bg-transparent h5">
-            <li class="breadcrumb-item"><a href="/">INICIO</a></li>
+            <li class="breadcrumb-item"><a href="{{url('/')}}">INICIO</a></li>
             <li class="breadcrumb-item active" aria-current="page">CARRITO-COMPRAS</li>
         </ol>
     </nav>
@@ -97,7 +97,8 @@
                 <h5 class="mr-auto my-1 text-center">Total</h5>
                 <h5 class="ml-auto my-1 text-center" id="total">$0.00</h5>
             </div>
-            <a class="btn btn-primary my-auto btn-lg btn-block" href="{{url('/direccionEnvio')}}">Pagar</a>
+            <!-- <a class="btn btn-primary my-auto btn-lg btn-block" href="{{url('/direccionEnvio')}}">Pagar</a>-->
+            <button id="btnPagar" class="btn btn-primary my-auto btn-lg btn-block"> Pagar</button>
         </div>
     </div>
     @endif
@@ -130,6 +131,7 @@
     $("input[type='number']").inputSpinner(props);
 </script>
 <script>
+    let totalCompra = 0;
     async function setCantidad(id) {
         let cantidad = $(`#cantidad${id}`).val();
         //console.log('El producto a cambiar es,' + id);
@@ -193,7 +195,7 @@
     async function calcularTotal() {
         if (carrito == null)
             return;
-        let totalCompra = 0;
+        totalCompra = 0;
         let cuerpoCarrito = "";
         let contador = 0;
         for (let i in carrito) {
@@ -205,10 +207,19 @@
         if (contador != 0) {
             $('#subtotal').html(`$ ${totalCompra}`);
             $('#total').html(`$ ${totalCompra}`);
-            return;
+            return totalCompra;
         }
     }
     calcularTotal();
+    $("#btnPagar").on("click", pagar)
+
+    function pagar() {
+      //  let tot = document.getElementById("total");
+        //let total = parseFloat(tot.va);
+        console.log("El total es:",totalCompra);
+        location.href = `{{url('/direccionEnvio')}}?totalC=${totalCompra}`;
+    }
+    btnPagar
 </script>
 
 @endsection
