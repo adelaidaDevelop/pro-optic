@@ -93,6 +93,9 @@
                             {{$domicilio->numeroInterior}} @endif</p>
 
                         <p class="text-muted">Colonia: {{$domicilio->colonia}}</p>
+                        <!--div class="row d-md-flex">
+                        </div-->
+                        <button class="btn btn-succe"></button>
                     </div>
                     @endforeach
                 </div>
