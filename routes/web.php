@@ -64,12 +64,13 @@ Route::post('/quitarProductoCarrito/{id}', [EcommerceController::class,'quitarPr
 
 Route::get('/direccionEnvio', [EcommerceController::class,'direccionEnvio'])->middleware('isCliente');
 Route::post('/domicilio', [EcommerceController::class,'postDireccion'])->middleware('isCliente');
+Route::post('/actualizarDireccion', [EcommerceController::class,'actualizarDireccion'])->middleware('isCliente');
 
 Route::post('/eliminarDireccion', [EcommerceController::class,'eliminarDireccion'])->middleware('isCliente');
 Route::get('/metodoPago', [EcommerceController::class,'formaPago'])->middleware('isCliente');
 Route::get('/revisionPedido', [EcommerceController::class,'revisionPedido'])->middleware('isCliente');
 Route::get('/menu', [EcommerceController::class,'menu'])->middleware('isCliente');
-//Route::post('/', [EcommerceController::class,'menu'])->middleware('isCliente');
+Route::post('/actualizarDatosCliente', [EcommerceController::class,'actualizarDatosCliente'])->middleware('isCliente');
 //Auth::routes();
 Route::get('/pagoPaypal', [EcommerceController::class,'pagoPaypal']);
 

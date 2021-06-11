@@ -256,7 +256,7 @@ function mostrarCarrito() {
         cuerpoCarrito = cuerpoCarrito +
         `<div class="row mx-auto ><p class="text-center mx-auto border border-dark"> + ${productosExtra} ${p}</p></div>`;
     }
-
+    document.querySelector('#cantidadCarrito').textContent = contador;
     if (contador == 0)
         return;
     cuerpoCarrito = cuerpoCarrito +
@@ -264,7 +264,7 @@ function mostrarCarrito() {
     cuerpoCarrito = cuerpoCarrito + `<a class="btn btn-secondary" href="{{url('/carrito')}}">Ver carrito</a>`
     elementoCarrito.innerHTML = cuerpoCarrito;
     //"Aqui se agregará el contenido de carrito";
-    document.querySelector('#cantidadCarrito').textContent = contador; //respuesta.length;
+     //respuesta.length;
 }
 mostrarCarrito();
 
