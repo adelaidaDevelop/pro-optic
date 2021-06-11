@@ -14,9 +14,11 @@ use App\Models\Carrito;
 use App\Models\Domicilio;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use DateInterval;
 
-use Validator, Hash, Auth;
+use Hash, Auth;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class EcommerceController extends Controller
@@ -278,7 +280,7 @@ class EcommerceController extends Controller
 
     public function addCarrito(Request $request, $id)
     {
-        
+
         $cantidad = 1;
         $p = Producto::find($id);
         $sp = Sucursal_producto::where('idSucursal', '=', session('sucursalEcommerce'))
@@ -289,7 +291,7 @@ class EcommerceController extends Controller
         }
         if (Auth::check()) {
             if (Auth::user()->tipo == 2) {
-                
+
                 $producto = [];
                 $producto['id'] = $p->id;
                 $producto['imagen'] = $p->imagen;
@@ -297,12 +299,11 @@ class EcommerceController extends Controller
                 $producto['precio'] = $sp->precio;
                 $producto['sucursal'] = session('sucursalEcommerce');
                 $carrito = Carrito::where('idUsuario', '=', Auth::user()->id)->where('idProducto', '=', $id)
-                ->where('idSucursal', '=', session('sucursalEcommerce'));//->get();
-                
+                    ->where('idSucursal', '=', session('sucursalEcommerce')); //->get();
+
                 if (count($carrito->get()) > 0) {
                     $nuevaCantidad = $cantidad + $carrito->first()->cantidad;
-                    if($nuevaCantidad<=$sp->existencia)
-                    {
+                    if ($nuevaCantidad <= $sp->existencia) {
                         $carrito->update(['cantidad' => $nuevaCantidad]);
                         $carrito = session('carrito');
                         for ($i = 0; $i < count($carrito); $i++) {
@@ -317,10 +318,10 @@ class EcommerceController extends Controller
                     }
                     //return 'carrito tiene algo';
                 } else {
-                    
+
                     $carrito = session('carrito');
                     $producto['cantidad'] = $cantidad;
-                    if($carrito===NULL)
+                    if ($carrito === NULL)
                         $carrito = [];
                     array_push($carrito, $producto);
                     session(['carrito' => $carrito]);
@@ -419,15 +420,12 @@ class EcommerceController extends Controller
                 $productoSucursal = Sucursal_producto::where('idSucursal', '=', session('sucursalEcommerce'))
                     ->where('idProducto', '=', $id)->first();
                 //$nuevaCantidad = $carrito[$i]['cantidad'] + $request['cantidad'];
-                if ($request['cantidad'] <= $productoSucursal->existencia)
-                {
+                if ($request['cantidad'] <= $productoSucursal->existencia) {
                     $carrito[$i]['cantidad'] = $request['cantidad'];
-                    Carrito::where('idUsuario', '=', Auth::user()->id)->where('idProducto', '=',$id)
-                    ->where('idSucursal', '=', session('sucursalEcommerce'))
-                    ->update(['cantidad' => $request['cantidad'] ]);
-
-                }
-                else
+                    Carrito::where('idUsuario', '=', Auth::user()->id)->where('idProducto', '=', $id)
+                        ->where('idSucursal', '=', session('sucursalEcommerce'))
+                        ->update(['cantidad' => $request['cantidad']]);
+                } else
                     return $carrito[$i]['cantidad'];
 
                 $pos = true;
@@ -452,11 +450,10 @@ class EcommerceController extends Controller
             }
             $i++;
         }
-        if(Auth::check())
-        {
+        if (Auth::check()) {
             if (Auth::user()->tipo == 2) {
                 Carrito::where('idUsuario', '=', Auth::user()->id)->where('idProducto', '=', $id)
-                ->where('idSucursal', '=', session('sucursalEcommerce'))->delete();
+                    ->where('idSucursal', '=', session('sucursalEcommerce'))->delete();
             }
         }
         session(['carrito' => $carrito]);
@@ -470,7 +467,7 @@ class EcommerceController extends Controller
 
     public function postDireccion(Request $request)
     {
-        
+
         //return $request->all();
         $datosDomicilio = $request->except('_token');
         $domicilio = new Domicilio;
@@ -483,8 +480,10 @@ class EcommerceController extends Controller
         //return 'todo bien';
         $domicilio->save();
         session(['domicilio' => true]);
-        if($request->has('ajax'))
-            return true;
+        if ($request->has('ajax'))
+        {
+            return Domicilio::where('idCliente', '=', $domicilio->idCliente)->get();
+        }
         return redirect('/direccionEnvio');
     }
 
@@ -545,12 +544,49 @@ class EcommerceController extends Controller
 
     public function menu()
     {
-        if(!Auth::check())
+        if (!Auth::check())
             return redirect('/loginCliente');
         $sucursales = Sucursal::all();
         $departamentos = Departamento::where('ecommerce', '=', 1)->get(['id', 'nombre']);
-        $idCliente = Cliente::where('idUsuario','=',session('idCliente'))->first()->id;
-        $domicilios = Domicilio::where('idCliente', '=', $idCliente)->get();
-        return view('Ecommerce.vistaCliente', compact('sucursales','departamentos','domicilios'));
+        $cliente = Cliente::where('idUsuario', '=', session('idCliente'))->first();
+        $domicilios = Domicilio::where('idCliente', '=', $cliente->id)->get();
+        return view('Ecommerce.vistaCliente', compact('sucursales', 'departamentos', 'domicilios', 'cliente'));
+    }
+
+    public function actualizarDatosCliente(Request $request)
+    {
+        $datos = [];
+        $cliente = Cliente::where('idUsuario', '=', session('idCliente'))->first();
+        $user = Auth::user();
+        
+        if ($request->input('nombre') != $cliente->nombre)
+            $datos = Arr::add($datos, 'nombre', $request->input('nombre'));
+        if ($request->input('apellidoPaterno') != $cliente->apellidoPaterno)
+            $datos = Arr::add($datos, 'apellidoPaterno', $request->input('apellidoPaterno'));
+        if ($request->input('apellidoMaterno') != $cliente->apellidoMaterno)
+            $datos = Arr::add($datos, 'apellidoMaterno', $request->input('apellidoMaterno'));
+        if ($request->input('telefono') != $cliente->telefono)
+            $datos = Arr::add($datos, 'telefono', $request->input('telefono'));
+        if ($request->input('username') != $user->username)
+            $datos = Arr::add($datos, 'username', $request->input('username'));
+        if ($request->input('email') != $user->email)
+            $datos = Arr::add($datos, 'email', $request->input('email'));
+        $validacion =  Validator::make($datos, [
+            'nombre' => ['string', 'max:30', 'min:3'],
+            'apellidoPaterno' => ['string', 'max:30', 'min:3'],
+            'apellidoMaterno' => ['string', 'max:30', 'min:3'],
+            //'domicilio' => ['string', 'max:191','min:3'],
+            'telefono' => ['string', 'max:10', 'min:7'],
+            'username' => ['string', 'max:255', 'unique:users', 'min:3'],
+            'email' => ['string', 'email', 'max:255', 'unique:users', 'min:5'],
+        ]);
+        if ($validacion->fails()) :
+            return back()->withErrors($validacion)->with(['cambios' => true])->withInput($request->all());
+        endif;
+        $datosCliente = request()->except(['_token','email','username']);
+        $datosUser = request()->only(['email','username']);
+        Cliente::where('idUsuario','=',session('idCliente'))->update($datosCliente);
+        User::where('id','=',session('idCliente'))->update($datosUser);
+        return back();//redirect('/')
     }
 }

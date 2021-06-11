@@ -267,7 +267,8 @@ class EmpleadoController extends Controller
             
             $validacion =  Validator::make($datos, [
                 'nombre' => ['string', 'max:30','min:3'],
-                'apellidos' => ['string', 'max:30','min:3'],
+                'apellidoPaterno' => ['string', 'max:30','min:3'],
+                'apellidoMaterno' => ['string', 'max:30','min:3'],
                 'domicilio' => ['string', 'max:191','min:3'],
                 'curp' => ['string','min:18' ,'max:18','unique:empleados'],
                 'telefono' => ['string', 'max:10','min:7'],

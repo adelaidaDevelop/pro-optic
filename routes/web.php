@@ -69,6 +69,6 @@ Route::post('/eliminarDireccion', [EcommerceController::class,'eliminarDireccion
 Route::get('/metodoPago', [EcommerceController::class,'formaPago'])->middleware('isCliente');
 Route::get('/revisionPedido', [EcommerceController::class,'revisionPedido'])->middleware('isCliente');
 Route::get('/menu', [EcommerceController::class,'menu'])->middleware('isCliente');
-//Route::post('/', [EcommerceController::class,'menu'])->middleware('isCliente');
+Route::post('/actualizarDatosCliente', [EcommerceController::class,'actualizarDatosCliente'])->middleware('isCliente');
 //Auth::routes();
 Route::get('/pagoPaypal', [EcommerceController::class,'pagoPaypal']);
