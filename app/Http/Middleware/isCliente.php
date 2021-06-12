@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\Cliente;
+use App\Models\Domicilio;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +27,7 @@ class isCliente
             {
                 if(Auth::user()->tipo == 2)
                 {
+                    
                     return $next($request);
                 }
                 Auth::logout();
