@@ -35,64 +35,81 @@
     <div class="col-9 ">
         <div class="row col-12 mr-auto px-0 mb-auto border-bottom border-dark ">
             <div class="col-1 my-1 mx-0 px-0">
-                <img class="col-10 mx-0 img-fluid" src="{{ asset('img\credit-card.svg') }}" alt="FORMA DE PAGO" />
+                <img class="col-10 mx-0 " src="{{ asset('img\lupa.png') }}" alt="FORMA DE PAGO" />
             </div>
             <h4 class="row col my-auto px-0 text-left alert-info">Revisión de su compra</h4>
         </div>
-        <div class="row w-100 mt-0 mx-auto  mb-auto">
-            <p class="col-auto mr-auto text-secondary"><small><strong> Revice que la información de la compra sea correcta: domicilio, metodo de pago, productos </strong> </small></p>
+        <div class="row  col-12  mt-0  mb-4  ">
+            <p class="col-auto mr-auto text-secondary alert-warning  h5"><small><strong> Revice que la información de la compra sea correcta: domicilio, metodo de pago, productos </strong> </small></p>
         </div>
 
-        <div class="row col-12 mr-auto px-0 my-4 ">
-            <div class=" mb-auto mx-4">
-            </div>
-            <div class="mb-auto mx-4 ">
-            </div>
-            <div class="col-12 mt-4 mx-2 row mt-4 h4"> Forma de pago seleccionado: <h4> <strong>
-                        <p id="opc"></p>
-                    </strong></h4>
-            </div>
-            <div class="col-12 mt-4 mx-2 row mt-4 h4"> Usted paga con: <h4> <strong>
-                        <p id="pagando2"></p>
-                    </strong></h4>
+        <div class="col-9">
+            <div class="row col-12 mr-auto px-0 mb-auto border-bottom border-dark">
+                <div class="col-1 my-1 mx-0 px-0">
+                    <img class="col-10 mx-0 img-fluid" src="{{ asset('img\tarjeta.png') }}" alt="UBICACION" />
+                </div>
+                <h4 class="row col-auto my-auto px-0 text-left">Forma de pago</h4>
             </div>
         </div>
-    </div>
-    <div class="col-3 border border-warning">
-        <div class="row mb-auto p-1 border">
-            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
-                <h4 class="col-12 mx-auto my-1 py-0 text-center text-primary">Resumen de compra</h4>
+        <div class="row col-12 mr-auto px-0 mb-auto">
+            <div class=" col-4">
+                <h5 class="row col-12 input-group mx-2"> Forma de pago seleccionado: <h5> <strong>
+                            <p id="opc" class="mx-4"></p>
+                        </strong></h5>
+                </h5>
             </div>
-            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
-                <h5 class="mr-auto my-1 text-center">Subtotal</h5>
-                <h5 class="ml-auto my-1 text-center" id="subtotal">$ 0.00</h5>
+            <div class="col-3">
+                <h5 class="row col-12 input-group mx-2"> Usted va a pagar con: <h5> <strong>
+                            <p id="pagando2" class="mx-4"></p>
+                        </strong></h5>
+                </h5>
             </div>
-            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
-                <h5 class="mr-auto my-1 text-center">Costo del envío</h5>
-                <h5 class="ml-auto my-1 text-center" id="envio">*por calcular</h5>
+            <div class="col-4">
+                <h5 class="row col-12 input-group mx-2">Cambio que usted va a recibir: <h5> <strong>
+                            <p id="cambio" class="mx-4"></p>
+                        </strong></h5>
+                </h5>
             </div>
-            <div class="row col-12 mx-auto mt-1  py-0 border-bottom">
-                <h5 class="mr-auto my-1 text-center">Total</h5>
-                <h3 class="ml-auto my-1 text-center" id="total">$0.00</h3>
-            </div>
-            <!--
-            @if(session()->has('idCliente'))
-            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="http:/google.com">Pagar</a>
-            @else
-            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="{{url('/loginCliente')}}">Pagar</a>
-            @endif
-            -->
         </div>
+
+
+        <!--
+            <div class="col-3 border border-warning">
+                <div class="row mb-auto p-1 border">
+                    <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
+                        <h4 class="col-12 mx-auto my-1 py-0 text-center text-primary">Resumen de compra</h4>
+                    </div>
+                    <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
+                        <h5 class="mr-auto my-1 text-center">Subtotal</h5>
+                        <h5 class="ml-auto my-1 text-center" id="subtotal">$ 0.00</h5>
+                    </div>
+                    <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
+                        <h5 class="mr-auto my-1 text-center">Costo del envío</h5>
+                        <h5 class="ml-auto my-1 text-center" id="envio">*por calcular</h5>
+                    </div>
+                    <div class="row col-12 mx-auto mt-1  py-0 border-bottom">
+                        <h5 class="mr-auto my-1 text-center">Total</h5>
+                        <h3 class="ml-auto my-1 text-center" id="total">$0.00</h3>
+                    </div>
+                    <!--
+                    @if(session()->has('idCliente'))
+                    <a class="btn btn-outline-success my-auto btn-lg btn-block" href="http:/google.com">Pagar</a>
+                    @else
+                    <a class="btn btn-outline-success my-auto btn-lg btn-block" href="{{url('/loginCliente')}}">Pagar</a>
+                    @endif
+                    -->
     </div>
 </div>
 
-<div class="row col-12 mx-auto">
+
+
+<div class="row col-12 mx-auto mt-4">
     <div class="col-9 ">
         <div class="row col-12 mr-auto px-0 mb-auto border-bottom border-dark">
             <div class="col-1 my-1 mx-0 px-0">
                 <img class="col-10 mx-0 img-fluid" src="{{ asset('img\ubicacion.png') }}" alt="UBICACION" />
             </div>
-            <h5 class="row col-auto my-auto px-0 text-left">Dirección De Envío</h5>
+            <h4 class="row col-auto my-auto px-0 text-left">Dirección De Envío</h4>
         </div>
         <div class="row col-auto ">
             <div class="col-10 mb-auto ">
@@ -109,6 +126,7 @@
                     <p class="h6">Tel: {{$telefono}}</p>
                 </div>
             </div>
+            <!--
             <div class="row col-2 mt-0 mx-auto mb-auto">
                 <button class="btn btn-outline-danger border-0" id="editarDireccion">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -125,13 +143,15 @@
                     </button>
                 </form>
             </div>
+            -->
         </div>
-        <div class="row col-12 mr-auto px-0 mb-auto border-bottom border-dark">
+        <div class="row col-12 mr-auto px-0 mb-auto border-bottom border-primary">
             <div class="col-1 my-1 mx-0 px-0">
                 <img class="col-10 mx-0 img-fluid" src="{{ asset('img\camion.png') }}" alt="UBICACION" />
             </div>
-            <h5 class="row col-auto my-auto px-0 text-left">Detalle De Envío</h5>
+            <h4 class="row col-auto my-auto px-0 text-left">Detalle De Envío: Productos</h4>
         </div>
+        <!--
         <div class="row col-12 mt-0 mx-auto mb-auto border-bottom border-dark">
             @foreach($carrito as $p)
             <div class="row col-12 border-bottom">
@@ -149,11 +169,75 @@
             </div>
             @endforeach
         </div>
-        <div class="col-12 text-right py-1">
-            <a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Confirmar compra</a>
-            <!-- <button class="btn btn-success btn-lg" onclick="{{url('/metodoPago')}}" type="submit">Continuar2</button>-->
+        -->
+
+        <div class="row col-12 mt-0 mx-auto mb-auto border-bottom border-dark">
+            <div class="row col-12 border-bottom">
+                <div class="row col-5 mx-0">
+                    <p class="my-auto mx-auto text-center"><strong> Producto </strong></p>
+                </div>
+                <div class="row col-3 mx-0">
+                    <p class="my-auto mx-auto text-center"><strong>Cantidad </strong></p>
+                </div>
+            </div>
+            @foreach($carrito as $p)
+            <div class="row col-12 border-bottom">
+                <div class="row col-5 mx-0">
+                    <p class="my-auto mx-auto text-center">{{$p['nombre']}}</p>
+                </div>
+                <div class="row col-3 mx-0">
+                    <p class="my-auto mx-auto text-center">{{$p['cantidad']}}</p>
+                </div>
+            </div>
+            @endforeach
         </div>
+
     </div>
+    <div class=" row col-12  mx-auto mt-3">
+        <div class="row col-6 mx-auto text-center mb-auto p-1 border">
+            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
+                <h4 class="col-12 mx-auto my-1 py-0 text-center text-primary">Resumen de compra</h4>
+            </div>
+            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
+                <h5 class="mr-auto my-1 text-center">Subtotal</h5>
+                <h5 class="ml-auto my-1 text-center" id="subtotal">$ 0.00</h5>
+            </div>
+            <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom">
+                <h5 class="mr-auto my-1 text-center">Costo del envío</h5>
+                <h5 class="ml-auto my-1 text-center" id="envio">*por calcular</h5>
+            </div>
+            <div class="row col-12 mx-auto mt-1  py-0 border-bottom">
+                <h3 class="mr-auto my-1 text-center">Total</h3>
+                <h3 class="ml-auto my-1 text-center" id="total">$0.00</h3>
+            </div>
+            <div class="row col-12 mx-auto mt-1  py-0 border-bottom">
+                <h5 class="mr-auto my-1 text-center">Pagar con</h5>
+                <h5 class="ml-auto my-1 text-center" id="pagaCon">$0.00</h5>
+            </div>
+            <div class="row col-12 mx-auto mt-1  py-0 border-bottom">
+                <h5 class="mr-auto my-1 text-center">Su cambio</h5>
+                <h5 class="ml-auto my-1 text-center" id="cambioR">$0.00</h5>
+            </div>
+            <!--
+            @if(session()->has('idCliente'))
+            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="http:/google.com">Pagar</a>
+            @else
+            <a class="btn btn-outline-success my-auto btn-lg btn-block" href="{{url('/loginCliente')}}">Pagar</a>
+            @endif
+            -->
+        </div>
+
+    </div>
+
+    <div class="col-12 text-right py-1 text-center mx-auto my-4">
+        <p class="h6 text-dark">Si usted ya verifico la información de su compra pueda precionar el boton <mark>Confirmar Compra </mark> para solicitar y generar la compra. </p>
+    </div>
+
+    <div class="col-12 text-right py-1 text-center mx-auto my-4">
+        <a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Confirmar compra</a>
+        <!-- <button class="btn btn-success btn-lg" onclick="{{url('/metodoPago')}}" type="submit">Continuar2</button>-->
+    </div>
+
 
 </div>
 <script>
@@ -279,6 +363,11 @@
             $('#envio').html(`$ ${envioCosto}`);
             let suma = totalCompra + envioCosto;
             $('#total').html(`$ ${suma}`);
+            $('#pagaCon').html(`$ ${pagaCon2}`);
+            let cambio2 = pagaCon2 - suma;
+            console.log("cambio: ", cambio);
+            $('#cambioR').html(`$ ${cambio2}`);
+            $('#cambio').html(`$ ${cambio2}`);
             return;
         }
     }
