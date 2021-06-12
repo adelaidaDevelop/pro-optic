@@ -535,16 +535,16 @@ class EcommerceController extends Controller
             if ($pos !== false) {
                 $id =  Auth::user()->id;
                 $cliente = Cliente::where('idUsuario', '=', $id)->first();
-                $domicilio = Domicilio::where('idCliente', '=', $cliente->id)->first();
+                $domicilios = Domicilio::where('idCliente', '=', $cliente->id)->get();
                 $nombre = $cliente->nombre;
                 $telefono = $cliente->telefono;
-                if (isset($domicilio)) {
+                if (count($domicilios)>0) {
                     if (isset($_GET['domicilio']) && $_GET['domicilio'] == 'false') {
                         session(['domicilio' => false]);
-                        return view('Ecommerce.domicilio', compact('domicilio'));
+                        return view('Ecommerce.domicilio', compact('domicilios'));
                     }
                     if (session()->has('domicilio') && session('domicilio')) {
-                        return view('Ecommerce.detalleCompra', compact('carrito', 'nombre', 'domicilio', 'telefono'));
+                        return view('Ecommerce.detalleCompra', compact('carrito', 'nombre', 'domicilios', 'telefono'));
                     }
                 }
                 return view('Ecommerce.domicilio');

@@ -31,10 +31,10 @@
                 <a class="nav-link" id="pills-domicilio-tab" data-toggle="pill" href="#pills-domicilio" role="tab"
                     onclick="getDomicilios()" aria-controls="pills-domicilio" aria-selected="false">Mis Domicilios</a>
             </li>
-            <li class="nav-item" role="presentation">
+            <!--li class="nav-item" role="presentation">
                 <a class="nav-link" id="pills-formapago-tab" data-toggle="pill" href="#pills-formapago" role="tab"
                     aria-controls="pills-formapago" aria-selected="false">Mis Formas de pago</a>
-            </li>
+            </li-->
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="pills-pedido-tab" data-toggle="pill" href="#pills-pedido" role="tab"
                     aria-controls="pills-pedido" aria-selected="false">Mis Pedidos</a>
@@ -242,9 +242,9 @@
                     </form>
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-formapago" role="tabpanel" aria-labelledby="pills-formapago-tab">
+            <!--div class="tab-pane fade" id="pills-formapago" role="tabpanel" aria-labelledby="pills-formapago-tab">
                 aqui van mis formas de pago
-            </div>
+            </div-->
             <div class="tab-pane fade" id="pills-pedido" role="tabpanel" aria-labelledby="pills-pedido-tab">
                 aqui van mis pedido
             </div>
@@ -275,6 +275,11 @@ function getDatos() {
 }
 
 function getDomicilios() {
+    let forms = document.getElementsByClassName(
+        'validacion-formulario');
+    var validation = Array.prototype.filter.call(forms, function(form) {
+        form.classList.remove('was-validated');
+    });
     $('#tituloDomicilio').removeClass('d-none');
     $('#tituloAgregarDomicilio').addClass('d-none');
     $('#domicilios').removeClass('d-none');
