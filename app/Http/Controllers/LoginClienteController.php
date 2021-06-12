@@ -135,7 +135,7 @@ class LoginClienteController extends Controller
 
                 if (isset($_GET['compra']))
                     return redirect('/direccionEnvio');
-                return redirect('/'); //->intended('/');
+                return redirect('/menu'); //->intended('/');
             }
             Auth::logout();
         }

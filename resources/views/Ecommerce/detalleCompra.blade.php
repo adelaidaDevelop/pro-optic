@@ -12,11 +12,12 @@
 
 <div class=" row col-12 px-4  py-2 my-2 input-group text-center mx-auto alert-secondary " style="background:#D5DBDB">
     <button id="btnGenerarPed" class="btn btn-outline-secondary col  text-center  p-1 border-0" type="submit" disabled>
-        <img class="" src="{{ asset('img\posicion.png') }}" alt="Editar" width="30px" height="30px">
+        <img class="img-fluid" src="{{ asset('img\posicion.png') }}" alt="Editar" width="30px" height="30px" max-width="30px">
         <p class="h6 my-auto mx-2 text-success">Dirección de envio</p>
     </button>
     <div class=" h1 my-auto text-success">
-        <p>..............</p>
+        <p class="d-none d-md-block">..............</p>
+        <p class="d-block d-md-none">.....</p>
     </div>
     <!--PASO DOS -->
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
@@ -24,7 +25,8 @@
         <p class="h6 my-auto mx-2 text-primary">Metodo de pago</p>
     </button>
     <div class="h1 my-auto text-primary">
-        <p>..............</p>
+    <p class="d-none d-md-block">..............</p>
+        <p class="d-none d-sm-block d-md-none">.....</p>
     </div>
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\revision.png') }}" alt="Editar" width="35px" height="35px">
@@ -32,7 +34,8 @@
     </button>
 
     <div class="h1 my-auto text-secondary">
-        <p>..............</p>
+    <p class="d-none d-md-block">..............</p>
+        <p class="d-block d-md-none">.....</p>
     </div>
     <!--PASO TRES-->
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
@@ -40,22 +43,22 @@
         <p class="h6 my-auto mx-2 text-secondary">Confirmar compra</p>
     </button>
 </div>
-<div class="row col-12 mx-auto">
-    <div class="col-9 ">
-        <div class="row col-12 mr-auto px-0 mb-auto border-bottom border-dark">
-            <div class="col-1 my-1 mx-0 px-0">
+<div class="row col-12 mx-auto px-0 ">
+    <div class="col-12 col-md-9 mx-0 px-0">
+        <div class="row col-12 mx-0 mr-md-auto px-0 mb-auto border-bottom border-dark">
+            <div class="col-3 col-md-1 my-1 mx-0 px-0">
                 <img class="col-10 mx-0 img-fluid" src="{{ asset('img\ubicacion.png') }}" alt="UBICACION" />
             </div>
-            <h5 class="row col-auto my-auto px-0 text-left">Dirección De Envío</h5>
+            <h5 class="row col-9 col-md-11 my-auto px-0 text-left">Dirección De Envío</h5>
         </div>
-        <div class="row col-auto ">
+        <div class="row col-12 mx-0 px-0">
             <div class="col-12 mx-auto mb-auto ">
-                <div class="row col-12 mt-md-3">
+                <div class="row col-12 mt-3">
                     <p><strong class="">{{$nombre}}</strong></p>
                 </div>
-                <div class="form-group row mx-md-0">
-                    <label for="" class="col-md-2 col-form-label border">Domicilio</label>
-                    <div class="col-md-10">
+                <div class="form-group row col-12 mx-0 px-0">
+                    <label for="domicilios" class="col-auto col-md-2 mb-1 col-form-label text-center border">Domicilio</label>
+                    <div class="col-12 mx-0 mt-1 mb-2 col-md-10 px-0">
 
                         <select class="custom-select my-auto mx-auto" onchange="getDireccion()" id="domicilios">
                             @foreach($domicilios as $domicilio)
@@ -72,8 +75,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="row mx-md-0 p-auto border">
-                    <p class="h6 " id="direccion">
+                <div class="row mx-auto mx-md-0">
+                    <p class="h6 p-2 border" id="direccion">
                         {{$domicilios[count($domicilios)-1]->calle}}
                         {{$domicilios[count($domicilios)-1]->numeroExterior}},
                         @if(isset($domicilios[count($domicilios)-1]->numeroInterior)){{$domicilios[count($domicilios)-1]->numeroInterior}},
@@ -108,11 +111,11 @@
                 </form>
             </div-->
         </div>
-        <div class="row col-12 mr-auto px-0 mb-auto border-bottom border-dark">
-            <div class="col-1 my-1 mx-0 px-0">
-                <img class="col-10 mx-0 img-fluid" src="{{ asset('img\camion.png') }}" alt="UBICACION" />
+        <div class="row col-12 mx-0 mr-auto px-0 mb-auto border-bottom border-dark">
+            <div class="col-3 col-md-1 my-1 mx-0 px-1">
+                <img class="col-md-10 mx-0 img-fluid" src="{{ asset('img\camion.png') }}" alt="UBICACION" />
             </div>
-            <h5 class="row col-auto my-auto px-0 text-left">Detalle De Envío</h5>
+            <h5 class="row col my-auto px-0 text-left">Detalle De Envío</h5>
         </div>
         <div class="row col-12 mt-0 mx-auto mb-auto border-bottom border-dark">
             @foreach($carrito as $p)

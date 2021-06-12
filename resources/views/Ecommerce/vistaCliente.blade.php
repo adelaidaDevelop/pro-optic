@@ -21,7 +21,7 @@
             </button>
         </div>
     </div-->
-    <div class="col-md-12 mx-auto border">
+    <div class="col-md-12 mt-3 py-2 mx-auto border">
         <ul class="nav nav-pills mb-3 pt-md-2 justify-content-center" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="pills-datos-tab" data-toggle="pill" href="#pills-datos" role="tab"
@@ -46,10 +46,10 @@
         </ul>
         <div class="tab-content pb-md-2" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-datos" role="tabpanel" aria-labelledby="pills-datos-tab">
-                <div class="row col-12 mx-auto my-md-2 border-top border-bottom">
+                <div class="row col-12 mx-auto my-2 border-top border-bottom">
                     <p class="h3 text-muted mx-auto my-md-2">Mis datos</p>
                 </div>
-                <form class="col-7 mx-auto border py-md-2" method="post" action="{{url('/actualizarDatosCliente')}}"
+                <form class="col-12 col-md-7 mx-auto border py-md-2" method="post" action="{{url('/actualizarDatosCliente')}}"
                     enctype="multipart/form-data" accept-charset="utf-8">
                     {{csrf_field()}}
                     <div class="form-group">
@@ -128,13 +128,13 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="d-flex flex-row-reverse">
+                    <div class="d-flex flex-row-reverse my-2">
                         <button class="btn btn-success ml-md-auto" type="submit">Actualizar Datos</button>
                     </div>
                 </form>
             </div>
             <div class="tab-pane fade" id="pills-domicilio" role="tabpanel" aria-labelledby="pills-domicilio-tab">
-                <div id="tituloDomicilio" class="row col-12 mx-auto my-md-2 border-top border-bottom">
+                <div id="tituloDomicilio" class="row col-12 mx-auto my-2 border-top border-bottom">
                     <p class="h3 text-muted mx-auto my-md-2">Mis domicilios</p>
                 </div>
                 <div id="tituloAgregarDomicilio" class="row col-12 mx-auto my-md-2 border-top border-bottom d-none">
@@ -161,15 +161,15 @@
                     </div>
                     @endforeach
                     <div class="col mt-auto">
-                        <button class="btn btn-success my-auto" onclick="">Agregar nueva dirección</button>
+                        <button class="btn btn-success my-2" onclick="">Agregar nueva dirección</button>
                     </div>
                 </div>
-                <div id="formularioDomicilio" class="row col-12 mx-auto d-none">
-                    <form id="formDomicilio" class="row col-12 mx-auto validacion-formulario" novalidate method="post"
+                <div id="formularioDomicilio" class="row col-12 my-2 mx-auto d-none">
+                    <form id="formDomicilio" class="row col-12 mx-auto px-1 x-md-2 validacion-formulario" novalidate method="post"
                         enctype="multipart/form-data" accept-charset="utf-8">
                         {{csrf_field()}}
                         <div class="form-row col-12 mx-auto px-0">
-                            <div class="form-group col-6">
+                            <div class="form-group col-md-6">
                                 <label class="row mx-auto my-0" for="calle">
                                     Calle <p class="text-danger m-0 mr-1"><strong>*</strong></p>
                                 </label>
@@ -177,7 +177,7 @@
                                     value="" required autocomplete="off">
 
                             </div>
-                            <div class="form-group col-3">
+                            <div class="form-group col-md-3">
                                 <label class="row mx-auto my-0" for="numeroExterior">
                                     Numero Exterior <p class="text-danger m-0 mr-1"><strong>*</strong></p>
                                 </label>
@@ -185,14 +185,14 @@
                                     value="" aria-describedby="numeroExterior" required>
 
                             </div>
-                            <div class="form-group col-3">
+                            <div class="form-group col-md-3">
                                 <label class="row mx-auto my-0" for="numeroInterior">Numero Interior</label>
                                 <input type="number" class="form-control" name="numeroInterior" id="numeroInterior"
                                     value="" aria-describedby="numeroInterior">
                             </div>
                         </div>
                         <div class="form-row col-12 mx-auto px-0">
-                            <div class="form-group col-6">
+                            <div class="form-group col-md-6">
                                 <label class="row mx-auto my-0" for="codigoPostal">
                                     Código Postal<p class="text-danger m-0 mr-1"><strong>*</strong></p>
                                 </label>
@@ -201,7 +201,7 @@
                                 <small id="codigoPostal" class="form-text text-muted">Por el momento solo contamos con
                                     envíos a Zimatlán de Álvarez, Oaxaca.</small>
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-md-6">
                                 <label class="row mx-auto my-0" for="colonia">
                                     Colonia<p class="text-danger m-0 mr-1"> <strong> * </strong></p>
                                 </label>
@@ -210,7 +210,7 @@
                             </div>
                         </div>
                         <div class="form-row col-12 mx-auto px-0">
-                            <div class="form-group col-6">
+                            <div class="form-group col-md-6">
                                 <label class="row mx-auto my-0" for="estado">
                                     Estado<p class="text-danger m-0 mr-1"><strong>*</strong></p>
                                 </label>
@@ -222,7 +222,7 @@
                                     Zimatlán de Álvarez, Oaxaca.</small>
 
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-md-6">
                                 <label class="row mx-auto my-0" for="ciudad">
                                     Ciudad<p class="text-danger m-0 mr-1"> <strong>*</strong></p>
                                 </label>
@@ -525,7 +525,7 @@ function mostrarDomicilios() {
     for (let i in domicilios) {
         let numeroInterior = "";
         if (domicilios[i].numeroInterior != null) {
-            numeroInterior = `<p id="numeroInterior${domicilios[i].id}" class="text-muted">Numero exterior:
+            numeroInterior = `<p id="numeroInterior${domicilios[i].id}" class="text-muted">Numero interior:
                 ${domicilios[i].numeroInterior} </p>`;
         }
         let btnEliminar = "";
@@ -533,7 +533,7 @@ function mostrarDomicilios() {
             btnEliminar =
                 `<button class="btn btn-danger my-auto mx-md-1" onclick="eliminarDomicilio('${domicilios[i].id}')">Eliminar</button>`;
         }
-        cuerpo = cuerpo + `<div class="col-md-4 p-md-2 border">
+        cuerpo = cuerpo + `<div class="col-md-4  my-2 p-2 border">
                         <p id="codigoPostal${domicilios[i].id}"class="text-muted">Codigo postal: ${domicilios[i].codigoPostal}</p>
                         <p id="calle${domicilios[i].id}" class="text-muted">Calle: ${domicilios[i].calle} Num ${domicilios[i].numeroExterior}</p>
                         <!--p class="text-muted"></p-->
@@ -541,14 +541,14 @@ function mostrarDomicilios() {
                         <p id="colonia${domicilios[i].id}" class="text-muted">Colonia: ${domicilios[i].colonia}</p>
                         <div class="row col-12 mx-auto d-md-flex flex-row-reverse">
                         ${btnEliminar}
-                            <button class="btn btn-success my-auto mx-md-1" onclick="formEditarDomicilio('${domicilios[i].id}')">Editar</button>
+                            <button class="btn btn-success my-auto mx-1" onclick="formEditarDomicilio('${domicilios[i].id}')">Editar</button>
                         </div>
 
                     </div>`;
     }
     if (domicilios.length < 5) {
         cuerpo = cuerpo + `<div class="col mt-auto">
-                        <button class="btn btn-success my-auto" onclick="nuevoDomicilio()">Agregar nueva dirección</button>
+                        <button class="btn btn-success my-2" onclick="nuevoDomicilio()">Agregar nueva dirección</button>
                     </div>`;
     }
     document.getElementById('domicilios').innerHTML = cuerpo;
@@ -568,5 +568,13 @@ function nuevoDomicilio() {
     document.getElementById('numeroInterior').value = ""; //domicilio.numeroInterior;
     document.getElementById('colonia').value = "San Lorenzo"; //domicilio.colonia;
 }
+
+//function existenciaDomicilios()
+//{
+    if(domicilios.length == 0)
+    {
+        alert('Le recomendamos agregar una direccion para que esta pueda usarse en sus futuras compras');
+    }
+//}
 </script>
 @endsection
