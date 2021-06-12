@@ -5,7 +5,7 @@
         <ol class="breadcrumb bg-transparent h5">
             <li class="breadcrumb-item"><a href="{{url('/')}}">INICIO</a></li>
             <li class="breadcrumb-item"><a href="{{url('/carrito')}}">CARRITO-COMPRAS</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Detalle-compra</li>
+            <li class="breadcrumb-item active" aria-current="page">DIRECCION</li>
         </ol>
     </nav>
 </div>
@@ -25,7 +25,7 @@
         <p class="h6 my-auto mx-2 text-primary">Metodo de pago</p>
     </button>
     <div class="h1 my-auto text-primary">
-    <p class="d-none d-md-block">..............</p>
+        <p class="d-none d-md-block">..............</p>
         <p class="d-none d-sm-block d-md-none">.....</p>
     </div>
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
@@ -34,7 +34,7 @@
     </button>
 
     <div class="h1 my-auto text-secondary">
-    <p class="d-none d-md-block">..............</p>
+        <p class="d-none d-md-block">..............</p>
         <p class="d-block d-md-none">.....</p>
     </div>
     <!--PASO TRES-->
@@ -111,6 +111,7 @@
                 </form>
             </div-->
         </div>
+        <!--
         <div class="row col-12 mx-0 mr-auto px-0 mb-auto border-bottom border-dark">
             <div class="col-3 col-md-1 my-1 mx-0 px-1">
                 <img class="col-md-10 mx-0 img-fluid" src="{{ asset('img\camion.png') }}" alt="UBICACION" />
@@ -134,6 +135,7 @@
             </div>
             @endforeach
         </div>
+        -->
         <div class="col-12 text-right py-1">
             <a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Continuar</a>
             <!-- <button class="btn btn-success btn-lg" onclick="{{url('/metodoPago')}}" type="submit">Continuar2</button>-->
@@ -160,59 +162,59 @@
     </div>
 </div>
 <script>
-let totalCompra = 0;
-$('#editarDireccion').click(function() {
-    location.href = "{{url('/direccionEnvio?domicilio=false')}}";
-});
+    let totalCompra = 0;
+    $('#editarDireccion').click(function() {
+        location.href = "{{url('/direccionEnvio?domicilio=false')}}";
+    });
 
-async function calcularTotal() {
-    if (carrito == null)
-        return;
-    //let totalCompra = 0;
-    totalCompra = 0;
-    let cuerpoCarrito = "";
-    let contador = 0;
-    for (let i in carrito) {
-        if (carrito[i].sucursal == sucursal) {
-            contador++;
-            totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+    async function calcularTotal() {
+        if (carrito == null)
+            return;
+        //let totalCompra = 0;
+        totalCompra = 0;
+        let cuerpoCarrito = "";
+        let contador = 0;
+        for (let i in carrito) {
+            if (carrito[i].sucursal == sucursal) {
+                contador++;
+                totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+            }
+        }
+        let envioCosto = 15;
+        if (contador != 0) {
+            $('#subtotal').html(`$ ${totalCompra}`);
+            $('#envio').html(`$ ${envioCosto}`);
+            let suma = totalCompra + envioCosto;
+            $('#total').html(`$ ${suma}`);
+            return;
+        }
+
+        if (contador != 0) {
+            $('#subtotal').html(`$ ${totalCompra}`);
+            $('#total').html(`$ ${totalCompra}`);
+            return;
         }
     }
-    let envioCosto = 15;
-    if (contador != 0) {
-        $('#subtotal').html(`$ ${totalCompra}`);
-        $('#envio').html(`$ ${envioCosto}`);
-        let suma = totalCompra + envioCosto;
-        $('#total').html(`$ ${suma}`);
-        return;
-    }
+    calcularTotal();
 
-    if (contador != 0) {
-        $('#subtotal').html(`$ ${totalCompra}`);
-        $('#total').html(`$ ${totalCompra}`);
-        return;
-    }
-}
-calcularTotal();
-
-function getDireccion() {
-    let id = document.getElementById('domicilios').value;
-    let domicilios = @json($domicilios);
-    let domicilio = domicilios.find(p => p.id == id);
-    let numeroInterior = "";
-    if (domicilio.numeroInterior != null)
-        numeroInterior = domicilio.numeroInterior + ",";
-    document.getElementById('direccion').textContent =
-        `${domicilio.calle} ${domicilio.numeroExterior}, ${numeroInterior}
+    function getDireccion() {
+        let id = document.getElementById('domicilios').value;
+        let domicilios = @json($domicilios);
+        let domicilio = domicilios.find(p => p.id == id);
+        let numeroInterior = "";
+        if (domicilio.numeroInterior != null)
+            numeroInterior = domicilio.numeroInterior + ",";
+        document.getElementById('direccion').textContent =
+            `${domicilio.calle} ${domicilio.numeroExterior}, ${numeroInterior}
     ${domicilio.codigoPostal}, ${domicilio.colonia}, Zimatlán de Álvarez, Oaxaca`;
-}
-/*
-    function continuar() {
-        //  let tot = document.getElementById("total");
-        //let total = parseFloat(tot.va);
-        console.log("El total es:", totalCompra);
-        location.href = `{{url('/metodoPago')}}?totalC=${totalCompra}`;
     }
-    */
+    /*
+        function continuar() {
+            //  let tot = document.getElementById("total");
+            //let total = parseFloat(tot.va);
+            console.log("El total es:", totalCompra);
+            location.href = `{{url('/metodoPago')}}?totalC=${totalCompra}`;
+        }
+        */
 </script>
 @endsection

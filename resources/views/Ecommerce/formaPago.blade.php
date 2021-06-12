@@ -105,11 +105,11 @@
         if (label2 == null || input2 == null) {
             document.getElementById("opc").innerHTML = "Contra Entrega";
             document.getElementById("descPaypal").innerHTML = "";
-            var label = document.createElement("h5");
+            // var label = document.createElement("h5");
             // var newContent = document.createTextNode("Selecciona cómo harás tu pago contra entrega");
-            var newContent = document.createTextNode("Escriba la cantidad de efectivo con la que va a pagar para preparar su cambio");
-            label.appendChild(newContent); //añade texto al div creado.
-            label.id = 'label'
+            // var newContent = document.createTextNode("Escriba la cantidad de efectivo con la que va a pagar para preparar su cambio");
+            // label.appendChild(newContent); //añade texto al div creado.
+            // label.id = 'label'
             var input = document.createElement("INPUT");
             //aquí indicamos que es un input de tipo text
             input.type = 'number';
@@ -128,7 +128,7 @@
 
             //  input.setAttribute.require;
             //   let divPrinc = document.getElementById()
-            document.getElementById("elementos").appendChild(label);
+            // document.getElementById("elementos").appendChild(label);
             //  document.getElementById("elementos").appendChild(input);
             document.getElementById("elementos").appendChild(div);
 
@@ -136,6 +136,10 @@
             <form method="post" action="{{url('/revisionCompra')}}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <!--El name debe ser igual al de la base de datos-->
+            <label for="precio_ind" class="mt-3">
+                            <h5> Escriba la cantidad de efectivo con la que va a pagar para preparar su cambio </h5>
+                        </label>
+            
             <div class="input-group">
             <h5 class="my-auto mx-1">$</h5>
             <input class="col-3 form-control my-auto mt-4" type="number" id="pagando" name="pago" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
@@ -184,10 +188,15 @@
     }
 
     function pagoPaypal() {
+        var div = document.getElementById("divN");
+        if (div != null) {
+            document.getElementById("divN").innerHTML = "";
+        }
         // let btn = document.getElementById("btnPaypal");
         // document.getElementById("btnPaypal").style.background = 'green';
         //  btn.setAttribute.class = 'btn btn-success input-group';
         document.getElementById("opc").innerHTML = " Paypal";
+        /*
         var label2 = document.getElementById("label");
         var input2 = document.getElementById("pagaCon");
         var divNuevo = document.getElementById("divN");
@@ -196,6 +205,7 @@
             document.getElementById("pagaCon").remove();
             document.getElementById("divN").remove();
         }
+        */
         let element = `<div class="col-8 mb-auto">
                 <p class="h5">Paga de manera sencilla con tus tarjetas de débito o crédito registradas en tu cuenta
                     PayPal.</p>
