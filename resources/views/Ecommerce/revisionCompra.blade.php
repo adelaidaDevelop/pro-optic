@@ -373,6 +373,82 @@
     }
     calcularTotal();
 
+    function enviarCompra() {
+        let formulario = `
+            <form method="post" action="{{url('/revisionCompra')}}" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <!--El name debe ser igual al de la base de datos-->
+            <div class="input-group">
+            <h5 class="my-auto mx-1">$</h5>
+            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando" name="formaPago" value ="` + +` " data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando1" name="pagaCon" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando2" name="cambio" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando3" name="direccion" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando4" name="cliente" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando5" name="productos" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando6" name="subtotal" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando7" name="costoEnvio" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando8" name="total" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+            </div>
+            <button type="submit" id="btnContinuar" class="btn btn-success mt-4">Continuar</button>
+            </form>
+            `;
+
+
+
+    }
+
+    function enviarCompra2() {
+        let direccion = `{{$domicilio->calle}} {{$domicilio->numeroExterior}},
+                        @if(isset($domicilio->numeroInterior)){{$domicilio->numeroInterior}}, @else @endif
+                        {{$domicilio->codigoPostal}}, {{$domicilio->colonia}}, Zimatlán de Álvarez, Oaxaca`;
+        let suma = totalCompra + envioCosto;
+        let cambio2 = pagaCon2 - suma;
+        let datosFormulario = new FormData();
+        datosFormulario.append("formaPago", formaPago);
+        datosFormulario.append("pagaCon", pagaCon2);
+        datosFormulario.append("cambio", cambio2);
+        datosFormulario.append("direccion", direccion);
+        //  datosFormulario.append("idCliente", "Groucho");
+        //  datosFormulario.append("productos", "Groucho");
+        datosFormulario.append("subtotal", totalCompra);
+        datosFormulario.append("costoEnvio", envioCosto);
+        datosFormulario.append("costoEnvio", envioCosto);
+        datosFormulario.append("total", suma);
+        //datosFormulario.append('ajax', true);
+        //console.log('formulario', datosFormulario);
+        try {
+            let respuesta = await $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `{{url('/prueba')}}`,
+                contentType: false,
+                processData: false,
+                cache: false,
+                // los datos que voy a enviar para la relación
+                data: datosFormulario
+            });
+            
+            /*
+            console.log('respuesta', respuesta);
+            domicilios = respuesta;
+            mostrarDomicilios();
+            $('#tituloDomicilio').removeClass('d-none');
+            $('#tituloAgregarDomicilio').addClass('d-none');
+            $('#domicilios').removeClass('d-none');
+            $('#formularioDomicilio').addClass('d-none');
+            $('#btnAgregarDomicilio').addClass('d-none');
+            $('#btnEditarDomicilio').removeClass('d-none');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.classList.remove('was-validated');
+            });
+            */
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+    }
+
     document.getElementById("opc").innerHTML = formaPago;
     $('#pagando2').html(`$ ${pagaCon2}`);
 </script>

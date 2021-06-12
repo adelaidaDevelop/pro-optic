@@ -75,3 +75,4 @@ Route::post('/actualizarDatosCliente', [EcommerceController::class,'actualizarDa
 Route::get('/pagoPaypal', [EcommerceController::class,'pagoPaypal']);
 
 Route::post('/revisionCompra', [EcommerceController::class,'revisionCompra'])->middleware('isCliente');
+Route::post('/prueba', [EcommerceController::class,'insertarSolicitud'])->middleware('isCliente');
