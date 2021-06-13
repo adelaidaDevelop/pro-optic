@@ -246,7 +246,18 @@
                 aqui van mis formas de pago
             </div-->
             <div class="tab-pane fade" id="pills-pedido" role="tabpanel" aria-labelledby="pills-pedido-tab">
-                aqui van mis pedido
+                <div class="row mx-0">
+                @foreach($pedidosContraEntrega as $pedido)
+                    <div class="col">
+                        <p>Direccion: {{$pedido->direccion}}</p>
+                        <p>Subtotal: {{$pedido->subtotal}}</p>
+                        <p>Costo de envio: {{$pedido->costoEnvio}}</p>
+                        <p>Total: {{$pedido->total}}</p>
+                        <p>Pagó con: {{$pedido->pagarCon}}</p>
+                        <p>Cambio: {{$pedido->cambio}}</p>
+                    </div>
+                @endforeach
+                </div>
             </div>
             <div class="tab-pane fade" id="pills-compra" role="tabpanel" aria-labelledby="pills-compra-tab">
                 aqui van mis compras

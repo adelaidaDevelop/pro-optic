@@ -665,7 +665,9 @@ class EcommerceController extends Controller
         $departamentos = Departamento::where('ecommerce', '=', 1)->get(['id', 'nombre']);
         $cliente = Cliente::where('idUsuario', '=', session('idCliente'))->first();
         $domicilios = Domicilio::where('idCliente', '=', $cliente->id)->get();
-        return view('Ecommerce.vistaCliente', compact('sucursales', 'departamentos', 'domicilios', 'cliente'));
+        $pedidosContraEntrega = Pedido_contra_entrega::where('idCliente', '=', $cliente->id)->get();
+        return view('Ecommerce.vistaCliente', compact('sucursales', 'departamentos', 'domicilios', 'cliente',
+        'pedidosContraEntrega'));
     }
 
     public function actualizarDatosCliente(Request $request)
