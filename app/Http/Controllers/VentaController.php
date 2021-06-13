@@ -112,7 +112,6 @@ class VentaController extends Controller
                 $pagoCredito->idVentaCliente = $credito->id;
                 $pagoCredito->idEmpSuc = $idSucursalEmpleado;
                 $pagoCredito->monto = $pago;
-
                 $pagoCredito->save();
                 //return 'Todo bien hasta aqui';
             }

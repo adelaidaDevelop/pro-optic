@@ -21,6 +21,7 @@ class CreatePedidoContraEntregasTable extends Migration
             $table->float('costoEnvio',8,2);
             $table->float('total',8,2);
             $table->float('pagarCon',8,2);
+            $table->float('cambio',8,2);
             $table->timestamps();
         });
     }

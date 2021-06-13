@@ -237,14 +237,21 @@
         </p>
     </div>
 
+<<<<<<< HEAD
     <div class="col-12 text-right py-1 text-center mx-auto my-1 my-md-4">
         <a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Confirmar compra</a>
         <!-- <button class="btn btn-success btn-lg" onclick="{{url('/metodoPago')}}" type="submit">Continuar2</button>-->
+=======
+    <div class="col-12 text-right py-1 text-center mx-auto my-4">
+        <!--<a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Confirmar compra</a>-->
+        <button class="btn btn-success btn-lg" onclick=" return enviarCompra2()" type="submit">Continuar2</button>
+>>>>>>> b0368e224d1011432583594cf3af4b8062a0bbd6
     </div>
 
 
 </div>
 <script>
+<<<<<<< HEAD
 let formaPago = @json($formaPago);
 let pagaCon2 = @json($pagaCon);
 let envioCosto = 15;
@@ -289,6 +296,52 @@ function pagoContEnt() {
         document.getElementById("elementos").appendChild(div);
 
         let boton3 = `
+=======
+    let productosVenta = [];
+    let formaPago = @json($formaPago);
+    let pagaCon2 = @json($pagaCon);
+    let envioCosto = 15;
+    let totalCompra = 0;
+    $('#editarDireccion').click(function() {
+        location.href = "{{url('/direccionEnvio?domicilio=false')}}";
+    });
+
+    function pagoContEnt() {
+
+        var label2 = document.getElementById("label");
+        var input2 = document.getElementById("pagaCon");
+        if (label2 == null || input2 == null) {
+            document.getElementById("opc").innerHTML = "Contra Entrega";
+            document.getElementById("descPaypal").innerHTML = "";
+            var label = document.createElement("h5");
+            // var newContent = document.createTextNode("Selecciona cómo harás tu pago contra entrega");
+            var newContent = document.createTextNode("Escriba la cantidad de efectivo con la que va a pagar para preparar su cambio");
+            label.appendChild(newContent); //añade texto al div creado.
+            label.id = 'label'
+            var input = document.createElement("INPUT");
+            //aquí indicamos que es un input de tipo text
+            input.type = 'number';
+            input.id = 'pagaCon';
+
+            var boton = document.createElement("button");
+            boton.id = "btnSeguir";
+            boton.innerHTML = 'Continuar';
+            //  boton.setAttribute.class = 'btn btn-success'
+            // boton.style.backgroundColor = '#009900';
+
+
+            //let btn = document.getElementById("btnSeguir");
+            var div = document.createElement("div");
+            div.id = 'divN'
+
+            //  input.setAttribute.require;
+            //   let divPrinc = document.getElementById()
+            document.getElementById("elementos").appendChild(label);
+            //  document.getElementById("elementos").appendChild(input);
+            document.getElementById("elementos").appendChild(div);
+
+            let boton3 = `
+>>>>>>> b0368e224d1011432583594cf3af4b8062a0bbd6
             <div class ="input-group">
             <h5 class="my-auto mx-1">$</h5>
             <input class="col-3 form-control my-auto mt-4" type="number" id="pagando" name="pago" data-decimals="" min="0" placeholder="0" value="0" required>
@@ -403,6 +456,7 @@ function enviarCompra() {
 
 }
 
+<<<<<<< HEAD
 async function enviarCompra2() {
     let direccion = `{{$domicilio->calle}} {{$domicilio->numeroExterior}},
                         @if(isset($domicilio->numeroInterior)){{$domicilio->numeroInterior}}, @else @endif
@@ -451,6 +505,111 @@ async function enviarCompra2() {
         */
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
+=======
+    function productosCarrito() {
+        console.log(carrito);
+
+        for (let j in carrito) {
+            let producto = {
+                //   id: productosVenta.length + 1,
+                idProducto: carrito[j].id,
+                idSucursal: carrito[j].sucursal,
+                cantidad: carrito[j].cantidad,
+                precio: carrito[j].precio,
+                subtotal: carrito[j].cantidad * carrito[j].precio
+            };
+            productosVenta.push(producto);
+
+        }
+    }
+
+    async function enviarCompra2() {
+        productosCarrito();
+        let json = JSON.stringify(productosVenta);
+
+        let direccion = `{{$domicilio->calle}} {{$domicilio->numeroExterior}},
+                        @if(isset($domicilio->numeroInterior)){{$domicilio->numeroInterior}}, @else @endif
+                        {{$domicilio->codigoPostal}}, {{$domicilio->colonia}}, Zimatlán de Álvarez, Oaxaca`;
+        let suma = totalCompra + envioCosto;
+        
+        let cambio2 = pagaCon2 - suma;
+        let datosFormulario = new FormData();
+        datosFormulario.append("formaPago", formaPago);
+        datosFormulario.append("pagaCon", parseFloat(pagaCon2));
+        datosFormulario.append("cambio", parseFloat(cambio2));
+        datosFormulario.append("direccion", direccion);
+        //  datosFormulario.append("idCliente", "Groucho");
+        //  datosFormulario.append("productos", "Groucho");
+        datosFormulario.append("subtotal", parseFloat(totalCompra));
+        datosFormulario.append("costoEnvio", parseFloat(envioCosto));
+        //datosFormulario.append("costoEnvio", envioCosto);
+        datosFormulario.append("total", parseFloat(suma));
+        datosFormulario.append("datos", json);
+        datosFormulario.append("_token", "{{ csrf_token() }}");
+        //datosFormulario.append('ajax', true);
+        //console.log('formulario', datosFormulario);
+        /*
+        try {
+            let respuesta = await $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `{{url('/prueba')}}`,
+                // contentType: false,
+                // processData: false,
+                // cache: false,
+                // los datos que voy a enviar para la relación
+                data: {
+                    data: datosFormulario,
+                    _token: "{{ csrf_token() }}"
+                    //  id: idSucProd
+                }
+            });
+
+            console.log("ok");
+            /*
+            console.log('respuesta', respuesta);
+            domicilios = respuesta;
+            mostrarDomicilios();
+            $('#tituloDomicilio').removeClass('d-none');
+            $('#tituloAgregarDomicilio').addClass('d-none');
+            $('#domicilios').removeClass('d-none');
+            $('#formularioDomicilio').addClass('d-none');
+            $('#btnAgregarDomicilio').addClass('d-none');
+            $('#btnEditarDomicilio').removeClass('d-none');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.classList.remove('was-validated');
+            });
+            
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+        */
+
+        /////////////////
+        try {
+            let funcion = $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `{{url('/prueba')}}`,
+                contentType: false,
+                processData: false,
+                cache: false,
+                // los datos que voy a enviar para la relación
+                data: datosFormulario,
+
+                //  id: idSucProd
+
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                console.log(respuesta); //JSON.stringify(respuesta));
+            });
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+        /////////////////
+>>>>>>> b0368e224d1011432583594cf3af4b8062a0bbd6
     }
 }
 
