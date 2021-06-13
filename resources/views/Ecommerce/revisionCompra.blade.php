@@ -234,13 +234,14 @@
     </div>
 
     <div class="col-12 text-right py-1 text-center mx-auto my-4">
-        <a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Confirmar compra</a>
-        <!-- <button class="btn btn-success btn-lg" onclick="{{url('/metodoPago')}}" type="submit">Continuar2</button>-->
+        <!--<a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Confirmar compra</a>-->
+        <button class="btn btn-success btn-lg" onclick=" return enviarCompra2()" type="submit">Continuar2</button>
     </div>
 
 
 </div>
 <script>
+    let productosVenta = [];
     let formaPago = @json($formaPago);
     let pagaCon2 = @json($pagaCon);
     let envioCosto = 15;
@@ -398,38 +399,67 @@
 
     }
 
-    function enviarCompra2() {
+    function productosCarrito() {
+        console.log(carrito);
+
+        for (let j in carrito) {
+            let producto = {
+                //   id: productosVenta.length + 1,
+                idProducto: carrito[j].id,
+                idSucursal: carrito[j].sucursal,
+                cantidad: carrito[j].cantidad,
+                precio: carrito[j].precio,
+                subtotal: carrito[j].cantidad * carrito[j].precio
+            };
+            productosVenta.push(producto);
+
+        }
+    }
+
+    async function enviarCompra2() {
+        productosCarrito();
+        let json = JSON.stringify(productosVenta);
+
         let direccion = `{{$domicilio->calle}} {{$domicilio->numeroExterior}},
                         @if(isset($domicilio->numeroInterior)){{$domicilio->numeroInterior}}, @else @endif
                         {{$domicilio->codigoPostal}}, {{$domicilio->colonia}}, Zimatlán de Álvarez, Oaxaca`;
         let suma = totalCompra + envioCosto;
+        
         let cambio2 = pagaCon2 - suma;
         let datosFormulario = new FormData();
         datosFormulario.append("formaPago", formaPago);
-        datosFormulario.append("pagaCon", pagaCon2);
-        datosFormulario.append("cambio", cambio2);
+        datosFormulario.append("pagaCon", parseFloat(pagaCon2));
+        datosFormulario.append("cambio", parseFloat(cambio2));
         datosFormulario.append("direccion", direccion);
         //  datosFormulario.append("idCliente", "Groucho");
         //  datosFormulario.append("productos", "Groucho");
-        datosFormulario.append("subtotal", totalCompra);
-        datosFormulario.append("costoEnvio", envioCosto);
-        datosFormulario.append("costoEnvio", envioCosto);
-        datosFormulario.append("total", suma);
+        datosFormulario.append("subtotal", parseFloat(totalCompra));
+        datosFormulario.append("costoEnvio", parseFloat(envioCosto));
+        //datosFormulario.append("costoEnvio", envioCosto);
+        datosFormulario.append("total", parseFloat(suma));
+        datosFormulario.append("datos", json);
+        datosFormulario.append("_token", "{{ csrf_token() }}");
         //datosFormulario.append('ajax', true);
         //console.log('formulario', datosFormulario);
+        /*
         try {
             let respuesta = await $.ajax({
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
                 url: `{{url('/prueba')}}`,
-                contentType: false,
-                processData: false,
-                cache: false,
+                // contentType: false,
+                // processData: false,
+                // cache: false,
                 // los datos que voy a enviar para la relación
-                data: datosFormulario
+                data: {
+                    data: datosFormulario,
+                    _token: "{{ csrf_token() }}"
+                    //  id: idSucProd
+                }
             });
-            
+
+            console.log("ok");
             /*
             console.log('respuesta', respuesta);
             domicilios = respuesta;
@@ -443,10 +473,35 @@
             var validation = Array.prototype.filter.call(forms, function(form) {
                 form.classList.remove('was-validated');
             });
-            */
+            
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
+        */
+
+        /////////////////
+        try {
+            let funcion = $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `{{url('/prueba')}}`,
+                contentType: false,
+                processData: false,
+                cache: false,
+                // los datos que voy a enviar para la relación
+                data: datosFormulario,
+
+                //  id: idSucProd
+
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                console.log(respuesta); //JSON.stringify(respuesta));
+            });
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+        /////////////////
     }
 
     document.getElementById("opc").innerHTML = formaPago;
