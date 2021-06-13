@@ -1,5 +1,16 @@
 @extends('layouts.headerProcesoCompra')
 @section('contenido')
+<div class="row col-12">
+    <nav aria-label="breadcrumb ">
+        <ol class="breadcrumb bg-transparent h5">
+            <li class="breadcrumb-item"><a href="{{url('/')}}">INICIO</a></li>
+            <li class="breadcrumb-item"><a href="{{url('/carrito')}}">CARRITO-COMPRAS</a></li>
+            <li class="breadcrumb-item"><a href="{{url('/direccionEnvio')}}">DIRECCION</a></li>
+            <li class="breadcrumb-item"><a href="{{url('/metodoPago')}}">METODO DE PAGO</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Revisar y confirmar compra</li>
+        </ol>
+    </nav>
+</div>
 <div class=" row col-12 px-4  py-2 my-2 input-group text-center mx-auto alert-secondary " style="background:#D5DBDB">
     <button id="btnGenerarPed" class="btn btn-outline-secondary col  text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\posicion.png') }}" alt="Editar" width="30px" height="30px">
@@ -24,7 +35,7 @@
         <p class="h6 my-auto mx-2 text-primary">Revisión compra</p>
     </button>
 
-    <div class="h1 my-auto text-secondary">
+    <div class="h1 my-auto text-primary">
         <p class="d-none d-md-block">..............</p>
         <p class="d-block d-md-none">.....</p>
     </div>
@@ -43,8 +54,7 @@
         <!--h6 class="row col mx-auto my-auto py-auto px-1 text-left alert-info d-block d-sm-none display-4">Revisión de su compra</h6-->
     </div>
     <div class="row col-12 mx-auto mt-1  mb-4  ">
-        <p class="col-auto mx-auto text-secondary alert-warning  h5"><small><strong> Revice que la información de la
-                    compra sea correcta: domicilio, metodo de pago, productos </strong> </small></p>
+        <p class="col-auto mx-auto text-secondary alert-warning  h5"><small><strong> Revise que la forma de pago, direccion, y productos sean correctos </strong> </small></p>
     </div>
 
     <div class="col-md-9 mx-md-auto border-bottom border-dark">
@@ -62,14 +72,14 @@
                     </strong></h5>
             </h5>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <h5 class="row col-12 input-group mx-2"> Usted va a pagar con: <h5> <strong>
                         <p id="pagando2" class="mx-4"></p>
                     </strong></h5>
             </h5>
         </div>
         <div class="col-md-4">
-            <h5 class="row col-12 input-group mx-2">Cambio que usted va a recibir: <h5> <strong>
+            <h5 class="row col-12 input-group mx-2">Cambio a entregarle: <h5> <strong>
                         <p id="cambio" class="mx-4"></p>
                     </strong></h5>
             </h5>
@@ -151,7 +161,7 @@
             <div class="col-3 col-md-1 my-1 mx-0 px-0">
                 <img class="col-10 mx-0 img-fluid" src="{{ asset('img\camion.png') }}" alt="UBICACION" />
             </div>
-            <h4 class="col-9 col-md-11 mx-auto mr-md-auto ml-md-0 my-auto px-0 text-left">Detalle De Envío: Productos
+            <h4 class="col-9 col-md-11 mx-auto mr-md-auto ml-md-0 my-auto px-0 text-left">Detalle De Envío: productos
             </h4>
         </div>
         <!--
@@ -232,111 +242,111 @@
 
     </div>
 
-    <div class="col-12 text-right py-1 text-center mx-auto my-md-4">
-        <p class="h6 text-dark">Si usted ya verifico la información de su compra pueda precionar el boton
-            <mark>Confirmar Compra </mark> para solicitar y generar la compra.
+    <div class="col-12 text-right  text-center mx-auto my-md-4">
+        <p class="h6 text-danger">Si usted ya verifico la información de su compra,<mark> presione el boton
+                Confirmar Compra </mark> para generar su pedido en este momento
         </p>
     </div>
 
-    <div class="col-12 text-right py-1 text-center mx-auto my-4">
+    <div class="col-12 text-right  text-center mx-auto my-4">
         <!--<a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Confirmar compra</a>-->
-        <button class="btn btn-success btn-lg" onclick=" return enviarCompra2()" type="submit">Continuar2</button>
+        <button class="btn btn-success btn-lg" onclick=" return enviarCompra2()" type="submit">Confirmar compra</button>
     </div>
 
 
 </div>
 <script>
-let productosVenta = [];
-let formaPago = @json($formaPago);
-let pagaCon2 = @json($pagaCon);
-let envioCosto = 15;
-let totalCompra = 0;
-$('#editarDireccion').click(function() {
-    location.href = "{{url('/direccionEnvio?domicilio=false')}}";
-});
+    let productosVenta = [];
+    let formaPago = @json($formaPago);
+    let pagaCon2 = @json($pagaCon);
+    let envioCosto = 15;
+    let totalCompra = 0;
+    $('#editarDireccion').click(function() {
+        location.href = "{{url('/direccionEnvio?domicilio=false')}}";
+    });
 
-function pagoContEnt() {
+    function pagoContEnt() {
 
-    var label2 = document.getElementById("label");
-    var input2 = document.getElementById("pagaCon");
-    if (label2 == null || input2 == null) {
-        document.getElementById("opc").innerHTML = "Contra Entrega";
-        document.getElementById("descPaypal").innerHTML = "";
-        var label = document.createElement("h5");
-        // var newContent = document.createTextNode("Selecciona cómo harás tu pago contra entrega");
-        var newContent = document.createTextNode(
-            "Escriba la cantidad de efectivo con la que va a pagar para preparar su cambio");
-        label.appendChild(newContent); //añade texto al div creado.
-        label.id = 'label'
-        var input = document.createElement("INPUT");
-        //aquí indicamos que es un input de tipo text
-        input.type = 'number';
-        input.id = 'pagaCon';
+        var label2 = document.getElementById("label");
+        var input2 = document.getElementById("pagaCon");
+        if (label2 == null || input2 == null) {
+            document.getElementById("opc").innerHTML = "Contra Entrega";
+            document.getElementById("descPaypal").innerHTML = "";
+            var label = document.createElement("h5");
+            // var newContent = document.createTextNode("Selecciona cómo harás tu pago contra entrega");
+            var newContent = document.createTextNode(
+                "Escriba la cantidad de efectivo con la que va a pagar para preparar su cambio");
+            label.appendChild(newContent); //añade texto al div creado.
+            label.id = 'label'
+            var input = document.createElement("INPUT");
+            //aquí indicamos que es un input de tipo text
+            input.type = 'number';
+            input.id = 'pagaCon';
 
-        var boton = document.createElement("button");
-        boton.id = "btnSeguir";
-        boton.innerHTML = 'Continuar';
-        //  boton.setAttribute.class = 'btn btn-success'
-        // boton.style.backgroundColor = '#009900';
+            var boton = document.createElement("button");
+            boton.id = "btnSeguir";
+            boton.innerHTML = 'Continuar';
+            //  boton.setAttribute.class = 'btn btn-success'
+            // boton.style.backgroundColor = '#009900';
 
 
-        //let btn = document.getElementById("btnSeguir");
-        var div = document.createElement("div");
-        div.id = 'divN'
+            //let btn = document.getElementById("btnSeguir");
+            var div = document.createElement("div");
+            div.id = 'divN'
 
-        //  input.setAttribute.require;
-        //   let divPrinc = document.getElementById()
-        document.getElementById("elementos").appendChild(label);
-        //  document.getElementById("elementos").appendChild(input);
-        document.getElementById("elementos").appendChild(div);
+            //  input.setAttribute.require;
+            //   let divPrinc = document.getElementById()
+            document.getElementById("elementos").appendChild(label);
+            //  document.getElementById("elementos").appendChild(input);
+            document.getElementById("elementos").appendChild(div);
 
-        let boton3 = `
+            let boton3 = `
             <div class ="input-group">
             <h5 class="my-auto mx-1">$</h5>
             <input class="col-3 form-control my-auto mt-4" type="number" id="pagando" name="pago" data-decimals="" min="0" placeholder="0" value="0" required>
             </div>
-            <button type="button" id="btnContinuar" name="pagaCon" class="btn btn-success mt-4">Continuar</button>`;
-        document.getElementById("divN").innerHTML = boton3;
+            <button type="button" id="btnContinuar" name="pagaCon" class="btn btn-primary mt-4">Continuar</button>`;
+            document.getElementById("divN").innerHTML = boton3;
 
-        //Validar pago con 
-        var number = document.getElementById('pagando');
-        number.onkeypress = function(e) {
-            if (!((e.keyCode > 95 && e.keyCode < 106) ||
-                    (e.keyCode > 47 && e.keyCode < 58) ||
-                    e.keyCode == 8 || e.keyCode == 46)) {
-                return false;
+            //Validar pago con 
+            var number = document.getElementById('pagando');
+            number.onkeypress = function(e) {
+                if (!((e.keyCode > 95 && e.keyCode < 106) ||
+                        (e.keyCode > 47 && e.keyCode < 58) ||
+                        e.keyCode == 8 || e.keyCode == 46)) {
+                    return false;
+                }
             }
+            let suma = totalCompra + envioCosto;
+            console.log("Si los agrego ok");
+            $("#btnContinuar").click(function() {
+                let pago2 = $('#pagando').val();
+                console.log("El pago ingresado", pago2);
+                if (pago2 < suma) {
+                    return alert(`EL pago mínimo que usted debe preparar es: ` + suma);
+                }
+                location.href = "{{url('/puntoVenta/detalleCompra')}}";
+            });
+
+            //y por ultimo agreamos el componente creado al padre
+            //  padre.appendChild(input);
         }
-        let suma = totalCompra + envioCosto;
-        console.log("Si los agrego ok");
-        $("#btnContinuar").click(function() {
-            let pago2 = $('#pagando').val();
-            console.log("El pago ingresado", pago2);
-            if (pago2 < suma) {
-                return alert(`EL pago mínimo que usted debe preparar es: ` + suma);
-            }
-            location.href = "{{url('/puntoVenta/detalleCompra')}}";
-        });
-
-        //y por ultimo agreamos el componente creado al padre
-        //  padre.appendChild(input);
     }
-}
 
-function pagoPaypal() {
-    // let btn = document.getElementById("btnPaypal");
-    // document.getElementById("btnPaypal").style.background = 'green';
-    //  btn.setAttribute.class = 'btn btn-success input-group';
-    document.getElementById("opc").innerHTML = " Paypal";
-    var label2 = document.getElementById("label");
-    var input2 = document.getElementById("pagaCon");
-    var divNuevo = document.getElementById("divN");
-    if (label2 != null || input2 != null || divNuevo != null) {
-        document.getElementById("label").remove()
-        document.getElementById("pagaCon").remove();
-        document.getElementById("divN").remove();
-    }
-    let element = `<div class="col-8 mb-auto">
+    function pagoPaypal() {
+        // let btn = document.getElementById("btnPaypal");
+        // document.getElementById("btnPaypal").style.background = 'green';
+        //  btn.setAttribute.class = 'btn btn-success input-group';
+        document.getElementById("opc").innerHTML = " Paypal";
+        var label2 = document.getElementById("label");
+        var input2 = document.getElementById("pagaCon");
+        var divNuevo = document.getElementById("divN");
+        if (label2 != null || input2 != null || divNuevo != null) {
+            document.getElementById("label").remove()
+            document.getElementById("pagaCon").remove();
+            document.getElementById("divN").remove();
+        }
+        let element = `<div class="col-8 mb-auto">
                 <p class="h5">Paga de manera sencilla con tus tarjetas de débito o crédito registradas en tu cuenta
                     PayPal.</p>
             </div>
@@ -348,169 +358,168 @@ function pagoPaypal() {
             </div>
             `;
 
-    document.getElementById("descPaypal").innerHTML = element;
+        document.getElementById("descPaypal").innerHTML = element;
 
-};
-async function calcularTotal() {
-    if (carrito == null)
-        return;
-    //let totalCompra = 0;
-    totalCompra = 0;
-    let cuerpoCarrito = "";
-    let contador = 0;
-    for (let i in carrito) {
-        if (carrito[i].sucursal == sucursal) {
-            contador++;
-            totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+    };
+    async function calcularTotal() {
+        if (carrito == null)
+            return;
+        //let totalCompra = 0;
+        totalCompra = 0;
+        let cuerpoCarrito = "";
+        let contador = 0;
+        for (let i in carrito) {
+            if (carrito[i].sucursal == sucursal) {
+                contador++;
+                totalCompra = totalCompra + (carrito[i].precio * carrito[i].cantidad);
+            }
+        }
+        // envioCosto = 15;
+        if (contador != 0) {
+            $('#subtotal').html(`$ ${totalCompra}`);
+            $('#envio').html(`$ ${envioCosto}`);
+            let suma = totalCompra + envioCosto;
+            $('#total').html(`$ ${suma}`);
+            $('#pagaCon').html(`$ ${pagaCon2}`);
+            let cambio2 = pagaCon2 - suma;
+            console.log("cambio: ", cambio);
+            $('#cambioR').html(`$ ${cambio2}`);
+            $('#cambio').html(`$ ${cambio2}`);
+            return;
         }
     }
-    // envioCosto = 15;
-    if (contador != 0) {
-        $('#subtotal').html(`$ ${totalCompra}`);
-        $('#envio').html(`$ ${envioCosto}`);
-        let suma = totalCompra + envioCosto;
-        $('#total').html(`$ ${suma}`);
-        $('#pagaCon').html(`$ ${pagaCon2}`);
-        let cambio2 = pagaCon2 - suma;
-        console.log("cambio: ", cambio);
-        $('#cambioR').html(`$ ${cambio2}`);
-        $('#cambio').html(`$ ${cambio2}`);
-        return;
-    }
-}
-calcularTotal();
-
-function enviarCompra() {
-    let formulario = `
-            <form method="post" action="{{url('/revisionCompra')}}" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            <!--El name debe ser igual al de la base de datos-->
-            <div class="input-group">
-            <h5 class="my-auto mx-1">$</h5>
-            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando" name="formaPago" value ="` + +` " data-decimals="" min="0" placeholder="0" value="0" autofocus required>
-            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando1" name="pagaCon" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
-            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando2" name="cambio" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
-            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando3" name="direccion" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
-            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando4" name="cliente" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
-            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando5" name="productos" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
-            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando6" name="subtotal" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
-            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando7" name="costoEnvio" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
-            <input class="col-3 form-control my-auto mt-4" type="number" id="pagando8" name="total" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
-            </div>
-            <button type="submit" id="btnContinuar" class="btn btn-success mt-4">Continuar</button>
-            </form>
-            `;
-
-
-
-}
-
-function productosCarrito() {
-    console.log(carrito);
-
-    for (let j in carrito) {
-        let producto = {
-            //   id: productosVenta.length + 1,
-            idProducto: carrito[j].id,
-            idSucursal: carrito[j].sucursal,
-            cantidad: carrito[j].cantidad,
-            precio: carrito[j].precio,
-            subtotal: carrito[j].cantidad * carrito[j].precio
-        };
-        productosVenta.push(producto);
-
-    }
-}
-
-async function enviarCompra2() {
-    productosCarrito();
-    let json = JSON.stringify(productosVenta);
-
-    let direccion = `{{$domicilio->calle}} {{$domicilio->numeroExterior}},
-                        @if(isset($domicilio->numeroInterior)){{$domicilio->numeroInterior}}, @else @endif
-                        {{$domicilio->codigoPostal}}, {{$domicilio->colonia}}, Zimatlán de Álvarez, Oaxaca`;
-    let suma = totalCompra + envioCosto;
-
-    let cambio2 = pagaCon2 - suma;
-    let datosFormulario = new FormData();
-    datosFormulario.append("formaPago", formaPago);
-    datosFormulario.append("pagaCon", parseFloat(pagaCon2));
-    datosFormulario.append("cambio", parseFloat(cambio2));
-    datosFormulario.append("direccion", direccion);
-    //  datosFormulario.append("idCliente", "Groucho");
-    //  datosFormulario.append("productos", "Groucho");
-    datosFormulario.append("subtotal", parseFloat(totalCompra));
-    datosFormulario.append("costoEnvio", parseFloat(envioCosto));
-    //datosFormulario.append("costoEnvio", envioCosto);
-    datosFormulario.append("total", parseFloat(suma));
-    datosFormulario.append("datos", json);
-    datosFormulario.append("_token", "{{ csrf_token() }}");
-    //datosFormulario.append('ajax', true);
-    //console.log('formulario', datosFormulario);
+    calcularTotal();
     /*
-    try {
-        let respuesta = await $.ajax({
-            // metodo: puede ser POST, GET, etc
-            method: "POST",
-            // la URL de donde voy a hacer la petición
-            url: `{{url('/prueba')}}`,
-            // contentType: false,
-            // processData: false,
-            // cache: false,
-            // los datos que voy a enviar para la relación
-            data: {
-                data: datosFormulario,
-                _token: "{{ csrf_token() }}"
-                //  id: idSucProd
-            }
-        });
-
-        console.log("ok");
-        /*
-        console.log('respuesta', respuesta);
-        domicilios = respuesta;
-        mostrarDomicilios();
-        $('#tituloDomicilio').removeClass('d-none');
-        $('#tituloAgregarDomicilio').addClass('d-none');
-        $('#domicilios').removeClass('d-none');
-        $('#formularioDomicilio').addClass('d-none');
-        $('#btnAgregarDomicilio').addClass('d-none');
-        $('#btnEditarDomicilio').removeClass('d-none');
-        var validation = Array.prototype.filter.call(forms, function(form) {
-            form.classList.remove('was-validated');
-        });
-        
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
+    function enviarCompra() {
+        let formulario = `
+                <form method="post" action="{{url('/revisionCompra')}}" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <!--El name debe ser igual al de la base de datos-->
+                <div class="input-group">
+                <h5 class="my-auto mx-1">$</h5>
+                <input class="col-3 form-control my-auto mt-4" type="number" id="pagando" name="formaPago" value ="` + +` " data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+                <input class="col-3 form-control my-auto mt-4" type="number" id="pagando1" name="pagaCon" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+                <input class="col-3 form-control my-auto mt-4" type="number" id="pagando2" name="cambio" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+                <input class="col-3 form-control my-auto mt-4" type="number" id="pagando3" name="direccion" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+                <input class="col-3 form-control my-auto mt-4" type="number" id="pagando4" name="cliente" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+                <input class="col-3 form-control my-auto mt-4" type="number" id="pagando5" name="productos" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+                <input class="col-3 form-control my-auto mt-4" type="number" id="pagando6" name="subtotal" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+                <input class="col-3 form-control my-auto mt-4" type="number" id="pagando7" name="costoEnvio" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+                <input class="col-3 form-control my-auto mt-4" type="number" id="pagando8" name="total" data-decimals="" min="0" placeholder="0" value="0" autofocus required>
+                </div>
+                <button type="submit" id="btnContinuar" class="btn btn-success mt-4">Continuar</button>
+                </form>
+                `;
     }
     */
 
-    /////////////////
-    try {
-        let funcion = $.ajax({
-            // metodo: puede ser POST, GET, etc
-            method: "POST",
-            // la URL de donde voy a hacer la petición
-            url: `{{url('/prueba')}}`,
-            contentType: false,
-            processData: false,
-            cache: false,
-            // los datos que voy a enviar para la relación
-            data: datosFormulario,
+    function productosCarrito() {
+        console.log(carrito);
 
-            //  id: idSucProd
+        for (let j in carrito) {
+            let producto = {
+                //   id: productosVenta.length + 1,
+                idProducto: carrito[j].id,
+                idSucursal: carrito[j].sucursal,
+                cantidad: carrito[j].cantidad,
+                precio: carrito[j].precio,
+                subtotal: carrito[j].cantidad * carrito[j].precio
+            };
+            productosVenta.push(producto);
 
-            // si tuvo éxito la petición
-        }).done(function(respuesta) {
-            console.log(respuesta); //JSON.stringify(respuesta));
-        });
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
+        }
     }
-    /////////////////
-}
 
-document.getElementById("opc").innerHTML = formaPago;
-$('#pagando2').html(`$ ${pagaCon2}`);
+    async function enviarCompra2() {
+        productosCarrito();
+        let json = JSON.stringify(productosVenta);
+
+        let direccion = `{{$domicilio->calle}} {{$domicilio->numeroExterior}},
+                        @if(isset($domicilio->numeroInterior)){{$domicilio->numeroInterior}}, @else @endif
+                        {{$domicilio->codigoPostal}}, {{$domicilio->colonia}}, Zimatlán de Álvarez, Oaxaca`;
+        let suma = totalCompra + envioCosto;
+
+        let cambio2 = pagaCon2 - suma;
+        let datosFormulario = new FormData();
+        datosFormulario.append("formaPago", formaPago);
+        datosFormulario.append("pagaCon", parseFloat(pagaCon2));
+        datosFormulario.append("cambio", parseFloat(cambio2));
+        datosFormulario.append("direccion", direccion);
+        //  datosFormulario.append("idCliente", "Groucho");
+        //  datosFormulario.append("productos", "Groucho");
+        datosFormulario.append("subtotal", parseFloat(totalCompra));
+        datosFormulario.append("costoEnvio", parseFloat(envioCosto));
+        //datosFormulario.append("costoEnvio", envioCosto);
+        datosFormulario.append("total", parseFloat(suma));
+        datosFormulario.append("datos", json);
+        datosFormulario.append("_token", "{{ csrf_token() }}");
+        //datosFormulario.append('ajax', true);
+        //console.log('formulario', datosFormulario);
+        /*
+        try {
+            let respuesta = await $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `{{url('/prueba')}}`,
+                // contentType: false,
+                // processData: false,
+                // cache: false,
+                // los datos que voy a enviar para la relación
+                data: {
+                    data: datosFormulario,
+                    _token: "{{ csrf_token() }}"
+                    //  id: idSucProd
+                }
+            });
+
+            console.log("ok");
+            /*
+            console.log('respuesta', respuesta);
+            domicilios = respuesta;
+            mostrarDomicilios();
+            $('#tituloDomicilio').removeClass('d-none');
+            $('#tituloAgregarDomicilio').addClass('d-none');
+            $('#domicilios').removeClass('d-none');
+            $('#formularioDomicilio').addClass('d-none');
+            $('#btnAgregarDomicilio').addClass('d-none');
+            $('#btnEditarDomicilio').removeClass('d-none');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.classList.remove('was-validated');
+            });
+            
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+        */
+
+        /////////////////
+        try {
+            let funcion = $.ajax({
+                // metodo: puede ser POST, GET, etc
+                method: "POST",
+                // la URL de donde voy a hacer la petición
+                url: `{{url('/prueba')}}`,
+                contentType: false,
+                processData: false,
+                cache: false,
+                // los datos que voy a enviar para la relación
+                data: datosFormulario,
+
+                //  id: idSucProd
+
+                // si tuvo éxito la petición
+            }).done(function(respuesta) {
+                console.log(respuesta); //JSON.stringify(respuesta));
+                location.href = "{{url('/resumenFinal')}}";
+            });
+        } catch (err) {
+            console.log("Error al realizar la petición AJAX: " + err.message);
+        }
+        /////////////////
+    }
+
+    document.getElementById("opc").innerHTML = formaPago;
+    $('#pagando2').html(`$ ${pagaCon2}`);
 </script>
 @endsection

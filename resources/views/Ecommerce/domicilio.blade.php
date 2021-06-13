@@ -15,7 +15,7 @@
     <p class="col-12 alert-info py-1 h5 text-center mx-auto"> <strong> AGREGAR DIRECCION DE ENVIO </strong> </p>
 </div>
 
-<div class=" row col-12 px-4  py-2 my-2 input-group text-center mx-auto " style="background:#D5DBDB">
+<div class=" row col-12 px-4   my-2 input-group text-center mx-auto " style="background:#D5DBDB">
     <button id="btnGenerarPed" class="btn btn-outline-secondary col  text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\posicion.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto mx-2 text-primary">Dirección de envio</p>
@@ -34,7 +34,7 @@
     </div>
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\revision.png') }}" alt="Editar" width="35px" height="35px">
-        <p class="h6 my-auto mx-2 text-secondary">Revisión compra</p>
+        <p class="h6 my-auto mx-2 text-secondary">Revisar y confirmar compra</p>
     </button>
 
     <div class="h1 my-auto text-secondary">
@@ -43,7 +43,7 @@
     <!--PASO TRES-->
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\pedidoConfirmado.png') }}" alt="Editar" width="30px" height="30px">
-        <p class="h6 my-auto mx-2 text-secondary">Confirmar compra</p>
+        <p class="h6 my-auto mx-2 text-secondary">Pedido Generado exitosamente</p>
     </button>
 </div>
 

@@ -577,6 +577,9 @@ class EcommerceController extends Controller
         return view('Ecommerce.revisionCompra', compact('nombre', 'domicilio', 'telefono', 'carrito','pagaCon','formaPago'));
     }
 
+    public function resumen(){
+        return view('Ecommerce.compraGenerada');
+    }
     public function insertarSolicitud(Request $request){
         $id =  Auth::user()->id;
         $idCliente = Cliente::where('idUsuario', '=', $id)->first()->id;
@@ -654,7 +657,7 @@ class EcommerceController extends Controller
               }
 
        // return 1;
-        return view('Ecommerce.compraGenerada');
+        return true;
     }
 
     public function menu()

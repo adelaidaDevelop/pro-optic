@@ -10,7 +10,7 @@
     </nav>
 </div>
 
-<div class=" row col-12 px-4  py-2 my-2 input-group text-center mx-auto alert-secondary " style="background:#D5DBDB">
+<div class=" row col-12 px-4   my-2 input-group text-center mx-auto alert-secondary " style="background:#D5DBDB">
     <button id="btnGenerarPed" class="btn btn-outline-secondary col  text-center  p-1 border-0" type="submit" disabled>
         <img class="img-fluid" src="{{ asset('img\posicion.png') }}" alt="Editar" width="30px" height="30px" max-width="30px">
         <p class="h6 my-auto mx-2 text-success">Dirección de envio</p>
@@ -22,15 +22,15 @@
     <!--PASO DOS -->
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\tarjeta2.png') }}" alt="Editar" width="35px" height="35px">
-        <p class="h6 my-auto mx-2 text-primary">Metodo de pago</p>
+        <p class="h6 my-auto mx-2 text-secondary">Metodo de pago</p>
     </button>
-    <div class="h1 my-auto text-primary">
+    <div class="h1 my-auto text-secondary">
         <p class="d-none d-md-block">..............</p>
         <p class="d-none d-sm-block d-md-none">.....</p>
     </div>
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\revision.png') }}" alt="Editar" width="35px" height="35px">
-        <p class="h6 my-auto mx-2 text-secondary">Revisión compra</p>
+        <p class="h6 my-auto mx-2 text-secondary">Revisar y confirmar compra</p>
     </button>
 
     <div class="h1 my-auto text-secondary">
@@ -40,7 +40,7 @@
     <!--PASO TRES-->
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\pedidoConfirmado.png') }}" alt="Editar" width="30px" height="30px">
-        <p class="h6 my-auto mx-2 text-secondary">Confirmar compra</p>
+        <p class="h6 my-auto mx-2 text-secondary">Pedido Generado exitosamente</p>
     </button>
 </div>
 <div class="row col-12 mx-0 px-0 ">
@@ -136,7 +136,7 @@
             @endforeach
         </div>
         -->
-        
+
     </div>
     <div class="col-md-3 mr-md-0 ml-md-auto px-0 pl-md-2 pr-md-0">
         <div class="row mx-0 mb-auto p-1 border .hidden-md-up ">
@@ -157,10 +157,10 @@
             </div>
         </div>
     </div>
-    <div class="col-12 text-right py-1">
-            <a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Continuar</a>
-            <!-- <button class="btn btn-success btn-lg" onclick="{{url('/metodoPago')}}" type="submit">Continuar2</button>-->
-        </div>
+    <div class="col-9 text-right py-1">
+        <a class="btn btn-primary btn-lg" href="{{url('/metodoPago')}}">Continuar</a>
+        <!-- <button class="btn btn-success btn-lg" onclick="{{url('/metodoPago')}}" type="submit">Continuar2</button>-->
+    </div>
 </div>
 <script>
     let totalCompra = 0;
