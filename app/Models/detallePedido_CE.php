@@ -10,7 +10,7 @@ class detallePedido_CE extends Model
     use HasFactory;
     protected $fillable = [
         'idPedido',
-        'idSucProd',
+        'idProducto',
         'precio',
         'cantidad',
         'subtotal'

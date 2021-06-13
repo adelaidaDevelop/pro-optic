@@ -16,6 +16,7 @@ class CreatePedidoContraEntregasTable extends Migration
         Schema::create('pedido_contra_entregas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('idCliente')->constrained('clientes');
+            $table->foreignId('idSucursal')->constrained('sucursals');
             $table->string('direccion');
             $table->float('subtotal',8,2);
             $table->float('costoEnvio',8,2);

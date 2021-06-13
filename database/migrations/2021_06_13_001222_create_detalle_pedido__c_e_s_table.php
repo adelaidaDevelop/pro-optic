@@ -15,7 +15,8 @@ class CreateDetallePedidoCESTable extends Migration
     {
         Schema::create('detalle_pedido__c_e_s', function (Blueprint $table) {
             $table->foreignId('idPedido')->constrained('pedido_contra_entregas');
-            $table->foreignId('idSucProd')->constrained('sucursal_productos');
+            //$table->foreignId('idSucProd')->constrained('sucursal_productos');
+            $table->foreignId('idProducto')->constrained('productos');
             $table->float('precio',8,2);
             $table->unsignedInteger('cantidad');
             $table->float('subtotal',8,2);

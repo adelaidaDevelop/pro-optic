@@ -1635,21 +1635,26 @@ function obtenerPedidosEntrega() {
 function verPedidoEntrega(id) {
     let detallePedidos = @json($detallePedidos);
     let cuerpo = "";
-    let detallePedido = detallePedidos.find(p => p.idPedido == id);
+    let detallePedido = detallePedidos.filter(p => p.idPedido == id);
+    //let productos = productosCompra.filter(p => p.id == id);
     console.log('detallePedido',detallePedido);
-    cuerpo = `<div class="row col-5 mx-0">
-                                <p class="h5 text-center mx-auto my-0">${detallePedido.idSucProd}</p>
+    for(let i in detallePedido)
+    {
+        cuerpo = cuerpo + `<div class="row col-5 mx-0">
+                                <p class="h5 text-center mx-auto my-0">${detallePedido[i].idSucProd}</p>
                             </div>
                             <div class="row col-2 mx-0">
-                                <p class="h5 text-center mx-auto my-0">${detallePedido.precio}</p>
+                                <p class="h5 text-center mx-auto my-0">${detallePedido[i].precio}</p>
                             </div>
                             <div class="row col-2 mx-0">
-                                <p class="h5 text-center mx-auto my-0">${detallePedido.cantidad}</p>
+                                <p class="h5 text-center mx-auto my-0">${detallePedido[i].cantidad}</p>
                             </div>
                             <div class="row col-2 mx-0">
-                                <p class="h5 text-center mx-auto my-0">${detallePedido.subtotal}</p>
+                                <p class="h5 text-center mx-auto my-0">${detallePedido[i].subtotal}</p>
                             </div>
                             <div class="row col-1 mx-0"></div>`
+    }
+    
     document.getElementById("detallePedido").innerHTML = cuerpo;
 }
 </script>

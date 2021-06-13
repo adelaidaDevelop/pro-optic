@@ -595,6 +595,7 @@ class EcommerceController extends Controller
        
         $pedidoCompra = new Pedido_contra_entrega; //credito
         $pedidoCompra->idCliente = $idCliente;
+        $pedidoCompra->idSucursal = session('sucursalEcommerce');
         $pedidoCompra->direccion = $direccion;
         $pedidoCompra->subtotal = $subtotal;
         $pedidoCompra->costoEnvio = $costoEnvio;
@@ -613,7 +614,8 @@ class EcommerceController extends Controller
              $idSucProd =  $sucursal_producto->first()->id ;
             $detalle = new detallePedido_CE();
             $detalle->idPedido = $pedidoCompra->id;
-            $detalle->idSucProd = $idSucProd ;
+            //$detalle->idSucProd = $idSucProd ;
+            $detalle->idProducto = $datosProducto['idProducto'];
             $detalle->precio =  $datosProducto['precio'];
             $detalle->cantidad = $datosProducto['cantidad'];
             $detalle->subtotal = $datosProducto['subtotal'];

@@ -10,6 +10,7 @@ class Pedido_contra_entrega extends Model
     use HasFactory;
     protected $fillable = [
         'idCliente',
+        'idSucursal',
         'direccion',
         'subtotal',
         'costoEnvio',
