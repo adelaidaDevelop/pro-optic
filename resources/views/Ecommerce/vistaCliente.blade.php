@@ -558,8 +558,8 @@ function mostrarDomicilios() {
                     </div>`;
     }
     if (domicilios.length < 5) {
-        cuerpo = cuerpo + `<div class="col mt-auto">
-                        <button class="btn btn-success my-2" onclick="nuevoDomicilio()">Agregar nueva dirección</button>
+        cuerpo = cuerpo + `<div class="col mt-auto mx-auto text-center my-4">
+                        <button class="btn btn-success my-2" onclick="nuevoDomicilio()">Nuevo domicilio</button>
                     </div>`;
     }
     document.getElementById('domicilios').innerHTML = cuerpo;
@@ -584,7 +584,7 @@ function nuevoDomicilio() {
 //{
     if(domicilios.length == 0)
     {
-        alert('Le recomendamos agregar una direccion para que esta pueda usarse en sus futuras compras');
+        alert('Por favor agregue al menos un domicilio para poder realizar compras');
     }
 //}
 </script>
