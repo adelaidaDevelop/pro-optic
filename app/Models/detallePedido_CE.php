@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class detalleContraEntrega extends Model
+class detallePedido_CE extends Model
 {
     use HasFactory;
     protected $fillable = [
