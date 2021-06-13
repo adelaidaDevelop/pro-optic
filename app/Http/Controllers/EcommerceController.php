@@ -577,8 +577,18 @@ class EcommerceController extends Controller
         return view('Ecommerce.revisionCompra', compact('nombre', 'domicilio', 'telefono', 'carrito','pagaCon','formaPago'));
     }
 
-    public function resumen(){
-        return view('Ecommerce.compraGenerada');
+    public function resumen($datos, $folio){
+        $pagarCon = $datos;
+        $folio = $folio;
+        $formaPago = 'Contra Entrega';
+        $carrito = session('carrito');
+        $id =  Auth::user()->id;
+        $cliente = Cliente::where('idUsuario', '=', $id)->first();
+        $domicilio = Domicilio::where('idCliente', '=', $cliente->id)->first();
+        $nombre = $cliente->nombre;
+        $telefono = $cliente->telefono;
+        return view('Ecommerce.compraGenerada', compact('nombre', 'domicilio', 'telefono', 'carrito','formaPago','pagarCon', 'folio'));
+        
     }
     public function insertarSolicitud(Request $request){
         $id =  Auth::user()->id;
@@ -604,6 +614,8 @@ class EcommerceController extends Controller
         $pedidoCompra->cambio = $cambio;
         //return $pedidoCompra;
         $pedidoCompra->save();
+
+        $folioPedido = $pedidoCompra->id;
         
         $datos = $request->input('datos');
         $datosCodificados = json_decode($datos, true);
@@ -629,14 +641,10 @@ class EcommerceController extends Controller
             // $sucursal_producto->update(['existencia' => $existencia]);
               }
               //Datos a enviar para siguiente vista
-        $formaPago = 'Contra Entrega';
-        $carrito = session('carrito');
-        $id =  Auth::user()->id;
-        $cliente = Cliente::where('idUsuario', '=', $id)->first();
-        $domicilio = Domicilio::where('idCliente', '=', $cliente->id)->first();
-        $nombre = $cliente->nombre;
-        $telefono = $cliente->telefono;
-        return compact('nombre', 'domicilio', 'telefono', 'carrito','formaPago');
+        //return view('Ecommerce.compraGenerada');
+       // return $pagaCon;
+        return compact ('pagaCon', 'folioPedido');
+       // return compact('nombre', 'domicilio', 'telefono', 'carrito','formaPago');
     }
 
     public function menu()

@@ -54,9 +54,8 @@
         <!--h6 class="row col mx-auto my-auto py-auto px-1 text-left alert-info d-block d-sm-none display-4">Revisión de su compra</h6-->
     </div>
     <div class="row col-12 mx-auto mt-1  mb-4  ">
-        <p class="col-auto mx-auto text-secondary alert-warning  h5"><small><strong> Revise que la forma de pago, direccion, y productos sean correctos </strong> </small></p>
+        <p class="col-auto mx-auto text-secondary alert-warning  h5"><small><strong> Revise que la forma de pago, dirección, y productos sean correctos </strong> </small></p>
     </div>
-
     <div class="col-md-9 mx-md-auto border-bottom border-dark">
         <div class="row col-12 mx-auto px-0 mb-auto">
             <div class="col-3 col-md-1 my-1 mx-0 px-0">
@@ -73,7 +72,7 @@
             </h5>
         </div>
         <div class="col-md-4">
-            <h5 class="row col-12 input-group mx-2"> Usted va a pagar con: <h5> <strong>
+            <h5 class="row col-12 input-group mx-2"> Usted paga con: <h5> <strong>
                         <p id="pagando2" class="mx-4"></p>
                     </strong></h5>
             </h5>
@@ -85,8 +84,6 @@
             </h5>
         </div>
     </div>
-
-
     <!--
             <div class="col-3 border border-warning">
                 <div class="row mb-auto p-1 border">
@@ -113,7 +110,6 @@
                     endif
                     -->
 </div>
-
 <div class="row col-12 mx-0 mt-4 mb-1 px-0">
     <div class="col-md-9 mx-0 mx-md-auto">
         <div class="row col-12 mx-0 px-0 mb-auto border-bottom border-dark">
@@ -183,7 +179,6 @@
             @endforeach
         </div>
         -->
-
         <div class="row col-12 mt-0 mx-auto mb-auto border-bottom border-dark">
             <div class="row col-12 mx-auto border-bottom">
                 <div class="row col-8 col-md-5 mx-0">
@@ -204,7 +199,6 @@
             </div>
             @endforeach
         </div>
-
     </div>
     <div class=" row col-12  mx-auto mt-3">
         <div class="row col-md-6 mx-auto text-center mb-auto p-1 border">
@@ -239,21 +233,16 @@
             @endif
             -->
         </div>
-
     </div>
-
     <div class="col-12 text-right  text-center mx-auto my-md-4">
         <p class="h6 text-danger">Si usted ya verifico la información de su compra,<mark> presione el boton
                 Confirmar Compra </mark> para generar su pedido en este momento
         </p>
     </div>
-
     <div class="col-12 text-right  text-center mx-auto my-4">
         <!--<a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Confirmar compra</a>-->
         <button class="btn btn-success btn-lg" onclick=" return enviarCompra2()" type="submit">Confirmar compra</button>
     </div>
-
-
 </div>
 <script>
     let productosVenta = [];
@@ -452,48 +441,11 @@
         //datosFormulario.append("costoEnvio", envioCosto);
         datosFormulario.append("total", parseFloat(suma));
         datosFormulario.append("datos", json);
+        
         datosFormulario.append("_token", "{{ csrf_token() }}");
         //datosFormulario.append('ajax', true);
         //console.log('formulario', datosFormulario);
-        /*
-        try {
-            let respuesta = await $.ajax({
-                // metodo: puede ser POST, GET, etc
-                method: "POST",
-                // la URL de donde voy a hacer la petición
-                url: `{{url('/prueba')}}`,
-                // contentType: false,
-                // processData: false,
-                // cache: false,
-                // los datos que voy a enviar para la relación
-                data: {
-                    data: datosFormulario,
-                    _token: "{{ csrf_token() }}"
-                    //  id: idSucProd
-                }
-            });
-
-            console.log("ok");
-            /*
-            console.log('respuesta', respuesta);
-            domicilios = respuesta;
-            mostrarDomicilios();
-            $('#tituloDomicilio').removeClass('d-none');
-            $('#tituloAgregarDomicilio').addClass('d-none');
-            $('#domicilios').removeClass('d-none');
-            $('#formularioDomicilio').addClass('d-none');
-            $('#btnAgregarDomicilio').addClass('d-none');
-            $('#btnEditarDomicilio').removeClass('d-none');
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.classList.remove('was-validated');
-            });
-            
-        } catch (err) {
-            console.log("Error al realizar la petición AJAX: " + err.message);
-        }
-        */
-
-        /////////////////
+        
         try {
             let funcion = $.ajax({
                 // metodo: puede ser POST, GET, etc
@@ -510,9 +462,10 @@
 
                 // si tuvo éxito la petición
             }).done(function(respuesta) {
-                console.log(respuesta); //JSON.stringify(respuesta));
-                let datos= respuesta;
-                location.href = "{{url('/resumenFinal')}}";
+                console.log("La respuesta despues ins:",respuesta); //JSON.stringify(respuesta));
+                let paga = respuesta['pagaCon'];
+                let folio = respuesta['folioPedido'];
+                location.href = `{{url('/resumenFinal')}}/${paga},${folio}`;
             });
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
