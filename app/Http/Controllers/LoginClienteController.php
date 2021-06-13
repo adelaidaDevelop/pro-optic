@@ -194,7 +194,7 @@ class LoginClienteController extends Controller
         $cliente = Cliente::create($datosEmpleado);
         Auth::loginUsingId($usuario->id);
         session(['idCliente' => Auth::user()->id]);
-        return redirect('/'); // $datosEmpleado;//view('auth.registerCliente');
+        return redirect('/menu'); // $datosEmpleado;//view('auth.registerCliente');
     }
     protected function validator(array $data)
     {
