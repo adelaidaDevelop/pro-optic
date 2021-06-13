@@ -13,7 +13,7 @@ use App\Models\Cliente;
 use App\Models\Carrito;
 use App\Models\Domicilio;
 use App\Models\Pedido_contra_entrega;
-use App\Models\detalleContraEntrega;
+use App\Models\detallePedido_CE;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -615,38 +615,45 @@ class EcommerceController extends Controller
         $pedidoCompra->cambio = $cambio;
         //return $pedidoCompra;
         $pedidoCompra->save();
-        return true;
+        
+      //  return true;
 
         // return $cambio;
         
         $datos = $request->input('datos');
         $datosCodificados = json_decode($datos, true);
-        $idSucursal = $datosCodificados['idSucursal'];
+        
         
         foreach ($datosCodificados as $datosProducto) {
+            $idSucursal = $datosProducto['idSucursal'];
+            
             $sucursal_producto = Sucursal_producto::where('idProducto', '=', $datosProducto['idProducto'])
             ->where('idSucursal', '=', $idSucursal); //->update(['existencia'=>'11']);
-           
+            //return 1;
+              //  return $sucursal_producto->first()->id ;
+            $idSucProd =  $sucursal_producto->first()->id ;
             
-            $idSucProd =  $datosProducto['idSucProd'];
-            $detalle = new detalleContraEntrega;
+            $detalle = new detallePedido_CE();
             $detalle->idPedido = $pedidoCompra->id;
-            $detalle->idSucProd =  $sucursal_producto->id;
+            $detalle->idSucProd = $idSucProd ;
+            
             $detalle->precio =  $datosProducto['precio'];
             $detalle->cantidad = $datosProducto['cantidad'];
             $detalle->subtotal = $datosProducto['subtotal'];
+            
             $detalle->save();
+            
             //Actualizar existencia
             /*
             $productosSucursal = Sucursal_producto::where('idProducto', '=', $datosProducto['idProducto'])
             ->where('idSucursal', '=', session('sucursal')); //->update(['existencia'=>'11']);
             */
-            $sucProd = Sucursal_producto::where('id', '=', $idSucProd);
-            $existencia = $sucProd->first()->existencia - $datosProducto['cantidad'];
-            $sucProd->update(['existencia' => $existencia]);
-   
-        }
+       
+           // $existencia = $sucursal_producto->first()->existencia - $datosProducto['cantidad'];
+            // $sucursal_producto->update(['existencia' => $existencia]);
+              }
 
+       // return 1;
         return view('Ecommerce.compraGenerada');
     }
 
