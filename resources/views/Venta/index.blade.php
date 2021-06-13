@@ -358,7 +358,7 @@
 
                             <div>
                                 <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR"
-                                    id="texto">
+                                    id="">
                                 <h6 class=" text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER
                                         INFORMACION
                                         ADICIONAL, EDITAR O ELIMINAR </small> </h6>
@@ -371,17 +371,17 @@
                         </div>
                     </div>
                 </div>
-                <div class=" col-8">
+                <div class="row col-8 mx-auto">
 
                     <div class="col-12">
                         <div class="row col-12 mx-auto border-bottom">
-                            <div class="row col-5 mx-0">
+                            <div class="row col-4 mx-0">
                                 <p class="h5 text-center mx-auto my-0">Producto</p>
                             </div>
                             <div class="row col-2 mx-0">
                                 <p class="h5 text-center mx-auto my-0">Precio</p>
                             </div>
-                            <div class="row col-2 mx-0">
+                            <div class="row col-3 mx-0">
                                 <p class="h5 text-center mx-auto my-0">Cantidad</p>
                             </div>
                             <div class="row col-2 mx-0">
@@ -389,17 +389,20 @@
                             </div>
                             <div class="row col-1 mx-0"></div>
                         </div>
-                        <div id="detallePedido" class="row col-12 mx-auto border-bottom">
+                        <div id="detallePedido" class="row col-12 mx-auto border-bottom"
+                            style="height:300px;overflow-y:auto;">
                         </div>
-
                     </div>
-
+                    <div id="informacionCliente" class="col-12">
+                    </div>
+                    <!--div class="col-12 d-flex flex-row-reverse mb-0 mt-auto">
+                        </div-->
                 </div>
             </div>
-
-
-
             <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">ACEPTAR PEDIDO</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">RECHAZAR PEDIDO</button>
+
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
                 <!--button type="button" class="btn btn-primary">Agregar Producto</button-->
             </div>
@@ -1624,38 +1627,98 @@ function obtenerPedidosEntrega() {
     let pedidosContraEntrega = @json($pedidosContraEntrega);
     let cuerpo = "";
     for (let i in pedidosContraEntrega) {
-        let cliente = clientes.find(p => p.id == pedidosContraEntrega[i].idCliente);
-        cuerpo = cuerpo +
-            `<button class="btn btn-block btn-light"
-        onclick="verPedidoEntrega(${pedidosContraEntrega[i].id})" >Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
+        let idCliente = pedidosContraEntrega[i].idCliente;
+        let cliente = clientes.find(p => p.id == idCliente);
+        if (parseInt(i) == 0) {
+            cuerpo = cuerpo +
+                `<button class="btn btn-block btn-primary active"
+        onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})" >Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
+        } else {
+            cuerpo = cuerpo +
+                `<button class="btn btn-block btn-primary"
+        onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})" >Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
+
+        }
     }
+    //,'${pedidosContraEntrega[i].direccion}'
     document.getElementById("resultadoPedidos").innerHTML = cuerpo;
+
+    if (pedidosContraEntrega[0] != undefined) {
+        let idC = pedidosContraEntrega[0].idCliente;
+        verPedidoEntrega(pedidosContraEntrega[0].id, idC);//, pedidosContraEntrega[0].direccion);
+    }
+
 }
 
-function verPedidoEntrega(id) {
+function verPedidoEntrega(id, idCliente)//, direccion) {
+    console.log("id,idCliente, direccion",id,idCliente,direccion);
+    return;
+    let direccion ="";
+    let clientes = @json($clientes);
+    let cliente = clientes.find(p => p.id == idCliente);
+    let productos = @json($productos);
     let detallePedidos = @json($detallePedidos);
     let cuerpo = "";
     let detallePedido = detallePedidos.filter(p => p.idPedido == id);
     //let productos = productosCompra.filter(p => p.id == id);
-    console.log('detallePedido',detallePedido);
-    for(let i in detallePedido)
-    {
-        cuerpo = cuerpo + `<div class="row col-5 mx-0">
-                                <p class="h5 text-center mx-auto my-0">${detallePedido[i].idSucProd}</p>
-                            </div>
-                            <div class="row col-2 mx-0">
-                                <p class="h5 text-center mx-auto my-0">${detallePedido[i].precio}</p>
-                            </div>
-                            <div class="row col-2 mx-0">
-                                <p class="h5 text-center mx-auto my-0">${detallePedido[i].cantidad}</p>
-                            </div>
-                            <div class="row col-2 mx-0">
-                                <p class="h5 text-center mx-auto my-0">${detallePedido[i].subtotal}</p>
-                            </div>
-                            <div class="row col-1 mx-0"></div>`
+    console.log('detallePedido', detallePedido);
+    var props = {
+        decrementButton: "<strong>&minus;</strong>", // button text
+        incrementButton: `<strong>&plus;</strong>`, // ..
+        groupClass: "my-auto", // css class of the resulting input-group
+        buttonsClass: "btn-outline-secondary",
+        buttonsWidth: "1.5rem",
+        textAlign: "center", // alignment of the entered number
+        autoDelay: 500, // ms threshold before auto value change
+        autoInterval: 50, // speed of auto value change
+        buttonsOnly: false, // set this `true` to disable the possibility to enter or paste the number via keyboard
+        keyboardStepping: true, // set this to `false` to disallow the use of the up and down arrow keys to step
+        locale: navigator.language, // the locale, per default detected automatically from the browser
+        //editor: I18nEditor, // the editor (parsing and rendering of the input)
+        template: // the template of the input
+            '<div class="input-group ${groupClass}">' +
+            '<div class="input-group-prepend"><button style="width: ${buttonsWidth};" class="btn btn-decrement ${buttonsClass} btn-minus px-0 text-center" type="button">${decrementButton}</button></div>' +
+            '<input type="text" inputmode="decimal" style="text-align: ${textAlign}" class="form-control form-control-text-input px-0 mx-0"/>' +
+            '<div class="input-group-append"><button style="width: ${buttonsWidth};" class="btn btn-increment ${buttonsClass} btn-plus px-0 text-center" type="button">${incrementButton}</button></div>' +
+            '</div>'
     }
-    
+
+    for (let i in detallePedido) {
+        let p = productos.find(p => p.id == detallePedido[i].idProducto);
+        cuerpo = cuerpo +
+            `<div class="row col-4 mx-0">
+                    <p class=" text-center mx-auto my-auto">${p.nombre}</p>
+                </div>
+                <div class="row col-2 mx-0">
+                    <p class=" text-center mx-auto my-auto">$ ${detallePedido[i].precio}</p>
+                </div>
+                <div class="row col-3 mx-0 px-0">
+                    <!--p class="h5 text-center mx-auto my-auto">${detallePedido[i].cantidad}</p-->
+                    <input type="number" class="form-control my-auto border" min="1" value="${detallePedido[i].cantidad}" 
+                    onchange="setCantidad(${detallePedido[i].idProducto})" id="cantidadProductoPedido${detallePedido[i].idProducto}" />
+                </div>
+                <div class="row col-2 mx-0">
+                    <p class=" text-center mx-auto my-auto">$ ${detallePedido[i].subtotal}</p>
+                </div>
+                <div class="row col-1 mx-0">
+                    <button class="btn btn-outline-danger my-auto mx-auto mx-md-0 p-0 d-none d-md-block border-0" 
+                    onclick="quitarProductoCarrito(${detallePedido[i].idProducto})">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-trash my-auto" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                        </svg>
+                    </button>
+                </div>`;
+        //$(`input[id='cantidadProductoPedido${detallePedido[i].idProducto}']`).inputSpinner(props);
+    }
     document.getElementById("detallePedido").innerHTML = cuerpo;
+    for (let i in detallePedido) {
+        $(`input[id='cantidadProductoPedido${detallePedido[i].idProducto}']`).inputSpinner(props);
+    }
+    document.getElementById("informacionCliente").innerHTML =
+        `<p> Cliente: ${cliente.nombre} ${cliente.apellidoPaterno} ${cliente.apellidoMaterno}</p>
+    <p> Telefono: ${cliente.telefono} </p>
+    <p> Direccion de envio: ${direccion} </p>`;
 }
 </script>
 @endsection

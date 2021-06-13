@@ -61,10 +61,12 @@ class VentaController extends Controller
         //$sucursalProd = Sucursal_producto::where('idSucursal', $idSucursal)->get();
         $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)->get();
     
-        $pedidosContraEntrega = Pedido_contra_entrega::get();
+        $pedidosContraEntrega = Pedido_contra_entrega::where('idSucursal', '=',session('sucursal'))->get();
+        
+        $productos = Producto::get();
         $detallePedidos = detallePedido_CE::get();
         return view('Venta.index', compact('datosP', 'departamentos', 'clientes', 'productosSucursal', 'subproductos',
-         'ofertas','pedidosContraEntrega','detallePedidos'));
+         'ofertas','pedidosContraEntrega','detallePedidos','productos'));
         //    return session('idEmpleado');
     }
 
