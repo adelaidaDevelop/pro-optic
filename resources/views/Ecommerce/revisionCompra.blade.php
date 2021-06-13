@@ -32,7 +32,7 @@
     </div>
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\revision.png') }}" alt="Editar" width="35px" height="35px">
-        <p class="h6 my-auto mx-2 text-primary">Revisión compra</p>
+        <p class="h6 my-auto mx-2 text-primary">Revisar y confirmar compra</p>
     </button>
 
     <div class="h1 my-auto text-primary">
@@ -42,7 +42,7 @@
     <!--PASO TRES-->
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\pedidoConfirmado.png') }}" alt="Editar" width="30px" height="30px">
-        <p class="h6 my-auto mx-2 text-secondary">Confirmar compra</p>
+        <p class="h6 my-auto mx-2 text-secondary">Pedido Generado exitosamente</p>
     </button>
 </div>
 <div class="row col-12 mx-0 px-0">
@@ -511,6 +511,7 @@
                 // si tuvo éxito la petición
             }).done(function(respuesta) {
                 console.log(respuesta); //JSON.stringify(respuesta));
+                let datos= respuesta;
                 location.href = "{{url('/resumenFinal')}}";
             });
         } catch (err) {

@@ -1,5 +1,6 @@
 @extends('layouts.headerProcesoCompra')
 @section('contenido')
+
 <div class=" row col-12 px-4  py-2 my-2 input-group text-center mx-auto alert-secondary " style="background:#D5DBDB">
     <button id="btnGenerarPed" class="btn btn-outline-secondary col  text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\posicion.png') }}" alt="Editar" width="30px" height="30px">
@@ -21,17 +22,17 @@
     </div>
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\revision.png') }}" alt="Editar" width="35px" height="35px">
-        <p class="h6 my-auto mx-2 text-primary">Revisión compra</p>
+        <p class="h6 my-auto mx-2 text-success">Revisar y confirmar compra</p>
     </button>
 
-    <div class="h1 my-auto text-secondary">
+    <div class="h1 my-auto text-success">
         <p class="d-none d-md-block">..............</p>
         <p class="d-block d-md-none">.....</p>
     </div>
     <!--PASO TRES-->
     <button class="btn btn-outline-secondary col   text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\pedidoConfirmado.png') }}" alt="Editar" width="30px" height="30px">
-        <p class="h6 my-auto mx-2 text-secondary">Confirmar compra</p>
+        <p class="h6 my-auto mx-2 text-secondary">Pedido Generado exitosamente</p>
     </button>
 </div>
 <div class="row col-12 mx-0 px-0">
@@ -40,7 +41,7 @@
             <img class="col-md-10 mx-auto my-0 img-fluid" src="{{ asset('img\lupa.png') }}" alt="FORMA DE PAGO" />
         </div>
         <h4 class="row col mx-auto my-auto py-auto px-1 text-left alert-info">Descripción de su compra</h4>
-        <h4 class="row col mx-auto my-auto py-auto px-1 text-left alert-info">Numero Folio: </h4>
+        <h4 class="row col mx-auto my-auto py-auto px-1 text-left alert-info">Numero Folio: 444 </h4>
 
         <!--h6 class="row col mx-auto my-auto py-auto px-1 text-left alert-info d-block d-sm-none display-4">Revisión de su compra</h6-->
     </div>
@@ -54,7 +55,6 @@
                 <h4 class="row col-auto my-auto px-0 text-left">Forma de pago</h4>
             </div>
         </div>
-
     </div>
 
 
@@ -257,7 +257,7 @@
 
 </div>
 <script>
-/*
+    /*
     let productosVenta = [];
     let formaPago = @json($formaPago);
     let pagaCon2 = @json($pagaCon);

@@ -567,7 +567,7 @@ class EcommerceController extends Controller
 
     public function revisionCompra(Request $request){
         $pagaCon = $request->input('pago');
-        $formaPago = 'Contra Entrega';
+        $formaPago = ' Contra Entrega';
         $carrito = session('carrito');
         $id =  Auth::user()->id;
         $cliente = Cliente::where('idUsuario', '=', $id)->first();
@@ -592,22 +592,7 @@ class EcommerceController extends Controller
         $subtotal = $request->input('subtotal');
         $costoEnvio = $request->input('costoEnvio');
         $total = $request->input('total');
-    
-        $total2 = $request->input('data');
-
-      //  return $cambio;
-      /*
-        $venta = pedidoPContraEntrega::create([
-            'idCliente' => $id,
-            'direccion' => $direccion,
-            'subtotal' => $subtotal,
-            'costoEnvio' => $costoEnvio,
-            'total' => $total,
-            'pagarCon' => $pagaCon,
-            'cambio' => $cambio,
-              ]);
-        */
-        
+       
         $pedidoCompra = new Pedido_contra_entrega; //credito
         $pedidoCompra->idCliente = $idCliente;
         $pedidoCompra->direccion = $direccion;
@@ -619,45 +604,37 @@ class EcommerceController extends Controller
         //return $pedidoCompra;
         $pedidoCompra->save();
         
-      //  return true;
-
-        // return $cambio;
-        
         $datos = $request->input('datos');
         $datosCodificados = json_decode($datos, true);
-        
-        
         foreach ($datosCodificados as $datosProducto) {
             $idSucursal = $datosProducto['idSucursal'];
-            
             $sucursal_producto = Sucursal_producto::where('idProducto', '=', $datosProducto['idProducto'])
             ->where('idSucursal', '=', $idSucursal); //->update(['existencia'=>'11']);
-            //return 1;
-              //  return $sucursal_producto->first()->id ;
-            $idSucProd =  $sucursal_producto->first()->id ;
-            
+             $idSucProd =  $sucursal_producto->first()->id ;
             $detalle = new detallePedido_CE();
             $detalle->idPedido = $pedidoCompra->id;
             $detalle->idSucProd = $idSucProd ;
-            
             $detalle->precio =  $datosProducto['precio'];
             $detalle->cantidad = $datosProducto['cantidad'];
             $detalle->subtotal = $datosProducto['subtotal'];
-            
             $detalle->save();
-            
             //Actualizar existencia
             /*
             $productosSucursal = Sucursal_producto::where('idProducto', '=', $datosProducto['idProducto'])
             ->where('idSucursal', '=', session('sucursal')); //->update(['existencia'=>'11']);
             */
-       
            // $existencia = $sucursal_producto->first()->existencia - $datosProducto['cantidad'];
             // $sucursal_producto->update(['existencia' => $existencia]);
               }
-
-       // return 1;
-        return true;
+              //Datos a enviar para siguiente vista
+        $formaPago = 'Contra Entrega';
+        $carrito = session('carrito');
+        $id =  Auth::user()->id;
+        $cliente = Cliente::where('idUsuario', '=', $id)->first();
+        $domicilio = Domicilio::where('idCliente', '=', $cliente->id)->first();
+        $nombre = $cliente->nombre;
+        $telefono = $cliente->telefono;
+        return compact('nombre', 'domicilio', 'telefono', 'carrito','formaPago');
     }
 
     public function menu()

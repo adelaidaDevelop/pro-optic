@@ -10,7 +10,7 @@
         </ol>
     </nav>
 </div>
-<div class=" row col-12 px-4   my-2 input-group text-center mx-auto alert-secondary " style="background:#D5DBDB">
+<div class=" row col-12 px-4  mb-2 input-group text-center mx-auto alert-secondary " style="background:#D5DBDB">
     <button id="btnGenerarPed" class="btn btn-outline-secondary col  text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img\posicion.png') }}" alt="Editar" width="30px" height="30px">
         <p class="h6 my-auto mx-2 text-success">Dirección de envio</p>
