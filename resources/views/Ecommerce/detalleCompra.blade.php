@@ -43,9 +43,9 @@
         <p class="h6 my-auto mx-2 text-secondary">Confirmar compra</p>
     </button>
 </div>
-<div class="row col-12 mx-auto px-0 ">
-    <div class="col-12 col-md-9 mx-0 px-0">
-        <div class="row col-12 mx-0 mr-md-auto px-0 mb-auto border-bottom border-dark">
+<div class="row col-12 mx-0 px-0 ">
+    <div class="col-12 col-md-9 mx-0 px-0 px-md-2 ml-md-0 mr-md-auto border mb-2">
+        <div class="row col-12 mx-0 mr-md-2 px-0 px-md-2 mb-auto border-bottom border-dark">
             <div class="col-3 col-md-1 my-1 mx-0 px-0">
                 <img class="col-10 mx-0 img-fluid" src="{{ asset('img\ubicacion.png') }}" alt="UBICACION" />
             </div>
@@ -57,7 +57,7 @@
                     <p><strong class="">{{$nombre}}</strong></p>
                 </div>
                 <div class="form-group row col-12 mx-0 px-0">
-                    <label for="domicilios" class="col-auto col-md-2 mb-1 col-form-label text-center border">Domicilio</label>
+                    <label for="domicilios" class="col-auto col-md-1 mb-1 mx-0 px-0 col-form-label text-center">Domicilio</label>
                     <div class="col-12 mx-0 mt-1 mb-2 col-md-10 px-0">
 
                         <select class="custom-select my-auto mx-auto" onchange="getDireccion()" id="domicilios">
@@ -136,15 +136,12 @@
             @endforeach
         </div>
         -->
-        <div class="col-12 text-right py-1">
-            <a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Continuar</a>
-            <!-- <button class="btn btn-success btn-lg" onclick="{{url('/metodoPago')}}" type="submit">Continuar2</button>-->
-        </div>
+        
     </div>
-    <div class="col-3 .hidden-md-up border-primary">
-        <div class="row mb-auto p-1 border border-primary .hidden-md-up ">
+    <div class="col-md-3 mr-md-0 ml-md-auto px-0 pl-md-2 pr-md-0">
+        <div class="row mx-0 mb-auto p-1 border .hidden-md-up ">
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom  .hidden-md-up">
-                <h4 class="col-12 mx-auto my-1 py-0 text-center text-primary .hidden-md-up">Resumen de compra</h4>
+                <h4 class="col-12 mx-auto my-1 py-0 text-center .hidden-md-up">Resumen de compra</h4>
             </div>
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom .hidden-md-up">
                 <h5 class="mr-auto my-1 text-center .hidden-md-up">Subtotal</h5>
@@ -160,6 +157,10 @@
             </div>
         </div>
     </div>
+    <div class="col-12 text-right py-1">
+            <a class="btn btn-success btn-lg" href="{{url('/metodoPago')}}">Continuar</a>
+            <!-- <button class="btn btn-success btn-lg" onclick="{{url('/metodoPago')}}" type="submit">Continuar2</button>-->
+        </div>
 </div>
 <script>
     let totalCompra = 0;

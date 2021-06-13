@@ -481,7 +481,7 @@ class EcommerceController extends Controller
         $domicilio->colonia = $request['colonia'];
         //return 'todo bien';
         $domicilio->save();
-        session(['domicilio' => true]);
+        //session(['domicilio' => true]);
         if ($request->has('ajax'))
         {
             return Domicilio::where('idCliente', '=', $domicilio->idCliente)->get();
@@ -541,13 +541,13 @@ class EcommerceController extends Controller
                 $nombre = $cliente->nombre;
                 $telefono = $cliente->telefono;
                 if (count($domicilios)>0) {
-                    if (isset($_GET['domicilio']) && $_GET['domicilio'] == 'false') {
+                    /*if (isset($_GET['domicilio']) && $_GET['domicilio'] == 'false') {
                         session(['domicilio' => false]);
                         return view('Ecommerce.domicilio', compact('domicilios'));
-                    }
-                    if (session()->has('domicilio') && session('domicilio')) {
+                    }*/
+                    //if (session()->has('domicilio') && session('domicilio')) {
                         return view('Ecommerce.detalleCompra', compact('carrito', 'nombre', 'domicilios', 'telefono'));
-                    }
+                    //}
                 }
                 return view('Ecommerce.domicilio');
             }
