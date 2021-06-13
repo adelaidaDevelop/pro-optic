@@ -374,7 +374,7 @@
                 <div class=" col-8">
 
                     <div class="col-12">
-                        <div class="row col-12 border-bottom">
+                        <div class="row col-12 mx-auto border-bottom">
                             <div class="row col-5 mx-0">
                                 <p class="h5 text-center mx-auto my-0">Producto</p>
                             </div>
@@ -388,6 +388,8 @@
                                 <p class="h5 text-center mx-auto my-0">Subtotal</p>
                             </div>
                             <div class="row col-1 mx-0"></div>
+                        </div>
+                        <div id="detallePedido" class="row col-12 mx-auto border-bottom">
                         </div>
 
                     </div>
@@ -1617,18 +1619,38 @@ function modoPago(tipoPago) {
 </script>
 <!--script src="{{ asset('js\mayusculas.js') }}"></script-->
 <script>
-function obtenerPedidosEntrega()
-{
+function obtenerPedidosEntrega() {
     let clientes = @json($clientes);
     let pedidosContraEntrega = @json($pedidosContraEntrega);
     let cuerpo = "";
-    for(let i in pedidosContraEntrega)
-    {
+    for (let i in pedidosContraEntrega) {
         let cliente = clientes.find(p => p.id == pedidosContraEntrega[i].idCliente);
-        cuerpo = cuerpo + `<button class="btn btn-block btn-light"
+        cuerpo = cuerpo +
+            `<button class="btn btn-block btn-light"
         onclick="verPedidoEntrega(${pedidosContraEntrega[i].id})" >Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
     }
     document.getElementById("resultadoPedidos").innerHTML = cuerpo;
+}
+
+function verPedidoEntrega(id) {
+    let detallePedidos = @json($detallePedidos);
+    let cuerpo = "";
+    let detallePedido = detallePedidos.find(p => p.idPedido == id);
+    console.log('detallePedido',detallePedido);
+    cuerpo = `<div class="row col-5 mx-0">
+                                <p class="h5 text-center mx-auto my-0">${detallePedido.idSucProd}</p>
+                            </div>
+                            <div class="row col-2 mx-0">
+                                <p class="h5 text-center mx-auto my-0">${detallePedido.precio}</p>
+                            </div>
+                            <div class="row col-2 mx-0">
+                                <p class="h5 text-center mx-auto my-0">${detallePedido.cantidad}</p>
+                            </div>
+                            <div class="row col-2 mx-0">
+                                <p class="h5 text-center mx-auto my-0">${detallePedido.subtotal}</p>
+                            </div>
+                            <div class="row col-1 mx-0"></div>`
+    document.getElementById("detallePedido").innerHTML = cuerpo;
 }
 </script>
 @endsection

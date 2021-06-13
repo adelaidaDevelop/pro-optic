@@ -18,6 +18,7 @@ use App\Models\venta_cliente;
 use App\Models\Subproducto;
 use App\Models\Oferta;
 use App\Models\Pedido_contra_entrega;
+use App\Models\detallePedido_CE;
 
 //imp directo
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
@@ -61,9 +62,9 @@ class VentaController extends Controller
         $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)->get();
     
         $pedidosContraEntrega = Pedido_contra_entrega::get();
-        
+        $detallePedidos = detallePedido_CE::get();
         return view('Venta.index', compact('datosP', 'departamentos', 'clientes', 'productosSucursal', 'subproductos',
-         'ofertas','pedidosContraEntrega'));
+         'ofertas','pedidosContraEntrega','detallePedidos'));
         //    return session('idEmpleado');
     }
 
