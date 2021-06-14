@@ -39,10 +39,10 @@
                 <a class="nav-link" id="pills-pedido-tab" data-toggle="pill" href="#pills-pedido" role="tab"
                     onclick="verMisPedidos()" aria-controls="pills-pedido" aria-selected="false">Mis Pedidos</a>
             </li>
-            <li class="nav-item" role="presentation">
+            <!--li class="nav-item" role="presentation">
                 <a class="nav-link" id="pills-compra-tab" data-toggle="pill" href="#pills-compra" role="tab"
                     aria-controls="pills-compra" aria-selected="false">Listas de Compras</a>
-            </li>
+            </li-->
         </ul>
         <div class="tab-content pb-md-2" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-datos" role="tabpanel" aria-labelledby="pills-datos-tab">
