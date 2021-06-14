@@ -270,8 +270,6 @@ SUBPRODUCTOS
             }
         }*/
     //VALIDAR CAMPO PRECIO DE CREAR SUBPRODUCTO
-
-
     var number = document.getElementById('precio');
     number.onkeypress = function(e) {
         if (!((e.keyCode > 95 && e.keyCode < 106) ||

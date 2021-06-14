@@ -24,12 +24,6 @@ $verC = $sE->hasAnyRole($vC);
         <p class="h6 my-auto text-dark"><small>NUEVO CLIENTE</small></p>
     </a>
 </div>
-<div class="col-0  ml-3 p-1 ">
-    <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" href=".seguimientoPedidos" id="" onclick="return seguimientoPedidos()" value="">
-        <img src="{{ asset('img\camion.png') }}" alt="Editar" width="30px" height="30px">
-        <p class="h6 my-auto mx-2 text-dark"><small>SEGUIMIENTO PEDIDOS</small></p>
-    </button>
-</div>
 
 <div class="col-6 ml-4"></div>
 <div class=" ml-3 my-auto">
@@ -222,90 +216,7 @@ $verC = $sE->hasAnyRole($vC);
         </div>
     </div>
 </div>
-<!--Seguimiento pedido modal de ventas-->
-<div class="modal fade seguimientoPedidos" id="seguimientoPedidos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content" id="">
-            <div class="modal-header">
 
-                <h5 class="modal-title" id="exampleModalLabel">SEGUIMIENTO DE PEDIDOS</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="row modal-body">
-                <div class=" col-4">
-                    <div class="col-12 border border-dark mt-4 mb-4 ml-4 mr-2">
-                        <div class="px-3 py-3 m-0">
-                            <!--input type="text" id="buscador" class="form-control my-2">
-                        <button class="btn btn-info mb-2" id="boton">Buscar</button-->
-
-                            <h4 class="row my-1 mx-1" style="color:#4388CC">ACTIVOS</h4>
-
-                            <div>
-                                <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto">
-                                <h6 class=" text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER
-                                        INFORMACION
-                                        ADICIONAL, EDITAR O ELIMINAR </small> </h6>
-                                <!--div class="input-group-append">
-                        <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
-                        </div-->
-                            </div>
-
-                        </div>
-                        <div class="row m-0 px-0" style="height:200px;overflow-y:auto;">
-                            <div id="resultados" class="col btn-block h-100">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class=" col-8">
-                    <div id="seguimientoPaq" class="col-11 mt-4 input-group text-center mx-auto " style="background:#D5DBDB">
-                        <button id="btnGenerarPed" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img\pedidoGenerado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO ACEPTADO</small></p>
-                        </button>
-                        <div class=" h1 my-auto text-success">
-                            <p>.....</p>
-                        </div>
-                        <!--PASO DOS -->
-                        <button id="btnDos" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img\pedidoConfirmado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PREPARANDO PEDIDO</small></p>
-                        </button>
-                        <div class="h1 my-auto text-dark">
-                            <p>.....</p>
-                        </div>
-                        <!--PASO TRES-->
-                        <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img\procesoEntrega.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>EN PROCESO DE ENTREGA A DOMICILIO</small></p>
-                        </button>
-                        <div class="h1 my-auto text-dark">
-                            <p>.....</p>
-                        </div>
-                        <!--PASO CUATRO-->
-                        <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img\entregado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>ENTREGADO</small></p>
-                        </button>
-                    </div>
-                    <div class="row col-12 mx-auto mb-2">
-                        <p class="col-auto  mx-auto text-secondary  h5"><small><strong> Presione para actualizar el estado del paquete </strong> </small></p>
-                    </div>
-                    <div class="row col-12" id="divActBtn"><button id="btnActEstado" onclick="return actEstado()" class="btn btn-success text-center mx-auto">PREPARAR PEDIDO </button> </div>
-                </div>
-
-
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                <!--button type="button" class="btn btn-primary">Agregar Producto</button-->
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     let presionar = 0;
@@ -367,43 +278,8 @@ $verC = $sE->hasAnyRole($vC);
     texto.addEventListener('keyup', filtrar);
     filtrar();
 
-    function seguimientoPedidos() {
 
-    }
 
-    function actEstado() {
-        presionar = presionar + 1;
-    }
 
-    let estado = "aceptado";// recuperar estado de tabla venta_cliente
-    function botones() {
-        let btn1 = `
-        <button  onclick="return actEstado1()" class="btn btn-success text-center mx-auto">PREPARAR PEDIDO </button>
-        `;
-        let btn2 = `
-        <button  onclick="return actEstado2()" class="btn btn-success text-center mx-auto">PEDIDO EN CAMINO</button>
-        `;
-        let btn3 = `
-        <button  onclick="return actEstado2()" class="btn btn-success text-center mx-auto">PEDIDO ENTREGADO</button>
-        `;
-        if (estado == "aceptado") {
-            document.getElementById("divActBtn").innerHTML = btn1;
-        }
-        if (estado == "preparando") {
-            document.getElementById("divActBtn").innerHTML = btn2;
-        }
-        if (estado == "encamino") {
-            document.getElementById("divActBtn").innerHTML = btn3;
-        }
-        if (estado == "entregado") {
-            document.getElementById("divActBtn").innerHTML = "";
-        }
-
-    }
-
-    function estadosPaq() {
-
-       // seguimientoPaq
-    }
 </script>
 @endsection

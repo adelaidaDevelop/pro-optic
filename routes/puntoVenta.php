@@ -176,6 +176,15 @@ Route::prefix('/puntoVenta')->group(function () {
         Route::resource('venta', VentaController::class);
         Route::post('/compra/editar/{id}', [CompraController::class, 'estadoCompra']);
 
+        //Recuperar ventas ecommerce activos para seguimiento
+        Route::get('/seguimientoPedidosActivos', [VentaController::class, 'buscador2']);
+        Route::get('/ventaPedidos', [VentaController::class, 'buscador']);
+        //Darle funcionalidad a cadapedido
+        Route::get('/verSeguimiento/{id}', [VentaController::class, 'darSeguimiento']);
+        //Actualizar estado de los pedidos
+        Route::post('/actEstadoPed', [VentaController::class, 'act_est_paq']);
+        
+
         Route::resource('compra', CompraController::class);
         Route::get('/proveedor/buscador', [ProveedorController::class, 'buscador']);
         Route::post('/proveedor/editar/{id}', [ProveedorController::class, 'editarProveedor']);

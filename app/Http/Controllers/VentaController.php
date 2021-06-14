@@ -19,6 +19,7 @@ use App\Models\Subproducto;
 use App\Models\Oferta;
 use App\Models\Pedido_contra_entrega;
 use App\Models\detallePedido_CE;
+use Illuminate\Support\Facades\DB;
 
 //imp directo
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
@@ -55,19 +56,59 @@ class VentaController extends Controller
         //$datos['departamentos'] = Producto::paginate();
         $idSucursal = session('sucursal');
         $subproductos = Subproducto::all();
-
         $ofertas = Oferta::all();
-
         //$sucursalProd = Sucursal_producto::where('idSucursal', $idSucursal)->get();
         $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)->get();
-    
         $pedidosContraEntrega = Pedido_contra_entrega::where('idSucursal', '=',session('sucursal'))->get();
-        
         $productos = Producto::get();
         $detallePedidos = detallePedido_CE::get();
+        
+      //  $ventas = Venta::where('tipo','=',$tipo)->where('status', '=', $status);
+      $tipo ='ecommerce';
+      $status = 1;
+      $estado = 'PAGADO';
+      $seguimientoPedidoActivo = DB::table('ventas')
+      ->join('venta_clientes', 'ventas.id', '=', 'venta_clientes.idVenta')
+       ->where('ventas.tipo', '=', $tipo)->where('ventas.status','=',$status)->where('venta_clientes.estado','!=', $estado)
+          // ->select('sucursal_empleados.idSucursal as idSucu')
+          // ->groupBy('sucursal_empleados.idSucursal')
+          ->get();
+          //return $seguimientoPedidoActivo;
+
         return view('Venta.index', compact('datosP', 'departamentos', 'clientes', 'productosSucursal', 'subproductos',
-         'ofertas','pedidosContraEntrega','detallePedidos','productos'));
+         'ofertas','pedidosContraEntrega','detallePedidos','productos','seguimientoPedidoActivo'));
         //    return session('idEmpleado');
+    }
+    //Funcion recuperar solo datos
+
+    public function buscador()
+    {
+        $tipo ='ecommerce';
+        $status = 1;
+        $estado = 'PAGADO';
+        $seguimientoPedidoActivo = DB::table('ventas')
+        ->join('venta_clientes', 'ventas.id', '=', 'venta_clientes.idVenta')
+         ->where('ventas.tipo', '=', $tipo)->where('ventas.status','=',$status)->where('venta_clientes.estado','!=', $estado)
+            ->select('venta_clientes.estado as estado', 'ventas.id as idVenta', 'ventas.totalV as totalV')
+            // ->groupBy('sucursal_empleados.idSucursal')
+            ->get();
+            return $seguimientoPedidoActivo;
+    }
+    public function buscador2()
+    {
+       $tipo ='ecommerce';
+       $status = 1;
+       $estado = 'PAGADO';
+       $seguimientoPedidoActivo = DB::table('ventas')
+       ->join('venta_clientes', 'ventas.id', '=', 'venta_clientes.idVenta')
+        ->where('ventas.tipo', '=', $tipo)->where('ventas.status','=',$status)->where('venta_clientes.estado','!=', $estado)
+         ->select('venta_clientes.estado as estado2','ventas.id as idVenta', 'ventas.totalV as totalV')
+            // ->groupBy('sucursal_empleados.idSucursal')
+            ->get();
+            //$idVenta = $seguimientoPedidoActivo->id;
+       // $datosConsulta['sucursalB'] = Sucursal::where("direccion",'like',$request->texto."%")->get();
+        return view('Ecommerce.formSeguiPedi',compact('seguimientoPedidoActivo'));
+        //return $datosConsulta;
     }
 
     /**
@@ -206,6 +247,19 @@ class VentaController extends Controller
         }*/
 
         return view('Venta.ticket', compact('cajero', 'folio', 'pago'));
+    }
+    //Actualizar el estado de un paquete
+    public function act_est_paq(Request $request){
+        $idV = $request->input('idV');
+        $estado = $request->input('estado');
+      //  return $estado;
+        $pedido = Venta_cliente::where('idVenta','=', $idV);//->first()->get();
+        //  return $pedido;
+        //$pedido->estado = $estado;
+      //  $pedido->save();
+        $pedido->update(['estado' => $estado]);
+       // return $pedido;
+        return true;
     }
     ////
     public function show($folio) //Venta $venta)
@@ -614,5 +668,11 @@ class VentaController extends Controller
         $pedidos = Pedido_contra_entrega::get();
         $detallePedidos = detallePedido_CE::get();
         return compact('pedidos','detallePedidos');
+    }
+    public function darSeguimiento($id){
+        $seguimiento = Venta_cliente::where('idVenta','=',$id);
+        $estado = $seguimiento->first()->estado;
+       // $estado = $seguimiento->estado;
+        return $estado;
     }
 }
