@@ -1625,9 +1625,9 @@ function modoPago(tipoPago) {
 let pedidosContraEntrega = @json($pedidosContraEntrega);
 let detallePedidos = @json($detallePedidos);
 document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
-    
+
 function obtenerPedidosEntrega(idPedido) {
-    
+
     let clientes = @json($clientes);
     let contador = 0;
     let cuerpo = "";
@@ -1642,20 +1642,19 @@ function obtenerPedidosEntrega(idPedido) {
                 `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-primary active"
             onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
         } else {
-            if(pedidosContraEntrega[i].id == idPedido)
-            {
+            if (pedidosContraEntrega[i].id == idPedido) {
                 contador = parseInt(i);
                 cuerpo = cuerpo +
-                `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-primary active"
+                    `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-primary active"
                 onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
-        
-            }else{
+
+            } else {
                 cuerpo = cuerpo +
-                `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}" class="btn btn-block btn-primary"
+                    `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}" class="btn btn-block btn-primary"
                 onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
 
             }
-            
+
         }
     }
     document.getElementById("resultadoPedidos").innerHTML = cuerpo;
@@ -1706,7 +1705,7 @@ function verPedidoEntrega(id, idCliente) {
     for (let i in detallePedido) {
         let p = productos.find(p => p.id == detallePedido[i].idProducto);
         let btnQuitar =
-        `<div class="row col-1 mx-0">
+            `<div class="row col-1 mx-0">
             <button class="btn btn-outline-danger my-auto mx-auto mx-md-0 p-0 d-none d-md-block border-0" 
             onclick="quitarProductoPedido(${detallePedido[i].idPedido},${detallePedido[i].idProducto})">
                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-trash my-auto" viewBox="0 0 16 16">
@@ -1715,7 +1714,7 @@ function verPedidoEntrega(id, idCliente) {
                 </svg>
             </button>
         </div>`;
-        if(detallePedido.length ==1)
+        if (detallePedido.length == 1)
             btnQuitar = `<div class="row col-1 mx-0"></div>`;
         cuerpo = cuerpo +
             `<div class="row col-4 mx-0">
@@ -1727,17 +1726,18 @@ function verPedidoEntrega(id, idCliente) {
                 <div class="row col-3 mx-0 px-0">
                     <!--p class="h5 text-center mx-auto my-auto">${detallePedido[i].cantidad}</p-->
                     <input type="number" class="form-control my-auto border" min="1" value="${detallePedido[i].cantidad}" 
-                    onchange="setCantidad(${detallePedido[i].idProducto})" id="cantidadProductoPedido${detallePedido[i].idProducto}" />
+                    onchange="actualizarCantidadPedidoProducto(${detallePedido[i].idPedido},${detallePedido[i].idProducto})" 
+                    id="cantidadProductoPedido${detallePedido[i].idPedido}${detallePedido[i].idProducto}" />
                 </div>
                 <div class="row col-2 mx-0">
                     <p class=" text-center mx-auto my-auto">$ ${detallePedido[i].subtotal}</p>
                 </div>
                 ${btnQuitar}`;
-        //$(`input[id='cantidadProductoPedido${detallePedido[i].idProducto}']`).inputSpinner(props);
     }
     document.getElementById("detallePedido").innerHTML = cuerpo;
     for (let i in detallePedido) {
-        $(`input[id='cantidadProductoPedido${detallePedido[i].idProducto}']`).inputSpinner(props);
+        $(`input[id='cantidadProductoPedido${detallePedido[i].idPedido}${detallePedido[i].idProducto}']`).inputSpinner(
+            props);
     }
     $('#btnAceptarPedido').val(id);
     $('#btnRechazarPedido').val(id);
@@ -1767,10 +1767,10 @@ $('#btnAceptarPedido').bind('click', async function() {
             // si tuvo éxito la petición
         });
         console.log('respuestaAceptar', funcion);
-        
-        if(funcion == 1)
-        {
-            return alert('Algunos de los productos no tienen la existencia disponible para pasar a la venta');
+
+        if (funcion == 1) {
+            return alert(
+                'Algunos de los productos no tienen la existencia disponible para pasar a la venta');
         }
         pedidosContraEntrega = funcion['pedidos'];
         detallePedidos = funcion['detallePedidos'];
@@ -1810,8 +1810,69 @@ $('#btnRechazarPedido').bind('click', async function() {
         console.log("Error al realizar la petición de productos AJAX: " + err.message);
     }
 });
-async function quitarProductoPedido(idPedido,idProducto)
-{
+let workerAjax = new Worker("{{ asset('js/workerAjax.js') }}");
+async function actualizarCantidadPedidoProducto(idPedido, idProducto) {
+    let cantidad = document.getElementById(`cantidadProductoPedido${idPedido}${idProducto}`).value;
+
+    /*if (window.Worker) {
+        //src="{{ asset('js\bootstrap-input-spinner.js') }}"
+        //var message = {mensaje:"Hola Worker"};
+        workerAjax.terminate();
+        workerAjax = new Worker("{{ asset('js/workerAjax.js') }}");
+        var message = {
+            idPedido: idPedido,
+            idProducto: idProducto,
+            cantidad: cantidad,
+            url:`{{url('/puntoVenta/actualizarCantidadPedidoProducto')}}`,
+            _token: "{{ csrf_token() }}"
+        };
+
+        workerAjax.postMessage(message);
+        workerAjax.onmessage = function(e) {
+
+            let funcion = e.data.respuesta;
+            
+            console.log('respuestaActualizar', funcion);
+            return;
+            pedidosContraEntrega = funcion['pedidos'];
+            detallePedidos = funcion['detallePedidos'];
+            obtenerPedidosEntrega(idPedido);
+            document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
+
+        };
+        //worker.terminate();
+    } else {*/
+    try {
+        //$(`cantidadProductoPedido${idPedido}${idProducto}`).readonly 
+        let funcion = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `{{url('/puntoVenta/actualizarCantidadPedidoProducto')}}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                idPedido: idPedido,
+                idProducto: idProducto,
+                cantidad: cantidad,
+                _token: "{{ csrf_token() }}"
+            }
+            // si tuvo éxito la petición
+        });
+        console.log('respuestaQuitar', funcion);
+        pedidosContraEntrega = funcion['pedidos'];
+        detallePedidos = funcion['detallePedidos'];
+        obtenerPedidosEntrega(idPedido);
+        document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
+
+        //if(funcion == 1)
+        //  alert('El pedido se ha eliminado');
+
+    } catch (err) {
+        console.log("Error al realizar la petición de productos AJAX: " + err.message);
+    }
+    //}
+}
+async function quitarProductoPedido(idPedido, idProducto) {
     try {
         let confirmacion = confirm('¿Quitar producto de este pedido?');
         if (!confirmacion)
@@ -1823,8 +1884,8 @@ async function quitarProductoPedido(idPedido,idProducto)
             url: `{{url('/puntoVenta/quitarProductoPedido')}}`,
             // los datos que voy a enviar para la relación
             data: {
-                idPedido:idPedido,
-                idProducto:idProducto,
+                idPedido: idPedido,
+                idProducto: idProducto,
                 _token: "{{ csrf_token() }}"
             }
             // si tuvo éxito la petición
