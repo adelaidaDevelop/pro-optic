@@ -4,6 +4,7 @@
 DEVOLUCION
 @endsection
 @section('opciones')
+
 <div class="col-7 ml-4"></div>
 <div class=" ml-3 my-auto">
     <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">

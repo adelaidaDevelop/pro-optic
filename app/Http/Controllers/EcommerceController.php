@@ -557,15 +557,25 @@ class EcommerceController extends Controller
 
     public function formaPago()
     {
+        if (session()->has('carrito')) {
+        if (!Auth::check())
+            return redirect('/loginCliente');
+        
         return view('Ecommerce.formaPago');
+            }
+            return back();
     }
 
     public function revisionPedido()
     {
+        if (!Auth::check())
+            return redirect('/loginCliente');
         return view('Ecommerce.revisionPedido');
     }
 
     public function revisionCompra(Request $request){
+        if (!Auth::check())
+            return redirect('/loginCliente');
         $pagaCon = $request->input('pago');
         $formaPago = ' Contra Entrega';
         $carrito = session('carrito');
@@ -578,6 +588,8 @@ class EcommerceController extends Controller
     }
 
     public function resumen($datos, $folio){
+        if (!Auth::check())
+            return redirect('/loginCliente');
         $pagarCon = $datos;
         $folio = $folio;
         $formaPago = 'Contra Entrega';
