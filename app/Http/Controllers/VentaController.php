@@ -14,7 +14,7 @@ use App\Models\Pago_venta;
 use App\Models\Sucursal_producto;
 use App\Models\Sucursal_empleado;
 use App\Models\Empleado;
-use App\Models\venta_cliente;
+use App\Models\Venta_cliente;
 use App\Models\Subproducto;
 use App\Models\Oferta;
 use App\Models\Pedido_contra_entrega;
@@ -509,6 +509,56 @@ class VentaController extends Controller
     public function impAjustado($folio){
     }
 
+    public function aceptarPedido(Request $request,$id)
+    {
+        $pedido = Pedido_contra_entrega::find($id);
+        $venta = new Venta;
+        $venta->tipo ="ecommerce";
+        $venta->totalV = $pedido->total;
+        $venta->status = true;
+        $venta->idSucursalEmpleado = session('idSucursalEmpleado');
+        $venta->fecha = now()->toDateString();
+        $venta->save();
+
+        $ventaCliente = new Venta_cliente;
+        $ventaCliente->estado = "ACEPTADO";
+        $ventaCliente->idCliente = $pedido->idCliente;
+        $ventaCliente->idVenta = $venta->id;
+        $ventaCliente->direccion = $pedido->direccion;
+        $ventaCliente->save();
+        
+        $detallePedido = detallePedido_CE::where('idPedido','=',$id)->get();
+        foreach ($detallePedido as $producto)
+        {
+            $detalleVenta  = new Detalle_venta;
+            $detalleVenta->idVenta = $venta->id;
+            $detalleVenta->idProducto = $producto->idProducto;
+            $detalleVenta->tipo = "NORMAL";
+            $detalleVenta->cantidad = $producto->cantidad;
+            $detalleVenta->precioIndividual = $producto->precio;
+            
+            $sucursal_producto = Sucursal_producto::where('idProducto', '=', $producto->idProducto)
+            ->where('idSucursal', '=', $pedido->idSucursal); //->update(['existencia'=>'11']);
+            if($producto->cantidad > $sucursal_producto->first()->existencia)
+            {
+                
+                Detalle_venta::where('idVenta','=',$venta->id)->delete();
+                Venta_cliente::where('idVenta','=',$venta->id)->delete();
+                Venta::destroy($venta->id);
+                return 1;
+            }
+            
+            $existencia = $sucursal_producto->first()->existencia - $producto->cantidad;
+            $sucursal_producto->update(['existencia' => $existencia]);
+        }
+        
+        detallePedido_CE::where('idPedido','=',$id)->delete();
+        Pedido_contra_entrega::destroy($id);
+        $pedidos = Pedido_contra_entrega::get();
+        $detallePedidos = detallePedido_CE::get();
+        return compact('pedidos','detallePedidos');
+    }
+
     public function rechazarPedido(Request $request,$id)
     {
         detallePedido_CE::where('idPedido','=',$id)->delete();
@@ -525,5 +575,3 @@ class VentaController extends Controller
         return compact('pedidos','detallePedidos');
     }
 }
-
-

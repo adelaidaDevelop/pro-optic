@@ -19,6 +19,7 @@ class CreateVentaClientesTable extends Migration
          //   $table->string('descripcion')->nullable();
             $table->foreignId('idCliente')->constrained('clientes');
             $table->foreignId('idVenta')->constrained('ventas');
+            $table->string('direccion');
             $table->timestamps();
         });
     }
