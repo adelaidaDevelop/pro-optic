@@ -483,8 +483,7 @@ class EcommerceController extends Controller
         //return 'todo bien';
         $domicilio->save();
         //session(['domicilio' => true]);
-        if ($request->has('ajax'))
-        {
+        if ($request->has('ajax')) {
             return Domicilio::where('idCliente', '=', $domicilio->idCliente)->get();
         }
         return redirect('/direccionEnvio');
@@ -494,13 +493,12 @@ class EcommerceController extends Controller
     {
         $id =  Auth::user()->id;
         $cliente = Cliente::where('idUsuario', '=', $id)->first();
-        $domicilio = request()->except(['_token','ajax','idDomicilio','ciudad','estado']);
+        $domicilio = request()->except(['_token', 'ajax', 'idDomicilio', 'ciudad', 'estado']);
         //return $domicilio;
         //Domicilio::find($request['idDomicilio']);
-        Domicilio::where('id', '=',$request['idDomicilio'])->update($domicilio);
+        Domicilio::where('id', '=', $request['idDomicilio'])->update($domicilio);
         //return 'Todo bien';
-        if($request->has('ajax'))
-        {
+        if ($request->has('ajax')) {
             return Domicilio::where('idCliente', '=', $cliente->id)->get();
         }
         //Domicilio::where('idCliente', '=', $cliente->id)->delete();
@@ -511,8 +509,7 @@ class EcommerceController extends Controller
         $id =  Auth::user()->id;
         $cliente = Cliente::where('idUsuario', '=', $id)->first();
         Domicilio::destroy($request['idDomicilio']);
-        if($request->has('ajax'))
-        {
+        if ($request->has('ajax')) {
             return Domicilio::where('idCliente', '=', $cliente->id)->get();
         }
         //Domicilio::where('idCliente', '=', $cliente->id)->delete();
@@ -541,13 +538,13 @@ class EcommerceController extends Controller
                 $domicilios = Domicilio::where('idCliente', '=', $cliente->id)->get();
                 $nombre = $cliente->nombre;
                 $telefono = $cliente->telefono;
-                if (count($domicilios)>0) {
+                if (count($domicilios) > 0) {
                     /*if (isset($_GET['domicilio']) && $_GET['domicilio'] == 'false') {
                         session(['domicilio' => false]);
                         return view('Ecommerce.domicilio', compact('domicilios'));
                     }*/
                     //if (session()->has('domicilio') && session('domicilio')) {
-                        return view('Ecommerce.detalleCompra', compact('carrito', 'nombre', 'domicilios', 'telefono'));
+                    return view('Ecommerce.detalleCompra', compact('carrito', 'nombre', 'domicilios', 'telefono'));
                     //}
                 }
                 return view('Ecommerce.domicilio');
@@ -559,12 +556,12 @@ class EcommerceController extends Controller
     public function formaPago()
     {
         if (session()->has('carrito')) {
-        if (!Auth::check())
-            return redirect('/loginCliente');
-        
-        return view('Ecommerce.formaPago');
-            }
-            return back();
+            if (!Auth::check())
+                return redirect('/loginCliente');
+
+            return view('Ecommerce.formaPago');
+        }
+        return back();
     }
 
     public function revisionPedido()
@@ -574,7 +571,8 @@ class EcommerceController extends Controller
         return view('Ecommerce.revisionPedido');
     }
 
-    public function revisionCompra(Request $request){
+    public function revisionCompra(Request $request)
+    {
         if (!Auth::check())
             return redirect('/loginCliente');
         $pagaCon = $request->input('pago');
@@ -585,10 +583,11 @@ class EcommerceController extends Controller
         $domicilio = Domicilio::where('idCliente', '=', $cliente->id)->first();
         $nombre = $cliente->nombre;
         $telefono = $cliente->telefono;
-        return view('Ecommerce.revisionCompra', compact('nombre', 'domicilio', 'telefono', 'carrito','pagaCon','formaPago'));
+        return view('Ecommerce.revisionCompra', compact('nombre', 'domicilio', 'telefono', 'carrito', 'pagaCon', 'formaPago'));
     }
 
-    public function resumen($datos, $folio){
+    public function resumen($datos, $folio)
+    {
         if (!Auth::check())
             return redirect('/loginCliente');
         $pagarCon = $datos;
@@ -600,10 +599,10 @@ class EcommerceController extends Controller
         $domicilio = Domicilio::where('idCliente', '=', $cliente->id)->first();
         $nombre = $cliente->nombre;
         $telefono = $cliente->telefono;
-        return view('Ecommerce.compraGenerada', compact('nombre', 'domicilio', 'telefono', 'carrito','formaPago','pagarCon', 'folio'));
-        
+        return view('Ecommerce.compraGenerada', compact('nombre', 'domicilio', 'telefono', 'carrito', 'formaPago', 'pagarCon', 'folio'));
     }
-    public function insertarSolicitud(Request $request){
+    public function insertarSolicitud(Request $request)
+    {
         $id =  Auth::user()->id;
         $idCliente = Cliente::where('idUsuario', '=', $id)->first()->id;
         $datosDomicilio = $request->except('_token');
@@ -615,7 +614,7 @@ class EcommerceController extends Controller
         $subtotal = $request->input('subtotal');
         $costoEnvio = $request->input('costoEnvio');
         $total = $request->input('total');
-       
+
         $pedidoCompra = new Pedido_contra_entrega; //credito
         $pedidoCompra->idCliente = $idCliente;
         $pedidoCompra->idSucursal = session('sucursalEcommerce');
@@ -629,14 +628,14 @@ class EcommerceController extends Controller
         $pedidoCompra->save();
 
         $folioPedido = $pedidoCompra->id;
-        
+
         $datos = $request->input('datos');
         $datosCodificados = json_decode($datos, true);
         foreach ($datosCodificados as $datosProducto) {
             $idSucursal = $datosProducto['idSucursal'];
             $sucursal_producto = Sucursal_producto::where('idProducto', '=', $datosProducto['idProducto'])
-            ->where('idSucursal', '=', $idSucursal); //->update(['existencia'=>'11']);
-             $idSucProd =  $sucursal_producto->first()->id ;
+                ->where('idSucursal', '=', $idSucursal); //->update(['existencia'=>'11']);
+            $idSucProd =  $sucursal_producto->first()->id;
             $detalle = new detallePedido_CE();
             $detalle->idPedido = $pedidoCompra->id;
             //$detalle->idSucProd = $idSucProd ;
@@ -650,14 +649,17 @@ class EcommerceController extends Controller
             $productosSucursal = Sucursal_producto::where('idProducto', '=', $datosProducto['idProducto'])
             ->where('idSucursal', '=', session('sucursal')); //->update(['existencia'=>'11']);
             */
-           // $existencia = $sucursal_producto->first()->existencia - $datosProducto['cantidad'];
+            // $existencia = $sucursal_producto->first()->existencia - $datosProducto['cantidad'];
             // $sucursal_producto->update(['existencia' => $existencia]);
-              }
-              //Datos a enviar para siguiente vista
+        }
+        //Datos a enviar para siguiente vista
         //return view('Ecommerce.compraGenerada');
-       // return $pagaCon;
-        return compact ('pagaCon', 'folioPedido');
-       // return compact('nombre', 'domicilio', 'telefono', 'carrito','formaPago');
+        // return $pagaCon;
+        Carrito::where('idUsuario', '=', Auth::user()->id)->delete();
+        $carrito = [];
+        session(['carrito' => $carrito]);
+        return compact('pagaCon', 'folioPedido');
+        // return compact('nombre', 'domicilio', 'telefono', 'carrito','formaPago');
     }
 
     public function menu()
@@ -674,9 +676,18 @@ class EcommerceController extends Controller
         $ventasClientes = Venta_cliente::get();
         $detalleVentaPedidos = Detalle_venta::get();
         $productos = Producto::get();
-        return view('Ecommerce.vistaCliente', compact('sucursales', 'departamentos', 'domicilios', 'cliente',
-        'pedidosContraEntrega','ventasContraEntrega','ventasClientes','detallePedidos','detalleVentaPedidos',
-        'productos'));
+        return view('Ecommerce.vistaCliente', compact(
+            'sucursales',
+            'departamentos',
+            'domicilios',
+            'cliente',
+            'pedidosContraEntrega',
+            'ventasContraEntrega',
+            'ventasClientes',
+            'detallePedidos',
+            'detalleVentaPedidos',
+            'productos'
+        ));
     }
 
     public function actualizarDatosCliente(Request $request)
@@ -684,7 +695,7 @@ class EcommerceController extends Controller
         $datos = [];
         $cliente = Cliente::where('idUsuario', '=', session('idCliente'))->first();
         $user = Auth::user();
-        
+
         if ($request->input('nombre') != $cliente->nombre)
             $datos = Arr::add($datos, 'nombre', $request->input('nombre'));
         if ($request->input('apellidoPaterno') != $cliente->apellidoPaterno)
@@ -709,10 +720,10 @@ class EcommerceController extends Controller
         if ($validacion->fails()) :
             return back()->withErrors($validacion)->with(['cambios' => true])->withInput($request->all());
         endif;
-        $datosCliente = request()->except(['_token','email','username']);
-        $datosUser = request()->only(['email','username']);
-        Cliente::where('idUsuario','=',session('idCliente'))->update($datosCliente);
-        User::where('id','=',session('idCliente'))->update($datosUser);
-        return back();//redirect('/')
+        $datosCliente = request()->except(['_token', 'email', 'username']);
+        $datosUser = request()->only(['email', 'username']);
+        Cliente::where('idUsuario', '=', session('idCliente'))->update($datosCliente);
+        User::where('id', '=', session('idCliente'))->update($datosUser);
+        return back(); //redirect('/')
     }
 }
