@@ -32,7 +32,12 @@
         </div>
         @endif
         <div class="col-0  ml-3 p-1 ">
+<<<<<<< HEAD
             <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal" href=".listaSolicitudVentas" id="btnSolic_Ventas" onclick="obtenerPedidosEntrega()" value="">
+=======
+            <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal"
+                href=".listaSolicitudVentas" id="btnSolic_Ventas" onclick="obtenerPedidosEntrega(0)" value="">
+>>>>>>> 85a10b0b0e56a0b58f3b15dac1c984ee3ad173cd
                 <img src="{{ asset('img\ventas.png') }}" alt="Editar" width="30px" height="30px">
                 <span id="notificacionPedidos" class="badge badge-warning">0</span>
                 <p class="h6 my-auto mx-2 text-dark"><small>VENTAS ECOMMERCE</small></p>
@@ -1567,6 +1572,7 @@
 </script>
 <!--script src="{{ asset('js\mayusculas.js') }}"></script-->
 <script>
+<<<<<<< HEAD
     let pedidosContraEntrega = @json($pedidosContraEntrega);
     let detallePedidos = @json($detallePedidos);
     let estado = "ACEPTADO";
@@ -1590,6 +1596,40 @@
                 cuerpo = cuerpo +
                     `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}" class="btn btn-block btn-primary"
             onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
+=======
+let pedidosContraEntrega = @json($pedidosContraEntrega);
+let detallePedidos = @json($detallePedidos);
+document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
+
+function obtenerPedidosEntrega(idPedido) {
+
+    let clientes = @json($clientes);
+    let contador = 0;
+    let cuerpo = "";
+    for (let i in pedidosContraEntrega) {
+        let idCliente = pedidosContraEntrega[i].idCliente;
+        let cliente = clientes.find(p => p.id == idCliente);
+        let direccion = pedidosContraEntrega[i].direccion;
+        //console.log('direccion', direccion);
+
+        if (idPedido == 0 && parseInt(i) == 0) {
+            cuerpo = cuerpo +
+                `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-primary active"
+            onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
+        } else {
+            if (pedidosContraEntrega[i].id == idPedido) {
+                contador = parseInt(i);
+                cuerpo = cuerpo +
+                    `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-primary active"
+                onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
+
+            } else {
+                cuerpo = cuerpo +
+                    `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}" class="btn btn-block btn-primary"
+                onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
+
+            }
+>>>>>>> 85a10b0b0e56a0b58f3b15dac1c984ee3ad173cd
 
             }
         }
@@ -1599,8 +1639,19 @@
             let direccion = pedidosContraEntrega[0].direccion;
             verPedidoEntrega(pedidosContraEntrega[0].id, idC); //, pedidosContraEntrega[0].direccion);
         }
+<<<<<<< HEAD
+=======
+    }
+    document.getElementById("resultadoPedidos").innerHTML = cuerpo;
+    if (pedidosContraEntrega[contador] != undefined) {
+        let idC = pedidosContraEntrega[contador].idCliente;
+        let direccion = pedidosContraEntrega[contador].direccion;
+        verPedidoEntrega(pedidosContraEntrega[contador].id, idC); //, pedidosContraEntrega[0].direccion);
+    }
+>>>>>>> 85a10b0b0e56a0b58f3b15dac1c984ee3ad173cd
 
     }
+<<<<<<< HEAD
 
     function verPedidoEntrega(id, idCliente) {
         let direccion = pedidosContraEntrega.find(p => p.id == id).direccion;
@@ -1642,6 +1693,30 @@
             let p = productos.find(p => p.id == detallePedido[i].idProducto);
             cuerpo = cuerpo +
                 `<div class="row col-4 mx-0">
+=======
+    for (let i in pedidosContraEntrega) {
+        if (pedidosContraEntrega[i].id == id)
+            $(`#btnPedidoEntrega${pedidosContraEntrega[i].id}`).addClass("active");
+        else
+            $(`#btnPedidoEntrega${pedidosContraEntrega[i].id}`).removeClass("active");
+    }
+    for (let i in detallePedido) {
+        let p = productos.find(p => p.id == detallePedido[i].idProducto);
+        let btnQuitar =
+            `<div class="row col-1 mx-0">
+            <button class="btn btn-outline-danger my-auto mx-auto mx-md-0 p-0 d-none d-md-block border-0" 
+            onclick="quitarProductoPedido(${detallePedido[i].idPedido},${detallePedido[i].idProducto})">
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-trash my-auto" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                </svg>
+            </button>
+        </div>`;
+        if (detallePedido.length == 1)
+            btnQuitar = `<div class="row col-1 mx-0"></div>`;
+        cuerpo = cuerpo +
+            `<div class="row col-4 mx-0">
+>>>>>>> 85a10b0b0e56a0b58f3b15dac1c984ee3ad173cd
                     <p class=" text-center mx-auto my-auto">${p.nombre}</p>
                 </div>
                 <div class="row col-2 mx-0">
@@ -1650,11 +1725,13 @@
                 <div class="row col-3 mx-0 px-0">
                     <!--p class="h5 text-center mx-auto my-auto">${detallePedido[i].cantidad}</p-->
                     <input type="number" class="form-control my-auto border" min="1" value="${detallePedido[i].cantidad}" 
-                    onchange="setCantidad(${detallePedido[i].idProducto})" id="cantidadProductoPedido${detallePedido[i].idProducto}" />
+                    onchange="actualizarCantidadPedidoProducto(${detallePedido[i].idPedido},${detallePedido[i].idProducto})" 
+                    id="cantidadProductoPedido${detallePedido[i].idPedido}${detallePedido[i].idProducto}" />
                 </div>
                 <div class="row col-2 mx-0">
                     <p class=" text-center mx-auto my-auto">$ ${detallePedido[i].subtotal}</p>
                 </div>
+<<<<<<< HEAD
                 <div class="row col-1 mx-0">
                     <button class="btn btn-outline-danger my-auto mx-auto mx-md-0 p-0 d-none d-md-block border-0" 
                     onclick="quitarProductoCarrito(${detallePedido[i].idProducto})">
@@ -1702,6 +1779,47 @@
 
         } catch (err) {
             console.log("Error al realizar la petición de productos AJAX: " + err.message);
+=======
+                ${btnQuitar}`;
+    }
+    document.getElementById("detallePedido").innerHTML = cuerpo;
+    for (let i in detallePedido) {
+        $(`input[id='cantidadProductoPedido${detallePedido[i].idPedido}${detallePedido[i].idProducto}']`).inputSpinner(
+            props);
+    }
+    $('#btnAceptarPedido').val(id);
+    $('#btnRechazarPedido').val(id);
+    let infoPedido = pedidosContraEntrega.find(p => p.id == id);
+    document.getElementById("informacionCliente").innerHTML =
+        `<p> Subtotal: $ ${infoPedido.subtotal} </p>
+        <p> Costo de envio: $ ${infoPedido.costoEnvio} </p>
+        <p> Total: $ ${infoPedido.total} </p>
+        <p> Pagará con: $ ${infoPedido.pagarCon} </p>
+        <p> Cambio: $ ${infoPedido.cambio} </p>
+        <p> Cliente: ${cliente.nombre} ${cliente.apellidoPaterno} ${cliente.apellidoMaterno}</p>
+    <p> Telefono: ${cliente.telefono} </p>
+    <p> Direccion de envio: ${direccion} </p>
+    `;
+}
+$('#btnAceptarPedido').bind('click', async function() {
+    try {
+        let funcion = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `{{url('/puntoVenta/aceptarPedido')}}/${this.value}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                _token: "{{ csrf_token() }}"
+            }
+            // si tuvo éxito la petición
+        });
+        console.log('respuestaAceptar', funcion);
+
+        if (funcion == 1) {
+            return alert(
+                'Algunos de los productos no tienen la existencia disponible para pasar a la venta');
+>>>>>>> 85a10b0b0e56a0b58f3b15dac1c984ee3ad173cd
         }
     });
     $('#btnRechazarPedido').bind('click', async function() {
@@ -1994,6 +2112,7 @@
         });
         // actualizarEstadoBD(idVentaGlobal, estado);
     }
+<<<<<<< HEAD
 
     function entregadoFuncion() {
         // SEGUIMIENTO4
@@ -2100,6 +2219,114 @@
             //Llamar funcionPreparando
             //  canceladoFuncion();
             //Actualizar estado de la tabla venta_clientes
+=======
+});
+let workerAjax = new Worker("{{ asset('js/workerAjax.js') }}");
+async function actualizarCantidadPedidoProducto(idPedido, idProducto) {
+    let cantidad = document.getElementById(`cantidadProductoPedido${idPedido}${idProducto}`).value;
+
+    /*if (window.Worker) {
+        //src="{{ asset('js\bootstrap-input-spinner.js') }}"
+        //var message = {mensaje:"Hola Worker"};
+        workerAjax.terminate();
+        workerAjax = new Worker("{{ asset('js/workerAjax.js') }}");
+        var message = {
+            idPedido: idPedido,
+            idProducto: idProducto,
+            cantidad: cantidad,
+            url:`{{url('/puntoVenta/actualizarCantidadPedidoProducto')}}`,
+            _token: "{{ csrf_token() }}"
+        };
+
+        workerAjax.postMessage(message);
+        workerAjax.onmessage = function(e) {
+
+            let funcion = e.data.respuesta;
+            
+            console.log('respuestaActualizar', funcion);
+            return;
+            pedidosContraEntrega = funcion['pedidos'];
+            detallePedidos = funcion['detallePedidos'];
+            obtenerPedidosEntrega(idPedido);
+            document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
+
+        };
+        //worker.terminate();
+    } else {*/
+    try {
+        //$(`cantidadProductoPedido${idPedido}${idProducto}`).readonly 
+        let funcion = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `{{url('/puntoVenta/actualizarCantidadPedidoProducto')}}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                idPedido: idPedido,
+                idProducto: idProducto,
+                cantidad: cantidad,
+                _token: "{{ csrf_token() }}"
+            }
+            // si tuvo éxito la petición
+        });
+        console.log('respuestaQuitar', funcion);
+        pedidosContraEntrega = funcion['pedidos'];
+        detallePedidos = funcion['detallePedidos'];
+        obtenerPedidosEntrega(idPedido);
+        document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
+
+        //if(funcion == 1)
+        //  alert('El pedido se ha eliminado');
+
+    } catch (err) {
+        console.log("Error al realizar la petición de productos AJAX: " + err.message);
+    }
+    //}
+}
+async function quitarProductoPedido(idPedido, idProducto) {
+    try {
+        let confirmacion = confirm('¿Quitar producto de este pedido?');
+        if (!confirmacion)
+            return;
+        let funcion = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `{{url('/puntoVenta/quitarProductoPedido')}}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                idPedido: idPedido,
+                idProducto: idProducto,
+                _token: "{{ csrf_token() }}"
+            }
+            // si tuvo éxito la petición
+        });
+        console.log('respuestaQuitar', funcion);
+        pedidosContraEntrega = funcion['pedidos'];
+        detallePedidos = funcion['detallePedidos'];
+        obtenerPedidosEntrega(idPedido);
+        document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
+
+        //if(funcion == 1)
+        //  alert('El pedido se ha eliminado');
+
+    } catch (err) {
+        console.log("Error al realizar la petición de productos AJAX: " + err.message);
+    }
+}
+setInterval(async function() {
+    try {
+        let funcion = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `{{url('/puntoVenta/pedidosTiempoReal')}}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                _token: "{{ csrf_token() }}"
+            }
+            // si tuvo éxito la petición
+>>>>>>> 85a10b0b0e56a0b58f3b15dac1c984ee3ad173cd
         });
         //Asignar evento a boton entregar pedido en sucursal
         $("#btnEntregarSucursal").click(function() {

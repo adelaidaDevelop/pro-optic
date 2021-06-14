@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use App\Models\Venta;
+use App\Models\Venta_cliente;
 use App\Models\Sucursal;
 use App\Models\Sucursal_producto;
 use App\Models\Departamento;
@@ -668,8 +669,14 @@ class EcommerceController extends Controller
         $cliente = Cliente::where('idUsuario', '=', session('idCliente'))->first();
         $domicilios = Domicilio::where('idCliente', '=', $cliente->id)->get();
         $pedidosContraEntrega = Pedido_contra_entrega::where('idCliente', '=', $cliente->id)->get();
+        $detallePedidos = detallePedido_CE::get();
+        $ventasContraEntrega = Venta::where('tipo', '=', 'ecommerce')->get();
+        $ventasClientes = Venta_cliente::get();
+        $detalleVentaPedidos = Detalle_venta::get();
+        $productos = Producto::get();
         return view('Ecommerce.vistaCliente', compact('sucursales', 'departamentos', 'domicilios', 'cliente',
-        'pedidosContraEntrega'));
+        'pedidosContraEntrega','ventasContraEntrega','ventasClientes','detallePedidos','detalleVentaPedidos',
+        'productos'));
     }
 
     public function actualizarDatosCliente(Request $request)

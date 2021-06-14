@@ -211,7 +211,7 @@
         }
     }
     calcularTotal();
-    $("#btnPagar").on("click", pagar)
+    //$("#btnPagar").on("click", pagar)
 
     /*
     function pagar() {
@@ -221,7 +221,7 @@
         location.href = `{{url('/direccionEnvio')}}?totalC=${totalCompra}`;
     }
     */
-    btnPagar
+    //btnPagar
 </script>
 
 @endsection

@@ -197,6 +197,8 @@ Route::prefix('/puntoVenta')->group(function () {
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); //->middleware('verified');
         Route::get('/ecommerce/administracion', [App\Http\Controllers\EcommerceController::class, 'administracion']);
         Route::post('/ecommerce/departamentos', [App\Http\Controllers\EcommerceController::class, 'actualizarDepartamentos']);
+        Route::post('/actualizarCantidadPedidoProducto', [App\Http\Controllers\VentaController::class, 'actualizarCantidadPedidoProducto']);
+        Route::post('/quitarProductoPedido', [App\Http\Controllers\VentaController::class, 'quitarProductoPedido']);
         Route::post('/aceptarPedido/{id}', [App\Http\Controllers\VentaController::class, 'aceptarPedido']);
         Route::post('/rechazarPedido/{id}', [App\Http\Controllers\VentaController::class, 'rechazarPedido']);
         Route::post('/pedidosTiempoReal', [App\Http\Controllers\VentaController::class, 'pedidosTiempoReal']);

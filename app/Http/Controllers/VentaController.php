@@ -562,7 +562,48 @@ class VentaController extends Controller
 
     public function impAjustado($folio){
     }
-
+    public function actualizarCantidadPedidoProducto(Request $request)
+    {
+        $producto = detallePedido_CE::where('idPedido','=',$request['idPedido'])
+        ->where('idProducto','=',$request['idProducto']);
+        //Se actualiza subtotal
+        $producto->update(['cantidad' => $request['cantidad']]);
+        $nuevoSubtotalProducto = $producto->first()->precio * $producto->first()->cantidad;
+        $producto->update(['subtotal' => $nuevoSubtotalProducto]);
+        //Se calcula nuevoSubtotal
+        $pedidoProductos = detallePedido_CE::where('idPedido','=',$request['idPedido'])->get();
+        $subtotalPedido = 0;
+        foreach ($pedidoProductos as $p)
+        {
+            $subtotalPedido = $subtotalPedido + $p->subtotal;
+        }
+        $pedido = Pedido_contra_entrega::where('id','=',$request['idPedido']);
+        //$nuevoSubtotal = $pedido->first()->subtotal + $producto->first()->subtotal;
+        $pedido->update(['subtotal' => $subtotalPedido]);
+        $nuevoTotal = $pedido->first()->subtotal + $pedido->first()->costoEnvio;
+        $pedido->update(['total' => $nuevoTotal]);
+        $nuevoCambio =$pedido->first()->pagarCon - $pedido->first()->total ;
+        $pedido->update(['cambio' => $nuevoCambio]);
+        $pedidos = Pedido_contra_entrega::get();
+        $detallePedidos = detallePedido_CE::get();
+        return compact('pedidos','detallePedidos');
+    }
+    public function quitarProductoPedido(Request $request)
+    {
+        $producto = detallePedido_CE::where('idPedido','=',$request['idPedido'])
+        ->where('idProducto','=',$request['idProducto']);
+        $pedido = Pedido_contra_entrega::where('id','=',$request['idPedido']);
+        $nuevoSubtotal = $pedido->first()->subtotal - $producto->first()->subtotal;
+        $pedido->update(['subtotal' => $nuevoSubtotal]);
+        $nuevoTotal = $pedido->first()->subtotal + $pedido->first()->costoEnvio;
+        $pedido->update(['total' => $nuevoTotal]);
+        $nuevoCambio =$pedido->first()->pagarCon - $pedido->first()->total ;
+        $pedido->update(['cambio' => $nuevoCambio]);
+        $producto->delete();
+        $pedidos = Pedido_contra_entrega::get();
+        $detallePedidos = detallePedido_CE::get();
+        return compact('pedidos','detallePedidos');
+    }
     public function aceptarPedido(Request $request,$id)
     {
         $pedido = Pedido_contra_entrega::find($id);
@@ -590,7 +631,7 @@ class VentaController extends Controller
             $detalleVenta->tipo = "NORMAL";
             $detalleVenta->cantidad = $producto->cantidad;
             $detalleVenta->precioIndividual = $producto->precio;
-            
+            $detalleVenta->save();
             $sucursal_producto = Sucursal_producto::where('idProducto', '=', $producto->idProducto)
             ->where('idSucursal', '=', $pedido->idSucursal); //->update(['existencia'=>'11']);
             if($producto->cantidad > $sucursal_producto->first()->existencia)
