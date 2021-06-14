@@ -260,23 +260,19 @@ $verC = $sE->hasAnyRole($vC);
                     </div>
                 </div>
                 <div class=" col-8">
-                    <div class="col-11 my-4 input-group text-center mx-auto " style="background:#D5DBDB">
-                        <button id="btnGenerarPed" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit">
+                    <div id="seguimientoPaq" class="col-11 mt-4 input-group text-center mx-auto " style="background:#D5DBDB">
+                        <button id="btnGenerarPed" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img\pedidoGenerado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO GENERADO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO ACEPTADO</small></p>
                         </button>
-
-                        <div class=" h1 my-auto text-dark">
+                        <div class=" h1 my-auto text-success">
                             <p>.....</p>
                         </div>
-
                         <!--PASO DOS -->
-
-                        <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
+                        <button id="btnDos" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img\pedidoConfirmado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO CONFIRMADO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark"><small>PREPARANDO PEDIDO</small></p>
                         </button>
-
                         <div class="h1 my-auto text-dark">
                             <p>.....</p>
                         </div>
@@ -294,7 +290,13 @@ $verC = $sE->hasAnyRole($vC);
                             <p class="h6 my-auto mx-2 text-dark"><small>ENTREGADO</small></p>
                         </button>
                     </div>
+                    <div class="row col-12 mx-auto mb-2">
+                        <p class="col-auto  mx-auto text-secondary  h5"><small><strong> Presione para actualizar el estado del paquete </strong> </small></p>
+                    </div>
+                    <div class="row col-12" id="divActBtn"><button id="btnActEstado" onclick="return actEstado()" class="btn btn-success text-center mx-auto">PREPARAR PEDIDO </button> </div>
                 </div>
+
+
             </div>
 
             <div class="modal-footer">
@@ -306,6 +308,7 @@ $verC = $sE->hasAnyRole($vC);
 </div>
 
 <script>
+    let presionar = 0;
     const texto = document.querySelector('#texto');
 
     function filtrar() {
@@ -364,8 +367,43 @@ $verC = $sE->hasAnyRole($vC);
     texto.addEventListener('keyup', filtrar);
     filtrar();
 
-    function seguimientoPedidos(){
-        
+    function seguimientoPedidos() {
+
+    }
+
+    function actEstado() {
+        presionar = presionar + 1;
+    }
+
+    let estado = "aceptado";// recuperar estado de tabla venta_cliente
+    function botones() {
+        let btn1 = `
+        <button  onclick="return actEstado1()" class="btn btn-success text-center mx-auto">PREPARAR PEDIDO </button>
+        `;
+        let btn2 = `
+        <button  onclick="return actEstado2()" class="btn btn-success text-center mx-auto">PEDIDO EN CAMINO</button>
+        `;
+        let btn3 = `
+        <button  onclick="return actEstado2()" class="btn btn-success text-center mx-auto">PEDIDO ENTREGADO</button>
+        `;
+        if (estado == "aceptado") {
+            document.getElementById("divActBtn").innerHTML = btn1;
+        }
+        if (estado == "preparando") {
+            document.getElementById("divActBtn").innerHTML = btn2;
+        }
+        if (estado == "encamino") {
+            document.getElementById("divActBtn").innerHTML = btn3;
+        }
+        if (estado == "entregado") {
+            document.getElementById("divActBtn").innerHTML = "";
+        }
+
+    }
+
+    function estadosPaq() {
+
+       // seguimientoPaq
     }
 </script>
 @endsection
