@@ -509,20 +509,21 @@ class VentaController extends Controller
     public function impAjustado($folio){
     }
 
-
-
-    
-    //imprimir ticket desde un HTML ya generado
-    
-
-
-    /*public function productos(Request $request)
+    public function rechazarPedido(Request $request,$id)
     {
-        //return view('Venta.formulario');
-        $datos = $request->input('datos');
-        $no = $request->input('no');
-        return $datos; //compact($datos);//compact('no');
-    }*/
+        detallePedido_CE::where('idPedido','=',$id)->delete();
+        Pedido_contra_entrega::destroy($id);
+        $pedidos = Pedido_contra_entrega::get();
+        $detallePedidos = detallePedido_CE::get();
+        return compact('pedidos','detallePedidos');
+    }
+
+    public function pedidosTiempoReal(Request $request)
+    {
+        $pedidos = Pedido_contra_entrega::get();
+        $detallePedidos = detallePedido_CE::get();
+        return compact('pedidos','detallePedidos');
+    }
 }
 
 

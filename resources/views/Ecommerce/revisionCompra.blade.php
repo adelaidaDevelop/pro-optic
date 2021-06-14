@@ -433,7 +433,7 @@
         datosFormulario.append("formaPago", formaPago);
         datosFormulario.append("pagaCon", parseFloat(pagaCon2));
         datosFormulario.append("cambio", parseFloat(cambio2));
-        datosFormulario.append("direccion", direccion);
+        datosFormulario.append("direccion", String(direccion));
         //  datosFormulario.append("idCliente", "Groucho");
         //  datosFormulario.append("productos", "Groucho");
         datosFormulario.append("subtotal", parseFloat(totalCompra));
