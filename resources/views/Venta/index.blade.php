@@ -1627,7 +1627,7 @@ let detallePedidos = @json($detallePedidos);
 document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
     
 function obtenerPedidosEntrega() {
-        
+    
     let clientes = @json($clientes);
 
     let cuerpo = "";
@@ -1733,23 +1733,27 @@ function verPedidoEntrega(id, idCliente) {
 }
 $('#btnAceptarPedido').bind('click', async function() {
     try {
-        /*let funcion = await $.ajax({
+        let funcion = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: `{url('/puntoVenta/venta')}}`,
+            url: `{{url('/puntoVenta/aceptarPedido')}}/${this.value}`,
             // los datos que voy a enviar para la relación
             data: {
-                datos: json,
-                estado: 'credito',
-                idSucursalEmpleado: idSucursalEmpleado,
-                pago: parseFloat(pago.value),
-                cliente: parseInt(cliente.value),
-                //_token: $("meta[name='csrf-token']").attr("content")
                 _token: "{{ csrf_token() }}"
             }
             // si tuvo éxito la petición
-        })*/
+        });
+        console.log('respuestaAceptar', funcion);
+        
+        if(funcion == 1)
+        {
+            return alert('Algunos de los productos no tienen la existencia disponible para pasar a la venta');
+        }
+        pedidosContraEntrega = funcion['pedidos'];
+        detallePedidos = funcion['detallePedidos'];
+        obtenerPedidosEntrega();
+        document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
 
     } catch (err) {
         console.log("Error al realizar la petición de productos AJAX: " + err.message);
@@ -1775,6 +1779,8 @@ $('#btnRechazarPedido').bind('click', async function() {
         pedidosContraEntrega = funcion['pedidos'];
         detallePedidos = funcion['detallePedidos'];
         obtenerPedidosEntrega();
+        document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
+
         //if(funcion == 1)
         //  alert('El pedido se ha eliminado');
 

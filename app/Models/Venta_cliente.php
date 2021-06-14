@@ -10,8 +10,8 @@ class venta_cliente extends Model
     use HasFactory;
     protected $fillable = [
         'estado',
-        
         'idCliente',
         'idVenta',
+        'direccion'
     ];
 }
