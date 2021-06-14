@@ -38,7 +38,7 @@
             <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal"
                 href=".listaSolicitudVentas" id="btnSolic_Ventas" onclick="obtenerPedidosEntrega()" value="">
                 <img src="{{ asset('img\ventas.png') }}" alt="Editar" width="30px" height="30px">
-                <span class="badge badge-warning">2</span>
+                <span id="notificacionPedidos" class="badge badge-warning">0</span>
                 <p class="h6 my-auto mx-2 text-dark"><small>VENTAS ECOMMERCE</small></p>
             </button>
         </div>
@@ -351,9 +351,9 @@
                 </button>
             </div>
             <div class="row modal-body">
-                <div class=" col-4">
-                    <div class="col-12 border border-dark  ml-4 mr-2">
-                        <div class="px-3 py-3 m-0">
+                <div class="row col-4 mx-0">
+                    <div class="col-12 border border-dark ml-4 mr-2 h-100">
+                        <div class="row mx-auto px-3 py-3 m-0">
                             <h4 class="row my-1 mx-1" style="color:#4388CC">SOLICITUDES</h4>
 
                             <div>
@@ -365,15 +365,15 @@
                             </div>
 
                         </div>
-                        <div class="row m-0 px-0" style="height:200px;overflow-y:auto;">
-                            <div id="resultadoPedidos" class="col btn-block h-100">
+                        <div class="row m-0 px-0 py-2 overflow-auto" style="height: 300px;">
+                            <div id="resultadoPedidos" class="col btn-block">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row col-8 mx-auto">
+                <div class="row col-8 mx-0">
 
-                    <div class="col-12">
+                    <div class="col-12 border">
                         <div class="row col-12 mx-auto border-bottom">
                             <div class="row col-4 mx-0">
                                 <p class="h5 text-center mx-auto my-0">Producto</p>
@@ -393,15 +393,15 @@
                             style="height:300px;overflow-y:auto;">
                         </div>
                     </div>
-                    <div id="informacionCliente" class="col-12">
+                    <div id="informacionCliente" class="col-12 border">
                     </div>
                     <!--div class="col-12 d-flex flex-row-reverse mb-0 mt-auto">
                         </div-->
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">ACEPTAR PEDIDO</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">RECHAZAR PEDIDO</button>
+                <button type="button" id="btnAceptarPedido" class="btn btn-success">ACEPTAR PEDIDO</button>
+                <button type="button" id="btnRechazarPedido" class="btn btn-danger">RECHAZAR PEDIDO</button>
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
                 <!--button type="button" class="btn btn-primary">Agregar Producto</button-->
@@ -1622,42 +1622,46 @@ function modoPago(tipoPago) {
 </script>
 <!--script src="{{ asset('js\mayusculas.js') }}"></script-->
 <script>
+let pedidosContraEntrega = @json($pedidosContraEntrega);
+let detallePedidos = @json($detallePedidos);
+document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
+    
 function obtenerPedidosEntrega() {
+        
     let clientes = @json($clientes);
-    let pedidosContraEntrega = @json($pedidosContraEntrega);
+
     let cuerpo = "";
     for (let i in pedidosContraEntrega) {
         let idCliente = pedidosContraEntrega[i].idCliente;
         let cliente = clientes.find(p => p.id == idCliente);
+        let direccion = pedidosContraEntrega[i].direccion;
+        //console.log('direccion', direccion);
         if (parseInt(i) == 0) {
             cuerpo = cuerpo +
-                `<button class="btn btn-block btn-primary active"
-        onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})" >Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
+                `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-primary active"
+            onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
         } else {
             cuerpo = cuerpo +
-                `<button class="btn btn-block btn-primary"
-        onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})" >Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
+                `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}" class="btn btn-block btn-primary"
+            onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
 
         }
     }
-    //,'${pedidosContraEntrega[i].direccion}'
     document.getElementById("resultadoPedidos").innerHTML = cuerpo;
-
     if (pedidosContraEntrega[0] != undefined) {
         let idC = pedidosContraEntrega[0].idCliente;
-        verPedidoEntrega(pedidosContraEntrega[0].id, idC);//, pedidosContraEntrega[0].direccion);
+        let direccion = pedidosContraEntrega[0].direccion;
+        verPedidoEntrega(pedidosContraEntrega[0].id, idC); //, pedidosContraEntrega[0].direccion);
     }
 
 }
 
-function verPedidoEntrega(id, idCliente)//, direccion) {
-    console.log("id,idCliente, direccion",id,idCliente,direccion);
-    return;
-    let direccion ="";
+function verPedidoEntrega(id, idCliente) {
+    let direccion = pedidosContraEntrega.find(p => p.id == id).direccion;
     let clientes = @json($clientes);
     let cliente = clientes.find(p => p.id == idCliente);
     let productos = @json($productos);
-    let detallePedidos = @json($detallePedidos);
+
     let cuerpo = "";
     let detallePedido = detallePedidos.filter(p => p.idPedido == id);
     //let productos = productosCompra.filter(p => p.id == id);
@@ -1682,7 +1686,12 @@ function verPedidoEntrega(id, idCliente)//, direccion) {
             '<div class="input-group-append"><button style="width: ${buttonsWidth};" class="btn btn-increment ${buttonsClass} btn-plus px-0 text-center" type="button">${incrementButton}</button></div>' +
             '</div>'
     }
-
+    for (let i in pedidosContraEntrega) {
+        if (pedidosContraEntrega[i].id == id)
+            $(`#btnPedidoEntrega${pedidosContraEntrega[i].id}`).addClass("active");
+        else
+            $(`#btnPedidoEntrega${pedidosContraEntrega[i].id}`).removeClass("active");
+    }
     for (let i in detallePedido) {
         let p = productos.find(p => p.id == detallePedido[i].idProducto);
         cuerpo = cuerpo +
@@ -1715,10 +1724,90 @@ function verPedidoEntrega(id, idCliente)//, direccion) {
     for (let i in detallePedido) {
         $(`input[id='cantidadProductoPedido${detallePedido[i].idProducto}']`).inputSpinner(props);
     }
+    $('#btnAceptarPedido').val(id);
+    $('#btnRechazarPedido').val(id);
     document.getElementById("informacionCliente").innerHTML =
         `<p> Cliente: ${cliente.nombre} ${cliente.apellidoPaterno} ${cliente.apellidoMaterno}</p>
     <p> Telefono: ${cliente.telefono} </p>
     <p> Direccion de envio: ${direccion} </p>`;
 }
+$('#btnAceptarPedido').bind('click', async function() {
+    try {
+        /*let funcion = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `{url('/puntoVenta/venta')}}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                datos: json,
+                estado: 'credito',
+                idSucursalEmpleado: idSucursalEmpleado,
+                pago: parseFloat(pago.value),
+                cliente: parseInt(cliente.value),
+                //_token: $("meta[name='csrf-token']").attr("content")
+                _token: "{{ csrf_token() }}"
+            }
+            // si tuvo éxito la petición
+        })*/
+
+    } catch (err) {
+        console.log("Error al realizar la petición de productos AJAX: " + err.message);
+    }
+});
+$('#btnRechazarPedido').bind('click', async function() {
+    try {
+        let confirmacion = confirm('¿Rechazar este pedido?');
+        if (!confirmacion)
+            return;
+        let funcion = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `{{url('/puntoVenta/rechazarPedido')}}/${this.value}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                _token: "{{ csrf_token() }}"
+            }
+            // si tuvo éxito la petición
+        });
+        console.log('respuestaRechazo', funcion);
+        pedidosContraEntrega = funcion['pedidos'];
+        detallePedidos = funcion['detallePedidos'];
+        obtenerPedidosEntrega();
+        //if(funcion == 1)
+        //  alert('El pedido se ha eliminado');
+
+    } catch (err) {
+        console.log("Error al realizar la petición de productos AJAX: " + err.message);
+    }
+});
+setInterval(async function() {
+    try {
+        let funcion = await $.ajax({
+            // metodo: puede ser POST, GET, etc
+            method: "POST",
+            // la URL de donde voy a hacer la petición
+            url: `{{url('/puntoVenta/pedidosTiempoReal')}}`,
+            // los datos que voy a enviar para la relación
+            data: {
+                _token: "{{ csrf_token() }}"
+            }
+            // si tuvo éxito la petición
+        });
+        console.log('respuestaTiempoReal', funcion);
+        if (pedidosContraEntrega.length != funcion['pedidos'].length) {
+            pedidosContraEntrega = funcion['pedidos'];
+            detallePedidos = funcion['detallePedidos'];
+            obtenerPedidosEntrega();
+            document.getElementById("notificacionPedidos").textContent = pedidosContraEntrega.length;
+        }
+        //if(funcion == 1)
+        //  alert('El pedido se ha eliminado');
+
+    } catch (err) {
+        console.log("Error al realizar la petición de productos AJAX: " + err.message);
+    }
+}, 5000);
 </script>
 @endsection
