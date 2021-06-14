@@ -509,6 +509,22 @@ class VentaController extends Controller
     public function impAjustado($folio){
     }
 
+    public function quitarProductoPedido(Request $request)
+    {
+        $producto = detallePedido_CE::where('idPedido','=',$request['idPedido'])
+        ->where('idProducto','=',$request['idProducto']);
+        $pedido = Pedido_contra_entrega::where('id','=',$request['idPedido']);
+        $nuevoSubtotal = $pedido->first()->subtotal - $producto->first()->subtotal;
+        $pedido->update(['subtotal' => $nuevoSubtotal]);
+        $nuevoTotal = $pedido->first()->subtotal + $pedido->first()->costoEnvio;
+        $pedido->update(['total' => $nuevoTotal]);
+        $nuevoCambio =$pedido->first()->pagarCon - $pedido->first()->total ;
+        $pedido->update(['cambio' => $nuevoCambio]);
+        $producto->delete();
+        $pedidos = Pedido_contra_entrega::get();
+        $detallePedidos = detallePedido_CE::get();
+        return compact('pedidos','detallePedidos');
+    }
     public function aceptarPedido(Request $request,$id)
     {
         $pedido = Pedido_contra_entrega::find($id);
