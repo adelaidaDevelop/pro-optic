@@ -577,7 +577,7 @@ class VentaController extends Controller
             $detalleVenta->tipo = "NORMAL";
             $detalleVenta->cantidad = $producto->cantidad;
             $detalleVenta->precioIndividual = $producto->precio;
-            
+            $detalleVenta->save();
             $sucursal_producto = Sucursal_producto::where('idProducto', '=', $producto->idProducto)
             ->where('idSucursal', '=', $pedido->idSucursal); //->update(['existencia'=>'11']);
             if($producto->cantidad > $sucursal_producto->first()->existencia)

@@ -37,7 +37,7 @@
             </li-->
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="pills-pedido-tab" data-toggle="pill" href="#pills-pedido" role="tab"
-                    aria-controls="pills-pedido" aria-selected="false">Mis Pedidos</a>
+                    onclick="verMisPedidos()" aria-controls="pills-pedido" aria-selected="false">Mis Pedidos</a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="pills-compra-tab" data-toggle="pill" href="#pills-compra" role="tab"
@@ -49,8 +49,8 @@
                 <div class="row col-12 mx-auto my-2 border-top border-bottom">
                     <p class="h3 text-muted mx-auto my-md-2">Mis datos</p>
                 </div>
-                <form class="col-12 col-md-7 mx-auto border py-md-2" method="post" action="{{url('/actualizarDatosCliente')}}"
-                    enctype="multipart/form-data" accept-charset="utf-8">
+                <form class="col-12 col-md-7 mx-auto border py-md-2" method="post"
+                    action="{{url('/actualizarDatosCliente')}}" enctype="multipart/form-data" accept-charset="utf-8">
                     {{csrf_field()}}
                     <div class="form-group">
                         <label for="nombre">Nombre(s)</label>
@@ -165,8 +165,8 @@
                     </div>
                 </div>
                 <div id="formularioDomicilio" class="row col-12 my-2 mx-auto d-none">
-                    <form id="formDomicilio" class="row col-12 mx-auto px-1 x-md-2 validacion-formulario" novalidate method="post"
-                        enctype="multipart/form-data" accept-charset="utf-8">
+                    <form id="formDomicilio" class="row col-12 mx-auto px-1 x-md-2 validacion-formulario" novalidate
+                        method="post" enctype="multipart/form-data" accept-charset="utf-8">
                         {{csrf_field()}}
                         <div class="form-row col-12 mx-auto px-0">
                             <div class="form-group col-md-6">
@@ -246,17 +246,32 @@
                 aqui van mis formas de pago
             </div-->
             <div class="tab-pane fade" id="pills-pedido" role="tabpanel" aria-labelledby="pills-pedido-tab">
-                <div class="row mx-0">
-                @foreach($pedidosContraEntrega as $pedido)
-                    <div class="col">
-                        <p>Direccion: {{$pedido->direccion}}</p>
-                        <p>Subtotal: {{$pedido->subtotal}}</p>
-                        <p>Costo de envio: {{$pedido->costoEnvio}}</p>
-                        <p>Total: {{$pedido->total}}</p>
-                        <p>Pagó con: {{$pedido->pagarCon}}</p>
-                        <p>Cambio: {{$pedido->cambio}}</p>
+                <div id="tituloPedido" class="row col-12 mx-auto my-2 border-top border-bottom">
+                    <p class="h3 mx-auto my-md-2">Historial de pedidos</p>
+                </div>
+                <div id="subtituloPedido" class="row col-12 mx-auto my-2 border-top border-bottom">
+                    <p class="h5 text-muted mx-auto my-md-2">PEDIDOS QUE USTED A REALIZADO</p>
+                </div>
+                <div class="row col-12 mx-auto">
+                    <div class="row col-12 mx-auto border">
+                        <div class="col-1 text-center">
+                            <h5>Folio</h5>
+                        </div>
+                        <div class="col-6 text-center">
+                            <h5>Descripcion</h5>
+                        </div>
+                        <div class="col-2 text-center">
+                            <h5>Status</h5>
+                        </div>
+                        <div class="col-2 text-center">
+                            <h5></h5>
+                        </div>
+                        <div class="col-1 text-center">
+                            <h5></h5>
+                        </div>
                     </div>
-                @endforeach
+                    <div id="pedidos" class="row col-12 mx-auto px-0 border overflow-auto" style="height:400px">
+                    </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="pills-compra" role="tabpanel" aria-labelledby="pills-compra-tab">
@@ -265,6 +280,54 @@
         </div>
     </div>
 </div>
+<div class="modal fade modalDetallePedido" id="modalDetallePedido" tabindex="-1" aria-labelledby="modalDetallePedido"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" id="">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="exampleModalLabel">DETALLE DEL PEDIDO</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="row modal-body">
+                <div class="row col-4 mx-0">
+                    <div id="informacionPedido" class="col-12 border border-dark">
+
+                    </div>
+                </div>
+                <div class="row col-8 mx-0">
+
+                    <div class="col-12 border">
+                        <div class="row col-12 mx-auto border-bottom">
+                            <div class="row col-6 mx-0">
+                                <p class="h5 text-center mx-auto my-0">Producto</p>
+                            </div>
+                            <div class="row col-2 mx-0">
+                                <p class="h5 text-center mx-auto my-0">Precio</p>
+                            </div>
+                            <div class="row col-2 mx-0">
+                                <p class="h5 text-center mx-auto my-0">Cantidad</p>
+                            </div>
+                            <div class="row col-2 mx-0">
+                                <p class="h5 text-center mx-auto my-0">Subtotal</p>
+                            </div>
+                            <div class="row col-1 mx-0"></div>
+                        </div>
+                        <div id="detallePedido" class="row col-12 mx-auto border-bottom"
+                            style="height:300px;overflow-y:auto;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 let domicilios = @json($domicilios);
 
@@ -350,8 +413,8 @@ $('#btnAgregarDomicilio').bind('click', async function() {
         $('#btnAgregarDomicilio').addClass('d-none');
         $('#btnEditarDomicilio').removeClass('d-none');
         var validation = Array.prototype.filter.call(forms, function(form) {
-        form.classList.remove('was-validated');
-    });
+            form.classList.remove('was-validated');
+        });
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
@@ -413,8 +476,8 @@ $('#btnEditarDomicilio').bind('click', async function() {
         $('#btnAgregarDomicilio').addClass('d-none');
         $('#btnEditarDomicilio').removeClass('d-none');
         var validation = Array.prototype.filter.call(forms, function(form) {
-        form.classList.remove('was-validated');
-    });
+            form.classList.remove('was-validated');
+        });
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
@@ -447,7 +510,7 @@ async function editarDomicilio(id) {
             // los datos que voy a enviar para la relación
             data: {
                 //_token: $("meta[name='csrf-token']").attr("content")
-                ajax:true,
+                ajax: true,
                 idDomicilio: id,
                 _token: "{{ csrf_token() }}",
             }
@@ -470,7 +533,7 @@ async function eliminarDomicilio(id) {
             // los datos que voy a enviar para la relación
             data: {
                 //_token: $("meta[name='csrf-token']").attr("content")
-                ajax:true,
+                ajax: true,
                 idDomicilio: id,
                 _token: "{{ csrf_token() }}",
             }
@@ -580,12 +643,164 @@ function nuevoDomicilio() {
     document.getElementById('colonia').value = "San Lorenzo"; //domicilio.colonia;
 }
 
+function verMisPedidos() {
+    let pedidosContraEntrega = @json($pedidosContraEntrega);
+    let ventasContraEntrega = @json($ventasContraEntrega);
+    let ventasClientes = @json($ventasClientes);
+    let cuerpo = "";
+    for (let i in pedidosContraEntrega) {
+        cuerpo = cuerpo + `
+        <div class="row col-12 mx-0 border-bottom"> 
+            <div class="col-1 my-auto text-center">
+                <p> PE_${pedidosContraEntrega[i].id}</p>
+            </div>
+            <div class="col-6 my-auto">
+                <p>Direccion: ${pedidosContraEntrega[i].direccion}</p>
+                <!--p>Subtotal: ${pedidosContraEntrega[i].subtotal}</p>
+                <p>Costo de envio: ${pedidosContraEntrega[i].costoEnvio}</p-->
+                <p class="h6">Total: $${pedidosContraEntrega[i].total}</p>
+                <!--p>Pagó con: ${pedidosContraEntrega[i].pagarCon}</p>
+                <p>Cambio: ${pedidosContraEntrega[i].cambio}</p-->
+            </div>
+            <div class="col-2 my-auto text-center">
+                <p class="h6 bg-secondary text-white my-auto py-2 px-1 rounded">PENDIENTE</p>
+            </div>
+            <div class="col-2 my-auto">
+                <button class="btn btn-outline-primary">Ver Seguimiento</button>
+            </div>
+            <div class="col-1 my-auto">
+                <button class="btn btn-secondary" data-toggle="modal" href=".modalDetallePedido"
+                onclick="verDetallePedido('pedido',${pedidosContraEntrega[i].id})">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                </svg>
+                </button>
+            </div>
+        </div>
+        `;
+    }
+
+    for (let i in ventasContraEntrega) {
+        let ventaCliente = ventasClientes.find(p => p.idVenta == ventasContraEntrega[i].id);
+        let status = `<p class="h6 bg-primary text-white my-auto py-2 px-1 
+            rounded">${ventaCliente.estado}</p>`;
+        if (ventaCliente.estado.toUpperCase() == "ENTREGADO")
+            status = `<p class="h6 bg-success text-white my-auto py-2 px-1 
+            rounded">${ventaCliente.estado}</p>`;
+        if (ventaCliente.estado.toUpperCase() == "CANCELADO")
+            status = `<p class="h6 bg-danger text-white my-auto py-2 px-1 
+            rounded">${ventaCliente.estado}</p>`;
+        if (ventaCliente.estado.toUpperCase() == "SINLOCALIZAR")
+            status = `<p class="h6 bg-warning text-white my-auto py-2 px-1 
+            rounded">${ventaCliente.estado}</p>`;
+        cuerpo = cuerpo + `
+        <div class="row col-12 mx-0 border-bottom"> 
+            <div class="col-1 my-auto text-center">
+                <p> VE_${ventasContraEntrega[i].id}</p>
+            </div>
+            <div class="col-6 my-auto">
+                <p>Direccion: ${ventaCliente.direccion}</p>
+                <p class="h6"> Total: $${ventasContraEntrega[i].totalV}</p>
+            </div>
+            <div class="col-2 my-auto text-center">
+                ${status}
+            </div>
+            <div class="col-2 my-auto">
+                <button class="btn btn-outline-primary">Ver Seguimiento</button>
+            </div>
+            <div class="col-1 my-auto">
+                <button class="btn btn-secondary" data-toggle="modal" href=".modalDetallePedido" 
+                onclick="verDetallePedido('venta',${ventasContraEntrega[i].id})">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                </svg>
+                </button>
+            </div>
+        </div>
+        `;
+    }
+    document.getElementById("pedidos").innerHTML = cuerpo;
+}
+
+function verDetallePedido(tipo, id) {
+    let pedidosContraEntrega = @json($pedidosContraEntrega);
+    let ventasContraEntrega = @json($ventasContraEntrega);
+    let ventasClientes = @json($ventasClientes);
+    let productos = @json($productos);
+    let cuerpo = "";
+    if (tipo == 'pedido') {
+        let detallePedidos = @json($detallePedidos);
+        let detallePedido = detallePedidos.filter(p => p.idPedido == id);
+        for (let i in detallePedido) {
+            let p = productos.find(p => p.id == detallePedido[i].idProducto);
+            cuerpo = cuerpo +
+            `<div class="row col-12 mx-0">
+                <div class="row col-6 mx-0">
+                    <p class=" text-center mx-auto my-auto">${p.nombre}</p>
+                </div>
+                <div class="row col-2 mx-0">
+                    <p class=" text-center mx-auto my-auto"> $${detallePedido[i].precio}</p>
+                </div>
+                <div class="row col-2 mx-0 px-0">
+                    <p class="h5 text-center mx-auto my-auto">${detallePedido[i].cantidad}</p>
+                </div>
+                <div class="row col-2 mx-0">
+                    <p class=" text-center mx-auto my-auto"> $${detallePedido[i].subtotal}</p>
+                </div>
+            </div>`;
+        }
+        let infoPedido = pedidosContraEntrega.find(p => p.id == id);
+        document.getElementById("informacionPedido").innerHTML = 
+        `<p> Subtotal: $ ${infoPedido.subtotal} </p>
+        <p> Costo de envio: $ ${infoPedido.costoEnvio} </p>
+        <p> Total: $ ${infoPedido.total} </p>
+        <p> Pago con: $ ${infoPedido.pagarCon} </p>
+        <p> Cambio: $ ${infoPedido.cambio} </p>
+        <p> Direccion de envio: ${infoPedido.direccion} </p>
+        `;
+    }
+    if (tipo == 'venta') {
+        console.log("Entra a detalleVenta");
+        let detalleVentaPedidos = @json($detalleVentaPedidos);
+        let detalleVentaPedido = detalleVentaPedidos.filter(p => p.idVenta == id);
+        for (let i in detalleVentaPedido) {
+            let p = productos.find(p => p.id == detalleVentaPedido[i].idProducto);
+            cuerpo = cuerpo +
+            `<div class="row col-12 mx-0">
+                <div class="row col-6 mx-0">
+                    <p class=" text-center mx-auto my-auto">${p.nombre}</p>
+                </div>
+                <div class="row col-2 mx-0">
+                    <p class=" text-center mx-auto my-auto"> $${detalleVentaPedido[i].precioIndividual}</p>
+                </div>
+                <div class="row col-2 mx-0 px-0">
+                    <p class="h5 text-center mx-auto my-auto">${detalleVentaPedido[i].cantidad}</p>
+                </div>
+                <div class="row col-2 mx-0">
+                    <p class=" text-center mx-auto my-auto"> 
+                    $${parseFloat(detalleVentaPedido[i].precioIndividual) * parseInt(detalleVentaPedido[i].cantidad)}</p>
+                </div>
+            </div>`;
+        }
+        let infoPedido = ventasContraEntrega.find(p => p.id == id);
+        let infoPedidoCliente = ventasClientes.find(p => p.idVenta == id);
+        document.getElementById("informacionPedido").innerHTML = 
+        `<p> Subtotal: $ ${parseFloat(infoPedido.totalV) - 15} </p>
+        <p> Costo de envio: $ ${15} </p>
+        <p> Total: $ ${infoPedido.totalV} </p>
+        <p> Direccion de envio: ${infoPedidoCliente.direccion} </p>
+        `;
+    }
+    document.getElementById("detallePedido").innerHTML = cuerpo;
+}
+
 //function existenciaDomicilios()
 //{
-    if(domicilios.length == 0)
-    {
-        alert('Por favor agregue al menos un domicilio para poder realizar compras');
-    }
+if (domicilios.length == 0) {
+    alert('Por favor agregue al menos un domicilio para poder realizar compras');
+}
 //}
 </script>
 @endsection
