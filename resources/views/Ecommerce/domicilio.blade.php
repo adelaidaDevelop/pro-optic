@@ -130,7 +130,7 @@
 
                     </div>
                 </div>
-                <button class="btn btn-success ml-auto mr-1" onclick="{{url('/metodoPago')}}" type="submit">Continuar3</button>
+                <button class="btn btn-success ml-auto mr-1" onclick="{{url('/metodoPago')}}" type="submit">Continuar</button>
             </form>
         </div>
     </div>

@@ -603,7 +603,11 @@ class EcommerceController extends Controller
         $domicilio = Domicilio::where('idCliente', '=', $cliente->id)->first();
         $nombre = $cliente->nombre;
         $telefono = $cliente->telefono;
-        return view('Ecommerce.compraGenerada', compact('nombre', 'domicilio', 'telefono', 'carrito', 'formaPago', 'pagarCon', 'folio'));
+        Carrito::where('idUsuario', '=', Auth::user()->id)->delete();
+        $carrito = session('carrito');
+        $carritoReset = [];
+        session(['carrito' => $carritoReset]);
+        return view('Ecommerce.compraGenerada', compact('nombre', 'domicilio', 'telefono', 'carrito', 'formaPago', 'pagarCon', 'folio','carrito'));
     }
     public function insertarSolicitud(Request $request)
     {
@@ -659,9 +663,7 @@ class EcommerceController extends Controller
         //Datos a enviar para siguiente vista
         //return view('Ecommerce.compraGenerada');
         // return $pagaCon;
-        Carrito::where('idUsuario', '=', Auth::user()->id)->delete();
-        $carrito = [];
-        session(['carrito' => $carrito]);
+        
         return compact('pagaCon', 'folioPedido');
         // return compact('nombre', 'domicilio', 'telefono', 'carrito','formaPago');
     }
@@ -729,5 +731,11 @@ class EcommerceController extends Controller
         Cliente::where('idUsuario', '=', session('idCliente'))->update($datosCliente);
         User::where('id', '=', session('idCliente'))->update($datosUser);
         return back(); //redirect('/')
+    }
+
+    public function verSeguimientoPedido($id)
+    {
+        
+        return view('Ecommerce.seguimiento_pedido');
     }
 }

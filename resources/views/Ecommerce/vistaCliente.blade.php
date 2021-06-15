@@ -699,7 +699,8 @@ function verMisPedidos() {
                 <p class="h6 bg-secondary text-white my-auto py-2 px-1 rounded">PENDIENTE</p>
             </div>
             <div class="col-2 my-auto">
-                <button class="btn btn-outline-primary">Ver Seguimiento</button>
+                <button class="btn btn-outline-primary"
+                onclick="return alert('Aun no se puede hacer seguimiento hasta que el pedido haya sido aceptado')">Ver Seguimiento</button>
             </div>
             <div class="col-1 my-auto">
                 <button class="btn btn-secondary" data-toggle="modal" href=".modalDetallePedido"
@@ -740,7 +741,8 @@ function verMisPedidos() {
                 ${status}
             </div>
             <div class="col-2 my-auto">
-                <button class="btn btn-outline-primary">Ver Seguimiento</button>
+                <a class="btn btn-outline-primary"
+                href="{{url('/verSeguimientoPedido')}}/${ventasContraEntrega[i].id}">Ver Seguimiento</a>
             </div>
             <div class="col-1 my-auto">
                 <button class="btn btn-secondary" data-toggle="modal" href=".modalDetallePedido" 

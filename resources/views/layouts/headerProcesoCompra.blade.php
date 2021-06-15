@@ -21,7 +21,7 @@
                     <img src="{{ asset('img\usuario.png') }}" class="p-1" alt="LOGO" height="40px">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" class="text-primary" href="#" onclick="">
+                    <a class="dropdown-item" class="text-primary" href="{{url('/menu')}}" onclick="">
                         {{ Auth::user()->username }}
                     </a>
                     <a class="dropdown-item" class="text-primary" href="{{ url('logoutCliente') }}" onclick="event.preventDefault();
