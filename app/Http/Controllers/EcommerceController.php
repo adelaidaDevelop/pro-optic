@@ -743,6 +743,9 @@ class EcommerceController extends Controller
 
     public function generarComprobante($id)
     {
+        $pedidosContraEntrega = Pedido_contra_entrega::where('idCliente', '=', $cliente->id)->get();
+        $detallePedidos = detallePedido_CE::get();
+
         $venta = Venta::findOrFail($id);
         $ventaCliente = Venta_cliente::where('idVenta','=',$id)->first();
         $idCliente = $ventaCliente->idCliente;
