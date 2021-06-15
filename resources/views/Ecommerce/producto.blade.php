@@ -93,6 +93,7 @@
     console.log('carrito', carrito);
     async function addCarritoProducto(id) {
         let cantidad = $('#cantidad').val();
+        console.log('cantidadPedida',cantidad);
         try {
             //return alert('Listo'+id);
             let respuesta = await $.ajax({
