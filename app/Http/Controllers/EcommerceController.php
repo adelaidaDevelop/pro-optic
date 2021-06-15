@@ -735,7 +735,18 @@ class EcommerceController extends Controller
 
     public function verSeguimientoPedido($id)
     {
-        
-        return view('Ecommerce.seguimiento_pedido');
+        $venta = Venta::findOrFail($id);
+        $idVenta = $venta->id;
+        $ventaCliente = Venta_cliente::where('idVenta','=',$id)->first();
+        return view('Ecommerce.seguimiento_pedido',compact('venta','ventaCliente','idVenta'));
+    }
+
+    public function generarComprobante($id)
+    {
+        $venta = Venta::findOrFail($id);
+        $ventaCliente = Venta_cliente::where('idVenta','=',$id)->first();
+        $idCliente = $ventaCliente->idCliente;
+        $cliente = Cliente::findOrFail($idCliente);
+        return view('Ecommerce.comprobante', compact('venta', 'ventaCliente','cliente'));
     }
 }

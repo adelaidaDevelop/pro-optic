@@ -16,43 +16,51 @@
 
 <body class="container">
     <header>
-        <div class="row mx-2 position-relative">
-            <img class=" text-left mt-3" src="{{ asset('img\farmaciagilogo.png') }}" alt="Editar" height="50px">
-            <div class="row w-100  mt-3 mx-auto text-center position-absolute">
-                <p class="row h4 text-uppercase text-center mx-auto  my-auto"> Farmacias Gi S.A. de C.V.</p>
+        <div class="row col-11 mx-auto position-relative ">
+            <img class="mx-0 text-left mt-3 " src="{{ asset('img\farmaciagilogo.png') }}" alt="Editar" height="50px">
+            <div class="row col-12  mt-4 mx-auto text-center position-absolute">
+                <p class="row h3 text-uppercase text-center mx-auto  my-auto"> Farmacias Gi S.A. de C.V.</p>
             </div>
         </div>
     </header>
 
     <main>
-        <div class="col p-4 mx-4 " id="impDiv">
+        <div class="col p-4 mx-3 " id="impDiv">
             <div class="col text-center mt-4">
-                <h2 class=""> COMPROBANTE DE ENTREGA</h2>
-            </div>
-            <br /><br /><br /><br />
-            <div class="col mb-4">
-                <h3 class="text-left"> ESTIMADO CLIENTE:</h3>
-                <p class="h3" style="text-align:justify"> FARMACIAS GI ZIMATLAN, AGRADECE SU PREFERENCIA. A CONTINUACION, SE
-                    DETALLA INFORMACION DE SU PAQUETE.</p>
-            </div>
-            <br />
-            <div class="col h4 mt-4 border border-secondary rounded">
-                <p class=""> NUMERO DE GUIA</p>
-                <p>FECHA GENERADO PAQUETE</p>
-                <p>FECHA PROGRAMADO DE ENTREGA</p>
-                <p>FECHA DE ENTREGA</p>
-                <p>RECIBIO</p>
-                <p> DIRECCION DE ENTREGA</p>
+                <h4 class="alert-primary"> COMPROBANTE DE ENTREGA</h4>
             </div>
             <br /><br />
-            <div class="col text-center mt-4 h4 text-center">
-                <p class="h3">ATENTAMENTE</p>
+            <div class="col mb-4">
+                <h4 class="text-left mb-4"> ESTIMADO CLIENTE:</h4>
+                <p class="h5 mt-4" style="text-align:justify"> FARMACIAS GI ZIMATLAN, AGRADECE SU PREFERENCIA. A CONTINUACION, SE
+                    DETALLA INFORMACION DE SU PEDIDO.</p>
+            </div>
+
+            <div class="col-12 mx-auto  h5 mt-4 border  rounded my-4">
+                <div class="col-8 mx-auto">
+                    <p class=""> FOLIO: {{$venta->id}} </p>
+                    <p>FECHA Y HORA GENERADO PEDIDO: {{$venta->created_at->format('d-m-Y')}}</p>
+                    <p>HORA PROGRAMADA DE ENTREGA: {{$venta->created_at->addMinutes(60)->isoFormat('H:mm:ss A')}}</p>
+                    @if($ventaCliente->estado == 'PAGADO')
+                    <h6>ENTREGADO: {{$ventaCliente->updated_at->format('d-m-Y')}} {{$ventaCliente->updated_at->isoFormat('H:mm:ss A')}}</h6>
+                    @endif
+                    <p>ESTADO DEL PEDIDO: {{$ventaCliente->estado}}</p>
+                    <p>DIRECCION DE ENTREGA:</p>
+                    <p>CLIENTE: {{$cliente->nombre}} {{$cliente->apellidoPaterno}} {{$cliente->apellidoMaterno}}</p>
+                    <p class="my-4">PRODUCTOS:</p>
+                    <ul>
+                        <li>JABON</li>
+                        <li>ACETONA</li>
+                    </ul>
+                </div>
+            </div>
+            <br /><br />
+            <div class="col text-center  h5 text-center">
+                <p class="h4">ATENTAMENTE</p>
                 <br /><br />
                 <p> FARMACIAS GI SA DE C.V ZIMATLAN</p>
                 <p>direccion</p>
                 <p>telefono</p>
-                <p>linkPagina</p>
-                <p>farmaciasgizimatlan.epizy.com</p>
                 <a href="">farmaciasgizimatlan.epizy.com</a>
             </div>
         </div>
@@ -63,37 +71,9 @@
     </footer>
 </body>
 
-</html>
 <!--ACABA-->
 <script>
- 
-    document.addEventListener("DOMContentLoaded", () => {
-        // Escuchamos el click del botón
-        // const $boton = document.querySelector("#imp");
-        // $boton.addEventListener("click", () => {
-        const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
-        html2pdf()
-            .set({
-                margin: 1,
-                filename: 'seguimiento.pdf',
-                image: {
-                    type: 'jpeg',
-                    quality: 0.98
-                },
-                html2canvas: {
-                    scale: 3, // A mayor escala, mejores gráficos, pero más peso
-                    letterRendering: true,
-                },
-                jsPDF: {
-                    unit: "in",
-                    format: "a2",
-                    orientation: 'portrait' // landscape o portrait
-                }
-            })
-            .from($elementoParaConvertir)
-            .save()
-            .catch(err => console.log(err));
-    });
+   
 </script>
 
 </html>

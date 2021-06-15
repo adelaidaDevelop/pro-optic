@@ -1157,72 +1157,9 @@ INVENTARIO
                 .from($elementoParaConvertir)
                 .save()
                 .catch(err => console.log(err));
-
-
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-
-        //  const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
-
-
-        /*
-                try {
-                    let respuesta = "";
-                    await fetch(`/puntoVenta/encabezado_pie/${productosList}`, {
-                            method: 'get'
-                        })
-                        .then(response => response.text())
-                        .then(html => {
-                            respuesta = html
-
-                        });
-                    console.log("res", respuesta);
-                    */
-        /*response = await fetch(`/puntoVenta/encabezado_pie/${divTabla.innerHTML}`);
-        if (response.ok) {
-            let respuesta = await response.text();
-            console.log("REs: ", respuesta);
-            return;
-            //  let respuesta = await response.blob();
-            // var  html = new HTMLOutputElement(respuesta);
-            //  respuesta.HTMLOutputElement;
-            //  var objectURL = URL.createObjectURL(blob);
-            //  var docum = Document.elemento
-            var newDoc = document.createDocumentFragment(respuesta);
-            var divTabla = document.getElementById("tabla2");
-            //  newDoc.documentElemen
-            //  newDoc.body.innerHTML = divTabla;
-            //  console.log("Complero", newDoc);
-            //   let frame = document.getElementById("theFrame");
-            let doc = document.implementation.createHTMLDocument("New Document");
-            // doc.innerHTML = respuesta;
-            //   let p = doc.createElement("div");
-            //   p.textContent = "This is a new paragraph.";
-            /*
-                            try {
-                                doc.body.appendChild(p);
-                            } catch (e) {
-                                console.log(e);
-                            }
-            *
-            //  let doc = respuesta.document.documentElement.outerHTML;
-            console.log("Respuesta: ", html);
-        }
-    }
-    }
-    catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-
-*/
-        /*
-        setTimeout(function() {
-        newWin.close();
-        }, 2000);
-        */
-
-        ////////otro
     }
 
     function elemento() {

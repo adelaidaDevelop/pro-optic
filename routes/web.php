@@ -78,3 +78,4 @@ Route::get('/revisionCompra', [EcommerceController::class,'revisionCompra'])->mi
 Route::post('/prueba', [EcommerceController::class,'insertarSolicitud'])->middleware('isCliente');
 Route::get('/resumenFinal/{id},{folio}', [EcommerceController::class,'resumen'])->middleware('isCliente');
 Route::get('/verSeguimientoPedido/{id}', [EcommerceController::class,'verSeguimientoPedido'])->middleware('isCliente');
+Route::get('/comprobante/{id}', [EcommerceController::class,'generarComprobante'])->middleware('isCliente');

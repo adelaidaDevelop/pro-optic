@@ -24,11 +24,11 @@
     <div class="col-md-12 mt-3 py-2 mx-auto border">
         <ul class="nav nav-pills mb-3 pt-md-2 justify-content-center" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="pills-datos-tab" data-toggle="pill" href="#pills-datos" role="tab"
+                <a class="nav-link active h5 btn btn-outline-primary " id="pills-datos-tab" data-toggle="pill" href="#pills-datos" role="tab"
                     onclick="getDatos()" aria-controls="pills-datos" aria-selected="true">Mis Datos</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="pills-domicilio-tab" data-toggle="pill" href="#pills-domicilio" role="tab"
+                <a class="nav-link h5 btn btn-outline-primary mx-3" id="pills-domicilio-tab" data-toggle="pill" href="#pills-domicilio" role="tab"
                     onclick="getDomicilios()" aria-controls="pills-domicilio" aria-selected="false">Mis Domicilios</a>
             </li>
             <!--li class="nav-item" role="presentation">
@@ -36,7 +36,7 @@
                     aria-controls="pills-formapago" aria-selected="false">Mis Formas de pago</a>
             </li-->
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="pills-pedido-tab" data-toggle="pill" href="#pills-pedido" role="tab"
+                <a class="nav-link h5 btn btn-outline-primary" id="pills-pedido-tab" data-toggle="pill" href="#pills-pedido" role="tab"
                     onclick="verMisPedidos()" aria-controls="pills-pedido" aria-selected="false">Mis Pedidos</a>
             </li>
             <!--li class="nav-item" role="presentation">
@@ -250,13 +250,14 @@
             </div-->
             <div class="tab-pane fade" id="pills-pedido" role="tabpanel" aria-labelledby="pills-pedido-tab">
                 <div id="tituloPedido" class="row col-12 mx-auto my-2 border-top border-bottom">
-                    <p class="h3 mx-auto my-md-2">Historial de pedidos</p>
+                    <p class="h3 mx-auto text-muted my-md-2">Historial de pedidos</p>
+                   
                 </div>
                 <div id="subtituloPedido" class="row col-12 mx-auto my-2 border-top border-bottom">
-                    <p class="h5 text-muted mx-auto my-md-2">PEDIDOS QUE USTED A REALIZADO</p>
+                    <p class="h6  mx-auto my-md-2 alert-primary">PEDIDOS QUE USTED A REALIZADO</p>
                 </div>
-                <div class="row col-12 mx-auto">
-                    <div class="row col-12 mx-auto border">
+                <div class="row col-12 mx-auto ">
+                    <div class="row col-12 mx-auto border ">
                         <div class="col-1 text-center">
                             <h5>Folio</h5>
                         </div>
