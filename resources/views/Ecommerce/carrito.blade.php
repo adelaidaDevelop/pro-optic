@@ -37,6 +37,7 @@
                 <div class="row col-md-1 mx-0"></div>
             </div>
         </div>
+        <div class="row col-12 mx-0 overflow-auto" style="height:400px">
         @foreach($carrito as $p)
         <div id="productoCarrito{{$p['id']}}" class="row col-12 mx-auto my-2 my-md-0 px-0 px-md-2 border-bottom">
             <div class="row col-5 col-md-5 mx-0 px-0">
@@ -79,6 +80,7 @@
             <!--/div-->
         </div>
         @endforeach
+        </div>
     </div>
     <div class="col-md-3 pb-auto mt-4 my-md-0">
         <div class="row mb-auto p-1 border">

@@ -24,20 +24,23 @@
     <div class="col-md-12 mt-3 py-2 mx-auto border">
         <ul class="nav nav-pills mb-3 pt-md-2 justify-content-center" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active h5 btn btn-outline-primary " id="pills-datos-tab" data-toggle="pill" href="#pills-datos" role="tab"
-                    onclick="getDatos()" aria-controls="pills-datos" aria-selected="true">Mis Datos</a>
+                <a class="nav-link active h5 btn btn-outline-primary " id="pills-datos-tab" data-toggle="pill"
+                    href="#pills-datos" role="tab" onclick="getDatos()" aria-controls="pills-datos"
+                    aria-selected="true">Mis Datos</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link h5 btn btn-outline-primary mx-3" id="pills-domicilio-tab" data-toggle="pill" href="#pills-domicilio" role="tab"
-                    onclick="getDomicilios()" aria-controls="pills-domicilio" aria-selected="false">Mis Domicilios</a>
+                <a class="nav-link h5 btn btn-outline-primary mx-3" id="pills-domicilio-tab" data-toggle="pill"
+                    href="#pills-domicilio" role="tab" onclick="getDomicilios()" aria-controls="pills-domicilio"
+                    aria-selected="false">Mis Domicilios</a>
             </li>
             <!--li class="nav-item" role="presentation">
                 <a class="nav-link" id="pills-formapago-tab" data-toggle="pill" href="#pills-formapago" role="tab"
                     aria-controls="pills-formapago" aria-selected="false">Mis Formas de pago</a>
             </li-->
             <li class="nav-item" role="presentation">
-                <a class="nav-link h5 btn btn-outline-primary" id="pills-pedido-tab" data-toggle="pill" href="#pills-pedido" role="tab"
-                    onclick="verMisPedidos()" aria-controls="pills-pedido" aria-selected="false">Mis Pedidos</a>
+                <a class="nav-link h5 btn btn-outline-primary" id="pills-pedido-tab" data-toggle="pill"
+                    href="#pills-pedido" role="tab" onclick="verMisPedidos()" aria-controls="pills-pedido"
+                    aria-selected="false">Mis Pedidos</a>
             </li>
             <!--li class="nav-item" role="presentation">
                 <a class="nav-link" id="pills-compra-tab" data-toggle="pill" href="#pills-compra" role="tab"
@@ -250,28 +253,31 @@
             </div-->
             <div class="tab-pane fade" id="pills-pedido" role="tabpanel" aria-labelledby="pills-pedido-tab">
                 <div id="tituloPedido" class="row col-12 mx-auto my-2 border-top border-bottom">
-                    <p class="h3 mx-auto text-muted my-md-2">Historial de pedidos</p>
-                   
+                    <p class="h3 mx-auto text-muted my-md-2 d-none d-md-block">Historial de pedidos</p>
+                    <p class="h4 mx-auto text-muted my-md-2 d-md-none">Historial de pedidos</p>
+
                 </div>
                 <div id="subtituloPedido" class="row col-12 mx-auto my-2 border-top border-bottom">
-                    <p class="h6  mx-auto my-md-2 alert-primary">PEDIDOS QUE USTED A REALIZADO</p>
+                    <p class="h6  mx-auto my-md-2 alert-primary text-center">PEDIDOS QUE USTED A REALIZADO</p>
                 </div>
-                <div class="row col-12 mx-auto ">
-                    <div class="row col-12 mx-auto border ">
-                        <div class="col-1 text-center">
-                            <h5>Folio</h5>
-                        </div>
-                        <div class="col-6 text-center">
-                            <h5>Descripcion</h5>
-                        </div>
-                        <div class="col-2 text-center">
-                            <h5>Status</h5>
-                        </div>
-                        <div class="col-2 text-center">
-                            <h5></h5>
-                        </div>
-                        <div class="col-1 text-center">
-                            <h5></h5>
+                <div class="row col-12 mx-auto px-0 px-md-2">
+                    <div class="row col-12 mx-0 d-none d-md-block px-0">
+                        <div class="row col-12 mx-auto border ">
+                            <div class="col-1 text-center">
+                                <h5>Folio</h5>
+                            </div>
+                            <div class="col-6 text-center">
+                                <h5>Descripcion</h5>
+                            </div>
+                            <div class="col-2 text-center">
+                                <h5>Status</h5>
+                            </div>
+                            <div class="col-2 text-center">
+                                <h5></h5>
+                            </div>
+                            <div class="col-1 text-center">
+                                <h5></h5>
+                            </div>
                         </div>
                     </div>
                     <div id="pedidos" class="row col-12 mx-auto px-0 border overflow-auto" style="height:400px">
@@ -296,28 +302,35 @@
                 </button>
             </div>
             <div class="row modal-body">
-                <div class="row col-4 mx-0">
+                <div class="row col-12 col-md-4 mx-0 my-1 my-md-0">
                     <div id="informacionPedido" class="col-12 border border-dark">
 
                     </div>
                 </div>
-                <div class="row col-8 mx-0">
+                <div class="row col-12 col-md-8 mx-0">
 
-                    <div class="col-12 border">
-                        <div class="row col-12 mx-auto border-bottom">
-                            <div class="row col-6 mx-0">
-                                <p class="h5 text-center mx-auto my-0">Producto</p>
+                    <div class="col-12 my-1 my-md-0 border">
+                        <div class="row col-12 mx-0 px-0 d-none d-md-block">
+                            <div class="row col-12 mx-auto border-bottom">
+                                <div class="row col-md-4 mx-0">
+                                    <p class="h5 text-center mx-auto my-0">Producto</p>
+                                </div>
+                                <div class="row col-md-2 mx-0">
+                                    <p class="h6 text-center mx-auto my-0">Codigo de barras</p>
+                                </div>
+                                <div class="row col-md-2 mx-0">
+                                    <p class="h5 text-center mx-auto my-0">Precio</p>
+                                </div>
+                                <div class="row col-md-2 mx-0">
+                                    <p class="h5 text-center mx-auto my-0">Cantidad</p>
+                                </div>
+                                <div class="row col-md-2 mx-0">
+                                    <p class="h5 text-center mx-auto my-0">Subtotal</p>
+                                </div>
                             </div>
-                            <div class="row col-2 mx-0">
-                                <p class="h5 text-center mx-auto my-0">Precio</p>
-                            </div>
-                            <div class="row col-2 mx-0">
-                                <p class="h5 text-center mx-auto my-0">Cantidad</p>
-                            </div>
-                            <div class="row col-2 mx-0">
-                                <p class="h5 text-center mx-auto my-0">Subtotal</p>
-                            </div>
-                            <div class="row col-1 mx-0"></div>
+                        </div>
+                        <div class="row col-12 mx-0 px-0 d-md-none text-center">
+                            <p class="h5 mx-auto">Productos</p>
                         </div>
                         <div id="detallePedido" class="row col-12 mx-auto border-bottom"
                             style="height:300px;overflow-y:auto;">
@@ -503,7 +516,7 @@ function formEditarDomicilio(id) {
     $('#btnEditarDomicilio').removeClass('d-none');
     let forms = document.getElementsByClassName(
         'validacion-formulario');
-    
+
     var validation = Array.prototype.filter.call(forms, function(form) {
         form.classList.remove('was-validated');
     });
@@ -684,11 +697,13 @@ function verMisPedidos() {
     let cuerpo = "";
     for (let i in pedidosContraEntrega) {
         cuerpo = cuerpo + `
-        <div class="row col-12 mx-0 border-bottom"> 
-            <div class="col-1 my-auto text-center">
+        <div class="row col-12 mx-0 border border-dark my-1"> 
+            <div class="col-12 col-md-1 my-auto text-center">
+                <p class="h5 d-md-none">Folio:</p>
                 <p> PE_${pedidosContraEntrega[i].id}</p>
             </div>
-            <div class="col-6 my-auto">
+            <div class="col-12 col-md-6 my-auto">
+            <p class="h5 d-md-none text-center">Descripcion:</p>
                 <p>Direccion: ${pedidosContraEntrega[i].direccion}</p>
                 <!--p>Subtotal: ${pedidosContraEntrega[i].subtotal}</p>
                 <p>Costo de envio: ${pedidosContraEntrega[i].costoEnvio}</p-->
@@ -696,20 +711,24 @@ function verMisPedidos() {
                 <!--p>Pagó con: ${pedidosContraEntrega[i].pagarCon}</p>
                 <p>Cambio: ${pedidosContraEntrega[i].cambio}</p-->
             </div>
-            <div class="col-2 my-auto text-center">
+            <div class="col-12 col-md-2 my-auto text-center">
+                <p class="h5 d-md-none"> Status</p>
                 <p class="h6 bg-secondary text-white my-auto py-2 px-1 rounded">PENDIENTE</p>
             </div>
-            <div class="col-2 my-auto">
+            <div class="col-12 col-md-2 my-auto py-2">
                 <button class="btn btn-outline-primary"
                 onclick="return alert('Aun no se puede hacer seguimiento hasta que el pedido haya sido aceptado')">Ver Seguimiento</button>
             </div>
-            <div class="col-1 my-auto">
-                <button class="btn btn-secondary" data-toggle="modal" href=".modalDetallePedido"
+            <div class="col-12 col-md-1 my-auto py-2">
+                <button class="btn btn-secondary d-none d-md-block" data-toggle="modal" href=".modalDetallePedido"
                 onclick="verDetallePedido('pedido',${pedidosContraEntrega[i].id})">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                     <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
                     <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                 </svg>
+                <button class="btn btn-secondary d-md-none" data-toggle="modal" href=".modalDetallePedido"
+                onclick="verDetallePedido('pedido',${pedidosContraEntrega[i].id})">
+                    Ver Detalle
                 </button>
             </div>
         </div>
@@ -730,28 +749,35 @@ function verMisPedidos() {
             status = `<p class="h6 bg-warning text-white my-auto py-2 px-1 
             rounded">${ventaCliente.estado}</p>`;
         cuerpo = cuerpo + `
-        <div class="row col-12 mx-0 border-bottom"> 
-            <div class="col-1 my-auto text-center">
+        <div class="row col-12 mx-0 border border-dark"> 
+            <div class="col-12 col-md-1 my-auto text-center">
+            <p class="h5 d-md-none">Folio:</p>
                 <p> VE_${ventasContraEntrega[i].id}</p>
             </div>
-            <div class="col-6 my-auto">
+            <div class="col-12 col-md-6 my-auto">
+            <p class="h5 d-md-none text-center">Descripcion:</p>
                 <p>Direccion: ${ventaCliente.direccion}</p>
                 <p class="h6"> Total: $${ventasContraEntrega[i].totalV}</p>
             </div>
-            <div class="col-2 my-auto text-center">
+            <div class="col-12 col-md-2 my-auto text-center">
+            <p class="h5 d-md-none"> Status</p>
                 ${status}
             </div>
-            <div class="col-2 my-auto">
+            <div class="col-12 col-md-2 my-auto py-2">
                 <a class="btn btn-outline-primary"
                 href="{{url('/verSeguimientoPedido')}}/${ventasContraEntrega[i].id}">Ver Seguimiento</a>
             </div>
-            <div class="col-1 my-auto">
-                <button class="btn btn-secondary" data-toggle="modal" href=".modalDetallePedido" 
+            <div class="col-12 col-md-1 my-auto py-2">
+                <button class="btn btn-secondary d-none d-md-block" data-toggle="modal" href=".modalDetallePedido" 
                 onclick="verDetallePedido('venta',${ventasContraEntrega[i].id})">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                     <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
                     <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                 </svg>
+                </button>
+                <button class="btn btn-secondary d-md-none" data-toggle="modal" href=".modalDetallePedido" 
+                onclick="verDetallePedido('venta',${ventasContraEntrega[i].id})">
+                    Ver Detalle
                 </button>
             </div>
         </div>
@@ -772,18 +798,25 @@ function verDetallePedido(tipo, id) {
         for (let i in detallePedido) {
             let p = productos.find(p => p.id == detallePedido[i].idProducto);
             cuerpo = cuerpo +
-                `<div class="row col-12 mx-0">
-                <div class="row col-6 mx-0">
-                    <p class=" text-center mx-auto my-auto">${p.nombre}</p>
+                `<div class="row col-12 mx-0 border-bottom">
+                <div class="row col-12 col-md-4 mx-0">
+                    <p class="text-center mx-auto my-auto">${p.nombre}</p>
                 </div>
-                <div class="row col-2 mx-0">
-                    <p class=" text-center mx-auto my-auto"> $${detallePedido[i].precio}</p>
+                <div class="row col-12 col-md-2 mx-0">
+                    <p class="col h6 d-md-none my-auto">Codigo:</p>
+                    <p class="col text-center mx-auto my-auto">${p.codigoBarras}</p>
                 </div>
-                <div class="row col-2 mx-0 px-0">
-                    <p class="h5 text-center mx-auto my-auto">${detallePedido[i].cantidad}</p>
+                <div class="row col-12 col-md-2 mx-0">
+                    <p class="col h6 d-md-none">Precio:</p>
+                    <p class="col text-center mx-auto my-auto"> $${detallePedido[i].precio}</p>
                 </div>
-                <div class="row col-2 mx-0">
-                    <p class=" text-center mx-auto my-auto"> $${detallePedido[i].subtotal}</p>
+                <div class="row col-12 col-md-2 mx-0 px-0">
+                    <p class="col h6 d-md-none">Cantidad:</p>
+                    <p class="col h6 text-center mx-auto my-auto">${detallePedido[i].cantidad}</p>
+                </div>
+                <div class="row col-12 col-md-2 mx-0">
+                    <p class="col h6 d-md-none">Subtotal:</p>
+                    <p class="col text-center mx-auto my-auto"> $${detallePedido[i].subtotal}</p>
                 </div>
             </div>`;
         }
@@ -804,18 +837,26 @@ function verDetallePedido(tipo, id) {
         for (let i in detalleVentaPedido) {
             let p = productos.find(p => p.id == detalleVentaPedido[i].idProducto);
             cuerpo = cuerpo +
-                `<div class="row col-12 mx-0">
-                <div class="row col-6 mx-0">
+                `<div class="row col-12 mx-0 border-bottom">
+                <div class="row col-md-4 mx-0">
                     <p class=" text-center mx-auto my-auto">${p.nombre}</p>
                 </div>
-                <div class="row col-2 mx-0">
+                <div class="row col-12 col-md-2 mx-0">
+                    <p class="col h6 d-md-none my-auto">Codigo:</p>
+                    <p class="col text-center mx-auto my-auto">${p.codigoBarras}</p>
+                </div>
+                <div class="row col-md-2 mx-0">
+                <p class="col h6 d-md-none">Precio:</p>
                     <p class=" text-center mx-auto my-auto"> $${detalleVentaPedido[i].precioIndividual}</p>
                 </div>
-                <div class="row col-2 mx-0 px-0">
-                    <p class="h5 text-center mx-auto my-auto">${detalleVentaPedido[i].cantidad}</p>
+                <div class="row col-md-2 mx-0 px-0">
+                    <p class="col h6 d-md-none">Cantidad:</p>
+                    <p class="col h6 text-center mx-auto my-auto">${detalleVentaPedido[i].cantidad}</p>
                 </div>
-                <div class="row col-2 mx-0">
-                    <p class=" text-center mx-auto my-auto"> 
+                
+                <div class="row col-md-2 mx-0">
+                    <p class="col h6 d-md-none">Subtotal:</p>
+                    <p class="col text-center mx-auto my-auto"> 
                     $${parseFloat(detalleVentaPedido[i].precioIndividual) * parseInt(detalleVentaPedido[i].cantidad)}</p>
                 </div>
             </div>`;

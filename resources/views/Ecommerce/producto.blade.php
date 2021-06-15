@@ -47,7 +47,7 @@
             <p class="my-0"><small>* Producto sujeto a disponibilidad.</small></p>
             <p class="my-0"><small>* Descuento ya incluído en precios mostrados.</small></p>
         </div>
-        <div class="form-group col-10 col-md-5 mx-auto ml-md-0 mr-md-auto pl-md-0 pr-md-4">
+        <div id="divBtn" class="form-group col-10 col-md-5 mx-auto ml-md-0 mr-md-auto pl-md-0 pr-md-4">
             <input type="number" class="form-control border" id="cantidad" min="1" max="{{$producto->existencia}}" value="1">
         </div>
         <button class="btn btn-success col-12 col-auto mx-4 text-center ml-md-0 mr-md-auto" onclick="addCarritoProducto(`{{$producto->id}}`)"><strong>
@@ -90,9 +90,13 @@
 <script>
     $("input[type='number']").inputSpinner();
     //let carrito = json(session('carrito'));
+    let existencia = "{{$producto->existencia}}";
+    existencia = parseInt(existencia);
     console.log('carrito', carrito);
     async function addCarritoProducto(id) {
+        
         let cantidad = $('#cantidad').val();
+        console.log('cantidadPedida',cantidad);
         try {
             //return alert('Listo'+id);
             let respuesta = await $.ajax({
@@ -114,11 +118,16 @@
             }
             if (respuesta == 2) {
             return alert('Por el momento no tenemos este producto a la venta');
-        }
+            }
             carrito = respuesta;
             $('#toastAgregarCarrito').toast('show');
             document.getElementById('toastCuerpoCarrito').textContent = "Producto agregado al carrito";
             //document.querySelector('#cantidadCarrito').textContent = respuesta.length;
+            existencia = existencia - parseInt(cantidad);
+            document.getElementById('divBtn').innerHTML = 
+            `<input type="number" class="form-control border" id="cantidad" min="1" max="${existencia}" value="1">
+            `;
+            $("input[type='number']").inputSpinner();
             mostrarCarrito();
             //console.log('carrito',respuesta);
             //return alert("Listo"+ respuesta);
