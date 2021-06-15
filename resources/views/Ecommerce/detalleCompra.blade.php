@@ -56,8 +56,12 @@
                 <div class="row col-12 mt-3">
                     <p><strong class="">{{$nombre}}</strong></p>
                 </div>
+                <div class="row col-12 mt-3 text-center mx-auto">
+                    <p><strong class="">Seleccione una de las direcciones que usted a registrado </strong></p>
+                </div>
                 <div class="form-group row col-12 mx-0 px-0">
                     <label for="domicilios" class="col-auto col-md-1 mb-1 mx-0 px-0 col-form-label text-center">Domicilio</label>
+
                     <div class="col-12 mx-0 mt-1 mb-2 col-md-10 px-0">
 
                         <select class="custom-select my-auto mx-auto" onchange="getDireccion()" id="domicilios">
