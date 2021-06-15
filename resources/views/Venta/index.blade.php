@@ -1550,12 +1550,14 @@ function obtenerPedidosEntrega(idPedido) {
     }
     if(pedidosContraEntrega.length>0)
     {
-        $('#btnAceptarPedido').addClass('d-none');
-        $('#btnRechazarPedido').addClass('d-none');
-    }else
-    {
+        //console.log('Hay');
         $('#btnAceptarPedido').removeClass('d-none');
         $('#btnRechazarPedido').removeClass('d-none');
+    }else
+    {
+        $('#btnAceptarPedido').addClass('d-none');
+        $('#btnRechazarPedido').addClass('d-none');
+        //console.log('No hay');
     }
 
 }
