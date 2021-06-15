@@ -296,27 +296,27 @@
         <div class="modal-content" id="">
             <div class="modal-header">
 
-                <h5 class="modal-title" id="exampleModalLabel">DETALLE DEL PEDIDO</h5>
+                <h5 class="modal-title text-primary" id="exampleModalLabel">DETALLE DEL PEDIDO</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="row modal-body">
                 <div class="row col-12 col-md-4 mx-0 my-1 my-md-0">
-                    <div id="informacionPedido" class="col-12 border border-dark">
+                    <div id="informacionPedido" class="col-12 mx-0 border border-dark">
 
                     </div>
                 </div>
-                <div class="row col-12 col-md-8 mx-0">
+                <div class="row col-12 col-md-8 mx-0 px-1">
 
-                    <div class="col-12 my-1 my-md-0 border">
+                    <div class="col-12 my-1 my-md-0 mx-0 border">
                         <div class="row col-12 mx-0 px-0 d-none d-md-block">
-                            <div class="row col-12 mx-auto border-bottom">
+                            <div class="row col-12 mx-auto border-bottom text-primary">
                                 <div class="row col-md-4 mx-0">
                                     <p class="h5 text-center mx-auto my-0">Producto</p>
                                 </div>
                                 <div class="row col-md-2 mx-0">
-                                    <p class="h6 text-center mx-auto my-0">Codigo de barras</p>
+                                    <p class="h5 text-center mx-auto my-0">Codigo</p>
                                 </div>
                                 <div class="row col-md-2 mx-0">
                                     <p class="h5 text-center mx-auto my-0">Precio</p>
@@ -798,25 +798,25 @@ function verDetallePedido(tipo, id) {
         for (let i in detallePedido) {
             let p = productos.find(p => p.id == detallePedido[i].idProducto);
             cuerpo = cuerpo +
-                `<div class="row col-12 mx-0 border-bottom">
+                `<div class="row col-12 mx-0 px-0 border-bottom">
                 <div class="row col-12 col-md-4 mx-0">
                     <p class="text-center mx-auto my-auto">${p.nombre}</p>
                 </div>
-                <div class="row col-12 col-md-2 mx-0">
+                <div class="row col-12 col-md-2 mx-0 px-0">
                     <p class="col h6 d-md-none my-auto">Codigo:</p>
-                    <p class="col text-center mx-auto my-auto">${p.codigoBarras}</p>
+                    <p class="col col-md-12 text-center mx-auto my-auto px-0"><smalll>${p.codigoBarras}</small></p>
                 </div>
                 <div class="row col-12 col-md-2 mx-0">
                     <p class="col h6 d-md-none">Precio:</p>
-                    <p class="col text-center mx-auto my-auto"> $${detallePedido[i].precio}</p>
+                    <p class="col col-md-12 text-center mx-auto my-auto"> $${detallePedido[i].precio}</p>
                 </div>
                 <div class="row col-12 col-md-2 mx-0 px-0">
                     <p class="col h6 d-md-none">Cantidad:</p>
-                    <p class="col h6 text-center mx-auto my-auto">${detallePedido[i].cantidad}</p>
+                    <p class="col col-md-12 h6 text-center mx-auto my-auto">${detallePedido[i].cantidad}</p>
                 </div>
                 <div class="row col-12 col-md-2 mx-0">
                     <p class="col h6 d-md-none">Subtotal:</p>
-                    <p class="col text-center mx-auto my-auto"> $${detallePedido[i].subtotal}</p>
+                    <p class="col col-md-12 text-center mx-auto my-auto"> $${detallePedido[i].subtotal}</p>
                 </div>
             </div>`;
         }
@@ -837,26 +837,26 @@ function verDetallePedido(tipo, id) {
         for (let i in detalleVentaPedido) {
             let p = productos.find(p => p.id == detalleVentaPedido[i].idProducto);
             cuerpo = cuerpo +
-                `<div class="row col-12 mx-0 border-bottom">
+                `<div class="row col-12 mx-0 px-0 border-bottom">
                 <div class="row col-md-4 mx-0">
                     <p class=" text-center mx-auto my-auto">${p.nombre}</p>
                 </div>
-                <div class="row col-12 col-md-2 mx-0">
+                <div class="row col-12 col-md-2 mx-0 px-0">
                     <p class="col h6 d-md-none my-auto">Codigo:</p>
-                    <p class="col text-center mx-auto my-auto">${p.codigoBarras}</p>
+                    <p class="col col-md-12 text-center mx-auto my-auto px-0"><smalll>${p.codigoBarras}</small></p>
                 </div>
                 <div class="row col-md-2 mx-0">
                 <p class="col h6 d-md-none">Precio:</p>
-                    <p class=" text-center mx-auto my-auto"> $${detalleVentaPedido[i].precioIndividual}</p>
+                    <p class="col col-md-12 text-center mx-auto my-auto"> $${detalleVentaPedido[i].precioIndividual}</p>
                 </div>
                 <div class="row col-md-2 mx-0 px-0">
                     <p class="col h6 d-md-none">Cantidad:</p>
-                    <p class="col h6 text-center mx-auto my-auto">${detalleVentaPedido[i].cantidad}</p>
+                    <p class="col col-md-12 h6 text-center mx-auto my-auto">${detalleVentaPedido[i].cantidad}</p>
                 </div>
                 
                 <div class="row col-md-2 mx-0">
                     <p class="col h6 d-md-none">Subtotal:</p>
-                    <p class="col text-center mx-auto my-auto"> 
+                    <p class="col col-md-12 text-center mx-auto my-auto"> 
                     $${parseFloat(detalleVentaPedido[i].precioIndividual) * parseInt(detalleVentaPedido[i].cantidad)}</p>
                 </div>
             </div>`;
