@@ -982,40 +982,8 @@ function agregarProducto(id, codigoBarras, nombre, tipo, existencia, precio) {
             alert('PRODUCTO SIN EXISTENCIA');
         return;
     }
-    //}
-    //}
-    //}
-    //}
-    /*const palabraBusqueda = document.querySelector('#busquedaProducto');
-    palabraBusqueda.value = "";
-    $('#exampleModal').modal('hide');
-    $('#exampleModal2').modal('hide');
-    $('#ofertasModal').modal('hide');*/
-    //venta();
 };
-/*function agregarSubproducto(id) {
-    for (let x in subproductosSucursal) {
-        for (let count4 in productos) {
-            if (productos[count4].id === productosSucursal[x].idProducto) {
-                if (productos[count4].id === id) {
-                    if (!buscarProductoEnVenta(productos[count4].id)) {
-                        if (productosSucursal[x].existencia > 0) {
-                            agregarProductoAVenta(productos[count4].id, productos[count4].codigoBarras,
-                                productos[count4].nombre,
-                                productosSucursal[x].existencia, productosSucursal[x].precio, 1, productosSucursal[
-                                    x].precio,0);
-                            mostrarProductos();
-                        } else
-                            alert('PRODUCTO SIN EXISTENCIA');
-                    }
-                }
-            }
-        }
-    }
-    const palabraBusqueda = document.querySelector('#busquedaProducto');
-    palabraBusqueda.value = "";
-    //venta();
-};*/
+
 let worker = new Worker("{{ asset('js/workerConsultarProducto.js') }}"); // Ruta del archivo JS
 
 async function buscarProducto() {
@@ -1239,31 +1207,7 @@ async function buscarOferta() {
             return;
         }
         for (let x in ofertasSucursal) {
-            /*for (let count5 in productos) {
-                if (productos[count5].id === productosSucursal[x].idProducto) {
-                    if (productos[count5].nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
-                        for (let d in departamentos) {
-                            if (productos[count5].idDepartamento === departamentos[d].id)
-                                departamento = departamentos[d].nombre;
-                        }
-                        cuerpo = cuerpo + `
-                                <tr onclick="agregarProducto(` + productos[count5].id + `)" data-dismiss="modal">
-                                    <th scope="row">` + productos[count5].id + `</th>
-                                    <td>` + productos[count5].codigoBarras + `</td>
-                                    <td>` + productos[count5].nombre + `</td>
-                                    <td>` + productosSucursal[x].existencia + `</td>
-                                    <td>` + departamento + `</td>
-                                </tr>
-                                `;
-                    }
-                }
-            }*/
-            /*for (let d in departamentos) {
-                if (productosOferta[x].idDepartamento === departamentos[d].id)
-                    departamento = departamentos[d].nombre;
-            }*/
-            //let sucursalP = productosSucursal.find(p => p.id == ofertasSucursal[x].idSucursalProducto);
-            //let producto = productos.find(p => p.id == sucursalP.idProducto);
+            
             let departamento = departamentos.find(p => p.id == ofertasSucursal[x].idDepartamento);
             //if (producto.nombre.toUpperCase().includes(palabraBusqueda.value.toUpperCase())) {
             cuerpo = cuerpo + `
@@ -1288,14 +1232,6 @@ async function buscarOferta() {
 function cantidad(id) {
     //alert('Si entro en la funcion'+id);
     const valorProducto = document.querySelector('#valor' + id);
-    //alert(valorProducto.value);
-    /*console.log(valorProducto.value);
-    console.log(valorProducto.min);
-    console.log(valorProducto.max);
-    */
-    //console.log(valorProducto.max - valorProducto.value);
-    //if(valorProducto.value >= valorProducto.min)
-    //  console.log(valorProducto.value - valorProducto.min);
     if (parseInt(valorProducto.max) > parseInt(valorProducto.value))
         console.log(parseInt(valorProducto.max) - parseInt(valorProducto.value));
     //if (valorProducto.value >= valorProducto.min && valorProducto.value <= valorProducto.max) {
@@ -1307,16 +1243,7 @@ function cantidad(id) {
         }
     }
     mostrarProductos()
-
-    //}
-    //const importeProducto = document.querySelector('#importe'+id);
 }
-
-/*async function confirmarClave()
-{
-
-}*/
-
 async function realizarVentaEfectivo(ticket) {
     try {
 
@@ -1382,15 +1309,6 @@ async function realizarVentaEfectivo(ticket) {
             setTimeout(function() {
                 newWin.close();
             }, 1000);
-            // newWin.print();
-            /*
-        window.addEventListener("afterprint", function(event) {
-            console.log("Entro a imp auto")
-            $('#action-link').click();
-        });
-    */
-
-            /////////////
             console.log('ticket impreso');
         }
 
@@ -1401,10 +1319,6 @@ async function realizarVentaEfectivo(ticket) {
         productosSucursal = [];
         subproductosSucursal = [];
         ofertasSucursal = [];
-        //await cargarProductos();
-        //await cargarProductosSucursal();
-        //await cargarSubproductosSucursal();
-        //await cargarOfertasSucursal();
         document.querySelector('#claveEmpleado').value = "";
         //console.log(p);
         //console.log(funcion);
@@ -1468,9 +1382,6 @@ async function realizarVentaCredito() {
             console.log(respuesta); //JSON.stringify(respuesta));
 
         });
-        // let imp = await fetch(`/venta/ticket`);
-        // let impJ = await imp.text();
-        //  document.querySelector('#impresion').innerHTML = impJ;
         productosVenta = [];
         mostrarProductos();
         $('#confirmarVentaModal').modal('hide');
@@ -1478,10 +1389,6 @@ async function realizarVentaCredito() {
         productosSucursal = [];
         subproductosSucursal = [];
         ofertasSucursal = [];
-        //await cargarProductos();
-        //await cargarProductosSucursal();
-        //await cargarSubproductosSucursal();
-        //await cargarOfertasSucursal();
         document.querySelector('#claveEmpleado').value = "";
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
@@ -1641,6 +1548,15 @@ function obtenerPedidosEntrega(idPedido) {
         let direccion = pedidosContraEntrega[contador].direccion;
         verPedidoEntrega(pedidosContraEntrega[contador].id, idC); //, pedidosContraEntrega[0].direccion);
     }
+    if(pedidosContraEntrega.length>0)
+    {
+        $('#btnAceptarPedido').addClass('d-none');
+        $('#btnRechazarPedido').addClass('d-none');
+    }else
+    {
+        $('#btnAceptarPedido').removeClass('d-none');
+        $('#btnRechazarPedido').removeClass('d-none');
+    }
 
 }
 
@@ -1732,13 +1648,13 @@ function verPedidoEntrega(id, idCliente) {
     <p> Direccion de envio: ${direccion} </p>
     `;
 }
-$('#btnAceptarPedido').bind('click', async function() {
+/*$('#btnAceptarPedido').bind('click', async function() {
     try {
         let funcion = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: `{{url('/puntoVenta/aceptarPedido')}}/${this.value}`,
+            url: `{url('/puntoVenta/aceptarPedido')}}/${this.value}`,
             // los datos que voy a enviar para la relación
             data: {
                 _token: "{{ csrf_token() }}"
@@ -1759,7 +1675,7 @@ $('#btnAceptarPedido').bind('click', async function() {
     } catch (err) {
         console.log("Error al realizar la petición de productos AJAX: " + err.message);
     }
-});
+});*/
 $('#btnAceptarPedido').bind('click', async function() {
     try {
         let funcion = await $.ajax({
