@@ -342,7 +342,7 @@
         <div class="modal-content" id="">
             <div class="modal-header">
 
-                <h5 class="modal-title" id="exampleModalLabel">NUEVAS SOLICITUDES DE VENTAS EN LINEA</h5>
+                <h5 class="modal-title text-dark " id="exampleModalLabel" >NUEVAS SOLICITUDES DE VENTAS EN LINEA</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -354,11 +354,10 @@
                             <h4 class="row my-1 mx-1" style="color:#4388CC">SOLICITUDES</h4>
 
                             <div>
-                                <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR"
-                                    id="">
+                                
                                 <h6 class=" text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER
                                         INFORMACION
-                                        ADICIONAL, EDITAR O ELIMINAR </small> </h6>
+                                        A DETALLE. </small> </h6>
                             </div>
 
                         </div>
@@ -371,7 +370,7 @@
                 <div class="row col-8 mx-0">
 
                     <div class="col-12 border">
-                        <div class="row col-12 mx-auto border-bottom">
+                        <div class="row col-12 mx-auto border">
                             <div class="row col-4 mx-0">
                                 <p class="h5 text-center mx-auto my-0">Producto</p>
                             </div>
@@ -431,9 +430,7 @@
                             <div>
                                 <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR"
                                     id="texto">
-                                <h6 class=" text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER
-                                        INFORMACION
-                                        ADICIONAL, EDITAR O ELIMINAR </small> </h6>
+                                <h6 class=" text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER SU HISTORIAL DE SEGUIMIENTO</small> </h6>
                                 <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
@@ -452,14 +449,14 @@
 
                     </div>
                     <div id="estad" class="row col-12 mx-auto ">
-                        <p class="col-auto  mx-auto text-dark h5"><small><strong> Estado actual: </strong> </small></p>
+                      <!--  <p class="col-auto  mx-auto text-dark h5"><small><strong> Estado actual: </strong> </small></p>-->
                     </div>
                     <div id="estadoDesc" class="row col-12 mx-auto mb-4 ">
                         <!--  <p class="col-auto  mx-auto text-dark h5 alert-success"><small><strong> Paquete entregado </strong> </small></p>-->
                     </div>
                     <div id="instruccion" class="row col-12 mx-auto mb-4">
-                        <p class="col-auto  mx-auto text-secondary  h5"><small><strong> Presione para actualizar el
-                                    estado del paquete a:</strong> </small></p>
+                        <!--<p class="col-auto  mx-auto text-secondary  h5"><small><strong> Presione para actualizar el
+                                    estado del paquete a:</strong> </small></p>-->
                     </div>
                     <div class="row col-12  mx-auto" id="divActBtn">
 
