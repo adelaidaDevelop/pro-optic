@@ -136,6 +136,20 @@ class EcommerceController extends Controller
         if (isset($productoSucursal)) {
             $producto->precio = $productoSucursal->precio;
             $producto->existencia = $productoSucursal->existencia;
+            $carritoAux = session('carrito');
+
+            if(isset($carritoAux) && count($carritoAux)>0)
+            {
+                for($i = 0; $i < count($carritoAux); $i++)
+                {
+                    if($carritoAux[$i]['sucursal'] == session('sucursalEcommerce') && 
+                    $carritoAux[$i]['id'] ==$id)
+                    {
+                        $producto->existencia = $productoSucursal->existencia - $carritoAux[$i]['cantidad'];
+                    }
+                }
+            }
+            
         } else {
             $producto = false;
         }
