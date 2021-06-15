@@ -30,8 +30,8 @@
             <!-- Authentication Links -->
             @guest
             <div class="dropdown col-3 col-sm-2 col-md-1 my-auto">
-                <a id="invitadoDropdown" class="nav-link dropdown-toggle p-1 p-sm-3 p-md-0 p-lg-1 p-xl-3 text-white" href="#"
-                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a id="invitadoDropdown" class="nav-link dropdown-toggle p-1 p-sm-3 p-md-0 p-lg-1 p-xl-3 text-white"
+                    href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="{{ asset('img\usuario.png') }}" alt="LOGO" class="img-fluid"
                         href="{{ url('/loginCliente') }}">
                 </a>
@@ -43,8 +43,8 @@
             </div>
             @else
             <div class="dropdown col-3 col-sm-2 col-md-1 my-auto">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle p-1 p-sm-3 p-md-0 p-lg-1 p-xl-3 text-white" href="#" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle p-1 p-sm-3 p-md-0 p-lg-1 p-xl-3 text-white"
+                    href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="{{ asset('img\usuario.png') }}" class="img-fluid" alt="LOGO" height="40px">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -101,11 +101,11 @@
     </div>
     <script>
     $("input[type='search']").bind('keypress', function(e) {
-        if(this.value.length == 0 && e.key === ' ')
+        if (this.value.length == 0 && e.key === ' ')
             return false;
-        if (this.value.length > 0 &&  e.charCode == 13) {
+        if (this.value.length > 0 && e.charCode == 13) {
             location.href = `{{url('/buscar')}}?buscar=${this.value}`;
-    }
+        }
     });
 
     function buscarProducto(etiqueta) {
@@ -169,6 +169,20 @@
         </div>
     </nav>
 </div>
+<div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+    <div id="toastAgregarCarrito" class="toast hide bg-primary" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3500">
+        <div class="toast-header">
+            <strong class="h4 mr-auto">Carrito</strong>
+            <!--small>11 mins ago</small-->
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+        <p class="h5 text-white" id="toastCuerpoCarrito"><p>
+        </div>
+    </div>
+</div>
 <script>
 let carrito = @json(session('carrito'));
 let sucursal = @json(session('sucursalEcommerce'));
@@ -200,12 +214,11 @@ async function cambiarSucursal() {
 }
 
 function mostrarCarrito() {
-    if (carrito == null || carrito.length == 0)
-    {
+    if (carrito == null || carrito.length == 0) {
         elementoCarrito.innerHTML = cuerpoElementoCarrito;
         return;
     }
-    
+
     let totalCompra = 0;
     let cuerpoCarrito = "";
     let contador = 0;
@@ -221,10 +234,9 @@ function mostrarCarrito() {
                 carrito[i].imagen = `{{ asset('storage')}}/${carrito[i].imagen}`;
                 console.log('imagen', carrito[i].imagen);
             }
-            if(i<3)
-            {
-            cuerpoCarrito = cuerpoCarrito +
-                `<div class="row col-12 mx-auto border-bottom">
+            if (i < 3) {
+                cuerpoCarrito = cuerpoCarrito +
+                    `<div class="row col-12 mx-auto border-bottom">
                 <div class="col-4 p-1">
                     <img src="${carrito[i].imagen}" alt="imagen" class="img-fluid">
                 </div>
@@ -240,21 +252,19 @@ function mostrarCarrito() {
                     </button>
                 </div>
             </div>`;
-            }
-            else{
+            } else {
                 console.log('Si entra');
                 productosExtra = productosExtra + 1;
             }
             console.log('productos extra', productosExtra);
         }
     }
-    if(productosExtra>0)
-    {
+    if (productosExtra > 0) {
         let p = 'productos';
-        if(productosExtra == 1)
+        if (productosExtra == 1)
             p = 'producto';
         cuerpoCarrito = cuerpoCarrito +
-        `<div class="row mx-auto ><p class="text-center mx-auto border border-dark"> + ${productosExtra} ${p}</p></div>`;
+            `<div class="row mx-auto ><p class="text-center mx-auto border border-dark"> + ${productosExtra} ${p}</p></div>`;
     }
     document.querySelector('#cantidadCarrito').textContent = contador;
     if (contador == 0)
@@ -264,33 +274,67 @@ function mostrarCarrito() {
     cuerpoCarrito = cuerpoCarrito + `<a class="btn btn-primary" href="{{url('/carrito')}}">Ver carrito</a>`
     elementoCarrito.innerHTML = cuerpoCarrito;
     //"Aqui se agregará el contenido de carrito";
-     //respuesta.length;
+    //respuesta.length;
 }
 mostrarCarrito();
 
-async function quitarProducto(id)
-{
-    
+async function quitarProducto(id) {
+
     //let id = carrito[i]['id'];
     let url = `{{url('/quitarProductoCarrito')}}/${id}`;
     let respuesta = await $.ajax({
+        // metodo: puede ser POST, GET, etc
+        method: "POST",
+        // la URL de donde voy a hacer la petición
+        url: url,
+        // los datos que voy a enviar para la relación
+        data: {
+            //_token: $("meta[name='csrf-token']").attr("content")
+            //cantidad:cantidad,
+            _token: "{{ csrf_token() }}",
+        }
+    });
+    carrito = respuesta;
+    //console.log('Hecho',i);
+
+    //carrito.splice(i,1);
+    console.log('carrito despues d eliminar', carrito);
+    mostrarCarrito();
+}
+async function addCarrito(id) {
+
+    try {
+        //return alert('todo bien');
+        //return alert('Listo'+id);
+        let respuesta = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
             // la URL de donde voy a hacer la petición
-            url: url,
+            url: `{{url('/agregarAlCarrito')}}/${id}`,
             // los datos que voy a enviar para la relación
             data: {
                 //_token: $("meta[name='csrf-token']").attr("content")
-                //cantidad:cantidad,
                 _token: "{{ csrf_token() }}",
             }
         });
-    carrito = respuesta;
-    //console.log('Hecho',i);
-        
-    //carrito.splice(i,1);
-    console.log('carrito despues d eliminar',carrito);
-    mostrarCarrito();
+        console.log(respuesta);
+        //return;
+        if (respuesta == 1) {
+            return alert('Por el momento esta es la existencia que tenemos a la venta');
+        }
+        if (respuesta == 2) {
+            return alert('Por el momento no tenemos existencias de este producto');
+        }
+        carrito = respuesta;
+
+        $('#toastAgregarCarrito').toast('show');
+        document.getElementById('toastCuerpoCarrito').textContent = "Producto agregado al carrito";
+        mostrarCarrito();
+        //console.log('carrito',respuesta);
+        //return alert("Listo"+ respuesta);
+    } catch (err) {
+        console.log("Error al realizar la petición AJAX: " + err.message);
+    }
 }
 </script>
 @yield('contenido')

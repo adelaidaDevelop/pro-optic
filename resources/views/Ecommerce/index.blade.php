@@ -179,19 +179,20 @@ $deptos = $categorias[$d->nombre];
 @endif
 @endforeach
 @endif
-<div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
-    <div id="toastAgregarCarrito" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3500">
+<!--div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+    <div id="toastAgregarCarrito" class="toast hide bg-primary" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3500">
         <div class="toast-header">
-            <strong class="mr-auto">Carrito</strong>
+            <strong class="h4 mr-auto">Carrito</strong>
             <!--small>11 mins ago</small-->
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="toast-body" id="toastCuerpoCarrito">
+        <div class="toast-body">
+        <p class="h5 text-white" id="toastCuerpoCarrito"><p>
         </div>
     </div>
-</div>
+</div-->
 <script>
     //let sucursal = json(session('sucursalEcommerce'))
     //console.log('sucursal',sucursal);
@@ -199,7 +200,7 @@ $deptos = $categorias[$d->nombre];
     console.log('carrito', carrito);
     //if(carrito!=null)
     // document.querySelector('#cantidadCarrito').textContent = carrito.length;
-    async function addCarrito(id) {
+    /*async function addCarrito(id) {
 
         try {
             //return alert('todo bien');
@@ -208,11 +209,11 @@ $deptos = $categorias[$d->nombre];
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
-                url: `{{url('/agregarAlCarrito')}}/${id}`,
+                url: `{url('/agregarAlCarrito')}}/${id}`,
                 // los datos que voy a enviar para la relación
                 data: {
                     //_token: $("meta[name='csrf-token']").attr("content")
-                    _token: "{{ csrf_token() }}",
+                    _token: "{ csrf_token() }}",
                 }
             });
             console.log(respuesta);
@@ -221,7 +222,7 @@ $deptos = $categorias[$d->nombre];
                 return alert('Por el momento esta es la existencia que tenemos a la venta');
             }
             if (respuesta == 2) {
-            return alert('Por el momento no tenemos este producto a la venta');
+            return alert('Por el momento no tenemos existencias de este producto');
         }
             carrito = respuesta;
 
@@ -233,7 +234,7 @@ $deptos = $categorias[$d->nombre];
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-    }
+    }*/
 
     function seleccionProducto(bandera, id) {
         if (bandera) {

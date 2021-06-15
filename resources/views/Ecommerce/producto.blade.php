@@ -73,11 +73,10 @@
     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">perfiles</div>
     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">contactoos</div>
 </div>
-<div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+<!--div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
     <div id="toastAgregarCarrito" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3500">
         <div class="toast-header">
             <strong class="mr-auto">Carrito</strong>
-            <!--small>11 mins ago</small-->
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -85,14 +84,14 @@
         <div class="toast-body" id="toastCuerpoCarrito">
         </div>
     </div>
-</div>
+</div-->
 @endif
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
 <script>
     $("input[type='number']").inputSpinner();
     //let carrito = json(session('carrito'));
     console.log('carrito', carrito);
-    async function addCarrito(id) {
+    /*async function addCarrito(id) {
         let cantidad = $('#cantidad').val();
         try {
             //return alert('Listo'+id);
@@ -126,7 +125,7 @@
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-    }
+    }*/
     /*mostrarCarrito();
     function mostrarCarrito()
     {

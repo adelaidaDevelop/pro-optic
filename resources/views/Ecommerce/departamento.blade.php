@@ -263,7 +263,7 @@
             $('#tarjeta' + id).removeClass('shadow-lg border border-primary');
         }
     }
-    async function addCarrito(id) {
+    /*async function addCarrito(id) {
         try {
             //return alert('Listo'+id);
             let respuesta = await $.ajax({
@@ -274,7 +274,7 @@
                 // los datos que voy a enviar para la relación
                 data: {
                     //_token: $("meta[name='csrf-token']").attr("content")
-                    _token: "{{ csrf_token() }}",
+                    _token: "{ csrf_token() }}",
                 }
             });
             console.log(respuesta);
@@ -293,7 +293,7 @@
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-    }
+    }*/
 </script>
 @else
 <div class="col-9 mt-3 mx-auto">
