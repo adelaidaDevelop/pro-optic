@@ -56,31 +56,32 @@
                 <div class="row col-12 mt-3">
                     <p><strong class="">{{$nombre}}</strong></p>
                 </div>
-                <div class="row col-12 mt-3 text-center mx-auto">
-                    <p><strong class="">Seleccione una de las direcciones que usted a registrado </strong></p>
-                </div>
-                <div class="form-group row col-12 mx-0 px-0">
-                    <label for="domicilios" class="col-auto col-md-1 mb-1 mx-0 px-0 col-form-label text-center">Domicilio</label>
-
-                    <div class="col-12 mx-0 mt-1 mb-2 col-md-10 px-0">
-
-                        <select class="custom-select my-auto mx-auto" onchange="getDireccion()" id="domicilios">
-                            @foreach($domicilios as $domicilio)
-                            <option value="{{$domicilio->id}}" selected>
-                                <p class="text-white my-0 p-0"><small>
-                                        {{$domicilio->calle}} {{$domicilio->numeroExterior}},
-                                        @if(isset($domicilio->numeroInterior)){{$domicilio->numeroInterior}}, @else
-                                        @endif
-                                        {{$domicilio->codigoPostal}}, {{$domicilio->colonia}}, Zimatlán de Álvarez,
-                                        Oaxaca
-                                    </small></p>
-                            </option>
-                            @endforeach
-                        </select>
+                <div class="mx-auto">
+                    <div class="row col-12 border mt-3 text-center mx-auto ">
+                        <p><strong class="h5 ">Seleccione una de sus direcciones para realizar la entrega: </strong></p>
+                    </div>
+                    <div class="form-group row col-12 mx-0 px-0">
+                        <!-- <label for="domicilios" class="col-auto col-md-1 mb-1 mx-0 px-0 col-form-label text-center"> <strong> Domicilio </strong></label>-->
+                        <div class="col-12 mx-0 mt-1 mb-2 col-md-10 px-0 ">
+                            <select class="custom-select my-auto mx-auto" onchange="getDireccion()" id="domicilios">
+                                @foreach($domicilios as $domicilio)
+                                <option value="{{$domicilio->id}}" selected>
+                                    <p class="text-white my-0 p-0"><small>
+                                            {{$domicilio->calle}} {{$domicilio->numeroExterior}},
+                                            @if(isset($domicilio->numeroInterior)){{$domicilio->numeroInterior}}, @else
+                                            @endif
+                                            {{$domicilio->codigoPostal}}, {{$domicilio->colonia}}, Zimatlán de Álvarez,
+                                            Oaxaca
+                                        </small></p>
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="row mx-auto mx-md-0">
-                    <p class="h6 p-2 border" id="direccion">
+
+                <div class="row col-12 mx-auto mx-md-0">
+                    <p class="h6  border-bottom p-4 mx-auto" id="direccion">
                         {{$domicilios[count($domicilios)-1]->calle}}
                         {{$domicilios[count($domicilios)-1]->numeroExterior}},
                         @if(isset($domicilios[count($domicilios)-1]->numeroInterior)){{$domicilios[count($domicilios)-1]->numeroInterior}},
