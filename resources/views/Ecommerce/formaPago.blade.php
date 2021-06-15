@@ -82,23 +82,24 @@
             <p class="col-auto mx-auto text-secondary alert-warning  h5"><small><strong> Por favor escoja una de las opciones de abajo para continuar </strong> </small></p>
         </div>
         <div class="row col-12  mx-auto mr-md-auto px-0 my-4">
-            <div class="col-6 col-md-auto mb-auto ml-md-auto mr-1">
+            <div class="col-6 col-sm-auto mx-auto mb-1 ml-sm-auto mr-sm-1">
                 <button id="btnPaypal" class="btn btn-outline-info input-group" onclick="return pagoPaypal()">
                     <img class="img-fluid my-1 btn btn-light border-0 rounded" src="{{ asset('img\PayPal-logo3.png') }}" alt="FORMA DE PAGO" width="150px" height="150px" />
                 </button>
             </div>
-            <div class="col-6 col-md-auto mb-auto mr-md-auto ml-1 ">
+            <div class="col-6 col-sm-auto mx-auto mb-1 mr-sm-auto ml-sm-1 ">
                 <button id="btnConEnt" class="btn btn-outline-info input-group" onclick="return pagoContEnt()">
                     <img class=" img-fluid my-1 btn btn-light border-0 rounded " src="{{ asset('img\contraentrega.png') }}" alt="FORMA DE PAGO" width="150px" height="150px" />
                 </button>
             </div>
-
-            <div class="col-12 mt-4 mx-2 row mt-4 h4"> Forma de pago seleccionado: <h5> <strong>
+            <div class="col-12 mx-auto">
+            <div class="row col-md-6 mt-4 mx-auto h4"> Forma de pago seleccionado: <h5> <strong>
                         <p id="opc" class="h4 my-2 my-md-0"></p>
                     </strong></h5>
             </div>
-            <div id="descPaypal" class=" mx-2"> </div>
-            <div id="elementos" class="mx-2"></div>
+            <div id="descPaypal" class="row col-md-6 mx-auto"> </div>
+            <div id="elementos" class="row col-md-6 mx-auto"></div>
+            </div>
         </div>
     </div>
 
@@ -148,16 +149,16 @@
             <form method="get" onsubmit="return validarPagar()" action="{{url('/revisionCompra')}}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <!--El name debe ser igual al de la base de datos-->
-            <div class="col-12 px-md-0">
+            <div class="col-12 px-0">
             <label for="precio_ind" class="text-justify mt-3 mx-auto">
                             <h5> Escriba la cantidad de efectivo con la que va a pagar para preparar su cambio </h5>
                         </label>
             </div>
-            <div class="input-group px-3 px-md-0">
+            <div class="input-group px-0">
             <h5 class="my-auto mx-1"><strong>$</strong></h5>
             <input class="col-3 form-control my-auto mt-4" type="number" id="pagando" name="pago" data-decimals="" min="0" placeholder="0" value="" autofocus required>
             </div>
-            <button type="submit" id="btnContinuar"  class="btn btn-success ml-3 ml-md-0 btn-lg mt-4">Continuar</button>
+            <button type="submit" id="btnContinuar"  class="btn btn-success mx-0 ml-md-0 btn-lg mt-4">Continuar</button>
             </form>
             `;
             /*let boton3 = `
@@ -247,12 +248,12 @@
             document.getElementById("divN").remove();
         }
         */
-        let element = `<div class="col-8 mr-md-auto mb-auto">
+        let element = `<div class="col-md-8 mr-md-auto mb-auto px-0">
                 <p class="h5">Paga de manera sencilla con tus tarjetas de débito o crédito registradas en tu cuenta
                     PayPal.</p>
             </div>
-            <div class="col-6 col-md-9 mb-auto px-0">
-                <img class="col-md-2 img-fluid my-2 mx-0" src="{{ asset('img/paypal.png') }}" alt="FORMA DE PAGO" />
+            <div class="col-6 col-md-12 col-lg-11 col-xl-10 mb-auto px-0">
+                <img class="col-md-10 col-lg-9 col-xl-6 img-fluid my-2 mx-0" src="{{ asset('img/paypal.png') }}" alt="FORMA DE PAGO" />
             </div>
             <div class=" col-12">
             <a class="btn btn-success btn-lg" href="">Continuar con PayPal</a>
