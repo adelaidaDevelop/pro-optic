@@ -50,7 +50,7 @@
         <div class="form-group col-10 col-md-5 mx-auto ml-md-0 mr-md-auto pl-md-0 pr-md-4">
             <input type="number" class="form-control border" id="cantidad" min="1" max="{{$producto->existencia}}" value="1">
         </div>
-        <button class="btn btn-success col-12 col-auto mx-4 text-center ml-md-0 mr-md-auto" onclick="addCarrito(`{{$producto->id}}`)"><strong>
+        <button class="btn btn-success col-12 col-auto mx-4 text-center ml-md-0 mr-md-auto" onclick="addCarritoProducto(`{{$producto->id}}`)"><strong>
                 <h4>Agregar al carrito</h4>
             </strong></button>
     </div>
@@ -91,7 +91,7 @@
     $("input[type='number']").inputSpinner();
     //let carrito = json(session('carrito'));
     console.log('carrito', carrito);
-    /*async function addCarrito(id) {
+    async function addCarritoProducto(id) {
         let cantidad = $('#cantidad').val();
         try {
             //return alert('Listo'+id);
@@ -125,7 +125,7 @@
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
-    }*/
+    }
     /*mostrarCarrito();
     function mostrarCarrito()
     {
