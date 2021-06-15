@@ -288,6 +288,10 @@ class EcommerceController extends Controller
         $p = Producto::find($id);
         $sp = Sucursal_producto::where('idSucursal', '=', session('sucursalEcommerce'))
             ->where('idProducto', '=', $id)->first();
+        if($sp->existencia == 0)
+        {
+            return 2;
+        }
         //Revisa si recibe una cantidad de la solicitud
         if ($request->has('cantidad')) {
             $cantidad = $request['cantidad'];

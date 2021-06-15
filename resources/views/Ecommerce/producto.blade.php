@@ -113,6 +113,9 @@
             if (respuesta == 1) {
                 return alert('Por el momento esta es la existencia que tenemos a la venta');
             }
+            if (respuesta == 2) {
+            return alert('Por el momento no tenemos este producto a la venta');
+        }
             carrito = respuesta;
             $('#toastAgregarCarrito').toast('show');
             document.getElementById('toastCuerpoCarrito').textContent = "Producto agregado al carrito";
