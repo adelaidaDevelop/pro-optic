@@ -45,24 +45,27 @@
 </div>
 <div class="row col-12 mx-0 px-0 ">
     <div class="col-12 col-md-9 mx-0 px-0 px-md-2 ml-md-0 mr-md-auto border mb-2">
-        <div class="row col-12 mx-0 mr-md-2 px-0 px-md-2 mb-auto border-bottom border-dark">
+        <div class="row col-12 mx-0 mr-md-2 px-0 px-md-2 mb-auto ">
             <div class="col-3 col-md-1 my-1 mx-0 px-0">
                 <img class="col-10 mx-0 img-fluid" src="{{ asset('img\ubicacion.png') }}" alt="UBICACION" />
             </div>
-            <h5 class="row col-9 col-md-11 my-auto px-0 text-left">Dirección De Envío</h5>
+            <h4 class="row col-9 col-md-11 my-auto px-0 text-left">Dirección De Envío</h4>
         </div>
-        <div class="row col-12 mx-0 px-0">
-            <div class="col-12 mx-auto mb-auto ">
-                <div class="row col-12 mt-3">
+        <div class="row col-12 mx-0 px-0 border-bottom ">
+            <div class="col-12 mx-auto mb-auto border ">
+                <div class=" col-12 mt-3">
                     <p><strong class="">{{$nombre}}</strong></p>
                 </div>
-                <div class="mx-auto">
-                    <div class="row col-12 border mt-3 text-center mx-auto ">
-                        <p><strong class="h5 ">Seleccione una de sus direcciones para realizar la entrega: </strong></p>
-                    </div>
-                    <div class="form-group row col-12 mx-0 px-0">
+                <div class=" col-12 mt-md-1">
+                    <p class="h6"> <strong>Tel: {{$telefono}} </strong></p>
+                </div>
+                <div class="row col-12  mt-3  text-center mx-auto ">
+                    <p class=" "><strong class="h5 ">Seleccione una de sus direcciones para realizar la entrega: </strong></p>
+                </div>
+                <div class="row col-12 mx-auto text-center ">
+                    <div class="form-group row col-8 mx-auto px-0 ">
                         <!-- <label for="domicilios" class="col-auto col-md-1 mb-1 mx-0 px-0 col-form-label text-center"> <strong> Domicilio </strong></label>-->
-                        <div class="col-12 mx-0 mt-1 mb-2 col-md-10 px-0 ">
+                        <div class="col-12 mx-0 mt-1 mb-2 col-md-10 px-0 border">
                             <select class="custom-select my-auto mx-auto" onchange="getDireccion()" id="domicilios">
                                 @foreach($domicilios as $domicilio)
                                 <option value="{{$domicilio->id}}" selected>
@@ -78,21 +81,18 @@
                             </select>
                         </div>
                     </div>
+                    <div class="row col-8 mx-auto mx-md-auto ">
+                        <p class="h6  border-bottom p-0 " id="direccion">
+                            {{$domicilios[count($domicilios)-1]->calle}}
+                            {{$domicilios[count($domicilios)-1]->numeroExterior}},
+                            @if(isset($domicilios[count($domicilios)-1]->numeroInterior)){{$domicilios[count($domicilios)-1]->numeroInterior}},
+                            @else @endif
+                            {{$domicilios[count($domicilios)-1]->codigoPostal}},
+                            {{$domicilios[count($domicilios)-1]->colonia}}, Zimatlán de Álvarez, Oaxaca
+                        </p>
+                    </div>
                 </div>
 
-                <div class="row col-12 mx-auto mx-md-0">
-                    <p class="h6  border-bottom p-4 mx-auto" id="direccion">
-                        {{$domicilios[count($domicilios)-1]->calle}}
-                        {{$domicilios[count($domicilios)-1]->numeroExterior}},
-                        @if(isset($domicilios[count($domicilios)-1]->numeroInterior)){{$domicilios[count($domicilios)-1]->numeroInterior}},
-                        @else @endif
-                        {{$domicilios[count($domicilios)-1]->codigoPostal}},
-                        {{$domicilios[count($domicilios)-1]->colonia}}, Zimatlán de Álvarez, Oaxaca
-                    </p>
-                </div>
-                <div class="row col-12 mt-md-3">
-                    <p class="h6">Tel: {{$telefono}}</p>
-                </div>
             </div>
             <!--div class="row col-2 mt-0 mx-auto mb-auto">
                 <button class="btn btn-outline-danger border-0" id="editarDireccion">
@@ -146,7 +146,7 @@
     <div class="col-md-3 mr-md-0 ml-md-auto px-0 pl-md-2 pr-md-0">
         <div class="row mx-0 mb-auto p-1 border .hidden-md-up ">
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom  .hidden-md-up">
-                <h4 class="col-12 mx-auto my-1 py-0 text-center .hidden-md-up">Resumen de compra</h4>
+                <h4 class="col-12 mx-auto my-1 py-0 text-primary text-center .hidden-md-up">Resumen de compra</h4>
             </div>
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom .hidden-md-up">
                 <h5 class="mr-auto my-1 text-center .hidden-md-up">Subtotal</h5>
@@ -157,8 +157,8 @@
                 <h5 class="ml-auto my-1 text-center" id="envio">*por calcular</h5>
             </div>
             <div class="row col-12 mx-auto mt-1 mb-auto py-0 border-bottom .hidden-md-up">
-                <h5 class="mr-auto my-1 text-center .hidden-md-up">Total</h5>
-                <h5 class="ml-auto my-1 text-center" id="total">$0.00 </h5>
+                <h4 class="mr-auto my-1 text-center .hidden-md-up">Total</h4>
+                <h4 class="ml-auto my-1 text-center" id="total">$0.00 </h4>
             </div>
         </div>
     </div>

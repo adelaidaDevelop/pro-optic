@@ -151,7 +151,7 @@
             <!--El name debe ser igual al de la base de datos-->
             <div class="col-12 px-0">
             <label for="precio_ind" class="text-justify mt-3 mx-auto">
-                            <h5> Escriba la cantidad de efectivo con la que va a pagar para preparar su cambio </h5>
+                            <h5> Escriba la cantidad de efectivo con la que pagará para preparar su cambio </h5>
                         </label>
             </div>
             <div class="input-group px-0">
@@ -256,8 +256,10 @@
                 <img class="col-md-10 col-lg-9 col-xl-6 img-fluid my-2 mx-0" src="{{ asset('img/paypal.png') }}" alt="FORMA DE PAGO" />
             </div>
             <div class=" col-12">
-            <a class="btn btn-success btn-lg" href="">Continuar con PayPal</a>
+            <!--<a class="btn btn-success btn-lg" href="">Continuar con PayPal</a>-->
+            <button class="btn btn-success btn-lg" disabled> Continuar con PayPal</button>
             </div>
+            <p class="alert-danger mt-3"> Por el momento sólo estamos manejando el medio de pago: CONTRA ENTREGA </p>
             `;
 
         document.getElementById("descPaypal").innerHTML = element;

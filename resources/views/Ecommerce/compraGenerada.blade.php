@@ -181,8 +181,8 @@
     <div class="row col-12 my-1 my-md-4  mx-0">
         <div class="col-12 text-right  text-center mx-auto my-md-0 alert-warning">
             <p class="h6 ">
-                Farmacias gi atenderá su solicitud lo más pronto posible y una vez confirmada la compra por nosotros. Usted podrá ver el estado de su paquete en la seccion ""
-                incluyendo la fecha y hora estimada para hacer la entrega de su pedido.
+                Farmacias gi atenderá su solicitud lo más pronto posible y una vez confirmada la compra por nosotros usted podrá ver el historial y seguimiento de su pedido en la seccion "Mis pedidos" de su perfil creado.
+
             </p>
 
         </div>

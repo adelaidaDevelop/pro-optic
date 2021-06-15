@@ -56,7 +56,31 @@
     <div class="row col-12 mx-auto mt-1  mb-4  ">
         <p class="col-auto mx-auto text-secondary alert-warning  h5"><small><strong> Revise que la forma de pago, dirección, y productos sean correctos </strong> </small></p>
     </div>
+    <!--aqui-->
+    
     <div class="col-md-9 mx-md-auto border-bottom border-dark">
+        <div class="row col-12 mx-auto px-0 mb-auto">
+            <div class="col-3 col-md-1 my-1 mx-0 px-0">
+                <img class="col-10 mx-0 img-fluid" src="{{ asset('img\login.png') }}" alt="UBICACION" />
+            </div>
+            <h4 class="row col-auto my-auto px-0 text-left">Cliente</h4>
+        </div>
+    </div>
+    <div class="row col-md-9 mx-md-auto px-0 mb-4 py-2 mb-auto">
+        
+        <div class="col-md-4 mx-4">
+            <p class="row col-12  h5 my-auto "> Telefono:</p>
+            <p class="row col-12 h5 my-auto "><strong>{{$cliente->telefono}} </strong></p>
+        </div>
+        <div class="col-md-4">
+            <p class="row col-12  h5 my-auto "> Cliente:</p>
+            <p class="row col-12 h5 my-auto "><strong> {{$cliente->nombre}} {{$cliente->apellidoPaterno}} {{$cliente->apellidoMaterno}} </strong></p>
+        </div>
+
+    </div>
+
+    <!--aqui-->
+    <div class="col-md-9 mx-md-auto mt-2 border-bottom border-dark">
         <div class="row col-12 mx-auto px-0 mb-auto">
             <div class="col-3 col-md-1 my-1 mx-0 px-0">
                 <img class="col-10 mx-0 img-fluid" src="{{ asset('img\tarjeta.png') }}" alt="UBICACION" />
@@ -120,9 +144,7 @@
         </div>
         <div class="row col-auto mx-0 px-0 py-2 ">
             <div class="col-md-10 mb-auto">
-                <div class="row col-12">
-                    <p><strong class="">{{$nombre}}</strong></p>
-                </div>
+
                 <div class="row col-12 mx-0 px-md-0">
                     <p class="h6">{{$domicilio->calle}} {{$domicilio->numeroExterior}},
                         @if(isset($domicilio->numeroInterior)){{$domicilio->numeroInterior}}, @else @endif
@@ -235,8 +257,8 @@
         </div>
     </div>
     <div class="col-12 text-right  text-center mx-auto my-md-4">
-        <p class="h6 text-danger">Si usted ya verifico la información de su compra,<mark> presione el boton
-                Confirmar Compra </mark> para generar su pedido en este momento
+        <p class="h6 text-danger">Si usted ya verificó la información de su compra<mark> presione el boton
+                Confirmar compra </mark> para generar su pedido en este momento.
         </p>
     </div>
     <div class="col-12 text-right  text-center mx-auto my-4">
@@ -441,11 +463,11 @@
         //datosFormulario.append("costoEnvio", envioCosto);
         datosFormulario.append("total", parseFloat(suma));
         datosFormulario.append("datos", json);
-        
+
         datosFormulario.append("_token", "{{ csrf_token() }}");
         //datosFormulario.append('ajax', true);
         //console.log('formulario', datosFormulario);
-        
+
         try {
             let funcion = $.ajax({
                 // metodo: puede ser POST, GET, etc
@@ -462,7 +484,7 @@
 
                 // si tuvo éxito la petición
             }).done(function(respuesta) {
-                console.log("La respuesta despues ins:",respuesta); //JSON.stringify(respuesta));
+                console.log("La respuesta despues ins:", respuesta); //JSON.stringify(respuesta));
                 let paga = respuesta['pagaCon'];
                 let folio = respuesta['folioPedido'];
                 location.href = `{{url('/resumenFinal')}}/${paga},${folio}`;

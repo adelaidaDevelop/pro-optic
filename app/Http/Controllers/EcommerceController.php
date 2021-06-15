@@ -585,9 +585,9 @@ class EcommerceController extends Controller
         $id =  Auth::user()->id;
         $cliente = Cliente::where('idUsuario', '=', $id)->first();
         $domicilio = Domicilio::where('idCliente', '=', $cliente->id)->first();
-        $nombre = $cliente->nombre;
+       
         $telefono = $cliente->telefono;
-        return view('Ecommerce.revisionCompra', compact('nombre', 'domicilio', 'telefono', 'carrito', 'pagaCon', 'formaPago'));
+        return view('Ecommerce.revisionCompra', compact('cliente', 'domicilio', 'telefono', 'carrito', 'pagaCon', 'formaPago'));
     }
 
     public function resumen($datos, $folio)
