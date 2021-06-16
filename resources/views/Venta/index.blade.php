@@ -404,13 +404,13 @@
             </div>
             <div class="row modal-body">
                 <div class=" col-4">
-                    <div class="col-12 border border-dark mt-4 mb-4 ml-4 mr-2">
-                        <div class="px-3 py-3 m-0">
+                    <div class="col-12 border border-dark mt-4 mb-4 mx-auto ml-4 mr-2">
+                        <div class="px-3 py-3 m-0 mx-auto">
                             <!--input type="text" id="buscador" class="form-control my-2">
                         <button class="btn btn-info mb-2" id="boton">Buscar</button-->
-                            <h4 class="row my-1 mx-1" style="color:#4388CC">ACTIVOS</h4>
-                            <div>
-                                <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto">
+                            <h4 class="row my-1 mx-auto" style="color:#4388CC">ACTIVOS</h4>
+                            <div class="my-2">
+                               <!-- <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto">-->
                                 <h6 class=" text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER SU HISTORIAL DE SEGUIMIENTO</small> </h6>
                                 <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
