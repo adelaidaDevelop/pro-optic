@@ -60,7 +60,7 @@
                         <input type="tel" class="form-control @error('nombre') is-invalid @enderror" id="nombre"
                             name="nombre"
                             value="@if(session()->has('cambios')){{old('nombre')}}@else{{$cliente->nombre}}@endif"
-                            aria-describedby="nombre" placeholder="TEL 8-10 DIGITOS" pattern="[0-9]{8,10}" required>
+                            aria-describedby="nombre" placeholder="nombre" required>
                         @error('nombre')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

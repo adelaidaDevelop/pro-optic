@@ -9,10 +9,10 @@
 </div>
 
 <div class="col-12 input-group text-center mx-auto mb-4 mt-4" style="background:#F4F6F6">
-    <h6 class="col-2"> FOLIO: {{$venta->id}} </h6>
-    <h6 class="col-3">FECHA GENERADO: {{$venta->created_at->format('d-m-Y')}} </h6>
-    <h6 class="col-2"> STATUS: {{$ventaCliente->estado}} </h6>
-    <h6 class="col-4"> HORA PROGRAMADA DE ENTREGA: {{$venta->created_at->addMinutes(60)->isoFormat('H:mm:ss A')}} </h6>
+    <h6 class="col col-md-2"> FOLIO: {{$venta->id}} </h6>
+    <h6 class="col col-md-3"> FECHA GENERADO: {{$venta->created_at->format('d-m-Y')}} </h6>
+    <h6 class="col col-md-2"> STATUS: {{$ventaCliente->estado}} </h6>
+    <h6 class="col col-md-4"> HORA PROGRAMADA DE ENTREGA: {{$venta->created_at->addMinutes(60)->isoFormat('H:mm:ss A')}} </h6>
 </div>
 <!--
 <div class=" col-12 text-right mt-3 my-1">

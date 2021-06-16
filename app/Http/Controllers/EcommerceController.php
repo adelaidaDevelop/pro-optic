@@ -24,6 +24,8 @@ use Hash, Auth;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
+use Laravel\Fortify\Fortify;
+
 class EcommerceController extends Controller
 {
     public function __construct()
@@ -138,18 +140,16 @@ class EcommerceController extends Controller
             $producto->existencia = $productoSucursal->existencia;
             $carritoAux = session('carrito');
 
-            if(isset($carritoAux) && count($carritoAux)>0)
-            {
-                for($i = 0; $i < count($carritoAux); $i++)
-                {
-                    if($carritoAux[$i]['sucursal'] == session('sucursalEcommerce') && 
-                    $carritoAux[$i]['id'] ==$id)
-                    {
+            if (isset($carritoAux) && count($carritoAux) > 0) {
+                for ($i = 0; $i < count($carritoAux); $i++) {
+                    if (
+                        $carritoAux[$i]['sucursal'] == session('sucursalEcommerce') &&
+                        $carritoAux[$i]['id'] == $id
+                    ) {
                         $producto->existencia = $productoSucursal->existencia - $carritoAux[$i]['cantidad'];
                     }
                 }
             }
-            
         } else {
             $producto = false;
         }
@@ -302,8 +302,7 @@ class EcommerceController extends Controller
         $p = Producto::find($id);
         $sp = Sucursal_producto::where('idSucursal', '=', session('sucursalEcommerce'))
             ->where('idProducto', '=', $id)->first();
-        if($sp->existencia == 0)
-        {
+        if ($sp->existencia == 0) {
             return 2;
         }
         //Revisa si recibe una cantidad de la solicitud
@@ -599,7 +598,7 @@ class EcommerceController extends Controller
         $id =  Auth::user()->id;
         $cliente = Cliente::where('idUsuario', '=', $id)->first();
         $domicilio = Domicilio::where('idCliente', '=', $cliente->id)->first();
-       
+
         $telefono = $cliente->telefono;
         return view('Ecommerce.revisionCompra', compact('cliente', 'domicilio', 'telefono', 'carrito', 'pagaCon', 'formaPago'));
     }
@@ -621,7 +620,7 @@ class EcommerceController extends Controller
         $carrito = session('carrito');
         $carritoReset = [];
         session(['carrito' => $carritoReset]);
-        return view('Ecommerce.compraGenerada', compact('nombre', 'domicilio', 'telefono', 'carrito', 'formaPago', 'pagarCon', 'folio','carrito'));
+        return view('Ecommerce.compraGenerada', compact('nombre', 'domicilio', 'telefono', 'carrito', 'formaPago', 'pagarCon', 'folio', 'carrito'));
     }
     public function insertarSolicitud(Request $request)
     {
@@ -677,7 +676,7 @@ class EcommerceController extends Controller
         //Datos a enviar para siguiente vista
         //return view('Ecommerce.compraGenerada');
         // return $pagaCon;
-        
+
         return compact('pagaCon', 'folioPedido');
         // return compact('nombre', 'domicilio', 'telefono', 'carrito','formaPago');
     }
@@ -751,19 +750,30 @@ class EcommerceController extends Controller
     {
         $venta = Venta::findOrFail($id);
         $idVenta = $venta->id;
-        $ventaCliente = Venta_cliente::where('idVenta','=',$id)->first();
-        return view('Ecommerce.seguimiento_pedido',compact('venta','ventaCliente','idVenta'));
+        $ventaCliente = Venta_cliente::where('idVenta', '=', $id)->first();
+        return view('Ecommerce.seguimiento_pedido', compact('venta', 'ventaCliente', 'idVenta'));
     }
 
     public function generarComprobante($id)
     {
-        $pedidosContraEntrega = Pedido_contra_entrega::where('idCliente', '=', $cliente->id)->get();
+        //$pedidosContraEntrega = Pedido_contra_entrega::where('idCliente', '=', $cliente->id)->get();
         $detallePedidos = detallePedido_CE::get();
 
         $venta = Venta::findOrFail($id);
-        $ventaCliente = Venta_cliente::where('idVenta','=',$id)->first();
+        $ventaCliente = Venta_cliente::where('idVenta', '=', $id)->first();
         $idCliente = $ventaCliente->idCliente;
         $cliente = Cliente::findOrFail($idCliente);
-        return view('Ecommerce.comprobante', compact('venta', 'ventaCliente','cliente'));
+        return view('Ecommerce.comprobante', compact('venta', 'ventaCliente', 'cliente'));
+    }
+
+    public function verificacionEmail()
+    {
+        /*Fortify::verifyEmailView(function () {
+            return view('auth.verify-email');
+        });*/
+
+        Fortify::loginView(function () {
+            return view('auth.login');
+        });
     }
 }
