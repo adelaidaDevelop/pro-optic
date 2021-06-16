@@ -105,10 +105,6 @@
             ],
             "description": "BaconQrCode is a QR code generator for PHP.",
             "homepage": "https://github.com/Bacon/BaconQrCode",
-            "support": {
-                "issues": "https://github.com/Bacon/BaconQrCode/issues",
-                "source": "https://github.com/Bacon/BaconQrCode/tree/2.0.3"
-            },
             "time": "2020-10-30T02:02:47+00:00"
         },
         {
@@ -165,10 +161,6 @@
                 "laravel",
                 "pdf"
             ],
-            "support": {
-                "issues": "https://github.com/barryvdh/laravel-dompdf/issues",
-                "source": "https://github.com/barryvdh/laravel-dompdf/tree/v0.9.0"
-            },
             "funding": [
                 {
                     "url": "https://github.com/barryvdh",
@@ -270,10 +262,6 @@
                 "enum",
                 "map"
             ],
-            "support": {
-                "issues": "https://github.com/DASPRiD/Enum/issues",
-                "source": "https://github.com/DASPRiD/Enum/tree/1.0.3"
-            },
             "time": "2020-10-02T16:03:48+00:00"
         },
         {
@@ -1099,10 +1087,6 @@
                 "auth",
                 "laravel"
             ],
-            "support": {
-                "issues": "https://github.com/laravel/fortify/issues",
-                "source": "https://github.com/laravel/fortify"
-            },
             "time": "2021-05-25T16:35:21+00:00"
         },
         {
@@ -1741,10 +1725,6 @@
                 "printer",
                 "receipt-printer"
             ],
-            "support": {
-                "issues": "https://github.com/mike42/escpos-php/issues",
-                "source": "https://github.com/mike42/escpos-php/tree/v3.0"
-            },
             "time": "2019-10-13T06:27:43+00:00"
         },
         {
@@ -2143,11 +2123,6 @@
                 "hex2bin",
                 "rfc4648"
             ],
-            "support": {
-                "email": "info@paragonie.com",
-                "issues": "https://github.com/paragonie/constant_time_encoding/issues",
-                "source": "https://github.com/paragonie/constant_time_encoding"
-            },
             "time": "2020-12-06T15:14:20+00:00"
         },
         {
@@ -2338,10 +2313,6 @@
                 "Two Factor Authentication",
                 "google2fa"
             ],
-            "support": {
-                "issues": "https://github.com/antonioribeiro/google2fa/issues",
-                "source": "https://github.com/antonioribeiro/google2fa/tree/8.0.0"
-            },
             "time": "2020-04-05T10:47:18+00:00"
         },
         {
@@ -7696,5 +7667,5 @@
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "1.1.0"
 }
