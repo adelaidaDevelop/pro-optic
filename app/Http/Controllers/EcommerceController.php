@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\DB;
 
 use Laravel\Fortify\Fortify;
 
+use Illuminate\Routing\UrlGenerator;
+
 class EcommerceController extends Controller
 {
     public function __construct()
@@ -683,8 +685,10 @@ class EcommerceController extends Controller
 
     public function menu()
     {
+        //return url()->current();
         if (!Auth::check())
             return redirect('/loginCliente');
+        //$this->middleware('verified');
         $sucursales = Sucursal::all();
         $departamentos = Departamento::where('ecommerce', '=', 1)->get(['id', 'nombre']);
         $cliente = Cliente::where('idUsuario', '=', session('idCliente'))->first();

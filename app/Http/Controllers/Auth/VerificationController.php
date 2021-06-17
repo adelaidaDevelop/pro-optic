@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\UrlGenerator;
 
 class VerificationController extends Controller
 {
@@ -36,8 +38,26 @@ class VerificationController extends Controller
     public function __construct()
     {
         //$this->middleware('auth');
-        $this->middleware('isEmpleado');
+        //return NULL;
+        if (!session()->has('seccion')) {
+            $pos = strpos(url()->current(), 'puntoVenta');
+
+            if ($pos === false) {
+                session(['seccion' => 'ecommerce']);
+            } else {
+                session(['seccion' => 'puntoVenta']);
+            }
+        }
+        if(session('seccion') == 'ecommerce')
+        {
+            $this->middleware('isCliente');
+        }
+        if(session('seccion') == 'puntoVenta')
+        {
+            $this->middleware('isEmpleado');
+        }
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+        
     }
 }

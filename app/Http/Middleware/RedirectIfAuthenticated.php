@@ -18,13 +18,15 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, ...$guards)
     {
+        //return NULL;
         $guards = empty($guards) ? [null] : $guards;
-
+        //return NULL;
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::HOME);
             }
         }
+        
         if(session()->has('idEmpleado'))
         {
             $idEmpleado = session('idEmpleado');

@@ -27,17 +27,21 @@ class isCliente
             {
                 if(Auth::user()->tipo == 2)
                 {
-                    
                     return $next($request);
                 }
                 Auth::logout();
             }
             $idCliente = session('idCliente');
             Auth::loginUsingId($idCliente);
-            
         }
         else
+        {
             Auth::logout();
+            if(session()->has('seccion') && session('seccion') == 'ecommerce')
+            {
+                return redirect('/loginCliente');
+            }
+        }
         return $next($request);
     }
 }

@@ -123,6 +123,7 @@ class LoginController extends Controller
                 {
 //                    
                 $request->session()->regenerate();
+                session(['idEmpleado' => $empleado->id]);
                 session(['idUsuario' => Auth::user()->id]);
                 session(['sucursal' => $request->input('opcionSucursal')]);
                 session(['idSucursalEmpleado' => $sucursalEmpleado->id]);
@@ -156,6 +157,7 @@ class LoginController extends Controller
             session(['idCliente'])
         }*/
         session()->forget('idUsuario');
+        session()->forget('idEmpleado');
         session()->forget('idSucursalEmpleado');
         session()->forget('sucursal');
         session()->forget('sucursalNombre');

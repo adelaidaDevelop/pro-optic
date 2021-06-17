@@ -13,6 +13,7 @@ use App\Models\Producto;
 use App\Models\Sucursal_producto;
 use Illuminate\Support\Arr;
 use Validator, Hash, Auth;
+use Illuminate\Auth\Events\Registered;
 //use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginClienteController extends Controller
@@ -34,9 +35,23 @@ class LoginClienteController extends Controller
         $sucursales = Sucursal::all();
         $departamentos = Departamento::where('ecommerce', '=', 1)->get(['id', 'nombre']);
 
-        if (!Auth::check())
-            return view('auth.loginCliente', compact('sucursales', 'departamentos', 'compra'));
-        return redirect('/');
+        if(session()->has('idCliente'))
+        {
+            if(Auth::check())
+            {
+                if(Auth::user()->tipo == 2)
+                {
+                    
+                    //return $next($request);
+                }else
+                Auth::logout();
+            }
+            $idCliente = session('idCliente');
+            Auth::loginUsingId($idCliente);
+            return redirect('/menu');
+        }
+        return view('auth.loginCliente', compact('sucursales', 'departamentos', 'compra'));
+        //return redirect('/');
     }
 
     public function loginPost(Request $request)
@@ -148,6 +163,7 @@ class LoginClienteController extends Controller
     public function logout(Request $request)
     {
         session()->forget('idCliente');
+        //session()->forget('idUsuario');
         $carrito = [];
         session(['carrito' => $carrito]);
         //session()->forget('carrito');
@@ -188,12 +204,14 @@ class LoginClienteController extends Controller
             'password' => Hash::make($request['password']),
             'tipo' => 2,
         ]);
+        
         $datosEmpleado = Arr::add($datosEmpleado, 'idUsuario', $usuario->id);
         $datosEmpleado = Arr::add($datosEmpleado, 'tipo', 2);
         //$empleado = new Empleado;
         $cliente = Cliente::create($datosEmpleado);
         Auth::loginUsingId($usuario->id);
         session(['idCliente' => Auth::user()->id]);
+        event(new Registered($usuario));
         return redirect('/menu'); // $datosEmpleado;//view('auth.registerCliente');
     }
     protected function validator(array $data)

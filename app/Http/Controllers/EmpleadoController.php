@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
-
+use Illuminate\Auth\Events\Registered;
 class EmpleadoController extends Controller
 {
     /**
@@ -82,6 +82,7 @@ class EmpleadoController extends Controller
         $SucursalEmpleado->idSucursal = session('sucursal');
         $SucursalEmpleado->save();*/
         //Empleado::insert($datosEmpleado);
+        event(new Registered($usuario));
         $editar = ['verEmpleado','modificarEmpleado','eliminarEmpleado','admin'];
         if($sE->hasAnyRole($editar))
         {

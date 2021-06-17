@@ -48,7 +48,17 @@ class HomeController extends Controller
         }
         $usuarios = ['admin','crearVenta'];//,'admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);*/  
-        return redirect('puntoVenta/venta');//view('Venta.index');
+        if(session('seccion') == 'ecommerce')
+        {
+            session()->forget('seccion');
+            return redirect('/menu');
+        }
+        if(session('seccion') == 'puntoVenta')
+        {
+            session()->forget('seccion');
+            return redirect('puntoVenta/venta');
+        }
+        //view('Venta.index');
        // return view('header2');
     //  return view('layouts.app');
     }

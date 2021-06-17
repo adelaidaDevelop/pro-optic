@@ -22,44 +22,48 @@ class isEmpleado
     public function handle(Request $request, Closure $next)
     {
         //return 'Hay error';
-        
-        if(session()->has('idUsuario'))
-        {
-            
-            if(Auth::check())
-            {
-                
-                if(Auth::user()->tipo == 0)
-                {
-                    
-                    if(Auth::user()->id == 1)
-                    {
-                        
+
+        /*$pos = strpos(url()->current(), 'puntoVenta');
+        if ($pos === false) {
+            if (!Auth::check()) {
+                return redirect('/loginCliente');
+            }
+            else{
+                return $next($request);
+            }
+        }*/
+        if (session()->has('idUsuario')) {
+
+            if (Auth::check()) {
+
+                if (Auth::user()->tipo == 0) {
+
+                    if (Auth::user()->id == 1) {
+
                         return $next($request);
                     }
-                    
+
                     $id = Auth::user()->id;
-                    $empleado = Empleado::where('idUsuario','=',$id)->get()->first();
-                    $sucursalEmpleado = Sucursal_empleado::where('idSucursal','=',session('sucursal'))
-                    ->where('idEmpleado','=',$empleado->id)->get()->first();
+                    $empleado = Empleado::where('idUsuario', '=', $id)->get()->first();
+                    $sucursalEmpleado = Sucursal_empleado::where('idSucursal', '=', session('sucursal'))
+                        ->where('idEmpleado', '=', $empleado->id)->get()->first();
                     //return $sucursalEmpleado;
-                    if(!empty($sucursalEmpleado) && $sucursalEmpleado->status == 'alta')
-                    {
+                    if (!empty($sucursalEmpleado) && $sucursalEmpleado->status == 'alta') {
                         //                    return redirect('/puntoVenta/home');
                         //$request->session()->regenerate();
                         session(['idUsuario' => Auth::user()->id]);
-                        
+
                         session(['sucursal' => session('sucursal')]);
                         //return $next($request);
                         //return redirect('puntoVenta/sucursal');
-                    //    //$sucursal = Sucursal::findOrFail($request->input('opcionSucursal'))->direccion;
-                        
-                    //    //session(['sucursalNombre' => $sucursal]);
-                        
-                        return $next($request);//->intended('/');
-                    
+                        //    //$sucursal = Sucursal::findOrFail($request->input('opcionSucursal'))->direccion;
+
+                        //    //session(['sucursalNombre' => $sucursal]);
+
+                        return $next($request); //->intended('/');
+
                     }
-                    
+
                     /*$id = Auth::user()->id;
                     $empleado = Empleado::where('idUsuario','=',$id)->get()->first();
                     $sucursalEmpleado = Sucursal_empleado::where('idSucursal','=',session('sucursal'))
@@ -72,21 +76,19 @@ class isEmpleado
             //Auth::logout();
             $idUsuario = session('idUsuario');
             Auth::loginUsingId($idUsuario);
-            
-        }
-        else
-        {
-            //return 'Hay error';
+        } else {
+
             Auth::logout();
             return redirect('/puntoVenta/login');
+            //return 'Hay error';
+
         }
-            
-        if(Auth::check())
-            {
-                $idUsuario = Auth::user()->id;
-                session(['idUsuario' => $idUsuario]); 
-            }
-        
+
+        if (Auth::check()) {
+            $idUsuario = Auth::user()->id;
+            session(['idUsuario' => $idUsuario]);
+        }
+
         return $next($request);
     }
 }

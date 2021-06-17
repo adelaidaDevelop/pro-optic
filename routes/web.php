@@ -39,7 +39,7 @@ use App\Http\Controllers\ProductoController;
     return view('welcome');
 });*/
 Auth::routes(['verify' => true]);
-Route::get('/loginCliente', [LoginClienteController::class,'loginCliente'])->name('Login')->middleware('isCliente');
+Route::get('/loginCliente', [LoginClienteController::class,'loginCliente'])->name('Login');//->middleware('isCliente');
 Route::post('/loginCliente', [LoginClienteController::class,'loginPost'])->name('Login');
 Route::post('/logoutCliente', [LoginClienteController::class,'logout'])->name('Login');
 
@@ -62,14 +62,14 @@ Route::get('/carrito', [EcommerceController::class,'carrito'])->middleware('isCl
 Route::post('/actualizarCantidadCarrito/{id}', [EcommerceController::class,'actualizarCantidadCarrito'])->middleware('isCliente');
 Route::post('/quitarProductoCarrito/{id}', [EcommerceController::class,'quitarProductoDeCarrito'])->middleware('isCliente');
 
-Route::get('/direccionEnvio', [EcommerceController::class,'direccionEnvio'])->middleware('isCliente');
-Route::post('/domicilio', [EcommerceController::class,'postDireccion'])->middleware('isCliente');
-Route::post('/actualizarDireccion', [EcommerceController::class,'actualizarDireccion'])->middleware('isCliente');
+Route::get('/direccionEnvio', [EcommerceController::class,'direccionEnvio'])->middleware('isCliente')->middleware('verified');;
+Route::post('/domicilio', [EcommerceController::class,'postDireccion'])->middleware('isCliente')->middleware('verified');;
+Route::post('/actualizarDireccion', [EcommerceController::class,'actualizarDireccion'])->middleware('isCliente')->middleware('verified');;
 
 Route::post('/eliminarDireccion', [EcommerceController::class,'eliminarDireccion'])->middleware('isCliente');
 Route::get('/metodoPago', [EcommerceController::class,'formaPago'])->middleware('isCliente');
 Route::get('/revisionPedido', [EcommerceController::class,'revisionPedido'])->middleware('isCliente');
-Route::get('/menu', [EcommerceController::class,'menu'])->middleware('isCliente');
+Route::get('/menu', [EcommerceController::class,'menu'])->middleware('isCliente')->middleware('verified');;
 Route::post('/actualizarDatosCliente', [EcommerceController::class,'actualizarDatosCliente'])->middleware('isCliente');
 //Auth::routes();
 Route::get('/pagoPaypal', [EcommerceController::class,'pagoPaypal']);
@@ -79,4 +79,7 @@ Route::post('/prueba', [EcommerceController::class,'insertarSolicitud'])->middle
 Route::get('/resumenFinal/{id},{folio}', [EcommerceController::class,'resumen'])->middleware('isCliente');
 Route::get('/verSeguimientoPedido/{id}', [EcommerceController::class,'verSeguimientoPedido'])->middleware('isCliente');
 Route::get('/comprobante/{id}', [EcommerceController::class,'generarComprobante'])->middleware('isCliente');
-Route::get('/verificacionEmail', [EcommerceController::class,'verificacionEmail'])->middleware('isCliente');
+//Route::get('/verificacionEmail', [EcommerceController::class,'verificacionEmail'])->middleware('isCliente');
+Route::get('/forgot-password', function () {
+    return view('auth.passwords.email');
+})->middleware('guest')->name('password.request');

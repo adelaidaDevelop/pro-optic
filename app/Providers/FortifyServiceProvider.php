@@ -39,6 +39,9 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::verifyEmailView(function () {
             return view('auth.verify-email');
         });
+        Fortify::requestPasswordResetLinkView(function () {
+            return 'Olvido su contrasenia?';//view('auth.forgot-password');
+        });
         RateLimiter::for('login', function (Request $request) {
             return Limit::perMinute(5)->by($request->email.$request->ip());
         });
