@@ -31,8 +31,8 @@
     @endphp
     @endforeach
     @else
-    <div class="col-12 text-center">
-        <h5 class="mx-auto">NO ENCONTRADO</h5>
+    <div class="col-12 mt-4 text-center">
+        <h6 class="mx-auto">NO HAY  PEDIDOS ACTIVOS</h6>
     </div>
     @endif
 </body>
