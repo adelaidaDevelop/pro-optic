@@ -41,7 +41,7 @@
         @foreach($carrito as $p)
         <div id="productoCarrito{{$p['id']}}" class="row col-12 mx-auto my-2 my-md-0 px-0 px-md-2 border-bottom">
             <div class="row col-5 col-md-5 mx-0 px-0">
-                <div class="col-12 col-md-6 mx-0">
+                <div class="col-12 col-md-6 mx-0 my-auto">
                     @if(!empty($p['imagen']))
                     <img src="{{ asset('storage').'/'.$p['imagen']}}" alt="" class="img-fluid">
                     @else
@@ -99,7 +99,8 @@
                 <h5 class="mr-auto my-1 text-center">Total</h5>
                 <h5 class="ml-auto my-1 text-center" id="total">$0.00</h5>
             </div>
-            <a class="btn btn-primary my-auto btn-lg btn-block" href="{{url('/direccionEnvio')}}">Pagar</a>
+            <a class="btn btn-primary my-auto btn-lg btn-block" href="{{url('/direccionEnvio')}}" onclick="return validarPago()">Pagar</a>
+            <!--<button class="btn btn-primary my-auto btn-lg btn-block" onclick=""> Pagar</button> -->
             <!-- <button id="btnPagar" class="btn btn-primary my-auto btn-lg btn-block"> Pagar</button>-->
         </div>
     </div>
@@ -224,6 +225,15 @@
     }
     */
     //btnPagar
+    function validarPago(){
+        if(totalCompra<50)
+        {
+            alert("El mínimo de compras permitido es $50.00");
+            return false;
+        }
+
+        return true;
+    }
 </script>
 
 @endsection

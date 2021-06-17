@@ -15,6 +15,7 @@ use App\Models\Carrito;
 use App\Models\Domicilio;
 use App\Models\Pedido_contra_entrega;
 use App\Models\detallePedido_CE;
+use App\Models\Sucursal_empleado;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -765,9 +766,31 @@ class EcommerceController extends Controller
 
         $venta = Venta::findOrFail($id);
         $ventaCliente = Venta_cliente::where('idVenta', '=', $id)->first();
-        $idCliente = $ventaCliente->idCliente;
-        $cliente = Cliente::findOrFail($idCliente);
-        return view('Ecommerce.comprobante', compact('venta', 'ventaCliente', 'cliente'));
+       // $idCliente = $ventaCliente->idCliente;
+      //  $idSucEmp = $venta->idSucursalEmpleado;
+        $idSuc = Sucursal_empleado::findOrFail($venta->idSucursalEmpleado);
+        $sucursal = Sucursal::findOrFail($idSuc->idSucursal);
+        $cliente = Cliente::findOrFail( $ventaCliente->idCliente);
+        
+        $productos  = Detalle_venta::where('idVenta','=', $id)->get();
+        $productosPedido = [];
+        
+        foreach($productos as $productos2){
+            $idProducto = $productos2->idProducto;
+            $prod = Producto::findOrFail($idProducto);
+
+            $objProducto = [
+                // 'estado' => $estado,
+                'codigoBarras' => $prod->codigoBarras,
+                'nombre' => $prod->nombre, //session('idSucursalEmpleado'),
+                'receta' => $prod->receta,
+                'cantidad' => $productos2->cantidad,
+            ];
+            
+            array_push($productosPedido, $objProducto);
+        }
+        //return $productosPedido;
+        return view('Ecommerce.comprobante', compact('venta', 'ventaCliente', 'cliente','sucursal', 'productosPedido'));
     }
 
     public function verificacionEmail()

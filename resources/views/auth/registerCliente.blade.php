@@ -155,6 +155,7 @@
     });
 
     //validar texto sin numero
+    
     $("input[name='nombre']").bind('keypress', function(tecla) {
         if (this.value.length >= 100) return false;
         let code = tecla.charCode;
@@ -166,6 +167,8 @@
             return true;
         }
     });
+    
+   
     $("input[name='apellidoPaterno']").bind('keypress', function(tecla) {
         if (this.value.length >= 100) return false;
         let code = tecla.charCode;
@@ -188,6 +191,9 @@
             return true;
         }
     });
+    
+
+  
     
 </script>
 @endsection

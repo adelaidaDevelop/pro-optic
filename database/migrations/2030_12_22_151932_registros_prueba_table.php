@@ -81,7 +81,7 @@ class RegistrosPruebaTable extends Migration
             'tipo' => 0,
             'email_verified_at' =>'2021-06-02 11:17:15' 
         ]);
-        
+        User::where('id','=',$admin->id)->update(['email_verified_at' => now()]);
         //$admin->roles()->attach($role_admin);
         //CREACION USUARIO ADMIN P/DEUDORES
         $adminDeudor = User::create([

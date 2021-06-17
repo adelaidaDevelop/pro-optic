@@ -327,8 +327,19 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content" id="">
             <div class="modal-header">
+                <!--ENCABEZADO -->
+                <div class="container-fluid ">
+                    <div class="row" style="background:#3366FF">
+                        <h5 class="font-weight-bold my-2  px-1 mx-auto " style="color:#FFFFFF">
+                            NUEVAS SOLICITUDES DEL ECOMMERCE
+                        </h5>
+                    </div>
+                    <!--
+                    <div class="row p-1" style="background:#BDC2C5">
+                    </div>
+                    -->
+                </div>
 
-                <h5 class="modal-title text-dark " id="exampleModalLabel">NUEVAS SOLICITUDES DE VENTAS EN LINEA</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -337,13 +348,12 @@
                 <div class="row col-4 mx-0">
                     <div class="col-12 border border-dark ml-4 mr-2 h-100">
                         <div class="row mx-auto px-3 py-3 m-0">
-                            <h4 class="row my-1 mx-1" style="color:#4388CC">SOLICITUDES</h4>
-
+                            <h4 class="row my-1 mx-auto" style="color:#4388CC">SOLICITUDES</h4>
                             <div>
 
                                 <h6 class=" text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER
                                         INFORMACION
-                                        A DETALLE. </small> </h6>
+                                        DEL PEDIDO. </small> </h6>
                             </div>
 
                         </div>
@@ -354,9 +364,8 @@
                     </div>
                 </div>
                 <div class="row col-8 mx-0">
-
-                    <div class="col-12 border">
-                        <div class="row col-12 mx-auto border">
+                    <div class="col-12  ">
+                        <div class="row col-12 mx-auto border" style="background:#BDC2C5">
                             <div class="row col-4 mx-0">
                                 <p class="h5 text-center mx-auto my-0">Producto</p>
                             </div>
@@ -374,10 +383,50 @@
                         <div id="detallePedido" class="row col-12 mx-auto border-bottom" style="height:300px;overflow-y:auto;">
                         </div>
                     </div>
+                    <div class="row col-12 boder text-center mt-3 mb-1 mx-auto">
+                        <div class="row col-12 h5 p-0 text-center mx-auto" style="background:#BDC2C5">
+                            <p class="text-center mx-auto">Resumen de compra</p>
+                        </div>
+                        <div class="row col-12 px-4  h6">
+                            <p class="col-2"><strong>Subtotal:</strong>
+                            <p id="subtotal"> </p>
+                            </p>
+                            <p class="col-3"><strong>Costo envío:</strong>
+                            <p id="costoEnvio"> </p>
+                            </p>
+                            <p class="col-2"><strong>Total:</strong>
+                            <p id="totalH"></p>
+                            </p>
+                        </div>
+                        <div class="row col-12 px-3 h6 py-1 my-1">
+                            <p class="col-5"></p>
+                            <p class="col-3"><strong>Pagar con:</strong>
+                            <p id="pagarCon"></p>
+                            </p>
+                            <p class="col-2"><strong>Cambio:</strong>
+                            <p id="cambio"></p>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row col-12 boder text-center mt-2 mx-auto">
+                        <div class="row col-12 h5 p-0 text-center mx-auto" style="background:#BDC2C5">
+                            <p class="text-center mx-auto">Datos de envio</p>
+                        </div>
+
+                        <div class="row col-12 h6 ">
+                            <p class="col-9 "><strong>Cliente: <p id="cliente"></p></strong></p>
+                            <p class="col-3 text-center mx-auto"><strong>Telefono: <p id="telefono"></p></strong></p>
+                        </div>
+                        <div class="row col-12 text-center h6 px-3 mx-auto">
+                            <p class="text-center mx-auto"> <strong> Direccion:</strong>
+                            <p id="direccion"></p>
+                            </p>
+                        </div>
+                    </div>
+                    <!--
                     <div id="informacionCliente" class="col-12 border">
                     </div>
-                    <!--div class="col-12 d-flex flex-row-reverse mb-0 mt-auto">
-                        </div-->
+                    -->
                 </div>
             </div>
             <div class="modal-footer">
@@ -396,28 +445,39 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content" id="">
             <div class="modal-header">
-
-                <h5 class="modal-title" id="exampleModalLabel">SEGUIMIENTO DE PEDIDOS</h5>
+                <!--ENCABEZADO -->
+                <div class="container-fluid ">
+                    <div class="row" style="background:#3366FF">
+                        <h6 class="font-weight-bold my-2  px-1 mx-auto " style="color:#FFFFFF">
+                            SEGUIMIENTO DE PEDIDOS ACTIVOS
+                        </h6>
+                    </div>
+                    <div class="row p-2" style="background:#BDC2C5">
+                    </div>
+                </div>
+                <!-- <h5 class="modal-title" id="exampleModalLabel">SEGUIMIENTO DE PEDIDOS</h5>-->
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="row modal-body">
-                <div class=" col-4">
-                    <div class="col-12 border border-dark mt-4 mb-4 mx-auto ml-4 mr-2">
-                        <div class="px-3 py-3 m-0 mx-auto">
+                <div class=" col-4 mx-auto">
+                    <div class="col-12 border border-dark mb-1 mx-auto ml-4 mr-2">
+                        <div class=" mx-auto">
                             <!--input type="text" id="buscador" class="form-control my-2">
                         <button class="btn btn-info mb-2" id="boton">Buscar</button-->
-                            <h4 class="row my-1 mx-auto" style="color:#4388CC">ACTIVOS</h4>
-                            <div class="my-2">
-                               <!-- <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto">-->
-                                <h6 class=" text-uppercase  my-1 text-secondary"> <small>SELECCIONA UNO PARA VER SU HISTORIAL DE SEGUIMIENTO</small> </h6>
+                            <div class=" mt-2 py-0 mx-auto text-center">
+                                <h4 class=" text-center " style="color:#4388CC">ACTIVOS</h4>
+                            </div>
+                            <div class=" mb-4 mx-auto  text-center ">
+                                <!-- <input type="text" class=" form-control text-uppercase  my-1" placeholder="BUSCAR" id="texto">-->
+                                <h6 class=" text-uppercase text-center my-1 text-secondary"> <small>SELECCIONA UNO PARA VER EL SEGUIMIENTO</small> </h6>
                                 <!--div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="buscarD" type="button" id="button-addon2">Buscar</button>
                         </div-->
                             </div>
                         </div>
-                        <div class="row m-0 px-0" style="height:200px;overflow-y:auto;">
+                        <div class="row my-2 m-0 px-0 " style="height:200px;overflow-y:auto;">
                             <div id="resultados" class="col btn-block h-100">
                             </div>
                         </div>
@@ -1485,18 +1545,18 @@
 
             if (idPedido == 0 && parseInt(i) == 0) {
                 cuerpo = cuerpo +
-                    `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-primary active"
+                    `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-outline-primary text-dark active"
             onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
             } else {
                 if (pedidosContraEntrega[i].id == idPedido) {
                     contador = parseInt(i);
                     cuerpo = cuerpo +
-                        `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-primary active"
+                        `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-outline-primary text-dark active"
                 onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
 
                 } else {
                     cuerpo = cuerpo +
-                        `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}" class="btn btn-block btn-primary"
+                        `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}" class="btn btn-block btn-outline-primary text-dark"
                 onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
 
                 }
@@ -1591,6 +1651,7 @@
                 </div>
                 ${btnQuitar}`;
         }
+
         document.getElementById("detallePedido").innerHTML = cuerpo;
         for (let i in detallePedido) {
             $(`input[id='cantidadProductoPedido${detallePedido[i].idPedido}${detallePedido[i].idProducto}']`).inputSpinner(
@@ -1599,6 +1660,17 @@
         $('#btnAceptarPedido').val(id);
         $('#btnRechazarPedido').val(id);
         let infoPedido = pedidosContraEntrega.find(p => p.id == id);
+        //Asignar valor
+        document.getElementById("direccion").innerHTML = direccion;
+        document.getElementById("telefono").innerHTML = cliente.telefono;
+        document.getElementById("cliente").innerHTML = ` ${cliente.nombre} ${cliente.apellidoPaterno} ${cliente.apellidoMaterno}`;
+        document.getElementById("subtotal").innerHTML = infoPedido.subtotal;
+        document.getElementById("costoEnvio").innerHTML = infoPedido.costoEnvio;
+        document.getElementById("totalH").innerHTML = infoPedido.total;
+        document.getElementById("pagarCon").innerHTML = infoPedido.pagarCon;
+        document.getElementById("cambio").innerHTML = infoPedido.cambio;
+
+        /*
         document.getElementById("informacionCliente").innerHTML =
             `<p> Subtotal: $ ${infoPedido.subtotal} </p>
         <p> Costo de envio: $ ${infoPedido.costoEnvio} </p>
@@ -1608,7 +1680,8 @@
         <p> Cliente: ${cliente.nombre} ${cliente.apellidoPaterno} ${cliente.apellidoMaterno}</p>
     <p> Telefono: ${cliente.telefono} </p>
     <p> Direccion de envio: ${direccion} </p>
-    `;
+    `; */
+
     }
     /*$('#btnAceptarPedido').bind('click', async function() {
         try {
@@ -1757,15 +1830,15 @@
         let seguimiento1 = `
                         <button  class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/pedidoConfirmado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO ACEPTADO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">PEDIDO ACEPTADO</p>
                         </button>
-                        <div class=" h1 my-auto text-success">
+                        <div class="3 h1 my-auto text-success">
                             <p>.....</p>
                         </div>
                         <!--PASO DOS -->
                         <button id="btnDos" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PREPARANDO PEDIDO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO PEDIDO</p>
                         </button>
                         <div class="h1 my-auto text-secondary">
                             <p>.....</p>
@@ -1773,7 +1846,7 @@
                         <!--PASO TRES-->
                         <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/procesoEntrega.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>EN PROCESO DE ENTREGA A DOMICILIO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">EN CAMINO</p>
                         </button>
                         <div class="h1 my-auto text-secondary">
                             <p>.....</p>
@@ -1781,7 +1854,7 @@
                         <!--PASO CUATRO-->
                         <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/entregado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>ENTREGADO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">ENTREGADO</p>
                         </button>
         `;
         //DESCRIPCION DE ESTADOS
@@ -1818,7 +1891,7 @@
         let seguimiento2 = `
                         <button  class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/pedidoConfirmado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO ACEPTADO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">PEDIDO ACEPTADO</p>
                         </button>
                         <div class=" h1 my-auto text-success">
                             <p>.....</p>
@@ -1826,7 +1899,7 @@
                         <!--PASO DOS -->
                         <button id="btnDos" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PREPARANDO PEDIDO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO PEDIDO</p>
                         </button>
                         <div class="h1 my-auto text-success">
                             <p>.....</p>
@@ -1834,7 +1907,7 @@
                         <!--PASO TRES-->
                         <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/procesoEntrega.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>EN PROCESO DE ENTREGA A DOMICILIO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">EN PROCESO DE ENTREGA A DOMICILIO</p>
                         </button>
                         <div class="h1 my-auto text-secondary">
                             <p>.....</p>
@@ -1842,7 +1915,7 @@
                         <!--PASO CUATRO-->
                         <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/entregado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>ENTREGADO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">ENTREGADO</p>
                         </button>
         `;
         //DESCRIPCION DE ESTADOS
@@ -1886,7 +1959,7 @@
         let seguimiento3 = `
                         <button  class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/pedidoConfirmado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO ACEPTADO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">PEDIDO ACEPTADO</p>
                         </button>
                         <div class=" h1 my-auto text-success">
                             <p>.....</p>
@@ -1894,7 +1967,7 @@
                         <!--PASO DOS -->
                         <button id="btnDos" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PREPARANDO PEDIDO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO PEDIDO</p>
                         </button>
                         <div class="h1 my-auto text-success">
                             <p>.....</p>
@@ -1902,7 +1975,7 @@
                         <!--PASO TRES-->
                         <button class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/procesoEntrega.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>EN PROCESO DE ENTREGA A DOMICILIO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">EN CAMINO</p>
                         </button>
                         <div class="h1 my-auto text-success">
                             <p>.....</p>
@@ -1910,7 +1983,7 @@
                         <!--PASO CUATRO-->
                         <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/entregado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>ENTREGADO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">ENTREGADO</p>
                         </button>
         `;
         //DESCRIPCION DE ESTADOS
@@ -1962,7 +2035,7 @@
         let seguimiento4 = `
                         <button  class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/pedidoConfirmado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO ACEPTADO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">PEDIDO ACEPTADO</p>
                         </button>
                         <div class=" h1 my-auto text-success">
                             <p>.....</p>
@@ -1970,7 +2043,7 @@
                         <!--PASO DOS -->
                         <button id="btnDos" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>PREPARANDO PEDIDO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO PEDIDO</p>
                         </button>
                         <div class="h1 my-auto text-success">
                             <p>.....</p>
@@ -1978,7 +2051,7 @@
                         <!--PASO TRES-->
                         <button class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/procesoEntrega.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>EN PROCESO DE ENTREGA A DOMICILIO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">EN CAMINO></p>
                         </button>
                         <div class="h1 my-auto text-success">
                             <p>.....</p>
@@ -1986,7 +2059,7 @@
                         <!--PASO CUATRO-->
                         <button class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/entregado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark"><small>ENTREGADO</small></p>
+                            <p class="h6 my-auto mx-2 text-dark">ENTREGADO</p>
                         </button>
         `;
         //DESCRIPCION DE ESTADOS
