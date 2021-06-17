@@ -31,5 +31,6 @@
     @yield('headerEcommerce')
     @include('layouts.footerEcommerce')
 </div>
+<script src="{{ asset('js\mayusculas.js') }}"></script>
 </body>
 </html>
