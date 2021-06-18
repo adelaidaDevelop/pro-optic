@@ -69,19 +69,11 @@ Route::get('/direccionEnvio', [EcommerceController::class,'direccionEnvio'])->mi
 Route::post('/domicilio', [EcommerceController::class,'postDireccion'])->middleware('isCliente');//->middleware('verified');;
 Route::post('/actualizarDireccion', [EcommerceController::class,'actualizarDireccion'])->middleware('isCliente');//->middleware('verified');;
 
-<<<<<<< HEAD
 Route::post('/eliminarDireccion', [EcommerceController::class,'eliminarDireccion'])->middleware('isCliente');
 Route::get('/metodoPago', [EcommerceController::class,'formaPago'])->middleware('isCliente');
 Route::get('/revisionPedido', [EcommerceController::class,'revisionPedido'])->middleware('isCliente');
 Route::get('/menu', [EcommerceController::class,'menu'])->middleware('isCliente');//->middleware('verified');;
 Route::post('/actualizarDatosCliente', [EcommerceController::class,'actualizarDatosCliente'])->middleware('isCliente');
-=======
-Route::post('/eliminarDireccion', [EcommerceController::class,'eliminarDireccion']);//->middleware('isCliente');
-Route::get('/metodoPago', [EcommerceController::class,'formaPago']);//->middleware('isCliente');
-Route::get('/revisionPedido', [EcommerceController::class,'revisionPedido']);//->middleware('isCliente');
-Route::get('/menu', [EcommerceController::class,'menu']);//->middleware('isCliente')//->middleware('verified');;
-Route::post('/actualizarDatosCliente', [EcommerceController::class,'actualizarDatosCliente']);//->middleware('isCliente');
->>>>>>> 5df6b52543b72e32a0d8c7435136e81254fbb976
 //Auth::routes();
 Route::get('/pagoPaypal', [EcommerceController::class,'pagoPaypal']);
 
