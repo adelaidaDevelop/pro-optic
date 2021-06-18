@@ -21,12 +21,17 @@ class isCliente
      */
     public function handle(Request $request, Closure $next)
     {
+        if (!session()->has('seccion')) {
+            session(['urlSeccion' => url()->current()]);
+        }
         if(session()->has('idCliente'))
         {
             if(Auth::check())
             {
                 if(Auth::user()->tipo == 2)
                 {
+                    if(Auth::user()->email_verified_at == NULL)
+                            return redirect('/email/verify');
                     return $next($request);
                 }
                 Auth::logout();
@@ -42,6 +47,8 @@ class isCliente
                 return redirect('/loginCliente');
             }
         }
+        if(Auth::user()->email_verified_at == NULL)
+                            return redirect('/email/verify');
         return $next($request);
     }
 }

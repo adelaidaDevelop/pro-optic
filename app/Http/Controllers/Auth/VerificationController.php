@@ -39,25 +39,58 @@ class VerificationController extends Controller
     {
         //$this->middleware('auth');
         //return NULL;
-        if (!session()->has('seccion')) {
-            $pos = strpos(url()->current(), 'puntoVenta');
-
+        /*if (!session()->has('seccion')) {
+            $pos = strpos(url()->previous(), 'puntoVenta');
+            session(['urlSeccion' => url()->previous()]);
             if ($pos === false) {
                 session(['seccion' => 'ecommerce']);
             } else {
                 session(['seccion' => 'puntoVenta']);
             }
-        }
-        if(session('seccion') == 'ecommerce')
-        {
+        }*/
+        /*session(['urlVerified' => url()->current()]);
+        if (!session()->has('seccion') && session()->has('urlSeccion')){
+            $pos = strpos(session('urlSeccion'), 'puntoVenta');
+
+            if ($pos === false) {
+                $redirectTo = url('/loginCliente');
+                session(['seccion' => 'ecommerce']);
+            } else {
+                $redirectTo = url('/puntoVentalogin');
+                session(['seccion' => 'puntoVenta']);
+            }
+        }else
+        {*/
+            //$urlV = session('urlVerified');
+            //$id = "";
+        if(!session()->has('urlVerified'))
+            session(['urlVerified' => url()->current()]);
+            $pos = strpos(session('urlVerified'), 'verify/');
+
+            if ($pos === false) {
+                
+                //session(['seccion' => 'ecommerce']);
+            } else {
+                $id=session('urlVerified')[$pos+7];
+                Auth::logout();
+                Auth::loginUsingId($id);
+                //session(['seccion' => 'puntoVenta']);
+            }
+
+            //return 'urlV:'.$urlV.'  idUser:'.$id;
+        /*}
+        
+        if (session('seccion') == 'ecommerce') {
             $this->middleware('isCliente');
         }
-        if(session('seccion') == 'puntoVenta')
-        {
+        if (session('seccion') == 'puntoVenta') {
             $this->middleware('isEmpleado');
-        }
-        $this->middleware('signed')->only('verify');
+        }*/
+        //if(!Auth::check())
+        //{
+            $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+        //}
         
     }
 }

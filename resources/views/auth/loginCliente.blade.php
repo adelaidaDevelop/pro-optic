@@ -51,7 +51,7 @@
         <button type="submit" class="btn btn-block btn-success my-2">INICIAR SESION</button>
     </form>
     <div class="row col-sm-10 mx-auto">
-        <a href="" class="mx-auto mr-sm-auto ml-sm-0">¿Olvidaste tu contraseña?</a>
+        <a href="{{url('password/reset')}}" class="mx-auto mr-sm-auto ml-sm-0">¿Olvidaste tu contraseña?</a>
         <a href="{{url('registerCliente')}}" class="mx-auto ml-sm-auto mr-sm-0">Registrarse</a>
     </div>
 </div>
