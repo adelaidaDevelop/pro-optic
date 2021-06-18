@@ -47,8 +47,8 @@ class isCliente
                 return redirect('/loginCliente');
             }
         }
-        if(Auth::user()->email_verified_at == NULL)
-                            return redirect('/email/verify');
+        //if(Auth::user()->email_verified_at == NULL)
+          //                  return redirect('/email/verify');
         return $next($request);
     }
 }
