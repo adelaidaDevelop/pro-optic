@@ -789,6 +789,8 @@ class EcommerceController extends Controller
             
             array_push($productosPedido, $objProducto);
         }
+      //  $productos = $productosPedido;
+       // return $productos;
         //return $productosPedido;
         return view('Ecommerce.comprobante', compact('venta', 'ventaCliente', 'cliente','sucursal', 'productosPedido'));
     }

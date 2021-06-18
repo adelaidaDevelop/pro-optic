@@ -483,8 +483,8 @@
                         </div>
                     </div>
                 </div>
-                <div class=" col-8">
-                    <div id="seguimientoPaq" class="col-11 mt-4 input-group text-center mx-auto " style="background:#D5DBDB">
+                <div class=" col-8 px-0">
+                    <div id="seguimientoPaq" class="col-12 mt-4 input-group text-center mx-auto " style="background:#D5DBDB">
                     </div>
                     <div id="estad" class="row col-12 mx-auto ">
                         <!--  <p class="col-auto  mx-auto text-dark h5"><small><strong> Estado actual: </strong> </small></p>-->
@@ -497,6 +497,34 @@
                                     estado del paquete a:</strong> </small></p>-->
                     </div>
                     <div class="row col-12  mx-auto" id="divActBtn">
+                    <button  id="paso1" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" value="ACEPTADO" disabled>
+                            <img class="" src="{{ asset('img/pedidoConfirmado.png') }}" alt="Editar" width="40px" height="40px">
+                            <p class="h6 my-auto mx-2 text-dark"> ACEPTADO</p>
+                        </button>
+                        <div id="rama1" class="3 h1 my-auto text-success">
+                            <p>.....</p>
+                        </div>
+                        <!--PASO DOS -->
+                        <button id="paso2" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" value="PREPARANDO" type="submit" disabled>
+                            <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="40px" height="40px">
+                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO</p>
+                        </button>
+                        <div id="rama2" class="h1 my-auto text-secondary">
+                            <p>.....</p>
+                        </div>
+                        <!--PASO TRES-->
+                        <button  id="paso3" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" value="ENCAMINO" disabled>
+                            <img class="" src="{{ asset('img/procesoEntrega.png') }}" alt="Editar" width="40px" height="40px">
+                            <p class="h6 my-auto mx-2 text-dark">EN CAMINO</p>
+                        </button>
+                        <div id="rama3" class="h1 my-auto text-secondary">
+                            <p>.....</p>
+                        </div>
+                        <!--PASO CUATRO-->
+                        <button id="paso4" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
+                            <img class="" src="{{ asset('img/entregado.png') }}" alt="Editar" width="40px" height="40px">
+                            <p class="h6 my-auto mx-2 text-dark">ENTREGADO</p>
+                        </button>
 
                     </div>
                 </div>
@@ -1829,23 +1857,23 @@
         // SEGUIMIENTO1
         let seguimiento1 = `
                         <button  class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img/pedidoConfirmado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark">PEDIDO ACEPTADO</p>
+                            <img class="" src="{{ asset('img/pedidoConfirmado.png') }}" alt="Editar" width="40px" height="40px">
+                            <p class="h6 my-auto mx-2 text-dark"> ACEPTADO</p>
                         </button>
                         <div class="3 h1 my-auto text-success">
                             <p>.....</p>
                         </div>
                         <!--PASO DOS -->
                         <button id="btnDos" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO PEDIDO</p>
+                            <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="40px" height="40px">
+                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO</p>
                         </button>
                         <div class="h1 my-auto text-secondary">
                             <p>.....</p>
                         </div>
                         <!--PASO TRES-->
                         <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img/procesoEntrega.png') }}" alt="Editar" width="50px" height="50px">
+                            <img class="" src="{{ asset('img/procesoEntrega.png') }}" alt="Editar" width="40px" height="40px">
                             <p class="h6 my-auto mx-2 text-dark">EN CAMINO</p>
                         </button>
                         <div class="h1 my-auto text-secondary">
@@ -1853,18 +1881,21 @@
                         </div>
                         <!--PASO CUATRO-->
                         <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img/entregado.png') }}" alt="Editar" width="50px" height="50px">
+                            <img class="" src="{{ asset('img/entregado.png') }}" alt="Editar" width="40px" height="40px">
                             <p class="h6 my-auto mx-2 text-dark">ENTREGADO</p>
                         </button>
         `;
         //DESCRIPCION DE ESTADOS
+        let ins = `<p class="col-auto  mx-auto text-secondary  h5"><small><strong> Presione para actualizar el
+                                    estado del paquete a:</strong> </small></p>`;
         //   let estado = "PREPARANDO";
         let estadoAceptado = `
-        <p class="col-auto  mx-auto text-dark h5 alert-success"><small><strong> Pedido aceptado </strong> </small></p>
+        <p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> Pedido aceptado </strong> </small></p>
         `;
         document.getElementById("divActBtn").innerHTML = btn1;
         document.getElementById("seguimientoPaq").innerHTML = seguimiento1;
         document.getElementById("estadoDesc").innerHTML = estadoAceptado;
+        document.getElementById("instruccion").innerHTML = ins;
         //Asignar evento a los botones
         $("#btnPrepararPedido").click(function() {
             actualizarEstadoBD(idVentaGlobal, 'PREPARANDO');
@@ -1890,43 +1921,46 @@
         // SEGUIMIENTO2
         let seguimiento2 = `
                         <button  class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img/pedidoConfirmado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark">PEDIDO ACEPTADO</p>
+                            <img class="" src="{{ asset('img/pedidoConfirmado.png') }}" alt="Editar" width="40px" height="40px">
+                            <p class="h6 my-auto mx-2 text-dark"> ACEPTADO</p>
                         </button>
                         <div class=" h1 my-auto text-success">
                             <p>.....</p>
                         </div>
                         <!--PASO DOS -->
                         <button id="btnDos" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO PEDIDO</p>
+                            <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="40px" height="40px">
+                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO </p>
                         </button>
                         <div class="h1 my-auto text-success">
                             <p>.....</p>
                         </div>
                         <!--PASO TRES-->
                         <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img/procesoEntrega.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark">EN PROCESO DE ENTREGA A DOMICILIO</p>
+                            <img class="" src="{{ asset('img/procesoEntrega.png') }}" alt="Editar" width="40px" height="40px">
+                            <p class="h6 my-auto mx-2 text-dark">EN CAMINO</p>
                         </button>
                         <div class="h1 my-auto text-secondary">
                             <p>.....</p>
                         </div>
                         <!--PASO CUATRO-->
                         <button class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
-                            <img class="" src="{{ asset('img/entregado.png') }}" alt="Editar" width="50px" height="50px">
+                            <img class="" src="{{ asset('img/entregado.png') }}" alt="Editar" width="40px" height="40px">
                             <p class="h6 my-auto mx-2 text-dark">ENTREGADO</p>
                         </button>
         `;
         //DESCRIPCION DE ESTADOS
         //
+        let ins = `<p class="col-auto  mx-auto text-secondary  h5"><small><strong> Presione para actualizar el
+                                    estado del paquete a:</strong> </small></p>`;
         let estadoPreparando = `
-        <p class="col-auto  mx-auto text-dark h5 alert-success"><small><strong> Preparando pedido </strong> </small></p>
+        <p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> Preparando pedido </strong> </small></p>
         `;
         //Actualizar contenido modal
         document.getElementById("divActBtn").innerHTML = btn2;
         document.getElementById("seguimientoPaq").innerHTML = seguimiento2;
         document.getElementById("estadoDesc").innerHTML = estadoPreparando;
+        document.getElementById("instruccion").innerHTML = ins;
         //Asignar evento a los botones
         $("#btnPedidoEnCamino").click(function() {
             //Llamar funcionPreparando
@@ -1959,7 +1993,7 @@
         let seguimiento3 = `
                         <button  class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/pedidoConfirmado.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark">PEDIDO ACEPTADO</p>
+                            <p class="h6 my-auto mx-2 text-dark"> ACEPTADO</p>
                         </button>
                         <div class=" h1 my-auto text-success">
                             <p>.....</p>
@@ -1967,7 +2001,7 @@
                         <!--PASO DOS -->
                         <button id="btnDos" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO PEDIDO</p>
+                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO </p>
                         </button>
                         <div class="h1 my-auto text-success">
                             <p>.....</p>
@@ -1988,15 +2022,17 @@
         `;
         //DESCRIPCION DE ESTADOS
         //estado = "ENCAMINO";
-
+        let ins = `<p class="col-auto  mx-auto text-secondary  h5"><small><strong> Presione para actualizar el
+                                    estado del paquete a:</strong> </small></p>`;
         let estadoEnCamino = `
-        <p class="col-auto  mx-auto text-dark h5 alert-success"><small><strong> Pedido en camino para su entrega </strong> </small></p>
+        <p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> Pedido en camino para su entrega </strong> </small></p>
         `;
 
         //Actualizar contenido modal
         document.getElementById("divActBtn").innerHTML = btn4;
         document.getElementById("seguimientoPaq").innerHTML = seguimiento3;
         document.getElementById("estadoDesc").innerHTML = estadoEnCamino;
+        document.getElementById("instruccion").innerHTML = ins;
         //Asignar evento a boton Entregado
         $("#btnEntregado").click(function() {
             //Llamar funcionPreparando
@@ -2021,9 +2057,9 @@
         $("#btnCancelar").click(function() {
             //Llamar funcionPreparando
             //canceladoFuncion();
-            actualizarEstadoBD(idVentaGlobal, 'CANCELAR');
-            seguimientoPedidoActivo.find(p => p.idVenta == idVentaGlobal).estado = "CANCELAR";
-            estado = "CANCELAR";
+            actualizarEstadoBD(idVentaGlobal, 'CANCELADO');
+            seguimientoPedidoActivo.find(p => p.idVenta == idVentaGlobal).estado = "CANCELADO";
+            estado = "CANCELADO";
             botones();
             //Actualizar estado de la tabla venta_clientes
         });
@@ -2043,7 +2079,7 @@
                         <!--PASO DOS -->
                         <button id="btnDos" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
                             <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="50px" height="50px">
-                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO PEDIDO</p>
+                            <p class="h6 my-auto mx-2 text-dark">PREPARANDO </p>
                         </button>
                         <div class="h1 my-auto text-success">
                             <p>.....</p>
@@ -2065,7 +2101,7 @@
         //DESCRIPCION DE ESTADOS
         //  estado = "ENTREGADO"
         let estadoEntregado = `
-        <p class="col-auto  mx-auto text-dark h5 alert-success"><small><strong> Pedido entregado </strong> </small></p>
+        <p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> Pedido entregado </strong> </small></p>
         `;
         //Actualizar contenido modal
         document.getElementById("divActBtn").innerHTML = "";
@@ -2080,9 +2116,9 @@
     function sinLocalizarFuncion() {
         let btn5 = `
         <div class=" mx-auto">
-        <button class="btn btn-warning " id="btnEnCamino2" >SEGUNDO INTENTO DE ENTREGA</button>
+       <!-- <button class="btn btn-warning " id="btnEnCamino2" >SEGUNDO INTENTO DE ENTREGA</button>-->
         <button class="btn btn-success mx-4" id="btnEntregarSucursal"> ENTREGAR EN SUCURSAL</button>
-        <button class=" btn btn-danger " id="btnCancelar2" > CANCELAR</button>
+        <button class=" btn btn-danger " id="btnCancelar2" > CANCELAR PEDIDO</button>
         </div>
         `;
         //SEGUIMIENTO: SIN LOCALIZAR
@@ -2118,24 +2154,50 @@
         `;
         //DESCRIPCION DE ESTADOS
         // estado = "SINLOCALIZAR";
+        let ins = `<p class="col-auto  mx-auto text-secondary  h5"><small><strong> Presione para actualizar el
+                                    estado del paquete a:</strong> </small></p>`;
         let estadoSinLocalizar = `
-        <p class="col-auto  mx-auto text-dark h5 alert-warning"><small><strong> El cliente no fue localizado para la entrega </strong> </small></p>
+        <p class="col-auto  mx-auto text-dark h5 mt-2 bg-warning"><small><strong> El cliente no fue localizado para la entrega </strong> </small></p>
         `;
         //Actualizar contenido modal
         document.getElementById("divActBtn").innerHTML = btn5;
         document.getElementById("seguimientoPaq").innerHTML = segui_sin_localizar;
         document.getElementById("estadoDesc").innerHTML = estadoSinLocalizar;
+        document.getElementById("instruccion").innerHTML = ins;
         //Asignar evento a boton segundo intento de entrega
+        /*
         $("#btnEnCamino2").click(function() {
-            actualizarEstadoBD(idVentaGlobal, 'ENCAMINO');
-            seguimientoPedidoActivo.find(p => p.idVenta == idVentaGlobal).estado = "ENCAMINO";
-            estado = "ENCAMINO";
+           // actualizarEstadoBD(idVentaGlobal, 'ENCAMINO');
+           // seguimientoPedidoActivo.find(p => p.idVenta == idVentaGlobal).estado = "ENCAMINO";
+           // estado = "ENCAMINO";
+           // botones();
+            enCamino2Funcion();
+            //Llamar funcionPreparando
+            //  canceladoFuncion();
+            //Actualizar estado de la tabla venta_clientes
+        });
+        */
+        $("#btnEntregarSucursal").click(function() {
+            actualizarEstadoBD(idVentaGlobal, 'ENTREGADO');
+            seguimientoPedidoActivo.find(p => p.idVenta == idVentaGlobal).estado = "ENTREGADO";
+            estado = "ENTREGADO";
             botones();
             //enCamino2Funcion();
             //Llamar funcionPreparando
             //  canceladoFuncion();
             //Actualizar estado de la tabla venta_clientes
         });
+        $("#btnCancelar2").click(function() {
+            actualizarEstadoBD(idVentaGlobal, 'CANCELADO');
+            seguimientoPedidoActivo.find(p => p.idVenta == idVentaGlobal).estado = "CANCELADO";
+            estado = "CANCELADO";
+            botones();
+            //enCamino2Funcion();
+            //Llamar funcionPreparando
+            //  canceladoFuncion();
+            //Actualizar estado de la tabla venta_clientes
+        });
+        
     }
     let workerAjax = new Worker("{{ asset('js/workerAjax.js') }}");
     async function actualizarCantidadPedidoProducto(idPedido, idProducto) {
@@ -2298,7 +2360,7 @@
         //DESCRIPCION DE ESTADOS
         // estado = "CANCELADO";
         let estadoCancelado = `
-        <p class="col-auto  mx-auto text-dark h5 alert-danger"><small><strong> El pedido a sido cancelado </strong> </small></p>
+        <p class="col-auto  mx-auto text-dark h5 mt-2 alert-danger"><small><strong> El pedido a sido cancelado y no fue entregado</strong> </small></p>
         `;
         //Actualizar contenido modal
         // document.getElementById("divActBtn").innerHTML = btn4;
@@ -2307,7 +2369,6 @@
         document.getElementById("seguimientoPaq").innerHTML = segui_cancelado;
         document.getElementById("estadoDesc").innerHTML = estadoCancelado;
         //iNSERTAR ESTADO ACCT EN LA BD CANCELADO
-
     }
 
     function enCamino2Funcion() {
@@ -2352,9 +2413,13 @@
         <button class=" btn btn-danger " id="btnCancelar4" > CANCELAR PEDIDO</button>
         </div>
         `;
+        let ins = `<p class="col-auto  mx-auto text-secondary  h5"><small><strong> Presione para actualizar el
+                                    estado del paquete a:</strong> </small></p>`;
         document.getElementById("seguimientoPaq").innerHTML = seguimiento3;
         document.getElementById("estadoDesc").innerHTML = estadoX;
         document.getElementById("divActBtn").innerHTML = btnX;
+        document.getElementById("divActBtn").innerHTML = btnX;
+        document.getElementById("instruccion").innerHTML = ins;
         //Asignar evento a boton entregar pedido 
         $("#btnEntregar4").click(function() {
             //Llamar funcionPreparando
@@ -2363,6 +2428,7 @@
             seguimientoPedidoActivo.find(p => p.idVenta == idVentaGlobal).estado = "ENTREGADO";
             estado = "ENTREGADO";
             botones();
+
             //Actualizar estado de la tabla venta_clientes
         });
 
@@ -2374,6 +2440,8 @@
             seguimientoPedidoActivo.find(p => p.idVenta == idVentaGlobal).estado = "CANCELADO";
             estado = "CANCELADO";
             botones();
+
+           
             //Actualizar estado de la tabla venta_clientes
         });
         //iNSERTAR ESTADO ACCT EN LA BD ENCAMINO
@@ -2475,5 +2543,55 @@
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     };
+
+    /*
+    function asignarEstado() {
+        let estado = ventaCliente.estado;
+        for (let i = 1; i <= 4; i++) {
+            $(`#paso${i}`).addClass('btn-secondary');
+            $(`#paso${i}`).removeClass('btn-success');
+            $(`#paso${i}`).removeClass('btn-danger');
+            $(`#paso${i}`).removeClass('btn-warning');
+            $(`#paso${i}`).removeClass('btn-outline-secondary'); //ade
+            $(`#rama${i}`).removeClass('text-success');
+        }
+        //return;
+        console.log('Si entra');
+        for (let i = 1; i <= 3; i++) {
+            let btnEstado = document.getElementById(`paso${i}`).value;
+            $(`#paso${i}`).addClass('btn-success');
+            $(`#rama${i}`).addClass('text-success');
+            console.log('btnEstado', btnEstado);
+            console.log('Estado', estado);
+            if(i==1){
+                 document.getElementById("estadoDesc").innerHTML =
+                 `<p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> Pedido aceptado </strong> </small></p>`;
+            }
+
+            if (btnEstado == estado)
+                return;
+        }
+        if (estado == 'ENTREGADO') {
+            $(`#paso4`).addClass('btn-success');
+            document.getElementById("estadoDesc").innerHTML =
+                 `<p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> El pedido a sido entregado </strong> </small></p>`;
+            return;
+        }
+        if (estado == 'CANCELADO') {
+            document.getElementById("estadoDesc").innerHTML =
+                 `<p class="col-auto  mx-auto text-danger h5 mt-2 "><small><strong> El pedido a sido cancelado. </strong> </small></p>`;
+            $(`#paso4`).addClass('btn-danger');
+            return;
+        }
+        if (estado == 'SINLOCALIZAR') {
+            document.getElementById("estadoDesc").innerHTML =
+                 `<p class="col-auto  mx-auto text-dark h5 mt-2 bg-warning"><small><strong> El pedido no pudo ser entregado. Usted puede solicitar un último intento o pasar a sucursal a recogerlo en un máximo de 24 hrs.</strong> </small></p>`;
+            $(`#paso4`).addClass('btn-warning');
+            return;
+        }
+        return -1;
+    }
+    asignarEstado();
+    */
 </script>
 @endsection

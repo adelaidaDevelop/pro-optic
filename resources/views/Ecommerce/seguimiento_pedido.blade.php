@@ -31,7 +31,7 @@
 </div>
 -->
 
-<div id="subtitulo" class="col text-center mx-auto my-2 ">
+<div id="subtitulo" class="col text-center mx-auto my-1 ">
     @if($ventaCliente->estado == 'PAGADO')
     <h6>ENTREGADO: {{$ventaCliente->updated_at->format('d-m-Y')}} {{$ventaCliente->updated_at->isoFormat('H:mm:ss A')}}</h6>
     @endif
@@ -45,6 +45,7 @@
     <div id="rama1" class=" h1 my-auto text-success">
         <p>.....</p>
     </div>
+
     <!--PASO DOS -->
     <button id="paso2" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" value="PREPARANDO" disabled>
         <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="50px" height="50px">
@@ -66,6 +67,15 @@
         <img class="" src="{{ asset('img/entregado.png') }}" alt="Editar" width="50px" height="50px">
         <p class="h6 my-auto mx-2 text-dark">ENTREGADO</p>
     </button>
+    <div id="estadoDesc" class="row col-12 mx-auto mb-4 ">
+     <p class="col-auto  mx-auto text-dark h5 alert-success"><small><strong> Paquete entregado.</strong> </small></p>
+    </div>
+<!--
+    <div id="instruccion" class="row col-12 mx-auto mb-4">
+                        <p class="col-auto  mx-auto text-secondary  h5"><small><strong> Presione para actualizar el
+                                    estado del paquete a:</strong> </small></p>
+                    </div>
+                    -->
     <!--Dinamico-->
     <!--
     <div class=" col-8">
@@ -86,20 +96,19 @@
 
 <div id="verHistorial" class="text-center mx-auto my-4 p-3" style="background:#B2BABB">
     <!--<a class="btn btn-primary " href="{{url('/comprobante/')}}"> GENERAR COMPROBANTE</a> -->
-    <button id="btnComprobante" onclick="cargarComprobante()" class="btn btn-success">
+    <button id="btnComprobante" onclick="cargarComprobante()" class="btn btn-primary">
     <img src="{{ asset('img/Comprobante.png') }}" alt="Editar" width="40px" height="40px">
      GENERAR COMPROBANTE</button>
-        
-  
 </div>
 
 <!-- MODAL TABLA -->
 <!-- MODAL-->
+<!--
 <div class="modal fade bd-example-modal-lg" id="detalleProducto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="width:900px;">
             <div class="modal-header">
-                <!--ENCABEZADO -->
+              
                 <div class="container">
                     <div class="row" style="background:#3366FF">
                         <h6 class="font-weight-bold my-2 ml-4 px-1 text-center mx-auto " style="color:#FFFFFF">
@@ -107,13 +116,12 @@
                         </h6>
                     </div>
                 </div>
-                <!--button type="button" class="close" data-dismiss="modal" aria-label="Close"-->
-                <!-- <span aria-hidden="true">&times;</span>-->
-                <!--/button-->
+               button type="button" class="close" data-dismiss="modal" aria-label="Close"-->
+                <!-- <span aria-hidden="true">&times;</span>
+                /button
             </div>
             <div class="modal-body  col-12" id="">
-                <!-- TABLA -->
-                <div id="imp" class="row border my-0 mx-0 px-0 " style="height:300px;overflow-y:auto;" id="tablaBusqueda">
+                            <div id="imp" class="row border my-0 mx-0 px-0 " style="height:300px;overflow-y:auto;" id="tablaBusqueda">
                     <table class="table table-responsive-lg  border-primary  text-center " id="productos">
                         <thead class=" text-dark" id="cabeceraProductos">
                             <tr>
@@ -146,13 +154,13 @@
         </div>
     </div>
 </div>
+-->
 <script src="{{ asset('js\html2pdf.bundle.min.js')}}"></script>
 <script>
     let elemento = "";
     let idVenta = @json($idVenta);
 
     function asignarEstado() {
-
         let ventaCliente = @json($ventaCliente);
         let estado = ventaCliente.estado;
         for (let i = 1; i <= 4; i++) {
@@ -160,6 +168,7 @@
             $(`#paso${i}`).removeClass('btn-success');
             $(`#paso${i}`).removeClass('btn-danger');
             $(`#paso${i}`).removeClass('btn-warning');
+            $(`#paso${i}`).removeClass('btn-outline-secondary'); //ade
             $(`#rama${i}`).removeClass('text-success');
         }
         //return;
@@ -170,18 +179,37 @@
             $(`#rama${i}`).addClass('text-success');
             console.log('btnEstado', btnEstado);
             console.log('Estado', estado);
+            if(i==1){
+                 document.getElementById("estadoDesc").innerHTML =
+                 `<p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> Pedido aceptado </strong> </small></p>`;
+            }else 
+            if(i==2){
+                 document.getElementById("estadoDesc").innerHTML =
+                 `<p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> Preparando pedido para su salida </strong> </small></p>`;
+            } else 
+            if(i==3){
+                 document.getElementById("estadoDesc").innerHTML =
+                 `<p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> Pedido en camino. Por favor estar al pendiente para la entrega </strong> </small></p>`;
+            }
+
             if (btnEstado == estado)
                 return;
         }
         if (estado == 'ENTREGADO') {
             $(`#paso4`).addClass('btn-success');
+            document.getElementById("estadoDesc").innerHTML =
+                 `<p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> El pedido a sido entregado </strong> </small></p>`;
             return;
         }
         if (estado == 'CANCELADO') {
+            document.getElementById("estadoDesc").innerHTML =
+                 `<p class="col-auto  mx-auto text-danger h5 mt-2 "><small><strong> El pedido a sido cancelado. </strong> </small></p>`;
             $(`#paso4`).addClass('btn-danger');
             return;
         }
         if (estado == 'SINLOCALIZAR') {
+            document.getElementById("estadoDesc").innerHTML =
+                 `<p class="col-auto  mx-auto text-dark h5 mt-2 bg-warning"><small><strong> El pedido no pudo ser entregado. Usted puede solicitar un último intento o pasar a sucursal a recogerlo en un máximo de 24 hrs.</strong> </small></p>`;
             $(`#paso4`).addClass('btn-warning');
             return;
         }
@@ -235,35 +263,6 @@
         }
     }
     //imprirmir
-
-
-    // imprimir
-    /*
-    document.addEventListener("btnGenerarPed", () => {
-        const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
-        html2pdf()
-            .set({
-                margin: 1,
-                filename: 'reporteVentas.pdf',
-                image: {
-                    type: 'jpeg',
-                    quality: 0.98
-                },
-                html2canvas: {
-                    scale: 3, // A mayor escala, mejores gráficos, pero más peso
-                    letterRendering: true,
-                },
-                jsPDF: {
-                    unit: "in",
-                    format: "a2",
-                    orientation: 'portrait' // landscape o portrait
-                }
-            })
-            .from($elementoParaConvertir)
-            .save()
-            .catch(err => console.log(err));
-    });
-    */
 </script>
 
 @endsection

@@ -309,14 +309,14 @@
                             <p class="col-6"><strong>Total:</strong>
                             <p id="totalH"></p>
                             </p>
-                            <p class="col-6"><strong>Pagar con:</strong>
+                            <!--p id="pagarConTitulo" class="col-6"><strong>Pagar con:</strong>
                             <p id="pagarCon"></p>
-                            </p>
+                            </p-->
                         </div>
                         <div class="row col-12 px-3 h6 ">
-                            <p class="col-6"><strong>Cambio:</strong>
+                            <!--p class="col-6"><strong>Cambio:</strong>
                             <p id="cambio"></p>
-                            </p>
+                            </p-->
                             <p class="col-6"><strong>Direccion:</strong>
                             <p id="direccion"></p>
                             </p>
@@ -758,20 +758,20 @@
                 status = `<p class="h6 bg-success text-dark my-auto py-2 px-1 
             ">${ventaCliente.estado}</p>`;
             if (ventaCliente.estado.toUpperCase() == "CANCELADO")
-                status = `<p class="h6 alert-danger text-white my-auto py-2 px-1 
+                status = `<p class="h6 bg-danger text-white my-auto py-2 px-1 
             ">${ventaCliente.estado}</p>`;
             if (ventaCliente.estado.toUpperCase() == "SINLOCALIZAR")
-                status = `<p class="h6 alert-warning text-white my-auto py-2 px-1 
+                status = `<p class="h6 bg-warning text-dark my-auto py-2 px-1 
             rounded">${ventaCliente.estado}</p>`;
             cuerpo = cuerpo + `
         <div class="row col-12 mx-0 border border-dark"> 
             <div class="col-12 col-md-1 my-auto text-center">
             <p class="h5 d-md-none">Folio:</p>
-                <p> VE_${ventasContraEntrega[i].id}</p>
+                <p> <mark> VE_${ventasContraEntrega[i].id} </mark></p>
             </div>
             <div class="col-12 col-md-6 my-auto">
             <p class="h5 d-md-none text-center">Descripcion:</p>
-                <p>Direccion: ${ventaCliente.direccion}</p>
+                <p> <strong>Direccion:</strong> ${ventaCliente.direccion}</p>
                 <p class="h6"> Total: $${ventasContraEntrega[i].totalV}</p>
             </div>
             <div class="col-12 col-md-2 my-auto text-center">
@@ -892,8 +892,10 @@
             document.getElementById("subtotal").innerHTML =`$ ${parseFloat(infoPedido.totalV) - 15}`;
             document.getElementById("costoEnvio").innerHTML = ` $ ${15}`;
             document.getElementById("totalH").innerHTML = `$ ${infoPedido.totalV}`;
-            document.getElementById("pagarCon").innerHTML = `$ ${infoPedido.pagarCon}`;
-            document.getElementById("cambio").innerHTML =`$ ${ infoPedido.cambio}`;
+            //document.getElementById("pagarCon").innerHTML = `$ ${infoPedido.pagarCon}`;
+            //document.getElementById("cambio").innerHTML =`$ ${ infoPedido.cambio}`;
+            //$('#pagarCon').addClass('d-none');
+            //$('#cambio').addClass('d-none');
             document.getElementById("direccion").innerHTML = `${infoPedidoCliente.direccion}`;
 /*
             document.getElementById("informacionPedido").innerHTML =
