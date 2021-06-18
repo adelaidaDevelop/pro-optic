@@ -1,18 +1,29 @@
 @extends('layouts.headerProcesoCompra')
 @section('contenido')
-
+<div class="row col-12 py-1">
+    <nav aria-label="breadcrumb ">
+        <ol class="breadcrumb bg-transparent h5">
+            <li class="breadcrumb-item"><a href="{{url('/')}}">INICIO</a></li>
+            <li class="breadcrumb-item"><a href="{{url('/menu')}}">CLIENTE</a></li>
+            <li class="breadcrumb-item active" aria-current="page">SEGUIMIENTO-PEDIDO</li>
+        </ol>
+    </nav>
+</div>
 <!--HASTA AQUI-->
 
-<div class="col text-center  mx-auto mt-2 mb-4">
-    <h4 class="text-dark my-4">SEGUIMIENTO DE PEDIDO</h4>
-    <h6 class="text-secondary alert-success">ESTADO DE SU PEDIDO</h6>
+<div class="col text-center p-0 mx-auto  mb-2">
+    <h4 class="text-dark ">SEGUIMIENTO DE PEDIDO</h4>
+    <h5 class="text-secondary alert-success">ESTADO DE SU PEDIDO</h5>
 </div>
 
-<div class="col-12 input-group text-center mx-auto mb-4 mt-4" style="background:#F4F6F6">
-    <h6 class="col col-md-2"> FOLIO: {{$venta->id}} </h6>
-    <h6 class="col col-md-3"> FECHA GENERADO: {{$venta->created_at->format('d-m-Y')}} </h6>
-    <h6 class="col col-md-2"> STATUS: {{$ventaCliente->estado}} </h6>
-    <h6 class="col col-md-4"> HORA PROGRAMADA DE ENTREGA: {{$venta->created_at->addMinutes(60)->isoFormat('H:mm:ss A')}} </h6>
+<div class="row col-12 input-group text-center mx-auto  mt-4" style="background:#F4F6F6">
+    <h5 class="col col-md-2"><strong> FOLIO:</strong> {{$venta->id}} </h5>
+    <h5 class="col col-md-3"><strong> FECHA GENERADO: </strong>{{$venta->created_at->format('d-m-Y')}} </h5>
+    <h5 class="col col-md-3"> <strong>STATUS: </strong>{{$ventaCliente->estado}} </h5>
+   <!-- <h5 class="col col-md-4"> <strong>HORA PROGRAMADA DE ENTREGA:</strong> {{$venta->created_at->addMinutes(60)->isoFormat('H:mm:ss A')}} </h5>-->
+</div>
+<div class="row col-12 input-group text-right mb-4 mt-4" style="background:#F4F6F6">
+   <h5 class="col-12 col-md-12"> <strong>HORA PROGRAMADA DE ENTREGA:</strong> {{$venta->created_at->addMinutes(60)->isoFormat('H:mm A')}} </h5>
 </div>
 <!--
 <div class=" col-12 text-right mt-3 my-1">
@@ -29,31 +40,31 @@
 <div class="col-12 my-4 input-group text-center mx-auto " style="background:#D5DBDB">
     <button id="paso1" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" value="ACEPTADO" disabled>
         <img class="" src="{{ asset('img/pedidoConfirmado.png') }}" alt="Editar" width="50px" height="50px">
-        <p class="h6 my-auto mx-2 text-dark"><small>PEDIDO ACEPTADO</small></p>
+        <p class="h6 my-auto mx-2 text-dark">PEDIDO ACEPTADO</p>
     </button>
     <div id="rama1" class=" h1 my-auto text-success">
         <p>.....</p>
     </div>
     <!--PASO DOS -->
-    <button id="paso2" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" value="PREPARANDO" disabled>
+    <button id="paso2" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" value="PREPARANDO" disabled>
         <img class="" src="{{ asset('img/caja.png') }}" alt="Editar" width="50px" height="50px">
-        <p class="h6 my-auto mx-2 text-dark"><small>PREPARANDO PEDIDO</small></p>
+        <p class="h6 my-auto mx-2 text-dark">PREPARANDO PEDIDO</p>
     </button>
     <div id="rama2" class="h1 my-auto text-success">
         <p>.....</p>
     </div>
     <!--PASO TRES-->
-    <button id="paso3" class="btn btn-success col mx-2 my-2  text-center  p-1 border-0" type="submit" value="ENCAMINO" disabled>
+    <button id="paso3" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" value="ENCAMINO" disabled>
         <img class="" src="{{ asset('img/procesoEntrega.png') }}" alt="Editar" width="50px" height="50px">
-        <p class="h6 my-auto mx-2 text-dark"><small>EN PROCESO DE ENTREGA A DOMICILIO</small></p>
+        <p class="h6 my-auto mx-2 text-dark">EN CAMINO</p>
     </button>
     <div id="rama3" class="h1 my-auto text-success">
         <p>.....</p>
     </div>
     <!--PASO CUATRO-->
-    <button id="paso4" class="btn btn-danger col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
+    <button id="paso4" class="btn btn-outline-secondary col mx-2 my-2  text-center  p-1 border-0" type="submit" disabled>
         <img class="" src="{{ asset('img/entregado.png') }}" alt="Editar" width="50px" height="50px">
-        <p class="h6 my-auto mx-2 text-dark"><small>ENTREGADO</small></p>
+        <p class="h6 my-auto mx-2 text-dark">ENTREGADO</p>
     </button>
     <!--Dinamico-->
     <!--
@@ -75,10 +86,11 @@
 
 <div id="verHistorial" class="text-center mx-auto my-4 p-3" style="background:#B2BABB">
     <!--<a class="btn btn-primary " href="{{url('/comprobante/')}}"> GENERAR COMPROBANTE</a> -->
-    <button id="btnComprobante" onclick="cargarComprobante()" class="btn btn-primary"> GENERAR COMPROBANTE</button>
-    <!--button type="button" class="btn btn-outline-secondary border-0" data-toggle="modal" href=".bd-example-modal-lg" id="ver" onclick="" value="">
-        <img src="{{ asset('img/vermas2.png') }}" alt="Editar" width="30px" height="30px">
-    </button-->
+    <button id="btnComprobante" onclick="cargarComprobante()" class="btn btn-success">
+    <img src="{{ asset('img/Comprobante.png') }}" alt="Editar" width="40px" height="40px">
+     GENERAR COMPROBANTE</button>
+        
+  
 </div>
 
 <!-- MODAL TABLA -->
@@ -126,7 +138,8 @@
                     </a>
 
                     <button type="button" class="btn btn-primary" id="actPrecio2" onclick="generarComprobante();">GENERAR COMPROBANTE</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">CANCELAR</button>
 
                 </div>
             </div>
@@ -191,7 +204,7 @@
 
     async function descargar() {
         //  console.log("si entra a descargar");
-        var divTabla = document.getElementById("imp");
+      //  var divTabla = document.getElementById("imp");
         try {
             const $elementoParaConvertir = elemento;
            // const $elementoParaConvertir = divTabla.innerHTML;
