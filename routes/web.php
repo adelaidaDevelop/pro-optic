@@ -23,6 +23,9 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\ProductoController;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 //use Auth;
 /*
 |--------------------------------------------------------------------------
@@ -62,14 +65,14 @@ Route::get('/carrito', [EcommerceController::class,'carrito'])->middleware('isCl
 Route::post('/actualizarCantidadCarrito/{id}', [EcommerceController::class,'actualizarCantidadCarrito'])->middleware('isCliente');
 Route::post('/quitarProductoCarrito/{id}', [EcommerceController::class,'quitarProductoDeCarrito'])->middleware('isCliente');
 
-Route::get('/direccionEnvio', [EcommerceController::class,'direccionEnvio'])->middleware('isCliente')->middleware('verified');;
-Route::post('/domicilio', [EcommerceController::class,'postDireccion'])->middleware('isCliente')->middleware('verified');;
-Route::post('/actualizarDireccion', [EcommerceController::class,'actualizarDireccion'])->middleware('isCliente')->middleware('verified');;
+Route::get('/direccionEnvio', [EcommerceController::class,'direccionEnvio'])->middleware('isCliente');//->middleware('verified');;
+Route::post('/domicilio', [EcommerceController::class,'postDireccion'])->middleware('isCliente');//->middleware('verified');;
+Route::post('/actualizarDireccion', [EcommerceController::class,'actualizarDireccion'])->middleware('isCliente');//->middleware('verified');;
 
 Route::post('/eliminarDireccion', [EcommerceController::class,'eliminarDireccion'])->middleware('isCliente');
 Route::get('/metodoPago', [EcommerceController::class,'formaPago'])->middleware('isCliente');
 Route::get('/revisionPedido', [EcommerceController::class,'revisionPedido'])->middleware('isCliente');
-Route::get('/menu', [EcommerceController::class,'menu'])->middleware('isCliente')->middleware('verified');;
+Route::get('/menu', [EcommerceController::class,'menu'])->middleware('isCliente');//->middleware('verified');;
 Route::post('/actualizarDatosCliente', [EcommerceController::class,'actualizarDatosCliente'])->middleware('isCliente');
 //Auth::routes();
 Route::get('/pagoPaypal', [EcommerceController::class,'pagoPaypal']);
@@ -80,6 +83,79 @@ Route::get('/resumenFinal/{id},{folio}', [EcommerceController::class,'resumen'])
 Route::get('/verSeguimientoPedido/{id}', [EcommerceController::class,'verSeguimientoPedido'])->middleware('isCliente');
 Route::get('/comprobante/{id}', [EcommerceController::class,'generarComprobante'])->middleware('isCliente');
 //Route::get('/verificacionEmail', [EcommerceController::class,'verificacionEmail'])->middleware('isCliente');
+Route::get('/home',function()
+{
+    //$url = session('urlSeccion');
+    //session()->forget('seccion');
+    /*$pos = strpos(session('urlSeccion'), 'puntoVenta');
+    if ($pos === false) {
+        session(['seccion' => 'ecommerce']);
+    } else {
+        session(['seccion' => 'puntoVenta']);
+    }*/
+    //return session('urlSeccion');//$pos;*/
+
+    /*$url = session('urlSeccion');
+    $urlV = session('urlVerified');
+        $seccion = session('seccion');
+        session()->forget('urlSeccion');
+        session()->forget('seccion');
+        $user='no hay ussuario';
+        if(Auth::check())
+            $user = Auth::user()->id;
+        return 'seccion:'.$seccion.' url:'.$url.' sesion:'.$user.' urlVerified:'.$urlV; */
+    /*if(session()->has('seccion'))
+    {
+        $url = session('urlSeccion');
+        $seccion = session('seccion');
+        session()->forget('urlSeccion');
+        session()->forget('seccion');
+        //return $url;
+        if(session('seccion') == 'ecommerce')
+        {
+            session()->forget('urlSeccion');
+            session()->forget('seccion');
+            return redirect('/menu');
+        }
+        if(session('seccion') == 'puntoVenta')
+        {
+            session()->forget('urlSeccion');
+            session()->forget('seccion');
+            return redirect('/puntoVenta/home');
+        }
+    }else
+    {*/
+        if(Auth::check())
+        {
+            session()->forget('urlVerified');
+            if(Auth::user()->tipo == 0)
+            {
+                //session(['idUsuario' =>Auth::user()->id]);
+                Auth::logout();
+                return redirect('/puntoVenta/login');
+            }
+            if(Auth::user()->tipo == 2)
+            {
+                //session(['idCliente' =>Auth::user()->id]);
+                Auth::logout();
+                return redirect('/loginCliente');
+            }
+        }
+    //}
+    return NULL;
+});
 Route::get('/forgot-password', function () {
-    return view('auth.passwords.email');
+    return view('auth.reset');
 })->middleware('guest')->name('password.request');
+
+Route::post('/forgot-password', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+
+    return $status === Password::RESET_LINK_SENT
+                ? back()->with(['status' => __($status)])
+                : back()->withErrors(['email' => __($status)]);
+})->middleware('guest')->name('password.email');

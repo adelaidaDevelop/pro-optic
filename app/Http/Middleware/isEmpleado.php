@@ -22,16 +22,10 @@ class isEmpleado
     public function handle(Request $request, Closure $next)
     {
         //return 'Hay error';
-
-        /*$pos = strpos(url()->current(), 'puntoVenta');
-        if ($pos === false) {
-            if (!Auth::check()) {
-                return redirect('/loginCliente');
-            }
-            else{
-                return $next($request);
-            }
-        }*/
+        //return $next($request);
+        if (!session()->has('seccion')) {
+            session(['urlSeccion' => url()->current()]);
+        }
         if (session()->has('idUsuario')) {
 
             if (Auth::check()) {
@@ -39,7 +33,8 @@ class isEmpleado
                 if (Auth::user()->tipo == 0) {
 
                     if (Auth::user()->id == 1) {
-
+                        if(Auth::user()->email_verified_at == NULL)
+                            return redirect('/email/verify');
                         return $next($request);
                     }
 
@@ -59,7 +54,8 @@ class isEmpleado
                         //    //$sucursal = Sucursal::findOrFail($request->input('opcionSucursal'))->direccion;
 
                         //    //session(['sucursalNombre' => $sucursal]);
-
+                        if(Auth::user()->email_verified_at == NULL)
+                            return redirect('/email/verify');
                         return $next($request); //->intended('/');
 
                     }
@@ -83,12 +79,12 @@ class isEmpleado
             //return 'Hay error';
 
         }
-
         if (Auth::check()) {
             $idUsuario = Auth::user()->id;
             session(['idUsuario' => $idUsuario]);
         }
-
+        if(Auth::user()->email_verified_at == NULL)
+            return redirect('/email/verify');
         return $next($request);
     }
 }

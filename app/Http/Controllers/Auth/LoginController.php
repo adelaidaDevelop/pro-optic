@@ -57,6 +57,15 @@ class LoginController extends Controller
                 {
                     if(Auth::user()->id == 1)
                     {
+                        /*session(['sucursal' => session('sucursal')]);
+                        session(['idSucursalEmpleado' => $sucursalEmpleado->id]);
+
+                        session(['idEmpleado' => $empleado->id]);
+                        //session(['idUsuario' => Auth::user()->id]);
+                        //session(['sucursal' => $request->input('opcionSucursal')]);
+                        //session(['idSucursalEmpleado' => $sucursalEmpleado->id]);
+                        $sucursal = Sucursal::findOrFail(session('susucrsal'))->direccion;
+                        session(['sucursalNombre' => $sucursal]);*/
                         return redirect('/puntoVenta/home');
                     }
                         $id = Auth::user()->id;
@@ -71,6 +80,13 @@ class LoginController extends Controller
                     //    session(['idUsuario' => Auth::user()->id]);
                         session(['sucursal' => session('sucursal')]);
                         session(['idSucursalEmpleado' => $sucursalEmpleado->id]);
+
+                        session(['idEmpleado' => $empleado->id]);
+                        //session(['idUsuario' => Auth::user()->id]);
+                        //session(['sucursal' => $request->input('opcionSucursal')]);
+                        //session(['idSucursalEmpleado' => $sucursalEmpleado->id]);
+                        //$sucursal = Sucursal::findOrFail(session('susucrsal'))->direccion;
+                        //session(['sucursalNombre' => $sucursal]);
                         //$sucursal = Sucursal::findOrFail($request->input('opcionSucursal'))->direccion;
                         //session(['sucursalNombre' => $sucursal]);
                 
