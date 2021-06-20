@@ -94,19 +94,24 @@ $verC = $sE->hasAnyRole($vC);
                                         NOMBRE
                                     </label>
                                     <input type="text" class="form-control" name="nombre" id="nombre" value="{{$d->nombre}}" required>
+                                    <label for="apellidoPaterno">
+                                        APELLIDO PATERNO
+                                    </label>
+                                    <input type="text" class="form-control" name="apellidoPaterno" id="apellidoPaterno" value="{{$d->apellidoPaterno}}" required>
+                                    <label for="apellidoMaterno">
+                                        APELLIDO MATERNO
+                                    </label>
+                                    <input type="text" class="form-control" name="apellidoMaterno" id="apellidoMaterno" value="{{$d->apellidoMaterno}}" required>
                                     <label for="telefono" class="mt-2">
                                         TELEFONO
                                     </label>
-                                    <input type="tel" class="form-control @error('nombre') is-invalid @enderror" placeholder="TEL 8-10 DIGITOS" name="telefono" id="telefono" value="{{$d->telefono}}" pattern="[0-9]{8,10}" required>
+                                    <input type="tel" class="form-control @error('telefono') is-invalid @enderror" placeholder="TEL 8-10 DIGITOS" name="telefono" id="telefono" value="{{$d->telefono}}" pattern="[0-9]{8,10}" required>
 
                                     <label for="telefono" class="mt-2">
                                         DOMICILIO
                                     </label>
-                                    <textarea name="domicilio" id="domicilio" class="form-control @error('nombre') is-invalid @enderror" value="" required>{{$d->domicilio}}</textarea>
-                                    <!--
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror"
-                                        name="domicilio" id="domicilio" value="{{$d->domicilio}}" required>
-                                    -->
+                                    <textarea name="domicilio" id="domicilio" class="form-control @error('domicilio') is-invalid @enderror" value="" required>{{$d->domicilio}}</textarea>
+                                    
                                 </div>
                             </div>
                             <div class="col-4">
@@ -166,25 +171,29 @@ $verC = $sE->hasAnyRole($vC);
                                 <label for="nombre">
                                     NOMBRE
                                 </label>
-                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" placeholder="NOMBRE COMPLETO" required>
+                                <input type="text" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" placeholder="NOMBRE" required>
                                 @error('nombre')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+                                <label for="apellidoPaterno">
+                                    APELLIDO PATERNO
+                                </label>
+                                <input type="text" class="form-control @error('apellidoPaterno') is-invalid @enderror" name="apellidoPaterno" id="apellidoPaterno" value="" required placeholder="apellido paterno">
+                                <label for="apellidoMaterno">
+                                    APELLIDO MATERNO
+                                </label>
+                                <input type="text" class="form-control @error('apellidoMaterno') is-invalid @enderror" name="apellidoMaterno" id="apellidoMaterno" value="" required placeholder="apellido materno">
+
                                 <label for="telefono">
                                     TELEFONO
                                 </label>
-                                <input type="tel" class="text-uppercase  form-control @error('nombre') is-invalid @enderror" name="telefono" id="telefono" placeholder="TEL 8-10 DIGITOS" pattern="[0-9]{8,10}" required>
+                                <input type="tel" class="text-uppercase  form-control @error('telefono') is-invalid @enderror" name="telefono" id="telefono" placeholder="TEL 8-10 DIGITOS" pattern="[0-9]{8,10}" required>
                                 <label for="domicilio">
                                     DOMICILIO
                                 </label>
-                                <!--
-                                <input type="text"
-                                    class="text-uppercase  form-control @error('nombre') is-invalid @enderror"
-                                    name="domicilio" id="domicilio" required>
-                                    -->
-                                <textarea name="domicilio" id="domicilio" class="form-control @error('nombre') is-invalid @enderror" placeholder="INGRESAR DOMICILIO COMPLETO" required></textarea>
+                                <textarea name="domicilio" id="domicilio" class="form-control @error('domicilio') is-invalid @enderror" placeholder="INGRESAR DOMICILIO COMPLETO" required></textarea>
 
                                 </select>
                             </div>
@@ -277,9 +286,5 @@ $verC = $sE->hasAnyRole($vC);
 
     texto.addEventListener('keyup', filtrar);
     filtrar();
-
-
-
-
 </script>
 @endsection

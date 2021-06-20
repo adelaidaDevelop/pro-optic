@@ -19,7 +19,7 @@
         <small>
             <p class="h6 font-weight-bolder">Filtrar búsqueda</p>
         </small>
-        <div class="accordion" id="filtrarPorPrecio">
+        <div class="accordion d-none" id="filtrarPorPrecio">
             <div class="card">
                 <div class="card-header p-0" id="headingOne">
                     <h2 class="mb-0">

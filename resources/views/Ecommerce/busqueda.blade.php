@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="accordion" id="filtrarPorPrecio">
+        <div class="accordion d-none" id="filtrarPorPrecio">
             <div class="card">
                 <div class="card-header p-0" id="headingOne">
                     <h2 class="mb-0">
@@ -49,7 +49,7 @@
                     </h2>
                 </div>
 
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                <div id="collapseOne" class="collapse show " aria-labelledby="headingOne"
                     data-parent="#filtrarPorPrecio">
                     <div class="card-body">
                         <div class="form-check">
