@@ -433,7 +433,7 @@ class EcommerceController extends Controller
     {
         //return 'Todo bien';
         $carrito =  session('carrito');
-
+        //return $carrito;
         //for($i=0 ;$i<count($carrito);$i++)
         $i = 0;
         $pos = true;
@@ -442,16 +442,22 @@ class EcommerceController extends Controller
             if ($id == $carrito[$i]['id'] && session('sucursalEcommerce') == $carrito[$i]['sucursal']) {
                 $productoSucursal = Sucursal_producto::where('idSucursal', '=', session('sucursalEcommerce'))
                     ->where('idProducto', '=', $id)->first();
+                    //return $productoSucursal;
                 //$nuevaCantidad = $carrito[$i]['cantidad'] + $request['cantidad'];
                 if ($request['cantidad'] <= $productoSucursal->existencia) {
                     $carrito[$i]['cantidad'] = $request['cantidad'];
-                    Carrito::where('idUsuario', '=', Auth::user()->id)->where('idProducto', '=', $id)
+                    if(Auth::check())
+                    {
+                        Carrito::where('idUsuario', '=', Auth::user()->id)->where('idProducto', '=', $id)
                         ->where('idSucursal', '=', session('sucursalEcommerce'))
                         ->update(['cantidad' => $request['cantidad']]);
+                    }
                 } else
+                {
                     return $carrito[$i]['cantidad'];
+                }
 
-                $pos = true;
+                $pos = false;
             }
             $i++;
         }
@@ -804,5 +810,31 @@ class EcommerceController extends Controller
         Fortify::loginView(function () {
             return view('auth.login');
         });
+    }
+
+    public function busquedaTiempoReal()
+    {
+        
+        $array = [];
+        if (isset($_GET['buscar']))
+            $producto = $_GET['buscar'];
+        else {
+            return view('Ecommerce.busqueda', compact('array'));
+        }
+        $datos = DB::table('productos')
+            ->join('sucursal_productos', 'productos.id', '=', 'sucursal_productos.idProducto')
+            ->where([
+                ['productos.nombre', 'like', '%' . $producto . '%'],
+                ['sucursal_productos.idSucursal', '=', session('sucursalEcommerce')]
+            ])
+            ->orWhere([
+                ['sucursal_productos.idSucursal', '=', session('sucursalEcommerce')],
+                ['productos.descripcion', 'like', '%' . $producto . '%']
+            ])
+            ->select('*')->limit(5)->get();
+        //->groupBy('sucursal_empleados.idSucursal')
+
+        $array = json_decode(json_encode($datos), true);
+        return $array;
     }
 }
