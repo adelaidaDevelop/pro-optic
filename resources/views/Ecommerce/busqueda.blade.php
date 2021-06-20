@@ -251,9 +251,13 @@ function mostrarProductos(lista) {
         let urlImagen = "{{ asset('img/imagenNoDisponible.jpg') }}";
         if (lista[i].imagen != null && lista[i].imagen.length > 0)
             urlImagen = `{{ asset('storage')}}/${lista[i].imagen}`;
+            let border = "";
+        console.log(lista[i].nombre, lista[i].existencia);
+        if(lista[i].existencia == 0)
+            border = "border border-danger";
         cuerpo = cuerpo +
-        `<div class="card-group mx-auto ">
-            <div id="tarjeta${lista[i].id}" class="card my-1" style="width: 15rem;"
+        `<div class="card-group mx-auto">
+            <div id="tarjeta${lista[i].id}" class="card my-1 ${border}" style="width: 15rem;"
             onmouseout="seleccionProducto(false,${lista[i].id})"
             onmouseover="seleccionProducto(true,${lista[i].id})">
                 <a class="btn btn-outline-light h-100 " href="{{url('/producto')}}/${lista[i].id}">

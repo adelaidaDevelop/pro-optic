@@ -142,7 +142,8 @@ class EcommerceController extends Controller
             $producto->precio = $productoSucursal->precio;
             $producto->existencia = $productoSucursal->existencia;
             $carritoAux = session('carrito');
-
+            $departamento = Departamento::findOrFail($producto->idDepartamento)->nombre;
+            $producto->departamento = $departamento;
             if (isset($carritoAux) && count($carritoAux) > 0) {
                 for ($i = 0; $i < count($carritoAux); $i++) {
                     if (

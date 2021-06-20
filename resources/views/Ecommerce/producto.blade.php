@@ -41,37 +41,27 @@
     </div>
     <div class="form-group col-md-5 mx-auto ml-md-auto py-2">
         <h4 class="text-uppercase text-primary">{{$producto->nombre}}</h4>
-        <h2>$ {{$producto->precio}}</h2>
         <div class="form-group">
-            <p class="my-0"><small>* Precio exclusivo de tienda en línea.</small></p>
-            <p class="my-0"><small>* Producto sujeto a disponibilidad.</small></p>
-            <p class="my-0"><small>* Descuento ya incluído en precios mostrados.</small></p>
+            <p class="my-0"><strong>Codigo de barras:</strong> {{$producto->codigoBarras}}</p>
+            <p class="my-0"><strong>Existencia:</strong> {{$producto->existencia}}</p>
+            <p class="my-0"><strong>Departamento:</strong> {{$producto->departamento}}</p>
+            
         </div>
+        <h2 class="">$ {{$producto->precio}}</h2>
         <div id="divBtn" class="form-group col-10 col-md-5 mx-auto ml-md-0 mr-md-auto pl-md-0 pr-md-4">
             <input type="number" class="form-control border" id="cantidad" min="1" max="{{$producto->existencia}}" value="1">
         </div>
         <button class="btn btn-success col-12 col-auto mx-4 text-center ml-md-0 mr-md-auto" onclick="addCarritoProducto(`{{$producto->id}}`)"><strong>
                 <h4>Agregar al carrito</h4>
             </strong></button>
+            <div class="form-group">
+            <p class="my-0"><small>* Precio exclusivo de tienda en línea.</small></p>
+            <p class="my-0"><small>* Producto sujeto a disponibilidad.</small></p>
+            <p class="my-0"><small>* Descuento ya incluído en precios mostrados.</small></p>
+            
+        </div>
+        
     </div>
-</div>
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Descripcion</a>
-    </li>
-    <li class="nav-item" role="presentation">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-    </li>
-    <li class="nav-item" role="presentation">
-        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-    </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        {{$producto->descripcion}}
-    </div>
-    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">perfiles</div>
-    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">contactoos</div>
 </div>
 <!--div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
     <div id="toastAgregarCarrito" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3500">
@@ -94,9 +84,9 @@
     existencia = parseInt(existencia);
     console.log('carrito', carrito);
     async function addCarritoProducto(id) {
-        
+
         let cantidad = $('#cantidad').val();
-        console.log('cantidadPedida',cantidad);
+        console.log('cantidadPedida', cantidad);
         try {
             //return alert('Listo'+id);
             let respuesta = await $.ajax({
@@ -117,15 +107,15 @@
                 return alert('Por el momento esta es la existencia que tenemos a la venta');
             }
             if (respuesta == 2) {
-            return alert('Por el momento no tenemos este producto a la venta');
+                return alert('Por el momento no tenemos este producto a la venta');
             }
             carrito = respuesta;
             $('#toastAgregarCarrito').toast('show');
             document.getElementById('toastCuerpoCarrito').textContent = "Producto agregado al carrito";
             //document.querySelector('#cantidadCarrito').textContent = respuesta.length;
             existencia = existencia - parseInt(cantidad);
-            document.getElementById('divBtn').innerHTML = 
-            `<input type="number" class="form-control border" id="cantidad" min="1" max="${existencia}" value="1">
+            document.getElementById('divBtn').innerHTML =
+                `<input type="number" class="form-control border" id="cantidad" min="1" max="${existencia}" value="1">
             `;
             $("input[type='number']").inputSpinner();
             mostrarCarrito();

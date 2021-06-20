@@ -142,7 +142,12 @@ $deptos = $categorias[$d->nombre];
     <div class="row mx-auto col-12">
         @foreach($deptos as $producto)
         <!--div class="col my-2"-->
-        <div id="productoDepartamento{{$producto['id']}}" class="card col-12 col-md-auto mx-auto mx-md-1 my-2 px-0 py-auto border" onmouseout="seleccionProducto(false,`productoDepartamento{{$producto['id']}}`)" onmouseover="seleccionProducto(true,`productoDepartamento{{$producto['id']}}`)" style="width:15rem;max-width: 30rem;">
+        @if($producto->existencia == 0)
+        <div id="productoDepartamento{{$producto['id']}}" class="card col-12 col-md-auto mx-auto mx-md-1 my-2 px-0 py-auto border border-danger" onmouseout="seleccionProducto(false,`productoDepartamento{{$producto['id']}}`)" onmouseover="seleccionProducto(true,`productoDepartamento{{$producto['id']}}`)" style="width:15rem;max-width: 30rem;">
+        
+        @else
+        <div id="productoDepartamento{{$producto['id']}}" class="card col-12 col-md-auto mx-auto mx-md-1 my-2 px-0 py-auto border border" onmouseout="seleccionProducto(false,`productoDepartamento{{$producto['id']}}`)" onmouseover="seleccionProducto(true,`productoDepartamento{{$producto['id']}}`)" style="width:15rem;max-width: 30rem;">
+        @endif    
             <div class="row col-12 my-0 mx-auto px-0">
                 <!--a class="btn btn-outline-light" href="{url('/producto/'.$producto['id'])}}"-->
                 <div class="card-header col-5 col-md-12 my-auto mt-md-0 mb-md-1 p-0 p-md-1 bg-transparent border-0">
