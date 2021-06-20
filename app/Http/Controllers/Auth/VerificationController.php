@@ -61,23 +61,31 @@ class VerificationController extends Controller
             }
         }else
         {*/
-            //$urlV = session('urlVerified');
-            //$id = "";
-        if(!session()->has('urlVerified'))
+        //$urlV = session('urlVerified');
+        //$id = "";
+        if (!session()->has('urlVerified'))
             session(['urlVerified' => url()->current()]);
-            $pos = strpos(session('urlVerified'), 'verify/');
+        $pos1 = strpos(session('urlVerified'), 'verify/');
+        //$pos = strpos(url()->current(), 'verify/');
 
-            if ($pos === false) {
-                
-                //session(['seccion' => 'ecommerce']);
-            } else {
-                $id=session('urlVerified')[$pos+7];
-                Auth::logout();
-                Auth::loginUsingId($id);
-                //session(['seccion' => 'puntoVenta']);
-            }
+        if ($pos1 === false) {
+            
+            //session(['seccion' => 'ecommerce']);
+        } else {
+            //$id = session('urlVerified')[$pos + 7];
+            $pos1 = $pos1 + 7;
+            $pos2 = strpos(session('urlVerified'), '/',$pos1);
+            $pos1 = $pos1;
+            $pos2 = $pos2 - 1;
+            $id = substr(session('urlVerified'), $pos1,$pos2);
+            //session()->forget('idS');
+            //session(['idS' => $id]);
+            Auth::logout();
+            Auth::loginUsingId($id);
+            //session(['seccion' => 'puntoVenta']);
+        }
 
-            //return 'urlV:'.$urlV.'  idUser:'.$id;
+        //return 'urlV:'.$urlV.'  idUser:'.$id;
         /*}
         
         if (session('seccion') == 'ecommerce') {
@@ -88,9 +96,9 @@ class VerificationController extends Controller
         }*/
         //if(!Auth::check())
         //{
-            $this->middleware('signed')->only('verify');
+        $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
         //}
-        
+
     }
 }
