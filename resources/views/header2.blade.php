@@ -24,8 +24,8 @@ $verReporte = $sE->hasAnyRole($reporte);
 <div class="container-fluid">
     <div class="row my-0 py-0 align-self-center" style="background:#3366FF">
         <nav class="navbar navbar-expand-lg navbar-light w-100 mx-2 px-4 py-0" style="background-color:#3366FF;">
-            <a class="navbar-brand" href="#">
-                <img src="{{ asset('img\farmaciagilogo.png') }}" alt="Editar" height="50px">
+            <a class="navbar-brand" href="{{url('/puntoVenta/home')}}">
+                <img src="{{ asset('img\farmaciagilogo.png') }}" class="img-fluid" alt="Editar" >
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -143,7 +143,7 @@ $verReporte = $sE->hasAnyRole($reporte);
 
         </nav>
     </div>
-    <div class="row p-0" style="background:#BDC2C5">
+    <div class="row p-0" style="background:#BDC2C5" id="navbarSupportedContent">
         <h4 class="font-weight-bold  ml-4 px-1 col-2 my-3">
             @yield('subtitulo')
         </h4>

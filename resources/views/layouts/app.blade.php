@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'FarmaciasGI') }}?</title>
+    <title>{{ config('app.name', 'FarmaciasGI') }}</title>
 
     <!-- Scripts -->
     <!--script src="{ asset('js/app.js') }}"></script-->
@@ -29,33 +29,21 @@
 </head>
 
 <body>
-
-    <!--div id="app border" class="row w-100 border border-dark"-->
         <nav class="navbar navbar-expand-md m-0 p-0" style="background-color: #3366FF;">
-            <!--  <div class="container">  -->
-            <!--
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a> -->
-            <!--button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button-->
 
-            <div class="collapse navbar-collapse m-0 p-0" id="navbarSupportedContent">
+            <div class="navbar navbar-expand-lg w-100 m-0 p-0">
 
-                <!--ul class="navbar-nav mr-auto">
-
-                    </ul-->
                 <ul class="navbar-nav ml-auto my-0">
                     <li class="nav-item">
-                        <h5 class="text-white text-uppercase">{{session('sucursalNombre')}}
+                        <h5 class="text-white text-uppercase d-none d-md-block">{{session('sucursalNombre')}}
                         </h5>
+                        <h6 class="text-white text-uppercase text-center m-1 d-md-none">{{session('sucursalNombre')}}
+                        </h6>
                     </li>
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto my-0 py-0">
                     <!-- Authentication Links -->
-
                     @guest
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ url('puntoVenta/login') }}">{{ __('Login') }}</a>
@@ -67,10 +55,6 @@
                         endif-->
                     @else
                     <li class="nav-item dropdown">
-                        <!--
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>-->
                         <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <strong>{{ Auth::user()->username }}</strong>
