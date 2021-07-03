@@ -731,7 +731,6 @@
 </div>
 </div>
 <script src="{{ asset('js\bootstrap-input-spinner.js') }}"></script>
-<!--script src="{{ asset('js\mayusculas.js') }}"></script-->
 <script>
     let seguimientoPedidoActivo = "";
     let productosVenta = [];
@@ -1798,6 +1797,10 @@
     });
     setInterval(async function() {
         try {
+            let activo = @json(Auth::check());
+            console.log('activo', activo);
+            if(!activo)
+                return location.href = "{{url('/puntoVenta/login')}}";
             let funcion = await $.ajax({
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
@@ -1809,8 +1812,10 @@
                 }
                 // si tuvo éxito la petición
             });
-            //console.log('respuestaTiempoReal', funcion);
+            console.log('respuestaTiempoReal', funcion['pedidos'].length);
+            return console.log('pedidosContraEntrega', pedidosContraEntrega.length);
             if (pedidosContraEntrega.length != funcion['pedidos'].length) {
+                
                 pedidosContraEntrega = funcion['pedidos'];
                 detallePedidos = funcion['detallePedidos'];
                 obtenerPedidosEntrega();
