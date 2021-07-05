@@ -50,16 +50,16 @@
         @endsection
     </div>
     <!--div class="row p-1 "-->
-    <div class="row border border-dark my-2 mx-1">
+    <div class="row border border-dark my-1 mx-1">
         @php
         $var = 1;
         @endphp
-        <div class="col-12">
+        <div class="col-12 py-0">
             <div class=" col-12 row mx-0 my-3 px-0">
                 <!--div class="col-9 m-0 px-0"-->
-                <div class="input-group col-6 px-0 py-3 mr-auto">
+                <div class="input-group col-xl-6 my-2 mr-auto">
                     <div class="input-group-prepend">
-                        <label for="codigoBarras" class="h6 font-weight-bold my-auto py-auto " style="color:#3366FF">
+                        <label for="codigoBarras" class="h5 font-weight-bold my-auto py-auto " style="color:#3366FF">
                             <!--h5 class="my-auto border border-primary">CODIGO DEL PRODUCTO</h5-->
                             CODIGO DEL PRODUCTO
                         </label>
@@ -77,28 +77,28 @@
                     <div class="input-group-append ">
                         <button class="btn btn-outline-primary my-auto" type="button" onclick="agregarPorCodigo()"
                             value="informacion" id="botonAgregar">
-                            <img src="{{ asset('img\agregarReg.png') }}" class="img-fluid" alt="Editar" width="25px" height="25px">
+                            <!--img src="{{ asset('img\agregarReg.png') }}" class="img-fluid" alt="Editar" width="25px" height="25px"-->
                             AGREGAR
                         </button>
                     </div>
                 </div>
 
                 <div class="my-auto mx-1 px-0">
-                    <button class="btn btn-outline-primary p-1 " type="button" onclick="buscarProducto()"
+                    <button class="btn btn-outline-primary px-1 " type="button" onclick="buscarProducto()"
                         data-toggle="modal" data-target="#exampleModal" value="informacion" id="boton">
                         <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
                         BUSCAR PRODUCTO
                     </button>
                 </div>
                 <div class="my-auto mx-1 px-0">
-                    <button class="btn btn-outline-primary  p-1" type="button" onclick=" buscarSubproducto()"
+                    <button class="btn btn-outline-primary  px-1" type="button" onclick=" buscarSubproducto()"
                         data-toggle="modal" data-target="#exampleModal2" value="informacion" id="boton">
                         <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
                         BUSCAR SUBPRODUCTO
                     </button>
                 </div>
                 <div class="my-auto mx-1 px-0">
-                    <button class="btn btn-outline-primary  p-1" type="button" onclick="buscarOferta()"
+                    <button class="btn btn-outline-primary  px-1" type="button" onclick="buscarOferta()"
                         data-toggle="modal" data-target="#ofertasModal" value="informacion" id="boton">
                         <img src="{{ asset('img\oferta.png') }}" alt="Editar" width="25px" height="25px">
                         OFERTAS
@@ -173,7 +173,7 @@
             </ul>
             -->
             <div class="row m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
-                <table class="table " id="productos">
+                <table class="table" id="productos">
                     <thead class="thead-light">
                         <tr class="text-center">
                             <th scope="col">#</th>
@@ -184,9 +184,10 @@
                             <th scope="col">PRECIO</th>
                             <th scope="col">CANTIDAD</th>
                             <th scope="col">IMPORTE</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody id="info">
+                    <tbody id="info" class="">
                     </tbody>
                 </table>
             </div>
@@ -209,13 +210,13 @@
                 </div>
                 <div class="col my-2 ml-5 mr-0 pr-0 ">
                     <div class="d-flex flex-row-reverse">
-                        <h4 class="border border-dark ml-2 p-1" id="total">$ 0.00</h4>
+                        <h4 class="border border-dark my-auto ml-2 p-2" id="total">$ 0.00</h4>
                         <!--form method="get" action="{url('/empleado')}}"-->
                         <!--{url('/departamento/'.$departamento->id.'/edit/')}}-->
-                        <button class="btn btn-primary  p-1" type="button" onclick="verificarVenta()"
+                        <button class="btn btn-primary p-1" type="button" onclick="verificarVenta()"
                             value="informacion" id="boton">
                             <img src="{{ asset('img\dinero.png') }}" alt="Editar" width="30px" height="30px">
-                            COBRAR
+                            <strong>COBRAR</strong>
                         </button>
                         <!--/form-->
                     </div>
@@ -892,6 +893,17 @@ function mostrarProductos() {
 
     for (let count1 in productosVenta) {
         let tipo = `NORMAL`;
+        /*let btnEliminar = `<button type="button" class="btn btn-secondary" onclick="quitarProducto(` + productosVenta[count1]
+            .id + `)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg></i></button>`;*/
+        let btnEliminar = `<i class="btn btn-outline-danger border-0 p-0" onclick="quitarProducto(` + productosVenta[count1]
+            .id + `)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg></i>`;
+        
         if (productosVenta[count1].tipo == 1)
             tipo = `SUBPRODUCTO`;
         if (productosVenta[count1].tipo == 2)
@@ -904,17 +916,12 @@ function mostrarProductos() {
             <td>` + tipo + `</td>
             <td>` + productosVenta[count1].existencia + `</td>
             <td>` + productosVenta[count1].precio + `</td>
-            <td><input  value=` + productosVenta[count1].cantidad + ` 
+            <td style="width:10rem"><input  value=` + productosVenta[count1].cantidad + ` 
                 onchange="cantidad(` + productosVenta[count1].id + `)"  
                 id="valor` + productosVenta[count1].id + `" min=1 max=` + productosVenta[count1].existencia +
             ` type="number"/></td>
             <td id="importe` + productosVenta[count1].id + `">` + productosVenta[count1].subtotal + `</td>
-            <td><button type="button" class="btn btn-secondary" onclick="quitarProducto(` + productosVenta[count1]
-            .id + `)"><i class="bi bi-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                </svg></i></button>
-            </td>
+            <td>${btnEliminar}</td>
         </tr>
         `;
     }
@@ -998,6 +1005,8 @@ function buscarProductoEnVenta(idProducto, tipo) {
 async function agregarPorCodigo() {
     try {
         const codigo = document.querySelector('#codigoBarras');
+        if(codigo.value.length == 0)
+            return;
         //location.href= location.href+'?codigo='+codigo.value;
         //for (let x in productosSucursal) {
         //  for (count3 in productos) {
@@ -2624,5 +2633,19 @@ function asignarEstado() {
 }
 asignarEstado();
 */
+// Get the input field
+var input = document.getElementById("codigoBarras");
+
+// Execute a function when the user releases a key on the keyboard
+input.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    agregarPorCodigo();
+    // Cancel the default action, if needed
+    //event.preventDefault();
+    // Trigger the button element with a click
+    //document.getElementById("myBtn").click();
+  }
+});
 </script>
 @endsection
