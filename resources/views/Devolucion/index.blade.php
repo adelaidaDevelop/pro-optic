@@ -1,17 +1,17 @@
 @extends('header2')
 @section('contenido')
 @section('subtitulo')
-DEVOLUCION
+VENTAS DEL DIA
 @endsection
 @section('opciones')
 
-<div class="col-7 ml-4"></div>
-<div class=" ml-3 my-auto">
+<!--div class="col-7 ml-4"></div-->
+<div class=" ml-auto my-auto">
     <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\anterior.png') }}" alt="Editar" width="33px" height="33px">
     </a>
 </div>
-<div class=" ml-3 my-auto">
+<div class="mr-auto ml-3 my-auto">
     <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
         <img src="{{ asset('img\casa.png') }}" alt="Editar" width="33px" height="33px">
     </a>
@@ -25,29 +25,18 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
 $devolver = $sE->hasAnyRole($userDevolucion);
 @endphp
 <div class="row p-1 ">
-    <!--CONSULTAR PRODUCTO -->
-    <!--
-    <div class="row col-12 ml-2 w-100">
-
-        <h4 class="text-primary ml-2 my-2">
-            <strong>
-                DEVOLUCION
-            </strong>
-        </h4>
-    </div>
-    -->
-    <div class="row border border-dark m-2 ml-4 mr-4 col ">
+    <div class="row border border-dark m-1 ml-4 mr-4 col ">
         <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-        <div class="col mt-1 mb-4 ml-4 mr-4">
-            <div class="row  px-0 col-8 input-group my-4">
+        <div class="col mt-1 mb-4 mx-2">
+            <div class="row px-0 col-8 input-group my-2">
                 <h4 class=" mx-0 px-0 my-auto"> FOLIO VENTA:</h4>
                 <input type="number" min=0 class="form-control col-4 my-auto ml-3" size="15" placeholder="INGRESAR FOLIO VENTA" id="busquedaFolio" name="busquedaFolio" onkeyup="buscarFolio()">
-                <a title="buscar" class="text-dark ml-2 mr-5 my-auto">
-                    <img src="{{ asset('img\search.svg') }}" class="img-thumbnail" alt="Regresar" width="40px" height="40px" /></a>
-                <div class="col-2 ml-5"> </div>
-                <button class=" btn btn-outline-info my-auto " onclick="modalVenta()" data-toggle="modal" data-target="#buscarVenta" type="button">
+                <!--a title="buscar" class="text-dark "-->
+                    <img src="{{ asset('img\search.svg') }}" class="img-fluid img-thumbnail ml-1 mr-5 my-auto p-2" alt="Regresar" width="40px" height="40px" /><!--/a-->
+                <!--div class="col-2 ml-5"> </div-->
+                <button class=" btn btn-outline-info ml-md-auto py-0 " onclick="modalVenta()" data-toggle="modal" data-target="#buscarVenta" type="button">
                     BUSCAR VENTA
-                    <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail" alt="Regresar" width="35px" height="35px" />
+                    <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail border-0" alt="Regresar" width="35px" height="35px" />
                 </button>
             </div>
             <div id="sinResult" class="row ">
@@ -55,9 +44,9 @@ $devolver = $sE->hasAnyRole($userDevolucion);
 
             <!-- TABLA -->
             <div class="row ">
-                <h4 class="text-primary  mx-0 px-0  mt-4"> PRODUCTOS DE LA VENTA </h4>
+                <h4 class="text-primary  mx-0 px-0 mb-0 mt-2"> PRODUCTOS DE LA VENTA </h4>
             </div>
-            <div class="row border" style="height:350px;overflow-y:auto;">
+            <div class="row border" style="height:328px;overflow-y:auto;">
                 <table class="table table-bordered border-primary  ">
 
                     <thead class="table-secondary text-primary">

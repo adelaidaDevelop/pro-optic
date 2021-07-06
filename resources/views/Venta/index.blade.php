@@ -16,15 +16,15 @@
         @endphp
         <!-- BOTON DEVOLUCION-->
         @if($sE->hasAnyRole($userDevolucion))
-        <div class="ml-4">
+        <div class="ml-4 p-1">
             <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/devolucion')}}">
-                <img src="{{ asset('img\devolucion.png') }}" alt="Editar" width="32px" height="32px">
-                <p class="h6 my-auto mx-2 text-dark"><small>DEVOLUCION</small></p>
+                <img src="{{ asset('img\devolucion.png') }}" alt="Editar" width="30px" height="30px">
+                <p class="h6 my-auto mx-2 text-dark"><small>VENTAS DEL DIA Y DEVOLUCIONES</small></p>
             </a>
         </div>
         @endif
         @if($sE->hasAnyRole($userCliente))
-        <div class=" ml-4">
+        <div class=" ml-4 p-1">
             <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/cliente')}}">
                 <img src="{{ asset('img\consumidor.png') }}" alt="Editar" width="30px" height="30px">
                 <p class="h6 my-auto mx-2 text-dark"><small>CLIENTES</small></p>
@@ -59,10 +59,14 @@
                 <!--div class="col-9 m-0 px-0"-->
                 <div class="input-group col-xl-6 my-2 mr-auto">
                     <div class="input-group-prepend">
-                        <label for="codigoBarras" class="h5 font-weight-bold my-auto py-auto " style="color:#3366FF">
+                        <label for="codigoBarras" class="h5 font-weight-bold my-auto py-auto d-none d-md-block" style="color:#3366FF">
                             <!--h5 class="my-auto border border-primary">CODIGO DEL PRODUCTO</h5-->
                             CODIGO DEL PRODUCTO
                         </label>
+                        <!--label for="codigoBarras" class="h4 font-weight-bold my-auto py-auto d-md-none" style="color:#3366FF">
+                            <--h5 class="my-auto border border-primary">CODIGO DEL PRODUCTO</h5>
+                            CODIGO DEL PRODUCTO
+                        </label-->
                     </div>
                     <!--div class="col"-->
                         <input type="text" class="form-control @error('codigoBarras') is-invalid @enderror my-auto mx-1"
