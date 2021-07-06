@@ -45,10 +45,8 @@ $verC = $sE->hasAnyRole($vC);
     </a>
 </div-->
 @endsection
-
-
 <div class="row p-1">
-    <div class="row border border-dark m-2 my-4 w-100">
+    <div class="row border border-dark m-2 my-2 w-100">
         <div class="col-4 border border-dark mt-4 mb-4 ml-4 mr-2">
             <div class="px-3 py-3 m-0">
                 <!--input type="text" id="buscador" class="form-control my-2">
