@@ -342,10 +342,6 @@
                             NUEVAS SOLICITUDES DEL ECOMMERCE
                         </h5>
                     </div>
-                    <!--
-                    <div class="row p-1" style="background:#BDC2C5">
-                    </div>
-                    -->
                 </div>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -374,29 +370,29 @@
                 <div class="row col-8 mx-0">
                     <div class="col-12  ">
                         <div class="row col-12 mx-auto border" style="background:#BDC2C5">
-                            <div class="row col-4 mx-0">
+                            <div class="col-4 mx-0">
                                 <p class="h5 text-center mx-auto my-0">Producto</p>
                             </div>
-                            <div class="row col-2 mx-0">
+                            <div class="col-2 mx-0">
                                 <p class="h5 text-center mx-auto my-0">Precio</p>
                             </div>
-                            <div class="row col-3 mx-0">
+                            <div class="col-3 mx-0">
                                 <p class="h5 text-center mx-auto my-0">Cantidad</p>
                             </div>
-                            <div class="row col-2 mx-0">
+                            <div class="col-2 mx-0">
                                 <p class="h5 text-center mx-auto my-0">Subtotal</p>
                             </div>
-                            <div class="row col-1 mx-0"></div>
+                            <div class="col-1 mx-0"></div>
                         </div>
-                        <div id="detallePedido" class="row col-12 mx-auto border-bottom"
+                        <div id="detallePedido" class="row col-12 mx-auto border"
                             style="height:300px;overflow-y:auto;">
                         </div>
                     </div>
-                    <div class="row col-12 boder text-center mt-3 mb-1 mx-auto">
+                    <div class="row col-12 text-center mt-3 mb-1 mx-auto">
                         <div class="row col-12 h5 p-0 text-center mx-auto" style="background:#BDC2C5">
                             <p class="text-center mx-auto">Resumen de compra</p>
                         </div>
-                        <div class="row col-12 px-4  h6">
+                        <div class="row col-12 mx-auto my-1 py-1 px-4 h6 border">
                             <p class="col-2"><strong>Subtotal:</strong>
                             <p id="subtotal"> </p>
                             </p>
@@ -407,7 +403,7 @@
                             <p id="totalH"></p>
                             </p>
                         </div>
-                        <div class="row col-12 px-3 h6 py-1 my-1">
+                        <div class="row col-12 mx-auto my-1 px-3 h6 py-1 border">
                             <p class="col-5"></p>
                             <p class="col-3"><strong>Pagar con:</strong>
                             <p id="pagarCon"></p>
@@ -422,11 +418,14 @@
                             <p class="text-center mx-auto">Datos de envio</p>
                         </div>
 
-                        <div class="row col-12 h6 ">
-                            <p class="col-9 "><strong>Cliente: <p id="cliente"></p></strong></p>
-                            <p class="col-3 text-center mx-auto"><strong>Telefono: <p id="telefono"></p></strong></p>
+                        <div class="row col-12 mx-auto h6 border border-danger ">
+                            <p class="col-9"><strong>Cliente:</strong>
+                            <p id="cliente"> </p>
+                            </p>
+                            <!--div class="row col-9 border"><strong class="border w-100">Cliente: <p id="cliente"></p></strong></div-->
+                            <div class="row col-3 text-center mx-auto border border-dark"><strong>Telefono: <p id="telefono"></p></strong></div>
                         </div>
-                        <div class="row col-12 text-center h6 px-3 mx-auto">
+                        <div class="row col-12 text-center h6 px-3 mx-auto border">
                             <p class="text-center mx-auto"> <strong> Direccion:</strong>
                             <p id="direccion"></p>
                             </p>
@@ -1590,7 +1589,7 @@ function modoPago(tipoPago) {
 
 }
 </script>
-<!--script src="{{ asset('js\mayusculas.js') }}"></script-->
+<!--script src="{ asset('js\mayusculas.js') }}"></script-->
 <script>
 let pedidosContraEntrega = @json($pedidosContraEntrega);
 let detallePedidos = @json($detallePedidos);
@@ -1610,13 +1609,13 @@ function obtenerPedidosEntrega(idPedido) {
 
         if (idPedido == 0 && parseInt(i) == 0) {
             cuerpo = cuerpo +
-                `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-outline-primary text-dark active"
+                `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-outline-primary text-white active"
             onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
         } else {
             if (pedidosContraEntrega[i].id == idPedido) {
                 contador = parseInt(i);
                 cuerpo = cuerpo +
-                    `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-outline-primary text-dark active"
+                    `<button id="btnPedidoEntrega${pedidosContraEntrega[i].id}"  class="btn btn-block btn-outline-primary text-white active"
                 onclick="verPedidoEntrega(${pedidosContraEntrega[i].id},${idCliente})">Pedido: ${parseInt(i)+1} - Cliente: ${cliente.nombre} - Folio: ${pedidosContraEntrega[i].id}</button>`;
 
             } else {
@@ -1662,7 +1661,7 @@ function verPedidoEntrega(id, idCliente) {
         incrementButton: `<strong>&plus;</strong>`, // ..
         groupClass: "my-auto", // css class of the resulting input-group
         buttonsClass: "btn-outline-secondary",
-        buttonsWidth: "1.5rem",
+        buttonsWidth: "2rem",
         textAlign: "center", // alignment of the entered number
         autoDelay: 500, // ms threshold before auto value change
         autoInterval: 50, // speed of auto value change
@@ -1687,7 +1686,7 @@ function verPedidoEntrega(id, idCliente) {
     for (let i in detallePedido) {
         let p = productos.find(p => p.id == detallePedido[i].idProducto);
         let btnQuitar =
-            `<div class="row col-1 mx-0">
+            `<div class="row col-1 mx-0 ">
             <button class="btn btn-outline-danger my-auto mx-auto mx-md-0 p-0 d-none d-md-block border-0" 
             onclick="quitarProductoPedido(${detallePedido[i].idPedido},${detallePedido[i].idProducto})">
                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-trash my-auto" viewBox="0 0 16 16">
@@ -1699,7 +1698,9 @@ function verPedidoEntrega(id, idCliente) {
         if (detallePedido.length == 1)
             btnQuitar = `<div class="row col-1 mx-0"></div>`;
         cuerpo = cuerpo +
-            `<div class="row col-4 mx-0">
+            `<div id="producto${detallePedido[i].idProducto}" class="row col-12 mx-0 my-1 px-0 border border-light" onmouseover="seleccionProducto(${detallePedido[i].idProducto},true)"
+            onmouseout="seleccionProducto(${detallePedido[i].idProducto},false)">
+            <div class="row col-4 mx-0 my-1 ">
                     <p class=" text-center mx-auto my-auto">${p.nombre}</p>
                 </div>
                 <div class="row col-2 mx-0">
@@ -1714,7 +1715,8 @@ function verPedidoEntrega(id, idCliente) {
                 <div class="row col-2 mx-0">
                     <p class=" text-center mx-auto my-auto">$ ${detallePedido[i].subtotal}</p>
                 </div>
-                ${btnQuitar}`;
+                ${btnQuitar}
+            </div>`;
     }
 
     document.getElementById("detallePedido").innerHTML = cuerpo;
@@ -1736,18 +1738,25 @@ function verPedidoEntrega(id, idCliente) {
     document.getElementById("pagarCon").innerHTML = infoPedido.pagarCon;
     document.getElementById("cambio").innerHTML = infoPedido.cambio;
 
-    /*
-        document.getElementById("informacionCliente").innerHTML =
-            `<p> Subtotal: $ ${infoPedido.subtotal} </p>
-        <p> Costo de envio: $ ${infoPedido.costoEnvio} </p>
-        <p> Total: $ ${infoPedido.total} </p>
-        <p> Pagará con: $ ${infoPedido.pagarCon} </p>
-        <p> Cambio: $ ${infoPedido.cambio} </p>
-        <p> Cliente: ${cliente.nombre} ${cliente.apellidoPaterno} ${cliente.apellidoMaterno}</p>
-    <p> Telefono: ${cliente.telefono} </p>
-    <p> Direccion de envio: ${direccion} </p>
-    `; */
-
+}
+function seleccionProducto(idProducto,bandera)
+{
+    //return alert('Seleccionado');
+    //console.log('bandera',bandera);
+    //console.log('idProducto',idProducto);
+    if(bandera)
+    {
+        
+        $(`#producto${idProducto}`).addClass("border-dark");
+        $(`#producto${idProducto}`).removeClass("border-light");
+    }
+    else
+    {
+        //console.log('entra en estacondicion');
+        $(`#producto${idProducto}`).addClass("border-light");
+        $(`#producto${idProducto}`).removeClass("border-dark");
+    }
+    
 }
 /*$('#btnAceptarPedido').bind('click', async function() {
     try {
@@ -1836,10 +1845,10 @@ $('#btnRechazarPedido').bind('click', async function() {
 });
 setInterval(async function() {
     try {
-        /*let activo = json(Auth::check());
+        let activo = @json(Auth::check());
         console.log('activo', activo);
         if(!activo)
-            return location.href = "{url('/puntoVenta/login')}}";*/
+            return location.href = "{{url('/puntoVenta/login')}}";
         let funcion = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
