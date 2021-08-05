@@ -31,10 +31,10 @@ use App\Models\Sucursal_producto;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/puntoVenta')->group(function () {
+    //Rutas para el acceso al sistema
     Route::get('/login', [LoginController::class, 'login'])->name('Login'); //->middleware('isEmpleado');
     Route::post('/login', [LoginController::class, 'loginPost'])->name('Login');
     Route::post('/logout', [LoginController::class, 'logout'])->name('Login');
-    //Route::get('/producto/stock', [ProductoController::class,'stock']);
 
     //Route::middleware('verified')->group(function () {
         Route::middleware('isEmpleado')->group(function () {
@@ -45,7 +45,6 @@ Route::prefix('/puntoVenta')->group(function () {
             Route::get('/datosProducto', [DevolucionController::class, 'datosProducto']);
             Route::get('/datosEmpleado', [DevolucionController::class, 'datosEmpleado']);
             Route::get('/departamento2', [DepartamentoController::class, 'index2']);
-            Route::post('/venta/productos', [VentaController::class, 'productos']);
 
             Route::get('emple', [EmpleadoController::class, 'index2']);
             //cargar vista imp corte caja
@@ -149,8 +148,6 @@ Route::prefix('/puntoVenta')->group(function () {
             Route::get('reporteVentas', [ReporteController::class, 'index3']);
             Route::get('reporteCompraVenta', [ReporteController::class, 'index4']);
             Route::get('act_inventario', [SucursalProductoController::class, 'act_inventario']);
-            //imprimir directo
-            Route::get('impDirecto', [VentaController::class, 'imprimirPrueba']);
 
             //RUTA IMPRIMIR CORTE CAJA
             Route::get('imp_corteCaja', [ReporteController::class, 'pdf']);
@@ -174,18 +171,8 @@ Route::prefix('/puntoVenta')->group(function () {
             Route::resource('empleado', EmpleadoController::class);
             //Route::get('/login', [LoginController::class,'login'])->name('Login');
             //->middleware('isEmpleado');
-            Route::resource('venta', VentaController::class);
+            
             Route::post('/compra/editar/{id}', [CompraController::class, 'estadoCompra']);
-
-            //Recuperar ventas ecommerce activos para seguimiento
-            Route::get('/seguimientoPedidosActivos', [VentaController::class, 'buscador2']);
-            Route::get('/ventaPedidos', [VentaController::class, 'buscador']);
-            //Darle funcionalidad a cadapedido
-            Route::get('/verSeguimiento/{id}', [VentaController::class, 'darSeguimiento']);
-            //Actualizar estado de los pedidos
-            Route::post('/actEstadoPed', [VentaController::class, 'act_est_paq']);
-
-
             Route::resource('compra', CompraController::class);
             Route::get('/proveedor/buscador', [ProveedorController::class, 'buscador']);
             Route::post('/proveedor/editar/{id}', [ProveedorController::class, 'editarProveedor']);
@@ -198,13 +185,26 @@ Route::prefix('/puntoVenta')->group(function () {
             Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
             Route::get('/ecommerce/administracion', [App\Http\Controllers\EcommerceController::class, 'administracion']);
             Route::post('/ecommerce/departamentos', [App\Http\Controllers\EcommerceController::class, 'actualizarDepartamentos']);
-            Route::post('/actualizarCantidadPedidoProducto', [App\Http\Controllers\VentaController::class, 'actualizarCantidadPedidoProducto']);
+            //Rutas para el modulo de ventas
+            Route::resource('venta', VentaController::class);
+            Route::post('/venta/productos', [VentaController::class, 'productos']);
             Route::post('/quitarProductoPedido', [App\Http\Controllers\VentaController::class, 'quitarProductoPedido']);
             Route::post('/aceptarPedido/{id}', [App\Http\Controllers\VentaController::class, 'aceptarPedido']);
             Route::post('/rechazarPedido/{id}', [App\Http\Controllers\VentaController::class, 'rechazarPedido']);
+            Route::post('/actualizarCantidadPedidoProducto', [App\Http\Controllers\VentaController::class, 'actualizarCantidadPedidoProducto']);
+            //Recuperar ventas ecommerce activos para seguimiento
+            Route::get('/seguimientoPedidosActivos', [VentaController::class, 'buscador2']);
+            Route::get('/ventaPedidos', [VentaController::class, 'buscador']);
+            //Darle funcionalidad a cadapedido
+            Route::get('/verSeguimiento/{id}', [VentaController::class, 'darSeguimiento']);
+            //Actualizar estado de los pedidos
+            Route::post('/actEstadoPed', [VentaController::class, 'act_est_paq']);
+            //imprimir directo
+            Route::get('impDirecto', [VentaController::class, 'imprimirPrueba']);
+            Route::post('/pedidosTiempoReal', [VentaController::class, 'pedidosTiempoReal']);
         });
     //});
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
             
-    Route::post('/pedidosTiempoReal', [App\Http\Controllers\VentaController::class, 'pedidosTiempoReal']);
+    
 });
