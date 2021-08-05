@@ -1,18 +1,16 @@
 @extends('header2')
 @section('contenido')
+@php
+use App\Models\Sucursal_empleado;
+$userCliente= ['verCliente','crearCliente','modificarCliente','eliminarCliente','admin'];
+$userDevolucion= ['verDevolucion','crearDevolucion','admin'];
+$sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
+@endphp
 <div class="row" style="background:#ED4D46">
-
     @section('subtitulo')
     VENTAS
     @endsection
     @section('opciones')
-    @php
-    use App\Models\Sucursal_empleado;
-    $userCliente= ['verCliente','crearCliente','modificarCliente','eliminarCliente','admin'];
-    $userDevolucion= ['verDevolucion','crearDevolucion','admin'];
-    $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
-
-    @endphp
     <!-- BOTON DEVOLUCION-->
     @if($sE->hasAnyRole($userDevolucion))
     <div class="ml-4 p-1">
@@ -50,9 +48,6 @@
 </div>
 <!--div class="row p-1 "-->
 <div class="row border border-dark my-1 mx-1">
-    @php
-    $var = 1;
-    @endphp
     <div class="col-12 py-0">
         <div class=" col-12 row mx-0 my-3 px-0">
             <!--div class="col-9 m-0 px-0"-->
