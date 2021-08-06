@@ -41,11 +41,10 @@
                         </h6>
                     </li>
                 </ul>
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto my-0 py-0">
+                <ul class="navbar-nav ml-auto m-1 py-0 border border-light rounded">
                     <!-- Authentication Links -->
                     @guest
-                    <li class="nav-item">
+                    <li class="nav-item border">
                         <a class="nav-link text-white" href="{{ url('puntoVenta/login') }}">{{ __('Login') }}</a>
                     </li>
                     <!--if (Roudte:d:has('register'))

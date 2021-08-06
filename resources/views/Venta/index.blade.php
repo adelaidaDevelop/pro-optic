@@ -51,15 +51,9 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
             <div class="input-group-prepend">
                 <label for="codigoBarras" class="h5 font-weight-bold my-auto py-auto d-none d-md-block"
                     style="color:#3366FF">
-                    <!--h5 class="my-auto border border-primary">CODIGO DEL PRODUCTO</h5-->
                     CODIGO DEL PRODUCTO
                 </label>
-                <!--label for="codigoBarras" class="h4 font-weight-bold my-auto py-auto d-md-none" style="color:#3366FF">
-                            <--h5 class="my-auto border border-primary">CODIGO DEL PRODUCTO</h5>
-                            CODIGO DEL PRODUCTO
-                        </label-->
             </div>
-            <!--div class="col"-->
             <input type="text" class="form-control @error('codigoBarras') is-invalid @enderror my-auto mx-1"
                 name="codigoBarras" id="codigoBarras" value="{{ old('codigoBarras') }}"
                 placeholder="INGRESAR CODIGO DE BARRAS" required autocomplete="codigoBarras">
@@ -619,19 +613,19 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
                         <div class="col">
                             <button class="btn mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/efectivo.png);width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;">
-                                <--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"->
+                                <--img src="{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"->
                             </button>
                             <h6 class="mx-auto">EFECTIVO</h6>
-                            <--img src="{{ asset('img\efectivo.png') }}" class="img-thumbnail" alt="Editar"
+                            <--img src="{ asset('img\efectivo.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px"->
                         </div>
                         <div class="col">
                             <button class="btn mx-auto" type="button" value="informacion" id="boton" style="background-image: url(img/credito.png);width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;">
-                                <--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"->
+                                <--img src="{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"->
                             </button>
                             <h6 class="mx-auto">CREDITO</h6>
-                            <--img src="{{ asset('img\efectivo.png') }}" class="img-thumbnail" alt="Editar"
+                            <--img src="{ asset('img\efectivo.png') }}" class="img-thumbnail" alt="Editar"
                                     width="25px" height="25px"->
                         </div>
                     </div>
@@ -640,7 +634,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
                     <ul class="nav nav-pills mb-3  d-flex justify-content-center" id="pills-tab" role="tablist">
                         <li class="nav-item mx-2" role="presentation">
                             <button onclick="modoPago('efectivo')" class="btn nav-link active mx-auto" type="button"
-                                value="informacion" id="boton" style="background-image: url(/img/efectivo.png);width:80px;height:80px;
+                                value="informacion" id="boton" style="background-image: url('{{asset('img/efectivo.png')}}');width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-home"
                                 role="tab" aria-controls="pills-home" aria-selected="true">
                                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
@@ -652,7 +646,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
                         </li>
                         <li class="nav-item mx-2" role="presentation">
                             <button onclick="modoPago('credito')" class="btn nav-link mx-auto" type="button"
-                                value="informacion" id="boton" style="background-image: url(/img/credito.png);width:80px;height:80px;
+                                value="informacion" id="boton" style="background-image: url('{{asset('img/credito.png')}}');width:80px;height:80px;
                             background-repeat:no-repeat;background-size:100%;" data-toggle="pill" href="#pills-profile"
                                 role="tab" aria-controls="pills-profile" aria-selected="true">
                                 <!--img src="{{ asset('img\efectivo.png') }}"  class="img-fluid img-thumbnail" alt="Editar"-->
