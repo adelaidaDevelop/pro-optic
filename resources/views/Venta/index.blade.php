@@ -28,7 +28,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
         </a>
     </div>
     @endif
-    <div class="col-0  ml-3 p-1 ">
+    <div class="ml-4 p-1 ">
         <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal"
             href=".listaSolicitudVentas" id="btnSolic_Ventas" onclick="obtenerPedidosEntrega(0)" value="">
             <img src="{{ asset('img\ventas.png') }}" alt="Editar" width="30px" height="30px">
@@ -36,8 +36,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
             <p class="h6 my-auto mx-2 text-dark"><small>VENTAS ECOMMERCE</small></p>
         </button>
     </div>
-
-    <div class="col-0  ml-3 p-1 ">
+    <div class="ml-4 p-1 ">
         <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal"
             href=".seguimientoPedidos" id="" onclick="return filtrar()" value="">
             <img src="{{ asset('img\camion.png') }}" alt="Editar" width="30px" height="30px">
@@ -46,65 +45,62 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
     </div>
     @endsection
 </div>
-<!--div class="row p-1 "-->
-<div class="row border border-dark my-1 mx-1">
-    <div class="col-12 py-0">
-        <div class=" col-12 row mx-0 my-3 px-0">
-            <!--div class="col-9 m-0 px-0"-->
-            <div class="input-group col-xl-6 my-2 mr-auto">
-                <div class="input-group-prepend">
-                    <label for="codigoBarras" class="h5 font-weight-bold my-auto py-auto d-none d-md-block"
-                        style="color:#3366FF">
-                        <!--h5 class="my-auto border border-primary">CODIGO DEL PRODUCTO</h5-->
-                        CODIGO DEL PRODUCTO
-                    </label>
-                    <!--label for="codigoBarras" class="h4 font-weight-bold my-auto py-auto d-md-none" style="color:#3366FF">
+<div class="row col-12 border border-dark my-2 mx-1">
+    <div class="col-12 row mx-0 my-3 px-0">
+        <div class="input-group col-xl-6 my-2 mr-auto">
+            <div class="input-group-prepend">
+                <label for="codigoBarras" class="h5 font-weight-bold my-auto py-auto d-none d-md-block"
+                    style="color:#3366FF">
+                    <!--h5 class="my-auto border border-primary">CODIGO DEL PRODUCTO</h5-->
+                    CODIGO DEL PRODUCTO
+                </label>
+                <!--label for="codigoBarras" class="h4 font-weight-bold my-auto py-auto d-md-none" style="color:#3366FF">
                             <--h5 class="my-auto border border-primary">CODIGO DEL PRODUCTO</h5>
                             CODIGO DEL PRODUCTO
                         </label-->
-                </div>
-                <!--div class="col"-->
-                <input type="text" class="form-control @error('codigoBarras') is-invalid @enderror my-auto mx-1"
-                    name="codigoBarras" id="codigoBarras" value="{{ old('codigoBarras') }}"
-                    placeholder="INGRESAR CODIGO DE BARRAS" required autocomplete="codigoBarras">
-                @error('codigoBarras')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-                <!--/div-->
-                <div class="input-group-append ">
-                    <button class="btn btn-outline-primary my-auto" type="button" onclick="agregarPorCodigo()"
-                        value="informacion" id="botonAgregar">
-                        <!--img src="{{ asset('img\agregarReg.png') }}" class="img-fluid" alt="Editar" width="25px" height="25px"-->
-                        AGREGAR
-                    </button>
-                </div>
             </div>
+            <!--div class="col"-->
+            <input type="text" class="form-control @error('codigoBarras') is-invalid @enderror my-auto mx-1"
+                name="codigoBarras" id="codigoBarras" value="{{ old('codigoBarras') }}"
+                placeholder="INGRESAR CODIGO DE BARRAS" required autocomplete="codigoBarras">
+            @error('codigoBarras')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+            <!--/div-->
+            <div class="input-group-append ">
+                <button class="btn btn-outline-primary my-auto" type="button" onclick="agregarPorCodigo()"
+                    value="informacion" id="botonAgregar">
+                    <!--img src="{{ asset('img\agregarReg.png') }}" class="img-fluid" alt="Editar" width="25px" height="25px"-->
+                    AGREGAR
+                </button>
+            </div>
+        </div>
 
-            <div class="my-auto mx-1 px-0">
-                <button class="btn btn-outline-primary px-1 " type="button" onclick="buscarProducto()"
-                    data-toggle="modal" data-target="#exampleModal" value="informacion" id="boton">
-                    <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
-                    BUSCAR PRODUCTO
-                </button>
-            </div>
-            <div class="my-auto mx-1 px-0">
-                <button class="btn btn-outline-primary  px-1" type="button" onclick=" buscarSubproducto()"
-                    data-toggle="modal" data-target="#exampleModal2" value="informacion" id="boton">
-                    <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
-                    BUSCAR SUBPRODUCTO
-                </button>
-            </div>
-            <div class="my-auto mx-1 px-0">
-                <button class="btn btn-outline-primary  px-1" type="button" onclick="buscarOferta()" data-toggle="modal"
-                    data-target="#ofertasModal" value="informacion" id="boton">
-                    <img src="{{ asset('img\oferta.png') }}" alt="Editar" width="25px" height="25px">
-                    OFERTAS
-                </button>
-            </div>
+        <div class="my-auto mx-1 px-0">
+            <button class="btn btn-outline-primary px-1 " type="button" onclick="buscarProducto()" data-toggle="modal"
+                data-target="#exampleModal" value="informacion" id="boton">
+                <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
+                BUSCAR PRODUCTO
+            </button>
+        </div>
+        <div class="my-auto mx-1 px-0">
+            <button class="btn btn-outline-primary  px-1" type="button" onclick=" buscarSubproducto()"
+                data-toggle="modal" data-target="#exampleModal2" value="informacion" id="boton">
+                <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
+                BUSCAR SUBPRODUCTO
+            </button>
+        </div>
+        <div class="my-auto mx-1 px-0">
+            <button class="btn btn-outline-primary  px-1" type="button" onclick="buscarOferta()" data-toggle="modal"
+                data-target="#ofertasModal" value="informacion" id="boton">
+                <img src="{{ asset('img\oferta.png') }}" alt="Editar" width="25px" height="25px">
+                OFERTAS
+            </button>
+        </div>
 
-            <!--div>
+        <!--div>
                     <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
                         onclick=" buscarSubproductos()" data-toggle="modal" data-target="#exampleModal2"
                         value="informacion" id="boton">
@@ -113,20 +109,20 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
                         BUSCAR SUBPRODUCTOS
                     </button>
                 </div-->
-            <!--/div-->
-            <!--div class="col-3 m-0 px-0"-->
+        <!--/div-->
+        <!--div class="col-3 m-0 px-0"-->
 
 
-            <!--/div-->
-        </div>
-        <!--PRUE IMP DIRECTO>
+        <!--/div-->
+    </div>
+    <!--PRUE IMP DIRECTO>
             <div class="">
                 <button class="btn btn-outline-primary p-1" type="button" onclick="impDirecto()" value="" id="botonImpDirecto">
                     <img src="{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
                     IMP DIRECTO
                 </button>
             </div-->
-        <!--div class="btn-toolbar" role="toolbar">
+    <!--div class="btn-toolbar" role="toolbar">
                 <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
                     onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion"
                     id="boton">
@@ -149,7 +145,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
                     OFERTAS
                 </button>
             </div-->
-        <!--
+    <!--
             <ul class="list-group list-group-horizontal pl-0 border-0">
                 <li class="list-group-item ml-0 pl-0 border-0">
                     <button class="btn btn-outline-primary  p-1 " type="button" onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion" id="boton">
@@ -171,28 +167,28 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
                 </li>
             </ul>
             -->
-        <div class="row m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
-            <table class="table" id="productos">
-                <thead class="thead-light">
-                    <tr class="text-center">
-                        <th scope="col">#</th>
-                        <th scope="col">CODIGO_BARRAS</th>
-                        <th scope="col">PRODUCTO</th>
-                        <th scope="col">TIPO</th>
-                        <th scope="col">EXISTENCIA</th>
-                        <th scope="col">PRECIO</th>
-                        <th scope="col">CANTIDAD</th>
-                        <th scope="col">IMPORTE</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody id="info" class="">
-                </tbody>
-            </table>
-        </div>
-        <div class="row m-0 px-0">
-            <div class="col my-2 ml-5 px-1">
-                <!--div class="row">
+    <div class="row col-12 m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
+        <table class="table" id="productos">
+            <thead class="thead-light">
+                <tr class="text-center">
+                    <th scope="col">#</th>
+                    <th scope="col">CODIGO_BARRAS</th>
+                    <th scope="col">PRODUCTO</th>
+                    <th scope="col">TIPO</th>
+                    <th scope="col">EXISTENCIA</th>
+                    <th scope="col">PRECIO</th>
+                    <th scope="col">CANTIDAD</th>
+                    <th scope="col">IMPORTE</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="info" class="">
+            </tbody>
+        </table>
+    </div>
+    <div class="row col-12 m-0 px-0">
+        <div class="col my-2 ml-5 px-1">
+            <!--div class="row">
                         <form method="get" action="{url('/empleado')}}">
                             <button class="btn btn-outline-primary  p-1" type="submit">
                                 <img src="{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
@@ -206,22 +202,22 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
                             </button>
                         </form>
                     </div-->
-            </div>
-            <div class="col my-2 ml-5 mr-0 pr-0 ">
-                <div class="d-flex flex-row-reverse">
-                    <h4 class="border border-dark my-auto ml-2 p-2" id="total">$ 0.00</h4>
-                    <!--form method="get" action="{url('/empleado')}}"-->
-                    <!--{url('/departamento/'.$departamento->id.'/edit/')}}-->
-                    <button class="btn btn-primary p-1" type="button" onclick="verificarVenta()" value="informacion"
-                        id="boton">
-                        <img src="{{ asset('img\dinero.png') }}" alt="Editar" width="30px" height="30px">
-                        <strong>COBRAR</strong>
-                    </button>
-                    <!--/form-->
-                </div>
+        </div>
+        <div class="col my-2 ml-5 mr-0 pr-0 ">
+            <div class="d-flex flex-row-reverse">
+                <h4 class="border border-dark my-auto ml-2 p-2" id="total">$ 0.00</h4>
+                <!--form method="get" action="{url('/empleado')}}"-->
+                <!--{url('/departamento/'.$departamento->id.'/edit/')}}-->
+                <button class="btn btn-primary p-1" type="button" onclick="verificarVenta()" value="informacion"
+                    id="boton">
+                    <img src="{{ asset('img\dinero.png') }}" alt="Editar" width="30px" height="30px">
+                    <strong>COBRAR</strong>
+                </button>
+                <!--/form-->
             </div>
         </div>
     </div>
+    <!--/div-->
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
