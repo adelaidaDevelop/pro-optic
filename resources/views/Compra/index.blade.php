@@ -49,9 +49,9 @@ $abonar = $sE->hasAnyRole($modificar);
 </div>
 -->
 
-    <a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
-        <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
-    </a>
+<a class="btn btn-outline-secondary my-auto p-1 border-0" href="{{url('/puntoVenta/venta')}}">
+    <img src="{{ asset('img\casa.png') }}" alt="Editar" width="35px" height="35px">
+</a>
 
 @endsection
 <!--div class="row p-1 "-->
@@ -189,7 +189,7 @@ $abonar = $sE->hasAnyRole($modificar);
                             <th>FECHA REGISTRO</th>
                             <th>ESTADO</th>
                             <th>COSTO TOTAL</th>
-                            <th>ACCIONES</th>
+                            <th> </th>
                         </tr>
                     </thead>
                     <tbody class="text-center" id="consultaBusqueda">
@@ -325,7 +325,7 @@ $abonar = $sE->hasAnyRole($modificar);
                     //console.log(compras);
                     console.log("Si me responde");
                     compras = await response.json();
-                    console.log('compras',compras);
+                    console.log('compras', compras);
                     //return productos;
                 } else {
                     console.log("No responde :'v");
@@ -377,7 +377,7 @@ $abonar = $sE->hasAnyRole($modificar);
     let comprasAuxiliar = []
 
     function mostrarCompras() {
-        console.log('compras',compras);
+        console.log('compras', compras);
         const busquedaCompra = document.querySelector('#busquedaCompra');
 
         comprasAuxiliar = []; //comprasActuales;
@@ -615,7 +615,13 @@ $abonar = $sE->hasAnyRole($modificar);
                 btnVerCredito = `<button class="btn btn-light" onclick="verDetalleCompra(` +
                 comprasAuxiliar[i].id +`)" data-toggle="modal" data-target="#detalleCompraModal"
                     type="button">VER CREDITO</button>`;*/
-            cuerpo = cuerpo + `
+            let texto =  ` <td class="font-weight-bold" >` + comprasAuxiliar[i].costoTotal + `</td> `;
+            if (comprasAuxiliar[i].estado == 'credito')
+            {
+                texto =  ` <td class="font-weight-bold text-danger" >` + comprasAuxiliar[i].costoTotal + `</td> `;
+            }
+            
+                cuerpo = cuerpo + `
             <tr>
                 <th scope="row">` + contador++ + `</th>
                 <td>` + comprasAuxiliar[i].id + `</td>
@@ -623,9 +629,10 @@ $abonar = $sE->hasAnyRole($modificar);
                 <td>` + comprasAuxiliar[i].fechaCompra.toLocaleDateString() + `</td>
                 <td>` + comprasAuxiliar[i].fechaRegistro.toLocaleDateString() + ` ` +
                 comprasAuxiliar[i].fechaRegistro.toLocaleTimeString() + `</td>
-                <td>` + comprasAuxiliar[i].estado + `</td>
-                <td>` + comprasAuxiliar[i].costoTotal + `</td>
-                <td><button class="btn btn-light" onclick="verDetalleCompra(` +
+                <td>` + comprasAuxiliar[i].estado + `</td>` +
+                texto +
+              // <td class="font-weight-bold" >` + comprasAuxiliar[i].costoTotal + `</td>
+              `<td><button class="btn btn-light" onclick="verDetalleCompra(` +
                 comprasAuxiliar[i].id + `,'` + comprasAuxiliar[i].estado + `'` + `,${comprasAuxiliar[i].iva})" data-toggle="modal" data-target="#detalleCompraModal"
                 type="button"><img src="{{ asset('img/vermas2.png') }}" alt="verMas" width="30px" height="30px"></button>` + btnVerCredito + `</td>
             </tr>
@@ -637,7 +644,7 @@ $abonar = $sE->hasAnyRole($modificar);
         //console.log(opcionProveedor.value);
     }
 
-    function verDetalleCompra(id, estado,iva) {
+    function verDetalleCompra(id, estado, iva) {
         //return console.log('comprasAux',comprasAuxiliar);
         //return console.log('iva',iva);
         let cuerpo = "";
@@ -660,7 +667,7 @@ $abonar = $sE->hasAnyRole($modificar);
                     }
                 }
                 let ganancia = compra_producto[c].porcentaje_ganancia;
-                if(iva!= null)
+                if (iva != null)
                     ganancia = ganancia + iva;
                 let precio = parseFloat(compra_producto[c].costo_unitario) *
                     parseFloat(ganancia);
@@ -822,14 +829,16 @@ $abonar = $sE->hasAnyRole($modificar);
                 // metodo: puede ser POST, GET, etc
                 method: "POST",
                 // la URL de donde voy a hacer la petición
-                url: `{{url('/puntoVenta/pagoCompra/')}}`,//'/puntoVenta/sucursalProducto/editar/productos',
+                url: `{{url('/puntoVenta/pagoCompra/')}}`, //'/puntoVenta/sucursalProducto/editar/productos',
                 // los datos que voy a enviar para la relación
-                data: {'id':id,
-                    'pago':pago,
-                    '_token':"{{ csrf_token() }}"}
-                    //datos,//{
+                data: {
+                    'id': id,
+                    'pago': pago,
+                    '_token': "{{ csrf_token() }}"
+                }
+                //datos,//{
                 //    datos: JSON.stringify(productos1),
-                    //_token: $("meta[name='csrf-token']").attr("content")
+                //_token: $("meta[name='csrf-token']").attr("content")
                 //    _token: "{{ csrf_token() }}",
                 //}
             });
@@ -858,9 +867,11 @@ $abonar = $sE->hasAnyRole($modificar);
                     // metodo: puede ser POST, GET, etc
                     method: "POST",
                     // la URL de donde voy a hacer la petición
-                    url: `{{url('/puntoVenta/compra/editar/${id}')}}`,//'/puntoVenta/sucursalProducto/editar/productos',
+                    url: `{{url('/puntoVenta/compra/editar/${id}')}}`, //'/puntoVenta/sucursalProducto/editar/productos',
                     // los datos que voy a enviar para la relación
-                    data: {'_token':"{{ csrf_token() }}"}//datosCompra,//{
+                    data: {
+                        '_token': "{{ csrf_token() }}"
+                    } //datosCompra,//{
                     //    datos: JSON.stringify(productos1),
                     //_token: $("meta[name='csrf-token']").attr("content")
                     //    _token: "{{ csrf_token() }}",
@@ -869,12 +880,12 @@ $abonar = $sE->hasAnyRole($modificar);
                 console.log(resp2);
                 //let respuestaCompra = await fetch(`/puntoVenta/compra/${id}`, initUpdate);
                 //if (respuestaCompra.ok) {
-                    //let rC = await respuestaCompra.json();
-                    //console.log(rC);
-                    alert('TU DEUDA ESTA SALDADA');
-                    compras = [];
-                    await cargarComprasPagina();
-                    console.log(compras);
+                //let rC = await respuestaCompra.json();
+                //console.log(rC);
+                alert('TU DEUDA ESTA SALDADA');
+                compras = [];
+                await cargarComprasPagina();
+                console.log(compras);
                 //}
             }
 
