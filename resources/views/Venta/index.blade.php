@@ -93,21 +93,6 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
                 OFERTAS
             </button>
         </div>
-
-        <!--div>
-                    <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
-                        onclick=" buscarSubproductos()" data-toggle="modal" data-target="#exampleModal2"
-                        value="informacion" id="boton">
-                        <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                            height="25px">
-                        BUSCAR SUBPRODUCTOS
-                    </button>
-                </div-->
-        <!--/div-->
-        <!--div class="col-3 m-0 px-0"-->
-
-
-        <!--/div-->
     </div>
     <!--PRUE IMP DIRECTO>
             <div class="">
@@ -116,88 +101,74 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
                     IMP DIRECTO
                 </button>
             </div-->
-    <!--div class="btn-toolbar" role="toolbar">
-                <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
-                    onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion"
-                    id="boton">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    BUSCAR PRODUCTO
-                </button>
-                <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
-                    onclick=" buscarSubproductos()" data-toggle="modal" data-target="#exampleModal2" value="informacion"
-                    id="boton">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    BUSCAR SUBPRODUCTOS
-                </button>
-                <button class="btn btn-primary form-control" type="button" style="background-color:#3366FF"
-                    onclick=" buscarSubproductos()" data-toggle="modal" data-target="#exampleModal2" value="informacion"
-                    id="boton">
-                    <img src="{{ asset('img\agregar.png') }}" class="img-thumbnail" alt="Editar" width="25px"
-                        height="25px">
-                    OFERTAS
-                </button>
-            </div-->
-    <!--
-            <ul class="list-group list-group-horizontal pl-0 border-0">
-                <li class="list-group-item ml-0 pl-0 border-0">
-                    <button class="btn btn-outline-primary  p-1 " type="button" onclick="buscarProducto()" data-toggle="modal" data-target="#exampleModal" value="informacion" id="boton">
-                        <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="30px" height="30px">
-                        BUSCAR PRODUCTO
-                    </button>
-                </li>
-                <li class="list-group-item border-0">
-                    <button class="btn btn-outline-primary  p-1" type="button" onclick=" buscarSubproducto()" data-toggle="modal" data-target="#exampleModal2" value="informacion" id="boton">
-                        <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="30px" height="30px">
-                        BUSCAR SUBPRODUCTOS
-                    </button>
-                </li>
-                <li class="list-group-item border-0">
-                    <button class="btn btn-outline-primary  p-1" type="button" onclick="buscarOferta()" data-toggle="modal" data-target="#ofertasModal" value="informacion" id="boton">
-                        <img src="{{ asset('img\oferta.png') }}" alt="Editar" width="25px" height="25px">
-                        OFERTAS
-                    </button>
-                </li>
-            </ul>
-            -->
-    <div class="row col-12 m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
-        <table class="table" id="productos">
-            <thead class="thead-light">
-                <tr class="text-center">
-                    <th scope="col">#</th>
-                    <th scope="col">CODIGO_BARRAS</th>
-                    <th scope="col">PRODUCTO</th>
-                    <th scope="col">TIPO</th>
-                    <th scope="col">EXISTENCIA</th>
-                    <th scope="col">PRECIO</th>
-                    <th scope="col">CANTIDAD</th>
-                    <th scope="col">IMPORTE</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody id="info" class="">
-            </tbody>
-        </table>
+    <div class="row col-12 m-0 px-0">
+        <ul class="nav nav-tabs" id="MisTickets" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="ticket0" value=0 data-toggle="tab" href="#tablaProductos" role="tab"
+                    aria-controls="home" aria-selected="true">Ticket</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content col-12 px-0 " id="myTabContent">
+        <div class="tab-pane fade show active" id="tablaProductos" role="tabpanel" aria-labelledby="home-tab">
+            <div class="row col-12 m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
+                <table class="table" id="productos">
+                    <thead class="thead-light">
+                        <tr class="text-center">
+                            <th scope="col">#</th>
+                            <th scope="col">CODIGO_BARRAS</th>
+                            <th scope="col">PRODUCTO</th>
+                            <th scope="col">TIPO</th>
+                            <th scope="col">EXISTENCIA</th>
+                            <th scope="col">PRECIO</th>
+                            <th scope="col">CANTIDAD</th>
+                            <th scope="col">IMPORTE</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="info" class="">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="row col-12 m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
+                <table class="table" id="productos">
+                    <thead class="thead-light">
+                        <tr class="text-center">
+                            <th scope="col">#</th>
+                            <th scope="col">CODIGO_BARRAS</th>
+                            <th scope="col">PRODUCTO</th>
+                            <th scope="col">TIPO</th>
+                            <th scope="col">EXISTENCIA</th>
+                            <th scope="col">PRECIO</th>
+                            <th scope="col">CANTIDAD</th>
+                            <th scope="col">IMPORTE</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="info" class="">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
     </div>
     <div class="row col-12 m-0 px-0">
-        <div class="col my-2 ml-5 px-1">
-            <!--div class="row">
-                        <form method="get" action="{url('/empleado')}}">
-                            <button class="btn btn-outline-primary  p-1" type="submit">
-                                <img src="{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
-                                AGREGAR TICKET
-                            </button>
-                        </form>
-                        <form method="get" action="{url('/empleado')}}">
-                            <button class="btn btn-outline-primary  p-1 ml-5" type="submit">
-                                <img src="{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
-                                ELIMINAR TICKET
-                            </button>
-                        </form>
-                    </div-->
+        <div class="col my-2 ml-0 pr-0 border">
+            <div class="row">
+
+                <button class="btn btn-outline-primary  p-1" id="btnAgregarTicket" type="button">
+                    <img src="{{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                    AGREGAR TICKET
+                </button>
+                <button class="btn btn-outline-primary  p-1 ml-5" type="button">
+                    <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                    ELIMINAR TICKET
+                </button>
+            </div>
         </div>
-        <div class="col my-2 ml-5 mr-0 pr-0 ">
+        <div class="col my-2 ml-5 mr-0 pr-0 border">
             <div class="d-flex flex-row-reverse">
                 <h4 class="border border-dark my-auto ml-2 p-2" id="total">$ 0.00</h4>
                 <!--form method="get" action="{url('/empleado')}}"-->
@@ -746,6 +717,10 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
 let seguimientoPedidoActivo = "";
 let productosVenta = [];
 let idVentaGlobal = 0;
+let tickets = [{id:0,productos:[]}];
+
+let contadorTicket = 0;
+let ticketPos = 0;
 //let subproductosVenta = [];
 //let productos = json($datosP);
 let productosSucursal = []; //json($productosSucursal);
@@ -1637,7 +1612,6 @@ function verPedidoEntrega(id, idCliente) {
 
     let cuerpo = "";
     let detallePedido = detallePedidos.filter(p => p.idPedido == id);
-    //let productos = productosCompra.filter(p => p.id == id);
     console.log('detallePedido', detallePedido);
     var props = {
         decrementButton: "<strong>&minus;</strong>", // button text
@@ -2577,55 +2551,6 @@ async function getPedidos() {
     }
 };
 
-/*
-function asignarEstado() {
-    let estado = ventaCliente.estado;
-    for (let i = 1; i <= 4; i++) {
-        $(`#paso${i}`).addClass('btn-secondary');
-        $(`#paso${i}`).removeClass('btn-success');
-        $(`#paso${i}`).removeClass('btn-danger');
-        $(`#paso${i}`).removeClass('btn-warning');
-        $(`#paso${i}`).removeClass('btn-outline-secondary'); //ade
-        $(`#rama${i}`).removeClass('text-success');
-    }
-    //return;
-    console.log('Si entra');
-    for (let i = 1; i <= 3; i++) {
-        let btnEstado = document.getElementById(`paso${i}`).value;
-        $(`#paso${i}`).addClass('btn-success');
-        $(`#rama${i}`).addClass('text-success');
-        console.log('btnEstado', btnEstado);
-        console.log('Estado', estado);
-        if(i==1){
-             document.getElementById("estadoDesc").innerHTML =
-             `<p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> Pedido aceptado </strong> </small></p>`;
-        }
-
-        if (btnEstado == estado)
-            return;
-    }
-    if (estado == 'ENTREGADO') {
-        $(`#paso4`).addClass('btn-success');
-        document.getElementById("estadoDesc").innerHTML =
-             `<p class="col-auto  mx-auto text-dark h5 mt-2 alert-success"><small><strong> El pedido a sido entregado </strong> </small></p>`;
-        return;
-    }
-    if (estado == 'CANCELADO') {
-        document.getElementById("estadoDesc").innerHTML =
-             `<p class="col-auto  mx-auto text-danger h5 mt-2 "><small><strong> El pedido a sido cancelado. </strong> </small></p>`;
-        $(`#paso4`).addClass('btn-danger');
-        return;
-    }
-    if (estado == 'SINLOCALIZAR') {
-        document.getElementById("estadoDesc").innerHTML =
-             `<p class="col-auto  mx-auto text-dark h5 mt-2 bg-warning"><small><strong> El pedido no pudo ser entregado. Usted puede solicitar un último intento o pasar a sucursal a recogerlo en un máximo de 24 hrs.</strong> </small></p>`;
-        $(`#paso4`).addClass('btn-warning');
-        return;
-    }
-    return -1;
-}
-asignarEstado();
-*/
 // Get the input field
 var input = document.getElementById("codigoBarras");
 
@@ -2640,5 +2565,50 @@ input.addEventListener("keyup", function(event) {
         //document.getElementById("myBtn").click();
     }
 });
+
+$('#btnAgregarTicket').bind('click', function() {
+    //MisTickets
+    contadorTicket++;
+    ticketPos = contadorTicket;
+    const ticket = document.createElement("li");
+    ticket.className = "nav-item";
+    ticket.role = "presentation";
+    ticket.innerHTML = `<a class="nav-link" id="ticket${contadorTicket}"value=${contadorTicket} data-toggle="tab" href="#tablaProductos" role="tab"
+                    aria-controls="profile" aria-selected="false">Ticket${contadorTicket}</a>`;
+    document.getElementById('MisTickets').appendChild(ticket);
+    let ticketProductos = {
+        id: ticketPos,
+        productos: productosVenta
+    };
+    tickets.push(ticketProductos); // [ticketPos] =productosVenta;
+    
+    $(`#ticket${contadorTicket}`).on('click', function(event) {
+        //event.preventDefault();
+        //return alert('cambio de ticket');
+        console.log('Se seleccionó el ticket',$(`#ticket1`).val());
+        console.log('ticket',tickets.find(p => p.id == ticketPos));
+        //tickets.find(p => p.id == ticketPos).productos = productosVenta;
+        //productosVenta = tickets.find(p => p.id == contadorTicket).productos;
+        $(this).tab('show');
+        ticketPos = contadorTicket;
+        mostrarProductos();
+        
+    })
+    productosVenta = [];
+    
+    $(`#ticket${ticketPos}`).tab('show');
+    mostrarProductos();
+});
+$('#ticket0').on('click', function(event) {
+    //event.preventDefault();
+    //return alert('cambio de ticket');
+    console.log('ticket',tickets);
+    //console.log('ticket',tickets.find(p => p.id == ticketPos));
+    //tickets.find(p => p.id == ticketPos).productos = productosVenta;
+    //productosVenta = tickets.find(p => p.id == 0).productos;
+    ticketPos = 0;
+    $(this).tab('show');
+    mostrarProductos();
+})
 </script>
 @endsection
