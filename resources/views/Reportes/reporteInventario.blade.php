@@ -107,7 +107,7 @@ INVENTARIO
                 <option value="2">EN OFERTA</option>
             </select>
             -->
-            <h6 class=" my-auto mr-1">CAJERO:</h6>
+            <h6 class=" my-auto mr-1">VENDEDOR:</h6>
             <select class="form-control col-2 ml-3 mr-3 my-0" name="idCajero" id="idCajero" onchange="" required>
                 <option value="0">TODOS</option>
                 @foreach($sucursalEmpleados as $cajero)
@@ -184,7 +184,7 @@ INVENTARIO
             <input type="date" min="" onchange="" id="fechaPFinal" class="form-control my-0 col-2 mr-2" disabled />
             <button class="btn btn-outline-secondary  p-1 mx-3 text-dark" onclick="generaReportes()">
                 <img src="{{ asset('img\reporte.png') }}" alt="Editar" width="30px" height="30px">
-                GENERAR</button>
+                CONSULTAR</button>
             <button id="getUser" name="getUser" onclick="recuperar2()" class="btn btn-outline-secondary  p-1 text-dark">
                 <img src="{{ asset('img\impresora.png') }}" alt="Editar" width="30px" height="30px" disabled>
                 DESCARGAR </button>
@@ -875,7 +875,7 @@ INVENTARIO
                     cuerpo = entradaNuevosProductos + entradaCompraProduct;
 
                     if (cuerpo === "") {
-                        let sin = `<h4 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON REGISTROS </h4>`;
+                        let sin = `<h4 class= "text-dark text-center mx-auto mt-4"> NO SE ENCONTRARON RESULTADOS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         // document.getElementById("btnCrearPdf").disabled = true;
                     } else {
@@ -892,7 +892,7 @@ INVENTARIO
                     cuerpo = salidaVP;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
+                        let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON RESULTADOS</h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
                     } else {
                         $('#getUser').prop('disabled', false);
@@ -907,7 +907,7 @@ INVENTARIO
                     cuerpo = devolucionFila;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
+                        let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON RESULTADOS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         //  document.getElementById("btnCrearPdf").disabled = true;
                     } else {
@@ -937,7 +937,7 @@ INVENTARIO
                     cuerpo = entradaNuevosProductos + entradaCompraProduct + salidaVP + devolucionFila;
                     if (cuerpo === "") {
                         // tabla2 = document.querySelector('#tablaR');
-                        let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON REGISTROS </h4>`;
+                        let sin = ` <h4 class= "text-dark my-auto text-center mx-auto "> NO SE ENCONTRARON RESULTADOS </h4>`;
                         document.getElementById("tablaR").innerHTML = sin;
                         //  document.getElementById("btnCrearPdf").disabled = true;
                     } else {

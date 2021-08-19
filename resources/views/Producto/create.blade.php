@@ -67,7 +67,7 @@ PRODUCTOS
             @if(isset($producto))
             @foreach($sucursalProd as $sucursalProd)
             @if($sucursalProd->idProducto === $producto->id)
-            <input type="number" name="minimoStock" min="1" id="minimoStock" class="form-control mb-2 mt-2" placeholder="Nombre productos" value="{{$sucursalProd->minimoStock}}" autofocus required>
+            <input type="number" name="minimoStock" min="1" id="minimoStock" class="form-control mb-2 mt-2" placeholder="Nombre productos" value="{{$sucursalProd->minimoStock}}" onkeypress=`return validarEnteroPosi(event);` autofocus required>
             @endif
             @endforeach
             @else
@@ -104,17 +104,18 @@ PRODUCTOS
                 @endif
                 @endforeach
             </select>
-            <input type="number" name="existencia" id="existencia" class=" form-control mb-2 " placeholder="INGRESAR EXISTENCIA" value="{{ old('existencia')}}" autofocus required>
-            <input type="number" name="costo" id="costo" class=" form-control mb-2 " placeholder="INGRESAR COSTO" value="{{ old('costo')}}" autofocus required>
-            <input type="number" name="precio" id="precio" class=" form-control mb-4 " placeholder="INGRESAR PRECIO" value="{{old('precio')}}" autofocus required>
+            <input type="number" name="existencia" id="existencia" min="0" class=" form-control mb-2 " placeholder="INGRESAR EXISTENCIA" value="{{ old('existencia')}}" onkeypress="return validarEnteroPosi(event);"  autofocus required>
+            <input type="number" name="costo" min="0"  step="0.01" id="costo" class=" form-control mb-2 "  data-decimals="2" placeholder="INGRESAR COSTO" value="{{ old('costo')}}"  autofocus required>
+            <input type="number" name="precio" min="0"  step="0.01" id="precio" class=" form-control mb-4 " data-decimals="2" placeholder="INGRESAR PRECIO" value="{{old('precio')}}"  autofocus required>
+            
             <!--
             <button class="btn btn-outline-secondary my-0 mb-1" onclick="return confirm('¿AGREGAR NUEVO PRODUCTO?')" type="submit" value="  AGREGAR">
                 <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px"> GUARDAR PRODUCTO
             </button>
             -->
-            
+
         </div>
-        
+
         <div class="col-3 text-center mt-3">
             <label for="imagen">
                 <h5> <strong>{{'FOTO'}}</strong></h5>
@@ -241,38 +242,26 @@ PRODUCTOS
 
     function onKeyDown(event) {
         const key = event.key; // "A", "1", "Enter", "ArrowRight"...
-
         console.log("Presionada: " + key);
     };
 
-    //$('.minimoStock').on('input', function() {
-    //     this.value = this.value.replace(/[^0-9,.]/g, '').replace(/,/g, 'x');
-    // });
+    function validarPositivos(e) {
+        if (!((e.keyCode > 95 && e.keyCode < 106) ||
+                (e.keyCode > 47 && e.keyCode < 58) ||
+                e.keyCode == 8 || e.keyCode == 46)) {
+            return false;
+        } 
+        return true;
+    }
 
-    $("input[name='minimoStock']").bind('keypress', function(tecla) {
-        if (this.value.length >= 13) return false;
-        let code = tecla.charCode;
-        if (code == 8) { // backspace.
-            return true;
-        } else if (code >= 48 && code <= 57) { // is a number.
-            return true;
-        } else { // other keys.
+    function validarEnteroPosi(e) {
+        if (!((e.keyCode > 95 && e.keyCode < 106) ||
+                (e.keyCode > 47 && e.keyCode < 58) ||
+                e.keyCode == 8)) {
             return false;
         }
-    });
-
-    $("input[name='existencia']").bind('keypress', function(tecla) {
-        if (this.value.length >= 13) return false;
-        let code = tecla.charCode;
-        if (code == 8) { // backspace.
-            return true;
-        } else if (code >= 48 && code <= 57) { // is a number.
-            return true;
-        } else { // other keys.
-            return false;
-        }
-    });
-
+    }
+   
     ///
     // var frase = "Son tres mil trescientos treinta y tres con nueve";
     // frase3 = frase.replace(/[aiou]/gi, 'e');
