@@ -104,7 +104,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
     <div class="row col-12 m-0 px-0">
         <ul class="nav nav-tabs" id="MisTickets" role="tablist">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="ticket0" value=0 data-toggle="tab" href="#tablaProductos" role="tab"
+                <a class="nav-link active" id="ticket0" onclick="verTicket(0)" data-toggle="tab" href="#tablaProductos" role="tab"
                     aria-controls="home" aria-selected="true">Ticket</a>
             </li>
         </ul>
@@ -159,11 +159,11 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
             <div class="row">
 
                 <button class="btn btn-outline-primary  p-1" id="btnAgregarTicket" type="button">
-                    <img src="{{ asset('img\agregarReg.png') }}" alt="Editar" width="25px" height="25px">
+                    <img src="{{ asset('img\agregarReg.png') }}" alt="Agregar Ticket" width="25px" height="25px">
                     AGREGAR TICKET
                 </button>
                 <button class="btn btn-outline-primary  p-1 ml-5" type="button">
-                    <img src="{{ asset('img\eliReg.png') }}" alt="Editar" width="25px" height="25px">
+                    <img src="{{ asset('img\eliReg.png') }}" alt="Eliminar Ticket" width="25px" height="25px">
                     ELIMINAR TICKET
                 </button>
             </div>
@@ -2568,23 +2568,27 @@ input.addEventListener("keyup", function(event) {
 
 $('#btnAgregarTicket').bind('click', function() {
     //MisTickets
+    tickets.find(p => p.id == ticketPos).productos = productosVenta;
     contadorTicket++;
     ticketPos = contadorTicket;
     const ticket = document.createElement("li");
     ticket.className = "nav-item";
     ticket.role = "presentation";
-    ticket.innerHTML = `<a class="nav-link" id="ticket${contadorTicket}"value=${contadorTicket} data-toggle="tab" href="#tablaProductos" role="tab"
+    ticket.innerHTML = `<a class="nav-link" id="ticket${contadorTicket}" onclick="verTicket(${contadorTicket})" data-toggle="tab" href="#tablaProductos" role="tab"
                     aria-controls="profile" aria-selected="false">Ticket${contadorTicket}</a>`;
     document.getElementById('MisTickets').appendChild(ticket);
+    
     let ticketProductos = {
         id: ticketPos,
-        productos: productosVenta
+        productos: []
     };
     tickets.push(ticketProductos); // [ticketPos] =productosVenta;
-    
+    /*
     $(`#ticket${contadorTicket}`).on('click', function(event) {
         //event.preventDefault();
         //return alert('cambio de ticket');
+        console.log('Valor del ticket:',this.value);
+        return;
         console.log('Se seleccionó el ticket',$(`#ticket1`).val());
         console.log('ticket',tickets.find(p => p.id == ticketPos));
         //tickets.find(p => p.id == ticketPos).productos = productosVenta;
@@ -2594,15 +2598,18 @@ $('#btnAgregarTicket').bind('click', function() {
         mostrarProductos();
         
     })
+    */
     productosVenta = [];
     
     $(`#ticket${ticketPos}`).tab('show');
     mostrarProductos();
 });
+/*
 $('#ticket0').on('click', function(event) {
     //event.preventDefault();
     //return alert('cambio de ticket');
-    console.log('ticket',tickets);
+    console.log('valor del ticket',this.value);
+    return;
     //console.log('ticket',tickets.find(p => p.id == ticketPos));
     //tickets.find(p => p.id == ticketPos).productos = productosVenta;
     //productosVenta = tickets.find(p => p.id == 0).productos;
@@ -2610,5 +2617,14 @@ $('#ticket0').on('click', function(event) {
     $(this).tab('show');
     mostrarProductos();
 })
+*/
+function verTicket(idTicket)
+{
+    tickets.find(p => p.id == ticketPos).productos = productosVenta;
+    productosVenta = tickets.find(p => p.id == idTicket).productos;
+    ticketPos = idTicket;
+    mostrarProductos();
+    //return console.log('El ticket:',idTicket);
+}
 </script>
 @endsection
