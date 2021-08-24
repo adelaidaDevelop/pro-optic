@@ -104,8 +104,8 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
     <div class="row col-12 m-0 px-0">
         <ul class="nav nav-tabs" id="MisTickets" role="tablist">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="ticket0" onclick="verTicket(0)" data-toggle="tab" href="#tablaProductos" role="tab"
-                    aria-controls="home" aria-selected="true">Ticket</a>
+                <a class="nav-link active" id="ticket0" onclick="verTicket(0)" data-toggle="tab" href="#tablaProductos"
+                    role="tab" aria-controls="home" aria-selected="true">Ticket</a>
             </li>
         </ul>
     </div>
@@ -162,7 +162,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
                     <img src="{{ asset('img\agregarReg.png') }}" alt="Agregar Ticket" width="25px" height="25px">
                     AGREGAR TICKET
                 </button>
-                <button class="btn btn-outline-primary  p-1 ml-5" type="button">
+                <button class="btn btn-outline-primary  p-1 ml-5" id="btnEliminarTicket" type="button">
                     <img src="{{ asset('img\eliReg.png') }}" alt="Eliminar Ticket" width="25px" height="25px">
                     ELIMINAR TICKET
                 </button>
@@ -717,7 +717,10 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
 let seguimientoPedidoActivo = "";
 let productosVenta = [];
 let idVentaGlobal = 0;
-let tickets = [{id:0,productos:[]}];
+let tickets = [{
+    id: 0,
+    productos: []
+}];
 
 let contadorTicket = 0;
 let ticketPos = 0;
@@ -2577,49 +2580,48 @@ $('#btnAgregarTicket').bind('click', function() {
     ticket.innerHTML = `<a class="nav-link" id="ticket${contadorTicket}" onclick="verTicket(${contadorTicket})" data-toggle="tab" href="#tablaProductos" role="tab"
                     aria-controls="profile" aria-selected="false">Ticket${contadorTicket}</a>`;
     document.getElementById('MisTickets').appendChild(ticket);
-    
+
     let ticketProductos = {
         id: ticketPos,
         productos: []
     };
     tickets.push(ticketProductos); // [ticketPos] =productosVenta;
-    /*
-    $(`#ticket${contadorTicket}`).on('click', function(event) {
-        //event.preventDefault();
-        //return alert('cambio de ticket');
-        console.log('Valor del ticket:',this.value);
-        return;
-        console.log('Se seleccionó el ticket',$(`#ticket1`).val());
-        console.log('ticket',tickets.find(p => p.id == ticketPos));
-        //tickets.find(p => p.id == ticketPos).productos = productosVenta;
-        //productosVenta = tickets.find(p => p.id == contadorTicket).productos;
-        $(this).tab('show');
-        ticketPos = contadorTicket;
-        mostrarProductos();
-        
-    })
-    */
     productosVenta = [];
-    
+
     $(`#ticket${ticketPos}`).tab('show');
     mostrarProductos();
 });
-/*
-$('#ticket0').on('click', function(event) {
-    //event.preventDefault();
-    //return alert('cambio de ticket');
-    console.log('valor del ticket',this.value);
-    return;
-    //console.log('ticket',tickets.find(p => p.id == ticketPos));
-    //tickets.find(p => p.id == ticketPos).productos = productosVenta;
-    //productosVenta = tickets.find(p => p.id == 0).productos;
-    ticketPos = 0;
-    $(this).tab('show');
+
+$('#btnEliminarTicket').bind('click', function() {
+    if(tickets.length == 1)
+        return;
+    let btnConfirmar = confirm('¿Desea eliminar el ticket actual?');
+    if(!btnConfirmar)
+        return;
+        //console.log('ticketPos: ',document.getElementById(`ticket${ticketPos}`));
+    //return;
+    document.getElementById(`ticket${ticketPos}`).remove();
+    let ticketActual = tickets.find(p => p.id == ticketPos);
+    let indice = tickets.indexOf(ticketActual);
+    tickets.splice(indice, 1);
+    if(indice>0)
+    {
+        productosVenta = tickets[indice-1].productos;
+        ticketPos = tickets[indice-1].id;
+        $(`#ticket${ticketPos}`).tab('show');
+        
+    }
+        
+    else
+    {
+        productosVenta = tickets[0].productos;
+        ticketPos = tickets[0].id;
+        $(`#ticket${ticketPos}`).tab('show');
+    }
     mostrarProductos();
-})
-*/
-function verTicket(idTicket)
-{
+});
+
+function verTicket(idTicket) {
     tickets.find(p => p.id == ticketPos).productos = productosVenta;
     productosVenta = tickets.find(p => p.id == idTicket).productos;
     ticketPos = idTicket;
