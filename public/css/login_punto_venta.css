@@ -1,0 +1,24 @@
+    body {
+        background-image: url("../img/background_punto_venta.jpg");
+        background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+    }
+    
+    #div1 {
+        opacity: .9;
+    }
+    
+    select {
+        background: transparent;
+        border: none;
+        font-size: 14px;
+        height: 30px;
+        padding: 5px;
+        width: 250px;
+    }
+    
+    select:focus {
+        outline: none;
+    }

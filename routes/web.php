@@ -129,3 +129,8 @@ Route::post('/forgot-password', function (Request $request) {
         ? back()->with(['status' => __($status)])
         : back()->withErrors(['email' => __($status)]);
 })->middleware('guest')->name('password.email');
+
+Route::get('img/background_punto_venta',function()
+{
+    return asset('img\background_punto_venta.jpg');
+});
