@@ -19,62 +19,64 @@
 
     <link rel="stylesheet" href="{{ asset('css\bootstrap.min.css') }}">
     <script src="{{ asset('js\jquery-3.5.1.min.js') }}"></script>
-    
+
 
     <script src="{{ asset('js\popper.min.js') }}"></script>
     <script src="{{ asset('js\bootstrap.min.js') }}"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
 </head>
 
-<body>
-        <nav class="navbar navbar-expand-md m-0 p-0" style="background-color: #3366FF;">
+<body class="">
+    <nav class="navbar navbar-expand-md m-0 p-0 " style="background-color: #3366FF;">
 
-            <div class="navbar navbar-expand-lg w-100 m-0 p-0">
+        <!--div class="navbar navbar-expand-lg w-100 m-0 p-0 border border-warning"-->
 
-                <ul class="navbar-nav ml-auto my-0">
-                    <li class="nav-item">
-                        <h5 class="text-white text-uppercase d-none d-md-block">{{session('sucursalNombre')}}
-                        </h5>
-                        <h6 class="text-white text-uppercase text-center m-1 d-md-none">{{session('sucursalNombre')}}
-                        </h6>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto m-1 py-0 border border-light rounded">
-                    <!-- Authentication Links -->
-                    @guest
-                    <li class="nav-item border">
-                        <a class="nav-link text-white" href="{{ url('puntoVenta/login') }}">{{ __('Login') }}</a>
-                    </li>
-                    <!--if (Roudte:d:has('register'))
+        <ul class="navbar-nav mx-auto ml-xl-auto my-xl-0">
+            <li class="nav-item">
+                <h5 class="text-white text-uppercase d-none d-md-block ">{{session('sucursalNombre')}}
+                </h5>
+                <h6 class="text-white text-uppercase text-center mx-auto my-1 d-md-none">{{session('sucursalNombre')}}
+                </h6>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto ml-sm-0 m-1 border border-light rounded">
+            <!-- Authentication Links -->
+            @guest
+            <li class="nav-item border">
+                <a class="nav-link text-white" href="{{ url('puntoVenta/login') }}">{{ __('Login') }}</a>
+            </li>
+            <!--if (Roudte:d:has('register'))
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{ route('register') }}">{ __('Register') }}</a>
                         </li>
                         endif-->
-                    @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <strong>{{ Auth::user()->username }}</strong>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" class="text-white" href="{{ url('puntoVenta/logout') }}" onclick="event.preventDefault();
+            @else
+            <li class="nav-item dropdown">
+            <!--div class="dropdown"-->
+                <a id="navbarDropdown" class="nav-link  dropdown-toggle text-white p-1 p-sm-auto" href="#" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <strong>{{ Auth::user()->username }}</strong>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right border " aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item " class="text-white" href="{{ url('puntoVenta/logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                <img src="{{ asset('img\salir.png') }}" alt="Editar" height="30px">
-                            
-                                {{ __('Logout') }}
-                            </a>
+                        <img src="{{ asset('img\salir.png') }}" alt="Editar" height="30px">
 
-                            <form id="logout-form" action="{{ url('puntoVenta/logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
-                    @endguest
-                </ul>
-            </div>
-        </nav>
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ url('puntoVenta/logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+            <!--/div-->
+            </li>
+            @endguest
+        </ul>
+        <!--/div-->
+    </nav>
     @yield('content')
     <script src="{{ asset('js\mayusculas.js') }}"></script>
 </body>

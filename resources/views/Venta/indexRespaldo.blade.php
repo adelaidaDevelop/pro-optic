@@ -6,37 +6,37 @@ $userCliente= ['verCliente','crearCliente','modificarCliente','eliminarCliente',
 $userDevolucion= ['verDevolucion','crearDevolucion','admin'];
 $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
 @endphp
-<!--div class="row border border-danger" style="background:#ED4D46"-->
+<div class="row" style="background:#ED4D46">
     @section('subtitulo')
     VENTAS
     @endsection
     @section('opciones')
-    <!-- BOTON VENTAS DEL DIA-->
+    <!-- BOTON DEVOLUCION-->
     @if($sE->hasAnyRole($userDevolucion))
-    <div class="p-1 ">
+    <div class="ml-4 p-1">
         <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/devolucion')}}">
             <img src="{{ asset('img\devolucion.png') }}" alt="Editar" width="30px" height="30px">
-            <p class="h6 my-auto mx-2 text-dark "><small>VENTAS DEL DIA Y DEVOLUCIONES</small></p>
+            <p class="h6 my-auto mx-2 text-dark"><small>VENTAS DEL DIA Y DEVOLUCIONES</small></p>
         </a>
     </div>
     @endif
     @if($sE->hasAnyRole($userCliente))
-    <div class=" ml-lg-4 p-1">
+    <div class=" ml-4 p-1">
         <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/cliente')}}">
             <img src="{{ asset('img\consumidor.png') }}" alt="Editar" width="30px" height="30px">
             <p class="h6 my-auto mx-2 text-dark"><small>CLIENTES</small></p>
         </a>
     </div>
     @endif
-    <div class="ml-lg-4 p-1 ">
+    <div class="ml-4 p-1 ">
         <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal"
             href=".listaSolicitudVentas" id="btnSolic_Ventas" onclick="obtenerPedidosEntrega(0)" value="">
             <img src="{{ asset('img\ventas.png') }}" alt="Editar" width="30px" height="30px">
             <span id="notificacionPedidos" class="badge badge-warning">0</span>
-            <p class="h6 my-auto mx-2 text-dark text-nowrap"><small>VENTAS ECOMMERCE</small></p>
+            <p class="h6 my-auto mx-2 text-dark"><small>VENTAS ECOMMERCE</small></p>
         </button>
     </div>
-    <div class="ml-lg-4 p-1 ">
+    <div class="ml-4 p-1 ">
         <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal"
             href=".seguimientoPedidos" id="" onclick="return filtrar()" value="">
             <img src="{{ asset('img\camion.png') }}" alt="Editar" width="30px" height="30px">
@@ -44,9 +44,9 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
         </button>
     </div>
     @endsection
-<!--/div-->
+</div>
 <div class="row col-12 border border-dark my-2 mx-1">
-    <div class="col-12 row mx-0 mt-3 mb-1 px-0 py-0">
+    <div class="col-12 row mx-0 my-3 px-0">
         <div class="input-group col-xl-6 my-2 mr-auto">
             <div class="input-group-prepend">
                 <label for="codigoBarras" class="h5 font-weight-bold my-auto py-auto d-none d-md-block"

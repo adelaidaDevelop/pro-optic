@@ -9,10 +9,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Farmacias GI') }}</title>
-
-    <!-- Scripts -->
-    <!--script src="{ asset('js/app.js') }}" defer></script-->
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -21,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@100&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <!--Recursos de Bootstrap-->
     <link rel="stylesheet" href="{{ asset('css\bootstrap.min.css') }}">
     <script src="{{ asset('js\jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('js\popper.min.js') }}"></script>
@@ -140,37 +136,12 @@
                             class="btn btn-outline-dark  d-flex justify-content-center my-2 mb-3 mx-auto"><strong>INICIAR
                                 SESION</strong></button>
                     </div>
-                    <!--/div-->
                 </form>
-                <!--/div-->
             </div>
         </div>
     </div>
 
-    <script>
-    function mostrarPasswordClave() {
-        var cambio = document.getElementById("password");
-        if (cambio.type == "password") {
-            cambio.type = "text";
-            var cambioicono = document.getElementById("iconPasswordClave").innerHTML =
-                `
-    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-    `;
-            //$('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
-        } else {
-            cambio.type = "password";
-            var cambioicono = document.getElementById("iconPasswordClave").innerHTML =
-                `
-    <path
-        d="M10.79 12.912l-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.027 7.027 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.088z" />
-    <path
-        d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708l-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6l-12-12 .708-.708 12 12-.708.707z" />
-    `;
-            //$('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
-        }
-    }
-    </script>
+    <script src="{{ asset('js/login_punto_venta.js') }}"></script>
 </body>
 
 </html>
