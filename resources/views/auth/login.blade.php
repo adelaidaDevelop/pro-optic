@@ -41,7 +41,7 @@
         <div class="row w-100 rounded align-self-center" style="background:#4388CC" id="div1">
             <div class="row col-12 mx-auto pl-sm-0 pl-md-0">
                 <img src="{{ asset('img\logo.png') }}"
-                    class="img-fluid position-relative mx-auto ml-sm-1 mr-sm-5  ml-md-4 ml-lg-4 pl-lg-3 ml-xl-5 pl-xl-5 mr-auto my-2 py-0 rounded-pill" alt="Inicio" />
+                    class="img-fluid position-relative mx-auto mx-sm-auto  ml-md-4 ml-lg-4 pl-lg-3 ml-xl-5 pl-xl-5 mr-auto my-2 py-0 rounded-pill" alt="Inicio" />
             </div>
             <div class="row col-12 col-md-11 col-lg-11 col-xl-10 d-flex justify-content-center mb-5 mx-auto p-2 rounded"
                 style="background:#7FB3D5">
