@@ -45,7 +45,6 @@
             </div>
             <div class="row col-12 col-md-11 col-lg-11 col-xl-10 d-flex justify-content-center mb-5 mx-auto p-2 rounded"
                 style="background:#7FB3D5">
-                <!--div class="col-sm-10 col-12 text-center" style="background:#7FB3D5"-->
                 <img src="{{ asset('img\login.png') }}" class="col-auto position-relative my-auto mx-auto" alt=" Inicio"
                     height="100px" />
                 <form class="col-auto col-md-9 col-lg-9 m-1 rounded p-0" method="POST" action="{{ url('puntoVenta/login') }}"
