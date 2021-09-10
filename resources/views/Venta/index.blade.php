@@ -72,22 +72,22 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
             </div>
         </div>
 
-        <div class="my-auto mx-1 px-0">
-            <button class="btn btn-outline-primary px-1 " type="button" onclick="buscarProducto()" data-toggle="modal"
+        <div class="my-auto mx-1 px-0 mx-auto ml-lg-auto mr-lg-1">
+            <button class="btn btn-outline-primary my-1 px-1 " type="button" onclick="buscarProducto()" data-toggle="modal"
                 data-target="#exampleModal" value="informacion" id="boton">
                 <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
                 BUSCAR PRODUCTO
             </button>
         </div>
-        <div class="my-auto mx-1 px-0">
-            <button class="btn btn-outline-primary  px-1" type="button" onclick=" buscarSubproducto()"
+        <div class="my-auto mx-1 px-0 mx-auto mx-lg-1 ">
+            <button class="btn btn-outline-primary my-1 mx-auto px-1" type="button" onclick=" buscarSubproducto()"
                 data-toggle="modal" data-target="#exampleModal2" value="informacion" id="boton">
                 <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
                 BUSCAR SUBPRODUCTO
             </button>
         </div>
-        <div class="my-auto mx-1 px-0">
-            <button class="btn btn-outline-primary  px-1" type="button" onclick="buscarOferta()" data-toggle="modal"
+        <div class="my-auto mx-1 px-0 mx-auto ml-lg-1 mr-lg-auto">
+            <button class="btn btn-outline-primary my-1 mx-auto px-1" type="button" onclick="buscarOferta()" data-toggle="modal"
                 data-target="#ofertasModal" value="informacion" id="boton">
                 <img src="{{ asset('img\oferta.png') }}" alt="Editar" width="25px" height="25px">
                 OFERTAS
@@ -155,14 +155,14 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
     </div>
     <div class="row col-12 m-0 px-0">
-        <div class="col my-2 ml-0 pr-0 border">
-            <div class="row">
+        <div class="col-12 my-2 mx-0 ml-xl-0 pr-0 border">
+            <div class="row col-12 px-1 px-xl-0 py-1 text-center">
 
-                <button class="btn btn-outline-primary  p-1" id="btnAgregarTicket" type="button">
+                <button class="btn btn-outline-primary my-1 mx-auto p-1 mr-lg-2" id="btnAgregarTicket" type="button">
                     <img src="{{ asset('img\agregarReg.png') }}" alt="Agregar Ticket" width="25px" height="25px">
                     AGREGAR TICKET
                 </button>
-                <button class="btn btn-outline-primary  p-1 ml-5" id="btnEliminarTicket" type="button">
+                <button class="btn btn-outline-primary my-1 mx-auto p-1 ml-lg-5" id="btnEliminarTicket" type="button">
                     <img src="{{ asset('img\eliReg.png') }}" alt="Eliminar Ticket" width="25px" height="25px">
                     ELIMINAR TICKET
                 </button>

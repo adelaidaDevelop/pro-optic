@@ -148,7 +148,21 @@ class DevolucionController extends Controller
     }
     public function datosVenta(){
         $ventas= Venta::all();
-        return compact('ventas');
+        if(!session()->has('sucursal')) return;
+        $idSucursal= session('sucursal');
+        $ventas_sucursal = [];
+        foreach ($ventas as $venta) 
+        {
+            $sucursal_empleado = Sucursal_empleado::where('id','=',$venta->idSucursalEmpleado)->first();
+            
+            if($sucursal_empleado->idSucursal == $idSucursal)
+            {
+                array_push($ventas_sucursal,$venta);
+            }
+
+        }
+        return json_encode($ventas_sucursal);
+        //return compact('ventas_sucursal');
     }
     
     public function datosDetalleVenta(){
