@@ -23,7 +23,7 @@ $verReporte = $sE->hasAnyRole($reporte);
 <link href="{{ asset('css/header_punto_venta.css')}}" rel="stylesheet">
 <div class="container-fluid">
     <div class="row my-0 py-0 align-self-center" style="background:#3366FF">
-        <nav class="navbar navbar-expand-md navbar-light w-100 mx-2 px-auto py-0 position-relative "
+        <nav class="navbar navbar-expand-md navbar-light w-100 mx-2 my-0 px-auto py-0 position-relative "
             style="background-color:#3366FF;">
             <a class="navbar-brand mr-2" href="{{url('/puntoVenta/home')}}">
                 <img src="{{ asset('img\farmaciagilogo.png') }}" class="img-fluid" alt="Editar">
@@ -35,13 +35,13 @@ $verReporte = $sE->hasAnyRole($reporte);
             </button>
             <!--cambios de ruta-->
             <div class="collapse navbar-collapse mx-auto mx-lg-0 px-auto rounded overflow-auto" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-xl-auto mx-auto mb-0 pb-0 p-1 position-sticky grupo_modulos my-md-1 py-md-1
+                <ul class="navbar-nav mx-auto mb-0 mr-0 pr-0 pb-0 ml-md-auto mr-md-0 my-md-1 -md-1 position-sticky grupo_modulos my-md-1 py-md-1
                 ">
 
                     <li class="nav-item active">
                         <a class="nav-link px-0 mx-2" href="{{ url('/puntoVenta/venta')}}">
                             <button class="btn btn-light input-group border" type="submit">
-                                <img src="{{ asset('img\venta2.png') }}" class="img-fluid mx-md-auto" alt="Editar"
+                                <img src="{{ asset('img\venta2.png') }}" class="mx-md-auto" alt="Editar"
                                     width="30px" height="30px">
                                 <p class="h6 my-auto"><small>VENTAS</small></p>
                             </button>
@@ -100,7 +100,7 @@ $verReporte = $sE->hasAnyRole($reporte);
                     </li>
 
                 </ul>
-                <ul class="navbar-nav mr-xl-auto mx-auto mt-0 mt-0 pt-0 pb-2 my-md-1 py-md-1 position-sticky grupo_modulos
+                <ul class="navbar-nav mx-auto mt-0 mt-0 ml-0 pt-0 pl-0 pb-2 mr-md-auto ml-md-0 my-md-1 py-md-1 position-sticky grupo_modulos
                    ">
 
                     <li class="nav-item active">
@@ -159,7 +159,7 @@ $verReporte = $sE->hasAnyRole($reporte);
     </div>
     <div class="row p-0" style="background:#BDC2C5">
         <nav class="navbar navbar-expand-md navbar-light w-100 px-0 py-0 position-relative" style="background:#BDC2C5">
-            <h4 class="font-weight-bold  ml-4 px-1 pl-2 col-2 my-3">
+            <h4 class="font-weight-bold mr-md-4 ml-4 px-1 pl-2 col-2 my-3">
                 @yield('subtitulo')
             </h4>
             <button class="navbar-toggler mr-4 border" type="button" data-toggle="collapse"

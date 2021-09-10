@@ -982,9 +982,10 @@ async function agregarPorCodigo() {
         productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
         //    if (!buscarProductoEnVenta(productos[count3].id)) {
         //        if (productosSucursal[x].existencia > 0) {
-        let response = await fetch(`{{url('/puntoVenta/sucursalProducto/buscarPorCodigo')}}/${codigo.value}`);
+        let response = await fetch(`{{url('/puntoVenta/sucursalProducto/buscarPorCodigo')}}/${JSON.stringify(codigo.value)}`);
+        //return console.log(await response.json());;
         let producto = await response.json();
-        console.log(producto);
+        //console.log(producto);
         if (producto != false) {
             //alert('Entra aqui');
             agregarProducto(producto.id, producto.codigoBarras, producto.nombre, 0, producto.existencia,

@@ -150,9 +150,9 @@ class SucursalProductoController extends Controller
 
     public function buscarPorCodigo($codigo)
     {
-        
-        $producto = Producto::where("codigoBarras",'=',$codigo)->first(['id', 'codigoBarras', 'nombre', 'idDepartamento']);
-            //return $producto;
+        $codigo_decodificado = json_decode($codigo);
+        $producto = Producto::where("codigoBarras",'like','%'.$codigo_decodificado.'%')->first(['id', 'codigoBarras', 'nombre', 'idDepartamento']);
+            //return json_encode($producto);
         if(isset($producto))
         {
             //'Entra';
@@ -163,7 +163,7 @@ class SucursalProductoController extends Controller
                 $producto->existencia = $sP->existencia;
                 $producto->costo = $sP->costo;
                 $producto->precio = $sP->precio;
-            return $producto;
+            return json_encode($producto);
             }
         }
         return [];//json_encode(false);

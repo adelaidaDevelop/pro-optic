@@ -3,8 +3,8 @@
 <div class="row mx-auto my-3 p-1">
     <h4 class="text-primary mx-auto"><strong> Registro</strong></h4>
 </div>
-<div class="row col-8 mx-auto p-3 border">
-    <div class="card mx-auto col-10 ">
+<div class="row col-xl-8 mx-auto p-3 border">
+    <div class="card mx-auto col-xl-10 ">
         <!--div class="card-header">{{ __('Register') }}</div-->
         <div class="card-body">
             <form method="POST" action="{{ url('registerPost') }}">

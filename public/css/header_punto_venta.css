@@ -66,12 +66,19 @@
 
 @media screen and (min-width:768px) and (max-width:991px) {
     #navbarSupportedContent {
-        width: 100%;
-        display: flex;
+        width: 800px;
+        overflow: visible;
+        border: 1px solid gray;
+        border-radius: 5px;
+        padding: 2px 2px;
+        margin-bottom: 5px;
     }
     .grupo_modulos {
-        display: flex;
+        column-count: 4;
         background: #3366FF;
         text-align: center;
+    }
+    #navbarSubtitulos {
+        margin-left: 2000px;
     }
 }

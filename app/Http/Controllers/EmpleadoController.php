@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Auth\Events\Registered;
+
+//use Illuminate\Auth\Notifications\VerifyEmail;
+//use Illuminate\Notifications\Messages\MailMessage;
+
 class EmpleadoController extends Controller
 {
     /**
@@ -57,12 +61,12 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   //permisos para acceder a esta funcion
         $usuarios = ['crearEmpleado','admin'];
         $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
-        $sE->authorizeRoles($usuarios);  
+        $sE->authorizeRoles($usuarios); 
+        //validar datos del formulario
         $this->validator($request->all())->validate();
-        //return 'si lo valida';
         $datosEmpleado = request()->except('_token','password_confirmation','username','password','email');//,'apellidos','contra2','correo');
         //$dato = ['status','alta'];
         //$datosEmpleado = Arr::add($datosEmpleado,'status','alta');
@@ -72,7 +76,6 @@ class EmpleadoController extends Controller
             'password' => Hash::make($request['password']),
             'tipo' => 0,
         ]);
-        //$usuario->roles()->attach(Role::where('name', 'username')->first());
         //$user = User::latest('id')->first();
         $datosEmpleado = Arr::add($datosEmpleado,'idUsuario',$usuario->id);
         //$empleado = new Empleado;

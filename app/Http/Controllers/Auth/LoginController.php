@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-use Auth;
+//use Auth;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Empleado;
 use App\Models\Sucursal_empleado;
 use App\Models\Sucursal;
