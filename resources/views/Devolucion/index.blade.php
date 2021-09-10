@@ -24,8 +24,8 @@ $userDevolucion= ['crearDevolucion','admin'];
 $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
 $devolver = $sE->hasAnyRole($userDevolucion);
 @endphp
-<div class="row col-auto mx-auto px-0 px-sm-auto md-1 ">
-    <div class="col-12 border border-dark mx-0 my-1 m-sm-1 ml-lg-4 mr-lg-4 px-1 px-sm-auto">
+<div class="row col-12 mx-auto px-0 px-sm-auto md-1">
+    <div class="col-12 border border-dark mx-0 my-1 m-sm-1 mx-sm-auto px-1 px-sm-auto">
         <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
         <div class="col-auto mt-1 mb-lg-4 mx-0 mx-sm-auto mx-lg-2 p-sm-2">
             <div class="row px-1 px-lg-0 col-12 col-lg-8 m-auto ml-lg-1 mr-lg-auto input-group my-lg-2 ">
