@@ -31,16 +31,16 @@ $devolver = $sE->hasAnyRole($userDevolucion);
             <div class="row px-1 px-lg-0 col-12 col-lg-8 m-auto ml-lg-1 mr-lg-auto input-group my-lg-2 ">
                 <!--div class="form-inline col-12 mx-auto px-auto">
                     <div class="form-group"-->
-                        <h4 class="mx-auto mx-sm-0  px-0 my-auto d-none d-sm-inline-block col-auto"> FOLIO VENTA:</h4>
-                        <label class="mx-auto px-1 my-auto font-weight-bold d-sm-none"> FOLIO VENTA:</label>
-                        <input type="number" min=0 class="form-control mx-auto col-10 col-sm-6 col-md-4 col-xl-4 my-1 mx-sm-1 w-100"
-                            size="15" placeholder="INGRESAR FOLIO VENTA" id="busquedaFolio" name="busquedaFolio"
-                            onkeyup="buscarFolio()">
-                        <!--a title="buscar" class="text-dark "-->
-                        <img src="{{ asset('img\search.svg') }}"
-                            class="btn btn-light img-fluid img-thumbnail mx-auto ml-sm-1 mr-xl-5 my-auto p-2"
-                            alt="Regresar" width="40px" height="40px" onclick="buscarFolio()" />
-                    <!--/div>
+                <h4 class="mx-auto mx-sm-0  px-0 my-auto d-none d-sm-inline-block col-auto"> FOLIO VENTA:</h4>
+                <label class="mx-auto px-1 my-auto font-weight-bold d-sm-none"> FOLIO VENTA:</label>
+                <input type="number" min=0
+                    class="form-control mx-auto col-10 col-sm-6 col-md-4 col-xl-4 my-1 mx-sm-1 w-100" size="15"
+                    placeholder="INGRESAR FOLIO VENTA" id="busquedaFolio" name="busquedaFolio">
+                <!--a title="buscar" class="text-dark "-->
+                <img src="{{ asset('img\search.svg') }}"
+                    class="btn btn-light img-fluid img-thumbnail mx-auto ml-sm-1 mr-xl-5 my-auto p-2" alt="Regresar"
+                    width="40px" height="40px" onclick="buscarFolio()" />
+                <!--/div>
                 </div-->
                 <div class="col-auto mx-auto px-auto">
                     <button class=" btn btn-outline-info ml-md-auto mx-auto py-0 my-1 col-12 col-lg-auto"
@@ -192,7 +192,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
 
 <!-- SCRIPT-->
 <script>
-let ventas = @json($ventas);
+let ventas = []; //json($ventas); 
 let detalleVenta = @json($detalleVenta);
 let productos = @json($productos);
 let empleados = @json($empleados);
@@ -210,76 +210,102 @@ let pagosVenta = @json($pagosVenta);
 // let cantProd = 0;
 let diferencia = 0;
 
-function buscarFolio() {
-    //return alert('entra a buscar folio');
-    document.getElementById("sinResult").innerHTML = "";
-    let cont = 0;
-    let botonDev = "";
-    let palabraBusqueda = document.querySelector('#busquedaFolio');
-    let cuerpo = "";
-    let cuerpo2 = "";
-    let contador = 1;
-    let subtotalV = 0;
-    let precioSP = 0;
-    if (palabraBusqueda.value.length > 0) {
-        let folio = parseInt(palabraBusqueda.value);
-        let venta = ventas.find(v => v.id === folio);
-        if (venta != null) {
-            // if (venta.tipo == "efectivo") {
-            console.log("encontrado asd");
-            //console.log(detalleVenta);
-            //console.log(ventas);
-            for (count2 in detalleVenta) {
-                if (detalleVenta[count2].idVenta == folio) {
-                    // let detalleV = detalleVenta.find(p => p.idVenta == folio);
-                    //  if (detalleV != null) {
+let input_busqueda = document.getElementById("busquedaFolio");
+input_busqueda.addEventListener('keyup', async (e) => {
+    await buscarFolio();
+})
+let worker = new Worker("{{ asset('js/worker_get.js') }}");
+async function buscarFolio() {
+    if (window.Worker) {
+        worker.terminate();
+        document.getElementById("sinResult").innerHTML = "";
+        let cont = 0;
+        let botonDev = "";
+        let palabraBusqueda = document.querySelector('#busquedaFolio');
+        let cuerpo = "";
+        let cuerpo2 = "";
+        let contador = 1;
+        let subtotalV = 0;
+        let precioSP = 0;
+        try {
+            //await cargarVentas();
 
-                    //console.log("Entra a la funcion de buscar folio");
-                    // for (count3 in productos) {
-                    //  if (productos[count3].id == detalleVenta[count2].idProducto) {
-                    let product = productos.find(p => p.id == detalleVenta[count2].idProducto);
-                    if (product != null) {
+            worker = new Worker("{{ asset('js/worker_get.js')}}");
+            let url = `{{ url('/puntoVenta/datosVentas') }}`;
+            var message = {
+                url: url,
+            };
+            worker.postMessage(message);
+            worker.onmessage = function(e) {
+                if (palabraBusqueda.value.length > 0) {
+                    let folio = parseInt(palabraBusqueda.value);
 
-                        document.getElementById("sinResult").innerHTML = "";
-                        // idProductoD = productos[count3].id;
-                        //idVentaD = ventas[count].id;
-                        // cantTotal = detalleVenta[count2].cantidad;
-                        console.log("De esta venta por cada producto que se vendi en esta venta entra");
-                        let cantPD = 0; //CHECAR
-                        console.log("dev");
-                        console.log(devolucions);
-                        // if (devolucions.length > 0) {
-                        if (devolucions !== null) {
-                            for (count51 in devolucions) {
-                                console.log("devoluNo");
-                                //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
-                                if (venta.id == devolucions[count51].idVenta) {
 
-                                    if (devolucions[count51].idProducto == product.id) {
-                                        cantPD = cantPD + devolucions[count51].cantidad;
-                                        console.log("Si entra en esta parte");
+
+                    ventas = e.data.datos;
+                    //console.log('ventas', ventas);
+                    //return;
+                    let venta = ventas.find(v => v.id === folio);
+                    if (venta != null) {
+                        // if (venta.tipo == "efectivo") {
+                        console.log("encontrado asd");
+                        //console.log(detalleVenta);
+                        //console.log(ventas);
+                        for (count2 in detalleVenta) {
+                            if (detalleVenta[count2].idVenta == folio) {
+                                // let detalleV = detalleVenta.find(p => p.idVenta == folio);
+                                //  if (detalleV != null) {
+
+                                //console.log("Entra a la funcion de buscar folio");
+                                // for (count3 in productos) {
+                                //  if (productos[count3].id == detalleVenta[count2].idProducto) {
+                                let product = productos.find(p => p.id == detalleVenta[count2].idProducto);
+                                if (product != null) {
+
+                                    document.getElementById("sinResult").innerHTML = "";
+                                    // idProductoD = productos[count3].id;
+                                    //idVentaD = ventas[count].id;
+                                    // cantTotal = detalleVenta[count2].cantidad;
+                                    console.log(
+                                        "De esta venta por cada producto que se vendi en esta venta entra");
+                                    let cantPD = 0; //CHECAR
+                                    console.log("dev");
+                                    console.log(devolucions);
+                                    // if (devolucions.length > 0) {
+                                    if (devolucions !== null) {
+                                        for (count51 in devolucions) {
+                                            console.log("devoluNo");
+                                            //if (devolucions[count51].idVenta == ventas[count].id && devolucions[count51].idProducto == productos[count3].id) {
+                                            if (venta.id == devolucions[count51].idVenta) {
+
+                                                if (devolucions[count51].idProducto == product.id) {
+                                                    cantPD = cantPD + devolucions[count51].cantidad;
+                                                    console.log("Si entra en esta parte");
+                                                }
+                                            }
+                                        }
                                     }
-                                }
-                            }
-                        }
-                        if (venta.tipo == "credito") {
-                            cuerpo2 = "x";
-                            botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
+                                    if (venta.tipo == "credito") {
+                                        cuerpo2 = "x";
+                                        botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
                                             type="button" disabled >DEVOLVER</button>`;
-                        } else {
-                            if (cantPD < detalleVenta[count2].cantidad) {
-                                botonDev = `<button class="btn btn-light" onclick="idProdDV(` + product.id + `,` + venta
-                                    .id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)"
+                                    } else {
+                                        if (cantPD < detalleVenta[count2].cantidad) {
+                                            botonDev = `<button class="btn btn-light" onclick="idProdDV(` +
+                                                product.id +
+                                                `,` + venta
+                                                .id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)"
                                             type="button">DEVOLVER</button>`;
-                            } else {
-                                botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
+                                        } else {
+                                            botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
                                             type="button" disabled >DEVOLVER</button>`;
-                            }
-                        }
-                        subtotalV = detalleVenta[count2].cantidad * detalleVenta[count2].precioIndividual;
-                        console.log("sisisi");
-                        cont = cont + 1;
-                        cuerpo = cuerpo + `
+                                        }
+                                    }
+                                    subtotalV = detalleVenta[count2].cantidad * detalleVenta[count2]
+                                        .precioIndividual;
+                                    console.log("sisisi");
+                                    cont = cont + 1;
+                                    cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
                                             <td>` + product.codigoBarras + `</td>
@@ -292,31 +318,40 @@ function buscarFolio() {
                                             </td>        
                                                 </tr>
                                                 `;
+                                }
+                            }
+                        }
+                        // } 
+                        /*
+                        else {
+                            cuerpo2 = "x";
+                        }
+                        */
+                        //document.getElementById("sinResult").innerHTML = "Folio no encontrado";
                     }
-                }
-            }
-            // } 
-            /*
-            else {
-                cuerpo2 = "x";
-            }
-            */
-            //document.getElementById("sinResult").innerHTML = "Folio no encontrado";
-        }
-        /////////////////7
-        if (cuerpo2 === "x") {
-            let sin =
-                ` <h5 class= "text-danger  mx-0 px-0"> EL FOLIO PERTENECE A UNA VENTA A CREDITO Y NO SE PUEDEN HACER DEVOLUCIONES</h5>`;
-            document.getElementById("sinResult").innerHTML = sin;
-        }
-        if (cuerpo === "") {
-            let sin = ` <h5 class= "text-dark  mx-0 px-0"> EL FOLIO NO EXISTE</h5>`;
-            document.getElementById("sinResult").innerHTML = sin;
+                    /////////////////7
+                    if (cuerpo2 === "x") {
+                        let sin =
+                            ` <h5 class= "text-danger  mx-0 px-0"> EL FOLIO PERTENECE A UNA VENTA A CREDITO Y NO SE PUEDEN HACER DEVOLUCIONES</h5>`;
+                        document.getElementById("sinResult").innerHTML = sin;
+                    }
+                    if (cuerpo === "") {
+                        let sin = ` <h5 class= "text-dark  mx-0 px-0"> EL FOLIO NO EXISTE</h5>`;
+                        document.getElementById("sinResult").innerHTML = sin;
 
+                    }
+                    //}
+                } else {
+                    console.log('entro aqui')
+                    document.getElementById("sinResult").innerHTML = "";
+                }
+                //document.getElementById("filaTablas").innerHTML = cuerpo;
+                document.getElementById("tablaProductos").innerHTML = cuerpo;
+            }
+        } catch (err) {
+            console.log("Error al realizar la petición de productos AJAX: " + err.message);
         }
     }
-    //document.getElementById("filaTablas").innerHTML = cuerpo;
-    document.getElementById("tablaProductos").innerHTML = cuerpo;
 };
 
 function idProdDV(idP, idV, cantDV, cPD) {
@@ -425,7 +460,8 @@ async function devolver() {
                 }
             }
         } else {
-            return alert('El máximo de productos a devolver es: ' + diferencia + ', ingrese una cantidad válida.');
+            return alert('El máximo de productos a devolver es: ' + diferencia +
+                ', ingrese una cantidad válida.');
         }
     } else {
         return alert('DEBE INGRESAR UNA CANTIDAD VALIDA DE PRODUCTOS A DEVOLVER');
@@ -471,7 +507,7 @@ async function cargarDevolucion() {
     };
 */
 async function cargarVentas() {
-    console.log("carg  ventas");
+    console.log("cargar  ventas");
     let response = "Sin respuesta";
     try {
         response = await fetch(`{{ url('/puntoVenta/datosVentas') }}`);
@@ -577,7 +613,9 @@ async function modalVenta() {
                             let segundoNombre = "";
                             if (empleados[count6].segundoNombre != null)
                                 segundoNombre = empleados[count6].segundoNombre;
-                            emple = empleados[count6].primerNombre + " " + segundoNombre + " " + empleados[count6]
+                            emple = empleados[count6].primerNombre + " " + segundoNombre + " " +
+                                empleados[
+                                    count6]
                                 .apellidoPaterno + " " + empleados[count6].apellidoMaterno;
                         }
                         // emple = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
@@ -730,7 +768,9 @@ function filtrarCompras() {
                                 let segundoNombre = "";
                                 if (empleados[count6].segundoNombre != null)
                                     segundoNombre = empleados[count6].segundoNombre;
-                                emple = empleados[count6].primerNombre + " " + segundoNombre + " " + empleados[count6]
+                                emple = empleados[count6].primerNombre + " " + segundoNombre + " " +
+                                    empleados[
+                                        count6]
                                     .apellidoPaterno + " " + empleados[count6].apellidoMaterno;
                             }
                             // emple = empleados[count6].primerNombre + " " + empleados[count6].segundoNombre + " " + empleados[count6].apellidoPaterno + " " + empleados[count6].apellidoMaterno;
