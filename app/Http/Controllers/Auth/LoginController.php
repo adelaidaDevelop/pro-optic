@@ -50,6 +50,7 @@ class LoginController extends Controller
 
     public function login()
     {
+        url('/clear-cache'); 
         if(session()->has('idUsuario'))
         {
             if(Auth::check())
@@ -108,7 +109,8 @@ class LoginController extends Controller
             return redirect('/puntoVenta/home');
             
         }
-        $sucursales = Sucursal::all(['id','direccion']);     
+        $sucursales = Sucursal::all(['id','direccion']);  
+          
         return view('auth.login',compact('sucursales'));
         //
         //return 'Si entra aqui';

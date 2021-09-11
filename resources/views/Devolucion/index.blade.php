@@ -1,4 +1,7 @@
 @extends('header2')
+@section('recursos_internos')
+<link rel="stylesheet" href="{{ asset('css\devolucion_index.css') }}">
+@endsection
 @section('contenido')
 @section('subtitulo')
 VENTAS DEL DIA
@@ -61,7 +64,7 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                 </label>
             </div>
             <div class="row border m-auto" style="height:328px;overflow-y:auto;">
-                <table class="table table-bordered border-primary  ">
+                <table class="table table-bordered border-primary table_busqueda"> <!--table-responsive{-sm } "-->
 
                     <thead class="table-secondary text-primary">
                         <tr>
@@ -121,9 +124,9 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     </div>
                 </div>
                 <div class="row mx-1 mt-4" style="height:400px;overflow:auto;">
-                    <table class="table table-hover table-bordered border" id="productos">
+                    <table class="table table-hover table-bordered border table-responsive{-sm } table_consulta" id="productos">
                         <thead class="table-secondary text-dark">
-                            <tr class="text-center">
+                            <tr class="text-center  w-100">
                                 <th scope="col">#</th>
                                 <th scope="col">FOLIO</th>
                                 <th scope="col">EMPLEADO</th>
@@ -308,13 +311,13 @@ async function buscarFolio() {
                                     cuerpo = cuerpo + `
                                             <tr onclick="" data-dismiss="modal">
                                             <th scope="row">` + cont + `</th>
-                                            <td>` + product.codigoBarras + `</td>
-                                            <td>` + product.nombre + `</td>
-                                            <td>` + detalleVenta[count2].cantidad + `</td>
-                                            <td>` + detalleVenta[count2].precioIndividual + `</td>
-                                            <td>` + subtotalV + `</td> 
-                                            <td>` + cantPD + `</td> 
-                                            <td>` + botonDev + `
+                                            <td title="codigo barras">` + product.codigoBarras + `</td>
+                                            <td title="producto">` + product.nombre + `</td>
+                                            <td title="cantidad">` + detalleVenta[count2].cantidad + `</td>
+                                            <td title="precio">` + detalleVenta[count2].precioIndividual + `</td>
+                                            <td title="subtotal">` + subtotalV + `</td> 
+                                            <td title="cantidad devueltos">` + cantPD + `</td> 
+                                            <td title="devolver">` + botonDev + `
                                             </td>        
                                                 </tr>
                                                 `;
@@ -347,6 +350,7 @@ async function buscarFolio() {
                 }
                 //document.getElementById("filaTablas").innerHTML = cuerpo;
                 document.getElementById("tablaProductos").innerHTML = cuerpo;
+                resposividadTabla();
             }
         } catch (err) {
             console.log("Error al realizar la petición de productos AJAX: " + err.message);
@@ -666,21 +670,25 @@ async function modalVenta() {
             cuerpo = cuerpo + `
                     <tr >
                     <th scope="row">` + cont + `</th>
-                    <td>` + ventas[count5].id + `</td>
-                    <td>` + emple + `</td>
-                    <td>` + ventas[count5].tipo + `</td>
-                    <td>` + pago + `</td>
-                    <td>` + total + `</td> 
-                    <td>` + fecha.toLocaleDateString() + `</td> 
-                    <td>` + fecha.toLocaleTimeString() + `</td>   
+                    <td title="Folio">` + ventas[count5].id + `</td>
+                    <td title="Empleado">` + emple + `</td>
+                    <td title="Tipo">` + ventas[count5].tipo + `</td>
+                    <td title="Pago">` + pago + `</td>
+                    <td title="Total">` + total + `</td> 
+                    <td title="Fecha">` + fecha.toLocaleDateString() + `</td> 
+                    <td title="Hora">` + fecha.toLocaleTimeString() + `</td>   
                 </tr>
                 `;
         }
         if (cuerpo.length > 0)
+        {
             document.getElementById("tablaVenta").innerHTML = cuerpo;
+            
+        }
         else
             document.getElementById("tablaVenta").innerHTML =
             "<tr><th colspan='8'>Aún no cuenta con ventas registradas en esta sucursal</th></tr>";
+            resposividadTabla()
     } catch (err) {
         console.log("Error al realizar la petición de productos AJAX: " + err.message);
     }
@@ -812,13 +820,13 @@ function filtrarCompras() {
                 cuerpo = cuerpo + `
                         <tr >
                         <th >` + cont + `</th>
-                        <td>` + ventas[j].id + `</td>
-                        <td>` + emple + `</td>
-                        <td>` + ventas[j].tipo + `</td>
-                        <td>` + pago + `</td>
-                        <td>` + total + `</td> 
-                        <td>` + fecha5.toLocaleDateString() + `</td> 
-                        <td>` + fecha5.toLocaleTimeString() + `</td>   
+                        <td title="Folio">` + ventas[j].id + `</td>
+                        <td title="Empleado">` + emple + `</td>
+                        <td title="Tipo">` + ventas[j].tipo + `</td>
+                        <td title="Pago">` + pago + `</td>
+                        <td title="Total">` + total + `</td> 
+                        <td title="Fecha">` + fecha5.toLocaleDateString() + `</td> 
+                        <td title="Hora">` + fecha5.toLocaleTimeString() + `</td>   
                     </tr>
                     `;
                 // }
@@ -827,7 +835,7 @@ function filtrarCompras() {
             }
         }
         document.getElementById("tablaVenta").innerHTML = cuerpo;
-
+        resposividadTabla();
     } else {
         console.log("No verifico bien");
         modalVenta();
@@ -890,5 +898,27 @@ $("input[name='cantidad']").bind('keypress', function(tecla) {
         return false;
     }
 });
+function resposividadTabla()
+{
+    var ShowCells = function() {
+		var tbody = jQuery('tbody');
+		var row = jQuery('tbody > tr');
+		row.addClass('closed');
+		row.click(function(){
+			if((!jQuery(this).hasClass('closed'))&&(jQuery(this).parent().is("tbody"))) {
+				jQuery(this).attr('class','closed');
+			}
+			else {
+				row.addClass('closed');
+				jQuery(this).removeClass('closed');
+				}
+		});
+	}
+
+	jQuery(document).ready(function(){
+		ShowCells();
+	});
+}
+
 </script>
 @endsection

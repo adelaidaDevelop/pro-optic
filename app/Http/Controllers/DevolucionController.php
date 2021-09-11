@@ -51,6 +51,7 @@ class DevolucionController extends Controller
             }
         }
         */
+        route('clear.cache');
         return view('Devolucion.index', compact('ventas','pagosVenta', 'ventaCliente','detalleVenta', 'productos', 'empleados', 'devolucions', 'sucursalEmpleado',  'productX_Sucursal', 'ventas'));
     
     }

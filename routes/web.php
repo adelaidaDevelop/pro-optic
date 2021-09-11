@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdministracionController;
 use App\Http\Controllers\EcommerceController;
-
+//use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginClienteController;
 
 use Illuminate\Support\Facades\Route;
@@ -148,3 +148,9 @@ Route::post('/email/verification-notification', function (Request $request) {
     return redirect('/');
     //return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');*/
+Route::get('/clear-cache', function () {
+   echo Artisan::call('config:clear');
+   echo Artisan::call('config:cache');
+   echo Artisan::call('cache:clear');
+   echo Artisan::call('route:clear');
+})->name('clear.cache');

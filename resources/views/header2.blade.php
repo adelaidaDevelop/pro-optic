@@ -19,6 +19,9 @@ $verCorte = $sE->hasAnyRole($corte);
 $verReporte = $sE->hasAnyRole($reporte);
 
 @endphp
+@section('recursos')
+@yield('recursos_internos')
+@endsection
 @section('content')
 <link href="{{ asset('css/header_punto_venta.css')}}" rel="stylesheet">
 <div class="container-fluid">
