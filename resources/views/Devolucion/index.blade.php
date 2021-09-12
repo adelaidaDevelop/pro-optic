@@ -64,7 +64,8 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                 </label>
             </div>
             <div class="row border m-auto" style="height:328px;overflow-y:auto;">
-                <table class="table table-bordered border-primary table_busqueda"> <!--table-responsive{-sm } "-->
+                <table class="table table-bordered border-primary table_busqueda">
+                    <!--table-responsive{-sm } "-->
 
                     <thead class="table-secondary text-primary">
                         <tr>
@@ -124,7 +125,8 @@ $devolver = $sE->hasAnyRole($userDevolucion);
                     </div>
                 </div>
                 <div class="row mx-1 mt-4" style="height:400px;overflow:auto;">
-                    <table class="table table-hover table-bordered border table-responsive{-sm } table_consulta" id="productos">
+                    <table class="table table-hover table-bordered border table-responsive{-sm } table_consulta"
+                        id="productos">
                         <thead class="table-secondary text-dark">
                             <tr class="text-center  w-100">
                                 <th scope="col">#</th>
@@ -230,6 +232,7 @@ async function buscarFolio() {
         let contador = 1;
         let subtotalV = 0;
         let precioSP = 0;
+        let fechaHoy = new Date();
         try {
             //await cargarVentas();
 
@@ -288,18 +291,42 @@ async function buscarFolio() {
                                             }
                                         }
                                     }
+                                    //Validacion de devolucion del producto en el mismo dia
+                                    fechaVenta = new Date(venta.fecha);
+                                    console.log('fechaVD',fechaVenta.getDate());
+                                    console.log('fechaVM',fechaVenta.getMonth());
+                                    console.log('fechaVY',fechaVenta.getFullYear());
+                                    console.log('fechaHVD',fechaHoy.getDate());
+                                    console.log('fechaHVM',fechaHoy.getMonth());
+                                    console.log('fechaHVY',fechaHoy.getFullYear());
+                                    let mismaFecha = true;
+                                    if(fechaHoy.getDate() != (fechaVenta.getDate()+1) || fechaHoy.getMonth() != fechaVenta.getMonth()
+                                    || fechaHoy.getFullYear() != fechaVenta.getFullYear())
+                                        mismaFecha = false;
+                                    /*let mesHoy = fechaHoy.getMonth();
+                                    if (mesHoy < 10)
+                                        mesHoy = "0" + mesHoy;
+                                    let diaHoy = fechaHoy.getDate();
+                                    if(diaHoy < 10)
+                                        diaHoy = "0" + diaHoy;
+                                    console.log('fecha de prueba',new Date("2018/01/01").getDate());
+                                    fechaHoyString = fechaHoy.getFullYear() + "-" + mesHoy + "-" + diaHoy;*/
+                                    //console.log('fechaHoy', fechaHoyString);
                                     if (venta.tipo == "credito") {
                                         cuerpo2 = "x";
                                         botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
                                             type="button" disabled >DEVOLVER</button>`;
                                     } else {
-                                        if (cantPD < detalleVenta[count2].cantidad) {
+                                        console.log('valor misma fecha',mismaFecha);
+                                        if (cantPD < detalleVenta[count2].cantidad && mismaFecha) {
+                                            //console.log('fecha de venta', venta.fecha);
                                             botonDev = `<button class="btn btn-light" onclick="idProdDV(` +
                                                 product.id +
                                                 `,` + venta
                                                 .id + `,` + detalleVenta[count2].cantidad + `,` + cantPD + `)"
                                             type="button">DEVOLVER</button>`;
                                         } else {
+
                                             botonDev = `<button class="btn btn-light" onclick="" data-toggle="modal" data-target="#devolucion"
                                             type="button" disabled >DEVOLVER</button>`;
                                         }
@@ -680,15 +707,13 @@ async function modalVenta() {
                 </tr>
                 `;
         }
-        if (cuerpo.length > 0)
-        {
+        if (cuerpo.length > 0) {
             document.getElementById("tablaVenta").innerHTML = cuerpo;
-            
-        }
-        else
+
+        } else
             document.getElementById("tablaVenta").innerHTML =
             "<tr><th colspan='8'>Aún no cuenta con ventas registradas en esta sucursal</th></tr>";
-            resposividadTabla()
+        resposividadTabla()
     } catch (err) {
         console.log("Error al realizar la petición de productos AJAX: " + err.message);
     }
@@ -898,27 +923,25 @@ $("input[name='cantidad']").bind('keypress', function(tecla) {
         return false;
     }
 });
-function resposividadTabla()
-{
+
+function resposividadTabla() {
     var ShowCells = function() {
-		var tbody = jQuery('tbody');
-		var row = jQuery('tbody > tr');
-		row.addClass('closed');
-		row.click(function(){
-			if((!jQuery(this).hasClass('closed'))&&(jQuery(this).parent().is("tbody"))) {
-				jQuery(this).attr('class','closed');
-			}
-			else {
-				row.addClass('closed');
-				jQuery(this).removeClass('closed');
-				}
-		});
-	}
+        var tbody = jQuery('tbody');
+        var row = jQuery('tbody > tr');
+        row.addClass('closed');
+        row.click(function() {
+            if ((!jQuery(this).hasClass('closed')) && (jQuery(this).parent().is("tbody"))) {
+                jQuery(this).attr('class', 'closed');
+            } else {
+                row.addClass('closed');
+                jQuery(this).removeClass('closed');
+            }
+        });
+    }
 
-	jQuery(document).ready(function(){
-		ShowCells();
-	});
+    jQuery(document).ready(function() {
+        ShowCells();
+    });
 }
-
 </script>
 @endsection
