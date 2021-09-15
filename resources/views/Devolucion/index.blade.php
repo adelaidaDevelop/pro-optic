@@ -293,12 +293,12 @@ async function buscarFolio() {
                                     }
                                     //Validacion de devolucion del producto en el mismo dia
                                     fechaVenta = new Date(venta.fecha);
-                                    console.log('fechaVD',fechaVenta.getDate());
+                                    /*console.log('fechaVD',fechaVenta.getDate());
                                     console.log('fechaVM',fechaVenta.getMonth());
                                     console.log('fechaVY',fechaVenta.getFullYear());
                                     console.log('fechaHVD',fechaHoy.getDate());
                                     console.log('fechaHVM',fechaHoy.getMonth());
-                                    console.log('fechaHVY',fechaHoy.getFullYear());
+                                    console.log('fechaHVY',fechaHoy.getFullYear());*/
                                     let mismaFecha = true;
                                     if(fechaHoy.getDate() != (fechaVenta.getDate()+1) || fechaHoy.getMonth() != fechaVenta.getMonth()
                                     || fechaHoy.getFullYear() != fechaVenta.getFullYear())
