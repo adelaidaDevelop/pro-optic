@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdministracionController;
 use App\Http\Controllers\EcommerceController;
-
+//use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginClienteController;
 
 use Illuminate\Support\Facades\Route;
@@ -27,6 +27,8 @@ use App\Http\Controllers\ProductoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 //use Auth;
 /*
 |--------------------------------------------------------------------------
@@ -102,12 +104,12 @@ Route::get('/home', function () {
         session()->forget('urlVerified');
         if (Auth::user()->tipo == 0) {
             //session(['idUsuario' =>Auth::user()->id]);
-            Auth::logout();
+
             return redirect('/puntoVenta/login');
         }
         if (Auth::user()->tipo == 2) {
             //session(['idCliente' =>Auth::user()->id]);
-            Auth::logout();
+            //Auth::logout();
             return redirect('/loginCliente');
         }
     }
@@ -134,3 +136,21 @@ Route::get('img/background_punto_venta',function()
 {
     return asset('img\background_punto_venta.jpg');
 });
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+/*Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/');
+    //return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');*/
+Route::get('/clear-cache', function () {
+   echo Artisan::call('config:clear');
+   echo Artisan::call('config:cache');
+   echo Artisan::call('cache:clear');
+   echo Artisan::call('route:clear');
+})->name('clear.cache');

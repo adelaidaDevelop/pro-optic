@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-use Auth;
+//use Auth;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Empleado;
 use App\Models\Sucursal_empleado;
 use App\Models\Sucursal;
@@ -49,6 +50,7 @@ class LoginController extends Controller
 
     public function login()
     {
+        url('/clear-cache'); 
         if(session()->has('idUsuario'))
         {
             if(Auth::check())
@@ -107,7 +109,8 @@ class LoginController extends Controller
             return redirect('/puntoVenta/home');
             
         }
-        $sucursales = Sucursal::all(['id','direccion']);     
+        $sucursales = Sucursal::all(['id','direccion']);  
+          
         return view('auth.login',compact('sucursales'));
         //
         //return 'Si entra aqui';

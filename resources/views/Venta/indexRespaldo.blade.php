@@ -6,37 +6,37 @@ $userCliente= ['verCliente','crearCliente','modificarCliente','eliminarCliente',
 $userDevolucion= ['verDevolucion','crearDevolucion','admin'];
 $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
 @endphp
-<!--div class="row border border-danger" style="background:#ED4D46"-->
+<div class="row" style="background:#ED4D46">
     @section('subtitulo')
     VENTAS
     @endsection
     @section('opciones')
-    <!-- BOTON VENTAS DEL DIA-->
+    <!-- BOTON DEVOLUCION-->
     @if($sE->hasAnyRole($userDevolucion))
-    <div class="p-1 ">
+    <div class="ml-4 p-1">
         <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/devolucion')}}">
             <img src="{{ asset('img\devolucion.png') }}" alt="Editar" width="30px" height="30px">
-            <p class="h6 my-auto mx-2 text-dark "><small>VENTAS DEL DIA Y DEVOLUCIONES</small></p>
+            <p class="h6 my-auto mx-2 text-dark"><small>VENTAS DEL DIA Y DEVOLUCIONES</small></p>
         </a>
     </div>
     @endif
     @if($sE->hasAnyRole($userCliente))
-    <div class=" ml-lg-4 p-1">
+    <div class=" ml-4 p-1">
         <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/cliente')}}">
             <img src="{{ asset('img\consumidor.png') }}" alt="Editar" width="30px" height="30px">
             <p class="h6 my-auto mx-2 text-dark"><small>CLIENTES</small></p>
         </a>
     </div>
     @endif
-    <div class="ml-lg-4 p-1 ">
+    <div class="ml-4 p-1 ">
         <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal"
             href=".listaSolicitudVentas" id="btnSolic_Ventas" onclick="obtenerPedidosEntrega(0)" value="">
             <img src="{{ asset('img\ventas.png') }}" alt="Editar" width="30px" height="30px">
             <span id="notificacionPedidos" class="badge badge-warning">0</span>
-            <p class="h6 my-auto mx-2 text-dark text-nowrap"><small>VENTAS ECOMMERCE</small></p>
+            <p class="h6 my-auto mx-2 text-dark"><small>VENTAS ECOMMERCE</small></p>
         </button>
     </div>
-    <div class="ml-lg-4 p-1 ">
+    <div class="ml-4 p-1 ">
         <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal"
             href=".seguimientoPedidos" id="" onclick="return filtrar()" value="">
             <img src="{{ asset('img\camion.png') }}" alt="Editar" width="30px" height="30px">
@@ -44,9 +44,9 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
         </button>
     </div>
     @endsection
-<!--/div-->
+</div>
 <div class="row col-12 border border-dark my-2 mx-1">
-    <div class="col-12 row mx-0 mt-3 mb-1 px-0 py-0">
+    <div class="col-12 row mx-0 my-3 px-0">
         <div class="input-group col-xl-6 my-2 mr-auto">
             <div class="input-group-prepend">
                 <label for="codigoBarras" class="h5 font-weight-bold my-auto py-auto d-none d-md-block"
@@ -72,22 +72,22 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
             </div>
         </div>
 
-        <div class="my-auto mx-1 px-0 mx-auto ml-lg-auto mr-lg-1">
-            <button class="btn btn-outline-primary my-1 px-1 " type="button" onclick="buscarProducto()" data-toggle="modal"
+        <div class="my-auto mx-1 px-0">
+            <button class="btn btn-outline-primary px-1 " type="button" onclick="buscarProducto()" data-toggle="modal"
                 data-target="#exampleModal" value="informacion" id="boton">
                 <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
                 BUSCAR PRODUCTO
             </button>
         </div>
-        <div class="my-auto mx-1 px-0 mx-auto mx-lg-1 ">
-            <button class="btn btn-outline-primary my-1 mx-auto px-1" type="button" onclick=" buscarSubproducto()"
+        <div class="my-auto mx-1 px-0">
+            <button class="btn btn-outline-primary  px-1" type="button" onclick=" buscarSubproducto()"
                 data-toggle="modal" data-target="#exampleModal2" value="informacion" id="boton">
                 <img src="{{ asset('img\busqueda.png') }}" alt="Editar" width="25px" height="25px">
                 BUSCAR SUBPRODUCTO
             </button>
         </div>
-        <div class="my-auto mx-1 px-0 mx-auto ml-lg-1 mr-lg-auto">
-            <button class="btn btn-outline-primary my-1 mx-auto px-1" type="button" onclick="buscarOferta()" data-toggle="modal"
+        <div class="my-auto mx-1 px-0">
+            <button class="btn btn-outline-primary  px-1" type="button" onclick="buscarOferta()" data-toggle="modal"
                 data-target="#ofertasModal" value="informacion" id="boton">
                 <img src="{{ asset('img\oferta.png') }}" alt="Editar" width="25px" height="25px">
                 OFERTAS
@@ -155,14 +155,14 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
     </div>
     <div class="row col-12 m-0 px-0">
-        <div class="col-12 my-2 mx-0 ml-xl-0 pr-0 border">
-            <div class="row col-12 px-1 px-xl-0 py-1 text-center">
+        <div class="col my-2 ml-0 pr-0 border">
+            <div class="row">
 
-                <button class="btn btn-outline-primary my-1 mx-auto p-1 mr-lg-2" id="btnAgregarTicket" type="button">
+                <button class="btn btn-outline-primary  p-1" id="btnAgregarTicket" type="button">
                     <img src="{{ asset('img\agregarReg.png') }}" alt="Agregar Ticket" width="25px" height="25px">
                     AGREGAR TICKET
                 </button>
-                <button class="btn btn-outline-primary my-1 mx-auto p-1 ml-lg-5" id="btnEliminarTicket" type="button">
+                <button class="btn btn-outline-primary  p-1 ml-5" id="btnEliminarTicket" type="button">
                     <img src="{{ asset('img\eliReg.png') }}" alt="Eliminar Ticket" width="25px" height="25px">
                     ELIMINAR TICKET
                 </button>
@@ -982,10 +982,9 @@ async function agregarPorCodigo() {
         productos[count].existencia,productos[count].precio,1,productos[count].precio);*/
         //    if (!buscarProductoEnVenta(productos[count3].id)) {
         //        if (productosSucursal[x].existencia > 0) {
-        let response = await fetch(`{{url('/puntoVenta/sucursalProducto/buscarPorCodigo')}}/${JSON.stringify(codigo.value)}`);
-        //return console.log(await response.json());;
+        let response = await fetch(`{{url('/puntoVenta/sucursalProducto/buscarPorCodigo')}}/${codigo.value}`);
         let producto = await response.json();
-        //console.log(producto);
+        console.log(producto);
         if (producto != false) {
             //alert('Entra aqui');
             agregarProducto(producto.id, producto.codigoBarras, producto.nombre, 0, producto.existencia,

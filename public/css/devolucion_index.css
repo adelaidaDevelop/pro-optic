@@ -1,0 +1,173 @@
+/*======GENERAL======*/
+
+table {
+    width: 100%;
+    border: solid 1px #666;
+    background: white;
+    border-spacing: 0;
+    font: normal normal 80% "Roboto", Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    line-height: 1rem;
+    /*margin: auto;*/
+}
+
+
+/*======TFOOT======*/
+
+tfoot td {
+    border-top: solid 1px #eee;
+    color: #666;
+}
+
+
+/*======TBODY======*/
+
+tr {
+    border-bottom: solid 1px #ccc;
+}
+
+tr * {
+    /*padding: 5px 10px;*/
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #eee;
+}
+
+tr th {
+    font-weight: bold;
+}
+
+thead tr {
+    background: #eee;
+    background: linear-gradient(#fff, #ccc);
+    background: -webkit-linear-gradient(#fff, #ccc);
+    background: -ms-linear-gradient(#fff, #ccc);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#cccccc');
+    border-bottom: solid 2px #bbb;
+}
+
+@media only screen and (max-width: 576px) {
+    /*======GENERAL======*/
+    table {
+        font-size: 1rem;
+    }
+    table,
+    thead,
+    tfoot,
+    tbody,
+    tr {
+        display: block;
+    }
+    table {
+        position: relative;
+    }
+    /*table * {
+		font: bold normal 36px/42px Arial, Helvetica, sans-serif;
+		}*/
+    /*======THEAD======*/
+    thead tr th {
+        display: none;
+    }
+    .table_busqueda thead tr th:nth-child(3) {
+        display: block;
+        width: inherit;
+        padding: 2% 5%;
+        font-size: 1.5rem;
+        line-height: 1.8rem;
+        text-align: center;
+    }
+    .table_consulta thead tr th:nth-child(2) {
+        display: block;
+        width: inherit;
+        padding: 2% 5%;
+        font-size: 1.5rem;
+        line-height: 1.8rem;
+        text-align: center;
+    }
+    /*======TFOOT======*/
+    tfoot {
+        position: absolute;
+        bottom: -60px;
+        width: inherit;
+    }
+    tfoot td,
+    tfoot tr {
+        display: block;
+        padding: 2xp;
+        border: 0;
+        text-align: center;
+    }
+    /*======TBODY======*/
+    tbody tr {
+        position: relative;
+    }
+    /*tr * {
+        padding: 10px 20px;
+    }*/
+    tbody th,
+    tbody tr td:first-of-type {
+        display: inline-block;
+        width: auto;
+        /*48%;
+        /*44%;*/
+        padding: 1.2rem 0%;
+        font-size: 1.2rem;
+        line-height: 1.2rem;
+        border: none;
+    }
+    tbody th {
+        width: 13%;
+    }
+    tbody tr td:first-of-type {
+        padding-right: 10%;
+    }
+    tr td,
+    tr td:nth-of-type(1n+2) {
+        display: block;
+    }
+    tbody .closed td {
+        display: none;
+    }
+    tbody td:nth-of-type(1n+2):before {
+        content: attr(title)": ";
+        font-weight: bold;
+        /*background: url("../img/icono_mas.png");*/
+    }
+    tbody tr:after {
+        content: "";
+        position: absolute;
+        right: 3%;
+        /*8px;*/
+        top: 5%;
+        /*12px;*/
+        width: 2rem;
+        height: 2rem;
+        opacity: 0.6;
+        background: url("../img/icono_mas.png");
+        /*background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;*/
+        /* no-repeat center center;*/
+        background-size: 2rem;
+        cursor: pointer;
+    }
+    tr.closed:after {
+        top: 6%;
+        background: url("../img/icono_menos.png");
+        /* no-repeat center center;*/
+        background-size: 2rem
+    }
+    td:nth-of-type(1n+2) {
+        border-bottom: solid 1px #ccc;
+    }
+}
+
+@media only screen and (max-device-width: 576px) and (-webkit-min-device-pixel-ratio: 1.5) {
+    /*======GENERAL======*/
+    HTML {
+        font-size: 1rem;
+    }
+}
