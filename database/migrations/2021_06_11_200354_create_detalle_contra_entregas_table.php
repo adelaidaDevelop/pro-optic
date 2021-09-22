@@ -13,14 +13,14 @@ class CreateDetalleContraEntregasTable extends Migration
      */
     public function up()
     {
-        Schema::create('detalle_contra_entregas', function (Blueprint $table) {
+        /*Schema::create('detalle_contra_entregas', function (Blueprint $table) {
             $table->foreignId('idPedido')->constrained('pedidoContraEntregas');
             $table->foreignId('idSucProd')->constrained('sucursal_productos');
             $table->float('precio',8,2);
             $table->unsignedInteger('cantidad');
             $table->float('subtotal',8,2);
             $table->timestamps();
-        });
+        });*/
     }
 
     /**
@@ -30,6 +30,6 @@ class CreateDetalleContraEntregasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detalle_contra_entregas');
+        //Schema::dropIfExists('detalle_contra_entregas');
     }
 }

@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 //para poder borrar informacion de los registros de la carpeta uploads de storage
 use Illuminate\Support\Facades\Storage;
 
+//para poder importar archivos excel
+use App\Imports\InventarioImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class ProductoController extends Controller
 {
     /**
@@ -22,11 +26,11 @@ class ProductoController extends Controller
     public function index()
     {
         $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
         $idSucursal = session('sucursal');
         $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)//->where('status', '=', 1)
         ->get(['id','costo','precio','existencia','minimoStock','idProducto','status']);
-       
+
         $depas['d']= Departamento::paginate();
         $datosP= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento','imagen']);
         $depa= Departamento::all(['id','nombre']);
@@ -45,8 +49,8 @@ class ProductoController extends Controller
     public function create()
     {
         $usuarios = ['crearProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
+
         $producto['producto']= Producto::paginate();
         $departamento= Departamento::all();
         return view('Producto.create', compact('departamento'));
@@ -62,12 +66,12 @@ class ProductoController extends Controller
     {
         //return 'Todo bien';
         $usuarios = ['crearProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
+
         try{
 
         $datosProducto = request()->except('_token', 'minimoStock','existencia','costo','precio','ajax');
-        
+
       //  $datosProducto['existencia']=0;
      //   $datosProducto['costo']=0;
      //   $datosProducto['precio']=0;
@@ -78,9 +82,9 @@ class ProductoController extends Controller
         else{
             $datosProducto['imagen'] = NULL;
         }
-        
+
         $producto = Producto::create($datosProducto);
-        
+
         if($request->has('ajax'))
         {
             $datosSP['costo']= 0;
@@ -93,7 +97,7 @@ class ProductoController extends Controller
             Sucursal_producto::create($datosSP);
             return $producto;
         }
-        
+
         $datosSP['costo']= $request->input('costo');
        $datosSP['precio']= $request->input('precio');
        $datosSP['existencia']= $request->input('existencia');
@@ -102,11 +106,11 @@ class ProductoController extends Controller
        $datosSP['idSucursal'] = $idSucursal;
        $datosSP['idProducto'] = $producto->id;
        Sucursal_producto::create($datosSP);
-       
+
        // return response()->json($datosProducto);
       // TempData["success"] = "registro grabado";
      //::success('this is a test message');
-    
+
        // return redirect('/puntoVenta/producto');
         return redirect()->back()->withErrors(['mensajeConf' => 'PRODUCTO CREADO CORRECTAMENTE']);
     }catch (\Illuminate\Database\QueryException $e){
@@ -125,25 +129,25 @@ class ProductoController extends Controller
     public function show($producto)//Producto $producto)
     {
         //return NULL;
-        
+
         if($producto=="productos")
         {
             //$usuarios = ['crearVenta','admin'];
-        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
+
             $productos = Producto::all();
             $productosCodificados = json_encode($productos);
             return $productos;//compact('productos');
         }
         else{
             $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
-            Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-            
+            Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
+
             $productos = Producto::where("nombre",'like',$producto."%")->paginate(30,
             ['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
             for($i=0;$i< count($productos);$i++)
             {
-                
+
                 $sP = Sucursal_producto::where('idProducto', '=', $productos[$i]->id)->where('idSucursal','=',session('sucursal'))
                 ->first(['existencia','costo','precio']);
                 if(isset($sP))
@@ -165,8 +169,8 @@ class ProductoController extends Controller
     public function show2($id)
     {
         $usuarios = ['verProducto','crearProducto','eliminarProducto','modificarProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
+
         $producto= Producto::findOrFail($id);
         return view('Producto.edit', compact('producto'));
     }
@@ -180,8 +184,8 @@ class ProductoController extends Controller
     public function edit($id)
     {
         $usuarios = ['eliminarProducto','modificarProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
+
         $departamento= Departamento::all();
         $producto= Producto::findOrFail($id);
        // $sucursalProd = Sucursal_producto::where('idProducto', '=', $id)->get();
@@ -199,7 +203,7 @@ class ProductoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function stock(){
-        
+
         //$productos= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento']);
         //$idSucursal = session('sucursal');
         //$productosSucursal= Sucursal_producto::where('idSucursal', '=', $idSucursal)->get(['id','costo','precio','existencia','minimoStock','idProducto','status']);
@@ -221,17 +225,19 @@ class ProductoController extends Controller
                 }
                 }
             }
-          
+
 
         }
         */
         return view('Producto.stockV',compact('depa'));//, compact('productos', 'depa', 'productosSucursal'));
        // return view('Producto.stockV', compact('depa', 'noAgregado'));
-        
+
     }
-    
+
     public function buscarStock($producto)
     {
+        $producto = json_decode($producto);
+        return $producto;
         $productosStock = [];
         $productos = Producto::where("nombre",'like',"%".$producto."%")
         ->orWhere("codigoBarras",'like',"%".$producto."%")->get();
@@ -255,37 +261,37 @@ class ProductoController extends Controller
     public function update(Request $request, $id)
     {
         //return 'Recibo tu solicitud';
-        
+
         $usuarios = ['modificarProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
+
         $datosProducto = request()->except('_token', 'minimoStock','ajax');
-        
+
         if($request->hasFile('imagen')){
-            
+
             $producto=Producto::findOrFail($id);
             Storage::delete('public/'.$producto->imagen);
             $datosProducto['imagen']=$request->file('imagen')->store('uploads','public');
         }
-        
+
         $producto = Producto::findOrFail($id);
-        
+
         $producto->update($datosProducto);
-        
+
        // $producto = Producto::where('id', '=', $id)->update($datosProducto);
 
         //  $datosSP['costo']= 0;
         // $datosSP['precio']= 0;
         // $datosSP['existencia']= 0;
          $datosSP['minimoStock']= $request->input('minimoStock');
-         
+
          //return $request->input('descripcion');
          $sp = Sucursal_producto::where('idProducto', '=', $id);
          //return $request->input('descripcion');//$datosSP['minimoStock'];
          $sp->update($datosSP);
-         
+
        //   Sucursal_producto::create($datosSP);
-        
+
         if($request['ajax'])
         {
             if(isset($datosProducto['imagen']))
@@ -306,8 +312,8 @@ class ProductoController extends Controller
     //public function destroy(Producto $producto)
     public function eliminar($id){
         $usuarios = ['eliminarProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
+
         $producto= Producto::findOrFail($id);
         return view('Producto/delete', compact('producto'));
     }
@@ -322,7 +328,7 @@ class ProductoController extends Controller
        // if( Storage::delete('public/'.$producto->imagen)){
             //Producto::destroy($producto->id);
             Producto::destroy($producto->$id);
-       // } 
+       // }
        // return redirect('puntoVenta/producto');
        return "HOLA";
     }
@@ -348,7 +354,7 @@ class ProductoController extends Controller
            $producto->update($dato);
            // Sucursal_producto::where('idProducto',$id)->first()->update($dato);
             return redirect()->back();
-        
+
     }
 
     //PRODUCTOS ADMINISTRADOR
@@ -358,20 +364,29 @@ class ProductoController extends Controller
         //return compact('sucursalesInac');
     }
     //ELIMINAR PRODUCTO POR EL ADMINISTRADOR
-    
+
     public function eliProd($id)//Sucursal $sucursal)
     {
        // $producto = Producto::all();
        $usuarios = ['eliminarProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
+
             try{
                 Producto::destroy($id);
                 return redirect('puntoVenta/administracion');
-            } catch (\Illuminate\Database\QueryException $e) { 
-               
+            } catch (\Illuminate\Database\QueryException $e) {
+
             return redirect()->back()->withErrors(['noEliminado' => 'EL PRODUCTO NO SE PUDO ELIMINAR PORQUE ESTA EN USO']);
-        } 
-        
+        }
+
+    }
+
+    public function import()
+    {
+        //(new VehiclesImport)->import('vehicles.xlsx');
+        Excel::import(new InventarioImport, 'inventarioFarmaciasGi.xlsx');
+
+        return redirect('/')->with('success', 'File imported successfully!');
+        //return Excel::import(new InventarioImport, 'inventarioFarmaciasGi.xlsx');
     }
 }

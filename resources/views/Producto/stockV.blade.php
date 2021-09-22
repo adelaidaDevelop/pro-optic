@@ -129,7 +129,7 @@ $crear = $sE->hasAnyRole($crearProducto);
                 producto = "%";
                 console.log('se cambio producto');
             }
-            let resp = await fetch(`{{url('/puntoVenta/producto/stock')}}/${producto}`);
+            let resp = await fetch(`{{url('/puntoVenta/producto/stock')}}/${JSON.stringify(producto)}`);
             productos = await resp.json();
             console.log('productosStock', productos);
             return productos;
@@ -162,7 +162,7 @@ $crear = $sE->hasAnyRole($crearProducto);
                     <td>` + productos[t].codigoBarras + `</td>
                     <td>` + productos[t].nombre + `</td>
                     <td>` + departamento + `</td>
-                    <td>` + btnAgregar + `</td>            
+                    <td>` + btnAgregar + `</td>
                 </tr>`;
             }
             if (cuerpo == "") {
@@ -216,8 +216,8 @@ $crear = $sE->hasAnyRole($crearProducto);
                                 <td>` + productos[t].nombre + `</td>
                                 <td>` + departamento + `</td>
                                     <td>` + btnAgregar +
-                        ` 
-                                </td>            
+                        `
+                                </td>
                                             </tr>
                                             `;
                     // }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePedidoContraEntregasTable extends Migration
+class CreatePedidoContraEntregas1Table extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePedidoContraEntregasTable extends Migration
      */
     public function up()
     {
-        Schema::create('pedidoContraEntregas', function (Blueprint $table) {
+        /*Schema::create('pedidoContraEntregas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('idCliente')->constrained('clientes');
             $table->string('direccion');
@@ -23,7 +23,7 @@ class CreatePedidoContraEntregasTable extends Migration
             $table->float('pagarCon',8,2);
             $table->float('cambio',8,2);
             $table->timestamps();
-        });
+        });*/
     }
 
     /**
@@ -33,6 +33,6 @@ class CreatePedidoContraEntregasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedido_contra_entregas');
+        //Schema::dropIfExists('pedido_contra_entregas');
     }
 }

@@ -171,7 +171,7 @@ Route::prefix('/puntoVenta')->group(function () {
             Route::resource('empleado', EmpleadoController::class);
             //Route::get('/login', [LoginController::class,'login'])->name('Login');
             //->middleware('isEmpleado');
-            
+
             Route::post('/compra/editar/{id}', [CompraController::class, 'estadoCompra']);
             Route::resource('compra', CompraController::class);
             Route::get('/proveedor/buscador', [ProveedorController::class, 'buscador']);
@@ -205,6 +205,6 @@ Route::prefix('/puntoVenta')->group(function () {
         });
     //});
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-            
-    
+
+    Route::get('/import', [App\Http\Controllers\ProductoController::class, 'import']);
 });
