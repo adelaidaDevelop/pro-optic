@@ -237,7 +237,7 @@ class ProductoController extends Controller
     public function buscarStock($producto)
     {
         $producto = json_decode($producto);
-        return $producto;
+        //return json_encode($producto);
         $productosStock = [];
         $productos = Producto::where("nombre",'like',"%".$producto."%")
         ->orWhere("codigoBarras",'like',"%".$producto."%")->get();
@@ -245,7 +245,7 @@ class ProductoController extends Controller
         foreach($productos as $p)
         {
             if(count($productosStock)>=30)
-                return $productosStock;//$productosStock;
+                return json_encode($productosStock);//$productosStock;
             $sP = Sucursal_producto::where('idProducto', '=', $p->id)->where('idSucursal','=',session('sucursal'))->first();//$p->id);
             //return $sP->get();
             if(!isset($sP))
@@ -255,7 +255,7 @@ class ProductoController extends Controller
             }
             //return 'producto bueno';
         }
-        return $productosStock;//$productosStock;
+        return json_encode($productosStock);//$productosStock;
     }
 
     public function update(Request $request, $id)
@@ -386,6 +386,13 @@ class ProductoController extends Controller
         //(new VehiclesImport)->import('vehicles.xlsx');
         Excel::import(new InventarioImport, 'inventarioFarmaciasGi.xlsx');
 
+        /*$productos = Producto::all();
+        foreach($productos as $producto)
+        {
+            Sucursal_producto::create([
+
+            ]);
+        }*/
         return redirect('/')->with('success', 'File imported successfully!');
         //return Excel::import(new InventarioImport, 'inventarioFarmaciasGi.xlsx');
     }
