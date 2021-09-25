@@ -17,4 +17,5 @@ class Sucursal_producto extends Model
         'minimoStock',
         'status'
     ];
+    protected $guarded = [];
 }

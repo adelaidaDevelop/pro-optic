@@ -14,4 +14,5 @@ class Departamento extends Model
         'status'
     ];
    // public $timestamps = false;
+   protected $guarded = [];
 }

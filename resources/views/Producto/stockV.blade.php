@@ -53,7 +53,7 @@ $crear = $sE->hasAnyRole($crearProducto);
     </div>
     <div class="row col-12 my-0 mx-0 mt-3">
         <div class="input-group col-8 mx-auto">
-            <input class="form-control text-uppercase my-auto" type="text" placeholder="Buscar producto" id="busquedaProducto" onkeyup="buscarProducto()">
+            <input class="form-control text-uppercase my-auto" type="text" placeholder="Buscar producto" id="busquedaProducto" >
             <div class="input-group-appendborder">
                 <button class="btn text-dark border p-0" onclick="buscarProducto()">
                     <img src="{{ asset('img\busqueda.png') }}" class="img-thumbnail m-0" alt="Regresar" width="38px" height="38px" /></button>
@@ -126,10 +126,10 @@ $crear = $sE->hasAnyRole($crearProducto);
     async function cargarProductos2(producto) {
         try {
             if (producto.length == 0) {
-                producto = "%";
+                producto = "";
                 console.log('se cambio producto');
             }
-            let resp = await fetch(`{{url('/puntoVenta/producto/stock')}}/${producto}`);
+            let resp = await fetch(`{{url('/puntoVenta/producto/stock')}}/${JSON.stringify(producto)}`);
             productos = await resp.json();
             console.log('productosStock', productos);
             return productos;
@@ -147,6 +147,7 @@ $crear = $sE->hasAnyRole($crearProducto);
             let palabraBusqueda = document.querySelector('#busquedaProducto');
             await cargarProductos2(palabraBusqueda.value);
             console.log('productosStock', productos);
+            //return;
             for (let t in productos) {
                 let departamento = deptos.find(d => d.id == productos[t].idDepartamento).nombre;
                 let agregar = @json($agregar);
@@ -162,7 +163,7 @@ $crear = $sE->hasAnyRole($crearProducto);
                     <td>` + productos[t].codigoBarras + `</td>
                     <td>` + productos[t].nombre + `</td>
                     <td>` + departamento + `</td>
-                    <td>` + btnAgregar + `</td>            
+                    <td>` + btnAgregar + `</td>
                 </tr>`;
             }
             if (cuerpo == "") {
@@ -216,8 +217,8 @@ $crear = $sE->hasAnyRole($crearProducto);
                                 <td>` + productos[t].nombre + `</td>
                                 <td>` + departamento + `</td>
                                     <td>` + btnAgregar +
-                        ` 
-                                </td>            
+                        `
+                                </td>
                                             </tr>
                                             `;
                     // }

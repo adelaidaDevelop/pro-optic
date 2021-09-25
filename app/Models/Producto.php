@@ -20,4 +20,5 @@ class Producto extends Model
         //'costo',
         //'precio',
     ];
+    protected $guarded = [];
 }

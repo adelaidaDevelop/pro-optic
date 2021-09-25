@@ -64,11 +64,11 @@ class RegistrosPruebaTable extends Migration
             $role->name = $nombres[$i];//'admin';
             $role->description = $descripcion[$i];//'ADMINISTRADOR';
             $role->idModulo = $modulo[$i]+1;//1;
-            $role->save(); 
+            $role->save();
         }
-        
+
         //ROLE
-        /*       
+        /*
         $role = new Role();
         $role->name = 'compraRead';
         $role->description = 'CONSULTAR COM';
@@ -79,7 +79,7 @@ class RegistrosPruebaTable extends Migration
             'email' => 'farmaciasgizimatlan@gmail.com',
             'password' => Hash::make('admin12345'),
             'tipo' => 0,
-            'email_verified_at' =>'2021-06-02 11:17:15' 
+            'email_verified_at' =>'2021-06-02 11:17:15'
         ]);
         User::where('id','=',$admin->id)->update(['email_verified_at' => now()]);
         //$admin->roles()->attach($role_admin);
@@ -89,7 +89,7 @@ class RegistrosPruebaTable extends Migration
             'email' => 'deudor@gmail.com',
             'password' => Hash::make('deudor12345'),
             'tipo' => 1,
-            'email_verified_at' =>'2021-06-02 11:17:15' 
+            'email_verified_at' =>'2021-06-02 11:17:15'
         ]);
 
         $empleadoAdmin = new Empleado;
@@ -163,7 +163,7 @@ class RegistrosPruebaTable extends Migration
         $empleado->save();
 */
         //CREACION DE DEPARTAMENTOS
-        $departamento = Departamento::create(
+        /*$departamento = Departamento::create(
             ['nombre' => 'SIN DEPARTAMENTO']
         );
         $departamento = Departamento::create(
@@ -192,7 +192,7 @@ class RegistrosPruebaTable extends Migration
         );
         $departamento = Departamento::create(
             ['nombre' => 'PASTILLAS SUELTAS']
-        );
+        );*/
 
         //CREACION DE PRODUCTOS
     /*    $producto = new Producto;
@@ -245,7 +245,7 @@ class RegistrosPruebaTable extends Migration
         $cliente->idUsuario = $usuario->id;
         $cliente->save();
 */
-        
+
 /*
         $productosSucursal = new Sucursal_producto;
         $productosSucursal->costo = 10;

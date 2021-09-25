@@ -46,7 +46,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
     @endsection
 <!--/div-->
 <div class="row col-12 border border-dark my-2 mx-1">
-    <div class="col-12 row mx-0 mt-3 mb-1 px-0 py-0">
+    <div class="col-12 row mx-0 mt-3 mt-lg-0 mb-1 px-0 py-0">
         <div class="input-group col-xl-6 my-2 mr-auto">
             <div class="input-group-prepend">
                 <label for="codigoBarras" class="h5 font-weight-bold my-auto py-auto d-none d-md-block"
@@ -113,17 +113,17 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
         <div class="tab-pane fade show active" id="tablaProductos" role="tabpanel" aria-labelledby="home-tab">
             <div class="row col-12 m-0 px-0 border border-dark" style="height:300px;overflow-y:auto;">
                 <table class="table" id="productos">
-                    <thead class="thead-light">
-                        <tr class="text-center">
-                            <th scope="col">#</th>
-                            <th scope="col">CODIGO_BARRAS</th>
-                            <th scope="col">PRODUCTO</th>
-                            <th scope="col">TIPO</th>
-                            <th scope="col">EXISTENCIA</th>
-                            <th scope="col">PRECIO</th>
-                            <th scope="col">CANTIDAD</th>
-                            <th scope="col">IMPORTE</th>
-                            <th scope="col"></th>
+                    <thead class="thead-light py-0 my-0">
+                        <tr class="text-center py-0 my-0">
+                            <th scope="col my-0">#</th>
+                            <th scope="col my-0">CODIGO_BARRAS</th>
+                            <th scope="col my-0">PRODUCTO</th>
+                            <th scope="col my-0">TIPO</th>
+                            <th scope="col my-0">EXISTENCIA</th>
+                            <th scope="col my-0">PRECIO</th>
+                            <th scope="col my-0">CANTIDAD</th>
+                            <th scope="col my-0">IMPORTE</th>
+                            <th scope="col my-0"></th>
                         </tr>
                     </thead>
                     <tbody id="info" class="">
@@ -155,7 +155,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
     </div>
     <div class="row col-12 m-0 px-0">
-        <div class="col-12 my-2 mx-0 ml-xl-0 pr-0 border">
+        <div class="col-12 col-lg-6 my-2 mx-0 ml-xl-0 pr-0 border">
             <div class="row col-12 px-1 px-xl-0 py-1 text-center">
 
                 <button class="btn btn-outline-primary my-1 mx-auto p-1 mr-lg-2" id="btnAgregarTicket" type="button">
@@ -880,8 +880,8 @@ function mostrarProductos() {
             <td>` + tipo + `</td>
             <td>` + productosVenta[count1].existencia + `</td>
             <td>` + productosVenta[count1].precio + `</td>
-            <td style="width:10rem"><input  value=` + productosVenta[count1].cantidad + ` 
-                onchange="cantidad(` + productosVenta[count1].id + `)"  
+            <td style="width:10rem"><input  value=` + productosVenta[count1].cantidad + `
+                onchange="cantidad(` + productosVenta[count1].id + `)"
                 id="valor` + productosVenta[count1].id + `" min=1 max=` + productosVenta[count1].existencia +
             ` type="number"/></td>
             <td id="importe` + productosVenta[count1].id + `">` + productosVenta[count1].subtotal + `</td>
@@ -940,7 +940,7 @@ function quitarProducto(id) {
         mostrarProductos();
     }
     //var i = arr.indexOf( item );
-    //if ( i !== -1 )  
+    //if ( i !== -1 )
 }
 
 
@@ -1208,7 +1208,7 @@ async function buscarSubproducto() {
                     <td>` + subproductosSucursal[i].codigoBarras + `</td>
                     <td class="text-uppercase">` + subproductosSucursal[i].nombre + `</td>
                     <td>` + subproductosSucursal[i].existencia + `</td>
-                    <td>` + departamento.nombre + `</td>  
+                    <td>` + departamento.nombre + `</td>
                     </tr>
                     `;
             //}
@@ -1648,7 +1648,7 @@ function verPedidoEntrega(id, idCliente) {
         let p = productos.find(p => p.id == detallePedido[i].idProducto);
         let btnQuitar =
             `<div class="row col-1 mx-0 ">
-            <button class="btn btn-outline-danger my-auto mx-auto mx-md-0 p-0 d-none d-md-block border-0" 
+            <button class="btn btn-outline-danger my-auto mx-auto mx-md-0 p-0 d-none d-md-block border-0"
             onclick="quitarProductoPedido(${detallePedido[i].idPedido},${detallePedido[i].idProducto})">
                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-trash my-auto" viewBox="0 0 16 16">
                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
@@ -1669,8 +1669,8 @@ function verPedidoEntrega(id, idCliente) {
                 </div>
                 <div class="row col-3 mx-0 px-0">
                     <!--p class="h5 text-center mx-auto my-auto">${detallePedido[i].cantidad}</p-->
-                    <input type="number" class="form-control my-auto border" min="1" value="${detallePedido[i].cantidad}" 
-                    onchange="actualizarCantidadPedidoProducto(${detallePedido[i].idPedido},${detallePedido[i].idProducto})" 
+                    <input type="number" class="form-control my-auto border" min="1" value="${detallePedido[i].cantidad}"
+                    onchange="actualizarCantidadPedidoProducto(${detallePedido[i].idPedido},${detallePedido[i].idProducto})"
                     id="cantidadProductoPedido${detallePedido[i].idPedido}${detallePedido[i].idProducto}" />
                 </div>
                 <div class="row col-2 mx-0">
@@ -2231,7 +2231,7 @@ async function actualizarCantidadPedidoProducto(idPedido, idProducto) {
         workerAjax.onmessage = function(e) {
 
             let funcion = e.data.respuesta;
-            
+
             console.log('respuestaActualizar', funcion);
             return;
             pedidosContraEntrega = funcion['pedidos'];
@@ -2243,7 +2243,7 @@ async function actualizarCantidadPedidoProducto(idPedido, idProducto) {
         //worker.terminate();
     } else {*/
     try {
-        //$(`cantidadProductoPedido${idPedido}${idProducto}`).readonly 
+        //$(`cantidadProductoPedido${idPedido}${idProducto}`).readonly
         let funcion = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
@@ -2431,7 +2431,7 @@ function enCamino2Funcion() {
     document.getElementById("divActBtn").innerHTML = btnX;
     document.getElementById("divActBtn").innerHTML = btnX;
     document.getElementById("instruccion").innerHTML = ins;
-    //Asignar evento a boton entregar pedido 
+    //Asignar evento a boton entregar pedido
     $("#btnEntregar4").click(function() {
         //Llamar funcionPreparando
         //entregadoFuncion();
@@ -2443,7 +2443,7 @@ function enCamino2Funcion() {
         //Actualizar estado de la tabla venta_clientes
     });
 
-    //Asignar evento a boton entregar pedido 
+    //Asignar evento a boton entregar pedido
     $("#btnCancelar4").click(function() {
         //Llamar funcionPreparando
         //  canceladoFuncion();
@@ -2610,9 +2610,9 @@ $('#btnEliminarTicket').bind('click', function() {
         productosVenta = tickets[indice-1].productos;
         ticketPos = tickets[indice-1].id;
         $(`#ticket${ticketPos}`).tab('show');
-        
+
     }
-        
+
     else
     {
         productosVenta = tickets[0].productos;
