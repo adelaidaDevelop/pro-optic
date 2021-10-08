@@ -206,5 +206,5 @@ Route::prefix('/puntoVenta')->group(function () {
     //});
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::get('/import', [App\Http\Controllers\ProductoController::class, 'import']);
+    Route::get('/import/{nombreArchivo}', [App\Http\Controllers\ProductoController::class, 'import']);
 });

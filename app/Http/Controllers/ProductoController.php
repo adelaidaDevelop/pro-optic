@@ -381,16 +381,17 @@ class ProductoController extends Controller
 
     }
 
-    public function import()
+    public function import($nombreArchivo)
     {
         //(new VehiclesImport)->import('vehicles.xlsx');
-        Excel::import(new InventarioImport, 'inventarioFarmaciasGi.xlsx');
+        //Excel::import(new InventarioImport, 'inventarioFarmaciasGi.xlsx');
+        Excel::import(new InventarioImport, $nombreArchivo);
 
         /*$productos = Producto::all();
         foreach($productos as $producto)
         {
             Sucursal_producto::create([
-
+                $sp['costo'] = $producto->
             ]);
         }*/
         return redirect('/')->with('success', 'File imported successfully!');
