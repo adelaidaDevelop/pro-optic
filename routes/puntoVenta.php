@@ -26,7 +26,7 @@ use App\Http\Controllers\HistorialPedidoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ProductosCaducidadController;
 use App\Http\Controllers\SucursalProductoController;
-use App\Models\Producto;
+//use App\Models\Producto;
 use App\Models\Sucursal_producto;
 use Illuminate\Support\Facades\Route;
 

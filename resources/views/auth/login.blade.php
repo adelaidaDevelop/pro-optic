@@ -135,6 +135,8 @@
                         <button id="btn_login" type="submit"
                             class="btn btn-outline-dark  d-flex justify-content-center my-2 mb-3 mx-auto"><strong>INICIAR
                                 SESION</strong></button>
+                                <a href="{{url('password/reset')}}" class="d-flex justify-content-center my-2 mb-3 mx-auto">¿Olvidaste tu contraseña?</a>
+
                     </div>
                 </form>
             </div>
