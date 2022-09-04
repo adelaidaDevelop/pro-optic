@@ -40,6 +40,8 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="invitadoDropdown">
                     <a class="dropdown-item" href="{{ url('/loginCliente') }}">
                         <small>{{ __('IniciarSesion / Registrarse') }}</small></a>
+                    <a class="dropdown-item" href="{{ url('/puntoVenta/login') }}">
+                        <small>{{ __('Punto de venta') }}</small></a>
                 </div>
 
             </div>
@@ -56,6 +58,8 @@
                                                      document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}
                     </a>
+                    <a class="dropdown-item" href="{{ url('/puntoVenta/login') }}">
+                        <small>{{ __('Punto de vsenta') }}</small></a>
 
                     <form id="logout-form" action="{{ url('logoutCliente') }}" method="POST" class="d-none">
                         @csrf

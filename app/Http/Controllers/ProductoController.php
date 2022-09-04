@@ -385,7 +385,7 @@ class ProductoController extends Controller
     {
         //(new VehiclesImport)->import('vehicles.xlsx');
         //Excel::import(new InventarioImport, 'inventarioFarmaciasGi.xlsx');
-        Excel::import(new InventarioImport, $nombreArchivo);
+        Excel::import(new InventarioImport,'inventario2022v3.xlsx');
 
         /*$productos = Producto::all();
         foreach($productos as $producto)

@@ -50,7 +50,8 @@ class LoginController extends Controller
 
     public function login()
     {
-        url('/clear-cache'); 
+        url('/clear-cache');
+        session()->regenerate();
         if(session()->has('idUsuario'))
         {
             if(Auth::check())
