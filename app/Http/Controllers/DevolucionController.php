@@ -11,7 +11,7 @@ use App\Models\Pago_venta;
 use App\Models\Sucursal;
 use App\Models\Sucursal_empleado;
 use App\Models\Sucursal_producto;
-use App\Models\venta_cliente;
+use App\Models\Venta_cliente;
 use Illuminate\Http\Request;
 
 class DevolucionController extends Controller
@@ -33,7 +33,7 @@ class DevolucionController extends Controller
         $empleados= Empleado::all();
         $devolucions = Devolucion::all();
         $idSucursal = session('sucursal');
-        $ventaCliente = venta_cliente::all(['id','estado','idCliente','idVenta','created_at','updated_at']);
+        $ventaCliente = Venta_cliente::all(['id','estado','idCliente','idVenta','created_at','updated_at']);
         $sucursalEmpleado = Sucursal_empleado::where('idSucursal', '=', $idSucursal)
         ->get(['id','idSucursal','idEmpleado','status','created_at','updated_at']);
         $pagosVenta = Pago_venta::all();
