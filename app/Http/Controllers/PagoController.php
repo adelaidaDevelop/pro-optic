@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pago_venta;
 use App\Models\Venta;
-use App\Models\venta_cliente;
+use App\Models\Venta_cliente;
 use Illuminate\Http\Request;
 
 class PagoController extends Controller
