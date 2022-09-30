@@ -17,7 +17,7 @@ use App\Models\Proveedor;
 use App\Models\Sucursal;
 use App\Models\Sucursal_empleado;
 use App\Models\Sucursal_producto;
-use App\Models\venta_cliente;
+use App\Models\Venta_cliente;
 use App\Models\historialInventario;
 use Illuminate\Http\Request;
 //use PDF;
@@ -59,7 +59,7 @@ class ReporteController extends Controller
           //  ->get();
             //return $pagoCompras2;
       
-        $venta_cliente = venta_cliente::all(['id','estado','idCliente','idVenta','created_at','updated_at']);
+        $venta_cliente = Venta_cliente::all(['id','estado','idCliente','idVenta','created_at','updated_at']);
         $devoluciones = Devolucion::all(['idEmpSuc','idVenta','idProducto','precio','cantidad','observacion','created_at','updated_at']);
        // $pagoCompras= Pago_compra::all();
         $compras = Compra::all();
