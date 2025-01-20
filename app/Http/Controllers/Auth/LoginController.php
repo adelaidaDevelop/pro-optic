@@ -140,8 +140,7 @@ class LoginController extends Controller
                 ->where('idEmpleado','=',$empleado->id)->get()->first();
                 //return $sucursalEmpleado;
                 if(!empty($sucursalEmpleado) && $sucursalEmpleado->status == 'alta')
-                {
-//                    
+                {             
                 $request->session()->regenerate();
                 session(['idEmpleado' => $empleado->id]);
                 session(['idUsuario' => Auth::user()->id]);

@@ -725,7 +725,6 @@ let tickets = [{
 let contadorTicket = 0;
 let ticketPos = 0;
 //let subproductosVenta = [];
-//let productos = json($datosP);
 let productosSucursal = []; //json($productosSucursal);
 let departamentos = @json($departamentos);
 

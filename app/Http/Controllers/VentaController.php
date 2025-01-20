@@ -49,7 +49,7 @@ class VentaController extends Controller
         //$usuarios = ['crearVenta','admin'];
         //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
 
-        $datosP = Producto::all();
+        //$datosP = Producto::all();
         $departamentos = Departamento::all();
         $clientes = Cliente::all();
         //$datos['departamentos'] = Producto::paginate();
@@ -74,7 +74,7 @@ class VentaController extends Controller
           ->get();
           //return $seguimientoPedidoActivo;
 
-        return view('Venta.index', compact('datosP', 'departamentos', 'clientes', 'productosSucursal', 'subproductos',
+        return view('Venta.index', compact('departamentos', 'clientes', 'productosSucursal', 'subproductos',
          'ofertas','pedidosContraEntrega','detallePedidos','productos','seguimientoPedidoActivo'));
         //    return session('idEmpleado');
     }

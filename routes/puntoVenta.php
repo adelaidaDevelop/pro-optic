@@ -13,8 +13,6 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\OfertaController;
 use App\Http\Controllers\AdministracionController;
 use App\Http\Controllers\PerdidaController;
-
-//ade
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\SubproductoController;
 use App\Http\Controllers\ProveedorController;
@@ -26,12 +24,11 @@ use App\Http\Controllers\HistorialPedidoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ProductosCaducidadController;
 use App\Http\Controllers\SucursalProductoController;
-//use App\Models\Producto;
 use App\Models\Sucursal_producto;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/puntoVenta')->group(function () {
-    //Rutas para el acceso al sistema
+    //Rutas para el acceso al punto de venta
     Route::get('/login', [LoginController::class, 'login'])->name('Login'); //->middleware('isEmpleado');
     Route::post('/login', [LoginController::class, 'loginPost'])->name('Login');
     Route::post('/logout', [LoginController::class, 'logout'])->name('Login');
@@ -72,7 +69,6 @@ Route::prefix('/puntoVenta')->group(function () {
             Route::get('/permisosEmpleado/{id}', [SucursalEmpleadoController::class, 'permisosEmpleado']);
             Route::post('/sucursalEmpleado/editar/{id}', [SucursalEmpleadoController::class, 'editarEmpleado']);
             Route::resource('sucursalEmpleado', SucursalEmpleadoController::class);
-
 
             //AGREGAR PRODUCTOS A SUCURSAL DESDE STOCK
             Route::get('/producto/stock', [ProductoController::class, 'stock']);
