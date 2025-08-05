@@ -12,47 +12,15 @@ use Illuminate\Http\Request;
 
 class SucursalProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-       
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        
         $usuarios = ['crearProducto','crearCompra','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        //return 'Todo bien';
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
         $datos = $request->input('datos');
         $datosCodificados = json_decode($datos,true);
         foreach($datosCodificados as $datosProducto)
         {
-            //return $datosProducto['fechaCaducidad'];
-            //$actualizarProductoInd = Sucursal_producto::find($datosProducto['id']);//->update(['existencia'=>]);
             $sucursalProducto = new Sucursal_producto;//::where('idSucursal','=',session('sucursal'))
-            //->where('idProducto', '=',$datosProducto['id'])->get()->first();
             $sucursalProducto->idSucursal = session('sucursal');
             $sucursalProducto->idProducto = $datosProducto['id'];
             $sucursalProducto->existencia = $datosProducto['cantidad'];
@@ -61,7 +29,6 @@ class SucursalProductoController extends Controller
             $sucursalProducto->minimoStock = 10;
             $sucursalProducto->status = 1;
             $sucursalProducto->save();
-            //$actualizarProductoInd->save();
             if($datosProducto['fechaCaducidad'] == 1)
             {
                 $productoCaducidad = new Productos_caducidad;
@@ -73,7 +40,7 @@ class SucursalProductoController extends Controller
             }
         }
 
-        
+
     }
     public function crear($id){
         return "creado";
@@ -88,11 +55,9 @@ class SucursalProductoController extends Controller
 
     public function actPrecio(Request $request,$id){
         $suc_prod = Sucursal_producto::findOrFail($id);
-        //return $suc_prod;
         $precio['precio'] =  $request->input('precio');
         $suc_prod->update($precio);
         return true;
-        //return  redirect('/puntoVenta/producto');
 
     }
     public function actCosto(Request $request,$id){
@@ -104,32 +69,22 @@ class SucursalProductoController extends Controller
     //reemplazar existencia
     public function actExistencia(Request $request,$id){
         $suc_prod = Sucursal_producto::findOrFail($id);
-       // $existencia['existencia'] = $suc_prod->existencia + $request->input('cantidad');
         $existencia['existencia'] = $request->input('cantidad');
         $suc_prod->update($existencia);
         return  true;
     }
-//agregar existencia lo que hay mas nueva existencia
+//agregar existencia lo que hay mas la nueva existencia
     public function agregarExistencia(Request $request,$id){
         $suc_prod = Sucursal_producto::findOrFail($id);
         $existencia['existencia'] = $suc_prod->existencia + $request->input('cantidad');
-      //  $existencia['existencia'] = $request->input('cantidad');
         $suc_prod->update($existencia);
         return  true;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Sucursal_producto  $sucursal_producto
-     * @return \Illuminate\Http\Response
-     */
     public function show($producto)//Sucursal_producto $sucursal_producto)
     {
         $productos = Producto::where("nombre",'like',$producto."%")//->get(['id', 'codigoBarras', 'nombre', 'idDepartamento'])
         ->paginate(30,['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
         $productosBusqueda = [];
-        //return $productos;
         for($i=0;$i< count($productos);$i++)
         {
             $sP = Sucursal_producto::where('idProducto', '=', $productos[$i]->id)
@@ -143,7 +98,7 @@ class SucursalProductoController extends Controller
                 array_push($productosBusqueda,$productos[$i]);
             }
             if(count($productosBusqueda) >= 30)
-                return $productosBusqueda;
+                {return $productosBusqueda;}
         }
         return $productosBusqueda;//Sucursal_producto::where('idSucursal', '=',$id)->get();//->where('status','=',1)->get();
     }
@@ -152,12 +107,10 @@ class SucursalProductoController extends Controller
     {
         $codigo_decodificado = json_decode($codigo);
         $producto = Producto::where("codigoBarras",'like','%'.$codigo_decodificado.'%')->first(['id', 'codigoBarras', 'nombre', 'idDepartamento']);
-            //return json_encode($producto);
         if(isset($producto))
         {
-            //'Entra';
             $sP = Sucursal_producto::where('idProducto', '=', $producto->id)->where('idSucursal','=',session('sucursal'))
-                ->first(['existencia','costo','precio']);  
+                ->first(['existencia','costo','precio']);
             if(isset($sP))
             {
                 $producto->existencia = $sP->existencia;
@@ -166,8 +119,7 @@ class SucursalProductoController extends Controller
             return json_encode($producto);
             }
         }
-        return [];//json_encode(false);
-        
+        return [];
     }
 
     public function agregarProdStock_Suc($id){
@@ -175,24 +127,18 @@ class SucursalProductoController extends Controller
         $datosSP['costo']= 0;
         $datosSP['precio']= 0;
         $datosSP['existencia']= 0;
-        $datosSP['minimoStock']= 0 ;//$datosProducto['minimoStock'];
+        $datosSP['minimoStock']= 0 ;
         $datosSP['status']= 1;
         $idSucursal = session('sucursal');
         $datosSP['idSucursal'] = $idSucursal;
         $datosSP['idProducto'] = $producto->id;
         Sucursal_producto::create($datosSP);
         return redirect()->back()->withErrors(['mensaje' => 'PRODUCTO AGREGADO A ESTA SUCURSAL']);
-        // return redirect('/puntoVenta/producto');
     }
-
     //ENVIAR DATOS: PRODUCTOS DADOS DE BAJA ESTA SUCURSAL
     public function productos_baja(){
         $idSucursal = session('sucursal');
-        $productosBaja = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 0)->get();
-       // $producto= Producto::findOrFail($productosBaja->idProducto)->get();
-     //  $id= $productosBaja->idProducto->get();
-      //  $producto = Producto::all();
-        return  $productosBaja;
+        return  Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 0)->get();
     }
     //ALTA PRODUCTO A SUCURSALES
     public function altaProductoS($id){
@@ -203,37 +149,17 @@ class SucursalProductoController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Sucursal_producto  $sucursal_producto
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sucursal_producto $sucursal_producto)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Sucursal_producto  $sucursal_producto
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request,$id)//, Sucursal_producto $sucursal_producto)
     {
         $usuarios = ['modificarEmpleado','crearCompra','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
+
         if($id == 'productos')
         {
             $datos = $request->input('datos');
             $datosCodificados = json_decode($datos,true);
-            
             foreach($datosCodificados as $datosProducto)
             {
-                
                 //$actualizarProductoInd = Producto::find($datosProducto['id']);//->update(['existencia'=>]);
                 $actualizarProducto = Sucursal_producto::where('idSucursal','=',session('sucursal'))
                 ->where('idProducto', '=',$datosProducto['id'])->get()->first();
@@ -242,18 +168,16 @@ class SucursalProductoController extends Controller
                 $actualizarProducto->costo = $datosProducto['costo'];
                 $actualizarProducto->precio = $datosProducto['precio'];
                 $actualizarProducto->save();
-                
                 if($datosProducto['fechaCaducidad'] == 1)
                 {
                     $productoCaducidad = new Productos_caducidad;
-            
-                    $productoCaducidad->idSucursalProducto = $actualizarProducto->id;//$datosProducto['id'];
+                    $productoCaducidad->idSucursalProducto = $actualizarProducto->id;
                     $productoCaducidad->fecha_caducidad = $datosProducto['caducidad'];
                     $productoCaducidad->cantidad = $datosProducto['cantidad'];
                     $productoCaducidad->oferta = false;
                     $productoCaducidad->save();
                 }
-                
+
             }
             return 'Proceso terminado';
         }
@@ -267,17 +191,6 @@ class SucursalProductoController extends Controller
         return 'No hizo nada';
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Sucursal_producto  $sucursal_producto
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Sucursal_producto $sucursal_producto)
-    {
-        //
-    }
-
     public function inventarioRapido($total)
     {
 /*
@@ -289,7 +202,7 @@ class SucursalProductoController extends Controller
         {
             do {
                 $valor = mt_rand(1, $totalProductos);
-            } while (in_array($valor, $valores)); 
+            } while (in_array($valor, $valores));
             array_push($valores,$valor);
             //if(in_array($valor, $valores))
             if($valor>count($productosSucursal))
@@ -308,7 +221,6 @@ class SucursalProductoController extends Controller
                 array_push($productosRapidos,$productosSucursal[$valor-1]);
             }
         }*/
-        //return session()->all();
         $productosRapidos = [];
         $productosSucursal = Sucursal_producto::where('idSucursal', '=',session('sucursal'))
         ->get(['id','idProducto','existencia'])->random($total);
@@ -322,17 +234,17 @@ class SucursalProductoController extends Controller
                 $subproducto->id = $pS->id;
                 array_push($subproductosSucursal,$subproducto);
             }
-                
+
         }
         $totalProductos = count($productosSucursal) + count($subproductosSucursal);
         if($total>$totalProductos)
-            $total = $totalProductos;
+           { $total = $totalProductos;}
         $valores = [];
         for($i=0;$i<$total;$i++)
         {
             do {
                 $valor = mt_rand(1, $totalProductos);
-            } while (in_array($valor, $valores)); 
+            } while (in_array($valor, $valores));
             array_push($valores,$valor);
             //if(in_array($valor, $valores))
             if($valor>count($productosSucursal))
@@ -346,12 +258,11 @@ class SucursalProductoController extends Controller
             else{
                 $producto = Producto::findOrFail($productosSucursal[$valor-1]->idProducto);
                 $productosSucursal[$valor-1]->nombre = $producto->nombre;
-                //$productosSucursal[$valor-1]->nombre = $producto->nombre;
                 $productosSucursal[$valor-1]->producto = true;
                 array_push($productosRapidos,$productosSucursal[$valor-1]);
             }
         }
-        return $productosRapidos;// view('Producto.inventarioRapido');
+        return $productosRapidos;
     }
-    
+
 }

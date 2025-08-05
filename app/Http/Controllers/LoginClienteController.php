@@ -14,49 +14,32 @@ use App\Models\Sucursal_producto;
 use Illuminate\Support\Arr;
 use Validator, Hash, Auth;
 use Illuminate\Auth\Events\Registered;
-//use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginClienteController extends Controller
 {
-
-    //use AuthenticatesUsers;
-
-    public function __construct()
-    {
-        //$this->middleware('guest')->except('logout');
-    }
+    public function __construct(){}
 
     public function loginCliente()
     {
-        //$this->middleware('isCliente');
-        $compra = NULL;
+        $compra = null;
         if (isset($_GET['compra']))
-            $compra = $_GET['compra']; //return "Recibi tu párametro";
+        {$compra = $_GET['compra'];}
         $sucursales = Sucursal::all();
         $departamentos = Departamento::where('ecommerce', '=', 1)->get(['id', 'nombre']);
 
         if(session()->has('idCliente'))
         {
-            if(Auth::check())
-            {
-                if(Auth::user()->tipo == 2)
-                {
-                    
-                    //return $next($request);
-                }else
-                Auth::logout();
-            }
+            if(Auth::check() && !Auth::user()->tipo == 2) {Auth::logout();}
+
             $idCliente = session('idCliente');
             Auth::loginUsingId($idCliente);
             return redirect('/menu');
         }
         return view('auth.loginCliente', compact('sucursales', 'departamentos', 'compra'));
-        //return redirect('/');
     }
 
     public function loginPost(Request $request)
     {
-
         /*$rules = [
             'email' =>'required|email',
             'password' => 'required|min:8'
@@ -73,16 +56,13 @@ class LoginClienteController extends Controller
                 'typealert','danger');
         endif;*/
         $credentials = $request->only('email', 'password');
-
         if (Auth::attempt($credentials)) {
             if (Auth::user()->tipo == 2) {
                 $request->session()->regenerate();
                 session(['idCliente' => Auth::user()->id]);
-
                 $carritoUsuario = Carrito::where('idUsuario', '=', Auth::user()->id)->get();
                 $carrito = [];
                 if (count($carritoUsuario) > 0) {
-
                     foreach ($carritoUsuario as $c) {
                         $p = Producto::find($c->idProducto);
                         $sp = Sucursal_producto::where('idSucursal', '=', session('sucursalEcommerce'))
@@ -94,14 +74,14 @@ class LoginClienteController extends Controller
                             } else {
                                 $producto = [];
                                 if ($c->cantidad <= $sp->first()->existencia)
-                                    $producto['cantidad'] = $c->cantidad;
+                                    {$producto['cantidad'] = $c->cantidad;}
                                 else
-                                    $producto['cantidad'] = $sp->first()->existencia;
+                                    {$producto['cantidad'] = $sp->first()->existencia;}
                                 $producto['id'] = $p->id;
                                 $producto['imagen'] = $p->imagen;
                                 $producto['nombre'] = $p->nombre;
                                 $producto['precio'] = $sp->first()->precio;
-                                $producto['sucursal'] = $c->idSucursal; // session('sucursalEcommerce');
+                                $producto['sucursal'] = $c->idSucursal;
                                 array_push($carrito, $producto);
                             }
                         }
@@ -110,7 +90,6 @@ class LoginClienteController extends Controller
 
                 $carritoInvitado = session('carrito');
                 if (isset($carritoInvitado) && count($carritoInvitado) > 0) {
-
                     for ($x = 0; $x < count($carritoInvitado); $x++) {
                         $encontrado = false;
                         for ($i = 0; $i < count($carrito); $i++) {
@@ -140,21 +119,17 @@ class LoginClienteController extends Controller
                             $agregarProductoCarrito->idSucursal = $carritoInvitado[$x]['sucursal'];
                             $agregarProductoCarrito->cantidad = $carritoInvitado[$x]['cantidad'];
                             $agregarProductoCarrito->save();
-
-
                             array_push($carrito, $carritoInvitado[$x]);
                         }
                     }
                 }
                 session(['carrito' => $carrito]);
-
                 if (isset($_GET['compra']))
-                    return redirect('/direccionEnvio');
+                   { return redirect('/direccionEnvio');}
                 return redirect('/menu'); //->intended('/');
             }
             Auth::logout();
         }
-
         return redirect('loginCliente')->withErrors([
             'email' => 'El email y/o la contraseña son incorrectos',
         ]);
@@ -163,40 +138,33 @@ class LoginClienteController extends Controller
     public function logout(Request $request)
     {
         session()->forget('idCliente');
-        //session()->forget('idUsuario');
         $carrito = [];
         session(['carrito' => $carrito]);
-        //session()->forget('carrito');
         Auth::logout();
         /*$idCliente = NULL;
         if(session()->has('idCliente'))
         {
             $idCliente = session('idCliente');
         }*/
-        //$request->session()->invalidate();
         $request->session()->regenerate();
-
         $request->session()->regenerateToken();
         /*if($idCliente != NULL)
         {
             session(['idCliente'])
         }*/
-
         return redirect('/loginCliente');
-        //return 'Tambien entra a esta funcion';
     }
     public function register()
     {
         $sucursales = Sucursal::all();
         $departamentos = Departamento::where('ecommerce', '=', 1)->get(['id', 'nombre']);
         if (!Auth::check())
-            return view('auth.registerCliente', compact('sucursales', 'departamentos'));
+           { return view('auth.registerCliente', compact('sucursales', 'departamentos'));}
         return redirect('/');
     }
     public function registerPost(Request $request)
     {
         $this->validator($request->all())->validate();
-        //return 'ok';
         $datosEmpleado = request()->except('_token', 'password_confirmation', 'username', 'password', 'email'); //,'apellidos','contra2','correo');
         $usuario = User::create([
             'username' => $request['username'],
@@ -204,21 +172,18 @@ class LoginClienteController extends Controller
             'password' => Hash::make($request['password']),
             'tipo' => 2,
         ]);
-        
         $datosEmpleado = Arr::add($datosEmpleado, 'idUsuario', $usuario->id);
         $datosEmpleado = Arr::add($datosEmpleado, 'tipo', 2);
-        //$empleado = new Empleado;
         $cliente = Cliente::create($datosEmpleado);
         Auth::loginUsingId($usuario->id);
         session(['idCliente' => Auth::user()->id]);
         event(new Registered($usuario));
-        return redirect('/menu'); // $datosEmpleado;//view('auth.registerCliente');
+        return redirect('/menu');
     }
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'nombre' => ['required', 'string', 'max:50'],
-            //'domicilio' => ['required', 'string', 'max:50'],
             'telefono' => ['required', 'string', 'max:10'],
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

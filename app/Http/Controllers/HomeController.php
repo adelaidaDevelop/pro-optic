@@ -9,23 +9,9 @@ use App\Models\Role;
 use App\Models\Modulo;
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //$this->middleware('auth');
-        //$this->middleware('isEmpleado');
-        
-    }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+    public function __construct(){  }
+
     public function index()
     {
     //    return session('idEmpleado');
@@ -47,11 +33,8 @@ class HomeController extends Controller
             }
         }
         $usuarios = ['admin','crearVenta'];//,'admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);*/  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);*/
+
             return redirect('puntoVenta/venta');
-        //view('Venta.index');
-       // return view('header2');
-    //  return view('layouts.app');
     }
 }

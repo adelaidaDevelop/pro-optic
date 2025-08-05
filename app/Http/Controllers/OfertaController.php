@@ -10,61 +10,31 @@ use Illuminate\Http\Request;
 
 class OfertaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $usuarios = ['verProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
         return view('Producto.oferta');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $usuarios = ['crearProducto','modificarProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
         $idSP = $request['producto']['idSucursalProducto'];
         $cantidad = $request['producto']['cantidad'];
         $oferta = Oferta::where('idSucursalProducto','=',$idSP);
         $of = $oferta->get()->first();
-        
-        //return $oferta;
         if(isset($of))
         {
-            //return 'pasa algo 0';
             $suma = $oferta->get()->first()->existencia + $cantidad;
             $oferta->update(['existencia' => $suma]);
-            //$oferta->save();
-            //return $suma;
         }
         else{
-            //return 'pasa algo 1';
             Oferta::create([
                 'idSucursalProducto' => $idSP,
                 'existencia' => $cantidad
             ]);
-            //return true;
         }
         $sucursalProducto = Sucursal_producto::findOrFail($idSP);//->update(['existencia' =>])
         $resta = $sucursalProducto->existencia - $cantidad;
@@ -72,19 +42,13 @@ class OfertaController extends Controller
         return true;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Oferta  $oferta
-     * @return \Illuminate\Http\Response
-     */
     protected function show($producto)
     {
         //$productos = Producto::all();
         //$sucursalProducto = Sucursal_producto::where('idSucursal', '=',$idS)->get();
     //    $usuarios = ['verProducto','crearProducto','modificarProducto','crearVenta','admin'];
-    //    Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-    /*    
+    //    Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
+    /*
     $productos = Producto::where("nombre",'like',$producto."%")->get(['id', 'codigoBarras', 'nombre', 'idDepartamento']);//paginate(30,
         //['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
         $productosBusqueda = [];
@@ -117,51 +81,27 @@ class OfertaController extends Controller
         foreach($productosOferta as $pO)
         {
             $idSP = $pO->idSucursalProducto;
-            
             $sucursalProducto = Sucursal_producto::findOrFail($idSP);// where('idSucursal', '=',$idS)->get();
-            
             if($sucursalProducto->idSucursal == session('sucursal'))//$idS)
             {
-                //$producto = Producto::findOrFail($sucursalProducto->idProducto);
                 $producto1 = Producto::where("nombre",'like',$producto."%")
                 ->where('id','=',$sucursalProducto->idProducto)->get(['id', 'codigoBarras', 'nombre', 'idDepartamento'])->first();
-                //return $producto->nombre;
                 $pO->id = $sucursalProducto->idProducto;
                 $pO->precio = $sucursalProducto->costo;
-                //$pO->cantidad = $sucursalProducto->cantidad
                 $pO->nombre = $producto1->nombre;
                 $pO->codigoBarras = $producto1->codigoBarras;
                 $pO->idDepartamento = $producto1->idDepartamento;
                 array_push($productosO, $pO);
             }
         }
-        return $productosO;//ProductosCaducidad::where('idSucursalProducto', '=',$id)->get();
-        
+        return $productosO;
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Oferta  $oferta
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Oferta $oferta)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Oferta  $oferta
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $usuarios = ['eliminarProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
         if(isset($request['restar']))
         {
             $oferta = Oferta::where('idSucursalProducto','=',$id);//->update(['existencia'])
@@ -171,23 +111,10 @@ class OfertaController extends Controller
         }
         return ':p';
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Oferta  $oferta
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Oferta $oferta)
-    {
-        //
-    }
-
     public function editarOferta(Request $request, $id)
     {
         $usuarios = ['eliminarProducto','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
         if(isset($request['restar']))
         {
             $oferta = Oferta::where('idSucursalProducto','=',$id);//->update(['existencia'])

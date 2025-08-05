@@ -20,7 +20,6 @@ use App\Models\Sucursal_producto;
 use App\Models\Venta_cliente;
 use App\Models\historialInventario;
 use Illuminate\Http\Request;
-//use PDF;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
 
@@ -28,27 +27,18 @@ class ReporteController extends Controller
 {
     public function __construct()
     {
-        //$usuarios = ['admin',];//,'admin'];
-        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function encabezadoPag(Request $request){
         $datos = $request->input('datos');
         $div = json_decode($datos, true);
-     //  return $datosCodificados;
         return  compact('div');
-      //  return view('encabezado_pie', compact('div'));
        return view('encabezado_pie', compact('datos'));
     }
     public function index()
     {
         $usuarios = ['verCorte','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
         //CORTE DE CAJA INDEX
         $ventas = Venta::all(['id','tipo','pago','status','idSucursalEmpleado','created_at','updated_at']);
         $pagos = Pago_venta::all(['idVentaCliente','idEmpSuc', 'monto','created_at','updated_at']);
@@ -57,11 +47,8 @@ class ReporteController extends Controller
        //     ->join('Sucursal_empleado', 'Pago_compra.idEmpSuc', '=', 'Sucursal_empleado.id')
         //    ->where('Sucursal_empleado.idSucursal','=', $idSucursal)
           //  ->get();
-            //return $pagoCompras2;
-      
         $venta_cliente = Venta_cliente::all(['id','estado','idCliente','idVenta','created_at','updated_at']);
         $devoluciones = Devolucion::all(['idEmpSuc','idVenta','idProducto','precio','cantidad','observacion','created_at','updated_at']);
-       // $pagoCompras= Pago_compra::all();
         $compras = Compra::all();
         $empleados = Empleado::all();
         $productos = Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento','imagen']);
@@ -71,10 +58,8 @@ class ReporteController extends Controller
         $suc_prod = Sucursal_producto::where('idSucursal', '=', $idSucursal)
         ->get(['id','costo','precio','existencia','minimoStock','idProducto','status']);
         //Seleccionar empleados que son cajeros
-        
         $suc_act = Sucursal::findOrFail($idSucursal)->get(['direccion','telefono','status']);
         $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get(['id','idSucursal','idEmpleado','status','created_at','updated_at']);
-        //return $sucursalEmpleados;
         return view('Reportes.corteCaja', compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados','suc_act','detalleV', 'productos', 'suc_prod','venta_cliente','departamento'));
     }
     public function corte_cajaView(){
@@ -87,13 +72,11 @@ class ReporteController extends Controller
     {
         //REPORTE INVENTARIO INDEX
         $usuarios = ['verReporte','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
         $empleados = Empleado::all(['id','primerNombre','segundoNombre','apellidoPaterno','apellidoMaterno','genero']);
         $idSucursal = session('sucursal');
         $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)
         ->get(['id','idEmpleado','status']);
-
         $compras= Compra::all();
         $detalleCompra= Detalle_compra::all();
         $productos= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento','created_at','updated_at']);
@@ -121,8 +104,7 @@ class ReporteController extends Controller
     public function index4()
     {
         $usuarios = ['verReporte','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-        
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
         $empleados = Empleado::all();
         $idSucursal = session('sucursal');
         $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
@@ -132,7 +114,6 @@ class ReporteController extends Controller
         $devoluciones= Devolucion::all();
         $departamentos= Departamento::all();
         $ventas = Venta::all();
-
         $comprasFiltro = [];
         foreach($compras as $c)
         {
@@ -144,11 +125,9 @@ class ReporteController extends Controller
                 }
             }
         }
-
         $ventasFiltro = [];
         foreach($ventas as $v)
         {
-           // $bandera = true;
             foreach($sucursalEmpleados as $suc_emp)
             {
                 if($suc_emp->id == $v->idSucursalEmpleado){
@@ -157,81 +136,13 @@ class ReporteController extends Controller
             }
         }
         $hoy = now()->toDateString();
-        $ayer = date("d-m-Y",strtotime($hoy."- 1 days")); 
-       // return $ayer;
+        $ayer = date("d-m-Y",strtotime($hoy."- 1 days"));
         $proveedores = Proveedor::where('status','=', 1)->get(['id','nombre']);
         $detalle_ventas = Detalle_venta::all();
         $sucursal_productos = Sucursal_producto::where('idSucursal','=', $idSucursal)->get();
         $totalInventario = historialInventario::where('idSucursal','=', $idSucursal)->where('fecha','=', $ayer)
         ->select('totalInv')->get();
-        return view('Reportes.entradas_salidas', compact('empleados', 'compras', 'detalleCompra', 'productos', 'devoluciones', 'departamentos', 'ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados','proveedores','comprasFiltro','ventasFiltro','totalInventario'));    
-    }
-      
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Reporte  $reporte
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Reporte $reporte)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Reporte  $reporte
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Reporte $reporte)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Reporte  $reporte
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Reporte $reporte)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Reporte  $reporte
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Reporte $reporte)
-    {
-        //
+        return view('Reportes.entradas_salidas', compact('empleados', 'compras', 'detalleCompra', 'productos', 'devoluciones', 'departamentos', 'ventas', 'detalle_ventas', 'sucursal_productos', 'sucursalEmpleados','proveedores','comprasFiltro','ventasFiltro','totalInventario'));
     }
 
     public function histoVenta(){
@@ -243,12 +154,8 @@ class ReporteController extends Controller
             ->select('sucursal_empleados.idSucursal as idSucu',  DB::raw('SUM(detalle_ventas.precioIndividual * detalle_ventas.cantidad) as sumaT'))
             ->groupBy('sucursal_empleados.idSucursal')
     ->get();
-        //return $datos;
-       // $array = (array) $datos;
         $array = json_decode(json_encode($datos), true);
-    //return $array;
     foreach ($array as $datosInsertar) {
-      //  return $datosInsertar;
       $historialV = new historialInventario;
       $historialV->totalInv = $datosInsertar['sumaT'];
       $historialV->fecha = $hoy;
@@ -268,11 +175,8 @@ class ReporteController extends Controller
         //Seleccionar empleados que son cajeros
         $idSucursal = session('sucursal');
         $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)->get();
-        //return $sucursalEmpleados;
       //  return view('Reportes.corteCaja', compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados'));
-
      //  $datos = compact('empleados','ventas', 'pagos', 'devoluciones','pagoCompras','compras','sucursalEmpleados');
-       
        $data = [
             'empleados' => $empleados,
             'ventas' => $ventas,
@@ -282,14 +186,11 @@ class ReporteController extends Controller
             'compras' =>$compras,
             'sucursalEmpleados' => $sucursalEmpleados
         ];
-        
-        
         $pdf = PDF::loadHTML('Reportes\corteCaja', $data)
         ->setPaper('a4', 'landscape');
-        
         //return $pdf;
         $pdf->save('corteCaja10.pdf');
-        return back(); 
+        return back();
     }
 /*
     function pdf2(){
@@ -301,11 +202,8 @@ class ReporteController extends Controller
     $data = [
         'titulo' => 'Styde.net'
     ];
-
     $pdf = \PDF::loadView('Reportes\corteCaja', $data);
-
     return $pdf->save('corte_caja.pdf');
     }
-
     */
 }

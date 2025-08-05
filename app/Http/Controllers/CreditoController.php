@@ -9,26 +9,17 @@ use App\Models\Producto;
 use App\Models\Detalle_venta;
 use App\Models\Pago_venta;
 use App\Models\Sucursal_empleado;
-
-
-
 use Illuminate\Http\Request;
 use SebastianBergmann\Environment\Console;
 
 class CreditoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $usuarios = ['verDeudor','admin'];
-        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
+        Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
         $idSucursal = session('sucursal');
-       // $sucursalEmpleados = Sucursal_empleado::where('idSucursal', '=', $idSucursal)
-       // ->get(['id','idSucursal','idEmpleado','status','created_at','updated_at']);
        $estado2= "incompleto";
         $venta_clientes= Venta_cliente::where('estado','=', $estado2)->get();
         $cliente= Cliente::all(['id', 'nombre','telefono','domicilio' ,'tipo','idUsuario','created_at','updated_at']);
@@ -36,77 +27,19 @@ class CreditoController extends Controller
         $detalleVentas= Detalle_venta::all();
         $productos = Producto::all();
         $pagos_ventas= Pago_venta::all();
-        
           return view('ListaDeudor.index', compact( 'venta_clientes', 'cliente','ventas','detalleVentas', 'productos','pagos_ventas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('ListaDeudor.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        
          $datosProducto = request()->except('_token');
          Venta_cliente::insert($datosProducto);
          return redirect('credito');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Credito  $credito
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Venta_cliente $credito)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Credito  $credito
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Venta_cliente $credito)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Credito  $credito
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Venta_cliente $credito)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Credito  $credito
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Venta_cliente $credito)
-    {
-        //
     }
 
     public function datosNuevos()
@@ -117,7 +50,6 @@ class CreditoController extends Controller
         $detalleVentas= Detalle_venta::all();
         $productos = Producto::all();
         $pagos= Pago_venta::all();
-        
         return  compact( 'credito', 'cliente','ventas','detalleVentas', 'productos','pagos');
     }
 }

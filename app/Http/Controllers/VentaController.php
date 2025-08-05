@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\DB;
 
 //imp directo
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
-//use CapabilityProfile;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\EscposImage;
@@ -35,51 +34,32 @@ class VentaController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth');
         $this->middleware('isEmpleado');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-
-        //$usuarios = ['crearVenta','admin'];
-        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-
         $datosP = Producto::all();
         $departamentos = Departamento::all();
         $clientes = Cliente::all();
-        //$datos['departamentos'] = Producto::paginate();
         $idSucursal = session('sucursal');
         $subproductos = Subproducto::all();
         $ofertas = Oferta::all();
-        //$sucursalProd = Sucursal_producto::where('idSucursal', $idSucursal)->get();
         $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)->where('status', '=', 1)->get();
         $pedidosContraEntrega = Pedido_contra_entrega::where('idSucursal', '=',session('sucursal'))->get();
         $productos = Producto::get();
         $detallePedidos = detallePedido_CE::get();
-        
-      //  $ventas = Venta::where('tipo','=',$tipo)->where('status', '=', $status);
       $tipo ='ecommerce';
       $status = 1;
       $estado = 'PAGADO';
       $seguimientoPedidoActivo = DB::table('ventas')
       ->join('venta_clientes', 'ventas.id', '=', 'venta_clientes.idVenta')
        ->where('ventas.tipo', '=', $tipo)->where('ventas.status','=',$status)->where('venta_clientes.estado','!=', $estado)
-          // ->select('sucursal_empleados.idSucursal as idSucu')
-          // ->groupBy('sucursal_empleados.idSucursal')
           ->get();
-          //return $seguimientoPedidoActivo;
-
         return view('Venta.index', compact('datosP', 'departamentos', 'clientes', 'productosSucursal', 'subproductos',
          'ofertas','pedidosContraEntrega','detallePedidos','productos','seguimientoPedidoActivo'));
-        //    return session('idEmpleado');
     }
     //Funcion recuperar solo datos
-
     public function buscador()
     {
         $tipo ='ecommerce';
@@ -89,7 +69,6 @@ class VentaController extends Controller
         ->join('venta_clientes', 'ventas.id', '=', 'venta_clientes.idVenta')
          ->where('ventas.tipo', '=', $tipo)->where('ventas.status','=',$status)->where('venta_clientes.estado','!=', $estado)
             ->select('venta_clientes.estado as estado', 'ventas.id as idVenta', 'ventas.totalV as totalV')
-            // ->groupBy('sucursal_empleados.idSucursal')
             ->get();
             return $seguimientoPedidoActivo;
     }
@@ -102,42 +81,17 @@ class VentaController extends Controller
        ->join('venta_clientes', 'ventas.id', '=', 'venta_clientes.idVenta')
         ->where('ventas.tipo', '=', $tipo)->where('ventas.status','=',$status)->where('venta_clientes.estado','!=', $estado)
          ->select('venta_clientes.estado as estado2','ventas.id as idVenta', 'ventas.totalV as totalV')
-            // ->groupBy('sucursal_empleados.idSucursal')
             ->get();
-            //$idVenta = $seguimientoPedidoActivo->id;
-       // $datosConsulta['sucursalB'] = Sucursal::where("direccion",'like',$request->texto."%")->get();
         return view('Ecommerce.formSeguiPedi',compact('seguimientoPedidoActivo'));
-        //return $datosConsulta;
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //$usuarios = ['crearVenta','admin'];
-        //Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);  
-
         $datos = $request->input('datos');
         $estado = $request->input('estado');
         $pago = $request->input('pago');
         $idSucursalEmpleado = $request->input('idSucursalEmpleado');
         $venta = "";
         $datosCodificados = json_decode($datos, true);
-
         if ($request->has('cliente')) {
             $hoy = now()->toDateString();
             $cliente = $request->input('cliente');
@@ -147,28 +101,21 @@ class VentaController extends Controller
                 'status' => true,
                 'idSucursalEmpleado' => $idSucursalEmpleado, //session('idSucursalEmpleado'),
             ]);
-
             $credito = new Venta_cliente; //credito
             $credito->estado = 'incompleto';
             $credito->idCliente = $cliente;
             $credito->idVenta = $venta->id;
             $credito->save();
-
             if ($pago > 0) {
-
                 $pagoCredito = new Pago_venta;
                 $pagoCredito->idVentaCliente = $credito->id;
                 $pagoCredito->idEmpSuc = $idSucursalEmpleado;
                 $pagoCredito->monto = $pago;
                 $pagoCredito->save();
-                //return 'Todo bien hasta aqui';
             }
         } else {
-            // session('idSucursalEmpleado');
             $hoy = now()->toDateString();
-            //return $hoy;
             $venta = Venta::create([
-                // 'estado' => $estado,
                 'tipo' => $estado,
                 'idSucursalEmpleado' => $idSucursalEmpleado, //session('idSucursalEmpleado'),
                 'pago' => $pago,
@@ -177,12 +124,10 @@ class VentaController extends Controller
             ]);
         }
         foreach ($datosCodificados as $datosProducto) {
-            //return $datosProducto;
             $producto = new Detalle_venta;
             $producto->cantidad = $datosProducto['cantidad'];
             $producto->idProducto = $datosProducto['idProducto'];
             $producto->precioIndividual = $datosProducto['precio'];
-
             if ($datosProducto['tipo'] == 0)
                 $tipo = 'NORMAL';
             if ($datosProducto['tipo'] == 1)
@@ -190,10 +135,8 @@ class VentaController extends Controller
             if ($datosProducto['tipo'] == 2)
                 $tipo = 'OFERTA';
             $producto->tipo = $tipo;
-            //$producto->subtotal = $datosProducto['subtotal'];
             $producto->idVenta = $venta->id;
             $producto->save();
-            //return 'Si llega hasta aqui';
             $tipo =  $datosProducto['tipo'];
             if ($tipo == 0) {
                 $productosSucursal = Sucursal_producto::where('idProducto', '=', $datosProducto['idProducto'])
@@ -218,83 +161,52 @@ class VentaController extends Controller
         }
         return $venta->id;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Venta  $venta
-     * @return \Illuminate\Http\Response
-     */
-    /////SHOW2: ORIGINAL
-    public function show2($folio) //Venta $venta)
+    public function show2($folio)
     {
         $venta = Venta::findOrFail($folio);
         $sE = Sucursal_empleado::findOrFail($venta->idSucursalEmpleado);
         $e = Empleado::findOrFail($sE->idEmpleado);
-
         if ($e->id == 1)
             $cajero =  "ADMINISTRADOR DE LA TIENDA";
         else
             $cajero = $e->primerNombre . " " . $e->segundoNombre . " " . $e->apellidoPaterno . " " . $e->apellidoMaterno;
-        //return $nombre;
         $detalleVenta = Detalle_venta::where('idVenta', '=', $folio)->get(['cantidad', 'precioIndividual']);
         $pago = $venta->pago;
-        /*$total = 0;
-        foreach($detalleVenta as $dV)
-        {
-            $total = $total + $dV->
-        }*/
-
         return view('Venta.ticket', compact('cajero', 'folio', 'pago'));
     }
     //Actualizar el estado de un paquete
     public function act_est_paq(Request $request){
         $idV = $request->input('idV');
         $estado = $request->input('estado');
-      //  return $estado;
         $pedido = Venta_cliente::where('idVenta','=', $idV);//->first()->get();
-        //  return $pedido;
-        //$pedido->estado = $estado;
-      //  $pedido->save();
         $pedido->update(['estado' => $estado]);
-       // return $pedido;
         return true;
     }
     ////
     public function show($folio) //Venta $venta)
     {
-      //  return true;
         $venta = Venta::findOrFail($folio);
         $sE = Sucursal_empleado::findOrFail($venta->idSucursalEmpleado);
         $e = Empleado::findOrFail($sE->idEmpleado);
-
         if ($e->id == 1)
             $cajero =  "ADMINISTRADOR DE LA TIENDA";
         else
             $cajero = $e->primerNombre . " " . $e->segundoNombre . " " . $e->apellidoPaterno . " " . $e->apellidoMaterno;
-        //return $nombre;
         $detalleVenta = Detalle_venta::where('idVenta', '=', $folio)->get(['cantidad', 'precioIndividual']);
         $pago = $venta->pago;
-
-        //
         $productos= json_decode($_GET['productos']);
-        
         $totalOk = 0;
         foreach ($productos as $p) {
             $subtotal = $p->precio * $p->cantidad;
             $totalOk = $totalOk + $subtotal;
         }
         $cambio = $pago - $totalOk;
-
-        
         //IMPRIRMIR
         $nombreImpresora = "EC-PM-5890X";
         $connector = new WindowsPrintConnector($nombreImpresora);
-        //return 'Aqui todo bien';
         $printer = new Printer($connector);
 
-        //contenido imprimir
-        //productos de la venta
+        //contenido imprimir --//productos de la venta
         $arregloP = null;
         $comprasFiltro = [];
         foreach ($productos as $p) {
@@ -307,23 +219,15 @@ class VentaController extends Controller
         // $subtotal = new item('Subtotal', '12.95');
         // $tax = new item('A local tax', '1.30');
         $total = new ItemController('Total', $totalOk, true);
-
         $date = now()->format('d-m-Y h:i:s A');
-
-        
         //logo empresa
-        
         //$logo = EscposImage::load("img/farmaciagilogo.png", false);
-
-        
         //CArgar logo
         /* Print top logo */
         $printer->setJustification(Printer::JUSTIFY_CENTER);
-        //$printer->graphics($logo);
-        
+
         /* Name of shop */
         $nombreSuc = session("sucursalNombre");
-       // return $nombreSuc;
         $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
         $printer->text("FARMACIAS GI S.A DE C.V.\n");
         $printer->selectPrintMode();
@@ -335,8 +239,6 @@ class VentaController extends Controller
         $printer->text($date . "\n");
         $printer->setEmphasis(false);
 
-        
-
         /* Items */
         $printer->setJustification(Printer::JUSTIFY_LEFT);
         $printer->setEmphasis(false);
@@ -345,7 +247,7 @@ class VentaController extends Controller
         foreach ($comprasFiltro as $item) {
             $printer->text($item);
         }
-        
+
 
        // $printer->setEmphasis(false);
         //$printer->setEmphasis(true);
@@ -353,72 +255,26 @@ class VentaController extends Controller
       //  $printer->setEmphasis(false);
         $printer->feed();
 
-        
         /* Tax and total */
-      //  $printer->text($tax);
         $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
         $printer->text($total);
         $printer->selectPrintMode();
 
-        
         /* Footer */
         $printer->feed(2);
         $printer->setJustification(Printer::JUSTIFY_CENTER);
         $printer->text("FARMACIAS GI ZIMATLAN, AGRADECE SU PREFERENCIA.\n");
         $printer->feed(2);
-        
-        
+
         /* Cut the receipt and open the cash drawer */
         $printer->cut();
-      //  $printer->Pulse();
         $printer->close();
-
-       // return $total;
     return true;
-        //        return true;
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Venta  $venta
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Venta $venta)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Venta  $venta
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Venta $venta)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Venta  $venta
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Venta $venta)
-    {
-        //
-    }
-    //metodo imprimir directo 
+    //metodo imprimir directo
     public function printVenta()
     {
         try {
-
-            // $profile = CapabilityProfile::load("simple");
-
-            //$conector = new WindowsPrintConnector("smb://user:pass@maquina1/epson_tm34");
             $conector = new WindowsPrintConnector("smb://hzhm1:1997@DESKTOP-PNF6KCF/EC-PM-5890X");
             //$conector = new WindowsPrintConnector("smb://hzhm1:1997@LAPTOPADE/Brother_DCP-T510W1");
             //adelaida.molinar1997@gmail.com:Adelaida_97
@@ -434,7 +290,6 @@ class VentaController extends Controller
             // $printer->close();
             return true;
         } catch (Exception $e) {
-            // return $e->getMessage();
             echo 'Excepción capturada: ',  $e->getMessage(), "\n";
         }
     }
@@ -442,20 +297,19 @@ class VentaController extends Controller
     {
         $nombreImpresora = "EC-PM-5890X";
         $connector = new WindowsPrintConnector($nombreImpresora);
-        //return 'Aqui todo bien';
         $impresora = new Printer($connector);
         $impresora->setJustification(Printer::JUSTIFY_CENTER);
         $impresora->setTextSize(2, 2);
         /*$texto = ` <!DOCTYPE html>
         <html lang="en">
-        
+
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Document</title>
             <link href="{{ asset('css/ticket.css') }}" rel="stylesheet">
         </head>
-        
+
         <body>
         @php
         if(isset($_GET['productos'])){
@@ -469,7 +323,7 @@ class VentaController extends Controller
         }
         $cambio = $pago - $total;
         @endphp
-            
+
         <div class="ticket">
                     <img
                         src="{{ asset('img\farmaciagilogo.png') }}"
@@ -525,9 +379,9 @@ class VentaController extends Controller
                     <p class="centrado">¡GRACIAS POR SU COMPRA!
                         <br>farmaciasgizimatlan.epizy.com</p>
                 </div>
-            
+
         </body>
-        
+
         </html> `;*/
         $impresora->text("");
         $impresora->text("ticket\n");
@@ -543,7 +397,6 @@ class VentaController extends Controller
     {
         $nombreImpresora = "EC-PM-5890X";
         $connector = new WindowsPrintConnector($nombreImpresora);
-        //return 'Aqui todo bien';
         $impresora = new Printer($connector);
         $impresora->setJustification(Printer::JUSTIFY_CENTER);
         $impresora->setTextSize(2, 2);
@@ -577,7 +430,6 @@ class VentaController extends Controller
             $subtotalPedido = $subtotalPedido + $p->subtotal;
         }
         $pedido = Pedido_contra_entrega::where('id','=',$request['idPedido']);
-        //$nuevoSubtotal = $pedido->first()->subtotal + $producto->first()->subtotal;
         $pedido->update(['subtotal' => $subtotalPedido]);
         $nuevoTotal = $pedido->first()->subtotal + $pedido->first()->costoEnvio;
         $pedido->update(['total' => $nuevoTotal]);
@@ -620,7 +472,7 @@ class VentaController extends Controller
         $ventaCliente->idVenta = $venta->id;
         $ventaCliente->direccion = $pedido->direccion;
         $ventaCliente->save();
-        
+
         $detallePedido = detallePedido_CE::where('idPedido','=',$id)->get();
         foreach ($detallePedido as $producto)
         {
@@ -635,17 +487,14 @@ class VentaController extends Controller
             ->where('idSucursal', '=', $pedido->idSucursal); //->update(['existencia'=>'11']);
             if($producto->cantidad > $sucursal_producto->first()->existencia)
             {
-                
                 Detalle_venta::where('idVenta','=',$venta->id)->delete();
                 Venta_cliente::where('idVenta','=',$venta->id)->delete();
                 Venta::destroy($venta->id);
                 return 1;
             }
-            
             $existencia = $sucursal_producto->first()->existencia - $producto->cantidad;
             $sucursal_producto->update(['existencia' => $existencia]);
         }
-        
         detallePedido_CE::where('idPedido','=',$id)->delete();
         Pedido_contra_entrega::destroy($id);
         $pedidos = Pedido_contra_entrega::get();
@@ -670,8 +519,6 @@ class VentaController extends Controller
     }
     public function darSeguimiento($id){
         $seguimiento = Venta_cliente::where('idVenta','=',$id);
-        $estado = $seguimiento->first()->estado;
-       // $estado = $seguimiento->estado;
-        return $estado;
+        return $seguimiento->first()->estado;
     }
 }

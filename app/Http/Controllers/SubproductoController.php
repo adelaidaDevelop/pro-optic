@@ -11,22 +11,15 @@ use App\Models\Sucursal_producto;
 
 class SubproductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $usuarios = ['verProducto', 'crearProducto', 'eliminarProducto', 'modificarProducto', 'admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
-
         $subproductos = Subproducto::all();
         $idSucursal = session('sucursal');
         $sucursalProd = Sucursal_producto::where('idSucursal', $idSucursal)->get();
         $productos = Producto::all();
         return view('Subproducto.index', compact('subproductos', 'productos', 'sucursalProd'));
-
         /*
           $datosProd['producto'] = Producto::paginate();
           $departamentos['d']= Departamento::paginate();
@@ -35,20 +28,11 @@ class SubproductoController extends Controller
    */
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
         $usuarios = ['crearProducto', 'admin'];
         Sucursal_empleado::findOrFail(session('idSucursalEmpleado'))->authorizeRoles($usuarios);
-
-        //$idSucProd = 1;
-        // $datosProd['producto'] = Producto::paginate(); necesito este: producto
         $idProd = $request->input('id');
-
         $datosP = Producto::all();
         $subproducto2['subproducto'] = SubProducto::paginate();
         $producto = Producto::all();
@@ -79,12 +63,6 @@ class SubproductoController extends Controller
         $subproducto->update($existencia);
         return redirect('/puntoVenta/producto');
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $usuarios = ['crearProducto', 'admin'];
@@ -102,15 +80,6 @@ class SubproductoController extends Controller
         // $existenciaNuevo['existencia'] = $actualizarProducto->existencia - 1;
         //  $actualizarProducto->update($existenciaNuevo);
         return redirect('/puntoVenta/producto');
-        /*
-    }
-    else {
-        Subproducto::create($datosSubproducto);
-        return redirect('/puntoVenta/producto');
-    }
-    */
-        //else return redirect()->back()->withErrors(['mensajeError' => '']);  
-
     }
 
     public function subProdExisStock($id)
@@ -127,36 +96,23 @@ class SubproductoController extends Controller
             $subproducto = Subproducto::where('idSucursalProducto', '=', $id); //->first();
             // $piezas['existencia'] = $subproducto->first()->piezas;
             $piezas['existencia'] = $subproducto->first()->existencia + $subproducto->first()->piezas;
-            // return 'si entra';
             $subproducto->update($piezas);
             $existenciaNuevo['existencia'] = $sucProd->existencia - 1;
             $sucProd->update($existenciaNuevo);
-            //return redirect('/puntoVenta/producto');
             return json_encode(true);
-            //return redirect()->back();
         } else {
             return json_encode(false);
-            //return redirect()->back()->withErrors(['mensajeError' => 'EL PRODUCTO NO TIENE EXISTENCIA EN INVENTARIO']);
         }
-        //else return redirect()->back()->withErrors(['mensajeError' => '']);  
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Subproducto  $subproducto
-     * @return \Illuminate\Http\Response
-     */
     public function subProdExisNuevo(Request $request, $id)
     {
         $subproducto = Subproducto::where('idSucursalProducto', '=', $id); //->first();
         $exisNuevo['existencia'] = $request->input('cantidad');  //$subproducto->first()->existencia + $request->input('cantidad');
-        // return $exisNuevo;
         $subproducto->update($exisNuevo);
         return redirect('/puntoVenta/producto');
     }
     public function show($producto) //Subproducto $subproducto)
     {
-
         /*
         $productos = Producto::where("nombre",'like',$producto."%")->get(['id', 'codigoBarras', 'nombre', 'idDepartamento']);//paginate(30,
             //['id', 'codigoBarras', 'nombre', 'idDepartamento'])->all();
@@ -184,57 +140,25 @@ class SubproductoController extends Controller
                 return $productosBusqueda;
         }
         return $productosBusqueda;
-
 */
         $subproductos = Subproducto::all();
         $productosS = [];
-        //return $subproductos;
         foreach ($subproductos as $pO) {
             $idSP = $pO->idSucursalProducto;
-
             $sucursalProducto = Sucursal_producto::findOrFail($idSP); // where('idSucursal', '=',$idS)->get();
-
             if ($sucursalProducto->idSucursal == session('sucursal')) //$idS )
             {
-
-                //$producto = Producto::findOrFail($sucursalProducto->idProducto);
-
                 $producto1 = Producto::where("nombre", 'like', $producto . "%")
                     ->where('id', '=', $sucursalProducto->idProducto)->get(['id', 'codigoBarras', 'nombre', 'idDepartamento'])->first();
-
-                //$pO->precio = $sucursalProducto->precio;
                 $pO->id = $sucursalProducto->idProducto;
                 $pO->nombre = $producto1->nombre;
-
                 $pO->codigoBarras = $producto1->codigoBarras;
-
                 $pO->idDepartamento = $producto1->idDepartamento;
                 array_push($productosS, $pO);
             }
         }
-
-        return $productosS; //ProductosCaducidad::where('idSucursalProducto', '=',$id)->get();
-
+        return $productosS;
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Subproducto  $subproducto
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Subproducto $subproducto)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Subproducto  $subproducto
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $idSucProd)
     {
         $datos['piezas']      = $request->input('piezas');
@@ -243,22 +167,9 @@ class SubproductoController extends Controller
         Subproducto::where('idSucursalProducto', '=', $idSucProd)->update($datos);
         return 'El producto ha sido actualizado';
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Subproducto  $subproducto
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-
-    }
     public function eliminar($id)
     {
         Subproducto::where('idSucursalProducto', '=', $id)->delete();
-
         return redirect('/puntoVenta/producto');
     }
 }
