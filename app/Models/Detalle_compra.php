@@ -13,7 +13,6 @@ class Detalle_compra extends Model
         'idProducto',
         'cantidad',
         'porcentaje_ganancia',
-        //'fecha_caducidad',
         'costo_unitario',
     ];
     public $timestamps = false;

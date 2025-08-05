@@ -15,10 +15,6 @@ class Producto extends Model
         'receta',
         'descripcion',
         'imagen',
-        //'minimo_stock',
-        //'existencia',
-        //'costo',
-        //'precio',
     ];
     protected $guarded = [];
 }
