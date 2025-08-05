@@ -9,11 +9,6 @@ class Venta extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'tipo',
         'fecha',
@@ -26,5 +21,4 @@ class Venta extends Model
     {
         return $this->hasMany(Detalle_venta::class,'idVentas');
     }
-
 }
