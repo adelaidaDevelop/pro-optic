@@ -15,6 +15,12 @@ class CreateLenteTable extends Migration
     {
         Schema::create('lente', function (Blueprint $table) {
             $table->id();
+            $table->string('material');
+            $table->string('diseño');
+            $table->string('adición');
+            $table->string('tratamiento');
+            $table->float('CYL',8,2);
+            $table->float('SPH',8,2);
             $table->timestamps();
         });
     }
