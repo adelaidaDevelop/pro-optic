@@ -19,10 +19,8 @@ class Empleado extends Model
         'entidadFederativa',
         'claveE',
         'telefono',
-        //'cargo',
         'curp',
         'domicilio',
         'idUsuario',
-        //'status',
     ];
 }

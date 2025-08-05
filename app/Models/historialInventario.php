@@ -12,6 +12,5 @@ class historialInventario extends Model
         'totalInv',
         'fecha',
         'idSucursal'
-        
     ];
 }
