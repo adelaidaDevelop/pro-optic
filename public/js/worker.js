@@ -63,7 +63,7 @@ function buscarFiltroNombre2() {
             //    //$("#bajosExistencia").prop('disabled', false);
                 //
                 //BUSCAR PRODUCTOS DE ESTA SUCURSAL POR NOMBRES
-                let comparar = "";
+                let comparar = producto.nombre.toUpperCase() + producto.codigoBarras.toUpperCase();
                 if (opcFolioNombre === 'nombre')
                     comparar = producto.nombre.toUpperCase();
                 if (opcFolioNombre === 'folio')
