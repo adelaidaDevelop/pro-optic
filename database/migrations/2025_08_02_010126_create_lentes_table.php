@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLenteTable extends Migration
+class CreateLentesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLenteTable extends Migration
      */
     public function up()
     {
-        Schema::create('lente', function (Blueprint $table) {
+        Schema::create('lentes', function (Blueprint $table) {
             $table->id();
             $table->string('material');
             $table->string('diseño');
@@ -22,6 +22,7 @@ class CreateLenteTable extends Migration
             $table->float('CYL',8,2);
             $table->float('SPH',8,2);
             $table->timestamps();
+            $table->foreignId('idProducto')->constrained('productos');
         });
     }
 
@@ -32,6 +33,6 @@ class CreateLenteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lente');
+        Schema::dropIfExists('lentes');
     }
 }

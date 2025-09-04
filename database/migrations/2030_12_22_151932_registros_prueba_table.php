@@ -25,8 +25,8 @@ class RegistrosPruebaTable extends Migration
     public function up()
     {   //CREACION DE SUCURSAL
         $sucursal = new Sucursal;
-        $sucursal->direccion ='SAN FELIPE 23, SAN MARTIN MEXICAPAN';
-        $sucursal->telefono = '9512456511';
+        $sucursal->direccion ='PRO-OPTIC';
+        $sucursal->telefono = '9513547350';
         $sucursal->status = 1;
         $sucursal->save();
 
@@ -61,18 +61,12 @@ class RegistrosPruebaTable extends Migration
         for($i=0;$i<count($nombres); $i++)
         {
             $role = new Role();
-            $role->name = $nombres[$i];//'admin';
-            $role->description = $descripcion[$i];//'ADMINISTRADOR';
-            $role->idModulo = $modulo[$i]+1;//1;
+            $role->name = $nombres[$i];
+            $role->description = $descripcion[$i];
+            $role->idModulo = $modulo[$i]+1;
             $role->save();
         }
-
-        //ROLE
-        /*
-        $role = new Role();
-        $role->name = 'compraRead';
-        $role->description = 'CONSULTAR COM';
-        $role->save();*/
+        
         //CREACION DE ADMINISTRADOR
         $admin = User::create([
             'username' => 'ADMINISTRADOR',
@@ -84,13 +78,6 @@ class RegistrosPruebaTable extends Migration
         User::where('id','=',$admin->id)->update(['email_verified_at' => now()]);
         //$admin->roles()->attach($role_admin);
         //CREACION USUARIO ADMIN P/DEUDORES
-        $adminDeudor = User::create([
-            'username' => 'DEUDOR',
-            'email' => 'deudor@gmail.com',
-            'password' => Hash::make('deudor12345'),
-            'tipo' => 1,
-            'email_verified_at' =>'2021-06-02 11:17:15'
-        ]);
 
         $empleadoAdmin = new Empleado;
         $empleadoAdmin->primerNombre = 'ADMINISTRADOR';
@@ -108,31 +95,6 @@ class RegistrosPruebaTable extends Migration
         $empleadoAdmin->idUsuario = $admin->id;
         $empleadoAdmin->save();
 
-        $usrEmp = User::create([
-            'username' => 'MARIA GUADALUPE',
-            'email' => 'inchurrumina@gmail.com',
-            'password' => Hash::make('yehis12345'),
-            'tipo' => 0,
-        ]);
-
-
-        $empleado1 = new Empleado;
-        $empleado1->primerNombre = 'MARIA';
-        $empleado1->segundoNombre = 'GUADALUPE';
-        $empleado1->apellidoPaterno = 'MOLINA';
-        $empleado1->apellidoMaterno = 'REYES';
-        $empleado1->genero = 'M';
-        $empleado1->fechaNacimiento = '1991-01-10';
-        $empleado1->entidadFederativa = 'OC';
-        $empleado1->curp = 'MORG911001MOCLYD04';
-        $empleado1->telefono = '9514119419';
-        $empleado1->domicilio = 'LIBERTAD 134, SAN MARTIN MEXICAPA, OAX.';
-        $empleado1->claveE = '54321';
-        //$empleadoAdmin->status = 'alta';
-        $empleado1->idUsuario = $usrEmp->id;
-        $empleado1->save();
-
-
         $sucursalEmpleado = new Sucursal_empleado;
         $sucursalEmpleado->idSucursal = $sucursal->id;
         $sucursalEmpleado->idEmpleado = $empleadoAdmin->id;
@@ -142,56 +104,10 @@ class RegistrosPruebaTable extends Migration
         //ROLE
         $role_admin = Role::where('name', 'admin')->first();
         $sucursalEmpleado->roles()->attach($role_admin);
-        //CREACION DE EMPLEADOS
-        /*$usuario = User::create([
-            'username' => 'Heber',
-            'email' => 'hzhm1997@gmail.com',
-            'password' => Hash::make('heber12345'),
-            'tipo' => 2
-        ]);
-
-        $empleado = new Empleado;
-        $empleado->nombre = 'Heber Zabdiel';
-        $empleado->apellidoPaterno = 'Hernandez';
-        $empleado->apellidoMaterno = 'Martinez';
-        $empleado->curp = 'HEMH970804HOCRRB00';
-        $empleado->telefono = '9513547350';
-        $empleado->domicilio = 'Valerio trujano 318, barrio san Juan, zimatlan';
-        $empleado->claveE = '12345';
-        $empleado->status = 'alta';
-        $empleado->idUsuario = $usuario->id;
-        $empleado->save();
-*/
+        
         //CREACION DE DEPARTAMENTOS
         /*$departamento = Departamento::create(
             ['nombre' => 'SIN DEPARTAMENTO']
-        );
-        $departamento = Departamento::create(
-            ['nombre' => 'VENTA LIBRE']
-        );
-        $departamento = Departamento::create(
-            ['nombre' => 'PERFUMERIA']
-        );
-        $departamento = Departamento::create(
-            ['nombre' => 'PATENTE']
-        );
-        $departamento = Departamento::create(
-            ['nombre' => 'GENERICO']
-        );
-        $departamento = Departamento::create(
-            ['nombre' => 'PAPELERIA']
-        );
-        $departamento = Departamento::create(
-            ['nombre' => 'MATERIAL DE CURACION']
-        );
-        $departamento = Departamento::create(
-            ['nombre' => 'BEBES']
-        );
-        $departamento = Departamento::create(
-            ['nombre' => 'REBOTICA']
-        );
-        $departamento = Departamento::create(
-            ['nombre' => 'PASTILLAS SUELTAS']
         );*/
 
         //CREACION DE PRODUCTOS
@@ -228,24 +144,6 @@ class RegistrosPruebaTable extends Migration
                 'direccion' => 'Sin especificar',
                 'status' => true
             ]);
-
-        Proveedor::create([
-                'rfc' => 'D6S568D6FSD4',
-                'nombre' => 'NIVEA',
-                'telefono' => '9547894563',
-                'direccion' => 'Sin especificar',
-                'status' => true
-            ]);
-
-        //CREACION DE CLIENTE
-        /*$cliente = new Cliente;
-        $cliente->nombre = 'ADELAIDA MOLINA REYES';
-        $cliente->telefono = '9512274920';
-        $cliente->domicilio = 'SIN ESPECIFICAR';
-        $cliente->idUsuario = $usuario->id;
-        $cliente->save();
-*/
-
 /*
         $productosSucursal = new Sucursal_producto;
         $productosSucursal->costo = 10;
@@ -276,6 +174,6 @@ class RegistrosPruebaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detalle_ventas');
+        //Schema::dropIfExists('detalle_ventas');
     }
 }

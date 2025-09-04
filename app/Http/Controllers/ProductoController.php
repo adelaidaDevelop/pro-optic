@@ -25,13 +25,17 @@ class ProductoController extends Controller
         $idSucursal = session('sucursal');
         $productosSucursal = Sucursal_producto::where('idSucursal', '=', $idSucursal)//->where('status', '=', 1)
         ->get(['id','costo','precio','existencia','minimoStock','idProducto','status']);
-        $depas['d']= Departamento::paginate();
         $datosP= Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento','imagen']);
         $depa= Departamento::all(['id','nombre']);
         $producto = Producto::all(['id','codigoBarras', 'nombre','descripcion','receta' ,'idDepartamento','imagen']);
         $subproducto = Subproducto::all();
         $ofertas = Oferta::all();
-         return view('Producto.index',$depas, compact('depa', 'datosP','productosSucursal', 'producto','subproducto', 'ofertas'));
+        $productosDeSucursal = Producto::join('sucursal_productos','productos.id','=','sucursal_productos.idProducto')
+        ->join('lentes','sucursal_productos.idProducto','=','lentes.idProducto')
+        ->where('sucursal_productos.idSucursal', '=', $idSucursal)
+        ->get(['productos.codigoBarras','productos.nombre','productos.idDepartamento','productos.id','sucursal_productos.costo',
+        'sucursal_productos.precio','sucursal_productos.existencia','sucursal_productos.minimoStock','sucursal_productos.status']);
+         return view('Producto.index', compact('depa', 'datosP','productosSucursal', 'producto','subproducto', 'ofertas','productosDeSucursal'));
     }
 
     public function create()
