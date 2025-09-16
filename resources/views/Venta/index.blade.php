@@ -20,6 +20,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
         </a>
     </div>
     @endif
+    <!-- --COMENTADO PRO-OPTIC--
     @if($sE->hasAnyRole($userCliente))
     <div class=" ml-lg-4 p-1">
         <a class="btn btn-outline-secondary  p-1 border-0" href="{{ url('/puntoVenta/cliente')}}">
@@ -43,6 +44,7 @@ $sE = Sucursal_empleado::findOrFail(session('idSucursalEmpleado'));
             <p class="h6 my-auto mx-2 text-dark"><small>SEGUIMIENTO PEDIDOS</small></p>
         </button>
     </div>
+-->
     @endsection
 <!--/div-->
 <div class="row col-12 border border-dark my-2 mx-1">
