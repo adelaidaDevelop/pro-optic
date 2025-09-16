@@ -16,11 +16,13 @@ class CreateLentesTable extends Migration
         Schema::create('lentes', function (Blueprint $table) {
             $table->id();
             $table->string('material');
-            $table->string('diseño');
-            $table->string('adición');
+            $table->string('disenio');
+            $table->float('adicion',8,2);
             $table->string('tratamiento');
-            $table->float('CYL',8,2);
-            $table->float('SPH',8,2);
+            $table->float('cyl',8,2);
+            $table->float('sph',8,2);
+            $table->float('espesor',8,2);
+            $table->float('diametro',8,2);
             $table->timestamps();
             $table->foreignId('idProducto')->constrained('productos');
         });
