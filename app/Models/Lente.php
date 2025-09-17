@@ -10,12 +10,14 @@ class Lente extends Model
     use HasFactory;
     protected $fillable = [
         'idProducto',
-        'SPH',
-        'CYL',
+        'sph',
+        'cyl',
+        'adicion',
         'tratamiento',
-        'adición',
-        'diseño',
-        'material'
+        'disenio',
+        'material',
+        'espesor',
+        'diametro'
     ];
     protected $guarded = [];
 }

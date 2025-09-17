@@ -34,40 +34,40 @@
 @section('content')
     <link href="{{ asset('css/header_punto_venta.css') }}" rel="stylesheet">
     <div class="container-fluid">
-        <div class="row p-0" style="background-color: #3366FF;">
-            <div class="col-sm-2 pr-0 py-0">
-                <a class="navbar-brand mr-2 px-0 py-0" href="{{ url('/puntoVenta/home') }}">
-                    <img src="{{ asset('img\logo.png') }}" width="180px" object-fit="cover" class="img-fluid px-0 py-0"
+        <div class="row p-0" style="background-color: #BADCE8;">
+            <div class="col-sm-3">
+                <a class="px-0 py-0" href="{{ url('/puntoVenta/home') }}">
+                    <img src="{{ asset('img\logo.png') }}" width="80%" object-fit="cover" class="img-fluid px-0 py-0"
                         style="object-fit: cover; object-position: top;" alt="Logo">
                 </a>
             </div>
-            <div class="col-sm-10 py-0">
+            <div class="col-sm-9 py-0">
                 <div class="row my-0 px-0 py-0 align-self-center">
-                    <nav class="navbar navbar-expand-md w-100 py-0" style="background-color: #3366FF;">
+                    <nav class="navbar navbar-expand-md w-100 py-0" style="background-color: #BADCE8;">
                         <ul class="navbar-nav mx-auto ml-xl-auto my-xl-0 px-0 py-0">
                             <li class="nav-item">
-                                <h5 class="text-white text-uppercase d-none d-md-block ">{{ session('sucursalNombre') }}
+                                <h5 class="text-black text-uppercase d-none d-md-block ">{{ session('sucursalNombre') }}
                                 </h5>
-                                <h6 class="text-white text-uppercase text-center mx-auto my-1 d-md-none py-0">
+                                <h5 class="text-black text-uppercase text-center mx-auto my-1 d-md-none py-0">
                                     {{ session('sucursalNombre') }}
-                                </h6>
+                                </h5>
                             </li>
                         </ul>
                         <ul class="navbar-nav ml-auto ml-sm-0 m-1 border border-light rounded px-0 py-0">
                             <!-- Authentication Links -->
                             @guest
                                 <li class="nav-item border">
-                                    <a class="nav-link text-white" href="{{ url('puntoVenta/login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link text-black" href="{{ url('puntoVenta/login') }}">{{ __('Login') }}</a>
                                 </li>
                             @else
                                 <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link  dropdown-toggle text-white p-1 p-sm-auto"
+                                    <a id="navbarDropdown" class="nav-link  dropdown-toggle text-black p-1 p-sm-auto"
                                         href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false" v-pre>
                                         <strong>{{ Auth::user()->username }}</strong>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right border " aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item " class="text-white" href="{{ url('puntoVenta/logout') }}"
+                                        <a class="dropdown-item " class="text-black" href="{{ url('puntoVenta/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             <img src="{{ asset('img\salir.png') }}" alt="Editar" height="30px">
@@ -86,7 +86,7 @@
                 </div>
                 <div class="row my-0 px-0 py-0 align-self-center">
                     <nav class="navbar navbar-expand-md navbar-light w-100 mx-2 my-0 px-auto py-0 position-relative"
-                        style="background-color:#3366FF;">
+                        style="background-color:#BADCE8;">
 
                         <button class="navbar-toggler ml-2" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -131,41 +131,24 @@
                                         </button>
                                         <span class="sr-only">(current)</span></a>
                                 </li>
+                            <!--Comentado PRO-OPTIC-->
+                                <!--
                                 <li class="nav-item active">
-                                    <!--if(session('idUsuario') == 1)-->
-
                                     <a class="nav-link px-0 mx-2 @if (!$verAdministracion) disabled @endif"
                                         href="{{ url('/puntoVenta/administracion') }}">
                                         <button class="btn btn-light input-group"
                                             @if (!$verAdministracion) disabled @endif>
                                             <img src="{{ asset('img\administracion.png') }}" class="mx-md-auto"
                                                 alt="Editar" width="30px" height="30px">
-
                                             <p class="h6 my-auto ml-1"><small>ADMINISTRACION</small></p>
                                         </button>
                                         <span class="sr-only">(current)</span></a>
-
-                                    <!--a class="nav-link" href="/puntoVenta/empleado">
-                                                <button class="btn btn-light">
-                                                    EMPLEADOS
-                                                </button>
-                                                <span class="sr-only">(current)</span></a-->
-
-                                </li>
-
+                                </li>-->
                             </ul>
                             <ul
-                                class="navbar-nav my-0 ml-0 py-0 pl-0 mr-md-auto ml-md-0 my-md-1 py-md-1 position-sticky grupo_modulos
-    ">
+                                class="navbar-nav my-0 ml-0 py-0 pl-0 mr-md-auto ml-md-0 my-md-1 py-md-1 position-sticky grupo_modulos">
+                                <!--
                                 <li class="nav-item active">
-                                    <!--
-                                        <a class="nav-link" href="/puntoVenta/cliente">
-                                            <button class="btn btn-light">
-                                            <img src="{{ asset('img\client.png') }}" alt="Editar" width="30px" height="30px">
-                                                CLIENTES
-                                            </button>
-                                            <span class="sr-only">(current)</span></a>
-                                            -->
                                     <a class="nav-link px-0 mx-2 @if (!$verDeudor) disabled @endif"
                                         href="{{ url('/puntoVenta/credito') }}">
                                         <button class="btn btn-light input-group"
@@ -175,9 +158,8 @@
                                             <p class="h6 my-auto ml-1 text-nowrap "><small>LISTA DEUDORES</small></p>
                                         </button>
                                         <span class="sr-only">(current)</span></a>
-
-
                                 </li>
+
                                 <li class="nav-item active">
                                     <a class="nav-link px-0 mx-2 @if (!$verCorte) disabled @endif"
                                         href="{{ url('/puntoVenta/corteCaja') }}">
@@ -189,6 +171,7 @@
                                         </button>
                                         <span class="sr-only">(current)</span></a>
                                 </li>
+                            -->
                                 <li class="nav-item active">
                                     @if ($verReporte)
                                         <a class="nav-link px-0 mx-2" href="{{ url('/puntoVenta/reporteInventario') }}">

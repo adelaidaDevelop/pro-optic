@@ -22,6 +22,7 @@ $abonar = $sE->hasAnyRole($modificar);
     </form>
 </div>
 @endif
+<!-- --COMENTADO PRO-OPTIC--
 @if($sE->hasAnyRole($verPago))
 <div class="ml-4">
     <form method="get" action="{{url('/puntoVenta/pagoCompra/')}}">
@@ -32,6 +33,7 @@ $abonar = $sE->hasAnyRole($modificar);
     </form>
 </div>
 @endif
+-->
 <div class="my-auto">
     <form method="get" action="{{url('/puntoVenta/proveedor/')}}">
         <button class="btn btn-outline-secondary p-1 border-0" type="submit">
@@ -620,7 +622,6 @@ $abonar = $sE->hasAnyRole($modificar);
             {
                 texto =  ` <td class="font-weight-bold text-danger" >` + comprasAuxiliar[i].costoTotal + `</td> `;
             }
-            
                 cuerpo = cuerpo + `
             <tr>
                 <th scope="row">` + contador++ + `</th>
@@ -732,7 +733,6 @@ $abonar = $sE->hasAnyRole($modificar);
                         <div class="col-6">
                             <input type="number" data-prefix="$" oninput="calcularDeuda(` + (costoTotal - pagos) + `)" id="pagoCredito" data-decimals="2"
                                 value=0 class="form-control" />
-                            
                         </div>
                     </div>
                     <div class="row my-auto">
@@ -815,7 +815,7 @@ $abonar = $sE->hasAnyRole($modificar);
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                // el cuerpo de la petición es una cadena de texto 
+                // el cuerpo de la petición es una cadena de texto
                 // con los datos en formato JSON
                 body: datos
             };*/
@@ -857,7 +857,7 @@ $abonar = $sE->hasAnyRole($modificar);
                         'Content-Type': 'multipart/form-data'
                         // 'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    // el cuerpo de la petición es una cadena de texto 
+                    // el cuerpo de la petición es una cadena de texto
                     // con los datos en formato JSON
                     body: datosCompra
                 };*/
@@ -910,7 +910,7 @@ $abonar = $sE->hasAnyRole($modificar);
                             'Content-Type': 'multipart/form-data'
                             // 'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        // el cuerpo de la petición es una cadena de texto 
+                        // el cuerpo de la petición es una cadena de texto
                         // con los datos en formato JSON
                         body: datosCompra
                     };

@@ -50,12 +50,14 @@
         </button>
     </div>
 
+<!-- --COMENTADO PRO-OPTIC 12-09-2925 ADELAIDA MOLINA--
     <div class="col-0  ml-3 p-1 ">
         <a class="btn btn-outline-secondary p-1 border-0" href="{{ url('/puntoVenta/productosCaducidad') }}">
             <img src="{{ asset('img\calendario.png') }}" alt="Editar" width="30px" height="30px">
             <p class="h6 my-auto text-dark"><small>PROXIMOS A CADUCAR</small></p>
         </a>
     </div>
+-->
 
     <div class="col-0  ml-3 p-1 ">
         <button type="button" class="btn btn-outline-secondary p-1 border-0" data-toggle="modal"
@@ -578,7 +580,7 @@
                         }
                     }
                 } else {
-                    //VERIFICAR BAJOS EXISTENCIA 
+                    //VERIFICAR BAJOS EXISTENCIA
                     //BUSCAR PRODUCTOS POR NOMBRE, BAJOS DE EXISTENCIA
                     let seleccion = document.querySelector('input[name="bajosExistencia"]:checked');
                     if (seleccion != null) {
@@ -832,7 +834,7 @@
         <img width="200" class="mx-auto" src="${urlImagen}" alt="${urlImagen}"  id="imagenPrevisualizacion">
         <input type="file" name="imagen" id="imagen" class="form-control mx-auto"
         onchange="previsualizarImagen('imagen')">
-                                            
+
                                             <br/>
                                             `
             }
@@ -840,10 +842,10 @@
         btnAgregarSubprod =
             ` <a class="btn btn-outline-primary "   href="#" onclick="subproductoExiste(${productoSucursal.id},${x});">
                                              <img src="{{ asset('img/agregarReg.png') }}" alt="Editar" width="25px" height="25px">
-                                             AGREGAR A SUBPRODUCTO </a> 
+                                             AGREGAR A SUBPRODUCTO </a>
                                              `;
         let btnEditar =
-            `<button class="btn btn-outline-primary mb-2" id="btnEditar" onclick="habilitarEditar(${x},${idProdSuc})" value=true> 
+            `<button class="btn btn-outline-primary mb-2" id="btnEditar" onclick="habilitarEditar(${x},${idProdSuc})" value=true>
                                             <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px">
                                             EDITAR</button>
                                     `;
@@ -851,20 +853,20 @@
             `<a class="btn btn-outline-danger mb-2" data-method="delete" onclick="return confirm('¿DESEA DAR DE BAJA ESTE PRODUCTO?. SI LO DA DE BAJA LA EXISTENCIA SERA: 0')"  href="{{ url('/puntoVenta/productoEli3/${x}') }}">` +
 
             `<img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
-                                             DAR DE BAJA </a> 
+                                             DAR DE BAJA </a>
                                         </div>
 
                                         <br/>
                                     `;
         if (!eliminarProducto)
-            btnDarBaja = `<a class="btn btn-outline-danger mb-2" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
+            btnDarBaja = `<a class="btn btn-outline-danger mb-2" onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
                                              DAR DE BAJA </a>
                                         </div>
                                     `;
         //botonesProducto = botonesProducto + btnDarBaja;
         if (!modificarProducto) {
-            btnEditar = `<button class="btn btn-outline-primary mb-2 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')"> 
+            btnEditar = `<button class="btn btn-outline-primary mb-2 " onclick="return alert('USTED NO TIENE PERMISOS PARA REALIZAR ESTA ACCION')">
                                             <img src="{{ asset('img/edit.png') }}" alt="Editar" width="25px" height="25px" >
                                             EDITAR  </button>
                                             `;
@@ -896,7 +898,7 @@
                                                 <h6 class="">{{ 'NOMBRE' }}</h6>
                                             </label>
                                             <div class="col-8">
-                                                <input type="text" name="nombre" id="nombre" class="form-control text-uppercase" 
+                                                <input type="text" name="nombre" id="nombre" class="form-control text-uppercase"
                                                 placeholder="Nombre productos" value="${producto.nombre}" autofocus required>
                                             </div>
                                         </div>
@@ -905,8 +907,8 @@
                                                 <h6  class=""> {{ 'DESCRIPCION' }} </h6>
                                             </label>
                                             <div class="col-8">
-                                                <textarea name="descripcion" id="descripcion" class="form-control text-uppercase" 
-                                                placeholder="Descripcion del producto" rows="3" cols="23" 
+                                                <textarea name="descripcion" id="descripcion" class="form-control text-uppercase"
+                                                placeholder="Descripcion del producto" rows="3" cols="23"
                                                 required>${producto.descripcion}</textarea>
                                             </div>
                                         </div>
@@ -915,7 +917,7 @@
                                                 <h6  class=""> {{ 'MINIMO STOCK' }}</h6>
                                             </label>
                                             <div class="col-8">
-                                                <input type="number" name="minimoStock" id="minimoStock" min="0" onkeypress="return validarEnteroPosi(event);" 
+                                                <input type="number" name="minimoStock" id="minimoStock" min="0" onkeypress="return validarEnteroPosi(event);"
                                                 class="form-control text-uppercase" placeholder="Ingrese el minimo de productos permitidos" value="${ms}" autofocus required>
                                             </div>
                                         </div>
@@ -934,7 +936,7 @@
                                                 <h6  class=""> {{ 'DEPARTAMENTO' }}</h6>
                                             </label>
                                             <div class="col-8">
-                                                <select class="form-control text-uppercase" name="departamento" 
+                                                <select class="form-control text-uppercase" name="departamento"
                                                 id="departamento">${departamentos}
                                                 </select>
                                             </div>
@@ -951,19 +953,19 @@
                                     <div class="">
                                         <div class="form-group row">
                                             <label for="costoNuevo" class="col-4 col-form-label">
-                                                <h6 class="">COSTO</h6> 
-                                            </label> 
-                                            <div class="col-8">      
+                                                <h6 class="">COSTO</h6>
+                                            </label>
+                                            <div class="col-8">
                                                 <input type="number" name="costoNuevo" min="0" id="costoNuevo" class="form-control"
-                                                placeholder="COSTO NUEVO" onkeypress="return validarPositivos(event);" 
+                                                placeholder="COSTO NUEVO" onkeypress="return validarPositivos(event);"
                                                 value="${costo}" autofocus required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="precioNuevo" class="col-4 col-form-label">
-                                                <h6 class="">PRECIO</h6> 
-                                            </label>      
-                                            <div class="col-8">  
+                                                <h6 class="">PRECIO</h6>
+                                            </label>
+                                            <div class="col-8">
                                                 <input type="number" name="precioNuevo" id="precioNuevo" min="0" class="form-control"
                                                 placeholder="PRECIO NUEVO" onkeypress="return validarPositivos(event);"
                                                 value="${precio}" autofocus required>
@@ -971,18 +973,18 @@
                                         </div>
                                         <div class="form-group row">
                                             <label for="cantidadNueva" class="col-4 col-form-label">
-                                                <h6 class="">EXISTENCIA</h6> 
-                                            </label> 
-                                            <div class="col-8">              
+                                                <h6 class="">EXISTENCIA</h6>
+                                            </label>
+                                            <div class="col-8">
                                                 <input type="number" name="cantidadNueva" id="cantidadNueva" class="form-control"
-                                                placeholder="CANTIDAD DE PRODUCTO" onkeypress="return validarEnteroPosi(event);" 
+                                                placeholder="CANTIDAD DE PRODUCTO" onkeypress="return validarEnteroPosi(event);"
                                                 value="${existencia}" min="0" autofocus required>
                                             </div>
                                         </div>
                                     </div>
                                 </fieldset>
                             </div>`;
-        let btnCerrar = `<button type="button" class="btn btn-secondary ml-4" 
+        let btnCerrar = `<button type="button" class="btn btn-secondary ml-4"
     data-dismiss="modal" onclick="">CERRAR</button>`;
         //document.getElementById("subAgregar").innerHTML = btnAgregarSubprod;
         document.getElementById("pieInformacion").innerHTML = btnAgregarSubprod + btnEditar + btnDarBaja + btnCerrar;
@@ -1015,7 +1017,7 @@
                                 <h6>PRECIO ACTUAL DEL PRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center" placeholder="" value="` +
                         productosSucursal[j].precio + `" autofocus required disabled>
-                                <h6 >INGRESAR NUEVO PRECIO DEL PRODUCTO</h6>        
+                                <h6 >INGRESAR NUEVO PRECIO DEL PRODUCTO</h6>
                                 <input type="number"   name="precio_nuevo" id="precio_nuevo" class="form-control text-center" placeholder="PRECIO NUEVO" onkeypress="return filterFloat(event,this);" value="" autofocus required>
                                     `;
                 }
@@ -1027,7 +1029,7 @@
         // $("#actPrecioCosto").removeAttr('onclick');
         /*
         $("#actPrecioCosto").click(function() {
-            
+
         });
         */
         document.getElementById("titulo").innerHTML = nombreProd;
@@ -1076,7 +1078,7 @@
                                 <h6>COSTO ACTUAL DEL PRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` +
                     productosSucursal[j].costo + `" autofocus required disabled>
-                                <h6>INGRESAR NUEVO COSTO DEL PRODUCTO</h6>        
+                                <h6>INGRESAR NUEVO COSTO DEL PRODUCTO</h6>
                                 <input type="number" name="costo" id="costo_nuevo" class="form-control text-center" placeholder="COSTO NUEVO" onkeypress="return filterFloat(event,this);" value="" autofocus required>
                                     `;
             }
@@ -1126,7 +1128,7 @@
                                 <h6>EXISTENCIA ACTUAL DEL PRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` +
                     productosSucursal[j].existencia + `" autofocus required disabled>
-                                <h6>CANTIDAD DE PRODUCTO TOTAL</h6>        
+                                <h6>CANTIDAD DE PRODUCTO TOTAL</h6>
                                 <input type="number" name="cantidad" id="cantidad" class="form-control text-center" placeholder="CANTIDAD DE PRODUCTO" value="" min="0" autofocus required>
                                     `;
             }
@@ -1169,7 +1171,7 @@
                         <h6>EXISTENCIA ACTUAL DEL PRODUCTO</h6>
                         <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` +
                     productosSucursal[j].existencia + `" autofocus required disabled>
-                        <h6>CANTIDAD DE PRODUCTO A AGREGAR</h6>        
+                        <h6>CANTIDAD DE PRODUCTO A AGREGAR</h6>
                         <input type="number" name="cantidadA" id="cantidadA" class="form-control text-center" placeholder="CANTIDAD DE PRODUCTO" value="0" min="0" autofocus required>
                             `;
             }
@@ -1217,7 +1219,7 @@
                                 <h6>EXISTENCIA ACTUAL DEL SUBPRODUCTO</h6>
                                 <input type="number" name="" id="" class="form-control mb-2 text-center " placeholder="" value="` +
             subp.existencia + `" autofocus required disabled>
-                                <h6 class="mx-auto text-center">NUEVA EXISTENCIA</h6>        
+                                <h6 class="mx-auto text-center">NUEVA EXISTENCIA</h6>
                                 <input type="number" name="cantPiezasSub" id="cantPiezasSub" class="form-control text-center" placeholder="PIEZAS DEL SUBPRODUCTO" value="" min="0" autofocus required>
                                     `;
         //}
@@ -1556,7 +1558,7 @@
             observacion.disabled = false;
             btnCancelar.hidden = false;
 
-            //botones.innerHTML = innerHTML +  
+            //botones.innerHTML = innerHTML +
         } else {
             btnCancelar.hidden = true;
             let subproducto = subproductos.find(p => p.idSucursalProducto == idSucProd);
@@ -1674,7 +1676,7 @@
                                                 </label>
                                                 <div class="col-sm-9">
                                                     <input type="text" name="nombre" id="nombre" class="form-control text-uppercase"
-                                                    placeholder="NOMBRE PRODUCTOS" value="${productos[count10].nombre}" 
+                                                    placeholder="NOMBRE PRODUCTOS" value="${productos[count10].nombre}"
                                                     required readonly>
                                                 </div>
                                             </div>
@@ -1711,15 +1713,15 @@
                                                     <h6 class="ml-4">OBSERVACION</h6>
                                                 </label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="observacion" id="observacion" class="form-control text-uppercase" 
+                                                    <input type="text" name="observacion" id="observacion" class="form-control text-uppercase"
                                                     placeholder="OBSERVACION" value="${subproductos[h].observacion}" required disabled>
                                                 </div>
                                             </div>
                                             <div class="row col-auto mx-0 px-0" id="botonesEditarSubp">
-                                                <button type="button" id="btnEditarSubp"class="btn btn-success ml-auto mr-1" 
+                                                <button type="button" id="btnEditarSubp"class="btn btn-success ml-auto mr-1"
                                                 onclick="editarSubproducto(${subproductos[h].idSucursalProducto},true)" value=true>
                                                 EDITAR SUBPRODUCTO</button>
-                                                <button type="button" id="btnCancelarSubp"class="btn btn-danger" 
+                                                <button type="button" id="btnCancelarSubp"class="btn btn-danger"
                                                 onclick="editarSubproducto(${subproductos[h].idSucursalProducto},false)" value=true hidden>
                                                 CANCELAR</button>
                                             </div>
@@ -1751,15 +1753,15 @@
                                             <br /><br />
                                             <a class="btn btn-outline-danger mb-4" data-method="delete" onclick="return confirm('¿DESEA ELIMINAR ESTE PRODUCTO?')"  href="{{ url('/puntoVenta/subproductoEli/` +
                                                                                                                         x +
-                                                                                                                        `') }}"> 
+                                                                                                                        `') }}">
                                             <img src="{{ asset('img/eliReg.png') }}" alt="Editar" width="25px" height="25px">
-                                             ELIMINAR </a> 
+                                             ELIMINAR </a>
                                              <div class="mt-4 mb-4"> </div>
-                                             <button class="btn btn-outline-primary" id="btnSubstraer" onclick="agregarExistenciaDeProducto(${x})"> 
+                                             <button class="btn btn-outline-primary" id="btnSubstraer" onclick="agregarExistenciaDeProducto(${x})">
                                             <img src="{{ asset('img/nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
-                                              EXISTENCIA INVENTARIO </button> 
-                                            <br/><br/>  
-                                            
+                                              EXISTENCIA INVENTARIO </button>
+                                            <br/><br/>
+
                                               <button type="button" class="btn btn-outline-primary mb-4 " data-toggle="modal" href=".modal_Exis_Nuevo"  onclick=" return agregarSubproducto( ` +
                                     x + `)" value="` + x + `">
                                               <img src="{{ asset('img/nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
@@ -1779,7 +1781,7 @@
                 }
             }
         }
-        let btnCerrar = `<button type="button" class="btn btn-secondary ml-4" 
+        let btnCerrar = `<button type="button" class="btn btn-secondary ml-4"
     data-dismiss="modal" onclick="">CERRAR</button>`;
         document.getElementById("subAgregar").innerHTML = "";
         document.getElementById("pieInformacion").innerHTML = btnCerrar;
@@ -1836,8 +1838,8 @@
                     <td>` + nombreDepa + `</td>
                     <td>` + producto.receta + `</td>
                     <td>` + btnAlta +
-                    ` 
-                    </td>        
+                    `
+                    </td>
                     </tr>
                      `;
             }
@@ -2249,7 +2251,7 @@
     worker.postMessage("Hola Mundo!");
     worker.postMessage(100);
     worker.postMessage({status:1,error:['ping','pong']});
-      
+
     // Termina la ejecución del Worker (esté en el estado que esté)
     worker.terminate();*/
     function validarPositivos(e) {
