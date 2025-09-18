@@ -49,8 +49,6 @@
                             </h5>
                         </label>
                     </div>
-                    <!-- <div class="col border border-dark mt-4 mb-4 mr-4 ml-2">-->
-
                     <div class="row mx-1 mb-2 py-2 border border-secondary">
                         <div class="col-3 form-group row m-auto">
                             <div class="input-group">
@@ -69,12 +67,8 @@
                                     <span class="input-group-text" for="fechaCompra">COMPRA</span>
                                 </div>
                                 <input type="date" min="" id="fechaCompra" class="form-control" />
-                                <!--select class="form-control" name="idDepartamento" id="idDepartamento" required>
-                                <option value="">10/12/2020</option>
-                            </select-->
                             </div>
                         </div>
-
                         <div class="col-2 form-group row m-auto">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -83,24 +77,11 @@
                                     </div>
                                     <span class="input-group-text" for="iva"><strong>IVA %</strong></span>
                                 </div>
-                                <!--div class="input-group my-0 mx-0 px-0 border"-->
                                 <input type="number" id="inputIva" data-prefix="IVA %" name="inputIva" value=16 min=0
                                     class="form-control my-auto" />
                             </div>
                         </div>
                         <div class="col-4 form-group row m-auto">
-                            <!--div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input type="checkbox" name="credito" id="credito"
-                                            onchange="activarCredito()" />
-                                    </div>
-                                    <span class="input-group-text" for="credito">CREDITO</span>
-                                    <span class="input-group-text"><strong>ABONO $</strong></span>
-                                </div>
-                                <input type="number" data-prefix="" id="pagoCredito" name="pagoCredito"
-                                    data-decimals="2" value=0 min=0 class="form-control" />
-                            </div-->
                             <div class="col-auto ml-auto px-1 py-0 border border-secondary rounded">
                                 <div class="form-check my-1">
                                     <input type="checkbox" name="credito" id="credito" class="form-check-input mt-2"
@@ -123,7 +104,8 @@
                             <p class="h6 my-auto mx-2">AGREGAR PRODUCTO</p>
                         </button>
                     </div>
-                    <!-- TABLA -->
+                    <!-- TABLA - LISTADO PRODUCTOS CARGADOS PARA COMPRA -->
+                    <!-- Modificar tabla productos cargados adelaida 180925-->
                     <div class="row m-1 border border-dark" style="height:390px;overflow-y:auto;">
                         <table class="table table-bordered border-primary col-12">
                             <thead class="table-secondary text-primary">
@@ -136,6 +118,23 @@
                                     <th>PRECIO</th>
                                     <th>CADUCIDAD</th>
                                     <th></th>
+
+                                    <!-- opcion nueva pro-optic-->
+                                    <!--
+                                    <th>CODIGO BARRAS</th>
+                                    <th>PRODUCTO</th>
+                                    <th>DESCRIPCION</th>
+                                    <th>SPH</th>
+                                    <th>CYL</th>
+                                    <th>ADD</th>
+                                    <th>TRATAMIENTO</th>
+                                    <th>DISEÑO</th>
+                                    <th>MATERIAL</th>
+                                    <th>COSTO</th>
+                                    <th>PRECIO</th>
+                                    <th>EXISTENCIA</th>
+                                    <th></th>
+                                    -->
                                 </tr>
                             </thead>
                             <tbody class="text-center" id="productos">
@@ -148,42 +147,36 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <!--
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    -->
                                 <tr>
                             </tbody>
                         </table>
-
                     </div>
                     <div class="col my-2 ml-1 pr-0 border">
                         <div class="d-flex flex-row-reverse">
                             <h4 class="border border-dark m-0 ml-2 p-1" id="total">$ 0.00</h4>
-                            <!--form method="get" action="{url('/empleado')}}"-->
-                            <!--{url('/departamento/'.$departamento->id.'/edit/')}}-->
                             <button type="button" onclick="verificarCompra()"
                                 class="btn btn-secondary d-flex ml-auto p-2">
                                 GUARDAR COMPRA</button>
                             <!--/form-->
                         </div>
                     </div>
-                    <!--div class="row mx-1 my-2 border">
-
-                        <button type="button" onclick="verificarCompra()" class="btn btn-secondary d-flex ml-auto p-2">
-                            GUARDAR COMPRA</button>
-                    </div-->
-                    <!--div class="d-flex flex-row-reverse bd-highlight m-1 ">
-                        <button type="button" onclick="verificarCompra()" class="btn btn-secondary"> GUARDAR
-                            COMPRA</button>
-                    </div-->
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<!--MODAL-SELECCIONAR PRODUCTOS PARA LISTAR COMPRA-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" id="modalConsulta">
             <div class="modal-header">
-
                 <h5 class="modal-title" id="exampleModalLabel">INGRESAR PRODUCTO</h5>
                 <button id="cerrar" type="button" class="close" onclick="cerrarModal()" data-dismiss="modal"
                     aria-label="Close">
@@ -200,7 +193,7 @@
                 <div class="row" style="height:200px;overflow:auto;" id="productosBusqueda">
                     <table class="table table-hover table-bordered">
                         <thead class="thead-light">
-                            <tr>
+                            <tr> <!--Modificar tabla modal Adelaida 180925-->
                                 <th scope="col">#</th>
                                 <th scope="col">CODIGO_BARRAS</th>
                                 <th scope="col">PRODUCTO</th>
@@ -209,7 +202,6 @@
                             </tr>
                         </thead>
                         <tbody id="consultaBusqueda">
-
                         </tbody>
                     </table>
                 </div>
@@ -250,8 +242,6 @@
 <script>
 let productosCompra = [];
 let productos = [];
-//let productosSucursal = [];
-
 function cargarProveedores() {
     const proveedor = document.querySelector('#proveedor');
     let proveedores = @json($proveedores);
@@ -273,33 +263,13 @@ function buscarProductoEnCompra(idProducto) {
     return false;
 };
 
-
 async function cargarProductos(producto) {
     let response = "Sin respuesta";
     try {
         response = await fetch(`/puntoVenta/producto/${producto}`);
         if (response.ok) {
             productos = await response.json();
-            //if (productosSucursal.length === 0)
-            //  productosSucursal = await cargarProductosSucursal();
-            /*for (let i in productos) {
-                productos[i].existencia = 0;
-                productos[i].costo = 0; //productosSucursal[s].costo;
-                productos[i].precio = 0; //productosSucursal[s].precio;
-                productos[i].idSucursal = false;
-                for (let s in productosSucursal) {
-                    if (productosSucursal[s].idProducto === productos[i].id) {
-                        productos[i].existencia = productosSucursal[s].existencia;
-                        productos[i].costo = productosSucursal[s].costo;
-                        productos[i].precio = productosSucursal[s].precio;
-                        productos[i].idSucursal = true;
-                    }
-
-                }
-            }*/
-            //console.log(productos);
             return productos;
-
         } else {
             console.log("No responde :'v");
             console.log(response);
@@ -310,28 +280,10 @@ async function cargarProductos(producto) {
     }
 }
 
-/*async function cargarProductosSucursal() {
-    let response = "Sin respuesta";
-    try {
-        response = await fetch(`/puntoVenta/sucursalProducto/{{session('sucursal')}}`);
-        if (response.ok) {
-            productosSucursal = await response.json();
-            //console.log('los productosde la sucursal son: ',productosSucursal);
-            return productosSucursal;
-        } else {
-            console.log("No responde :'v");
-            console.log(response);
-            throw new Error(response.statusText);
-        }
-    } catch (err) {
-        console.log("Error al realizar la petición AJAX: " + err.message);
-    }
-}*/
-
 let ingresarProducto = document.querySelector('#cuerpoModal').innerHTML;
 let ingresarProductoTitulo = document.querySelector('#exampleModalLabel').innerHTML;
-//let botonCerrarModal = 0;
-let worker = new Worker("{{ asset('js/workerConsultarProducto.js') }}"); // Ruta del archivo JS
+
+let worker = new Worker("{{ asset('js/workerConsultarProducto.js') }}");
 
 async function buscarProducto() {
     if (window.Worker) {
@@ -352,7 +304,7 @@ async function buscarProducto() {
             `;
         const entrada = document.querySelector('#busquedaProducto');
         if (entrada.value.length == 0) {
-            contenidoProducto.innerHTML = ""; //contenidoOriginal;
+            contenidoProducto.innerHTML = "";
             return;
         }
         worker = new Worker("{{ asset('js/workerConsultarProducto.js')}}");
@@ -364,18 +316,14 @@ async function buscarProducto() {
         worker.postMessage(message);
         worker.onmessage = function(e) {
             productos = e.data.productos;
-            //productos = await cargarProductos(entrada.value);
             console.log('Productos: ', productos);
-            contenidoProducto.innerHTML = ""; //contenidoOriginal;
+            contenidoProducto.innerHTML = "";
             let productosEncontrados = document.querySelector('#consultaBusqueda');
             let contador = 1;
             let cuerpo = "";
             let departamentos = @json($departamentos);
-
             for (let i in productos) {
-                //if (productos[i].nombre.toUpperCase().includes(entrada.value.toUpperCase())) {
                 let departamento = "No lo busca";
-
                 for (let o in departamentos) {
                     if (productos[i].idDepartamento === departamentos[o].id)
                         departamento = departamentos[o].nombre;
@@ -390,14 +338,11 @@ async function buscarProducto() {
                 <td>` + departamento + `</td>
             </tr>
             `;
-                //}
             }
             productosEncontrados.innerHTML = cuerpo;
         };
     } else {
         try {
-            //if (productos.length === 0)
-            //{
             const contenidoProducto = document.querySelector('#consultaBusqueda');
             const contenidoOriginal = contenidoProducto.innerHTML;
             contenidoProducto.innerHTML =
@@ -412,14 +357,11 @@ async function buscarProducto() {
             </td>
             </tr>
             `;
-
-            //}
             const entrada = document.querySelector('#busquedaProducto');
             if (entrada.value.length == 0) {
                 contenidoProducto.innerHTML = ""; //contenidoOriginal;
                 return;
             }
-
             productos = await cargarProductos(entrada.value);
             console.log('Productos: ', productos);
             contenidoProducto.innerHTML = ""; //contenidoOriginal;
@@ -429,9 +371,7 @@ async function buscarProducto() {
             let departamentos = @json($departamentos);
 
             for (let i in productos) {
-                //if (productos[i].nombre.toUpperCase().includes(entrada.value.toUpperCase())) {
                 let departamento = "No lo busca";
-
                 for (let o in departamentos) {
                     if (productos[i].idDepartamento === departamentos[o].id)
                         departamento = departamentos[o].nombre;
@@ -446,7 +386,6 @@ async function buscarProducto() {
                 <td>` + departamento + `</td>
             </tr>
             `;
-                //}
             }
             productosEncontrados.innerHTML = cuerpo;
         } catch (err) {
@@ -489,17 +428,6 @@ var preProps = {
         '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
         '</div>'
 }
-//$("input[name='pagoCredito']").inputSpinner(preProps);
-/*preProps.template = 
-'<div class="input-group ${groupClass}">' +
-        '<div class="input-group-prepend">'+'<div class="input-group-text">'+
-        '<input type="checkbox" name="iva" id="iva" onchange="activarIva()"></div>'+
-        '<button style="max-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus p-1" type="button">${decrementButton}</button></div>' +
-        '<input type="text" inputmode="decimal" style="text-align: ${textAlign}" class="form-control form-control-text-input"/>' +
-        '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
-        '</div>';
-*/
-//$("input[name='inputIva']").inputSpinner(preProps);
 $("input[name='pagoCredito']").inputSpinner(preProps);
 $('input[id="pagoCredito"]').prop('disabled', true);
 $('input[id="inputIva"]').prop('disabled', true);
@@ -517,47 +445,42 @@ function activarIva() {
     let btn = document.querySelector('input[name="iva"]:checked');
     if (btn != null) {
         $('input[id="inputIva"]').prop('disabled', false);
-
     } else {
         $('input[id="inputIva"]').prop('disabled', true);
     }
     for (let count1 in productosCompra) {
         costo(productosCompra[count1].id);
     }
-
 }
 
 function mostrarProductos() {
     let cuerpo = "";
     let contador = 1;
     for (let count1 in productosCompra) {
-
-        //<th scope="row">` + contador++ + `</th>
         let checked = "";
         let disabled = "disabled";
         if (productosCompra[count1].fechaCaducidad) {
             checked = "checked";
             disabled = "";
         }
-
         cuerpo = cuerpo + `
         <tr>
             <td><p>` + productosCompra[count1].codigoBarras + `</p></td>
             <td>` + productosCompra[count1].nombre + `</td>
-            <td><input name="cantidad" value="` + productosCompra[count1].cantidad + `" 
-                onchange="cantidad(` + productosCompra[count1].id + `)"  
+            <td><input name="cantidad" value="` + productosCompra[count1].cantidad + `"
+                onchange="cantidad(` + productosCompra[count1].id + `)"
                 id="cantidad` + productosCompra[count1].id + `" min="1" ` +
             ` type="number"/>` + `</td>
-            <td><input name="costo" data-prefix="$"  value="` + productosCompra[count1].costo + `" 
-                onchange="costo(` + productosCompra[count1].id + `)"  
+            <td><input name="costo" data-prefix="$"  value="` + productosCompra[count1].costo + `"
+                onchange="costo(` + productosCompra[count1].id + `)"
                 id="costo` + productosCompra[count1].id + `" min="0" ` +
             ` type="number" data-decimals="2"/>` + `</td>
-            <td><input name="ganancia" data-prefix="%"  value="` + productosCompra[count1].ganancia + `" 
-                onchange="ganancia(` + productosCompra[count1].id + `)"  
+            <td><input name="ganancia" data-prefix="%"  value="` + productosCompra[count1].ganancia + `"
+                onchange="ganancia(` + productosCompra[count1].id + `)"
                 id="ganancia` + productosCompra[count1].id + `" min="0" ` +
             ` type="number"/>` + `</td>
-            <td><input name="precio" data-prefix="$"  value="` + productosCompra[count1].precio + `" 
-                onchange="precio(` + productosCompra[count1].id + `)"  
+            <td><input name="precio" data-prefix="$"  value="` + productosCompra[count1].precio + `"
+                onchange="precio(` + productosCompra[count1].id + `)"
                 id="precio` + productosCompra[count1].id + `" min="0" ` +
             ` type="number" data-decimals="2" />` + `</td>
             <td>
@@ -599,17 +522,12 @@ function mostrarProductos() {
             '<div class="input-group-append"><button style="max-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus p-1" type="button">${incrementButton}</button></div>' +
             '</div>'
     }
-    //$("input[name='pagoCredito']").inputSpinner("destroy");
     $("input[name='cantidad']").inputSpinner(props);
     $("input[name='costo']").inputSpinner(props);
     $("input[name='ganancia']").inputSpinner(props);
     $("input[name='precio']").inputSpinner(props);
-    //activarIva();
-
-
-
 }
-//mostrarProductos();
+
 function cantidad(id) {
     const valorProducto = document.querySelector('#cantidad' + id);
     for (let i in productosCompra) {
@@ -626,7 +544,6 @@ function costo(id) {
     for (let i in productosCompra) {
         if (productosCompra[i].id === id) {
             productosCompra[i].costo = parseFloat(costoProducto.value);
-            //console.log(productosCompra[i]);
             let ganancia = ((productosCompra[i].costo * productosCompra[i].ganancia) / 100)
             let costo = productosCompra[i].costo;
             let precio = parseFloat(costo + ganancia);
@@ -634,7 +551,6 @@ function costo(id) {
             let btnIva = document.querySelector('input[name="iva"]:checked');
             if (btnIva != null) {
                 let iva = document.querySelector('input[name="inputIva"]');
-                //console.log(iva)
                 let costoIva = ((parseFloat(productosCompra[i].costo) * parseFloat(iva.value)) / 100);
                 costoIva = costoIva.toFixed(2);
                 precio = parseFloat(productosCompra[i].precio) + parseFloat(costoIva);
@@ -642,7 +558,6 @@ function costo(id) {
             }
             console.log(productosCompra[i].precio)
             mostrarProductos();
-            //productosCompra[i].costo;
         }
     }
     actualizarTotal();
@@ -658,7 +573,6 @@ function ganancia(id) {
             let costo = productosCompra[i].costo;
             let precio = parseFloat(costo + ganancia);
             productosCompra[i].precio = precio.toFixed(2);
-            //productosCompra[i].precio = productosCompra[i].precio.toFixed(2);
             let btnIva = document.querySelector('input[name="iva"]:checked');
             if (btnIva != null) {
                 let iva = document.querySelector('input[name="inputIva"]');
@@ -668,7 +582,6 @@ function ganancia(id) {
             }
             console.log(productosCompra[i].precio)
             mostrarProductos();
-            //productosCompra[i].costo;
         }
     }
 }
@@ -679,10 +592,8 @@ function precio(id) {
         if (productosCompra[i].id === id) {
             let precio1 = parseFloat(precioProducto.value);
             productosCompra[i].precio = precio1.toFixed(2);
-            //console.log(productosCompra[i]);
             let costo = productosCompra[i].costo;
-            let precio2 = parseFloat(productosCompra[i]
-            .precio); // ((productosCompra[i].costo*productosCompra[i].ganancia)/100)
+            let precio2 = parseFloat(productosCompra[i].precio);
             precio2 = precio2.toFixed(2);
             console.log(precio2);
             let mult = precio2 * 100;
@@ -692,21 +603,14 @@ function precio(id) {
             console.log(div);
             let resultado = parseInt(div - 100);
             productosCompra[i].ganancia = resultado; //parseInt(((precio*100)/costo)-100);
-            //console.log(resultado);
             let btnIva = document.querySelector('input[name="iva"]:checked');
             if (btnIva != null) {
                 let iva = document.querySelector('input[name="inputIva"]');
-                //let costoIva = ((parseFloat(productosCompra[i].costo) * parseFloat(iva))/100);
-                //let ganancia = ((productosCompra[i].precio*100)/productosCompra[i].costo)-parseInt(iva.value)
-                //productosCompra[i].precio = parseFloat(productosCompra[i].precio)+ parseFloat(costoIva);
-                //console.log(productosCompra[i].ganancia);
                 console.log(parseInt(iva.value));
                 console.log(productosCompra[i].ganancia);
                 productosCompra[i].ganancia = parseInt(productosCompra[i].ganancia - iva.value);
             }
-            //console.log(productosCompra[i].ganancia);
             mostrarProductos();
-            //productosCompra[i].costo;
         }
     }
 }
@@ -716,8 +620,6 @@ function caducidad(id) {
     for (let i in productosCompra) {
         if (productosCompra[i].id === id) {
             productosCompra[i].caducidad = caducidadProducto.value;
-
-            //productosCompra[i].costo;
         }
     }
 }
@@ -727,14 +629,13 @@ function fechaActual() {
     let dia = fechaActual.getDate();
     let mes = (fechaActual.getMonth() + 1);
     let anio = fechaActual.getFullYear();
-
     if (dia < 10)
         dia = "0" + dia;
     if (mes < 10)
         mes = "0" + mes;
-
     return anio + "-" + mes + "-" + dia;
 }
+
 let total = 0;
 
 function actualizarTotal() {
@@ -751,15 +652,9 @@ function agregarProducto(id) {
     for (let i in productos) {
         if (productos[i].id === id) {
             if (!buscarProductoEnCompra(id)) {
-
-                //console.log('El producto a agregar es:',productos[i]);
                 let ganancia = 0;
                 if (productos[i].costo > 0)
                     ganancia = ((productos[i].precio * 100) / (productos[i].costo)) - 100;
-                //console.log('La ganancia es:',ganancia);
-                //console.log((productos[i].precio * 100));
-                //console.log((productos[i].costo));
-                //agregarProductoACompra(id,codigoBarras,nombre,cantidad,costo,ganancia,precio,caducidad)
                 agregarProductoACompra(productos[i].id, productos[i].codigoBarras, productos[i].nombre,
                     1, productos[i].costo, ganancia, productos[i].precio, fechaActual(), productos[i].idSucursal
                 );
@@ -770,11 +665,9 @@ function agregarProducto(id) {
     mostrarProductos();
     actualizarTotal();
     activarIva();
-    //console.log(productosCompra);
 }
 
 function quitarProducto(id) {
-
     let confirmacion = confirm("¿QUITAR PRODUCTO DE LA COMPRA?");
     if (confirmacion == true) {
         for (let i in productosCompra) {
@@ -784,25 +677,17 @@ function quitarProducto(id) {
         actualizarTotal();
         mostrarProductos();
     }
-    //var i = arr.indexOf( item );
-    //if ( i !== -1 )  
 }
 
 function crearProducto() {
     const cuerpoModal = document.querySelector('#cuerpoModal');
-    //ingresarProducto = cuerpoModal.innerHTML;
     const tituloModal = document.querySelector('#exampleModalLabel');
     const cerrar = document.querySelector('#cerrar');
-    //ingresarProductoTitulo = tituloModal.innerHTML;
-
-    //botonCerrarModal = cerrar.outerHTML;
-    //cerrar.onclick="cerrarModal()";
-    //cerrar.outerHTML = `<button id="cerrar" type="button" class="close" onclick="cerrarModal()" aria-label="Close">`
     tituloModal.innerHTML =
         `<label for="codigoBarras" class="m-0">
         <h5 class="text-primary">
             <strong>
-                CREAR PRODUCTO
+                CREAR PRODUCTOsd
             </strong>
         </h5>
     </label>
@@ -813,12 +698,8 @@ function crearProducto() {
         departamentosOpciones = departamentosOpciones +
             `<option value="` + departamentos[i].id + `">` + departamentos[i].nombre + `</option>`
     }
-
-    //
-    //<form id="formularioProducto" enctype="multipart/form-data">
     let cuerpo = `
     <form class="needs-validation" novalidate id="formularioProducto" role="form" enctype="multipart/form-data">
-    
     <div class="row">
     <div class="col-6">
         <div class="form-group">
@@ -868,7 +749,7 @@ function crearProducto() {
                 </select>
             </div>
         </div>
-        
+
     </div>
     <div class="col-6">
         <div class="form-group">
@@ -891,7 +772,6 @@ function crearProducto() {
                     onchange="previsualizarImagen('formImagenProducto')" id="formImagenProducto" value="" autofocus>
             </div>
         </div>
-        
     </div>
     </div>
     <!--button class="btn btn-outline-secondary" type="submit" id="btnEnviar" >CREAR PRODUCTO</button-->
@@ -900,13 +780,9 @@ function crearProducto() {
         <button class="btn btn-outline-secondary" type="button" onclick="nuevoProducto()" id="btnEnviar" >CREAR PRODUCTO</button>
         <button type="button" class="btn btn-primary" onclick="cancelarProducto()">CANCELAR</button>
         <button type="button" class="btn btn-secondary" onclick="cerrarModal()" data-dismiss="modal">CERRAR</button>
-        
     </div>
     `;
-    //
-
     cuerpoModal.innerHTML = cuerpo;
-
 }
 
 function previsualizarImagen(id) {
@@ -927,54 +803,31 @@ function previsualizarImagen(id) {
 
 function nuevoProducto() {
     var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
     var bol = 0;
     var validation = Array.prototype.filter.call(forms, function(form) {
-        //form.addEventListener('submit', function(event) {
         if (form.checkValidity() === false) {
-            //event.preventDefault();
-            //event.stopPropagation();
-            //console.log('Entra aqui');
             bol = 1;
-            //return false;
         }
         form.classList.add('was-validated');
-        //}, false);
     });
     if (bol === 1)
         return false;
 
     const formulario = document.querySelector('#formularioProducto');
-    /*const codigoBarras = document.querySelector('#formCodigoBarras');
-    const nombre = document.querySelector('#formNombre');
-    const descripcion = document.querySelector('#formDescripcion');
-    const minimo_stock = document.querySelector('#formMinimoStock');
-    const receta = document.querySelector('#formReceta');
-    const departamento = document.querySelector('#formDepartamento');
-    const img = document.getElementById("formImagenProducto");*/
-
     let datosProducto = new FormData(formulario);
     datosProducto.append('_token', "{{ csrf_token() }}");
     datosProducto.append('ajax', true);
-    //alert(datosProducto);
-
     (async () => {
         try {
-            //console.log(datosProducto);
             var init = {
-                // el método de envío de la información será POST
                 method: "POST",
-                // el cuerpo de la petición es una cadena de texto 
-                // con los datos en formato JSON
-                body: datosProducto // convertimos el objeto a texto
+                // el cuerpo de la petición es cadena de texto.con datos en formato JSON
+                body: datosProducto
             };
-            //console.log('Aun llega aquí');
             let respuesta = await fetch(`{{url('/puntoVenta/producto/')}}`, init);
             if (respuesta.ok) {
-                //return console.log('Todo va bien');
                 let resp = await respuesta.json();
                 console.log(resp.nombre);
-
                 const cuerpoModal = document.querySelector('#cuerpoModal');
                 const tituloModal = document.querySelector('#exampleModalLabel');
                 cuerpoModal.innerHTML = ingresarProducto;
@@ -983,12 +836,10 @@ function nuevoProducto() {
                 agregarProducto(resp.id);
                 $('#exampleModal').modal('hide');
             }
-
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
         }
     })();
-
 }
 
 function cancelarProducto() {
@@ -1001,13 +852,11 @@ function cancelarProducto() {
 }
 
 function cerrarModal() {
-    //const cerrar = document.querySelector('#cerrar');
     const cuerpoModal = document.querySelector('#cuerpoModal');
     const tituloModal = document.querySelector('#exampleModalLabel');
     cuerpoModal.innerHTML = ingresarProducto;
     tituloModal.innerHTML = ingresarProductoTitulo;
     const entrada = document.querySelector('#busquedaProducto').value = "";
-    //cerrar.outerHTML = botonCerrarModal;
     $('#exampleModal').modal('hide');
 }
 
@@ -1017,37 +866,29 @@ function verificarCompra() {
     } else {
         $('#confirmarCompraModal').modal('show');
     }
-
 }
 
 async function guardarCompra() {
     try {
         const proveedor = document.querySelector('#proveedor');
         const fechaCompra = document.querySelector('#fechaCompra');
-        //console.log(fechaCompra.value.length);
-        //return ;
         if (fechaCompra.value.length == 0) {
             return alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
         }
-
         let json = JSON.stringify(productosCompra);
         let productos0 = [];
         let productos1 = [];
-        //console.log('productosCompra',productosCompra);
-        //return;
         for (let i in productosCompra) {
             if (productosCompra[i].idSucursal)
                 productos1.push((productosCompra[i]));
             else
                 productos0.push((productosCompra[i]));
         }
-        //productosCompra.push(producto);
         let estado = "pagado";
         let iva = null;
         let btnIva = document.querySelector('input[name="iva"]:checked');
         if (btnIva != null)
             iva = document.querySelector('#inputIva').value;
-        //return alert(iva);
         let btn = document.querySelector('input[name="credito"]:checked');
         const pagoCredito = document.querySelector('#pagoCredito');
         if (btn != null) {
@@ -1057,9 +898,6 @@ async function guardarCompra() {
             if (pagoCredito.value >= total)
                 return alert('EL ABONO NO PUEDE SER MAYOR O IGUAL AL PAGO DE LA COMPRA');
         }
-
-        //if (parseFloat(pagoCredito.value) > 0) {
-
         const contenidoProducto = document.querySelector('#modalConfirmarCompra');
         const contenidoOriginal = contenidoProducto.innerHTML;
         contenidoProducto.innerHTML =
@@ -1070,9 +908,6 @@ async function guardarCompra() {
                 </button>
             </div>
             `;
-        //console.log('productos0',productos0);
-        //console.log('productos1',productos1);
-
         let spp = await $.ajax({
             // metodo: puede ser POST, GET, etc
             method: "POST",
@@ -1081,7 +916,6 @@ async function guardarCompra() {
             // los datos que voy a enviar para la relación
             data: {
                 datos: JSON.stringify(productos0),
-                //_token: $("meta[name='csrf-token']").attr("content")
                 _token: "{{ csrf_token() }}",
             }
         });
@@ -1094,7 +928,6 @@ async function guardarCompra() {
             // los datos que voy a enviar para la relación
             data: {
                 datos: JSON.stringify(productos1),
-                //_token: $("meta[name='csrf-token']").attr("content")
                 _token: "{{ csrf_token() }}",
             }
         });
@@ -1112,15 +945,10 @@ async function guardarCompra() {
                 datos: json,
                 proveedor: proveedor.value,
                 fecha_compra: fechaCompra.value,
-                //_token: $("meta[name='csrf-token']").attr("content")
                 _token: "{{ csrf_token() }}",
             }
-            // si tuvo éxito la petición
         }).done(function(respuesta) {
-            //console.log(respuesta);
-
-            console.log(respuesta); //JSON.stringify(respuesta));
-
+            console.log(respuesta);
         }).fail(function(jqXHR, textStatus, errorThrown) {
             alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
             console.log(jqXHR, textStatus, errorThrown);
@@ -1130,34 +958,6 @@ async function guardarCompra() {
         productosCompra = [];
         mostrarProductos();
         $('#confirmarCompraModal').modal('hide');
-        //await cargarProductosSucursal();
-        //await cargarProductos();
-
-
-        /*let respuestaCaducidad =  await $.ajax({
-            // metodo: puede ser POST, GET, etc
-            method: "POST",
-            // la URL de donde voy a hacer la petición
-            url: '/puntoVenta/productosCaducidad/',
-            // los datos que voy a enviar para la relación
-            data: {
-                datos: json,
-                //_token: $("meta[name='csrf-token']").attr("content")
-                _token: "{{ csrf_token() }}",
-            }
-            // si tuvo éxito la petición
-        }).done(function(respuesta) {
-            //alert('COMPRA GUARDADA EXITOSAMENTE');
-            //productosCompra = [];
-            //mostrarProductos();
-            //$('#confirmarCompraModal').modal('hide');
-            console.log(respuesta); //JSON.stringify(respuesta));
-
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            //alert('VERIFIQUE LA FECHA DE COMPRA POR FAVOR');
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        console.log(respuestaCaducidad);*/
         $('#pagoCredito').val(0.00);
         fechaCompra.value = "yyyy-MM-dd";
         $("#iva").prop('checked', false);
@@ -1165,7 +965,6 @@ async function guardarCompra() {
         activarIva();
         activarCredito();
         actualizarTotal();
-
     } catch (err) {
         console.log("Error al realizar la petición AJAX: " + err.message);
     }
@@ -1186,7 +985,6 @@ $("input[name='cantidad']").bind('keypress', function(tecla) {
 function setFechaCaducidad(id) {
     let seleccion = $(`#checked${id}`).is(":checked");
     productosCompra.find(p => p.id == id).fechaCaducidad = seleccion;
-    //productosCompra[i].
     $(`#caducidad${id}`).prop('disabled', !seleccion);
 }
 </script>
