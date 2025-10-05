@@ -99,7 +99,7 @@
                     FILTRAR POR:
                 </h6>
                 <select class="form-control mt-1" name="idDepartamento" id="idDepartamento"
-                    onchange="buscarFiltroNombre()" required>
+                    onchange="buscarFiltroNombre()" required hidden>
                     <option value="">DEPARTAMENTO</option>
                     @foreach ($depa as $departamento)
                         <option value="{{ $departamento['id'] }}"> {{ $departamento['nombre'] }}</option>
@@ -159,16 +159,16 @@
                             <tr>
                                 <th>CODIGO BARRAS</th>
                                 <th>NOMBRE</th>
-                                <th>DEPARTAMENTO</th>
-                                <th>COSTO</th>
-                                <th>PRECIO </th>
-                                <th>MATERIAL</th>
-                                <th>DISEÑO</th>
-                                <th>ADICIÓN</th>
-                                <th>TRATAMIENTO</th>
-                                <th>CYL</th>
+                                <th>DESCRIPCION</th>
                                 <th>SPH</th>
-                                <th>CANT</th>
+                                <th>CYL </th>
+                                <th>ADD</th>
+                                <th>TRATAMIENTO</th>
+                                <th>DISEÑO</th>
+                                <th>MATERIAL</th>
+                                <th>COSTO</th>
+                                <th>PRECIO</th>
+                                <th>EXISTENCIA</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -497,7 +497,8 @@
     let productosRapidos = [];
     let prodSucursal = @json($productosDeSucursal);
     console.log({
-        prodSucursal
+        productosSucursal: productosSucursal,
+        productosDeSucursal: prodSucursal
     });
     console.log({
         productos

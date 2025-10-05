@@ -41,7 +41,7 @@
 
             <div class="form-row border border-dark m-1 col-12">
                 <!-- INICIO-->
-                <div class="col-6 mr-auto">
+                <div class="col-4 mr-auto">
                     <div class="form-group mb-3">
                         <label for="codigoBarras" class="form-label">CÓDIGO DE BARRAS</label>
                         <input type="text" name="codigoBarras" id="codigoBarras" maxlength="20"
@@ -72,18 +72,141 @@
                             @foreach ($sucursalProd as $s)
                                 @if ($s->idProducto === $producto->id)
                                     <input type="number" name="sph" id="sph" class="form-control"
-                                        min="1" value="{{ $s->minimoStock }}"
+                                        min="1" value="{{ $s->sph }}"
                                         onkeypress="return validarEnteroPosi(event);" required>
                                 @endif
                             @endforeach
                         @else
-                            <input type="number" name="minimoStock" id="minimoStock" class="form-control"
-                                min="1" value="{{ old('minimoStock') }}" required>
+                            <input type="number" name="sph" id="sph" class="form-control"
+                                value="{{ old('sph') }}" required>
                         @endif
                     </div>
 
-                    <!-- Mínimo stock -->
+                    <!-- CYL -->
                     <div class=" form-group mb-3">
+                        <label for="cyl" class="form-label">CYL</label>
+                        @if (isset($producto))
+                            @foreach ($sucursalProd as $s)
+                                @if ($s->idProducto === $producto->id)
+                                    <input type="number" name="cyl" id="cyl" class="form-control"
+                                        min="1" value="{{ $s->cyl }}"
+                                        onkeypress="return validarEnteroPosi(event);" required>
+                                @endif
+                            @endforeach
+                        @else
+                            <input type="number" name="cyl" id="cyl" class="form-control"
+                                value="{{ old('cyl') }}" required>
+                        @endif
+                    </div>
+
+                    <!-- ADD -->
+                    <div class=" form-group mb-3">
+                        <label for="add" class="form-label">ADD</label>
+                        @if (isset($producto))
+                            @foreach ($sucursalProd as $s)
+                                @if ($s->idProducto === $producto->id)
+                                    <input type="number" name="add" id="add" class="form-control"
+                                        min="1" value="{{ $s->add }}"
+                                        onkeypress="return validarEnteroPosi(event);" required>
+                                @endif
+                            @endforeach
+                        @else
+                            <input type="number" name="add" id="add" class="form-control"
+                                value="{{ old('add') }}" required>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-4 mr-auto">
+                    <!-- MATERIAL -->
+                    <div class="mb-3">
+                        <label for="material" class="form-label">MATERIAL</label>
+                        <select class="form-control text-uppercase" name="material" id="material" required>
+                            <option value="HI">
+                                Plastico
+                            </option>
+                            <option value="POLY">
+                                Policarbonato
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- TRATAMIENTO -->
+                    <div class="mb-3">
+                        <label for="tratamiento" class="form-label">TRATAMIENTO</label>
+                        <select class="form-control text-uppercase" name="tratamiento" id="tratamiento" required>
+                            <option value="HI">
+                                White
+                            </option>
+                            <option value="POLY">
+                                AR (Antireflejante)
+                            </option>
+                            <option value="HI">
+                                Blue (Blue block, anti-blue,Blue free)
+                            </option>
+                            <option value="POLY">
+                                Photo AR
+                            </option>
+                            <option value="POLY">
+                                Photo Blue (Premium)
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- DISEÑO -->
+                    <div class="mb-3">
+                        <label for="disenio" class="form-label">DISEÑO</label>
+                        <select class="form-control text-uppercase" name="disenio" id="disenio" required>
+                            <option value="HI">
+                                Monofocal
+                            </option>
+                            <option value="POLY">
+                                Flat Top - Bifocal
+                            </option>
+                            <option value="HI">
+                                Invisible (Blent)
+                            </option>
+                            <option value="POLY">
+                                Progresivo
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- ESPESOR -->
+                    <div class=" form-group mb-3">
+                        <label for="espesor" class="form-label">ESPESOR</label>
+                        @if (isset($producto))
+                            @foreach ($sucursalProd as $s)
+                                @if ($s->idProducto === $producto->id)
+                                    <input type="number" name="espesor" id="espesor" class="form-control"
+                                        min="1" value="{{ $s->espesor }}"
+                                        onkeypress="return validarEnteroPosi(event);" required>
+                                @endif
+                            @endforeach
+                        @else
+                            <input type="number" name="espesor" id="espesor" class="form-control"
+                                value="{{ old('espesor') }}" required>
+                        @endif
+                    </div>
+
+                    <!-- DIAMETRO -->
+                    <div class=" form-group mb-3">
+                        <label for="diametro" class="form-label">DIAMETRO</label>
+                        @if (isset($producto))
+                            @foreach ($sucursalProd as $s)
+                                @if ($s->idProducto === $producto->id)
+                                    <input type="number" name="diametro" id="diametro" class="form-control"
+                                        min="1" value="{{ $s->diametro }}"
+                                        onkeypress="return validarEnteroPosi(event);" required>
+                                @endif
+                            @endforeach
+                        @else
+                            <input type="number" name="diametro" id="diametro" class="form-control"
+                                value="{{ old('diametro') }}" required>
+                        @endif
+                    </div>
+
+                    <!-- MINIMO STOCK -->
+                    <div class="mb-3">
                         <label for="minimoStock" class="form-label">MÍNIMO STOCK</label>
                         @if (isset($producto))
                             @foreach ($sucursalProd as $s)
@@ -98,11 +221,13 @@
                                 min="1" value="{{ old('minimoStock') }}" required>
                         @endif
                     </div>
-
+                </div>
+                <div class="col-4 mr-auto">
                     <!-- Departamento -->
                     <div class="mb-3">
                         <label for="idDepartamento" class="form-label">DEPARTAMENTO</label>
-                        <select class="form-control text-uppercase" name="idDepartamento" id="idDepartamento" required>
+                        <select class="form-control text-uppercase" name="idDepartamento" id="idDepartamento"
+                            required>
                             <option value="">Seleccione departamento</option>
                             @foreach ($departamento as $d)
                                 <option value="{{ $d->id }}"
@@ -134,59 +259,44 @@
                         <input type="number" name="precio" id="precio" min="0" step="0.01"
                             class="form-control" placeholder="INGRESAR PRECIO" value="{{ old('precio') }}" required>
                     </div>
-                </div>
 
-                <!-- FIN -->
+                    <div class="mb-3">
+                        <label for="imagen">
+                            <h5> <strong>{{ 'FOTO' }}</strong></h5>
+                        </label required>
+                        @if (isset($producto->imagen))
+                            <br />
+                            <img src="{{ asset('storage') . '/' . $producto->imagen }}" alt=""
+                                width="200">
+                        @endif
+                        @if (isset($producto->imagen))
+                            <input type="file" name="imagen" id="imagen" class="form-control"
+                                value="">
+                        @else
+                            <input class="form-control mb-4" type="file" name="imagen" id="imagen"
+                                value="" autofocus>
+                        @endif
 
-                <div class="col-3 text-center mt-3">
-                    <label for="imagen">
-                        <h5> <strong>{{ 'FOTO' }}</strong></h5>
-                    </label required>
-                    @if (isset($producto->imagen))
-                        <br />
-                        <img src="{{ asset('storage') . '/' . $producto->imagen }}" alt="" width="200">
-                    @endif
-                    @if (isset($producto->imagen))
-                        <input type="file" name="imagen" id="imagen" class="form-control" value="">
-                    @else
-                        <input class="form-control mb-4" type="file" name="imagen" id="imagen"
-                            value="" autofocus>
-                    @endif
-
-                    @error('mensajeError')
-                        <div class="alert alert-danger my-auto" role="alert">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                    @error('mensajeConf')
-                        <div class="alert alert-success my-auto" role="alert">
-                            {{ $message }}
-                        </div>
-                    @enderror
-
-                    <br /><br /><br /><br /><br /><br />
-                    <button class="btn btn-outline-secondary mt-4"
-                        onclick="return confirm('¿AGREGAR NUEVO PRODUCTO?')" type="submit" value="  AGREGAR">
-                        <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
-                            width="25px" height="25px"> GUARDAR PRODUCTO
-                    </button>
+                        @error('mensajeError')
+                            <div class="alert alert-danger my-auto" role="alert">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                        @error('mensajeConf')
+                            <div class="alert alert-success my-auto" role="alert">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="mb-0 mt-auto">
+                        <button class="btn btn-outline-secondary ml-auto"
+                            onclick="return confirm('¿AGREGAR NUEVO PRODUCTO?')" type="submit" value="  AGREGAR">
+                            <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar"
+                                width="25px" height="25px"> GUARDAR PRODUCTO
+                        </button>
+                    </div>
                 </div>
             </div>
-            <!--
-    <div class="row text-right w-100">
-        <div class="col-md-6"> </div>
-        <div class="col-md-6">
-
-            <button class="btn btn-outline-secondary" onclick="return confirm('¿AGREGAR NUEVO PRODUCTO?')" type="submit" value="  AGREGAR">
-                <img src="{{ asset('img\guardar.png') }}" class="img-thumbnail" alt="Editar" width="25px" height="25px"> GUARDAR PRODUCTO
-            </button>
-            <br />
-            <br />
-
-           
-        </div>
-    </div>
-    -->
         </form>
     </div>
 </div>
@@ -219,7 +329,6 @@
             let nombre = document.getElementById("nombre");
             let descripcion = document.getElementById("descripcion");
             let minimoStock = document.getElementById("minimoStock");
-            let receta = document.getElementById("receta");
             let idDepto = document.getElementById("idDepartamento");
             let existencia = document.getElementById("existencia");
             let costo = document.getElementById("costo");
