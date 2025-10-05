@@ -99,28 +99,17 @@
                     </div>
                     <div class="row ml-1">
                         <button type="button" class="btn btn-secondary my-auto " data-toggle="modal"
-                            data-target="#exampleModal" onclick="buscarProducto()">
+                            data-target="#modalToSelectProduct" onclick="listaProductosBuscados()">
                             <img src="{{ asset('img\nuevoReg.png') }}" alt="Editar" width="25px" height="25px">
                             <p class="h6 my-auto mx-2">AGREGAR PRODUCTO</p>
                         </button>
                     </div>
-                    <!-- TABLA - LISTADO PRODUCTOS CARGADOS PARA COMPRA -->
-                    <!-- Modificar tabla productos cargados adelaida 180925-->
+                    <!-- TABLA PRINCIPAL--LISTADO PRODUCTOS AGREGADOS A COMPRA -->
                     <div class="row m-1 border border-dark" style="height:390px;overflow-y:auto;">
                         <table class="table table-bordered border-primary col-12">
                             <thead class="table-secondary text-primary">
                                 <tr class="text-center">
-                                    <th>CODIGO BARRAS</th>
-                                    <th>PRODUCTO</th>
-                                    <th>CANTIDAD</th>
-                                    <th>COSTO</th>
-                                    <th>GANANCIA</th>
-                                    <th>PRECIO</th>
-                                    <th>CADUCIDAD</th>
-                                    <th></th>
-
                                     <!-- opcion nueva pro-optic-->
-                                    <!--
                                     <th>CODIGO BARRAS</th>
                                     <th>PRODUCTO</th>
                                     <th>DESCRIPCION</th>
@@ -134,10 +123,9 @@
                                     <th>PRECIO</th>
                                     <th>EXISTENCIA</th>
                                     <th></th>
-                                    -->
                                 </tr>
                             </thead>
-                            <tbody class="text-center" id="productos">
+                            <tbody class="text-center" id="listProductToBuy">
                                 <tr>
                                     <td></td>
                                     <td></td>
@@ -147,17 +135,16 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <!--
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    -->
                                 <tr>
                             </tbody>
                         </table>
                     </div>
+                <!--BOTON FINAL - GENERAR LA COMPRA-->
                     <div class="col my-2 ml-1 pr-0 border">
                         <div class="d-flex flex-row-reverse">
                             <h4 class="border border-dark m-0 ml-2 p-1" id="total">$ 0.00</h4>
@@ -172,8 +159,8 @@
         </div>
     </div>
 </div>
-<!--MODAL-SELECCIONAR PRODUCTOS PARA LISTAR COMPRA-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--MODAL-SELECCIONAR PRODUCTOS A LA COMPRA-->
+<div class="modal fade" id="modalToSelectProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" id="modalConsulta">
             <div class="modal-header">
@@ -188,18 +175,42 @@
                     <div class="text-secondary mx-2 mt-2 h6"> <small> ESCRIBA EL NOMBRE DEL PRODUCTO A AGREGAR </small>
                     </div>
                     <input type="text" class="form-control mx-2 mb-3 text-uppercase" placeholder="Buscar producto"
-                        id="busquedaProducto" onkeyup="buscarProducto()">
+                        id="productToSearch" onkeyup="listaProductosBuscados()">
                 </div>
                 <div class="row" style="height:200px;overflow:auto;" id="productosBusqueda">
                     <table class="table table-hover table-bordered">
                         <thead class="thead-light">
-                            <tr> <!--Modificar tabla modal Adelaida 180925-->
+                            <!-- Campos Farmacias-GI
+                            <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">CODIGO_BARRAS</th>
                                 <th scope="col">PRODUCTO</th>
                                 <th scope="col">EXISTENCIA</th>
                                 <th scope="col">DEPARTAMENTO</th>
                             </tr>
+                        -->
+                        <!--tabla pro-optic-->
+                        <tr>
+                            <th scope="col">#</th>
+                           <th>CODIGO BARRAS</th>
+                           <th>PRODUCTO</th>
+                           <th>DESCRIPCION</th>
+                           <th>SPH</th>
+                           <th>CYL</th>
+                           <th>ADD</th>
+                           <th>MATERIAL</th>
+                           <th>TRATAMIENTO</th>
+                           <th>DISEÑO</th>
+                           <th>ESPESOR</th>
+                           <th>DIAMETRO</th>
+                           <th>MINIMO STOCK</th>
+                           <th>DEPARTAMENTO</th>
+                           <th>EXISTENCIA</th>
+                           <th>COSTO</th>
+                           <th>PRECIO</th>
+                           <th>FOTO</th>
+                           <th></th>
+                        </tr>
                         </thead>
                         <tbody id="consultaBusqueda">
                         </tbody>
@@ -271,7 +282,6 @@ async function cargarProductos(producto) {
             productos = await response.json();
             return productos;
         } else {
-            console.log("No responde :'v");
             console.log(response);
             throw new Error(response.statusText);
         }
@@ -285,7 +295,7 @@ let ingresarProductoTitulo = document.querySelector('#exampleModalLabel').innerH
 
 let worker = new Worker("{{ asset('js/workerConsultarProducto.js') }}");
 
-async function buscarProducto() {
+async function listaProductosBuscados() {
     if (window.Worker) {
         worker.terminate();
         const contenidoProducto = document.querySelector('#consultaBusqueda');
@@ -302,7 +312,7 @@ async function buscarProducto() {
             </td>
             </tr>
             `;
-        const entrada = document.querySelector('#busquedaProducto');
+        const entrada = document.querySelector('#productToSearch');
         if (entrada.value.length == 0) {
             contenidoProducto.innerHTML = "";
             return;
@@ -329,13 +339,27 @@ async function buscarProducto() {
                         departamento = departamentos[o].nombre;
                 }
                 console.log(productos);
+                //PRO-OPTIC-MODIFICAR PRODUCTOS DEL MODAL.
                 cuerpo = cuerpo + `
                 <tr onclick="agregarProducto(` + productos[i].id + `)" data-dismiss="modal">
                 <td>` + contador++ + `</td>
                 <td>` + productos[i].codigoBarras + `</td>
                 <td>` + productos[i].nombre + `</td>
-                <td>` + productos[i].existencia + `</td>
+                <td>` + productos[i].descripcion + `</td>
+                <td>` + productos[i].sph + `</td>
+                <td>` + productos[i].cyl + `</td>
+                <td>` + productos[i].adicion + `</td>
+                <td>` + productos[i].material + `</td>
+                <td>` + productos[i].tratamiento + `</td>
+                <td>` + productos[i].disenio + `</td>
+                <td>` + productos[i].espesor + `</td>
+                <td>` + productos[i].diametro + `</td>
+                <td>` + productos[i].minimoStock + `</td>
                 <td>` + departamento + `</td>
+                <td>` + productos[i].existencia + `</td>
+                <td>` + productos[i].costo + `</td>
+                <td>` + productos[i].precio + `</td>
+                <td>` + productos[i].imagen + `</td>
             </tr>
             `;
             }
@@ -357,7 +381,7 @@ async function buscarProducto() {
             </td>
             </tr>
             `;
-            const entrada = document.querySelector('#busquedaProducto');
+            const entrada = document.querySelector('#productToSearch');
             if (entrada.value.length == 0) {
                 contenidoProducto.innerHTML = ""; //contenidoOriginal;
                 return;
@@ -382,8 +406,21 @@ async function buscarProducto() {
                 <td>` + contador++ + `</td>
                 <td>` + productos[i].codigoBarras + `</td>
                 <td>` + productos[i].nombre + `</td>
-                <td>` + productos[i].existencia + `</td>
+                <td>` + productos[i].descripcion + `</td>
+                <td>` + productos[i].sph + `</td>
+                <td>` + productos[i].cyl + `</td>
+                <td>` + productos[i].adicion + `</td>
+                <td>` + productos[i].material + `</td>
+                <td>` + productos[i].tratamiento + `</td>
+                <td>` + productos[i].disenio + `</td>
+                <td>` + productos[i].espesor + `</td>
+                <td>` + productos[i].diametro + `</td>
+                <td>` + productos[i].minimoStock + `</td>
                 <td>` + departamento + `</td>
+                <td>` + productos[i].existencia + `</td>
+                <td>` + productos[i].costo + `</td>
+                <td>` + productos[i].precio + `</td>
+                <td>` + productos[i].imagen + `</td>
             </tr>
             `;
             }
@@ -503,7 +540,7 @@ function mostrarProductos() {
 </svg></i></button></td>
         `;
     }
-    document.getElementById("productos").innerHTML = cuerpo;
+    document.getElementById("listProductToBuy").innerHTML = cuerpo;
     var props = {
         decrementButton: "<strong>&minus;</strong>", // button text
         incrementButton: "<strong>&plus;</strong>", // ..
@@ -648,6 +685,7 @@ function actualizarTotal() {
     etiquetaTotal.textContent = "$ " + total;
 }
 
+<!-- PRO-OPTIC - MODIFICAR ESTA PARTE ADELAIDA 05 OCT 2025-->
 function agregarProducto(id) {
     for (let i in productos) {
         if (productos[i].id === id) {
@@ -660,8 +698,8 @@ function agregarProducto(id) {
                 );
             } else alert("YA AGREGÓ ESTE PRODUCTO");
         }
-    }
-    const entrada = document.querySelector('#busquedaProducto').value = "";
+        }
+    const entrada = document.querySelector('#productToSearch').value = "";
     mostrarProductos();
     actualizarTotal();
     activarIva();
@@ -687,7 +725,7 @@ function crearProducto() {
         `<label for="codigoBarras" class="m-0">
         <h5 class="text-primary">
             <strong>
-                CREAR PRODUCTOsd
+                CREAR PRODUCTO
             </strong>
         </h5>
     </label>
@@ -834,7 +872,7 @@ function nuevoProducto() {
                 tituloModal.innerHTML = ingresarProductoTitulo;
                 await cargarProductos(resp.nombre);
                 agregarProducto(resp.id);
-                $('#exampleModal').modal('hide');
+                $('#modalToSelectProduct').modal('hide');
             }
         } catch (err) {
             console.log("Error al realizar la petición AJAX: " + err.message);
@@ -847,7 +885,7 @@ function cancelarProducto() {
     const tituloModal = document.querySelector('#exampleModalLabel');
     cuerpoModal.innerHTML = ingresarProducto;
     tituloModal.innerHTML = ingresarProductoTitulo;
-    buscarProducto();
+    listaProductosBuscados();
 
 }
 
@@ -856,8 +894,8 @@ function cerrarModal() {
     const tituloModal = document.querySelector('#exampleModalLabel');
     cuerpoModal.innerHTML = ingresarProducto;
     tituloModal.innerHTML = ingresarProductoTitulo;
-    const entrada = document.querySelector('#busquedaProducto').value = "";
-    $('#exampleModal').modal('hide');
+    const entrada = document.querySelector('#productToSearch').value = "";
+    $('#modalToSelectProduct').modal('hide');
 }
 
 function verificarCompra() {
