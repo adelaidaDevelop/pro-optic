@@ -48,7 +48,7 @@ class ProductoController extends Controller
                 'lentes.disenio',
                 'lentes.adicion',
                 'lentes.tratamiento',
-
+                
             ]);
         return view('Producto.index', compact('depa', 'datosP', 'productosSucursal', 'producto', 'subproducto', 'ofertas', 'productosDeSucursal'));
     }
